@@ -60,6 +60,11 @@ header{position:sticky;top:0;z-index:50;background:var(--panel);border-bottom:1p
 .brand{font-family:var(--ff-display);font-weight:800;letter-spacing:.5px;font-size:1rem;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none}
 .brand .sym{color:var(--gold);font-size:1.15rem;letter-spacing:2px}
 .brand small{color:var(--textd);font-weight:600;font-size:.72rem;align-self:flex-end;margin-bottom:2px}
+.brand-logo-img{height:24px;width:auto;display:inline-block;vertical-align:middle}
+footer .brand-logo-img{height:18px}
+.logo-onlight{display:none}
+[data-theme="clear"] .logo-ondark{display:none}
+[data-theme="clear"] .logo-onlight{display:inline-block}
 nav{display:flex;gap:18px;flex:1;flex-wrap:wrap}
 nav a{color:var(--textm);font-size:.82rem;font-weight:500;letter-spacing:.3px;transition:color .15s}
 nav a:hover{color:var(--gold)}
@@ -140,7 +145,7 @@ footer .brand{margin-bottom:10px}
 <body>
 
 <header>
-  <a href="#inicio" class="brand" title="Inicio / Home"><span class="sym">m Δ° m</span> Music Motion <small>®</small></a>
+  <a href="#inicio" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small></a>
   <nav>
     <a href="#inicio"><span class="es">Inicio</span><span class="en">Home</span></a>
     <a href="#apps"><span class="es">Las apps</span><span class="en">The apps</span></a>
@@ -329,7 +334,7 @@ footer .brand{margin-bottom:10px}
 </main>
 
 <footer>
-  <a href="#inicio" class="brand" title="Inicio / Home"><span class="sym">m Δ° m</span> Music Motion <small>®</small></a>
+  <a href="#inicio" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small></a>
   <p><span class="es">Suite de afinación pitagórica · © 2001–2026 Music Motion. Todos los derechos reservados.</span><span class="en">Pythagorean tuning suite · © 2001–2026 Music Motion. All rights reserved.</span></p>
   <p style="margin-top:8px;color:var(--violet)" class="mono"><span class="es">Sitio en construcción — crece día a día con la suite.</span><span class="en">Site under construction — grows day by day with the suite.</span></p>
   <p style="margin-top:6px"><span class="es">Idiomas del sitio: español e inglés. Las aplicaciones tienen nombres de interfaz en hasta doce idiomas.</span><span class="en">Site languages: Spanish and English. The apps carry UI names in up to twelve languages.</span></p>
