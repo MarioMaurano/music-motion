@@ -114,6 +114,66 @@
   </div>
 </section>
 
+<section id="design">
+  <div class="app-eyebrow"><span class="es">Diseñá tu sonido</span><span class="en">Design your sound</span></div>
+  <p class="lead">
+    <span class="es">No empezás de cero: el banco trae <b>45 instrumentos</b> (42 orquestales y de folk + 3 sintéticos). Elegís uno, lo esculpís hasta que sea tuyo, y lo guardás — en tu lista, en tu computador, o directo en tu partitura.</span>
+    <span class="en">You don't start from scratch: the bank ships <b>45 instruments</b> (42 orchestral & folk + 3 synths). Pick one, sculpt it until it's yours, and save it — to your list, to your computer, or straight into your score.</span>
+  </p>
+
+  <ol style="margin:14px 0 0 22px;line-height:1.9">
+    <li><span class="es"><b>Partí de un default</b> — elegí un instrumento en el selector: las curvas, los knobs y la caja JSON se cargan solos. Tocá <b>note</b> o <b>sweep</b> para conocerlo de grave a agudo.</span><span class="en"><b>Start from a default</b> — pick an instrument in the selector: the curves, the knobs and the JSON box load by themselves. Hit <b>note</b> or <b>sweep</b> to hear it from low to high.</span></li>
+    <li><span class="es"><b>Esculpí</b> — los sliders de <b>Response</b> son cómo respira el instrumento a lo largo del registro; los knobs son su carácter (abajo está qué hace cada uno, sin tecnicismos). VOL y L·R son su nivel y su asiento en la orquesta: también se guardan con el sonido.</span><span class="en"><b>Sculpt</b> — the <b>Response</b> sliders are how the instrument breathes across its register; the knobs are its character (below, what each one does, no jargon). VOL and L·R are its level and its seat in the orchestra: they are saved with the sound too.</span></li>
+    <li><span class="es"><b>Guardalo</b> — <b>Save preset to list</b>: queda en tu lista activa, solo ese instrumento (con otro <i>name</i> conservás el original — <span class="mono">oboe_scuro</span> no pisa a <span class="mono">oboe</span>). <b>Download .txt</b>: un archivo en tu computador con el sonido completo. <b>Export list…</b>: toda tu lista como <span class="mono">mm-presets-&lt;nombre&gt;.js</span>, el formato que entiende la suite entera.</span><span class="en"><b>Save it</b> — <b>Save preset to list</b>: it joins your active list, that instrument only (a different <i>name</i> keeps the original — <span class="mono">oboe_scuro</span> doesn't overwrite <span class="mono">oboe</span>). <b>Download .txt</b>: a file on your computer with the complete sound. <b>Export list…</b>: your whole list as <span class="mono">mm-presets-&lt;name&gt;.js</span>, the format the entire suite understands.</span></li>
+  </ol>
+
+  <h1 style="font-size:1.3em;margin-top:34px"><span class="es">¿A dónde va? — al Score</span><span class="en">Where does it go? — to the Score</span></h1>
+  <p>
+    <span class="es"><b>▶ Send to Score</b> manda el preset en vivo. El Score es el <b>dueño de la lista de instrumentos</b>: lo recibe y lo difunde a la Console y al Keyboard. La consecuencia: <b>todo canal de tu partitura que use ese instrumento pasa a sonar con tu versión, al instante</b> — sin recargar nada. <b>Save preset to list</b> también lo difunde al guardarlo.</span>
+    <span class="en"><b>▶ Send to Score</b> sends the preset live. The Score is the <b>owner of the instrument list</b>: it receives it and broadcasts it to the Console and the Keyboard. The consequence: <b>every channel of your score using that instrument starts sounding with your version, instantly</b> — nothing to reload. <b>Save preset to list</b> also broadcasts it on save.</span>
+  </p>
+  <p style="margin-top:10px">
+    <span class="es">¿Y en el Score? Sus canales (CHANNELS) eligen lista: la <b>default</b> o una <b>personalizada</b> — ahí cargás el <span class="mono">mm-presets-….js</span> que exportaste, y toda la obra suena con tus timbres. Para volver al banco de fábrica: en el Register, <b>List ▾ → Reset to default list</b>.</span>
+    <span class="en">And in the Score? Its channels (CHANNELS) choose a list: the <b>default</b> or a <b>custom</b> one — there you load the <span class="mono">mm-presets-….js</span> you exported, and the whole piece sounds with your timbres. Back to the factory bank: in the Register, <b>List ▾ → Reset to default list</b>.</span>
+  </p>
+  <div class="note" style="margin-top:14px">
+    <span class="es"><b>Ejemplo:</b> «quiero un oboe más oscuro para mi adagio». Elegís <span class="mono">Oboe</span> → bajás <i>brightness</i> en mid/high y subís un toque de <i>air</i> en low → lo escuchás con <b>note</b> en varios registros → <i>name</i>: <span class="mono">oboe_scuro</span> → <b>Save preset to list</b> (ya viajó al Score) → en el canal del oboe de tu partitura elegís <span class="mono">oboe_scuro</span> → tu adagio suena con tu oboe. <b>Export list…</b> y ese sonido es tuyo para siempre, en cualquier sesión.</span>
+    <span class="en"><b>Example:</b> "I want a darker oboe for my adagio." Pick <span class="mono">Oboe</span> → lower <i>brightness</i> at mid/high and add a touch of <i>air</i> at low → audition with <b>note</b> across registers → <i>name</i>: <span class="mono">oboe_scuro</span> → <b>Save preset to list</b> (it already traveled to the Score) → on your score's oboe channel pick <span class="mono">oboe_scuro</span> → your adagio sounds with your oboe. <b>Export list…</b> and that sound is yours forever, in any session.</span>
+  </div>
+
+  <h1 style="font-size:1.3em;margin-top:34px"><span class="es">Qué hace cada knob — sin tecnicismos</span><span class="en">What each knob does — no jargon</span></h1>
+  <div class="specs">
+    <div class="spec">
+      <h3>Response</h3>
+      <p><span class="es">Las 7 filas (low·mid·high·top) son la firma del instrumento a lo largo del registro: <b>body</b> = cuánto cuerpo tiene cada zona · <b>air</b> = cuánto soplo se oye · <b>brightness</b> = cuánto brilla · <b>response</b> = qué tan rápido habla (los graves tardan más) · <b>vibrato ¢</b> y <b>vib rate</b> = cuánto y qué tan rápido ondula · <b>odd/even</b> = redondo y hueco como clarinete (impares) ↔ lleno y parejo (todos los armónicos).</span><span class="en">The 7 rows (low·mid·high·top) are the instrument's signature across its register: <b>body</b> = how much body each zone has · <b>air</b> = how much breath you hear · <b>brightness</b> = how much it shines · <b>response</b> = how fast it speaks (low notes take longer) · <b>vibrato ¢</b> and <b>vib rate</b> = how much and how fast it waves · <b>odd/even</b> = round and hollow like a clarinet (odd partials) ↔ full and even (all of them).</span></p>
+    </div>
+    <div class="spec">
+      <h3>Output</h3>
+      <p><span class="es"><b>VOL</b> = qué tan fuerte es <i>este</i> instrumento respecto a los demás (su nivel de fábrica). <b>L·R</b> = dónde se sienta en el escenario: cornos a la izquierda, contrabajos a la derecha. Los dos viajan dentro del preset.</span><span class="en"><b>VOL</b> = how loud <i>this</i> instrument is relative to the others (its factory level). <b>L·R</b> = where it sits on stage: horns left, double basses right. Both travel inside the preset.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Base timbre</h3>
+      <p><span class="es"><b>base noise</b> = el aliento constante del instrumento — una flauta respira mucho, una trompeta casi nada. <b>AM noise</b> = ese aliento late junto con el sonido (más granulado, más vivo).</span><span class="en"><b>base noise</b> = the instrument's constant breath — a flute breathes a lot, a trumpet barely. <b>AM noise</b> = that breath pulses along with the sound (grainier, more alive).</span></p>
+    </div>
+    <div class="spec">
+      <h3>Source</h3>
+      <p><span class="es"><b>mode</b> = la materia prima: <i>harmonic</i> (notas afinadas — casi todo), <i>inharmonic</i> (campanas, marimbas), <i>noise</i> (percusión sin altura). <b>source tilt</b> = nace oscuro ↔ nace brillante. <b>inharm.</b> = cuánto se «acampana». <b>band Hz / Q</b> = dónde silba el ruido y qué tan angosto.</span><span class="en"><b>mode</b> = the raw material: <i>harmonic</i> (pitched notes — almost everything), <i>inharmonic</i> (bells, marimbas), <i>noise</i> (unpitched percussion). <b>source tilt</b> = born dark ↔ born bright. <b>inharm.</b> = how bell-like it gets. <b>band Hz / Q</b> = where the noise whistles and how narrow.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Filter</h3>
+      <p><span class="es">El brillo que se deja pasar. <b>cutoff ×f</b> = cuánto brillo (acompaña a la nota: sube con ella). <b>resonance</b> = un filo nasal justo en el borde. <b>open oct</b> = la boca se abre de más en el ataque (ese «uá» inicial) y <b>time s</b> = cuánto tarda en cerrarse.</span><span class="en">The brightness that gets through. <b>cutoff ×f</b> = how much brightness (it follows the note: rises with it). <b>resonance</b> = a nasal edge right at the rim. <b>open oct</b> = the mouth opens extra at the attack (that initial "wah") and <b>time s</b> = how long it takes to close.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Attack &amp; Envelope</h3>
+      <p><span class="es">La consonante con que empieza la nota: <b>hit</b> = el golpe de lengua o martillo · <b>time ms</b> = corto (tic) o largo (thu) · <b>air</b> = el golpe es más soplo que golpe. Y la vida después: <b>decay</b> = cuánto cae tras el ataque · <b>sustain</b> = en qué nivel se queda mientras sostenés (en 0 se apaga solo, como un piano).</span><span class="en">The consonant the note starts with: <b>hit</b> = the tongue or hammer strike · <b>time ms</b> = short (tic) or long (thu) · <b>air</b> = the strike is more breath than hit. And the life after: <b>decay</b> = how much it falls after the attack · <b>sustain</b> = the level it holds while you sustain (at 0 it dies away on its own, like a piano).</span></p>
+    </div>
+    <div class="spec">
+      <h3>Formants F1 | F2</h3>
+      <p><span class="es">La «garganta» del instrumento: dos zonas que <b>no siguen la nota</b> — están fijas, como la caja de un violín o la boca diciendo una vocal. <b>freq Hz</b> = dónde está cada una · <b>gain dB</b> = cuánto empuja · <b>Q</b> = qué tan angosta. Son lo que hace que un oboe diga «eh» y un corno diga «oh».</span><span class="en">The instrument's "throat": two zones that <b>don't follow the note</b> — they're fixed, like a violin's body or a mouth shaping a vowel. <b>freq Hz</b> = where each one sits · <b>gain dB</b> = how hard it pushes · <b>Q</b> = how narrow. They're what makes an oboe say "eh" and a horn say "oh".</span></p>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
