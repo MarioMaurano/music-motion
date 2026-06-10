@@ -7,140 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* ═══════════ THEMES (experimento — luego van a las apps) ═══════════ */
-[data-theme="dark"]{
-  --bg:#07070e; --panel:#0e0e1a; --panel2:#15152360; --border:#23233a; --line:#1c1c30;
-  --text:#dcdcef; --textm:#9a9ac0; --textd:#6e6e94;
-  --gold:#cdac52; --teal:#3fbaa4; --rose:#d4587a; --blue:#6e8ade; --violet:#a98ce6;
-  --glow:.55;
-}
-[data-theme="gray"]{
-  --bg:#1b1b1f; --panel:#26262c; --panel2:#2d2d3460; --border:#3b3b46; --line:#34343d;
-  --text:#e7e7ec; --textm:#b2b2bd; --textd:#8a8a96;
-  --gold:#cfb45e; --teal:#48beaa; --rose:#dd6585; --blue:#869ee6; --violet:#b095ea;
-  --glow:.35;
-}
-[data-theme="clear"]{
-  --bg:#f1f0f7; --panel:#ffffff; --panel2:#f7f6fc; --border:#dad8e8; --line:#e6e4f0;
-  --text:#1f1f2c; --textm:#56566f; --textd:#8a8aa2;
-  --gold:#947414; --teal:#15826f; --rose:#aa2c54; --blue:#33509f; --violet:#6a4ec0;
-  --glow:0;
-}
-[data-theme="contrast"]{
-  --bg:#000000; --panel:#08080f; --panel2:#0d0d18; --border:#3a3a60; --line:#262648;
-  --text:#ffffff; --textm:#cccce6; --textd:#9a9ac4;
-  --gold:#ffcf48; --teal:#46ecca; --rose:#ff5e8a; --blue:#82aaff; --violet:#c6a2ff;
-  --glow:.8;
-}
-
-/* ═══════════ TYPE SCALE ═══════════ */
-:root{
-  --ff-text:'Inter',system-ui,'Segoe UI',sans-serif;
-  --ff-display:'Montserrat','Inter',sans-serif;
-  --ff-mono:'DM Mono','SFMono-Regular',Consolas,monospace;
-  --fs-h1:clamp(2.1rem,4.2vw,3rem);
-  --fs-h2:1.6rem; --fs-h3:1.06rem; --fs-lead:1.2rem;
-  --fs-body:1rem; --fs-sm:.82rem; --fs-eyebrow:.98rem;
-  --lh-tight:1.12; --lh-body:1.62;
-  --maxw:1060px; --rad:10px;
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--ff-text);font-size:var(--fs-body);line-height:var(--lh-body);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
-a{color:var(--gold);text-decoration:none}
-.mono{font-family:var(--ff-mono)}
-
-[data-lang="es"] .en{display:none}
-[data-lang="en"] .es{display:none}
-
-/* ═══════════ HEADER ═══════════ */
-header{position:sticky;top:0;z-index:50;background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:20px;padding:11px 26px;flex-wrap:wrap}
-.brand{font-family:var(--ff-display);font-weight:800;letter-spacing:.5px;font-size:1rem;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none}
-.brand .sym{color:var(--gold);font-size:1.15rem;letter-spacing:2px}
-.brand small{color:var(--textd);font-weight:600;font-size:.72rem;align-self:flex-end;margin-bottom:2px}
-.brand-logo-img{height:24px;width:auto;display:inline-block;vertical-align:middle}
-footer .brand-logo-img{height:18px}
-.logo-onlight{display:none}
-[data-theme="clear"] .logo-ondark{display:none}
-[data-theme="clear"] .logo-onlight{display:inline-block}
-nav{display:flex;gap:18px;flex:1;flex-wrap:wrap}
-nav a{color:var(--textm);font-size:.82rem;font-weight:500;letter-spacing:.3px;transition:color .15s}
-nav a:hover{color:var(--gold)}
-.tools{display:flex;gap:12px;align-items:center}
-.langtog{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.langtog button{background:transparent;border:none;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;cursor:pointer;transition:all .15s}
-.langtog button.on{background:var(--gold);color:#0a0a10;font-weight:500}
-.themetog{display:flex;gap:7px;align-items:center}
-.themetog button{width:17px;height:17px;border-radius:50%;border:1px solid var(--border);cursor:pointer;padding:0;transition:transform .12s,box-shadow .12s}
-.themetog button:hover{transform:scale(1.15)}
-.themetog button.on{box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--gold)}
-.sizetog{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.sizetog button{background:transparent;border:none;color:var(--textm);font-family:var(--ff-display);font-weight:700;line-height:1;padding:3px 8px;cursor:pointer;transition:all .15s}
-.sizetog button:nth-child(1){font-size:11px}
-.sizetog button:nth-child(2){font-size:14px}
-.sizetog button:nth-child(3){font-size:17px}
-.sizetog button:hover{color:var(--violet)}
-.sizetog button.on{background:var(--violet);color:#0a0a10}
-
-/* ═══════════ LAYOUT ═══════════ */
-main{max-width:var(--maxw);margin:0 auto;padding:0 26px}
-section{padding:60px 0;border-bottom:1px solid var(--line)}
-.eyebrow{font-family:var(--ff-mono);font-size:var(--fs-eyebrow);font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--violet);margin-bottom:14px}
-h1{font-family:var(--ff-display);font-size:var(--fs-h1);line-height:var(--lh-tight);letter-spacing:-1px;font-weight:800;margin-bottom:18px;max-width:18ch}
-h1 .hl{color:var(--gold)}
-h2{font-family:var(--ff-display);font-size:var(--fs-h2);line-height:1.2;letter-spacing:-.4px;font-weight:700;margin-bottom:8px}
-h3{font-size:var(--fs-h3);font-weight:600;margin:18px 0 4px}
-p{color:var(--textm);margin:10px 0;max-width:68ch}
-.lead{font-size:var(--fs-lead);line-height:1.55;color:var(--text);font-weight:400;max-width:60ch}
-.small{font-size:var(--fs-sm)}
-
-/* hero glow */
-#inicio{position:relative;overflow:hidden}
-#inicio::before{content:"";position:absolute;top:-120px;left:-80px;width:520px;height:420px;background:radial-gradient(circle,var(--violet),transparent 70%);opacity:calc(var(--glow)*.16);pointer-events:none;filter:blur(20px)}
-#inicio::after{content:"m Δ° m";position:absolute;right:-10px;top:10px;font-family:var(--ff-display);font-weight:800;font-size:120px;color:var(--gold);opacity:calc(var(--glow)*.05);letter-spacing:6px;pointer-events:none;white-space:nowrap}
-#inicio>*{position:relative}
-
-.pill{display:inline-block;font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;padding:3px 9px;border:1px solid var(--border);border-radius:20px;color:var(--textd);margin-right:8px}
-.note{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--rad) var(--rad) 0;padding:13px 16px;margin-top:18px;font-size:var(--fs-sm);color:var(--textm);max-width:68ch}
-.note b{color:var(--gold)}
-
-/* ═══════════ APPS ═══════════ */
-.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:26px}
-.app{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--c);border-radius:var(--rad);padding:18px 20px;transition:transform .15s,box-shadow .15s,border-color .15s}
-.app:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.28)}
-.app .tag{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--c);font-weight:500}
-.app h3{margin:5px 0 7px;font-size:1.15rem;color:var(--text)}
-.app p{font-size:var(--fs-sm);margin:0 0 4px}
-.app ul{list-style:none;margin-top:12px}
-.app li{font-size:var(--fs-sm);color:var(--textm);padding:3px 0 3px 15px;position:relative}
-.app li::before{content:"";position:absolute;left:2px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--c)}
-.wip{font-family:var(--ff-mono);font-size:.66rem;color:var(--violet);letter-spacing:1px}
-
-/* ═══════════ STEPS ═══════════ */
-.steps{counter-reset:s;margin-top:22px}
-.step{display:flex;gap:16px;padding:15px 0;border-bottom:1px dashed var(--line)}
-.step:last-child{border-bottom:none}
-.step .n{counter-increment:s;flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--violet);color:var(--violet);display:flex;align-items:center;justify-content:center;font-family:var(--ff-mono);font-weight:500;font-size:.82rem}
-.step .n::before{content:counter(s)}
-.step h3{margin:2px 0 2px}
-.step p{font-size:var(--fs-sm);margin:4px 0}
-
-/* ═══════════ CLASSROOM ═══════════ */
-.lesson{background:var(--panel);border:1px solid var(--border);border-radius:var(--rad);padding:18px 20px;margin-top:18px}
-.lesson h3{margin-top:0;font-size:1.12rem;color:var(--violet)}
-.levels{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;width:fit-content;margin:10px 0 14px}
-.levels button{background:transparent;border:none;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:6px 13px;cursor:pointer;transition:all .15s}
-.levels button.on{background:var(--violet);color:#0a0a10;font-weight:500}
-.lesson[data-lvl="new"] .lvl-pro{display:none}
-.lesson[data-lvl="pro"] .lvl-new{display:none}
-.lesson p{margin:0;font-size:var(--fs-body)}
-.lvl-tag{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;color:var(--textd);text-transform:uppercase}
-
-footer{max-width:var(--maxw);margin:0 auto;padding:32px 26px 70px;color:var(--textd);font-size:var(--fs-sm)}
-footer .brand{margin-bottom:10px}
-</style>
+<link rel="stylesheet" href="mm-theme.css">
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
 
@@ -151,6 +19,7 @@ footer .brand{margin-bottom:10px}
     <a href="#apps"><span class="es">Las apps</span><span class="en">The apps</span></a>
     <a href="#howto"><span class="es">Cómo empezar</span><span class="en">How to start</span></a>
     <a href="#aula"><span class="es">Aula del Coach</span><span class="en">Coach Classroom</span></a>
+    <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
   </nav>
   <div class="tools">
     <div class="sizetog" title="Tamaño del texto / Text size">
@@ -160,8 +29,8 @@ footer .brand{margin-bottom:10px}
     </div>
     <div class="themetog" title="Tema / Theme">
       <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
-      <button data-th="gray" style="background:#26262c" title="Classic Gray"></button>
-      <button data-th="clear" style="background:#f1f0f7" title="Clear"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
       <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
     </div>
     <div class="langtog">
@@ -212,6 +81,7 @@ footer .brand{margin-bottom:10px}
         <li><span class="es">↑/↓ inflexionan la nota sostenida por apotome (tope ♯♯/♭♭)</span><span class="en">↑/↓ inflect the held note by an apotome (capped at ♯♯/♭♭)</span></li>
         <li><span class="es">Fila HiFi: reverb · tono · calidez · balance L/R</span><span class="en">HiFi row: reverb · tone · warmth · L/R balance</span></li>
       </ul>
+      <a class="card-link" href="keyboard.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
     </div>
 
     <div class="app" style="--c:var(--gold)">
@@ -223,6 +93,7 @@ footer .brand{margin-bottom:10px}
         <li><span class="es">Botón de modo: WRITE → TODAL PLAY → TODAL WRITE</span><span class="en">Mode button: WRITE → TODAL PLAY → TODAL WRITE</span></li>
         <li><span class="es">Eliges la tónica y la armadura se ajusta sola</span><span class="en">Pick the tonic and the key signature sets itself</span></li>
       </ul>
+      <a class="card-link" href="score.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
     </div>
 
     <div class="app" style="--c:var(--teal)">
@@ -233,15 +104,17 @@ footer .brand{margin-bottom:10px}
         <li><span class="es">Faders por canal y master</span><span class="en">Per-channel faders + master</span></li>
         <li><span class="es">Transporte de reproducción (play/pausa/stop)</span><span class="en">Playback transport (play/pause/stop)</span></li>
       </ul>
+      <a class="card-link" href="console.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
     </div>
 
     <div class="app" style="--c:var(--rose)">
-      <div class="tag">⊞ Register Simulator</div>
+      <div class="tag">⊞ Register Response</div>
       <h3><span class="es">La respuesta del registro</span><span class="en">Register response</span></h3>
       <p><span class="es">Explora cómo responde cada registro del instrumento a lo largo del teclado.</span><span class="en">Explore how each register of the instrument responds across the keyboard.</span></p>
       <ul>
         <li><span class="es">Banco de pruebas de timbre y registro</span><span class="en">Timbre & register test bench</span></li>
       </ul>
+      <a class="card-link" href="register.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
     </div>
 
     <div class="app" style="--c:var(--violet)">
@@ -252,6 +125,7 @@ footer .brand{margin-bottom:10px}
         <li><span class="es">Solfeo básico, técnico (vigila las apps) y estilos (Barroco, Clásico…)</span><span class="en">Basic solfège, technical (watches the apps) and styles (Baroque, Classical…)</span></li>
         <li><span class="es">El pulso rítmico: latido visible y tap-tempo</span><span class="en">The rhythmic pulse: visible beat + tap-tempo</span></li>
       </ul>
+      <a class="card-link" href="coach.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
     </div>
 
   </div>
@@ -340,40 +214,8 @@ footer .brand{margin-bottom:10px}
   <p style="margin-top:6px"><span class="es">Idiomas del sitio: español e inglés. Las aplicaciones tienen nombres de interfaz en hasta doce idiomas.</span><span class="en">Site languages: Spanish and English. The apps carry UI names in up to twelve languages.</span></p>
 </footer>
 
-<script>
-function setLang(l){
-  document.documentElement.setAttribute('data-lang', l);
-  document.documentElement.setAttribute('lang', l);
-  document.getElementById('b-es').classList.toggle('on', l==='es');
-  document.getElementById('b-en').classList.toggle('on', l==='en');
-  try{ localStorage.setItem('mmSiteLang', l); }catch(e){}
-}
-function setTheme(t){
-  document.documentElement.setAttribute('data-theme', t);
-  document.querySelectorAll('.themetog button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-th')===t); });
-  try{ localStorage.setItem('mmSiteTheme', t); }catch(e){}
-}
-function setSize(pct){
-  document.documentElement.style.fontSize = pct + '%';
-  document.querySelectorAll('.sizetog button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-sz')===String(pct)); });
-  try{ localStorage.setItem('mmSiteSize', pct); }catch(e){}
-}
-function setLvl(btn, lvl){
-  var lesson = btn.closest('.lesson');
-  lesson.setAttribute('data-lvl', lvl);
-  lesson.querySelectorAll('.levels button').forEach(function(b){ b.classList.remove('on'); });
-  btn.classList.add('on');
-}
-document.querySelectorAll('.themetog button').forEach(function(b){
-  b.addEventListener('click', function(){ setTheme(b.getAttribute('data-th')); });
-});
-document.querySelectorAll('.sizetog button').forEach(function(b){
-  b.addEventListener('click', function(){ setSize(parseInt(b.getAttribute('data-sz'),10)); });
-});
-try{ var sl=localStorage.getItem('mmSiteLang'); if(sl) setLang(sl);
-     var st=localStorage.getItem('mmSiteTheme'); if(st) setTheme(st);
-     var sz=localStorage.getItem('mmSiteSize'); if(sz) setSize(parseInt(sz,10)); }catch(e){}
-</script>
+<script src="mm-theme.js"></script>
+<script src="site.js"></script>
 
 </body>
 </html>

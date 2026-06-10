@@ -1,0 +1,33 @@
+/* ════════════════════════════════════════════════════════════════
+   Music Motion — TEMAS CANÓNICOS (fuente única · sitio + apps)
+   4 temas que solo re-tintan los acentos de identidad fijos
+   (gold · teal · rose · blue · violet). Contrato de color: Lighthouse.
+   Lo linkean el sitio y las 4 apps; cambiar un color acá lo cambia
+   en toda la suite.
+   ════════════════════════════════════════════════════════════════ */
+[data-theme="dark"]{
+  --bg:#07070e; --panel:#0e0e1a; --panel2:#15152360; --border:#23233a; --line:#1c1c30;
+  --text:#dcdcef; --textm:#9a9ac0; --textd:#6e6e94;
+  --gold:#cdac52; --teal:#3fbaa4; --rose:#d4587a; --blue:#6e8ade; --violet:#a98ce6;
+  --glow:.55; --brand-name:#fffcf9;
+}
+/* gray = grafito profundo #24252d · un solo gris para toda la suite (incl. superficie del teclado) · de-fog · ver Lighthouse */
+[data-theme="gray"]{
+  --bg:#24252d; --panel:#2e303b; --panel2:#3a3c4a60; --border:#535873; --line:#383a47;
+  --text:#f4f5fb; --textm:#c9ccdb; --textd:#9a9eb4;
+  --gold:#d9b757; --teal:#3dc1a6; --rose:#e35d80; --blue:#7f9ef0; --violet:#b08ff0;
+  --glow:.4; --brand-name:#f4f5fb;
+}
+/* clear = crema dorada · beige cálido/amarillo (luz de tarde) · ver Lighthouse */
+[data-theme="clear"]{
+  --bg:#f6efda; --panel:#fcf6e2; --panel2:#f4ecd6; --border:#e6d9b8; --line:#efe6cf;
+  --text:#2c2716; --textm:#6e6347; --textd:#9c9072;
+  --gold:#946610; --teal:#15795f; --rose:#a62f4e; --blue:#3a5294; --violet:#6a4eb8;
+  --glow:0; --brand-name:#2c2716;
+}
+[data-theme="contrast"]{
+  --bg:#000000; --panel:#08080f; --panel2:#0d0d18; --border:#3a3a60; --line:#262648;
+  --text:#ffffff; --textm:#cccce6; --textd:#9a9ac4;
+  --gold:#ffcf48; --teal:#46ecca; --rose:#ff5e8a; --blue:#82aaff; --violet:#c6a2ff;
+  --glow:.8; --brand-name:#ffffff;
+}
