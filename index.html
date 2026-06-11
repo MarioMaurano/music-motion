@@ -122,6 +122,8 @@
       <h3><span class="es">El asesor</span><span class="en">The advisor</span></h3>
       <p><span class="es">Escucha la suite en silencio y aparece solo cuando hace falta, con una ayuda en el momento justo. Para alguien sin teoría: te orienta sin darte una clase.</span><span class="en">Listens to the suite silently and surfaces only when needed, with help at the right moment. For someone without theory: it guides you without a lecture.</span></p>
       <ul>
+        <li><span class="es">🎓 en las 4 apps: un clic lo despierta o lo duerme — nunca es una imposición</span><span class="en">🎓 in all 4 apps: one click wakes or sleeps it — never imposed</span></li>
+        <li><span class="es">Su primer consejo ya corre: los silencios que completan el compás, con minilección</span><span class="en">Its first advice is live: the rests that complete the measure, with a mini-lesson</span></li>
         <li><span class="es">Solfeo básico, técnico (vigila las apps) y estilos (Barroco, Clásico…)</span><span class="en">Basic solfège, technical (watches the apps) and styles (Baroque, Classical…)</span></li>
         <li><span class="es">El pulso rítmico: latido visible y tap-tempo</span><span class="en">The rhythmic pulse: visible beat + tap-tempo</span></li>
       </ul>
@@ -172,6 +174,20 @@
     </div>
     <div class="lvl-pro">
       <p><span class="es"><span class="lvl-tag">tónica · pulso</span><br>La tónica es el grado I, centro del campo de alturas; el pulso es la unidad de tiempo. El Keyboard permite hallar la tónica de oído y la propaga a la suite (la armadura del Score se ajusta sola). El pulso se fija con tap-tempo y es la rejilla contra la que después se mide el ritmo.</span><span class="en"><span class="lvl-tag">tonic · pulse</span><br>The tonic is scale degree I, the center of the pitch field; the pulse is the unit of time. The Keyboard lets you find the tonic by ear and propagates it to the suite (the Score's key signature follows). The pulse is set by tap-tempo and is the grid rhythm is later measured against.</span></p>
+    </div>
+  </div>
+
+  <div class="lesson" data-lvl="new">
+    <h3><span class="es">El compás siempre suma</span><span class="en">The measure always adds up</span></h3>
+    <div class="levels">
+      <button class="on" onclick="setLvl(this,'new')"><span class="es">Para empezar</span><span class="en">Getting started</span></button>
+      <button onclick="setLvl(this,'pro')"><span class="es">Para músicos</span><span class="en">For musicians</span></button>
+    </div>
+    <div class="lvl-new">
+      <p><span class="es">Un compás de 4/4 es una caja de 4 tiempos: lleve notas o no, la caja se llena igual. Lo que no suena se escribe con silencios — cada figura tiene su silencio gemelo, que dura exactamente lo mismo. Si tu nota entra en el tiempo 2, el tiempo 1 lo ocupa un silencio: cuéntalo como si sonara (<i>un…</i>) y entra justo. En el Score lo ves en vivo: suelta una nota adelantada y los silencios aparecen solos, con el Coach contándote por qué.</span><span class="en">A 4/4 measure is a box of 4 beats: with or without notes, the box always fills. What doesn't sound is written as rests — every note value has a twin rest of exactly the same length. If your note enters on beat 2, beat 1 is taken by a rest: count it as if it sounded (<i>one…</i>) and you come in right on time. The Score shows it live: drop a note past the start and the rests appear by themselves, with the Coach telling you why.</span></p>
+    </div>
+    <div class="lvl-pro">
+      <p><span class="es"><span class="lvl-tag">compás · silencios</span><br>La suma de duraciones de un compás es invariante: notas y silencios completan siempre el valor de la métrica. Al insertar con drag una figura en una posición posterior al contenido, el Score rellena el hueco con silencios en orden decreciente (blanca → negra → corchea…), alineados al beat, dentro del mismo undo. El evento viaja por el bus (<span class="mono">COACH · rest-fill</span>) y el Coach genera el mensaje compacto y la minilección. Entradas a contratiempo y anacrusas internas se escriben así con la gramática correcta desde el primer gesto.</span><span class="en"><span class="lvl-tag">measure · rests</span><br>A measure's duration sum is invariant: notes and rests always complete the meter's value. When you drag a value to a position past the existing content, the Score fills the gap with rests in decreasing order (half → quarter → eighth…), beat-aligned, inside the same undo. The event travels on the bus (<span class="mono">COACH · rest-fill</span>) and the Coach renders the compact message and the mini-lesson. Off-beat entries and internal pickups are written with correct grammar from the very first gesture.</span></p>
     </div>
   </div>
 

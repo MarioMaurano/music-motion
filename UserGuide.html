@@ -50,8 +50,8 @@
     <span class="en">The user guide.</span>
   </h1>
   <p class="lead">
-    <span class="es">Qué hace cada control de cada app, pensado para un músico. Crece app por app, a medida que crece la suite. Empezamos por la Console.</span>
-    <span class="en">What each control of each app does, written for a musician. It grows app by app, as the suite grows. We start with the Console.</span>
+    <span class="es">Qué hace cada control de cada app, pensado para un músico. Crece app por app, a medida que crece la suite: Console, y ahora el Coach.</span>
+    <span class="en">What each control of each app does, written for a musician. It grows app by app, as the suite grows: Console, and now the Coach.</span>
   </p>
   <div class="note">
     <span class="es">La parte técnica y de arquitectura vive en el <b>Manual</b> de la suite. Las apps se sirven desde un mismo <span class="mono">localhost</span> y se conectan solas por <b>mm-sync</b>.</span>
@@ -117,11 +117,97 @@
   </p>
 </section>
 
+<section style="--c:var(--violet)">
+  <div class="app-eyebrow">⊞ Coach</div>
+  <h1 style="font-size:1.6em">
+    <span class="es">El asesor.</span>
+    <span class="en">The advisor.</span>
+  </h1>
+  <p class="lead">
+    <span class="es">Te acompaña mientras escribís, solo si vos querés. Habla en el momento justo, donde estás trabajando, y guarda la explicación larga para cuando la pidas.</span>
+    <span class="en">It joins you while you write — only if you want it to. It speaks at the right moment, right where you're working, and keeps the long explanation for when you ask.</span>
+  </p>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3><span class="es">La oreja 🎓</span><span class="en">The ear 🎓</span></h3>
+      <p><span class="es">Junto al título de cada app vive un 🎓. Un clic lo despierta (late suave en violeta: el coach escucha) o lo duerme — el estado es uno solo para toda la suite. Con clic derecho elegís qué coach te acompaña: hoy el Suite Coach; Salieri llegará con su propio carácter.</span><span class="en">Next to each app's title lives a 🎓. One click wakes it (it pulses softly in violet: the coach is listening) or puts it to sleep — one state for the whole suite. Right-click picks which coach joins you: today the Suite Coach; Salieri will arrive with his own character.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">El mensajito</span><span class="en">The little message</span></h3>
+      <p><span class="es">Cuando pasa algo que vale la pena contar (por ejemplo, escribiste una nota adelantada y el Score completó el compás con silencios), aparece un mensaje compacto justo donde soltaste la nota. Se queda hasta que vos lo cierres: ✕, un clic afuera, o su 🎓 — que abre la minilección completa en la app del Coach.</span><span class="en">When something worth telling happens (say, you wrote a note past the start and the Score completed the measure with rests), a compact message appears right where you dropped the note. It stays until you close it: ✕, a click outside, or its 🎓 — which opens the full mini-lesson in the Coach app.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">La app: tres pestañas</span><span class="en">The app: three tabs</span></h3>
+      <p><span class="es"><b>🎓 Coach</b>: la bitácora de la sesión (lo que te fue diciendo, con hora) y las cartas de los coaches para elegir. <b>🎻 Orquestación</b>: la biblioteca de instrumentos de la suite, con familias, rangos y regímenes. <b>📖 Aula</b>: las minilecciones para leer con calma — crece con cada consejo nuevo.</span><span class="en"><b>🎓 Coach</b>: the session log (what it told you, with time) and the coach cards to choose from. <b>🎻 Orchestration</b>: the suite's instrument library, with families, ranges and regimes. <b>📖 Classroom</b>: the mini-lessons to read at ease — it grows with every new piece of advice.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">El primer consejo</span><span class="en">The first advice</span></h3>
+      <p><span class="es">«El compás siempre suma»: si tu nota entra en el beat 3, los beats anteriores se completan con silencios — el coach te muestra cuáles puso y por qué el silencio también se cuenta. Leelo entero en el Aula o en la <a href="index.html#aula">lección del sitio</a>.</span><span class="en">"The measure always adds up": if your note enters on beat 3, the earlier beats are completed with rests — the coach shows you which ones it placed and why rests count too. Read it in full in the Classroom or in the <a href="index.html#aula">site lesson</a>.</span></p>
+    </div>
+
+  </div>
+</section>
+
+<section style="--c:var(--blue)">
+  <div class="app-eyebrow">⊞ Cosmic Keyboard</div>
+  <h1 style="font-size:1.6em">
+    <span class="es">El instrumento.</span>
+    <span class="en">The instrument.</span>
+  </h1>
+  <p class="lead">
+    <span class="es">El único motor de sonido de la suite: todo lo que suena, suena aquí. Treinta y cinco alturas por octava, afinación pitagórica pura, y una franja temperada en cada tecla para escuchar la diferencia.</span>
+    <span class="en">The suite's only sound engine: everything you hear, sounds here. Thirty-five pitches per octave, pure Pythagorean tuning, and a tempered strip on every key to hear the difference.</span>
+  </p>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3><span class="es">Tres maneras de tocar</span><span class="en">Three ways to play</span></h3>
+      <p><span class="es"><b>Axiomatic</b>: el sistema pitagórico puro — las teclas por su nombre. <b>12 TET</b>: el teclado QWERTY toma la disposición clásica de piano y suena temperado sobre las franjas cian. <b>Tonal</b>: elegís tonalidad, alteración y modo, y el teclado del ordenador pasa a tocar por grados — quien no sabe piano compone correcto en cualquier tonalidad. Los grupos que no aplican se atenúan; se encienden al entrar en Tonal.</span><span class="en"><b>Axiomatic</b>: the pure Pythagorean system — keys by their names. <b>12 TET</b>: the QWERTY keyboard takes the classic piano layout and sounds tempered on the cyan strips. <b>Tonal</b>: choose key, alteration and mode, and the computer keyboard plays by degree — you can compose correctly in any key without knowing the piano. Groups that don't apply are dimmed; they light up when you enter Tonal.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">La salida HiFi</span><span class="en">The HiFi output</span></h3>
+      <p><span class="es">En la segunda línea, la cadena de salida: VOL (el maestro de la suite, el mismo de la Console) · REV (reverberación) · TONO (oscuro ↔ brillante — su luz es azul o amarilla, como una bandera) · CAL (calidez, saturación de armónicos consonantes) · BAL (tu posición frente a los parlantes). Cada perilla con su luz de color y doble clic para volver a lo neutro.</span><span class="en">On the second line, the output chain: VOL (the suite's master, same as the Console's) · REV (reverb) · TONE (dark ↔ bright — its light turns blue or yellow, like a flag) · CAL (warmth, consonant-harmonic saturation) · BAL (your position before the speakers). Every knob with its coloured light and double-click back to neutral.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">El cofre de grabaciones</span><span class="en">The recordings chest</span></h3>
+      <p><span class="es">⏺ graba lo que tocás — frecuencias exactas, sin MIDI ni cuantización. El botón «☰ recs» abre la lista: renombrar, ▶, exportar .mmf, cargar .mmf o .mid (el MIDI entra como capa temperada, en cian). El knob PLAYBACK TEMPO reproduce cualquier grabación de media a doble velocidad: grabá lento, escuchá a tempo.</span><span class="en">⏺ records what you play — exact frequencies, no MIDI, no quantization. The "☰ recs" button opens the list: rename, ▶, export .mmf, load .mmf or .mid (MIDI comes in as a tempered layer, in cyan). The PLAYBACK TEMPO knob plays any recording at half to double speed: record slowly, listen at tempo.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">♩ Pulse — el metrónomo</span><span class="en">♩ Pulse — the metronome</span></h3>
+      <p><span class="es">El botón ♩ abre una consolita: luz que late, ▶, tap para marcarle el tempo, perilla de BPM, el menú clásico de Largo a Presto, y un click opcional con volumen y tono. Fijado con el ⊗ sigue sonando; sin fijar, cerrarlo lo detiene — nada queda sonando por olvido.</span><span class="en">The ♩ button opens a small console: a beating light, ▶, tap to set the tempo, a BPM knob, the classical menu from Largo to Presto, and an optional click with volume and tone. Pinned with ⊗ it keeps going; unpinned, closing it stops it — nothing keeps sounding by mistake.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">La nota y el horizonte</span><span class="en">The note and the horizon</span></h3>
+      <p><span class="es">Debajo del instrumento, el display muestra la nota y sus Hz exactos. A su lado, el horizonte artificial: línea al centro = axiomático; sube cuando la nota tira hacia arriba (sensible), baja cuando resuelve hacia abajo. A= ajusta la referencia (415–466 y fino) para toda la suite.</span><span class="en">Below the instrument, the display shows the note and its exact Hz. Beside it, the artificial horizon: line at centre = axiomatic; it rises when the note pulls upward (leading tone), falls when it resolves down. A= sets the reference (415–466 plus fine) for the whole suite.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">Octavas y pánico</span><span class="en">Octaves and panic</span></h3>
+      <p><span class="es">OCTAVE SHIFT en el pie (◀ ▶ o las flechas ← →) desliza la ventana de octavas — la mano no se mueve del teclado. En Tonal, ↑/↓ re-afinan la nota sostenida por apotome, en vivo. Escape corta todo el sonido.</span><span class="en">OCTAVE SHIFT at the foot (◀ ▶ or the ← → arrows) slides the octave window — your hand never leaves the keys. In Tonal, ↑/↓ re-tune the held note by an apotome, live. Escape cuts all sound.</span></p>
+    </div>
+
+  </div>
+
+  <div class="launch">
+    <a class="btn-launch" href="mmk-scorekeyboard.html">▶ <span class="es">Abrir el Keyboard</span><span class="en">Open the Keyboard</span></a>
+  </div>
+</section>
+
 <section>
   <div class="app-eyebrow"><span class="es">Próximamente</span><span class="en">Coming soon</span></div>
   <p class="lead">
-    <span class="es">Score · Cosmic Keyboard · Coach — sus guías se suman a medida que trabajamos cada app.</span>
-    <span class="en">Score · Cosmic Keyboard · Coach — their guides are added as we work on each app.</span>
+    <span class="es">Score — su guía se suma a medida que trabajamos la app.</span>
+    <span class="en">Score — its guide is added as we work on the app.</span>
   </p>
 </section>
 

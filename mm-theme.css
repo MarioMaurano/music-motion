@@ -22,7 +22,7 @@
 [data-theme="clear"]{
   --bg:#f6efda; --panel:#fcf6e2; --panel2:#f4ecd6; --border:#e6d9b8; --line:#efe6cf;
   --text:#2c2716; --textm:#6e6347; --textd:#9c9072;
-  --gold:#946610; --teal:#15795f; --rose:#a62f4e; --blue:#3a5294; --violet:#6a4eb8;
+  --gold:#946610; --teal:#2c8a5a; --rose:#a62f4e; --blue:#3a5294; --violet:#6a4eb8;   /* teal jade cálido (2026-06-10, aprobado por Mario) */
   --glow:0; --brand-name:#2c2716;
 }
 [data-theme="contrast"]{
