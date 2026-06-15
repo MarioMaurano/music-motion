@@ -31,3 +31,12 @@
   --gold:#ffcf48; --teal:#46ecca; --rose:#ff5e8a; --blue:#82aaff; --violet:#c6a2ff;
   --glow:.8; --brand-name:#ffffff;
 }
+
+/* ── Contrato suite: RELIEVE DE BOTONES (Keyboard 2026-06-11 → fuente única 2026-06-12) ──
+   Para los ⊞ de navegación y botones chicos sin lámina propia: sombra + filo de luz
+   en reposo, lift −1px al hover, hundimiento al click. El FONDO no se toca acá —
+   lo maneja cada app (relleno de presencia por inline). Clear: sombra cálida. */
+.mm-relief{box-shadow:0 1px 3px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.06)}
+.mm-relief:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.22)}
+.mm-relief:active{transform:translateY(0);box-shadow:none}
+[data-theme="clear"] .mm-relief{box-shadow:0 1px 3px rgba(94,60,26,.30),inset 0 1px 0 rgba(255,255,255,.5)}
