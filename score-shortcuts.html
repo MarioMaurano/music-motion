@@ -70,8 +70,8 @@
     <button class="ks-print" onclick="window.print()">🖨 <span class="es">Imprimir</span><span class="en">Print</span></button>
   </div>
   <p class="lead" style="font-size:.95em">
-    <span class="es">Referencia imprimible. Convención de teclado del Score en modo WRITE / TODAL. Versión v9.4.20.91.</span>
-    <span class="en">Printable reference. Score keyboard scheme in WRITE / TODAL mode. Version v9.4.20.91.</span>
+    <span class="es">Referencia imprimible. Convención de teclado del Score en modo WRITE / TODAL. Versión v9.4.20.99.</span>
+    <span class="en">Printable reference. Score keyboard scheme in WRITE / TODAL mode. Version v9.4.20.99.</span>
   </p>
 
   <div class="ks-grid" id="ksGrid"></div>
@@ -114,6 +114,7 @@
     { es:"Editar la nota seleccionada", en:"Edit the selected note", rows:[
       ["↑ / ↓","TODAL: octava · cerrado: transponer ±1 diatónico","TODAL: octave · closed: transpose ±1 diatonic"],
       ["Banda / Band","Articulaciones, dinámicas, slur / stem / beam, ligadura","Articulations, dynamics, slur / stem / beam, tie"],
+      ["Note editor → Intp","Signos de nota (&lt; &gt; &lt;&gt; &gt;º&lt;, niente º); rClick sobre el signo → Interp Editor (tamaño + Peak/Valley)","Note signs (&lt; &gt; &lt;&gt; &gt;º&lt;, niente º); rClick the sign → Interp Editor (size + Peak/Valley)"],
     ]},
     { es:"Selección — backtick ` entrar/salir", en:"Selection — backtick ` to enter/leave", rows:[
       ["Ctrl/Cmd + C / V / D","Copiar / Pegar / Duplicar","Copy / Paste / Duplicate"],
@@ -121,6 +122,12 @@
       ["Delete / Backspace","Borrar","Delete"],
       ["↑ / ↓","Transponer la selección ±1","Transpose the selection ±1"],
       ["Shift + ← / →","Extender / encoger","Extend / shrink"],
+    ]},
+    { es:"Audición por selección", en:"Audition by selection", rows:[
+      ["Alt + clic / Alt + click","Sumar / quitar nota de la selección","Add / remove a note from the selection"],
+      ["Alt + arrastre / Alt + drag","Seleccionar notas por área (marquee)","Select notes in an area (marquee)"],
+      ["Esc","Quitar la selección","Clear the selection"],
+      ["Shift + Espacio / Shift + Space","Tocar la selección (audición)","Play the selection (audition)"],
     ]},
     { es:"Vista · archivo · deshacer", en:"View · file · undo", rows:[
       ["z","Panel (vista dividida)","Panel (split view)"],
