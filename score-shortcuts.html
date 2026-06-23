@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Score Editor — Keyboard Shortcuts · Music Motion</title>
+<title>Score Editor — Shortcuts &amp; Interactions · Music Motion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -44,6 +44,7 @@
   <nav>
     <a href="score.html"><span class="es">← Score</span><span class="en">← Score</span></a>
     <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
+    <a href="keyboard-shortcuts.html" title="Teclado QWERTY del Cosmic Keyboard"><span class="es">⌨ Keyboard</span><span class="en">⌨ Keyboard</span></a>
   </nav>
   <div class="tools">
     <div class="themetog" title="Tema / Theme">
@@ -64,14 +65,14 @@
   <div class="app-eyebrow">⊞ Score Editor</div>
   <div class="ks-head">
     <h1 style="font-size:1.5em;margin:0">
-      <span class="es">Atajos de teclado.</span>
-      <span class="en">Keyboard shortcuts.</span>
+      <span class="es">Atajos e interacciones.</span>
+      <span class="en">Shortcuts &amp; interactions.</span>
     </h1>
     <button class="ks-print" onclick="window.print()">🖨 <span class="es">Imprimir</span><span class="en">Print</span></button>
   </div>
   <p class="lead" style="font-size:.95em">
-    <span class="es">Referencia imprimible. Convención de teclado del Score en modo WRITE / TODAL. Versión v9.4.20.99.</span>
-    <span class="en">Printable reference. Score keyboard scheme in WRITE / TODAL mode. Version v9.4.20.99.</span>
+    <span class="es">Referencia imprimible: teclas y mouse del Score, por zona. Versión v9.4.25.</span>
+    <span class="en">Printable reference: Score keyboard &amp; mouse, by area. Version v9.4.25.</span>
   </p>
 
   <div class="ks-grid" id="ksGrid"></div>
@@ -88,63 +89,91 @@
 (function(){
   const B = [
     { es:"Transporte", en:"Transport", rows:[
-      ["Space / Espacio","Play / Pausa","Play / Pause"],
-      ["Tab","Lleva el playhead al cursor (audición)","Park the playhead at the cursor (audition)"],
+      ["Espacio","Space","Play / Pausa","Play / Pause"],
+      ["Shift + Espacio","Shift + Space","Tocar la selección Alt (notas marcadas con Alt)","Play the Alt-selection (notes picked with Alt)"],
+      ["Tab","Tab","Lleva el playhead al cursor (audición)","Park the playhead at the cursor (audition)"],
     ]},
-    { es:"Cursor — minikeyboard cerrado", en:"Cursor — mini-keyboard closed", rows:[
-      ["← / →","Mover el cursor (por subdivisión)","Move the cursor (by subdivision)"],
-      ["↑ / ↓","Cambiar de canal","Switch channel"],
+    { es:"Cursor y navegación — minikeyboard cerrado", en:"Cursor &amp; navigation — mini-keyboard closed", rows:[
+      ["← / →","← / →","Mover el cursor (por subdivisión)","Move the cursor (by subdivision)"],
+      ["↑ / ↓ (sin nota)","↑ / ↓ (no note)","Cambiar de canal","Switch channel"],
+      ["↑ / ↓ (nota seleccionada)","↑ / ↓ (note selected)","Transponer la nota ±1 diatónico (re-suena)","Transpose the note ±1 diatonic (re-sounds)"],
+      ["↑ / ↓ (silencio)","↑ / ↓ (rest)","Subir / bajar el silencio","Nudge the rest up / down"],
     ]},
-    { es:"Escritura — minikeyboard abierto (TODAL)", en:"Writing — mini-keyboard open (TODAL)", rows:[
-      ["Z–M / A–J / Q–U","Grados I–VII en 3 octavas","Degrees I–VII across 3 octaves"],
-      ["← / →","Mover el teclado una octava (ventana)","Move the keyboard one octave (window)"],
-      ["↑ / ↓","Octava de la nota/acorde seleccionado","Octave of the selected note/chord"],
-      ["Num pad + / −","APO en vivo (máx ±2)","Live APO (max ±2)"],
-      ["CapsLock","Entra / sale de TODAL","Enter / leave TODAL"],
+    { es:"Minikeyboard &amp; TODAL — escritura", en:"Mini-keyboard &amp; TODAL — writing", rows:[
+      ["CapsLock","CapsLock","Entra / sale de TODAL (manos en el QWERTY)","Enter / leave TODAL"],
+      ["Z X C V B N M","Z X C V B N M","Grados I–VII, octava baja","Degrees I–VII, low octave"],
+      ["A S D F G H J · K L Ñ","A S D F G H J · K L Ñ","Grados I–VII · K L Ñ = I II III octava siguiente","Degrees I–VII · K L Ñ = I II III next octave"],
+      ["Q W E R T Y U · I O P","Q W E R T Y U · I O P","Grados I–VII · I O P = I II III una octava arriba","Degrees I–VII · I O P = I II III one octave up"],
+      ["Teclas de grado juntas","Degree keys together","Acorde (un stack); el cursor avanza una vez","Chord (one stack); cursor advances once"],
+      ["← / → (TODAL)","← / → (TODAL)","Mover la ventana del teclado una octava","Shift the keyboard window one octave"],
+      ["↑ / ↓ (TODAL)","↑ / ↓ (TODAL)","Octava de la nota / acorde seleccionado","Octave of the selected note / chord"],
+      ["Clic en una tecla","Click a key","Escribir esa nota en el cursor","Write that note at the cursor"],
+      ["Shift + clic en una tecla","Shift + click a key","Escribir como acorde","Write as a chord"],
     ]},
-    { es:"Duraciones — num pad", en:"Durations — num pad", rows:[
-      ["1 … 7","1 = semifusa … 7 = redonda","1 = 64th … 7 = whole"],
-      [".","Puntillo","Dot"],
-      ["*","Tuplet (popup)","Tuplet (popup)"],
+    { es:"Num pad — duraciones", en:"Num pad — durations", rows:[
+      ["1 … 7","1 … 7","1 semifusa · 2 fusa · 3 16th · 4 corchea · 5 negra · 6 blanca · 7 redonda","1 64th · 2 32nd · 3 16th · 4 8th · 5 quarter · 6 half · 7 whole"],
+      [".",".","Puntillo (toggle)","Dot (toggle)"],
+      ["*","*","Abre el popup Tuplet (tresillo)","Open the Tuplet popup"],
+      ["+ / −","+ / −","APO en vivo ±2 (solo en TODAL write)","Live APO ±2 (TODAL write only)"],
     ]},
     { es:"Notas y ritmo", en:"Notes &amp; rhythm", rows:[
-      ["1 – 0 (fila de arriba)","Acorde sobre la nota seleccionada (2=2ª … 9=9ª, 0=10ª)","Chord on the selected note (2=2nd … 9=9th, 0=10th)"],
-      ["R","Insertar un silencio en el cursor","Insert a rest at the cursor"],
+      ["1 (fila de arriba)","1 (top row)","Duplicar la nota al unísono","Unison double of the note"],
+      ["2 … 9 (fila de arriba)","2 … 9 (top row)","Acorde: agrega 2ª … 9ª diatónica sobre la nota","Chord: add a 2nd … 9th above the note"],
+      ["0 (fila de arriba)","0 (top row)","Acorde: agrega 10ª","Chord: add a 10th"],
+      ["R","R","Insertar un silencio en el cursor","Insert a rest at the cursor"],
+      ["/","/","Romper / unir la barra (beam) en la nota o la selección","Toggle the beam (break / join) on the note or selection"],
     ]},
-    { es:"Editar la nota seleccionada", en:"Edit the selected note", rows:[
-      ["↑ / ↓","TODAL: octava · cerrado: transponer ±1 diatónico","TODAL: octave · closed: transpose ±1 diatonic"],
-      ["Banda / Band","Articulaciones, dinámicas, slur / stem / beam, ligadura","Articulations, dynamics, slur / stem / beam, tie"],
-      ["Note editor → Intp","Signos de nota (&lt; &gt; &lt;&gt; &gt;º&lt;, niente º); rClick sobre el signo → Interp Editor (tamaño + Peak/Valley)","Note signs (&lt; &gt; &lt;&gt; &gt;º&lt;, niente º); rClick the sign → Interp Editor (size + Peak/Valley)"],
+    { es:"Selección — ` entra / sale", en:"Selection — ` to enter / leave", rows:[
+      ["` (backtick)","` (backtick)","Entra / sale del modo Select","Enter / leave Select mode"],
+      ["Ctrl/Cmd + C · V · D","Ctrl/Cmd + C · V · D","Copiar · Pegar · Duplicar","Copy · Paste · Duplicate"],
+      ["Ctrl/Cmd + R","Ctrl/Cmd + R","Replicar","Replicate"],
+      ["Delete / Backspace","Delete / Backspace","Borrar la selección","Delete the selection"],
+      ["↑ / ↓","↑ / ↓","Transponer la selección ±1","Transpose the selection ±1"],
+      ["Shift + ← / →","Shift + ← / →","Extender / encoger por beat (por compás con BARS abierto)","Extend / shrink by beat (by bar with BARS open)"],
+      ["Esc","Esc","Salir del modo Select / limpiar","Leave Select mode / clear"],
     ]},
-    { es:"Selección — backtick ` entrar/salir", en:"Selection — backtick ` to enter/leave", rows:[
-      ["Ctrl/Cmd + C / V / D","Copiar / Pegar / Duplicar","Copy / Paste / Duplicate"],
-      ["Ctrl/Cmd + R","Replicar","Replicate"],
-      ["Delete / Backspace","Borrar","Delete"],
-      ["↑ / ↓","Transponer la selección ±1","Transpose the selection ±1"],
-      ["Shift + ← / →","Extender / encoger","Extend / shrink"],
+    { es:"Canvas y mouse", en:"Canvas &amp; mouse", rows:[
+      ["Clic sobre una nota","Click a note","Seleccionar la nota y llevar el cursor","Select the note, move the cursor"],
+      ["Arrastrar una nota","Drag a note","Mover la nota en el tiempo, dentro del compás","Move the note in time, within the bar"],
+      ["Alt + clic","Alt + click","Sumar / quitar la nota de la selección Alt","Add / remove the note from the Alt-selection"],
+      ["Alt + arrastre","Alt + drag","Marquee: seleccionar notas por área","Marquee: select notes by area"],
+      ["Clic derecho sobre una nota","Right-click a note","Abre el Note editor (≥2 notas Alt → Beam editor)","Open the Note editor (≥2 Alt-notes → Beam editor)"],
+      ["Clic derecho sobre el pentagrama","Right-click the staff","Menú del canal (clave, etc.)","Channel menu (clef, etc.)"],
+      ["Arrastrar el pentagrama","Drag the staff","Mover el canal verticalmente","Move the channel vertically"],
+      ["Arrastrar zona vacía","Drag empty space","Pan de la partitura","Pan the score"],
+      ["Rueda · Shift + rueda","Wheel · Shift + wheel","Scroll horizontal · vertical","Scroll horizontal · vertical"],
+      ["Ctrl/Cmd + rueda","Ctrl/Cmd + wheel","Zoom anclado al cursor","Zoom anchored to the cursor"],
     ]},
-    { es:"Audición por selección", en:"Audition by selection", rows:[
-      ["Alt + clic / Alt + click","Sumar / quitar nota de la selección","Add / remove a note from the selection"],
-      ["Alt + arrastre / Alt + drag","Seleccionar notas por área (marquee)","Select notes in an area (marquee)"],
-      ["Esc","Quitar la selección","Clear the selection"],
-      ["Shift + Espacio / Shift + Space","Tocar la selección (audición)","Play the selection (audition)"],
+    { es:"Panel (vista dividida · z)", en:"Panel (split view · z)", rows:[
+      ["Alt + arrastre","Alt + drag","Seleccionar notas por área (marquee) → cajas doradas; la selección suena con Play / Shift+Espacio","Select notes by area (marquee) → gold boxes; the selection is audible with Play / Shift+Space"],
+      ["Arrastre (botón izquierdo)","Left-drag","Pan del panel en los dos ejes (cursor grab) — alternativa a Shift + rueda","Pan the panel in both axes (grab cursor) — an alternative to Shift + wheel"],
+      ["Ctrl/Cmd + rueda","Ctrl/Cmd + wheel","Zoom del panel (y de las hojas en la vista Print)","Zoom the panel (and the sheets in the Print view)"],
     ]},
-    { es:"Vista · archivo · deshacer", en:"View · file · undo", rows:[
-      ["z","Panel (vista dividida)","Panel (split view)"],
-      ["m","Lupa","Magnifier"],
-      ["c","Alcance del cursor (canal ↔ todos)","Cursor scope (channel ↔ all)"],
-      ["X","Ocultar / mostrar popups","Hide / show popups"],
-      ["Esc","Cierra todos los popups abiertos (barra, editores de canvas, menús contextuales)","Close all open popups (toolbar, canvas editors, context menus)"],
-      ["Ctrl/Cmd + S","Guardar (.mmf)","Save (.mmf)"],
-      ["Ctrl/Cmd + Z · Y / Shift+Z","Deshacer · Rehacer","Undo · Redo"],
-      ["Esc","Salir de cualquier modo","Leave any mode"],
+    { es:"Editores — clic derecho sobre el elemento", en:"Editors — right-click the element", rows:[
+      ["Corchete de tresillo","Tuplet bracket","Tuplet editor: número on/off · ángulo · largo · mover ↕↔ · bracket","Tuplet editor: number on/off · angle · length · move ↕↔ · bracket"],
+      ["Arrastrar el corchete","Drag the bracket","Mover el corchete ↕ y ↔","Move the bracket ↕ and ↔"],
+      ["≥ 2 notas seleccionadas","≥ 2 notes selected","Beam editor: Join · Break · Auto + ángulo","Beam editor: Join · Break · Auto + angle"],
+      ["Ligadura (slur)","Slur","Slur editor: forma + dinámicas relativas al matiz","Slur editor: shape + Peak / Valley dynamics"],
+      ["Regulador (hairpin)","Hairpin","Hairpin editor: tramo · ángulo · From / To dinámicas","Hairpin editor: span · angle · From / To dynamics"],
+      ["Signo de intérprete","Interpreter sign","Interp editor: tamaño · Peak / Valley","Interp editor: size · Peak / Valley"],
+      ["Nota → botones del Note editor","Note → Note editor buttons","Stem · Slur · Beam editors, alteración, grace, tie","Stem · Slur · Beam editors, accidental, grace, tie"],
+    ]},
+    { es:"Global · vista · archivo · deshacer", en:"Global · view · file · undo", rows:[
+      ["z","z","Panel (vista dividida)","Panel (split view)"],
+      ["m","m","Lupa","Magnifier"],
+      ["c","c","Alcance del cursor (canal ↔ todos)","Cursor scope (channel ↔ all)"],
+      ["X","X","Ocultar / mostrar todos los popups","Hide / show all popups"],
+      ["Ctrl/Cmd + S","Ctrl/Cmd + S","Guardar (.mmf)","Save (.mmf)"],
+      ["Ctrl/Cmd + Z · Y / Shift+Z","Ctrl/Cmd + Z · Y / Shift+Z","Deshacer · Rehacer","Undo · Redo"],
+      ["Backspace","Backspace","Deshacer (fuera del modo Select)","Undo (outside Select mode)"],
+      ["Esc","Esc","Cierra el popup abierto · sale del modo · restaura zoom","Close the open popup · leave the mode · restore zoom"],
     ]},
   ];
   const esc = s => s.replace(/&(?!amp;)/g,'&amp;');
   const grid = document.getElementById('ksGrid');
   grid.innerHTML = B.map(b => {
     const rows = b.rows.map(r =>
-      '<tr><td class="k">'+esc(r[0])+'</td><td class="a"><span class="es">'+r[1]+'</span><span class="en">'+r[2]+'</span></td></tr>'
+      '<tr><td class="k"><span class="es">'+esc(r[0])+'</span><span class="en">'+esc(r[1])+'</span></td><td class="a"><span class="es">'+r[2]+'</span><span class="en">'+r[3]+'</span></td></tr>'
     ).join('');
     return '<div class="ks-block"><h2><span class="es">'+b.es+'</span><span class="en">'+b.en+'</span></h2><table class="ks">'+rows+'</table></div>';
   }).join('');

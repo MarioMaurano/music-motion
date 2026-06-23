@@ -217,6 +217,11 @@
   <div class="specs">
 
     <div class="spec">
+      <h3><span class="es">Modo Página: editar sobre la hoja</span><span class="en">Page mode: editing on the sheet</span></h3>
+      <p><span class="es">El botón <b>PÁGINA</b> de la barra cambia entre la tira continua y la vista de <b>hoja</b>: la partitura se ve como páginas A4 dentro de la misma ventana, con el mismo grabado de la impresión, pero editable encima. Un segundo selector elige la vista (Página entera · A lo ancho · Lado a lado). Sobre la hoja ya podés <b>seleccionar una nota</b> y poner ahí el cursor, <b>seleccionar una marca</b> (dinámica, expresión, articulación, tempo, agógica) para redimensionarla con los botones de zoom, o hacer clic en un vacío para ubicar el cursor (que se acomoda a la grilla). El <b>clic derecho</b> abre los mismos menús contextuales que en la tira (nota, ligado, ligadura, texto, marca, canal), y al pasar el mouse el puntero se vuelve una manito sobre lo clickeable. Al reproducir, la línea roja y las notas que suenan se encienden sobre la hoja. La hoja tiene su propio zoom y scroll (rueda; Mayús+rueda al costado; Ctrl+rueda zoom). Es reversible y no toca la tira. <b>Todavía no</b>: arrastrar notas ni escribir notas nuevas con el mouse sobre la hoja — para eso usá la tira o la banda.</span><span class="en">The <b>PAGE</b> button on the toolbar switches between the continuous strip and the <b>sheet</b> view: the score appears as A4 pages inside the same window, with the same engraving as the print, but editable on top. A second selector picks the view (Whole page · Fit width · Side by side). On the sheet you can already <b>select a note</b> and place the cursor there, <b>select a mark</b> (dynamic, expression, articulation, tempo, agogics) to resize it with the zoom buttons, or click an empty spot to place the cursor (which snaps to the grid). <b>Right-click</b> opens the same context menus as on the strip (note, tie, slur, text, mark, channel), and on hover the pointer turns into a hand over anything clickable. During playback, the red line and the sounding notes light up on the sheet. The sheet has its own zoom and scroll (wheel; Shift+wheel sideways; Ctrl+wheel zoom). It is reversible and leaves the strip untouched. <b>Not yet</b>: dragging notes or writing new notes with the mouse on the sheet — for that, use the strip or the band.</span></p>
+    </div>
+
+    <div class="spec">
       <h3><span class="es">El teclado de la computadora</span><span class="en">The computer keyboard</span></h3>
       <p><span class="es">En WRITE/TODAL escribís con el teclado: las letras tocan por grados de la tonalidad, el num pad elige la duración (1 = semifusa … 7 = redonda, el punto = puntillo), ↑/↓ suben o bajan una octava la nota seleccionada, ←/→ mueven el teclado, el num pad +/− ajusta el APO (afinación fina, ±2) y la fila 1–0 arma acordes. CapsLock entra y sale de TODAL. El mapa completo está en la cheat-sheet de atajos.</span><span class="en">In WRITE/TODAL you write with the keyboard: the letters play by scale degrees, the num pad picks the duration (1 = 64th … 7 = whole, the period = dot), ↑/↓ move the selected note an octave up or down, ←/→ move the keyboard, num pad +/− adjust the APO (fine tuning, ±2) and the 1–0 row builds chords. CapsLock enters and leaves TODAL. The full map is in the shortcuts cheat-sheet.</span></p>
     </div>
@@ -237,6 +242,11 @@
     </div>
 
     <div class="spec">
+      <h3><span class="es">Editar un tresillo</span><span class="en">Edit a tuplet</span></h3>
+      <p><span class="es">Con clic derecho sobre el corchete del tresillo se abre su editor. <b>Number On/Off</b> muestra o esconde el numerito. <b>Angle</b> (◣ ↻ ◢) inclina el corchete; el número queda derecho. <b>Size</b> ya no agranda las notas: acorta o alarga el corchete (su largo). <b>Move</b> lo acomoda — el tirador ↕ lo sube y baja, el tirador ↔ lo corre de costado; también podés arrastrar el corchete directo sobre el pentagrama. Cuando las notas llevan barra, el corchete se apoya sobre la barra; sobre negras, blancas o silencios, sobre la cabeza.</span><span class="en">Right-click the tuplet bracket to open its editor. <b>Number On/Off</b> shows or hides the little number. <b>Angle</b> (◣ ↻ ◢) tilts the bracket; the number stays upright. <b>Size</b> no longer scales the notes: it shortens or lengthens the bracket (its length). <b>Move</b> places it — the ↕ handle raises and lowers it, the ↔ handle slides it sideways; you can also drag the bracket directly on the staff. When the notes are beamed the bracket rests on the beam; over quarters, halves or rests, on the note head.</span></p>
+    </div>
+
+    <div class="spec">
       <h3><span class="es">Seleccionar todo</span><span class="en">Select all</span></h3>
       <p><span class="es">En el popup «Select · Actions» (clic derecho en el botón SELECT) hay dos filas nuevas arriba: <b>«Select all in channel»</b> selecciona todo el canal activo de punta a punta, y <b>«Select all channels»</b> selecciona toda la obra (todos los canales visibles). Hecha la selección, podés Copiar, Cortar, Transponer o Borrar todo de una vez.</span><span class="en">In the “Select · Actions” popup (right-click the SELECT button) there are two new rows on top: <b>“Select all in channel”</b> selects the whole active channel end to end, and <b>“Select all channels”</b> selects the whole piece (all visible channels). Once selected, Copy, Cut, Transpose or Clear it all at once.</span></p>
     </div>
@@ -247,8 +257,53 @@
     </div>
 
     <div class="spec">
+      <h3><span class="es">Score Info: autor y copyright</span><span class="en">Score Info: author &amp; copyright</span></h3>
+      <p><span class="es">La ficha de la obra (botón Score Info) suma dos campos: <b>Autor</b> y <b>Copyright</b> — que arranca en «© {año}» — junto a Título, Subtítulo y Compositor. Todo viaja en el .mmf: al importar una obra, la ficha se completa sola con lo que traía el archivo, así el título de impresión ya no aparece en blanco.</span><span class="en">The piece's card (Score Info button) gains two fields: <b>Author</b> and <b>Copyright</b> — which starts at “© {year}” — alongside Title, Subtitle and Composer. It all travels in the .mmf: when you import a piece, the card fills itself from what the file carried, so the print title no longer comes up blank.</span></p>
+    </div>
+
+    <div class="spec">
       <h3><span class="es">Guardar</span><span class="en">Saving</span></h3>
       <p><span class="es">El botón SAVE (o Ctrl/Cmd+S) guarda sobre el mismo .mmf de un clic; MENU FILES → EXPORT MMF saca una copia nueva.</span><span class="en">The SAVE button (or Ctrl/Cmd+S) writes back to the same .mmf in one click; MENU FILES → EXPORT MMF exports a fresh copy.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">Encabezado de impresión (solo la hoja)</span><span class="en">Print header (page only)</span></h3>
+      <p><span class="es">En el modal 🖨 PRINT hay una fila <b>«Print header · page only»</b> para poner Título / Subtítulo / Compositor / © <b>solo</b> en la hoja impresa. Pisa el Score Info; si la dejás vacía, la impresión usa el Score Info. Abre precargada para que edites solo lo que cambia, y se guarda con el .mmf. Al lado, <b>«T size»</b> agranda el título impreso y <b>«C size»</b> el compositor.</span><span class="en">The 🖨 PRINT modal has a <b>“Print header · page only”</b> row to set Title / Subtitle / Composer / © for the printed sheet <b>only</b>. It overrides Score Info; leave it empty and the print uses Score Info. It opens preloaded so you edit just what changes, and it is saved with the .mmf. Beside it, <b>“T size”</b> enlarges the printed title and <b>“C size”</b> the composer.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">Tamaño de las marcas (Size −/+)</span><span class="en">Mark size (Size −/+)</span></h3>
+      <p><span class="es">Con clic derecho sobre una dinámica, un tempo o un texto aparece la fila <b>«Size»</b> con − y + para cambiar el tamaño de la fuente de esa marca; con la marca seleccionada también sirven los botones de zoom +/−. Cada paso es chico; mantené apretado para repetir.</span><span class="en">Right-click a dynamic, a tempo or a text and a <b>“Size”</b> row appears with − and + to change that mark's font size; with the mark selected the zoom +/− buttons work too. Each step is small; press and hold to repeat.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">El tempo: cifra y ubicación</span><span class="en">Tempo: figure and placement</span></h3>
+      <p><span class="es">La cifra metronómica (♩=58) se imprime más chica que la palabra de tempo (Lent), como en la partitura clásica. El tempo se puede arrastrar en horizontal y en vertical para ubicarlo donde lo querés sobre el compás.</span><span class="en">The metronome figure (♩=58) prints smaller than the tempo word (Lent), as in classical engraving. The tempo can be dragged horizontally and vertically to place it wherever you want over the bar.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">Agregar texto en la vista Página</span><span class="en">Adding text in Page view</span></h3>
+      <p><span class="es">Los textos —nombres de instrumento o indicaciones como «dolce»— ya se pueden agregar también en la vista Página, no solo en la tira. Hacé clic donde lo querés (ahí se planta el cursor), tocá el botón TEXT, escribí y dale Apply; después se puede arrastrar para ubicarlo.</span><span class="en">Texts — instrument names or directions like “dolce” — can now be added in Page view too, not only on the strip. Click where you want it (that drops the cursor), press the TEXT button, type and hit Apply; you can then drag it to place it.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">La nota seleccionada no se imprime</span><span class="en">The selected note does not print</span></h3>
+      <p><span class="es">El recuadro cian de la nota seleccionada ya <b>no</b> aparece en la hoja impresa ni en el PDF: la selección es solo ayuda de edición en pantalla. La hoja sale limpia.</span><span class="en">The cyan box around the selected note no longer appears on the printed sheet or in the PDF: selection is only an on-screen editing aid. The sheet comes out clean.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">Ajustes de la hoja impresa</span><span class="en">Printed-sheet settings</span></h3>
+      <p><span class="es">El pie de la impresión va ahora en una sola línea (autor · ©). En el modal PRINT, <b>«Bars/system»</b> elige cuántos compases por sistema (Auto, o 1 a 6 — por defecto 4) y <b>«Staff space»</b> fija el tamaño del pentagrama, de 3 a 9 mm, en modo Auto.</span><span class="en">The print footer is now a single line (author · ©). In the PRINT modal, <b>“Bars/system”</b> chooses how many bars per system (Auto, or 1 to 6 — 4 by default) and <b>“Staff space”</b> sets the staff size, from 3 to 9 mm, in Auto mode.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">Imprimir la parte de un instrumento (desde el Panel)</span><span class="en">Printing one instrument's part (from the Panel)</span></h3>
+      <p><span class="es">En el Panel (vista dividida) elegís los canales con los chips, y el botón <b>🖨 PRINT VIEW</b> —antes «📄 PAGE»— abre la vista de impresión (el mismo modal que FILE → Print/PDF) mostrando <b>solo</b> esos canales: así imprimís la parte de un instrumento. Dentro del modal, el conmutador <b>«Show»</b> elige <b>Full score</b> (todos los canales visibles) o <b>Selected CH</b> (solo los que marcaste en el Panel). El campo <b>«Part name»</b> —con su caja de tamaño y su casilla «Part»— imprime una etiqueta arriba a la izquierda de la página 1; arranca en «Score» para la partitura entera o con el nombre del instrumento para una parte, y es editable. El <b>Ctrl+rueda</b> sobre la vista de impresión hace zoom solo de las hojas, no de la barra; vuelve a 100% al abrir o al cambiar de Vista.</span><span class="en">In the Panel (split view) you pick the channels with the chips, and the <b>🖨 PRINT VIEW</b> button — formerly “📄 PAGE” — opens the print view (the same modal as FILE → Print/PDF) showing <b>only</b> those channels: that's how you print one instrument's part. Inside the modal, the <b>“Show”</b> toggle picks <b>Full score</b> (all visible channels) or <b>Selected CH</b> (only the ones you picked in the Panel). The <b>“Part name”</b> field — with its size box and a “Part” checkbox — prints a label at the top-left of page 1; it defaults to “Score” for the full score or the instrument name for a part, and is editable. <b>Ctrl+wheel</b> over the print view zooms only the sheets, not the toolbar; it resets to 100% on open or on a View change.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">El Panel: seleccionar por área y desplazar</span><span class="en">The Panel: select by area and pan</span></h3>
+      <p><span class="es">Sobre el Panel, <b>Alt + arrastre</b> dibuja un marquee y selecciona las notas por área → cajas doradas; esa selección <b>suena</b> con Play o Shift+Espacio, igual que en el canvas principal. Y el <b>arrastre con el botón izquierdo</b> (manito: cursor grab / grabbing) desplaza el Panel en los dos ejes — una alternativa a Shift+rueda.</span><span class="en">On the Panel, <b>Alt + drag</b> draws a marquee and selects notes by area → gold boxes; that selection <b>sounds</b> with Play or Shift+Space, just like on the main canvas. And a <b>left-button drag</b> (hand: grab / grabbing cursor) pans the Panel in both axes — an alternative to Shift+wheel.</span></p>
     </div>
 
   </div>
