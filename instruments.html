@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instrumentos — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mm-theme.css">
+<link rel="stylesheet" href="site.css">
+<style>
+/* El banco, con el mismo render que la pestaña Orquestación del Coach. Lee mm-presets.js
+   (la lista canónica) y mm-orchestration.js (Rimsky + técnica): la página no repite el dato. */
+.lib-head{font-family:'DM Mono',monospace;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--text);margin:26px 0 4px}
+.lib-head .n{color:var(--violet);margin-left:6px}
+.lib-sub{font-size:12px;color:var(--textd);letter-spacing:.5px;margin:0 0 20px}
+.fam{margin-bottom:18px}
+.fam-h{display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--textm);margin:0 0 8px}
+.fam-h .dot{width:7px;height:7px;border-radius:50%}
+.fam-h .c{color:var(--textd)}
+.fam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.inst{background:var(--panel);border:1px solid var(--border);border-left:2px solid var(--c,var(--violet));padding:9px 11px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.inst:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.28)}
+.inst.on{box-shadow:0 0 0 1px var(--c,var(--violet)) inset}
+.inst-name{font-family:'DM Mono',monospace;font-size:12px;color:var(--text);letter-spacing:.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.inst-meta{display:flex;gap:8px;margin-top:5px;font-family:'DM Mono',monospace;font-size:9px;color:var(--textd);letter-spacing:.5px;align-items:center}
+.inst-rng{color:var(--violet)}
+.inst-reg{text-transform:uppercase;opacity:.8}
+.inst-ficha{display:none;margin-top:10px;padding:14px 16px;background:var(--panel);border:1px solid var(--border);border-left:2px solid var(--c,var(--violet))}
+.inst-ficha.open{display:block}
+.ficha-h{font-family:'DM Mono',monospace;font-size:13px;letter-spacing:1px;color:var(--text);margin-bottom:2px}
+.ficha-sub{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;color:var(--textd);margin-bottom:10px}
+.ficha-sec{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--textd);margin:14px 0 7px;border-top:1px solid var(--border);padding-top:9px}
+.ficha-row{display:flex;gap:12px;margin:0 0 8px;font-size:13px;line-height:1.55;align-items:baseline}
+.ficha-k{flex:0 0 180px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;color:var(--c,var(--violet))}
+.ficha-v{flex:1;color:var(--textm)}
+.ficha-src{margin-top:12px;font-size:10px;color:var(--textd)}
+@media (max-width:640px){ .ficha-row{display:block} .ficha-k{margin-bottom:2px} }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small> <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="es">Inicio</span><span class="en">Home</span></a>
+    <a href="index.html#apps"><span class="es">Las apps</span><span class="en">The apps</span></a>
+    <a href="instruments.html"><span class="es">Instrumentos</span><span class="en">Instruments</span></a>
+    <a href="index.html#aula"><span class="es">Aula del Coach</span><span class="en">Coach Classroom</span></a>
+    <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog">
+      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
+      <button id="b-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main style="--c:var(--violet)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="es">Volver a la suite</span><span class="en">Back to the suite</span></a>
+  <div class="app-eyebrow">⊞ <span class="es">El banco</span><span class="en">The bank</span></div>
+  <h1>
+    <span class="es">Los instrumentos.</span>
+    <span class="en">The instruments.</span>
+  </h1>
+  <p class="lead">
+    <span class="es">Toda la suite toca del mismo banco. Cada instrumento es un preset: no una grabación, sino la descripción física de cómo suena — su registro, su ataque, cuánto dura su cuerda, dónde resuena su caja. El Score escribe, el Cosmic suena y la Console mezcla siempre el mismo instrumento.</span>
+    <span class="en">The whole suite plays from one bank. Each instrument is a preset: not a recording but a physical description of how it sounds — its register, its attack, how long its string lives, where its body resonates. Score writes, Cosmic sounds and Console mixes always the same instrument.</span>
+  </p>
+
+  <div class="note">
+    <span class="es"><b>Hacé clic en cualquier instrumento</b> y se abre su ficha: el carácter de cada registro según Rimsky-Korsakov —qué suena y cuánto proyecta en el grave, el medio, el agudo y el sobreagudo— y, en los que ya la tienen, la tabla de cómo se toca y cómo se escribe: los gestos que le podés pedir y el signo con que se le piden.</span>
+    <span class="en"><b>Click any instrument</b> and its card opens: the character of each register after Rimsky-Korsakov — what sounds and how far it carries in the low, middle, high and extreme registers — and, where we already have it, the table of how it is played and how it is written: the gestures you can ask for and the sign you ask with.</span>
+  </div>
+
+  <div class="lib-head"><span class="es">Instrumentos de la suite</span><span class="en">Instruments of the suite</span> <span class="n" id="libCount">—</span></div>
+  <div class="lib-sub">
+    <span class="es">familia · registro (de–a) · régimen — la lista sale del banco mismo, así que esta página no envejece: cuando entra un instrumento nuevo, aparece acá.</span>
+    <span class="en">family · range (from–to) · regime — the list comes from the bank itself, so this page does not age: when a new instrument arrives, it shows up here.</span>
+  </div>
+  <div id="lib"></div>
+</section>
+
+</main>
+
+<footer>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small> <small>v.2</small></a>
+  <p><span class="es">Suite de afinación pitagórica · © 2001–2026 Music Motion. Todos los derechos reservados.</span><span class="en">Pythagorean tuning suite · © 2001–2026 Music Motion. All rights reserved.</span></p>
+  <p style="margin-top:8px;color:var(--violet)" class="mono"><span class="es">Sitio en construcción — crece día a día con la suite.</span><span class="en">Site under construction — grows day by day with the suite.</span></p>
+</footer>
+
+<script src="mm-presets.js"></script>
+<script src="mm-orchestration.js"></script>
+<script>
+// ── LA BIBLIOTECA — mismo render que la pestaña Orquestación del Coach (mm-coach.html).
+//    Fuente única: window.MM_PRESETS_DEFAULT + MM_INSTRUMENT_SECTIONS (banco) · MM_RK (Rimsky) ·
+//    MM_TECH (cómo se toca y cómo se escribe). La página no guarda ningún dato propio.
+(function(){
+  var SEC_COLOR={'Woodwinds':'var(--gold)','Brass':'var(--rose)','Percussion':'var(--teal)','Harp & Keyboards':'var(--blue)','Strings':'var(--violet)','Voice':'var(--rose)','Synths':'var(--teal)'};
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function build(){
+    var root=document.getElementById('lib'); if(!root) return;
+    var P=window.MM_PRESETS_DEFAULT||{};
+    var keys=Object.keys(P);
+    var cn=document.getElementById('libCount'); if(cn) cn.textContent=keys.length;
+    if(!keys.length){ root.innerHTML='<div style="color:var(--textd);font-size:13px">—</div>'; return; }
+    var SECS=window.MM_INSTRUMENT_SECTIONS||[];
+    var html='', seen={}, FAM='0', FAMN=0;
+    function card(k,col){
+      var p=P[k]||{}, c=p.class||{};
+      var lbl=c.label||p.name||k;
+      var rng=(p.lo!=null&&p.hi!=null)?(esc(p.lo)+'–'+esc(p.hi)):'—';
+      var reg=c.regime||'';
+      html+='<div class="inst" data-k="'+esc(k)+'" data-fam="'+FAM+'" style="--c:'+col+'"><div class="inst-name">'+esc(lbl)+'</div>'+
+            '<div class="inst-meta"><span class="inst-rng">'+rng+'</span>'+(reg?'<span class="inst-reg">'+esc(reg)+'</span>':'')+'</div></div>';
+    }
+    SECS.forEach(function(sec){
+      var items=sec.items.filter(function(k){ seen[k]=1; return P[k]; });
+      if(!items.length) return;
+      var col=SEC_COLOR[sec.section]||'var(--violet)';
+      FAM=String(FAMN++);
+      html+='<div class="fam"><div class="fam-h"><span class="dot" style="background:'+col+'"></span>'+esc(sec.section)+' <span class="c">'+items.length+'</span></div><div class="fam-grid">';
+      items.forEach(function(k){ card(k,col); });
+      html+='</div><div class="inst-ficha" id="ficha-'+FAM+'" style="--c:'+col+'"></div></div>';
+    });
+    var extra=keys.filter(function(k){ return !seen[k]; });
+    if(extra.length){ var col='var(--textd)'; FAM=String(FAMN++);
+      html+='<div class="fam"><div class="fam-h"><span class="dot" style="background:'+col+'"></span>Other <span class="c">'+extra.length+'</span></div><div class="fam-grid">';
+      extra.forEach(function(k){ card(k,col); });
+      html+='</div><div class="inst-ficha" id="ficha-'+FAM+'" style="--c:'+col+'"></div></div>'; }
+    root.innerHTML=html;
+
+    function bi(es,en){ return '<span class="es">'+esc(es)+'</span><span class="en">'+esc(en||es)+'</span>'; }
+    function ficha(k){
+      var p2=P[k]||{}, c=p2.class||{};
+      var rk=(window.MM_RK&&window.MM_RK.has(k))?window.MM_RK.reg[k]:null;
+      var tc=(window.MM_TECH&&window.MM_TECH.has(k))?window.MM_TECH.reg[k]:null;
+      var h='<div class="ficha-h">'+esc(c.label||p2.name||k)+'</div>'+
+            '<div class="ficha-sub">'+esc(c.family||'')+(c.regime?' · '+esc(c.regime):'')+
+            (p2.lo!=null?' · '+esc(p2.lo)+'–'+esc(p2.hi):'')+'</div>';
+      if(rk){
+        h+='<div class="ficha-sec">'+bi('Carácter por registro · Rimsky-Korsakov','Character by register · Rimsky-Korsakov')+'</div>';
+        window.MM_RK.zones.forEach(function(z,i){
+          var zz=rk.z[i], expr=(rk.scope||[]).indexOf(i)>=0;
+          h+='<div class="ficha-row"><div class="ficha-k">'+z+' · '+esc(window.MM_RK.fzaLabel[zz.fza])+(expr?' · expr':'')+
+             '</div><div class="ficha-v">'+esc(zz.car)+' <span style="color:var(--textd)">— '+esc(zz.din)+'</span></div></div>';
+        });
+        h+='<div class="ficha-src">'+esc(window.MM_RK.source)+'</div>';
+      }
+      if(tc){
+        if(tc.escribe&&tc.escribe.length){
+          h+='<div class="ficha-sec">'+bi('Cómo se escribe','How it is written')+'</div>';
+          tc.escribe.forEach(function(r){ h+='<div class="ficha-row"><div class="ficha-k">'+bi(r.sig,r.sigEn)+'</div><div class="ficha-v">'+bi(r.es,r.en)+'</div></div>'; });
+        }
+        if(tc.toca&&tc.toca.length){
+          h+='<div class="ficha-sec">'+bi('Cómo se toca','How it is played')+'</div>';
+          tc.toca.forEach(function(r){ h+='<div class="ficha-row"><div class="ficha-k">'+bi(r.sig,r.sigEn)+'</div><div class="ficha-v">'+bi(r.es,r.en)+'</div></div>'; });
+        }
+        h+='<div class="ficha-src">'+bi(window.MM_TECH.source,window.MM_TECH.sourceEn)+(tc.ref?' · '+esc(tc.ref):'')+'</div>';
+      }
+      if(!rk&&!tc) h+='<div class="ficha-row"><div class="ficha-v" style="color:var(--textd)">'+bi('Todavía sin ficha: este instrumento no tiene tabla de Rimsky ni notas de técnica.','No card yet: this instrument has neither a Rimsky table nor technique notes.')+'</div></div>';
+      return h;
+    }
+    root.addEventListener('click', function(e){
+      var t=e.target.closest?e.target.closest('.inst'):null; if(!t) return;
+      var box=document.getElementById('ficha-'+t.getAttribute('data-fam')); if(!box) return;
+      var k=t.getAttribute('data-k'), abierta=box.classList.contains('open')&&box.getAttribute('data-k')===k;
+      root.querySelectorAll('.inst.on').forEach(function(x){ x.classList.remove('on'); });
+      if(abierta){ box.classList.remove('open'); box.removeAttribute('data-k'); return; }
+      root.querySelectorAll('.inst-ficha.open').forEach(function(x){ x.classList.remove('open'); x.removeAttribute('data-k'); });
+      box.innerHTML=ficha(k); box.setAttribute('data-k',k); box.classList.add('open'); t.classList.add('on');
+    });
+  }
+  if(document.readyState!=='loading') build(); else document.addEventListener('DOMContentLoaded',build);
+})();
+</script>
+
+<script src="mm-theme.js"></script>
+<script src="site.js"></script>
+
+</body>
+</html>

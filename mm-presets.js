@@ -1,0 +1,6647 @@
+// mm-presets.js — banco de presets Default de Music Motion (v2 · baseline acústica · +lista canónica de instrumentos 2026-06-17 · +paleta de instrumentos en columnas MM_openInstrumentPalette 2026-08-23)
+// 2026-08-26 (Score V2.7.87 / Keyboard V2.3.22, con Mario sobre el bajo del 2do mov del Ravel — todo de oido,
+//   nota por nota, con G3 como control intocable). EL BAJO DEL PIANO, EN CUATRO PASOS.
+//   (1) decayTilt de piano_grand_tonal: escalar 0.2 -> a4 [1.6, 2.4, 2.8, 3.0]. Con 0.2 los parciales 2-5 duraban MAS que
+//   la fundamental (La1: 61/30/20/15 s contra 4,07 del master): el nivel bajaba y el timbre se quedaba entero, y eso el
+//   oido no lo lee como que la nota se apaga («queda sostenido el sonido sin ningun fade»). El valor FISICO del knob es 3
+//   —con decay = 3*tau1 es el que da tau_k = tau1/k— y la primera correccion lo puso mas empinado justo en el GRAVE, que
+//   es donde menos corresponde: la entorchada larga y de baja perdida sostiene sus parciales medios muchos segundos (el
+//   gruñido del bajo) y los que mueren rapido son los del agudo, donde el amortiguamiento crece como k^2. Curva final al reves.
+//   (2) bloom [1.2,0.9,0.5,0.25] -> [0.60,0.50,0.35,0.20] y bloomDepth [0.22,0.26,0.34,0.42] NUEVO (contrato del Keyboard):
+//   el prompt tardaba 1,2 s en el grave y caia solo -7,5 dB — el martillo se disolvia en vez de golpear. Ahora -12,5 dB en 0,6 s.
+//   Los tres pianos.
+//   (3) src.partials [44,16,12,8] NUEVO en los tres pianos y resp.tilt del ancla grave 0.90 -> 1.00 en los dos de cola
+//   («G3 y G2 o G1 fisicamente tienen una cuerda con diferente peso... lo que oigo es como si las cuerdas fueran del mismo
+//   tamaño», y «G3 es perfecto»). No estaba declarado: NHG = 16 parciales para las 88 teclas, y entre el ancla grave y la
+//   del tenor NADA se movia en el espectro — de La0 a Do3 el piano era la MISMA cuerda transpuesta. Anclas 2-4 clavadas en
+//   lo de hoy para no tocar G3 (queda a 0,15 dB): G1 pasa a 36 parciales y sostiene el parcial 10 unos 4 dB mas arriba.
+//   BANDERA en los tres puntos: todo a calibrar de oido.
+// 2026-08-25 (EL ARPA POR MATERIAL, con el oído de Mario sobre el Ginastera y una anécdota de Mahler): seis retoques,
+//   todos del arpa, todos con el A2 como referencia intacta. (1) onset.pitch pasa de escalar a a4 [3,12,26,26]: el glide de
+//   tensión depende del MATERIAL — el entorchado de acero casi no cede, la tripa ~15 cents, el nailon el doble (>2% en los
+//   primeros 100 ms, Woodhouse sobre un Mi4 de nailon de 390 mm); plano de F5 para arriba, que ya es todo nailon.
+//   (2) onset.ms pasa a a4 [14,10,5,4]: abajo son los ~15 ms del golpe de tapa, arriba el deslizamiento de la yema medido en
+//   1,2-6,1 ms (Chadefaux) — con 14 ms parejos el agudo se llevaba una ráfaga tres veces más larga que lo medido, en plena
+//   banda de fricción: eso era la «uña». (3) EL SEGUNDO QUIEBRE DE MATERIAL: anclas ["Cb1","A2","F5","G7"] — el ancla 3
+//   estaba en F4, una OCTAVA abajo del quiebre tripa→nailon (el mismo error que el del metal pero al doble). La numeración
+//   de cuerdas de la ficha (7E=Mi1 · 6E=Mi2 · 5A=La2) sitúa las octavas de Fa a Mi contando hacia abajo, así que «octavas
+//   3-4 tripa» = F3-E5: Mi4, Sol4 y La4 son TRIPA y recibían valores de nailon. Recién con F5 las cuatro anclas dicen los
+//   cuatro estados de la cuerda: entorchada · tripa · nailon · la más corta. (4) onset.hit [0.30,0.18,0.06,0.07]: arriba el
+//   dedo no viaja, ya está apoyado sobre la cuerda, y sin viaje no hay impacto — el punteo queda de puro desplazamiento y
+//   suelta (la «excitación casi ideal» del informe). onset.hit modela justo la parte cinética, la del dedo que LLEGA. Se
+//   hunde en el ancla 3 y no en la 4, que quedó calibrada para el ff de Mahler. (5) resp.atk [1.6,1.0,1.15,0.85] y filt.cut
+//   [48,28,12,6]: los 2 cm de yema son el 5% de una cuerda de 40 cm y más de un cuarto de una de 7,5 — cuanto más corta la
+//   cuerda, MÁS manda el dedo, y el ataque dejaba de alargarse hacia el agudo como si la yema pesara menos allá.
+//   (6) onset.bandHit [0.18,0.08,0.05,0.08]: el agudo deja de ser CERO. Los modos de la caja están en 134/157 Hz y no
+//   dependen de la nota; en el grave el ring queda TAPADO por el fundamental de la propia cuerda, arriba la cuerda muere en
+//   0,4 s y la caja queda sola. Mario, sobre el arpa de Mahler en ff: «suena corto, agudo, instantáneo, doloroso — como
+//   jalarse un pelo de la nariz», y después: «esa nota decae rapidísimo pero queda la resonancia de la caja». Son dos
+//   eventos, el tirón y lo que zumba después. Requiere Cosmic Keyboard V2.3.21 (contrato a4 de onset.pitch/onset.ms).
+// 2026-08-24 (EL QUIEBRE DE MATERIAL DEL ARPA, en La2): el arpa tenia sus anclas en Cb1·C3·F4·G7, pero el
+//   material no cambia en Do3 sino en LA2 — las doce cuerdas graves (Do1-Sol2) son entorchadas de acero/cobre
+//   y la primera de tripa es el 5A. Con el ancla en C3 el motor interpolaba el metal media octava de mas, y el
+//   quiebre —que en la referencia del Ginastera esta MEDIDO (E1 51 parciales utiles · E2 25 · A2 11)— no se oia.
+//   Tres numeros: anclas ["Cb1","A2","F4","G7"] · src.partials [56,32,14,8] -> [56,12,10,8] · y el dedo, que en
+//   la tripa vuelve a ser solo yema (apunte de Mario §9): onset.hit 0.25 -> 0.18 y onset.bandHit 0.12 -> 0.08 en
+//   esa ancla. Todo lo demas del arpa intacto. A/B: los primeros compases del Ginastera (arpegio Mi1·Mi2·La2·Re3,
+//   que cruza el quiebre). Los valores previos quedan anotados en cada linea para volver en un renglon.
+// 2026-08-23 2º (EL METAL ENTORCHADO del arpa, medido sobre el WAV de referencia del Ginastera — primeros 4 compases,
+//   arpegio E1·E2·A2·D3): el E1 de la referencia tiene 51 parciales útiles hasta 2,2 kHz, la banda 700-2000 Hz a −14,5 dB
+//   de la base y los parciales MÁS FUERTES en k6-k11 (el fundamental −4,7 dB); el nuestro tenía techo duro en el parcial 32
+//   (1318 Hz — el src.partials grave), 700-2k a −25 dB y nada sobre 2 kHz. A/B con el motor real (OfflineAudioContext):
+//   src.partials grave 32 → 56 · resp.tilt grave 0.55 → 0.75 · las dos resonancias ALTAS del banco de caja suben
+//   ([270,1.5,5]/[420,1,4] → [300,3,4]/[430,2.5,4]) — las bandas quedan clavadas a la referencia (700-2k −15,4 ·
+//   2k-6k −25,8 · 60 parciales hasta 2,5 kHz). El material y las anclas se reparten bien: las entorchadas de acero/cobre
+//   llegan hasta el quiebre en C3 (las tres primeras del arpegio: E1·E2·A2) — el D3 ya es TRIPA y toma poco del cambio
+//   (el ancla C3 lo frena); el nailon recién en el agudo. BANDERA para el oído de Mario: toca dos valores del banco de
+//   caja calibrados el 20-08 (los dos MEDIDOS de Le Carrou, 134/157, quedan intactos); el fino de la joroba k6-k11
+//   (bajar un punto el gain del fundamental grave) es del Register.
+// 2026-08-23 (deep-research del Demo 4 — Harp; numerización de CONTRABAJO FROTADO, CLARINETES y deltas de FLAUTA;
+//   informes citados en _Investigacion-instrumentos/cuerdas/contrabajo-investigacion.md y maderas/clarinete-investigacion.md
+//   + maderas/flauta-addendum-2026-08-23.md; TODO BANDERA hasta el A/B de oído de Mario en el Register):
+//   CONTRABASS gana anclas ["E1","G2","D3","G4"] (grave sin fundamental radiada / cuerpo pleno / cantabile del solo del
+//   Ginastera / agudo delgado) · form.bank de cuerpo medido [[62,+5,7],[110,+4,5],[155,+3,5],[420,+2,4]] (A0 57-70 Hz Meyer,
+//   T1 110 y C3 155 Brown 2004) · atk por período del transitorio de arco (Guettler & Askenfelt: 10 períodos = 243 ms en E1
+//   vs 26 en G4) → [2.2,1.6,1.1,0.8] con onset.hit por anclas y ms 60 (el motor no tiene onset.ms por anclas: pendiente) ·
+//   VIBRATO PROPIO del CB medido (Mick 2025): 5,2 Hz / 19 cents de media → vib [10,14,19,24] · vibRate [4.6,5.0,5.2,5.5]
+//   (más lento y angosto que el violín — copiarle el vibrato al cello lo delata) · filt.env 0.15 (el brillo respira con la
+//   dinámica) · src.mode "harm" con inharm 0.002: bajo arco los parciales quedan mode-locked (Woodhouse) — nada del molde
+//   percusivo (release/bloom/decayTilt los pone el arco, no el tiempo). CLARINET/BASS_CLARINET: la ley del IMPAR medida —
+//   pares 20-28 dB bajo los impares en chalumeau y la regla muere sobre el cutoff (~1,5 kHz; Kay 2017, Dickens 2007,
+//   Petersen 2020) → oddEven [0.12,0.20,0.45,0.50] (bajo [0.12,0.22,…], subido de 0.10: sin evidencia de más impar que el
+//   soprano) · anclas soprano ["D3","F4","A4","G6"] con F4-A4 pegadas para capturar GARGANTA y break (UNSW G4: dos picos de
+//   impedancia) · bajo ["Bb1","Eb3","A3","F5"] chalumeau «de órgano» y clarion NEUTRO (TOR: no abrir el agudo como en el
+//   soprano) · form.f1 pasa a modelar la banda reforzada del lattice (soprano [1400,4,1.5], medido 1130-1450 Hz por
+//   digitación — Moers & Kergomard) y f2 la campana ([2100,2,3] Petersen; bajo escalado [750,4,1.5]/[1050,2,3], BANDERA sin
+//   medición publicada — el [400] viejo no tenía fundamento) · vibrato clásico = 0 CONFIRMADO (vibRate queda de semilla
+//   jazz/klezmer) · inharm → 0 (tono soplado, armónicos exactos) · onset water-hammer (Almeida 2017): soprano hit 0.03 /
+//   bajo 0.06 (el pop de llave es real en el grave del bajo). FLUTE (addendum, cierra el pendiente del 17-06): f1 se queda
+//   en ~800 pero ANCHO ([800,3,1.4]) — Fletcher 1975 midió el formante PLANO en 500-1000 Hz y el ~2 kHz es codo de CAÍDA,
+//   no realce; el f1 3000 de la renovación del 03-07 caía en el notch de 3-5 kHz; H2 +9,5 dB sobre H1 en C4 (el grave
+//   aterciopelado del solo de la Pavane sale de este formante, sin parámetro nuevo) · f2 [9000,2,1.2] (riser, ganancia
+//   chica, BANDERA) · char.noise 0.12 → 0.30 (el orden validado el 17-06; BANDERA fuerte para el A/B).
+// 2026-08-20 (EL ARPA, afinada de oído con Mario sobre el Ginastera — Variaciones Concertantes, arpa + contrabajo):
+//   cuatro valores y un contrato nuevo. (1) `onset.freq` 150 → null: el thump de tapa estaba clavado en 150 Hz para toda la
+//   extensión, y 150 Hz es un re grave ajeno a la serie de cualquier bajo del arpa (mi1: 124 y 165 · si1: 124 y 186 — el golpe
+//   caía en el hueco). Mario lo oía como «un re fantasma» sobre las notas graves; ahora el chiff vuelve a seguir a la nota.
+//   (2) banco de caja: las frecuencias son los modos medidos (Le Carrou 2010) y no se tocan, pero el filtro estaba fuera de
+//   escala — +6 dB con Q 12 en 134 Hz y +5 con Q 8 en 157 no es una tabla que radia, es un pico angosto que salta 6 dB cada vez
+//   que un parcial le cae encima. A la escala del clavecín (3 · 2 · 1,5 · 1 dB con Q 8 · 6 · 5 · 4), que se afinó de oído. De
+//   referencia: el espectro promediado del render de Finale no tiene realce alguno en 134 Hz — está 10 dB por debajo de 250.
+//   (3) `decay` [17, 9, 4.5, 0.5] → [8, 4.5, 2.2, 0.4]. (4) `release` [1.2, 0.8, 0.45, 0.2] — NUEVO: LAS MANOS DEL ARPISTA.
+//   El arpa nació l.v. (sin release, la cuerda muere sola) y de oído eso es un arpa sin arpista: cada cuerda tirada al máximo y
+//   nadie que la calle. Se asume que el arpista apaga cada nota al tocar la siguiente y queda sólo la caja. La rampa cae a −60 dB
+//   en `release` segundos, así que a un tercio ya está 20 dB abajo: la mano frena rápido y la madera zumba un instante. Más lento
+//   que el fieltro del piano en el agudo (una mano no es un apagador por cuerda) y más rápido en el grave. Con el release puesto,
+//   `relNoise` —declarado el 18-08 esperando este momento— por fin suena: el roce del dedo al frenar. El l.v. deja de ser el
+//   default del arpa y pasa a ser MARCA por nota (`lv` en el NOTE_ON), que es como se escribe en la página.
+// 2026-08-18 (cierre del clavecín, oído de Mario: «el C2 es perfecto — la caja de cubiertos sobre una mesa: el golpe hum y la
+//   cajita que salta y cae; el efecto se disminuye en los agudos»): NO estaba mal. Medido con el harness: la energía de 3-8 kHz
+//   no baja hacia el agudo (en el ataque, C2 la tiene a 0 dB del cuerpo y C5 a +2 dB); lo que cae es la DENSIDAD de la banda —
+//   77 parciales separados 65 Hz en C2 (8,6 por banda crítica a 5 kHz: rugosidad = cubiertos) contra 10 separados 523 Hz en C5
+//   (1,1 por banda crítica: tonos resueltos = brillo). Más parciales no lo arreglan: es aritmética de la serie armónica. Los dos
+//   clavecines estrenan el contrato onset.band / bandHit / bandMs del Keyboard: [3500, 5200, 7000] Hz con Q 8, nivel
+//   [0.02, 0.06, 0.18, 0.22] (el grave casi no lo necesita) y 60 ms de cola — un segundo golpe de ruido en banda FIJA, igual
+//   para cualquier nota, escalonado 1,5 ms entre bandas. Es la aproximación barata de la resonancia simpática (SympBank, fase 2).
+//   Y el balance grave/agudo (misma escucha): el clavecín salía PLANO — 60 dBA en C2, C3, C4 y C5, cosa que ningún
+//   instrumento real hace. La tabla radia mal bajo sus modos (eficiencia ∝ f⁴), el plectro pellizca a una fracción mucho
+//   menor de la cuerda en el grave (línea recta del saltador, cuerdas largas: menos fundamental), y en el contrapunto el
+//   bajo lleva la armonía, no el volumen. resp.gain [0.50,0.62,...] → [0.32,0.52,...]: −3,9 dB en F1 y −1,5 en C3, agudo
+//   intacto. Sólo toca las CUERDAS: resp.gain se aplica al `car` (camino tonal), y el golpe de 160 Hz y el sacudón de banda
+//   van directo a la salida — la cajita de cubiertos queda donde estaba. El grave cobra su presencia en duración (22 s).
+// 2026-08-18 (Capa 1, Sesión B — la cuerda pulsada de la familia): ARPA, GUITARRA y PIZZICATO (solo y sección) pasan del
+//   preset plano (escalar, mode 'harm', sin anclas) al molde del Grand/clavecín, con las tablas §7 de la deep-research
+//   (_Investigacion-instrumentos/cuerdas/arpa|guitarra|pizzicato-investigacion.md). Sin tocar el motor: todo es a4 + inharm.
+//   harp: anclas Cb1·C3·F4·G7 (entorchado→tripa en C3, donde están T1/A0 de la caja), decay [17,9,4.5,0.5] (Le Carrou: 8 s
+//     medidos a 123 Hz), B [2e-4,1.2e-4,4e-4,6e-4] (escrito ×100 como el piano), banco de caja 134/157/270/420 Hz (Le Carrou
+//     2010), thump de tapa fijo en 150 Hz, glide +20 c/100 ms (Woodhouse), duet de cuerdas simpáticas a −18 dB. SIN
+//     env.release: el arpa no tiene apagador, la cuerda muere sola (l.v.); el étouffé es técnica, no default (relNoise queda
+//     declarado para cuando una técnica lo pida — el motor solo lo usa si hay release).
+//   guitar: anclas E2·D3·G3·B5 con el ESCALÓN entorchado→liso (B ×7 en la 3ª: 0.0017 → 0.012, Woodhouse Guitar II tabla I),
+//     decay [9.5,7.5,6.2,1.1], banco de caja 100/200/250/400/520 Hz (Christensen & Vistisen + Woodhouse), también l.v.
+//   pizzicato (solo) y strings_pizzicato (sección): el puente alto drena rápido — decay corto y decayTilt alto (0.5→0.8, los
+//     agudos mueren en 50–100 ms), thump del A0 en onset.freq, y release declarado (en pizz orquestal el intérprete apaga:
+//     30–80 ms con relNoise). La sección suma trio + duet ±8 c a 0.8, atk ×2, hit −4 dB y decay ×1.3 (Rasch: asincronía
+//     30–50 ms en conjuntos). El `pizzicato` genérico interpola cello (G2·D3) → violín (D4·G5) sobre su propio rango.
+//   Nodos nuevos del Lexicon (harp · guitar · pizzicato · strings_pizzicato): hasta hoy caían en la ley de la familia
+//   `cuerdas`, que es la del ARCO (el brillo abre con la fuerza). El pulsado es casi lineal (Woodhouse): el dedo y el punto
+//   de pulsado fijan la forma espectral, no la fuerza; lo que crece con la dinámica es el golpe y el ruido de contacto.
+//   Pendiente del motor (informes §7): peine a/L del punto de pulsado · selector de cuerda · spread de onset de sección ·
+//   buzz de pedal · Bartók. Todo BANDERA hasta el A/B de oído en el Register.
+// 2026-08-19 (Mario, el `p` del arranque de las Sinfonías: «me parece que arranca bastante más alto»): los DOS
+//   clavecines pasan de class.velRangeDb 3 a 6 — afinado de oído sobre la Sinfonía 3. Con 3, el `p` quedaba a 0,73 dB
+//   del mf y toda la escala ppp→fff medía 2,6 dB: el instrumento no tiene dinámica por tecla, pero tampoco es sordo
+//   (la velocidad de la tecla cambia el punto y la firmeza del pellizco). Con 6, `p` cae 1,46 dB, `pp` 2,22 y el rango
+//   llega a 5,2 dB — sigue siendo un clavecín (el lineal, sin la clave, daría `p` a −4,3 y 18 dB de rango: eso es un
+//   piano). Efecto de borde buscado: velRangeDb también acota lo que hacen INT·BEAMS y las velocities bajas del import,
+//   así que el decrescendo del grupo barrado —casi anulado con 3— vuelve a oírse.
+// 2026-08-17 (Capa 1 del plan de sonido — la familia física del piano): NACE «Harpsichord» (harpsichord, teclados) con el molde
+//   del Grand y la deep-research citada (_Investigacion-instrumentos/teclados/clavecin-investigacion.md): 8' fondo, anclas
+//   F1·C3·C5·F6 (bajo de latón · quiebre latón→hierro y valle de B · treble · tope), decay [22,11,3.5,1.0], apagador de paño
+//   [0.06…0.02] con relNoise (el «tac» del salterio), bloom débil, decayTilt 0.7 (el latón mata antes los parciales altos), B en
+//   valle [2e-5,1e-5,7e-5,3e-4] (escrito ×100 como el piano: [0.002,0.001,0.007,0.03]), hit [0.20…0.35] con knock fijo en 160 Hz (MacRitchie & Nuti 172 Hz), src.tilt −12 (pluck a
+//   1/8: más armónicos que el piano), banco de tapa 40–2500 Hz (Savage 1992 / F&B). SIN dinámica por tecla: el Lexicon lo
+//   aplana (nodo harpsichord). Registración (8'+8', 4', laúd, buff) y latencia del pluck: pendientes del motor. Sumado a
+//   MM_INSTRUMENT_SECTIONS (Harp & Keyboards). Todo BANDERA hasta el A/B de oído en el Register.
+//   2026-08-17 (oído de Mario, Sinfonía 9): «los bajos con más tac y menos sonido» → gain grave 0.95/1.0 → 0.80/0.90 ·
+//   hit grave 0.20/0.22 → 0.38/0.32 · relNoise grave 0.20/0.18 → 0.32/0.26 · air grave ↑; class.detache 0.15 (non legato).
+//   2026-08-17 (2º): «las negras un tris más cortas · las cuerdas graves menos sonoras» → detache 0.22 · gain grave 0.72/0.88 ·
+//   la tapa no radia bajo ~60–80 Hz (F&B, Helmholtz 37 Hz): el 40 Hz +4 dB del banco pasa a 50 Hz −6 dB (fundamental vaciada, como el Grand).
+//   2026-08-17 (3º, Mario): DOS clavecines — «Harpsichord (Tonal)» (harpsichord: la afinación de la casa, 3ⁿ/2ᵐ por deletreo, sin
+//   lobo) y «Harpsichord (Well-tempered)» (harpsichord_wt: clon con class.temperament 'werckmeister3' — el Keyboard re-afina cada
+//   nota a la tecla del temperamento, A=440 fijo). Contratos nuevos del Keyboard: class.velRangeDb · class.temperament · class.detache.
+//   2026-08-17 (4º, Mario: «el sustain de las negras debe sonar como el de las corcheas — pluma de ganso vs avestruz»): los parciales
+//   altos del bajo vivían segundos (decayTilt 0.7 con decay 22 s → k=8 en 4.5 s) y la negra tenía tiempo de mostrar la panza que la
+//   corchea no llegaba a mostrar. decayTilt pasa a a4 [3.0,2.2,1.0,0.7] (Keyboard lo interpola) y el sfumato del filtro se acorta
+//   (t 1.2 → 0.4 s, env 0.5): el brillo del pluck cae en las primeras décimas en TODA figura.
+//   2026-08-17 (5º, oído de Mario: «mejor, un poco seco, perdió brillo en agudos» + «¿el clavecín tiene techo de dB?»): decayTilt
+//   [2.4,1.8,0.9,0.6] · filt cut 8 / t 0.55 / env 0.45 · tilt agudo 0.92/0.90 · y NIVEL PROPIO del instrumento: gain ×0.7 en las
+//   cuatro anclas (Fletcher & Beebe: un 8' ≈ 70 dB(A) a 2 m, el piano mf ≈ 80): a VOL igual el clavecín queda debajo del piano —
+//   subir VOL es acercar el oído, no agrandar el plectro.
+//   2026-08-17 (6º, Mario con un wav de clavecín real: «de lejos suena como sacudir el cajón de los cubiertos, y eso es lo
+//   característico» — y debajo de A4 el nuestro no lo tenía): un G2 real tiene líneas hasta 10 kHz (parcial 60) y la banda 3–9 kHz
+//   a solo −10 dB de los medios; el motor tenía 16 parciales fijos y corte 8·f0 (G2: nada sobre 1.6 kHz). Contratos nuevos del
+//   Keyboard: src.partials (tope por voz, default 16) y filt.cut a4. Clavecines: partials 48 · cut [48,32,8,8] (F1 → 2.1 kHz,
+//   C3 → 4.2 kHz; C5/F6 como estaban) · tilt grave 0.98/0.96 → 0.80/0.86 (los 48 caen −2 dB/oct, no pared) · src.phaseMs 2 (48
+//   parciales en fase daban picos 4× el rms y el limitador bombeaba; con el arranque revuelto el pico vuelve al del piano). Agudo intacto.
+//   2026-08-17 (7º, Mario: «CH1 y CH2 bien; CH3 bajo E4 suena a bajo eléctrico, más cajón de cubiertos»): tilt grave 0.94/0.94 ·
+//   decayTilt grave 1.6/1.4 (los parciales altos del bajo viven más) · cut [64,48,8,8] · tapa: 50 Hz −10 dB, 75 Hz 0 dB (fundamental
+//   del bajo más vaciada — el «eléctrico» era fundamental gorda y poco sizzle). C5/F6 intactos.
+//   2026-08-17 (8º, Mario: «oigo poco cambio; no oigo la vibración metálica bajo E4»): el zumbido metálico del agudo lo hace la
+//   INARMONICIDAD (B agudo 7e-5/3e-4: los parciales altos se estiran y baten entre sí y con las voces vecinas); el grave tenía B
+//   2e-5/1e-5 = cuerda perfectamente armónica = bajo eléctrico. inharm grave 0.002/0.001 → 0.012/0.008 (B 1.2e-4/8e-5: el parcial
+//   40 se corre ~9 %, batido metálico). Los 48 parciales de un G2 llegan a 4.7 kHz; el real tiene líneas hasta 10 kHz (k≈100).
+//   2026-08-17 (9º, Mario, «probemos»): 8'+8' del grave — src.duet [+3 c, gain 0.6] en F1/C3 (0 en C5/F6): la segunda cuerda
+//   del unísono bate en los primeros 12 parciales (Weinreich); es la 2ª de las tres fuentes del «cajón» (la simpática, SympBank, fase 2).
+//   2026-08-17 (10º, Mario: «el zumbido de E4 arriba es otra cosa que vibra igual sea cual sea la nota, y eso falta abajo»): en el
+//   agudo los parciales 8-16 caen siempre en la MISMA banda (3-8 kHz) — un sizzle fijo; el grave con tope 48 no llegaba (G2 → 4.7 kHz).
+//   src.partials pasa a a4 [96,64,16,16] (Keyboard: escalar o a4, tope 96) y cut [96,64,8,8]: G2 llega a ~8 kHz con su propio sizzle
+//   en la banda del agudo; el agudo no cambia. La versión física de «otra cosa que vibra igual» es la simpática (SympBank, fase 2).
+// 2026-08-15 (Score V2.7.71 · Keyboard V2.3.13, checkpoint): PIANO (GRAND) — etiquetas «Piano (Grand)» (piano_steinway) y
+//   «Piano (Upright)» (piano); Grand corregido contra la literatura (agente con 14 fuentes primarias): tilt/atk high-top,
+//   hit por registro [0.35,0.42,0.55,0.75], inharm [0.016,0.017,0.085,1.5] (Steinway D, interpolado en LOG por el motor),
+//   duet/trio en Hz casi constantes (cents que BAJAN con la altura, A0 monocordio), decay [15,8.7,2.6,0.42], thump 16 ms.
+//   NACE piano_grand_tonal «Piano (Grand · Tonal)»: clon del Grand con cuerdas ideales (B al 10%, unísonos enganchados ±0.08 c)
+//   para la afinación 3ⁿ/2ᵐ (coincidencias exactas de parciales); fase 2 = SympBank. Sumado a MM_INSTRUMENT_SECTIONS.
+// 2026-07-17 2º (Keyboard V2.3.6, escucha de Mario): relNoise por MECÁNICA — piano (carácter vertical, apagadores
+//   ruidosos) [0.3, 0.22, 0.15, 0.09] · piano_steinway (gran cola del Ravel, mecánica silenciosa) [0.16, 0.12,
+//   0.08, 0.05]. Además el motor escala el soplo por recorrido de la tecla (nota corta ≈ sin soplo) y ×0.35 si la
+//   suelta es dentro de un ligado (el dedo camina). Antes ambos [0.4, 0.3, 0.2, 0.12] — "demasiado notorio acá".
+// 2026-07-17 (Keyboard V2.3.5): "pfh" del fieltro — env.relNoise en los dos pianos (opt-in):
+//   el apagador que cae sopla, PROPORCIONAL a cuánto vibraba la cuerda al soltar (nivel relativo al valor computado
+//   de la voz); frontera física f<1480 Hz (F#6, fin de apagadores) · duración = release×0.12 por registro (el grave
+//   frena largo y sopla largo) · solo el NOTE_OFF musical (stopVoice) — pool y retrigger no soplan. A afinar de oído.
+// 2026-07-15 (render Keyboard V2.3.1): pianos a oído (bloque 2, A/B vs Yamaha C2 de Mario) — inharm A0 0.030→0.045
+//   (filo metálico de la entorchada en C2–G2) · src.duet [1.2, 0.85] (segunda cuerda del unísono; batido Weinreich) ·
+// 2026-07-16 (nota, experimento tricordio — Mario): pianos con duet POR REGISTRO (cents [0.9,1.2,1.4,1.6] · gain
+//   [0.8,0.95,0.9,0.85] — C2 bicordio con el G4 respirando un poco más) + src.trio = TERCERA CUERDA (cents
+//   NEGATIVOS [-0.8,-1.0,-1.2,-1.4] — detune asimétrico Weinreich — · gain [0,0.6,0.9,0.85]); la 3ª cuerda tiene
+//   frontera física en el motor (~C3, 126 Hz): abajo nunca suena, por curva que haya. Normalización a 2-3 cuerdas
+//   · release (apagador) medio más respirado [1.5, 0.6, 0.16, 0.05] (antes 0.5/0.1/0.04): la resonancia del
+//   acorde suelto se oye un poquito bajo el ataque siguiente (pedido M1 B2.5 vs acorde de B2, sesión Ravel).
+//   · onset.ms de los pianos 3→10 y 2→9: una ráfaga de 2-3ms ES un click (salpica todo el espectro) — se oía
+//   como "crujidito" en el bajo repetido (M1 B2.5) y en las notas cortas (M7 B3); a 9-10ms el golpe del
+//   martillo suena a golpe sordo, no a púa (el thump real dura 10-25ms). El nivel (hit) no se tocó.
+//   en el Keyboard (_duetN) — el preset no sube de volumen. ·
+//   onset.pitch 3.5 cents / 45 ms (glide de tensión del martillo) · env.decayTilt 0.2 (cola se purifica hacia la
+//   fundamental sin matar el G4 emergente de C2) · release (apagador) [0.28,…]→[1.5, 0.5, 0.1, 0.04] (el apagador
+//   grave FRENA, no corta — el MI del vals del Ravel muere bajo los acordes hacia el pulso 2.5).
+// 2026-07-14 (checkpoint Keyboard V2.3.0): piano y piano_steinway NUMERIZADOS (track teclados F3+F4 — investigación
+//   _Investigacion-instrumentos/teclados/ + afinado de oído sobre el Ravel): anchors A0·C3·C5·C8 · mode inharm +
+//   curva V de B [0.03,0.013,0.1,1.5] (gran cola, ambos tras A/B) · decay [15,4.8,1.7,0.42] · release (apagador)
+//   [0.28,0.15,0.075,0.025] · bloom [1.2,0.9,0.5,0.25] · atk [0.2,0.12,0.1,0.1] · onset.freq 120 (thump) ·
+//   form.bank con corte [35,-10,1.4] (fundamental no radiado del grave profundo).
+// 2026-07-03: banco actualizado con la investigación de Mario (41 presets renovados + 9 nuevos = 55) ·
+// orden canónico compartido con las listas investigacion / inv-dinamica · previo en _history (PRE-INVESTIGACION)
+// Valores de arranque traducidos de acústica de instrumentos (formantes, odd/even, ruido,
+// ataque, registro) — Fletcher&Rossing, Meyer, UNSW/Wolfe, Euphonics, Rossing perc., Sundberg voz.
+// Punto de partida para afinar de oído en el Register. Carga via <script src> (file:// ok).
+// 2026-06-17 (render Score .96): flauta numerizada (air/vib/f1/char.noise); 10 correcciones de rango SONANTE
+//   (piccolo D6–C9 · kena G4–A6 · oboe→G6 · corno inglés→C6 · fagot→E5 · contrafagot→D3 · gamba D2–D5 ·
+//    xilófono F5–C9 · guitarra→B5 · contrabajo→G3).
+// 2026-06-17 (render Score .97): flauta en Sol — grave "hueco" (air 0.30/0.24/0.18/0.20 · tilt 0.28/0.34/0.30/0.25 · f1 700/+3).
+// 2026-06-18 (checkpoint Score .100): corno hi F5→A5 sonante (DO6→MI6 escrito) — techo del repertorio (Strauss/Schumann),
+//   logro del corno doble (post-R-K). Ref: _Investigacion-instrumentos/metales/corno-rango-agudo-investigacion.md
+// 2026-06-19 (render Score .102): cuerpo por BANCO de resonancias (form.bank → motor en serie): violín
+//   (formantes 470/3000 + 6 res · ataque de arco ~90 ms medido) · contrabajo (6 res graves · arco lento ~110 ms).
+//   Flauta en Sol: aire movido al registro grave (0.42→0.20). Medido de WAV reales (violin.wav / bass.wav).
+
+window.MM_PRESETS_DEFAULT = {
+  "piccolo": {
+    "name": "piccolo",
+    "class": {
+      "family": "maderas",
+      "instrument": "piccolo",
+      "label": "Piccolo",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "D5",
+    "hi": "C8",
+    "resp": {
+      "gain": [
+        0.7,
+        0.85,
+        1.0,
+        0.95
+      ],
+      "air": [
+        0.15,
+        0.2,
+        0.25,
+        0.3
+      ],
+      "tilt": [
+        0.9,
+        0.85,
+        0.8,
+        0.75
+      ],
+      "atk": [
+        1.0,
+        0.9,
+        0.8,
+        0.7
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        6.0,
+        6.0,
+        6.2,
+        6.2
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -14.0,
+      "inharm": 0.01,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        4000,
+        6.0,
+        1.2
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "filt": {
+      "cut": 8.0,
+      "q": 0.75,
+      "env": 0.0,
+      "t": 0.05
+    },
+    "env": {
+      "decay": 0.08,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.18,
+      "noiseAM": 0.08
+    },
+    "onset": {
+      "hit": 0.04,
+      "air": 0.2,
+      "ms": 25
+    }
+  },
+  "flute": {
+    "name": "flute",
+    "class": {
+      "family": "maderas",
+      "instrument": "flute",
+      "label": "Flute",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "C4",
+    "hi": "C7",
+    "resp": {
+      "gain": [
+        0.85,
+        1.0,
+        1.0,
+        0.9
+      ],
+      "air": [
+        0.18,
+        0.14,
+        0.12,
+        0.1
+      ],
+      "tilt": [
+        0.95,
+        0.9,
+        0.85,
+        0.8
+      ],
+      "atk": [
+        1.3,
+        1.2,
+        1.1,
+        1.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.2,
+        5.5,
+        5.6,
+        5.8
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -17.0,
+      "inharm": 0.01,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        800,
+        3,
+        1.4
+      ],
+      "f2": [
+        9000,
+        2,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 5.0,
+      "q": 0.7,
+      "env": 0.0,
+      "t": 0.08
+    },
+    "env": {
+      "decay": 0.09,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.3,
+      "noiseAM": 0.05
+    },
+    "onset": {
+      "hit": 0.03,
+      "air": 0.15,
+      "ms": 30
+    }
+  },
+  "alto_flute_g": {
+    "name": "alto_flute_g",
+    "class": {
+      "family": "maderas",
+      "instrument": "alto_flute",
+      "label": "Alto Flute (G)",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "G3",
+    "hi": "G6",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        1.0,
+        0.9
+      ],
+      "air": [
+        0.08,
+        0.08,
+        0.06,
+        0.05
+      ],
+      "tilt": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "atk": [
+        1.4,
+        1.4,
+        1.2,
+        1.2
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -20.0,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        2500,
+        6.0,
+        1.5
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "filt": {
+      "cut": 3.5,
+      "q": 0.7,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.1,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.08,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.02,
+      "air": 0.1,
+      "ms": 35
+    }
+  },
+  "oboe": {
+    "name": "oboe",
+    "class": {
+      "family": "maderas",
+      "instrument": "oboe",
+      "label": "Oboe",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "Bb3",
+    "hi": "G6",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.05,
+        0.04,
+        0.04,
+        0.06
+      ],
+      "tilt": [
+        0.65,
+        0.7,
+        0.75,
+        0.8
+      ],
+      "atk": [
+        0.9,
+        0.8,
+        0.76,
+        0.7
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.6,
+        5.8,
+        5.8
+      ],
+      "oddEven": [
+        0.45,
+        0.48,
+        0.5,
+        0.52
+      ]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": 0.002,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        1200,
+        6.0,
+        1.5
+      ],
+      "f2": [
+        3000,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 9.0,
+      "q": 1.1,
+      "env": 0.0,
+      "t": 0.05
+    },
+    "env": {
+      "decay": 0.05,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.04,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.06,
+      "air": 0.05,
+      "ms": 15
+    }
+  },
+  "english_horn": {
+    "name": "english_horn",
+    "class": {
+      "family": "maderas",
+      "instrument": "english_horn",
+      "label": "English Horn",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "E3",
+    "hi": "C6",
+    "resp": {
+      "gain": [
+        0.85,
+        1.0,
+        0.95,
+        0.8
+      ],
+      "air": [
+        0.06,
+        0.05,
+        0.05,
+        0.06
+      ],
+      "tilt": [
+        0.75,
+        0.8,
+        0.85,
+        0.9
+      ],
+      "atk": [
+        1.1,
+        1.0,
+        0.9,
+        0.8
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.2,
+        5.4,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.48,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -13.5,
+      "inharm": 0.003,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        600,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        1900,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 6.5,
+      "q": 0.9,
+      "env": 0.0,
+      "t": 0.06
+    },
+    "env": {
+      "decay": 0.06,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.05,
+      "air": 0.06,
+      "ms": 22
+    }
+  },
+  "clarinet": {
+    "name": "clarinet",
+    "class": {
+      "family": "maderas",
+      "instrument": "clarinet",
+      "label": "Clarinet",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "D3",
+    "hi": "A6",
+    "resp": {
+      "gain": [
+        0.95,
+        0.88,
+        1,
+        0.9
+      ],
+      "air": [
+        0.08,
+        0.09,
+        0.05,
+        0.07
+      ],
+      "tilt": [
+        0.82,
+        0.7,
+        0.88,
+        0.8
+      ],
+      "atk": [
+        1.1,
+        1.0,
+        0.85,
+        0.7
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.12,
+        0.2,
+        0.45,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -12.0,
+      "inharm": 0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        1400,
+        4,
+        1.5
+      ],
+      "f2": [
+        2100,
+        2,
+        3
+      ]
+    },
+    "filt": {
+      "cut": 6,
+      "q": 0.7,
+      "env": 0.0,
+      "t": 0.08
+    },
+    "env": {
+      "decay": 0.06,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.03,
+      "air": 0.06,
+      "ms": 25
+    },
+    "anchors": [
+      "D3",
+      "F4",
+      "A4",
+      "G6"
+    ]
+  },
+  "bass_clarinet": {
+    "name": "bass_clarinet",
+    "class": {
+      "family": "maderas",
+      "instrument": "bass_clarinet",
+      "label": "Bass Clarinet",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "Bb1",
+    "hi": "F5",
+    "resp": {
+      "gain": [
+        1,
+        0.92,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.11,
+        0.1,
+        0.07,
+        0.08
+      ],
+      "tilt": [
+        0.85,
+        0.72,
+        0.8,
+        0.75
+      ],
+      "atk": [
+        1.35,
+        1.15,
+        0.95,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5,
+        5,
+        5.2,
+        5.2
+      ],
+      "oddEven": [
+        0.12,
+        0.22,
+        0.45,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -14.0,
+      "inharm": 0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        750,
+        4,
+        1.5
+      ],
+      "f2": [
+        1050,
+        2,
+        3
+      ]
+    },
+    "filt": {
+      "cut": 4,
+      "q": 0.7,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.08,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.07,
+      "noiseAM": 0.04
+    },
+    "onset": {
+      "hit": 0.06,
+      "air": 0.1,
+      "ms": 30
+    },
+    "anchors": [
+      "Bb1",
+      "Eb3",
+      "A3",
+      "F5"
+    ]
+  },
+  "bassoon": {
+    "name": "bassoon",
+    "class": {
+      "family": "maderas",
+      "instrument": "bassoon",
+      "label": "Bassoon",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "Bb1",
+    "hi": "Eb5",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.9,
+        0.8
+      ],
+      "air": [
+        0.08,
+        0.06,
+        0.05,
+        0.05
+      ],
+      "tilt": [
+        0.7,
+        0.75,
+        0.8,
+        0.85
+      ],
+      "atk": [
+        1.2,
+        1.1,
+        1.0,
+        0.9
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        4.8,
+        5.0,
+        5.2,
+        5.4
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -11.0,
+      "inharm": 0.004,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        500,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        1100,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 5.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.08
+    },
+    "env": {
+      "decay": 0.07,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.06,
+      "air": 0.08,
+      "ms": 25
+    }
+  },
+  "contrabassoon": {
+    "name": "contrabassoon",
+    "class": {
+      "family": "maderas",
+      "instrument": "contrabassoon",
+      "label": "Contrabassoon",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "Bb0",
+    "hi": "Bb4",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.85,
+        0.75
+      ],
+      "air": [
+        0.15,
+        0.1,
+        0.08,
+        0.08
+      ],
+      "tilt": [
+        0.75,
+        0.8,
+        0.85,
+        0.9
+      ],
+      "atk": [
+        1.6,
+        1.4,
+        1.2,
+        1.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        4.5,
+        4.5,
+        4.8,
+        5.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -13.0,
+      "inharm": 0.006,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        250,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        800,
+        6.0,
+        1.1
+      ]
+    },
+    "filt": {
+      "cut": 3.5,
+      "q": 0.9,
+      "env": 0.0,
+      "t": 0.12
+    },
+    "env": {
+      "decay": 0.1,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.1,
+      "noiseAM": 0.06
+    },
+    "onset": {
+      "hit": 0.08,
+      "air": 0.15,
+      "ms": 35
+    }
+  },
+  "saxophone": {
+    "name": "saxophone",
+    "class": {
+      "family": "maderas",
+      "instrument": "saxophone",
+      "label": "Saxophone",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "Db3",
+    "hi": "A5",
+    "resp": {
+      "gain": [
+        0.85,
+        1.0,
+        0.95,
+        0.9
+      ],
+      "air": [
+        0.08,
+        0.05,
+        0.05,
+        0.06
+      ],
+      "tilt": [
+        0.65,
+        0.7,
+        0.75,
+        0.8
+      ],
+      "atk": [
+        1.0,
+        0.9,
+        0.8,
+        0.76
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.2,
+        5.4,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -9.5,
+      "inharm": 0.002,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        900,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        2400,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 8.5,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.06
+    },
+    "env": {
+      "decay": 0.06,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.06,
+      "noiseAM": 0.04
+    },
+    "onset": {
+      "hit": 0.05,
+      "air": 0.08,
+      "ms": 18
+    }
+  },
+  "kena": {
+    "name": "kena",
+    "class": {
+      "family": "maderas",
+      "instrument": "kena",
+      "label": "Kena",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "G4",
+    "hi": "G7",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.25,
+        0.2,
+        0.18,
+        0.22
+      ],
+      "tilt": [
+        1.0,
+        1.0,
+        0.95,
+        0.9
+      ],
+      "atk": [
+        1.3,
+        1.2,
+        1.1,
+        1.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.2,
+        5.4,
+        5.5,
+        5.6
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -19.0,
+      "inharm": 0.015,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        2800,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "filt": {
+      "cut": 4.5,
+      "q": 0.75,
+      "env": 0.0,
+      "t": 0.08
+    },
+    "env": {
+      "decay": 0.08,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.22,
+      "noiseAM": 0.12
+    },
+    "onset": {
+      "hit": 0.03,
+      "air": 0.25,
+      "ms": 38
+    }
+  },
+  "horn": {
+    "name": "horn",
+    "class": {
+      "family": "metales",
+      "instrument": "horn",
+      "label": "Horn",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "F1",
+    "hi": "F5",
+    "resp": {
+      "gain": [
+        0.9,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.02,
+        0.02,
+        0.03,
+        0.04
+      ],
+      "tilt": [
+        0.7,
+        0.75,
+        0.8,
+        0.85
+      ],
+      "atk": [
+        1.6,
+        1.4,
+        1.2,
+        1.1
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.2,
+        5.2,
+        5.4,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -12.5,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        450,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        1000,
+        6.0,
+        1.1
+      ]
+    },
+    "filt": {
+      "cut": 4.5,
+      "q": 0.85,
+      "env": 0.0,
+      "t": 0.08
+    },
+    "env": {
+      "decay": 0.08,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.03,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.04,
+      "air": 0.03,
+      "ms": 30
+    }
+  },
+  "trumpet": {
+    "name": "trumpet",
+    "class": {
+      "family": "metales",
+      "instrument": "trumpet",
+      "label": "Trumpet",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "E3",
+    "hi": "C6",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        1.0,
+        0.95
+      ],
+      "air": [
+        0.02,
+        0.02,
+        0.02,
+        0.03
+      ],
+      "tilt": [
+        0.6,
+        0.65,
+        0.7,
+        0.75
+      ],
+      "atk": [
+        0.9,
+        0.8,
+        0.76,
+        0.7
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.6,
+        5.6
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -8.5,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        1200,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        2800,
+        6.0,
+        1.1
+      ]
+    },
+    "filt": {
+      "cut": 9.5,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.05
+    },
+    "env": {
+      "decay": 0.05,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.03,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.07,
+      "air": 0.02,
+      "ms": 15
+    }
+  },
+  "trombone": {
+    "name": "trombone",
+    "class": {
+      "family": "metales",
+      "instrument": "trombone",
+      "label": "Trombone",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "E2",
+    "hi": "Bb5",
+    "resp": {
+      "gain": [
+        0.95,
+        1.0,
+        1.0,
+        0.9
+      ],
+      "air": [
+        0.02,
+        0.02,
+        0.02,
+        0.03
+      ],
+      "tilt": [
+        0.65,
+        0.7,
+        0.75,
+        0.8
+      ],
+      "atk": [
+        1.2,
+        1.1,
+        1.0,
+        0.9
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.2,
+        5.2,
+        5.4,
+        5.4
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.5,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        600,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        1600,
+        6.0,
+        1.1
+      ]
+    },
+    "filt": {
+      "cut": 6.5,
+      "q": 0.9,
+      "env": 0.0,
+      "t": 0.06
+    },
+    "env": {
+      "decay": 0.06,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.03,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.06,
+      "air": 0.02,
+      "ms": 22
+    }
+  },
+  "tuba": {
+    "name": "tuba",
+    "class": {
+      "family": "metales",
+      "instrument": "tuba",
+      "label": "Tuba",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "Bb0",
+    "hi": "F4",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.9,
+        0.8
+      ],
+      "air": [
+        0.05,
+        0.04,
+        0.03,
+        0.03
+      ],
+      "tilt": [
+        0.6,
+        0.65,
+        0.7,
+        0.75
+      ],
+      "atk": [
+        2.0,
+        1.8,
+        1.6,
+        1.4
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        4.5,
+        4.5,
+        4.8,
+        4.8
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -15.0,
+      "inharm": 0.005,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        250,
+        6.0,
+        1.5
+      ],
+      "f2": [
+        600,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 3.0,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.1,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.09,
+      "air": 0.08,
+      "ms": 45
+    }
+  },
+  "timpani": {
+    "name": "timpani",
+    "class": {
+      "family": "percusion",
+      "instrument": "timpani",
+      "label": "Timpani",
+      "regime": "percutido",
+      "articulations": [
+        "golpe",
+        "redoble"
+      ]
+    },
+    "lo": "C2",
+    "hi": "C4",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "tilt": [
+        0.4,
+        0.45,
+        0.5,
+        0.5
+      ],
+      "atk": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "vib": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -14,
+      "inharm": 0.2,
+      "mode": "inharm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        150,
+        6,
+        1
+      ],
+      "f2": [
+        400,
+        4,
+        1.5
+      ]
+    },
+    "filt": {
+      "cut": 4,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 1.2,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.6,
+      "air": 0,
+      "ms": 8
+    }
+  },
+  "glockenspiel": {
+    "name": "glockenspiel",
+    "class": {
+      "family": "percusion",
+      "instrument": "glockenspiel",
+      "label": "Glockenspiel",
+      "regime": "percusivo",
+      "articulations": [
+        "clear"
+      ]
+    },
+    "lo": "G5",
+    "hi": "C9",
+    "resp": {
+      "gain": [
+        0.8,
+        0.9,
+        1.0,
+        0.9
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.5,
+        0.55,
+        0.6,
+        0.65
+      ],
+      "atk": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -8.0,
+      "inharm": 0.055,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        4000,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 0.9,
+      "env": 0.3,
+      "t": 0.06
+    },
+    "env": {
+      "decay": 3.0,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.75,
+      "air": 0.0,
+      "ms": 2
+    }
+  },
+  "xylophone": {
+    "name": "xylophone",
+    "class": {
+      "family": "percusion",
+      "instrument": "xylophone",
+      "label": "Xylophone",
+      "regime": "percusivo",
+      "articulations": [
+        "seco"
+      ]
+    },
+    "lo": "F4",
+    "hi": "C8",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.65,
+        0.7,
+        0.75,
+        0.8
+      ],
+      "atk": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -12.0,
+      "inharm": 0.05,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        1200,
+        6.0,
+        1.2
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "filt": {
+      "cut": 6.5,
+      "q": 0.7,
+      "env": 0.3,
+      "t": 0.04
+    },
+    "env": {
+      "decay": 0.4,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.7,
+      "air": 0.0,
+      "ms": 2
+    }
+  },
+  "vibraphone": {
+    "name": "vibraphone",
+    "class": {
+      "family": "percusion",
+      "instrument": "vibraphone",
+      "label": "Vibraphone",
+      "regime": "percusivo",
+      "articulations": [
+        "sustained",
+        "staccato"
+      ]
+    },
+    "lo": "F3",
+    "hi": "F6",
+    "resp": {
+      "gain": [
+        0.9,
+        0.95,
+        1.0,
+        0.9
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.75,
+        0.8,
+        0.85,
+        0.9
+      ],
+      "atk": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "vib": [
+        0.15,
+        0.15,
+        0.15,
+        0.15
+      ],
+      "vibRate": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -15.0,
+      "inharm": 0.028,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        700,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "filt": {
+      "cut": 5.0,
+      "q": 0.8,
+      "env": 0.4,
+      "t": 0.08
+    },
+    "env": {
+      "decay": 3.0,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.45,
+      "air": 0.0,
+      "ms": 3
+    }
+  },
+  "marimba": {
+    "name": "marimba",
+    "class": {
+      "family": "percusion",
+      "instrument": "marimba",
+      "label": "Marimba",
+      "regime": "percusivo",
+      "articulations": [
+        "normal",
+        "staccato"
+      ]
+    },
+    "lo": "A1",
+    "hi": "C7",
+    "resp": {
+      "gain": [
+        0.95,
+        1.0,
+        0.9,
+        0.8
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.85,
+        0.9,
+        0.95,
+        1.0
+      ],
+      "atk": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -20.0,
+      "inharm": 0.035,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        350,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "filt": {
+      "cut": 3.0,
+      "q": 0.6,
+      "env": 0.4,
+      "t": 0.03
+    },
+    "env": {
+      "decay": 1.5,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.5,
+      "air": 0.0,
+      "ms": 3
+    }
+  },
+  "tubular_bells": {
+    "name": "tubular_bells",
+    "class": {
+      "family": "percusion",
+      "instrument": "tubular_bells",
+      "label": "Tubular Bells",
+      "regime": "percusivo",
+      "articulations": [
+        "sustained"
+      ]
+    },
+    "lo": "C4",
+    "hi": "G5",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.95,
+        0.9
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.6,
+        0.65,
+        0.7,
+        0.75
+      ],
+      "atk": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -9.0,
+      "inharm": 0.095,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        600,
+        6.0,
+        1.2
+      ],
+      "f2": [
+        3500,
+        6.0,
+        1.4
+      ]
+    },
+    "filt": {
+      "cut": 8.0,
+      "q": 1.1,
+      "env": 0.5,
+      "t": 0.25
+    },
+    "env": {
+      "decay": 3.0,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.02,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.8,
+      "air": 0.0,
+      "ms": 4
+    }
+  },
+  "snare": {
+    "name": "snare",
+    "class": {
+      "family": "percusion",
+      "instrument": "snare",
+      "label": "Snare",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ]
+    },
+    "lo": "C3",
+    "hi": "C5",
+    "resp": {
+      "gain": [
+        1.4,
+        1.8,
+        1.8,
+        1.6
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.7,
+        0.7,
+        0.7,
+        0.7
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        4200,
+        0.6
+      ]
+    },
+    "form": {
+      "f1": [
+        1000,
+        0,
+        2.0
+      ],
+      "f2": [
+        3000,
+        0,
+        2.5
+      ]
+    },
+    "filt": {
+      "cut": 22.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.2,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 1.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 1.2,
+      "air": 0.0,
+      "ms": 10
+    }
+  },
+  "bass_drum": {
+    "name": "bass_drum",
+    "class": {
+      "family": "percusion",
+      "instrument": "bass_drum",
+      "label": "Bass Drum",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ]
+    },
+    "lo": "C1",
+    "hi": "C3",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        80,
+        1.0
+      ]
+    },
+    "form": {
+      "f1": [
+        1000,
+        0,
+        2.0
+      ],
+      "f2": [
+        3000,
+        0,
+        2.5
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.4,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 1.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.7,
+      "air": 0.0,
+      "ms": 4
+    }
+  },
+  "cymbals": {
+    "name": "cymbals",
+    "class": {
+      "family": "percusion",
+      "instrument": "cymbals",
+      "label": "Cymbals",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ]
+    },
+    "lo": "C4",
+    "hi": "C7",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.9,
+        0.9,
+        0.9,
+        0.9
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        6000,
+        0.7
+      ]
+    },
+    "form": {
+      "f1": [
+        1000,
+        0,
+        2.0
+      ],
+      "f2": [
+        3000,
+        0,
+        2.5
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 1.5,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 1.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.4,
+      "air": 0.0,
+      "ms": 2
+    }
+  },
+  "tam_tam": {
+    "name": "tam_tam",
+    "class": {
+      "family": "percusion",
+      "instrument": "tam_tam",
+      "label": "Tam-tam",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ]
+    },
+    "lo": "C2",
+    "hi": "C4",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        400,
+        0.6
+      ]
+    },
+    "form": {
+      "f1": [
+        1000,
+        0,
+        2.0
+      ],
+      "f2": [
+        3000,
+        0,
+        2.5
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 3,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 1.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.4,
+      "air": 0.0,
+      "ms": 6
+    }
+  },
+  "triangle": {
+    "name": "triangle",
+    "class": {
+      "family": "percusion",
+      "instrument": "triangle",
+      "label": "Triangle",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ]
+    },
+    "lo": "C5",
+    "hi": "C7",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.95,
+        0.95,
+        0.95,
+        0.95
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        4000,
+        3.0
+      ]
+    },
+    "form": {
+      "f1": [
+        1000,
+        0,
+        2.0
+      ],
+      "f2": [
+        3000,
+        0,
+        2.5
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 1.5,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 1.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.3,
+      "air": 0.0,
+      "ms": 1
+    }
+  },
+  "tambourine": {
+    "name": "tambourine",
+    "class": {
+      "family": "percusion",
+      "instrument": "tambourine",
+      "label": "Tambourine",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ]
+    },
+    "lo": "C4",
+    "hi": "C6",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.85,
+        0.85,
+        0.85,
+        0.85
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        6000,
+        1.0
+      ]
+    },
+    "form": {
+      "f1": [
+        1000,
+        0,
+        2.0
+      ],
+      "f2": [
+        3000,
+        0,
+        2.5
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.3,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 1.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.5,
+      "air": 0.0,
+      "ms": 2
+    }
+  },
+  "woodblock": {
+    "name": "woodblock",
+    "class": {
+      "family": "percusion",
+      "instrument": "woodblock",
+      "label": "Woodblock",
+      "regime": "percutido",
+      "articulations": [
+        "golpe"
+      ]
+    },
+    "lo": "C4",
+    "hi": "C6",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "tilt": [
+        0.65,
+        0.7,
+        0.7,
+        0.75
+      ],
+      "atk": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "vib": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -8,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        1700,
+        4
+      ]
+    },
+    "form": {
+      "f1": [
+        1200,
+        6,
+        3
+      ],
+      "f2": [
+        2500,
+        4,
+        3
+      ]
+    },
+    "filt": {
+      "cut": 10,
+      "q": 2,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.08,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.9,
+      "air": 0,
+      "ms": 2
+    }
+  },
+  "harp": {
+    "name": "harp",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "harp",
+      "label": "Harp",
+      "regime": "percusivo",
+      "articulations": [
+        "legato",
+        "staccato",
+        "lauto"
+      ]
+    },
+    "lo": "Cb1",
+    "hi": "G7",
+    "anchors": ["Cb1", "A2", "F5", "G7"],   // 2026-08-25 (Mario, M1-M3 de CH2: «les falta ese paso que suaviza»): el ancla 3 se muda al SEGUNDO quiebre de material, tripa→nailon (era F4, una OCTAVA abajo — el mismo error que el del metal pero al doble). La numeración de cuerdas de la ficha (7E=Mi1 · 6E=Mi2 · 5A=La2) sitúa las octavas del arpa de Fa a Mi contando hacia abajo, así que «octavas 3-4 tripa» = F3-E5 y «octavas 1-2 nailon» = F5-E7: Mi4, Sol4 y La4 son TRIPA y estaban recibiendo valores de nailon. La propuesta de anclas del informe decía «F4 ≈ región donde en muchas arpas la tripa da paso al nailon» y se contradecía con su propia tabla de materiales; manda la tabla. Recién con F5 las cuatro anclas dicen los cuatro estados de la cuerda: entorchada · tripa · nailon · la más corta.
+    // 2026-08-24: el ancla 2 se muda al QUIEBRE DE MATERIAL (era C3). Las doce graves son entorchadas de acero/cobre (Do1-Sol2) y la PRIMERA DE TRIPA es el La2 (5A); con el ancla en C3 el motor estiraba el metal media octava de mas.
+    "resp": {
+      "gain": [0.65, 1.00, 0.95, 0.75],   // 2026-08-23 4º (oído de Mario, medido: en la ref el E1 pica −3,1 dB bajo el E2; el nuestro +0,6): el bordón grave es menos sonoro — y el fundamental deja de taparlo todo
+      "air": [0.10, 0.12, 0.15, 0.20],
+      "tilt": [0.75, 0.50, 0.45, 0.30],   // 2026-08-23 2º: grave 0.55→0.75 — el metal entorchado medido (ver cabecera)
+      "atk": [1.6, 1.0, 1.15, 0.85],   // 2026-08-25 (Mario, D4-D5: «necesita cada vez más carne para compensar la tensión de la cuerda»):
+      // el ataque dejaba de alargarse hacia el agudo (0.9 · 0.7) como si la yema pesara menos allá. Es al revés: los 2 cm de
+      // contacto son el 5% de una cuerda de 40 cm y más de un cuarto de una de 7,5 — cuanto más corta la cuerda, MÁS manda
+      // el dedo. Previo [1.6, 1.0, 0.9, 0.7]. BANDERA: a calibrar de oído.   // 2026-08-23 4º: la cuerda grave DURA en llegar (ref: pico a 80 ms; nuestro llegaba en 45) — período de 24 ms + tapa que no radia el fundamental + modos graves lentos
+      "vib": [0, 0, 0, 0],
+      "vibRate": [0, 0, 0, 0],
+      "oddEven": [0.5, 0.5, 0.5, 0.5]
+    },
+    "src": {
+      "tilt": -14.0,
+      "inharm": [0.02, 0.012, 0.04, 0.06],
+      "duet": [[1, 3, 4, 8], [0.16, 0.13, 0.10, 0.06]],
+      "mode": "inharm",
+      "partials": [56, 12, 10, 8],   // 2026-08-24: el derrumbe esta medido en la referencia del Ginastera — E1 51 parciales utiles · E2 25 · A2 (primera de tripa) 11. El 32 del ancla 2 era el metal llegando hasta C3. Valores previos [56, 32, 14, 8].   // 2026-08-23 2º: la referencia tiene 51 parciales en el E1 (techo era k=32/1318 Hz)
+      "phaseMs": 1.5,
+      "nb": [2500, 1.2]
+    },
+    "form": {
+      // 2026-08-20 (Mario, "resonancia exagerada"): las frecuencias son los modos medidos (Le Carrou 2010) y no se
+      // tocan; lo que estaba fuera de escala era el filtro. [f, dB, Q] con +6 dB a Q 12 no es una tabla que radia:
+      // es un pico angosto que salta 6 dB cada vez que un parcial le cae encima, y el LTAS del render de Finale no
+      // tiene ningun realce ahi (134 Hz esta 10 dB POR DEBAJO de 250). A la escala del clavecin, que se afino de oido.
+      "f1": [134, 2, 8],   // 2026-08-23 3º: los dos modos graves ceden 1 dB — en la referencia la joroba vive una octava ARRIBA (k6-k11, pico k8=330 Hz; nuestro pico caía en k4=165)
+      "f2": [270, 1.5, 5],
+      "bank": [
+        [134, 2, 8],
+        [157, 1, 6],
+        [300, 4, 4],   // 2026-08-23 2º/3º: las dos ALTAS suben (la joroba k6-k11 de la referencia está en 250-450 Hz); las dos MEDIDAS (Le Carrou) intactas en frecuencia
+        [430, 3.5, 4]
+      ]
+    },
+    "filt": {
+      "cut": [48, 28, 12, 6],   // 2026-08-25: la misma yema, del otro lado — excitación más ancha = menos parciales que sobreviven.
+      // D5 baja de 8,4 a 7,3 kHz (k14→k12), sigue por encima del piso de 6,8 kHz que mide Chadefaux. Previo [48, 28, 14, 7].
+      "q": 0.7,
+      "env": 0.35,
+      "t": 0.5
+    },
+    "env": {
+      "decay": [8, 4.5, 2.2, 0.4],   // 2026-08-20 (Mario, A/B contra el piano en el Keyboard: "puede durar mas de 10 s, es como si le faltan las manos del arpista"): antes [17, 9, 4.5, 0.5]. El piano no cuelga porque TIENE apagador (release 1.5/0.6/0.16/0.05); el arpa es l.v. y cada nota corre su decay entero, asi que el decay ES la duracion. El unico punto medido (Le Carrou: 8 s a 123 Hz) queda respetado en el grave; el 17 del bajo era extrapolacion.
+      "sustain": 0,
+      // 2026-08-20 (Mario): LAS MANOS DEL ARPISTA. El arpa nacio l.v. (sin release, la cuerda muere sola), y de
+      // oido eso es un arpa sin arpista: cada cuerda tirada al maximo y nadie que la calle. Se asume que el
+      // arpista apaga cada nota al tocar la siguiente y queda solo la caja. La rampa del motor cae a -60 dB en
+      // `release` segundos, asi que a un tercio de ese tiempo ya esta 20 dB abajo: la mano frena rapido y la
+      // madera zumba un instante. Mas lento que el fieltro del piano en el agudo (una mano no es un apagador
+      // por cuerda) y mas rapido en el grave (la cuerda del arpa guarda mucha menos energia que la del piano).
+      // relNoise, declarado desde el 18-08 esperando este momento, ahora suena: el roce del dedo al frenar.
+      "release": [1.2, 0.8, 0.45, 0.2],
+      "bloom": [0.35, 0.25, 0.20, 0.05],
+      "decayTilt": [0.25, 0.30, 0.40, 0.60],
+      "relNoise": [0.10, 0.12, 0.10, 0.06]
+    },
+    "char": {
+      "noise": 0,
+      "noiseAM": 0
+    },
+    "onset": {
+      "hit": [0.30, 0.18, 0.06, 0.07],   // 2026-08-25 2º (Mario: «la mano en las notas agudas queda más cerca DE LA CUERDA»): arriba el
+      // dedo no viaja — ya está apoyado. Sin viaje no hay impacto: el punteo queda de puro desplazamiento-y-suelta, que es la
+      // «excitación casi ideal» del informe §? (63-85% de la energía es potencial, 15-37% cinética). onset.hit modela justo la
+      // parte cinética, la del dedo que LLEGA — y esa es la uña que Mario seguía oyendo. Se hunde en el ancla 3 y NO en la 4:
+      // el extremo agudo quedó calibrado hoy mismo para el ff de Mahler y no se toca sin volver a escucharlo. Los fuertes
+      // recuperan el golpe por el otro eje (Lexicon: ff ×1.75-2.10, fff ×2.25-2.80 en el agudo). Previo [0.30,0.18,0.10,0.07].
+      "air": 0.18,
+      "freqMul": 4,   // 2026-08-23 5º (Mario: «tzh en vez de dhon»): contrato NUEVO opt-in del motor — el chiff centra en 4·f0 y SIGUE a la nota (E1→165 Hz, la zona T1/A0 de la caja, consonante con su serie); antes caía en la banda 1200+(1-air)·2600 ≈ 3,3 kHz: siseo de dedo. El fijo de 150 sigue desterrado (re fantasma, 20-08).
+      "ms": [14, 10, 5, 4],   // 2026-08-25: dos fenómenos, no uno. Abajo son los ~15 ms del golpe de tapa (informe §4); arriba es el deslizamiento de la yema, medido en 1,2-6,1 ms (Chadefaux 2012). Requiere el contrato a4 de onset.ms (Keyboard, 2026-08-25). BANDERA: a calibrar de oído.   // 2026-08-23 5º: el thump de tapa real dura ~15 ms (informe §4) — con 5 ms era un chasquido
+      "band": [134, 157],   // 2026-08-23 6º (Mario: «me falta el sonido de hueco de la caja»): la caja habla en SU altura FIJA — onset.band (el contrato del clavecín) con los DOS modos medidos de Le Carrou; el D2 del compás 2 sonaba tan lleno porque su serie CAE en los modos (147→134/157 · 294→300) — esto le da ese golpe de caja a TODAS las notas
+      "bandHit": [0.18, 0.08, 0.05, 0.08],   // 2026-08-25 (Mario: «esa nota decae rapidísimo pero queda la resonancia de la caja»): el agudo
+      // deja de ser CERO. El razonamiento del 24-08 —«la caja habla menos donde la cuerda es de tripa»— vale para el nivel
+      // absoluto, pero los modos de la caja están en 134/157 Hz y no dependen de la nota: en el grave el ring queda TAPADO
+      // por el fundamental de la propia cuerda, que vive en esa misma banda y dura ocho segundos; arriba la cuerda muere en
+      // 0,4 s y la caja queda sola. Más expuesto, no menos — el sonido de Mahler son dos eventos, el tirón y lo que zumba
+      // después. Previo [0.18, 0.08, 0.04, 0]. BANDERA: a calibrar de oído.
+      "bandMs": 120,   // el ring de caja dura más que el thump (~15 ms); las simpáticas siguen 0,3-1 s (Le Carrou)
+      "freq": null,   // 2026-08-20 (Mario, "re fantasma" sobre el mi1 y el si1 del arpegio): el thump de tapa fijo en 150 Hz es un re grave, ajeno a la serie de cualquier bajo del arpa (mi1: 124-165 · si1: 124-186); vuelve a seguir a la nota
+      "pitch": [3, 12, 26, 26],   // 2026-08-25 (Mario, Mi4 de CH2): el glide de tensión por MATERIAL, no uno solo para todo.
+      // El entorchado de acero/cobre casi no cede (3); la tripa del A2 son los ~15 cents del informe (12); en el F4
+      // ya es nailon y salta al doble (26 — Woodhouse mide >2% en los primeros 100 ms en un E4 de nailon de
+      // 390 mm; el material del agudo depende del encordado, y el oído de Mario puso el quiebre en F5,
+      // no en E4); de ahí para arriba PLANO: ya es todo nailon, el material no cambia
+      // más. El 34 del primer intento era extrapolación y el oído de Mario lo cazó — el Si5 se llevaba 29,7 cents
+      // contra los 25,9 del Mi4 aprobado.
+      // Requiere el contrato a4 de onset.pitch (Keyboard, 2026-08-25). BANDERA: a calibrar de oído.
+      "pitchMs": 100
+    }
+  },
+  "piano": {
+    "name": "piano",
+    "class": {
+      "family": "teclados",
+      "instrument": "piano",
+      "label": "Piano (Upright)",   // 2026-08-15 (Mario): el vertical, mecánica ruidosa — hermano de Piano (Grand); tercer piano por venir (resonancia pitagórica, SympBank)
+      "regime": "percusivo",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "A0",
+    "hi": "C8",
+    "anchors": ["A0", "C3", "C5", "C8"],
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.7,
+        0.75,
+        0.8,
+        0.85
+      ],
+      "atk": [
+        0.2,
+        0.12,
+        0.1,
+        0.1
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -11.0,
+      "inharm": [0.045, 0.013, 0.1, 1.5],
+      "partials": [44, 16, 12, 8],   // 2026-08-26 (Mario, bajos del Ravel: «G3 y G2 o G1 fisicamente tienen una cuerda con diferente peso, lo que oigo es como si las cuerdas fueran del mismo tamano»; y «G3 es perfecto»). No estaba declarado: NHG = 16 parciales para las 88 teclas. Entre el ancla grave y la del tenor NADA se movia en el espectro (inharm 0.0016->0.0017, tilt 0.90->0.90, gain 1.0->1.0): de La0 a Do3 el piano era la MISMA cuerda transpuesta. La entorchada del grave suena casi toda en sus parciales —la tapa no radia los 49 Hz de la fundamental— y la del tenor vive en la suya. Anclas 2-4 clavadas en el 16 de hoy para no tocar G3 (queda identico): G2 pasa a 20 parciales y G1 a 36. BANDERA: a calibrar de oido.
+      "duet": [[0.9, 1.2, 1.4, 1.6], [0.8, 0.95, 0.9, 0.85]],
+      "trio": [[-0.8, -1.0, -1.2, -1.4], [0, 0.6, 0.9, 0.85]],
+      "mode": "inharm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        350,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        1500,
+        6.0,
+        1.2
+      ],
+      "bank": [
+        [35, -10.0, 1.4],
+        [350, 6.0, 1.4],
+        [1500, 6.0, 1.2]
+      ]
+    },
+    "filt": {
+      "cut": 5.5,
+      "q": 0.8,
+      "env": 0.45,
+      "t": 0.2
+    },
+    "env": {
+      "decay": [15, 4.8, 1.7, 0.42],
+      "sustain": 0,
+      "release": [1.5, 0.6, 0.16, 0.05],
+      "relNoise": [0.3, 0.22, 0.15, 0.09],
+      "bloom": [0.60, 0.50, 0.35, 0.20],   // 2026-08-26 (Mario: «puede tener el fade más acentuado después del martillo»): el prompt de la doble caída tardaba 1,2 s en el grave — el golpe del martillo se disolvía en vez de caer. Previo [1.2, 0.9, 0.5, 0.25].
+      "bloomDepth": [0.22, 0.26, 0.34, 0.42],   // 2026-08-26: hondura del prompt (contrato env.bloomDepth, Keyboard 2026-08-26). El motor la tenía clavada en 0.42 (−7,5 dB) para todos: acá el grave cae −13,2 dB y el agudo queda como estaba. Weinreich mide 10-20 dB entre prompt y aftersound en el bajo. BANDERA: a calibrar de oído.
+      "decayTilt": 0.2
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.65,
+      "air": 0.0,
+      "ms": 10,
+      "freq": 120,
+      "pitch": 3.5,
+      "pitchMs": 45
+    }
+  },
+  "piano_steinway": {
+    "name": "piano_steinway",
+    "class": {
+      "family": "teclados",
+      "instrument": "piano_steinway",
+      "label": "Piano (Grand)",   // 2026-08-15 (Mario): sin marca en toda la suite — la clave piano_steinway queda (mmf/Lexicon)
+      "regime": "percusivo",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "A0",
+    "hi": "C8",
+    "anchors": ["A0", "C3", "C5", "C8"],
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [1.00, 0.90, 0.85, 0.90],   // 2026-08-26: la pendiente del grave, misma escucha. exp = (srcTilt + tilt*12)*0.1661, asi que 0.90 -> 1.00 en el ancla grave lleva la caida de k^-0.95 a k^-0.75: el parcial 10 sube ~4 dB. La cuerda gorda que suena por sus armonicos y no por su fundamental. Anclas 2-4 sin tocar (G3 identico). Previo [0.9, 0.9, 0.85, 0.9].   // 2026-08-15 (Mario, C6 en el Register: «más cuerda que martillo, muy brillante») high/top 0.95/1.0 → 0.85/0.90,
+      "atk": [0.2, 0.12, 0.06, 0.06],   // 2026-08-15: ataque más corto en high/top (0.10 → 0.06) — más martillo relativo,
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -16.5,
+      "inharm": [0.016, 0.017, 0.085, 1.5],
+      "partials": [44, 16, 12, 8],   // 2026-08-26 (Mario, bajos del Ravel: «G3 y G2 o G1 fisicamente tienen una cuerda con diferente peso, lo que oigo es como si las cuerdas fueran del mismo tamano»; y «G3 es perfecto»). No estaba declarado: NHG = 16 parciales para las 88 teclas. Entre el ancla grave y la del tenor NADA se movia en el espectro (inharm 0.0016->0.0017, tilt 0.90->0.90, gain 1.0->1.0): de La0 a Do3 el piano era la MISMA cuerda transpuesta. La entorchada del grave suena casi toda en sus parciales —la tapa no radia los 49 Hz de la fundamental— y la del tenor vive en la suya. Anclas 2-4 clavadas en el 16 de hoy para no tocar G3 (queda identico): G2 pasa a 20 parciales y G1 a 36. BANDERA: a calibrar de oido.   // 2026-08-15 (literatura, Steinway D: Galembo&Askenfelt A0 1.6e-4 · Rigaud 2013 ×3/oct): B×100 · antes [0.045,0.013,0.1,1.5] lineal; ahora se interpola en LOG
+      "duet": [[0, 1.0, 0.5, 0.15], [0, 0.95, 0.9, 0.85]],   // 2026-08-15: el afinador sostiene ~0.3 Hz, no cents (Weinreich · Kirk 1–2 c en el medio) — los cents BAJAN con la altura; A0 monocordio (gain 0). Antes [0.9,1.2,1.4,1.6]/[0.8,0.95,0.9,0.85]
+      "trio": [[0, -0.9, -0.45, -0.15], [0, 0.6, 0.9, 0.85]],   // 2026-08-15: ídem (3ª cuerda) · antes [-0.8,-1.0,-1.2,-1.4]
+      "mode": "inharm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        280,
+        6.0,
+        1.5
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ],
+      "bank": [
+        [35, -10.0, 1.4],
+        [280, 6.0, 1.5]
+      ]
+    },
+    "filt": {
+      "cut": 3.2,
+      "q": 0.6,
+      "env": 0.6,
+      "t": 0.08
+    },
+    "env": {
+      "decay": [15, 8.7, 2.6, 0.42],   // 2026-08-15: aftersound C3–C5 iba ~2× rápido vs Weinreich (<2 dB/s) · antes [15,4.8,1.7,0.42]
+      "sustain": 0,
+      "release": [1.5, 0.6, 0.16, 0.05],
+      "relNoise": [0.16, 0.12, 0.08, 0.05],
+      "bloom": [0.60, 0.50, 0.35, 0.20],   // 2026-08-26 (Mario: «puede tener el fade más acentuado después del martillo»): el prompt de la doble caída tardaba 1,2 s en el grave — el golpe del martillo se disolvía en vez de caer. Previo [1.2, 0.9, 0.5, 0.25].
+      "bloomDepth": [0.22, 0.26, 0.34, 0.42],   // 2026-08-26: hondura del prompt (contrato env.bloomDepth, Keyboard 2026-08-26). El motor la tenía clavada en 0.42 (−7,5 dB) para todos: acá el grave cae −13,2 dB y el agudo queda como estaba. Weinreich mide 10-20 dB entre prompt y aftersound en el bajo. BANDERA: a calibrar de oído.
+      "decayTilt": 0.2
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": [0.35, 0.42, 0.55, 0.75],   // 2026-08-15 (Mario): el golpe pesa más hacia el agudo — curva A0·C3·C5·C8 (antes 0.45 plano); el Keyboard y el Register interpolan
+      "air": 0.0,
+      "ms": 16,   // 2026-08-15: thump medido 15–30 ms (Askenfelt 1993) · antes 9
+      "freq": 120,
+      "pitch": 3.5,
+      "pitchMs": 45
+    }
+  },
+  // ── PIANO (GRAND · TONAL) — 2026-08-15 (idea de Mario 07-18): el piano que la afinación 3ⁿ/2ᵐ merece y que
+  // físicamente no existe. Clon del Grand (martillo, thump, decay, bloom, release, ley de dinámica heredada) con
+  // cuerdas IDEALES: inharm al 10% del real (parciales casi exactos → las coincidencias pitagóricas —3f de Do = 2f
+  // de Sol— quedan al hercio; el cero absoluto suena a órgano, se prueba como variante) y unísonos ENGANCHADOS
+  // (±0.08 c, bajo el umbral de acople de Weinreich; monocordio · bicordio · tricordio como el D). La doble caída
+  // la sigue dando bloom. Fase 2 (sesión propia): SympBank — resonancia simpática sobre armónicos perfectos.
+  "piano_grand_tonal": {
+    "name": "piano_grand_tonal",
+    "class": {
+      "family": "teclados",
+      "instrument": "piano_grand_tonal",
+      "label": "Piano (Grand · Tonal)",
+      "regime": "percusivo",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "A0",
+    "hi": "C8",
+    "anchors": [
+      "A0",
+      "C3",
+      "C5",
+      "C8"
+    ],
+    "resp": {
+      "gain": [
+        1,
+        1,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "tilt": [1.00, 0.90, 0.85, 0.90],   // 2026-08-26: la pendiente del grave, misma escucha. exp = (srcTilt + tilt*12)*0.1661, asi que 0.90 -> 1.00 en el ancla grave lleva la caida de k^-0.95 a k^-0.75: el parcial 10 sube ~4 dB. La cuerda gorda que suena por sus armonicos y no por su fundamental. Anclas 2-4 sin tocar (G3 identico). Previo [0.9, 0.9, 0.85, 0.9].
+      "atk": [
+        0.2,
+        0.12,
+        0.06,
+        0.06
+      ],
+      "vib": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vibRate": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -16.5,
+      "inharm": [
+        0.0016,
+        0.0017,
+        0.0085,
+        0.15
+      ],
+      "partials": [44, 16, 12, 8],   // 2026-08-26 (Mario, bajos del Ravel: «G3 y G2 o G1 fisicamente tienen una cuerda con diferente peso, lo que oigo es como si las cuerdas fueran del mismo tamano»; y «G3 es perfecto»). No estaba declarado: NHG = 16 parciales para las 88 teclas. Entre el ancla grave y la del tenor NADA se movia en el espectro (inharm 0.0016->0.0017, tilt 0.90->0.90, gain 1.0->1.0): de La0 a Do3 el piano era la MISMA cuerda transpuesta. La entorchada del grave suena casi toda en sus parciales —la tapa no radia los 49 Hz de la fundamental— y la del tenor vive en la suya. Anclas 2-4 clavadas en el 16 de hoy para no tocar G3 (queda identico): G2 pasa a 20 parciales y G1 a 36. BANDERA: a calibrar de oido.
+      "duet": [
+        [
+          0,
+          0.08,
+          0.08,
+          0.08
+        ],
+        [
+          0,
+          0.95,
+          0.9,
+          0.85
+        ]
+      ],
+      "trio": [
+        [
+          0,
+          -0.08,
+          -0.08,
+          -0.08
+        ],
+        [
+          0,
+          0.6,
+          0.9,
+          0.85
+        ]
+      ],
+      "mode": "inharm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        280,
+        6,
+        1.5
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ],
+      "bank": [
+        [
+          35,
+          -10,
+          1.4
+        ],
+        [
+          280,
+          6,
+          1.5
+        ]
+      ]
+    },
+    "filt": {
+      "cut": 3.2,
+      "q": 0.6,
+      "env": 0.6,
+      "t": 0.08
+    },
+    "env": {
+      "decay": [
+        15,
+        8.7,
+        2.6,
+        0.42
+      ],
+      "sustain": 0,
+      "release": [
+        1.5,
+        0.6,
+        0.16,
+        0.05
+      ],
+      "relNoise": [
+        0.16,
+        0.12,
+        0.08,
+        0.05
+      ],
+      "bloom": [0.60, 0.50, 0.35, 0.20],   // 2026-08-26 (Mario: «puede tener el fade más acentuado después del martillo»): el prompt de la doble caída tardaba 1,2 s en el grave — el golpe del martillo se disolvía en vez de caer. Previo [1.2, 0.9, 0.5, 0.25].
+      "bloomDepth": [0.22, 0.26, 0.34, 0.42],   // 2026-08-26: hondura del prompt (contrato env.bloomDepth, Keyboard 2026-08-26). El motor la tenía clavada en 0.42 (−7,5 dB) para todos: acá el grave cae −13,2 dB y el agudo queda como estaba. Weinreich mide 10-20 dB entre prompt y aftersound en el bajo. BANDERA: a calibrar de oído.
+      "decayTilt": [1.6, 2.4, 2.8, 3.0]   // 2026-08-26 2do (Mario, tras subir src.partials a 36 en el grave: «perdimos el decay que hicimos»). La curva estaba AL REVES. El 3.0 es exactamente la ley tau_k = tau1/k, y la habia puesto mas empinada justo en el grave: con 36 parciales, los veinte nuevos se evaporaban en menos de un cuarto de segundo (parcial 10 en 0,44 s, el 20 en 0,22) — ataque riquisimo y hueco en el medio. La cuerda entorchada, larga y de baja perdida, sostiene sus parciales medios muchos segundos: ese es el gruñido del bajo. Los que mueren rapido son los del agudo, donde el amortiguamiento crece como k^2. Ahora en G1 el parcial 5 dura 1,41 s y el 10, 0,76. La caida de NIVEL no se toca: la mandan el ring por matiz (Lexicon) y bloomDepth. G3 pasa de 2,33 a 2,43, dentro del ruido.   // 2026-08-26 (Mario, bajo del Ravel: «queda sostenido el sonido sin ningun fade»): la cola no se purificaba. tau_k = decay/(tilt*(k-1)) y con 0.2 los parciales 2-5 duraban MAS que la fundamental (La1: 61/30/20/15 s contra 4,07 del master) — el nivel bajaba y el timbre se quedaba entero, y eso el oido no lo lee como que la nota se apaga. El valor FISICO es 3: con decay = 3*tau1 es el que da tau_k = tau1/k, la ley de la cuerda real. Grave fisico, mas suave al agudo (cuerda corta, pocos parciales). Previo 0.2 escalar. BANDERA: a calibrar de oido.
+    },
+    "char": {
+      "noise": 0,
+      "noiseAM": 0
+    },
+    "onset": {
+      "hit": [
+        0.35,
+        0.42,
+        0.55,
+        0.75
+      ],
+      "air": 0,
+      "ms": 16,
+      "freq": 120,
+      "pitch": 3.5,
+      "pitchMs": 45
+    }
+  },
+  "harpsichord": {
+    "name": "harpsichord",
+    "class": {
+      "family": "teclados",
+      "instrument": "harpsichord",
+      "label": "Harpsichord (Tonal)",
+      "regime": "percusivo",
+      "detache": 0.22,
+      "velRangeDb": 6,
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "F1",
+    "hi": "F6",
+    "anchors": [
+      "F1",
+      "C3",
+      "C5",
+      "F6"
+    ],
+    "resp": {
+      "gain": [
+        0.32,
+        0.52,
+        0.7,
+        0.63
+      ],
+      "air": [
+        0.1,
+        0.07,
+        0.05,
+        0.07
+      ],
+      "tilt": [
+        0.94,
+        0.94,
+        0.92,
+        0.9
+      ],
+      "atk": [
+        0.06,
+        0.05,
+        0.04,
+        0.04
+      ],
+      "vib": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vibRate": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.55,
+        0.62
+      ]
+    },
+    "src": {
+      "tilt": -12.0,
+      "inharm": [
+        0.012,
+        0.008,
+        0.007,
+        0.03
+      ],
+      "duet": [
+        [
+          3,
+          3,
+          0,
+          0
+        ],
+        [
+          0.6,
+          0.6,
+          0,
+          0
+        ]
+      ],
+      "trio": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "mode": "inharm",
+      "partials": [
+        96,
+        64,
+        16,
+        16
+      ],
+      "phaseMs": 2,
+      "nb": [
+        2500,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        130,
+        3,
+        9
+      ],
+      "f2": [
+        330,
+        2,
+        12
+      ],
+      "bank": [
+        [
+          50,
+          -10,
+          1.4
+        ],
+        [
+          75,
+          0,
+          7
+        ],
+        [
+          130,
+          3,
+          9
+        ],
+        [
+          210,
+          2,
+          10
+        ],
+        [
+          330,
+          2,
+          12
+        ],
+        [
+          520,
+          1.5,
+          14
+        ],
+        [
+          900,
+          1,
+          10
+        ],
+        [
+          2500,
+          1,
+          6
+        ]
+      ]
+    },
+    "filt": {
+      "cut": [
+        96,
+        64,
+        8,
+        8
+      ],
+      "q": 0.7,
+      "env": 0.45,
+      "t": 0.55
+    },
+    "env": {
+      "decay": [
+        22,
+        11,
+        3.5,
+        1.0
+      ],
+      "sustain": 0,
+      "release": [
+        0.06,
+        0.045,
+        0.03,
+        0.02
+      ],
+      "relNoise": [
+        0.32,
+        0.26,
+        0.15,
+        0.12
+      ],
+      "bloom": [
+        0.25,
+        0.18,
+        0.1,
+        0.05
+      ],
+      "decayTilt": [
+        1.6,
+        1.4,
+        0.9,
+        0.6
+      ]
+    },
+    "char": {
+      "noise": 0,
+      "noiseAM": 0
+    },
+    "onset": {
+      "hit": [
+        0.38,
+        0.32,
+        0.28,
+        0.35
+      ],
+      "air": 0.15,
+      "ms": 6,
+      "freq": 160,
+      "pitch": 4,
+      "pitchMs": 10,
+      "band": [3500, 5200, 7000],
+      "bandHit": [0.02, 0.06, 0.18, 0.22],
+      "bandMs": 60
+    }
+  },
+  "harpsichord_wt": {
+    "name": "harpsichord_wt",
+    "class": {
+      "family": "teclados",
+      "instrument": "harpsichord_wt",
+      "label": "Harpsichord (Well-tempered)",
+      "regime": "percusivo",
+      "detache": 0.22,
+      "velRangeDb": 6,
+      "temperament": "werckmeister3",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "F1",
+    "hi": "F6",
+    "anchors": [
+      "F1",
+      "C3",
+      "C5",
+      "F6"
+    ],
+    "resp": {
+      "gain": [
+        0.32,
+        0.52,
+        0.7,
+        0.63
+      ],
+      "air": [
+        0.1,
+        0.07,
+        0.05,
+        0.07
+      ],
+      "tilt": [
+        0.94,
+        0.94,
+        0.92,
+        0.9
+      ],
+      "atk": [
+        0.06,
+        0.05,
+        0.04,
+        0.04
+      ],
+      "vib": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vibRate": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.55,
+        0.62
+      ]
+    },
+    "src": {
+      "tilt": -12.0,
+      "inharm": [
+        0.012,
+        0.008,
+        0.007,
+        0.03
+      ],
+      "duet": [
+        [
+          3,
+          3,
+          0,
+          0
+        ],
+        [
+          0.6,
+          0.6,
+          0,
+          0
+        ]
+      ],
+      "trio": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "mode": "inharm",
+      "partials": [
+        96,
+        64,
+        16,
+        16
+      ],
+      "phaseMs": 2,
+      "nb": [
+        2500,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        130,
+        3,
+        9
+      ],
+      "f2": [
+        330,
+        2,
+        12
+      ],
+      "bank": [
+        [
+          50,
+          -10,
+          1.4
+        ],
+        [
+          75,
+          0,
+          7
+        ],
+        [
+          130,
+          3,
+          9
+        ],
+        [
+          210,
+          2,
+          10
+        ],
+        [
+          330,
+          2,
+          12
+        ],
+        [
+          520,
+          1.5,
+          14
+        ],
+        [
+          900,
+          1,
+          10
+        ],
+        [
+          2500,
+          1,
+          6
+        ]
+      ]
+    },
+    "filt": {
+      "cut": [
+        96,
+        64,
+        8,
+        8
+      ],
+      "q": 0.7,
+      "env": 0.45,
+      "t": 0.55
+    },
+    "env": {
+      "decay": [
+        22,
+        11,
+        3.5,
+        1.0
+      ],
+      "sustain": 0,
+      "release": [
+        0.06,
+        0.045,
+        0.03,
+        0.02
+      ],
+      "relNoise": [
+        0.32,
+        0.26,
+        0.15,
+        0.12
+      ],
+      "bloom": [
+        0.25,
+        0.18,
+        0.1,
+        0.05
+      ],
+      "decayTilt": [
+        1.6,
+        1.4,
+        0.9,
+        0.6
+      ]
+    },
+    "char": {
+      "noise": 0,
+      "noiseAM": 0
+    },
+    "onset": {
+      "hit": [
+        0.38,
+        0.32,
+        0.28,
+        0.35
+      ],
+      "air": 0.15,
+      "ms": 6,
+      "freq": 160,
+      "pitch": 4,
+      "pitchMs": 10,
+      "band": [3500, 5200, 7000],
+      "bandHit": [0.02, 0.06, 0.18, 0.22],
+      "bandMs": 60
+    }
+  },
+  "celesta": {
+    "name": "celesta",
+    "class": {
+      "family": "teclados",
+      "instrument": "celesta",
+      "label": "Celesta",
+      "regime": "percusivo",
+      "articulations": [
+        "legato",
+        "staccato"
+      ]
+    },
+    "lo": "C3",
+    "hi": "C8",
+    "resp": {
+      "gain": [
+        0.8,
+        0.95,
+        1.0,
+        0.9
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.95,
+        0.95,
+        1.0,
+        1.0
+      ],
+      "atk": [
+        0.3,
+        0.3,
+        0.3,
+        0.3
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -22.0,
+      "inharm": 0.045,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        2000,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "filt": {
+      "cut": 4.0,
+      "q": 0.6,
+      "env": 0.5,
+      "t": 0.04
+    },
+    "env": {
+      "decay": 2.8,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.55,
+      "air": 0.0,
+      "ms": 2
+    }
+  },
+  "pipe_organ": {
+    "name": "pipe_organ",
+    "class": {
+      "family": "vientos",
+      "instrument": "pipe_organ",
+      "label": "Órgano de Tubos",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato"
+      ]
+    },
+    "lo": "C1",
+    "hi": "C7",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "air": [
+        0.03,
+        0.03,
+        0.04,
+        0.05
+      ],
+      "tilt": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "atk": [
+        0.6,
+        0.5,
+        0.4,
+        0.3
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -11.0,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        300,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        2000,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 7.5,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.05
+    },
+    "env": {
+      "decay": 0.02,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.04,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.1,
+      "air": 0.06,
+      "ms": 12
+    }
+  },
+  "accordion": {
+    "name": "accordion",
+    "class": {
+      "family": "vientos",
+      "instrument": "accordion",
+      "label": "Acordeón",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "bellows_shake"
+      ]
+    },
+    "lo": "F2",
+    "hi": "A6",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.04,
+        0.03,
+        0.03,
+        0.04
+      ],
+      "tilt": [
+        0.65,
+        0.7,
+        0.75,
+        0.8
+      ],
+      "atk": [
+        0.8,
+        0.7,
+        0.6,
+        0.5
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.5,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        800,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        2500,
+        6.0,
+        1.1
+      ]
+    },
+    "filt": {
+      "cut": 7.0,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.05
+    },
+    "env": {
+      "decay": 0.03,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.02,
+      "noiseAM": 0.01
+    },
+    "onset": {
+      "hit": 0.06,
+      "air": 0.04,
+      "ms": 15
+    }
+  },
+  "violin": {
+    "name": "violin",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "violin",
+      "label": "Violin",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "détaché"
+      ]
+    },
+    "lo": "G3",
+    "hi": "E7",
+    "resp": {
+      "gain": [
+        0.85,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.7,
+        0.75,
+        0.8,
+        0.85
+      ],
+      "atk": [
+        1.2,
+        1.0,
+        0.9,
+        0.8
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": 0.001,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        3000,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        5000,
+        6.0,
+        1.1
+      ]
+    },
+    "filt": {
+      "cut": 8.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.05,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.08,
+      "air": 0.0,
+      "ms": 25
+    }
+  },
+  "viola": {
+    "name": "viola",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "viola",
+      "label": "Viola",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "détaché"
+      ]
+    },
+    "lo": "C3",
+    "hi": "A6",
+    "resp": {
+      "gain": [
+        0.9,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.75,
+        0.8,
+        0.85,
+        0.9
+      ],
+      "atk": [
+        1.4,
+        1.2,
+        1.1,
+        1.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.2,
+        5.2,
+        5.4,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -12.5,
+      "inharm": 0.002,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        500,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        2200,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 5.5,
+      "q": 0.85,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.05,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.04,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.07,
+      "air": 0.0,
+      "ms": 28
+    }
+  },
+  "cello": {
+    "name": "cello",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "cello",
+      "label": "Cello",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "détaché"
+      ]
+    },
+    "lo": "C2",
+    "hi": "C6",
+    "resp": {
+      "gain": [
+        0.95,
+        1.0,
+        0.95,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.7,
+        0.75,
+        0.8,
+        0.85
+      ],
+      "atk": [
+        1.6,
+        1.4,
+        1.2,
+        1.1
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.0,
+        5.0,
+        5.2,
+        5.4
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -11.5,
+      "inharm": 0.003,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        250,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        1500,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 6.5,
+      "q": 0.9,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.06,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.04,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.08,
+      "air": 0.0,
+      "ms": 32
+    }
+  },
+  "contrabass": {
+    "name": "contrabass",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "contrabass",
+      "label": "Contrabass",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "détaché"
+      ]
+    },
+    "lo": "C1",
+    "hi": "G4",
+    "resp": {
+      "gain": [
+        0.85,
+        1,
+        1,
+        0.9
+      ],
+      "air": [
+        0.05,
+        0.06,
+        0.08,
+        0.1
+      ],
+      "tilt": [
+        0.7,
+        0.75,
+        0.85,
+        0.9
+      ],
+      "atk": [
+        2.2,
+        1.6,
+        1.1,
+        0.8
+      ],
+      "vib": [
+        10,
+        14,
+        19,
+        24
+      ],
+      "vibRate": [
+        4.6,
+        5.0,
+        5.2,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -12,
+      "inharm": 0.002,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        62,
+        5,
+        7
+      ],
+      "f2": [
+        420,
+        2,
+        4
+      ],
+      "bank": [
+        [
+          62,
+          5,
+          7
+        ],
+        [
+          110,
+          4,
+          5
+        ],
+        [
+          155,
+          3,
+          5
+        ],
+        [
+          420,
+          2,
+          4
+        ]
+      ]
+    },
+    "filt": {
+      "cut": 4.0,
+      "q": 0.8,
+      "env": 0.15,
+      "t": 0.15
+    },
+    "env": {
+      "decay": 0.1,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.07,
+      "noiseAM": 0.05
+    },
+    "onset": {
+      "hit": [
+        0.1,
+        0.08,
+        0.06,
+        0.05
+      ],
+      "air": 0.09,
+      "ms": 60
+    },
+    "anchors": [
+      "E1",
+      "G2",
+      "D3",
+      "G4"
+    ]
+  },
+  "violins_section": {
+    "name": "violins_section",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "violins_section",
+      "label": "Sección de Violines",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "sostenuto"
+      ]
+    },
+    "lo": "G3",
+    "hi": "E7",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.95,
+        0.9
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.75,
+        0.8,
+        0.85,
+        0.9
+      ],
+      "atk": [
+        2.0,
+        2.0,
+        2.0,
+        1.6
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -12.0,
+      "inharm": 0.015,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        2500,
+        6.0,
+        1.5
+      ],
+      "f2": [
+        4000,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 6.5,
+      "q": 0.7,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.1,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.08,
+      "noiseAM": 0.04
+    },
+    "onset": {
+      "hit": 0.02,
+      "air": 0.0,
+      "ms": 60
+    }
+  },
+  "violas_section": {
+    "name": "violas_section",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "violas_section",
+      "label": "Sección de Violas",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "sostenuto"
+      ]
+    },
+    "lo": "C3",
+    "hi": "A6",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.95,
+        0.9
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "atk": [
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.2,
+        5.2,
+        5.4,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -14.0,
+      "inharm": 0.018,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        450,
+        6.0,
+        1.5
+      ],
+      "f2": [
+        2000,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 4.8,
+      "q": 0.65,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.12,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.06,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.01,
+      "air": 0.0,
+      "ms": 70
+    }
+  },
+  "cellos_section": {
+    "name": "cellos_section",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "cellos_section",
+      "label": "Sección de Violonchelos",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "sostenuto"
+      ]
+    },
+    "lo": "C2",
+    "hi": "C6",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.95,
+        0.9
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.75,
+        0.8,
+        0.85,
+        0.9
+      ],
+      "atk": [
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.0,
+        5.0,
+        5.2,
+        5.4
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -13.0,
+      "inharm": 0.02,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        220,
+        6.0,
+        1.5
+      ],
+      "f2": [
+        1300,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 5.2,
+      "q": 0.7,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.15,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.06,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.02,
+      "air": 0.0,
+      "ms": 75
+    }
+  },
+  "contrabasses_section": {
+    "name": "contrabasses_section",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "contrabasses_section",
+      "label": "Sección de Contrabajos",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "sostenuto"
+      ]
+    },
+    "lo": "C1",
+    "hi": "G4",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.9,
+        0.8
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "atk": [
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        4.2,
+        4.5,
+        4.8,
+        5.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -15.0,
+      "inharm": 0.022,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        110,
+        6.0,
+        1.5
+      ],
+      "f2": [
+        750,
+        6.0,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 3.5,
+      "q": 0.65,
+      "env": 0.0,
+      "t": 0.12
+    },
+    "env": {
+      "decay": 0.18,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.08,
+      "noiseAM": 0.04
+    },
+    "onset": {
+      "hit": 0.03,
+      "air": 0.0,
+      "ms": 85
+    }
+  },
+  "strings": {
+    "name": "strings",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "strings",
+      "label": "Strings",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto",
+        "acento"
+      ]
+    },
+    "lo": "C2",
+    "hi": "E7",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "tilt": [
+        0.4,
+        0.55,
+        0.68,
+        0.75
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.18,
+        0.18,
+        0.18,
+        0.18
+      ],
+      "vibRate": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -8.0,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        500,
+        5,
+        1.2
+      ],
+      "f2": [
+        2500,
+        6,
+        1.0
+      ]
+    },
+    "filt": {
+      "cut": 13,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.6,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.12,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.0,
+      "air": 0.0,
+      "ms": 90
+    }
+  },
+  "full_strings": {
+    "name": "full_strings",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "full_strings",
+      "label": "Full Strings",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "sostenuto"
+      ]
+    },
+    "lo": "C1",
+    "hi": "E7",
+    "resp": {
+      "gain": [
+        1.0,
+        1.0,
+        0.95,
+        0.9
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.75,
+        0.8,
+        0.85,
+        0.9
+      ],
+      "atk": [
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.0,
+        5.2,
+        5.4,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -13.5,
+      "inharm": 0.025,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        180,
+        6.0,
+        1.6
+      ],
+      "f2": [
+        2800,
+        6.0,
+        1.3
+      ]
+    },
+    "filt": {
+      "cut": 5.8,
+      "q": 0.65,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.2,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.08,
+      "noiseAM": 0.04
+    },
+    "onset": {
+      "hit": 0.01,
+      "air": 0.0,
+      "ms": 80
+    }
+  },
+  "pizzicato": {
+    "name": "pizzicato",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "pizzicato",
+      "label": "Pizzicato",
+      "regime": "pulsado",
+      "articulations": [
+        "staccato",
+        "acento",
+        "armonicos"
+      ]
+    },
+    "lo": "G2",
+    "hi": "G5",
+    "anchors": ["G2", "D3", "D4", "G5"],
+    "resp": {
+      "gain": [0.90, 0.95, 1.00, 0.85],
+      "air": [0.10, 0.10, 0.12, 0.15],
+      "tilt": [0.30, 0.35, 0.40, 0.50],
+      "atk": [1.4, 1.2, 1.0, 0.8],
+      "vib": [0, 0, 0, 0],
+      "vibRate": [0, 0, 0, 0],
+      "oddEven": [0.5, 0.5, 0.5, 0.5]
+    },
+    "src": {
+      "tilt": -14.0,
+      "inharm": [0.001, 0.001, 0.0015, 0.005],
+      "duet": [[1.5, 1.5, 2, 2], [0.25, 0.25, 0.20, 0.20]],
+      "mode": "inharm",
+      "partials": [32, 24, 16, 8],
+      "phaseMs": 1.5,
+      "nb": [2500, 1.2]
+    },
+    "form": {
+      "f1": [275, 8, 15],
+      "f2": [2300, 6, 3],
+      "bank": [
+        [100, 6, 12],
+        [275, 8, 15],
+        [420, 4, 20],
+        [470, 8, 20],
+        [550, 8, 20],
+        [2300, 6, 3]
+      ]
+    },
+    "filt": {
+      "cut": [40, 32, 18, 8],
+      "q": 0.7,
+      "env": 0.5,
+      "t": 0.12
+    },
+    "env": {
+      "decay": [6.7, 4.5, 1.9, 0.7],
+      "sustain": 0,
+      "release": [0.05, 0.05, 0.04, 0.03],
+      "bloom": [0.45, 0.35, 0.20, 0.10],
+      "decayTilt": [0.50, 0.60, 0.70, 0.80],
+      "relNoise": [0.30, 0.30, 0.25, 0.20]
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0
+    },
+    "onset": {
+      "hit": [0.48, 0.42, 0.38, 0.35],
+      "air": 0.30,
+      "ms": 15,
+      "freq": 200,
+      "pitch": 3,
+      "pitchMs": 30
+    }
+  },
+  "strings_pizzicato": {
+    "name": "strings_pizzicato",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "strings_pizzicato",
+      "label": "Strings Pizzicato",
+      "regime": "percusivo",
+      "articulations": [
+        "staccato",
+        "seco"
+      ]
+    },
+    "lo": "C2",
+    "hi": "C6",
+    "anchors": ["C2", "G2", "D4", "C6"],
+    "resp": {
+      "gain": [1.00, 1.00, 0.95, 0.85],
+      "air": [0.20, 0.20, 0.22, 0.25],
+      "tilt": [0.25, 0.30, 0.38, 0.48],
+      "atk": [2.4, 2.0, 1.8, 1.4],
+      "vib": [0, 0, 0, 0],
+      "vibRate": [0, 0, 0, 0],
+      "oddEven": [0.5, 0.5, 0.5, 0.5]
+    },
+    "src": {
+      "tilt": -16.0,
+      "inharm": [0.002, 0.001, 0.001, 0.004],
+      "duet": [[6, 7, 8, 8], [0.80, 0.80, 0.80, 0.80]],
+      "trio": [[-5, -6, -7, -8], [0.70, 0.70, 0.70, 0.70]],
+      "mode": "inharm",
+      "partials": [32, 24, 16, 8],
+      "phaseMs": 1.5,
+      "nb": [2500, 1.2]
+    },
+    "form": {
+      "f1": [110, 8, 20],
+      "f2": [2300, 5, 3],
+      "bank": [
+        [60, 6, 10],
+        [110, 8, 20],
+        [219, 8, 20],
+        [420, 4, 20],
+        [550, 6, 20],
+        [2300, 5, 3]
+      ]
+    },
+    "filt": {
+      "cut": [32, 24, 16, 8],
+      "q": 0.7,
+      "env": 0.5,
+      "t": 0.15
+    },
+    "env": {
+      "decay": [22, 8.7, 2.5, 0.8],
+      "sustain": 0,
+      "release": [0.08, 0.07, 0.06, 0.05],
+      "bloom": [0.50, 0.45, 0.30, 0.15],
+      "decayTilt": [0.50, 0.50, 0.60, 0.70],
+      "relNoise": [0.35, 0.35, 0.30, 0.25]
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0
+    },
+    "onset": {
+      "hit": [0.32, 0.28, 0.24, 0.22],
+      "air": 0.35,
+      "ms": 22,
+      "freq": 150,
+      "pitch": 4,
+      "pitchMs": 40
+    }
+  },
+  "gamba": {
+    "name": "gamba",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "gamba",
+      "label": "Viola da gamba",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "notes_tenues"
+      ]
+    },
+    "lo": "A1",
+    "hi": "D5",
+    "resp": {
+      "gain": [
+        0.85,
+        0.95,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "atk": [
+        1.6,
+        1.4,
+        1.2,
+        1.0
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -14.5,
+      "inharm": 0.001,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        450,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        1800,
+        6.0,
+        1.3
+      ]
+    },
+    "filt": {
+      "cut": 4.5,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.04,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.05,
+      "air": 0.0,
+      "ms": 30
+    }
+  },
+  "guitar": {
+    "name": "guitar",
+    "class": {
+      "family": "cuerdas",
+      "instrument": "guitar",
+      "label": "Guitar",
+      "regime": "percusivo",
+      "articulations": [
+        "legato",
+        "staccato",
+        "apoyado"
+      ]
+    },
+    "lo": "E2",
+    "hi": "B5",
+    "anchors": ["E2", "D3", "G3", "B5"],
+    "resp": {
+      "gain": [1.00, 1.00, 0.95, 0.80],
+      "air": [0.05, 0.06, 0.08, 0.10],
+      "tilt": [0.45, 0.55, 0.40, 0.35],
+      "atk": [1.0, 1.0, 1.1, 0.8],
+      "vib": [0, 0, 0, 0],
+      "vibRate": [0, 0, 0, 0],
+      "oddEven": [0.5, 0.5, 0.5, 0.5]
+    },
+    "src": {
+      "tilt": -13.0,
+      "inharm": [0.0019, 0.0017, 0.012, 0.035],
+      "duet": [[1, 1, 1.5, 2], [0.30, 0.30, 0.30, 0.20]],
+      "mode": "inharm",
+      "partials": [32, 24, 20, 8],
+      "phaseMs": 1.5,
+      "nb": [3000, 1.2]
+    },
+    "form": {
+      "f1": [100, 8, 16],
+      "f2": [520, 2, 20],
+      "bank": [
+        [100, 8, 16],
+        [200, 6, 24],
+        [250, 3, 30],
+        [400, 3, 30],
+        [520, 2, 20]
+      ]
+    },
+    "filt": {
+      "cut": [60, 40, 32, 7],
+      "q": 0.7,
+      "env": 0.45,
+      "t": 0.25
+    },
+    "env": {
+      "decay": [9.5, 7.5, 6.2, 1.1],
+      "sustain": 0,
+      "bloom": [0.45, 0.40, 0.35, 0.15],
+      "decayTilt": [0.25, 0.30, 0.30, 0.40],
+      "relNoise": [0.15, 0.15, 0.12, 0.10]
+    },
+    "char": {
+      "noise": 0,
+      "noiseAM": 0
+    },
+    "onset": {
+      "hit": [0.30, 0.32, 0.35, 0.40],
+      "air": 0.28,
+      "ms": 8,
+      "freq": 120,
+      "pitch": 6,
+      "pitchMs": 40
+    }
+  },
+
+  // ── 2026-08-24 · OTRAS FAMILIAS, primera tanda ────────────────────────────────────────────────
+  // Cuatro instrumentos que hasta hoy no existian en el banco, numerizados de los informes de la
+  // deep-research (maderas/flauta-dulce-investigacion.md y cuerdas/pulsados-folk-investigacion.md).
+  // Entran a la lista en dos secciones nuevas al final (Other · Recorders / Other · Folk plucked)
+  // para no mezclarse con la orquesta. Todo BANDERA hasta el A/B de oido de Mario.
+  //
+  // FLAUTAS DE PICO — lo que las separa de la travesera, medido: char.noise 0.55/0.50 contra 0.30
+  //   (el chorro es MENOS turbulento pero el tono es 10-15 dB mas debil: el cociente sube) ·
+  //   oddEven 0.30-0.44 y no 0.50 (resonador abierto = serie completa, pero el labium centrado
+  //   anula los pares: Fletcher y Douglas 1980; medido p2/p1 = -21.8 dB a presion baja) ·
+  //   form.f2 = banda de ruido de borde 2400/3000 Hz, una DECADA mas abajo que el 9000 de la
+  //   travesera · onset.ms 60 ms MEDIDOS en C5 (Giordano y Thacker 2016) contra 30 de la travesera.
+  //   filt.cut va como multiplo de f0 (contrato del motor) con piso 2.5: el corte de red real cae
+  //   POR DEBAJO de la f0 en el agudo y escribirlo literal apagaba la nota — la pobreza del agudo
+  //   la lleva resp.tilt, que es donde corresponde.
+  "recorder_alto": {
+    "name": "recorder_alto",
+    "class": { "family": "maderas", "instrument": "recorder_alto", "label": "Recorder (alto)", "regime": "sostenido",
+      "articulations": ["legato", "staccato", "tenuto"] },
+    "lo": "F4", "hi": "G6",
+    "anchors": ["F4", "C5", "F5", "G6"],
+    "resp": {
+      "gain": [0.80, 1.00, 0.95, 0.62],
+      "air": [0.34, 0.28, 0.26, 0.30],
+      "tilt": [0.62, 0.55, 0.45, 0.28],
+      "atk": [2.2, 1.8, 1.5, 1.2],
+      "vib": [0, 3, 4, 3],
+      "vibRate": [4.5, 5.0, 5.2, 5.2],
+      "oddEven": [0.30, 0.33, 0.36, 0.42]
+    },
+    "src": { "tilt": -18.0, "inharm": 0, "mode": "harm", "nb": [2400, 1.1] },
+    "form": { "f1": [900, 2.5, 1.2], "f2": [2400, 2.0, 0.9] },
+    "filt": { "cut": [8.6, 5.0, 3.2, 2.5], "q": 0.7, "env": 0.5, "t": 0.06 },
+    "env": { "decay": 0.10, "sustain": 1, "release": [0.16, 0.10, 0.08, 0.04] },
+    "char": { "noise": 0.55, "noiseAM": 0.03 },
+    "onset": { "hit": [0.10, 0.08, 0.07, 0.06], "air": 0.42, "ms": 60 }
+  },
+  "recorder_soprano": {
+    "name": "recorder_soprano",
+    "class": { "family": "maderas", "instrument": "recorder_soprano", "label": "Recorder (soprano)", "regime": "sostenido",
+      "articulations": ["legato", "staccato", "tenuto"] },
+    "lo": "C5", "hi": "D7",
+    "anchors": ["C5", "G5", "C6", "D7"],
+    "resp": {
+      "gain": [0.82, 1.00, 0.93, 0.55],
+      "air": [0.32, 0.26, 0.25, 0.30],
+      "tilt": [0.58, 0.50, 0.40, 0.22],
+      "atk": [1.9, 1.6, 1.4, 1.1],
+      "vib": [0, 3, 4, 3],
+      "vibRate": [4.8, 5.2, 5.4, 5.4],
+      "oddEven": [0.30, 0.33, 0.36, 0.44]
+    },
+    "src": { "tilt": -18.5, "inharm": 0, "mode": "harm", "nb": [3000, 1.1] },
+    "form": { "f1": [1350, 2.5, 1.2], "f2": [3000, 2.0, 0.9] },
+    "filt": { "cut": [8.0, 4.6, 2.9, 2.5], "q": 0.7, "env": 0.5, "t": 0.06 },
+    "env": { "decay": 0.09, "sustain": 1, "release": [0.11, 0.07, 0.05, 0.025] },
+    "char": { "noise": 0.50, "noiseAM": 0.03 },
+    "onset": { "hit": [0.11, 0.09, 0.08, 0.06], "air": 0.38, "ms": 45 }
+  },
+
+  // PULSADOS FOLK — el banjo es OTRO instrumento, no una guitarra con parche: Woodhouse mide su
+  //   admitancia de puente 20-30 dB POR ENCIMA de seis guitarras de concierto, y la cuerda pierde
+  //   diez veces mas rapido (T60 0.7-1.4 s contra 2.1-2.8 de la guitarra). Suena +10 dB al empezar
+  //   y a los 400 ms ya perdio. form.bank = los modos del PARCHE medidos (290 fundamental con carga
+  //   de aire, 462 de la serie, 750 el formante principal) + el bridge hill de 3.2 kHz.
+  //   La MANDOLINA trae el cuerpo medido en siete instrumentos (A0 194 Hz, monopolo 554, 740) y lo
+  //   que la define: el par de cuerdas desafinado 3-5 cents = duet, que da batidos de 0.34 Hz en el
+  //   Sol3 y 3.8 Hz en el Mi6. Ojo: duet solo suena en mode inharm, y los dos son inharm.
+  //   src.tilt: el informe lo da por ancla y el motor lo tiene escalar — se escribe escalar, mas
+  //   brillante que la guitarra (-13.0), y la forma por registro la lleva resp.tilt. BANDERA.
+  "banjo": {
+    "name": "banjo",
+    "class": { "family": "cuerdas", "instrument": "banjo", "label": "Banjo", "regime": "percusivo",
+      "articulations": ["legato", "staccato", "roll"] },
+    "lo": "D3", "hi": "C6",
+    "anchors": ["D3", "G3", "D4", "C6"],
+    "resp": {
+      "gain": [0.80, 0.95, 1.00, 0.90],
+      "air": [0.20, 0.22, 0.25, 0.30],
+      "tilt": [0.55, 0.55, 0.50, 0.40],
+      "atk": [1.0, 1.0, 1.1, 1.2],
+      "vib": [0, 0, 0, 0],
+      "vibRate": [0, 0, 0, 0],
+      "oddEven": [0.50, 0.50, 0.52, 0.55]
+    },
+    "src": {
+      "tilt": -10.0,
+      "inharm": [0.0015, 0.0056, 0.0018, 0.0228],
+      "duet": [[2, 2, 3, 4], [0.50, 0.50, 0.50, 0.40]],
+      "mode": "inharm",
+      "partials": [40, 32, 24, 10],
+      "phaseMs": 1.5,
+      "nb": [3200, 1.2]
+    },
+    "form": {
+      "f1": [290, 8, 4],
+      "f2": [750, 9, 5],
+      "bank": [ [290, 8, 4], [462, 5, 4], [750, 9, 5], [3200, 6, 6], [5000, 4, 7] ]
+    },
+    "filt": { "cut": [68, 56, 41, 12], "q": 0.7, "env": -0.8, "t": 0.15 },
+    "env": {
+      "decay": [1.5, 1.1, 0.75, 0.25],
+      "sustain": 0,
+      "release": 0.02,
+      "bloom": [0.05, 0.10, 0.20, 0.35],
+      "decayTilt": [0.45, 0.50, 0.55, 0.65],
+      "relNoise": [0.10, 0.10, 0.08, 0.06]
+    },
+    "char": { "noise": 0.12, "noiseAM": 0 },
+    "onset": { "hit": [0.45, 0.45, 0.50, 0.55], "air": 0.27, "ms": 3, "freq": 290, "pitch": 20, "pitchMs": 60 }
+  },
+  "mandolin": {
+    "name": "mandolin",
+    "class": { "family": "cuerdas", "instrument": "mandolin", "label": "Mandolin", "regime": "percusivo",
+      "articulations": ["legato", "staccato", "tremolo"] },
+    "lo": "G3", "hi": "E6",
+    "anchors": ["G3", "D4", "A4", "E6"],
+    "resp": {
+      "gain": [1.00, 0.90, 0.95, 0.80],
+      "air": [0.12, 0.14, 0.16, 0.20],
+      "tilt": [0.45, 0.45, 0.42, 0.35],
+      "atk": [1.1, 1.1, 1.2, 1.3],
+      "vib": [0, 0, 0, 0],
+      "vibRate": [0, 0, 0, 0],
+      "oddEven": [0.55, 0.55, 0.58, 0.60]
+    },
+    "src": {
+      "tilt": -11.5,
+      "inharm": [0.0064, 0.0064, 0.0192, 0.0183],
+      "duet": [[3, 3, 4, 5], [0.89, 0.89, 0.89, 0.79]],
+      "mode": "inharm",
+      "partials": [32, 28, 22, 8],
+      "phaseMs": 1.2,
+      "nb": [2500, 1.2]
+    },
+    "form": {
+      "f1": [194, 7, 10],
+      "f2": [554, 6, 8],
+      "bank": [ [194, 7, 10], [554, 6, 8], [740, 4, 7], [2500, 2, 4] ]
+    },
+    "filt": { "cut": [36, 27, 20, 8], "q": 0.7, "env": -0.6, "t": 0.25 },
+    "env": {
+      "decay": [2.2, 1.8, 1.4, 0.45],
+      "sustain": 0,
+      "release": 0.04,
+      "bloom": [0.10, 0.20, 0.35, 0.40],
+      "decayTilt": [0.35, 0.40, 0.45, 0.55],
+      "relNoise": [0.12, 0.12, 0.10, 0.08]
+    },
+    "char": { "noise": 0.16, "noiseAM": 0 },
+    "onset": { "hit": [0.25, 0.25, 0.28, 0.30], "air": 0.22, "ms": 2, "freq": 194, "pitch": 8, "pitchMs": 40 }
+  },
+  "voice_soprano": {
+    "name": "voice_soprano",
+    "class": {
+      "family": "voz",
+      "instrument": "voice_soprano",
+      "label": "Soprano",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "C4",
+    "hi": "C6",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.05,
+        0.05,
+        0.06,
+        0.08
+      ],
+      "tilt": [
+        0.6,
+        0.65,
+        0.7,
+        0.75
+      ],
+      "atk": [
+        1.2,
+        1.1,
+        1,
+        0.9
+      ],
+      "vib": [
+        6,
+        8,
+        10,
+        10
+      ],
+      "vibRate": [
+        5.5,
+        5.7,
+        6,
+        6
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -12,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        800,
+        7,
+        1.2
+      ],
+      "f2": [
+        2900,
+        5,
+        1.5
+      ]
+    },
+    "filt": {
+      "cut": 6,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.15,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.02,
+      "air": 0.08,
+      "ms": 40
+    }
+  },
+  "voice_alto": {
+    "name": "voice_alto",
+    "class": {
+      "family": "voz",
+      "instrument": "voice_alto",
+      "label": "Alto",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "F3",
+    "hi": "F5",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.05,
+        0.05,
+        0.06,
+        0.07
+      ],
+      "tilt": [
+        0.55,
+        0.6,
+        0.65,
+        0.7
+      ],
+      "atk": [
+        1.3,
+        1.2,
+        1.1,
+        1
+      ],
+      "vib": [
+        6,
+        8,
+        9,
+        9
+      ],
+      "vibRate": [
+        5.2,
+        5.4,
+        5.6,
+        5.6
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -14,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        650,
+        7,
+        1.2
+      ],
+      "f2": [
+        2600,
+        5,
+        1.5
+      ]
+    },
+    "filt": {
+      "cut": 5.5,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.15,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.02,
+      "air": 0.07,
+      "ms": 42
+    }
+  },
+  "voice_tenor": {
+    "name": "voice_tenor",
+    "class": {
+      "family": "voz",
+      "instrument": "voice_tenor",
+      "label": "Tenor",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "C3",
+    "hi": "C5",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.04,
+        0.05,
+        0.05,
+        0.06
+      ],
+      "tilt": [
+        0.6,
+        0.65,
+        0.7,
+        0.7
+      ],
+      "atk": [
+        1.3,
+        1.2,
+        1.1,
+        1
+      ],
+      "vib": [
+        6,
+        8,
+        9,
+        9
+      ],
+      "vibRate": [
+        5,
+        5.2,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -13,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        600,
+        7,
+        1.2
+      ],
+      "f2": [
+        2800,
+        6,
+        2
+      ]
+    },
+    "filt": {
+      "cut": 5.5,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.15,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.03,
+      "air": 0.07,
+      "ms": 40
+    }
+  },
+  "voice_bass": {
+    "name": "voice_bass",
+    "class": {
+      "family": "voz",
+      "instrument": "voice_bass",
+      "label": "Bass",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "E2",
+    "hi": "E4",
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.04,
+        0.04,
+        0.05,
+        0.06
+      ],
+      "tilt": [
+        0.5,
+        0.55,
+        0.6,
+        0.65
+      ],
+      "atk": [
+        1.4,
+        1.3,
+        1.2,
+        1.1
+      ],
+      "vib": [
+        5,
+        7,
+        8,
+        8
+      ],
+      "vibRate": [
+        4.8,
+        5,
+        5.2,
+        5.2
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -15,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        500,
+        7,
+        1.2
+      ],
+      "f2": [
+        2600,
+        5,
+        2
+      ]
+    },
+    "filt": {
+      "cut": 5,
+      "q": 0.8,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.15,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.02
+    },
+    "onset": {
+      "hit": 0.03,
+      "air": 0.06,
+      "ms": 45
+    }
+  },
+  "ping": {
+    "name": "ping",
+    "class": {
+      "family": "sinteticos",
+      "instrument": "ping",
+      "label": "Ping",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ]
+    },
+    "lo": "C1",
+    "hi": "C8",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.3,
+        0.5,
+        0.7,
+        0.8
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -12.0,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        1000,
+        0,
+        2.0
+      ],
+      "f2": [
+        3000,
+        0,
+        2.5
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.8,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.2,
+      "air": 0.0,
+      "ms": 4
+    }
+  },
+  "sine": {
+    "name": "sine",
+    "class": {
+      "family": "sinteticos",
+      "instrument": "sine",
+      "label": "Sine",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto",
+        "acento"
+      ]
+    },
+    "lo": "C1",
+    "hi": "C8",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -30.0,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        1000,
+        0,
+        2.0
+      ],
+      "f2": [
+        3000,
+        0,
+        2.5
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.6,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.0,
+      "air": 0.0,
+      "ms": 10
+    }
+  },
+  "organ": {
+    "name": "organ",
+    "class": {
+      "family": "sinteticos",
+      "instrument": "organ",
+      "label": "Organ",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto",
+        "acento"
+      ]
+    },
+    "lo": "C1",
+    "hi": "C8",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.55,
+        0.6,
+        0.65,
+        0.7
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -9.0,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        1500,
+        4,
+        1.2
+      ],
+      "f2": [
+        3000,
+        3,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
+      "decay": 0.5,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.0,
+      "air": 0.0,
+      "ms": 8
+    }
+  }
+};
+
+// ============================================================================
+// Lista canonica de instrumentos — FUENTE UNICA para Keyboard · Register · Console · Score.
+// Orden de partitura orquestal: maderas → metales → percusion → arpa/teclados → cuerdas → voz;
+// sinteticos al final. Las etiquetas salen de class.label (EN). Las apps arman su <select> con
+// MM_instrumentOptionsHTML(map, selected, opts) para que la lista sea identica en toda la suite.
+// ============================================================================
+window.MM_INSTRUMENT_SECTIONS = [
+  { section:'Woodwinds', items:['piccolo','flute','alto_flute_g','oboe','english_horn','clarinet','bass_clarinet','bassoon','contrabassoon','saxophone','kena'] },
+  { section:'Brass', items:['horn','trumpet','trombone','tuba'] },
+  { section:'Percussion', items:['timpani','glockenspiel','xylophone','vibraphone','marimba','tubular_bells','snare','bass_drum','cymbals','tam_tam','triangle','tambourine','woodblock'] },
+  { section:'Harp & Keyboards', items:['harp','piano','piano_steinway','piano_grand_tonal','harpsichord','harpsichord_wt','celesta','pipe_organ','accordion'] },
+  { section:'Strings', items:['violin','viola','cello','contrabass','violins_section','violas_section','cellos_section','contrabasses_section','strings','full_strings','pizzicato','strings_pizzicato','gamba','guitar'] },
+  { section:'Voice', items:['voice_soprano','voice_alto','voice_tenor','voice_bass'] },
+  { section:'Synths', items:['ping','sine','organ'] },
+  // 2026-08-24 (idea de Mario): los parientes NO orquestales viven aparte y por familia, para que
+  // la lista de la orquesta no se llene de repeticiones. Se suman al final; la paleta los muestra
+  // como dos grupos propios en las cuatro apps.
+  { section:'Other · Recorders', items:['recorder_soprano','recorder_alto'] },
+  { section:'Other · Folk plucked', items:['banjo','mandolin'] }
+];
+window.MM_INSTRUMENT_ORDER = window.MM_INSTRUMENT_SECTIONS.reduce(function(a,s){ return a.concat(s.items); }, []);
+// Devuelve el HTML de <optgroup>/<option> (value=clave, texto=etiqueta) en orden canonico.
+//   map: mapa de presets para resolver etiqueta y presencia (default: banco). selected: clave activa.
+//   opts.includeNone: antepone la opcion "—" (sin instrumento). opts.onlyKeys: subconjunto plano (p.ej. percusion CH10).
+window.MM_instrumentOptionsHTML = function(map, selected, opts){
+  opts = opts || {}; map = map || window.MM_PRESETS_DEFAULT || {};
+  var NONE = '—';
+  var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); };
+  var lab = function(k){ var p=map[k]; return (p && p.class && p.class.label) || k; };
+  var optHTML = function(k){ return '<option value="'+esc(k)+'"'+(k===selected?' selected':'')+'>'+esc(lab(k))+'</option>'; };
+  var html = opts.includeNone ? ('<option value="'+NONE+'"'+((selected===NONE||selected==null)?' selected':'')+'>'+NONE+'</option>') : '';
+  if(opts.onlyKeys){ html += opts.onlyKeys.filter(function(k){ return k!==NONE && map[k]; }).map(optHTML).join(''); return html; }
+  var seen = {};
+  (window.MM_INSTRUMENT_SECTIONS||[]).forEach(function(sec){
+    var present = sec.items.filter(function(k){ seen[k]=1; return map[k]; });
+    if(present.length) html += '<optgroup label="'+NONE+' '+esc(sec.section)+' '+NONE+'">'+present.map(optHTML).join('')+'</optgroup>';
+  });
+  var extra = Object.keys(map).filter(function(k){ return !seen[k]; });
+  if(extra.length) html += '<optgroup label="'+NONE+' Other '+NONE+'">'+extra.map(optHTML).join('')+'</optgroup>';
+  return html;
+};
+
+// ============================================================================
+// PALETA DE INSTRUMENTOS EN COLUMNAS (2026-08-23, Mario: «una lista donde se pueden ver todos»)
+// El <select> nativo no acepta columnas (el desplegable lo dibuja el SO), asi que el clic sobre el
+// campo abre ESTE popup de la casa (border-top wine, pin ⊗ ON al abrir, header arrastrable, cierra
+// por clic afuera salvo pinneado — mismo contrato que el Pulse del Keyboard). Una columna por flujo
+// CSS (column-count ≤ 5, secciones indivisibles): toda la lista visible de un vistazo, y cuando la
+// investigacion sume instrumentos cada familia crece en su columna. Filtro por nombre arriba; los
+// instrumentos del banco que el mapa activo NO tiene salen apagados (el select los ocultaba).
+// La seleccion vuelve por el MISMO onchange del select de cada app: aqui no se toca nada del mix.
+// Pinneado permite probar varios seguidos (comparar de oido); desfijado, elegir cierra.
+window.MM_openInstrumentPalette = function(opts){
+  opts = opts || {};
+  var doc = document, pal = doc.getElementById('mm-inst-palette');
+  if(pal && pal.classList.contains('open') && pal._anchor === opts.anchor){ pal.classList.remove('open'); return pal; }   // clic en el campo con la paleta abierta = cerrar
+  if(!pal){
+    var css = doc.createElement('style'); css.id = 'mm-inst-palette-css';
+    css.textContent =
+      '#mm-inst-palette{display:none;position:fixed;z-index:9500;background:var(--panel,#0d0d18);border:1px solid var(--border,#1e1e34);border-top:2px solid var(--kb-border,#501828);box-shadow:0 6px 24px rgba(0,0,0,.55);font-family:\'DM Mono\',monospace;max-width:min(94vw,920px)}'+
+      '#mm-inst-palette.open{display:block}'+
+      '.mmip-hd{display:flex;align-items:center;gap:10px;padding:6px 10px;cursor:move;border-bottom:1px solid var(--border,#1e1e34)}'+
+      '.mmip-hd h3{font-family:\'DM Mono\',monospace;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#9a7ad8;margin:0;flex:none}'+
+      '.mmip-filter{flex:1;min-width:70px;background:var(--panel2,#111120);border:1px solid var(--border,#1e1e34);color:var(--text,#e0e0f4);font-family:inherit;font-size:10px;padding:3px 6px;outline:none}'+
+      '.mmip-filter:focus{border-color:var(--gold,#c8a84a)}'+
+      '.mmip-pin{cursor:pointer;font-size:12px;color:var(--textm,#c0c0e0);background:none;border:none;line-height:1;flex:none}'+
+      '.mmip-pin.on{color:#9a7ad8}'+
+      '.mmip-cols{padding:10px 14px;column-gap:22px;max-height:min(70vh,560px);overflow:auto}'+
+      '.mmip-sec{break-inside:avoid;margin:0 0 10px}'+
+      '.mmip-sect{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold,#c8a84a);border-bottom:1px solid var(--border,#1e1e34);padding:2px 0 3px;margin-bottom:3px;white-space:nowrap}'+
+      '.mmip-it{font-size:11px;color:var(--textm,#c0c0e0);padding:2px 6px;cursor:pointer;white-space:nowrap;border-left:2px solid transparent}'+
+      '.mmip-it:hover{color:var(--text,#e0e0f4);background:var(--panel2,#111120)}'+
+      '.mmip-it.on{color:var(--gold,#c8a84a);border-left-color:var(--gold,#c8a84a)}'+
+      '.mmip-it.ghost{opacity:.35;cursor:default}'+
+      '.mmip-it.ghost:hover{background:none;color:var(--textm,#c0c0e0)}';
+    doc.head.appendChild(css);
+    pal = doc.createElement('div'); pal.id = 'mm-inst-palette'; pal.className = 'lang-sync';   // regla del idioma: pares data-es/en, el Score los aplica via _prefsSyncLang
+    pal.innerHTML =
+      '<div class="mmip-hd" id="mmip-hd">'+
+        '<h3 data-es="Instrumentos" data-en="Instruments">Instruments</h3>'+
+        '<input class="mmip-filter" id="mmip-filter" type="text" placeholder="filter" data-title-es="Filtrar por nombre" data-title-en="Filter by name" title="Filter by name">'+
+        '<button class="mmip-pin on" id="mmip-pin" data-title-es="Fijar (clic afuera no cierra)" data-title-en="Pin (outside click keeps it open)" title="Pin (outside click keeps it open)">⊗</button>'+
+      '</div>'+
+      '<div class="mmip-cols" id="mmip-cols"></div>';
+    doc.body.appendChild(pal);
+    pal._pinned = true;
+    var pin = doc.getElementById('mmip-pin');
+    pin.addEventListener('pointerdown', function(e){ e.stopPropagation(); });   // contrato popup: pin con stop en mousedown
+    pin.addEventListener('click', function(e){ e.stopPropagation();          // contrato popup: pinneado, el clic CIERRA
+      if(pal._pinned){ pal.classList.remove('open'); pal._pinned = false; pin.classList.remove('on'); pin.textContent = '⊕'; return; }
+      pal._pinned = true; pin.classList.add('on'); pin.textContent = '⊗'; });
+    var hd = doc.getElementById('mmip-hd'), dx = 0, dy = 0, drag = false;      // header arrastrable (= Pulse)
+    hd.addEventListener('pointerdown', function(e){ if(e.target.id === 'mmip-pin' || e.target.id === 'mmip-filter') return;
+      var r = pal.getBoundingClientRect(); pal.style.left = r.left+'px'; pal.style.top = r.top+'px';
+      dx = e.clientX - r.left; dy = e.clientY - r.top; drag = true; try{ hd.setPointerCapture(e.pointerId); }catch(_){ } });
+    hd.addEventListener('pointermove', function(e){ if(drag){ pal.style.left = (e.clientX-dx)+'px'; pal.style.top = (e.clientY-dy)+'px'; } });
+    hd.addEventListener('pointerup', function(){ drag = false; });
+    var filt = doc.getElementById('mmip-filter');
+    filt.addEventListener('pointerdown', function(e){ e.stopPropagation(); });
+    filt.addEventListener('input', function(){ var q = this.value.trim().toLowerCase();
+      pal.querySelectorAll('.mmip-it').forEach(function(it){
+        it.style.display = (!q || it.textContent.toLowerCase().indexOf(q) >= 0 || (it.dataset.k||'').indexOf(q) >= 0) ? '' : 'none'; });
+      pal.querySelectorAll('.mmip-sec').forEach(function(sec){
+        var vis = false; sec.querySelectorAll('.mmip-it').forEach(function(it){ if(it.style.display !== 'none') vis = true; });
+        sec.style.display = vis ? '' : 'none'; }); });
+    doc.addEventListener('click', function(e){                                  // clic afuera cierra, salvo pinneado
+      if(!pal.classList.contains('open') || pal._pinned) return;
+      var t = e.target; if(!t || !t.isConnected) return;                        // nodo re-renderizado: no decidir con el
+      if(t.closest && t.closest('#mm-inst-palette')) return;
+      if(pal._anchor && pal._anchor.contains && pal._anchor.contains(t)) return;
+      pal.classList.remove('open'); });
+  }
+  // (re)construccion en cada apertura: mapa activo, seleccion, caso percusion
+  var map = opts.map || window.MM_PRESETS_DEFAULT || {};
+  var bank = window.MM_PRESETS_DEFAULT || {};
+  var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); };
+  var lab = function(k){ var p = map[k] || bank[k]; return (p && p.class && p.class.label) || k; };
+  var secs, seen = {};
+  if(opts.onlyKeys){ secs = [{ section:'Percussion', items: opts.onlyKeys.filter(function(k){ return map[k]; }) }]; }
+  else {
+    secs = (window.MM_INSTRUMENT_SECTIONS || []).map(function(s){
+      s.items.forEach(function(k){ seen[k] = 1; });
+      return { section: s.section, items: s.items.filter(function(k){ return map[k] || bank[k]; }) }; });
+    var extra = Object.keys(map).filter(function(k){ return !seen[k]; });
+    if(extra.length) secs.push({ section:'Other', items: extra });
+  }
+  var sel = opts.selected, html = '';
+  if(opts.includeNone) html += '<div class="mmip-sec"><div class="mmip-it'+((sel==='—'||sel==null)?' on':'')+'" data-k="—">—</div></div>';
+  secs.forEach(function(s){ if(!s.items.length) return;
+    html += '<div class="mmip-sec"><div class="mmip-sect">'+esc(s.section)+'</div>';
+    s.items.forEach(function(k){ var ghost = !map[k];
+      html += '<div class="mmip-it'+(k===sel?' on':'')+(ghost?' ghost':'')+'" data-k="'+esc(k)+'"'+
+              (ghost?' data-title-es="No está en la lista activa" data-title-en="Not in the active list" title="Not in the active list"':'')+'>'+esc(lab(k))+'</div>'; });
+    html += '</div>'; });
+  var cols = doc.getElementById('mmip-cols');
+  cols.innerHTML = html;
+  var n = cols.querySelectorAll('.mmip-it').length;
+  cols.style.columnCount = String(Math.max(1, Math.min(5, Math.ceil(n/12))));   // 4-5 columnas con la lista llena; menos si hay poco (percusion)
+  var filtEl = doc.getElementById('mmip-filter'); filtEl.value = '';
+  pal._anchor = opts.anchor || null;
+  pal._onPick = opts.onPick || null;
+  pal._pinned = true; var _pinEl = doc.getElementById('mmip-pin'); _pinEl.classList.add('on'); _pinEl.textContent = '⊗';   // pin ON al abrir (contrato)
+  cols.onclick = function(e){
+    var it = e.target && e.target.closest ? e.target.closest('.mmip-it') : null;
+    if(!it || it.classList.contains('ghost')) return;
+    e.stopPropagation();
+    cols.querySelectorAll('.mmip-it.on').forEach(function(x){ x.classList.remove('on'); });
+    it.classList.add('on');
+    if(pal._onPick) pal._onPick(it.dataset.k);
+    if(!pal._pinned) pal.classList.remove('open'); };
+  pal.classList.add('open');
+  var w = pal.offsetWidth, h = pal.offsetHeight, x = 80, y = 80;               // bajo el ancla, sin salirse del viewport
+  if(opts.anchor && opts.anchor.getBoundingClientRect){ var r2 = opts.anchor.getBoundingClientRect(); x = r2.left; y = r2.bottom + 6; }
+  if(x + w > window.innerWidth - 8)  x = Math.max(8, window.innerWidth - 8 - w);
+  if(y + h > window.innerHeight - 8) y = Math.max(8, window.innerHeight - 8 - h);
+  pal.style.left = Math.round(x)+'px'; pal.style.top = Math.round(y)+'px';
+  if(window._prefsSyncLang){ try{ window._prefsSyncLang(); }catch(_){ } }       // idioma del Coach al vuelo (solo existe en Score)
+  return pal;
+};

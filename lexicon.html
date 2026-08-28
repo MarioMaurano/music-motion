@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lexicon — Music Motion</title>
+<title>Lexicon — Music Motion v.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -13,11 +13,12 @@
 <body>
 
 <header>
-  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small></a>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small> <small>v.2</small></a>
   <nav>
     <a href="index.html#inicio"><span class="es">Inicio</span><span class="en">Home</span></a>
     <a href="index.html#apps"><span class="es">Las apps</span><span class="en">The apps</span></a>
     <a href="index.html#howto"><span class="es">Cómo empezar</span><span class="en">How to start</span></a>
+    <a href="instruments.html"><span class="es">Instrumentos</span><span class="en">Instruments</span></a>
     <a href="index.html#aula"><span class="es">Aula del Coach</span><span class="en">Coach Classroom</span></a>
     <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
   </nav>
@@ -62,33 +63,53 @@
   <div class="specs">
 
     <div class="spec">
-      <h3><span class="es">Siete ejes, siete valores</span><span class="en">Seven axes, seven values</span></h3>
+      <h3 id="ejes-del-sonido"><span class="es">Siete ejes, siete valores</span><span class="en">Seven axes, seven values</span></h3>
       <p><span class="es">Cada estado sonoro es una coordenada de 7 dígitos escrita en el alfabeto F K G D A E B. La letra D — el centro — es el neutro de cada eje, como el D0 de la red concéntrica: la palabra neutra es DDDDDDD y solo lo que se aparta del centro se almacena.</span><span class="en">Every sound state is a 7-digit coordinate written in the F K G D A E B alphabet. The letter D — the centre — is each axis's neutral, like the concentric lattice's D0: the neutral word is DDDDDDD and only departures from the centre are stored.</span></p>
     </div>
 
     <div class="spec">
-      <h3><span class="es">La dinámica es timbre</span><span class="en">Dynamics are timbre</span></h3>
+      <h3 id="la-dinamica-es-timbre"><span class="es">La dinámica es timbre</span><span class="en">Dynamics are timbre</span></h3>
       <p><span class="es">Una orquesta en pianissimo suena con menos decibeles, pero no pierde presencia: cambia el espectro, no la distancia. En el Lexicon pp oscurece el color y ablanda el ataque mientras el volumen apenas baja. El fader pertenece a la mezcla, no a la expresión.</span><span class="en">An orchestra playing pianissimo gives fewer decibels but loses no presence: the spectrum changes, not the distance. In the Lexicon, pp darkens the colour and softens the attack while volume barely drops. The fader belongs to the mix, not to expression.</span></p>
     </div>
 
     <div class="spec">
-      <h3><span class="es">Por nota, en su registro</span><span class="en">Per note, in its register</span></h3>
+      <h3 id="por-nota-en-su-registro"><span class="es">Por nota, en su registro</span><span class="en">Per note, in its register</span></h3>
       <p><span class="es">Cada término vive en 4 anclas de registro — en el violín, literalmente sus cuerdas: Sol·Re·La·Mi. Al sonar cada nota, el Cosmic interpola los valores en su altura real. La articulación y la dinámica dejan de ser un adorno general del canal.</span><span class="en">Each term lives across 4 register anchors — on the violin, literally its strings: G·D·A·E. As each note sounds, the Cosmic interpolates the values at its actual pitch. Articulation and dynamics stop being a channel-wide ornament.</span></p>
     </div>
 
     <div class="spec">
-      <h3><span class="es">Herencia orquestal</span><span class="en">Orchestral inheritance</span></h3>
+      <h3 id="herencia-orquestal"><span class="es">Herencia orquestal</span><span class="en">Orchestral inheritance</span></h3>
       <p><span class="es">Un árbol posicional: lo común se define una vez (default), cada familia ajusta lo suyo y cada instrumento solo guarda lo que lo distingue — el pizzicato grave del violín tiene más cuerpo, y eso es una sola línea en la base.</span><span class="en">A positional tree: what is common is defined once (default), each family adjusts its own, and each instrument stores only what sets it apart — the violin's low pizzicato has more body, and that is a single line in the database.</span></p>
     </div>
 
     <div class="spec">
-      <h3><span class="es">La capa intérprete <span class="wip">· en evolución</span></span><span class="en">The interpreter layer <span class="wip">· evolving</span></span></h3>
+      <h3 id="la-capa-interprete-en-evolucion"><span class="es">La capa intérprete <span class="wip">· en evolución</span></span><span class="en">The interpreter layer <span class="wip">· evolving</span></span></h3>
       <p><span class="es">El Score estrena una expresión por nota relativa al matiz: el signo de nota (florece &lt;, decae &gt;, messa &lt;&gt;, inverso &gt;º&lt;, niente º) lleva la nota hacia dos dinámicas y de vuelta; la ligadura adquiere polaridad (adelante decae, atrás crece). Vecina con el eje TRANS/WORD del Lexicon — trayecto entre notas —, pero por ahora vive en la nota del Score, no en la palabra de 7 letras. El modelo sigue en evolución.</span><span class="en">The Score introduces per-note expression relative to the dynamic: the note sign (bloom &lt;, decay &gt;, messa &lt;&gt;, inverse &gt;º&lt;, niente º) carries the note toward two dynamics and back; the slur gains polarity (forward decays, backward grows). A neighbour of the Lexicon's TRANS/WORD axis — trajectory between notes — but for now it lives on the Score's note, not in the 7-letter word. The model is still evolving.</span></p>
     </div>
 
     <div class="spec">
-      <h3><span class="es">TRANS · la preparación del salto, ahora al sonar el Score</span><span class="en">TRANS · the leap preparation, now when the Score plays</span></h3>
+      <h3 id="trans-la-preparacion-del-salto-ahora-al-sonar-el"><span class="es">TRANS · la preparación del salto, ahora al sonar el Score</span><span class="en">TRANS · the leap preparation, now when the Score plays</span></h3>
       <p><span class="es">El eje <b>TRANS</b> del Lexicon (cómo se prepara una nota que llega después de un salto) ya estaba definido, pero dormía. Ahora <b>actúa al reproducir el Score</b>: cuando una nota entra ligada y el salto desde la anterior supera <b>un tono pitagórico</b> (la razón de frecuencias es mayor a 9/8 — y la razón se calcula por los exponentes pitagóricos, nunca por semitonos del temperamento igual), el Score le pasa al Keyboard de dónde venía y el Lexicon aplica <b>trans.leap</b>: un poco más de ataque y de aire, y algo más oscuro, en proporción al tamaño del salto. Los pasos chicos no se preparan; los saltos, sí.</span><span class="en">The Lexicon's <b>TRANS</b> axis (how a note arriving after a leap is prepared) was already defined, but dormant. Now it <b>acts when the Score plays</b>: when a note enters slurred and the leap from the previous one exceeds <b>one Pythagorean whole tone</b> (the frequency ratio is greater than 9/8 — and the ratio is computed from the Pythagorean exponents, never from equal-tempered semitones), the Score tells the Keyboard where it came from and the Lexicon applies <b>trans.leap</b>: a touch more attack and air, and a little darker, in proportion to the size of the leap. Small steps are not prepared; leaps are.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-clavecin-un-nodo-que-aplana-la-dinamica"><span class="es">El clavecín: un nodo que aplana la dinámica</span><span class="en">The harpsichord: a node that flattens dynamics</span></h3>
+      <p><span class="es">Cuando la física de un instrumento dice que la fuerza no cambia el timbre, lo dice el <b>nodo</b> del Lexicon, no el motor. El clavecín no tiene dinámica por tecla (el plectro suelta la cuerda siempre desde la misma flecha: 1,7 dB entre pp y ff), así que su nodo <span class="mono">harpsichord</span> —y su clon <span class="mono">harpsichord_wt</span>, el bien temperado— pisa todos los términos DYN de la familia: nivel casi plano (pp ×0.92 → fff ×1.10), color, ataque y aire fijos; lo único que respira con la velocity es el ruido de la mecánica —el «tac» del salterio, ×0.55 en pp y ×2 en fff—. La expresión del clavecín es articulación, registración y tiempo, no fuerza. Nodos de teclados con anclas F1·C3·C5·F6.</span><span class="en">When the physics of an instrument says that force does not change the timbre, the Lexicon <b>node</b> says so, not the engine. The harpsichord has no per-key dynamics (the plectrum always releases the string from the same deflection: 1.7 dB between pp and ff), so its <span class="mono">harpsichord</span> node —and its clone <span class="mono">harpsichord_wt</span>, the well-tempered one— overrides every DYN term of the family: nearly flat level (pp ×0.92 → fff ×1.10), fixed colour, attack and air; the only thing that breathes with velocity is the mechanism noise —the jack's "tac", ×0.55 at pp and ×2 at fff—. The harpsichord's expression is articulation, registration and time, not force. Keyboard nodes with anchors F1·C3·C5·F6.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-cuerda-pulsada-el-arco-manda-el-brillo-el-ded"><span class="es">La cuerda pulsada: el arco manda el brillo, el dedo no</span><span class="en">Plucked strings: the bow rules brightness, the finger does not</span></h3>
+      <p><span class="es">Arpa, guitarra y pizzicato —solo y de sección— tienen desde hoy nodo propio (<span class="mono">harp</span> · <span class="mono">guitar</span> · <span class="mono">pizzicato</span> · <span class="mono">strings_pizzicato</span>). Hasta ahora caían en la ley de la familia <i>cuerdas</i>, que es la del <b>arco</b>: el brillo se abre con la fuerza. El pulsado no funciona así — el dedo suelta la cuerda desde un triángulo, y la forma del espectro la fijan el punto de pulsado y el ancho de la yema, no la fuerza: de pp a ff el color sube casi en bloque. Lo que sí crece es el <b>golpe</b> —el thump de la tapa y del puente— y el ruido del contacto. Por eso estos nodos mueven el color apenas y el golpe mucho: arpa +0,08 de color y +8 dB de golpe; guitarra +0,10 y +8 dB; pizzicato +0,15 y +10 dB. Sin vibrato. Y en un canal que <i>ya</i> es pizzicato, la marca <span class="mono">pizz</span> queda neutralizada: duplicaba el ataque.</span><span class="en">Harp, guitar and pizzicato —solo and section— now have nodes of their own (<span class="mono">harp</span> · <span class="mono">guitar</span> · <span class="mono">pizzicato</span> · <span class="mono">strings_pizzicato</span>). Until now they fell under the <i>cuerdas</i> family law, which is the <b>bowed</b> one: brightness opens with force. Plucking does not work like that — the finger releases the string from a triangle, and the shape of the spectrum is set by the plucking point and the width of the fingertip, not by force: from pp to ff the colour rises almost as a block. What does grow is the <b>hit</b> —the soundboard and bridge thump— and the contact noise. So these nodes move colour barely and the hit a lot: harp +0.08 of colour and +8 dB of hit; guitar +0.10 and +8 dB; pizzicato +0.15 and +10 dB. No vibrato. And on a channel that is <i>already</i> pizzicato, the <span class="mono">pizz</span> sign is neutralised: it doubled the attack.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-techo-del-agudo-es-del-tono-no-del-golpe"><span class="es">El techo del agudo es del tono, no del golpe</span><span class="en">The treble's ceiling belongs to the tone, not to the hit</span></h3>
+      <p><span class="es">El nodo del <b>arpa</b> hacía <i>bajar</i> el golpe hacia el agudo en los fuertes, apoyado en el «techo bajo en el agudo» de la ficha. Escuchando el arpa de Mahler del Mi5 para arriba —«suena corto, agudo, instantáneo, doloroso»— quedó claro que ese techo es del <b>tono</b>: los armónicos por encima de la fundamental no aportan volumen. Lo que sí se abre con la dinámica es la <b>no linealidad</b> —fantasma, glide, golpe de tapa, ruido de deslizamiento—, así que aplicarle al transitorio el techo del tono era al revés: el arpista apretaba y el motor le bajaba el golpe. Ahora, en <b>f · ff · fff</b>, el golpe abre <i>más</i> arriba que abajo; el color no se toca, que ahí el techo del agudo sí corresponde. De pp a mp queda igual. Y las <b>anclas</b> del nodo se mudaron a los quiebres de material medidos del preset —entorchado · tripa · nailon · la cuerda más corta— porque con anclas distintas de las suyas las curvas de dinámica se leían en posiciones de registro que no eran las de este instrumento.</span><span class="en">The <b>harp</b> node made the hit <i>fall</i> toward the treble in the loud dynamics, leaning on the "low ceiling in the treble" of its research card. Listening to Mahler's harp from E5 up —"short, high, instantaneous, painful"— it became clear that this ceiling belongs to the <b>tone</b>: partials above the fundamental add no volume. What does open with dynamics is the <b>non-linearity</b> —phantom partial, glide, soundboard thump, sliding noise— so applying the tone's ceiling to the transient was backwards: the harpist pressed and the engine lowered the hit. Now, at <b>f · ff · fff</b>, the hit opens <i>more</i> in the treble than in the bass; colour is left alone, since there the treble ceiling does apply. From pp to mp nothing changes. And the node's <b>anchors</b> moved to the preset's measured material breaks —wound · gut · nylon · the shortest string— because with anchors other than its own, the dynamic curves were being read at register positions that were not this instrument's.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-grupeto-pide-prestada-la-ley-del-mordente"><span class="es">El grupeto pide prestada la ley del mordente</span><span class="en">The turn borrows the mordent's law</span></h3>
+      <p><span class="es">La tabla de sinónimos suma <span class="mono">turn</span> · <span class="mono">grupeto</span> · <span class="mono">gruppetto</span> → <b>mordente</b>. El grupeto pasó a sonar —el Score lo realiza en cuatro notas: superior · principal · inferior · principal, arrancando <i>en</i> el tiempo— y necesitaba una ley de ataque: usa la del mordente, que es el mismo gesto breve de ornamento. El eje <b>ACC</b> tiene siete casillas con el neutro al centro (marcatissimo · marcato · accento · — · tr · mordente · tremolo), así que no se le agrega una octava por esto: cuando ACC crezca, el grupeto se muda a su propia casilla. Es el criterio de siempre — la tinta se guarda como se escribió y acá se la resuelve al término canónico, igual que <span class="mono">mordent</span> → mordente o <span class="mono">trill</span> → tr.</span><span class="en">The synonyms table adds <span class="mono">turn</span> · <span class="mono">grupeto</span> · <span class="mono">gruppetto</span> → <b>mordente</b>. The turn now sounds —the Score realises it as four notes: upper · main · lower · main, starting <i>on</i> the beat— and it needed an attack law: it uses the mordent's, which is the same short ornamental gesture. The <b>ACC</b> axis has seven slots with the neutral at the centre (marcatissimo · marcato · accento · — · tr · mordente · tremolo), so no eighth is added for this: when ACC grows, the turn moves to a slot of its own. It is the usual criterion — the ink is stored as written and resolved here to the canonical term, just as <span class="mono">mordent</span> → mordente or <span class="mono">trill</span> → tr.</span></p>
     </div>
 
   </div>
@@ -97,7 +118,7 @@
 </main>
 
 <footer>
-  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small></a>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small> <small>v.2</small></a>
   <p><span class="es">Suite de afinación pitagórica · © 2001–2026 Music Motion. Todos los derechos reservados.</span><span class="en">Pythagorean tuning suite · © 2001–2026 Music Motion. All rights reserved.</span></p>
   <p style="margin-top:8px;color:var(--violet)" class="mono"><span class="es">Sitio en construcción — crece día a día con la suite.</span><span class="en">Site under construction — grows day by day with the suite.</span></p>
 </footer>

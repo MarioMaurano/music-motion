@@ -26,5 +26,5 @@ document.querySelectorAll('.sizetog button').forEach(function(b){
   b.addEventListener('click', function(){ setSize(parseInt(b.getAttribute('data-sz'),10)); });
 });
 // el tema lo restaura mm-theme.js
-try{ var sl=localStorage.getItem('mmSiteLang'); if(sl) setLang(sl);
+try{ var sl=localStorage.getItem('mmSiteLang'); setLang(sl||'en');   // default EN para visitantes nuevos; la elección guardada se respeta
      var sz=localStorage.getItem('mmSiteSize'); if(sz) setSize(parseInt(sz,10)); }catch(e){}

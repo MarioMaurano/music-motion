@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Music Motion — suite · coach</title>
+<title>Music Motion v.2 — suite · coach</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -13,11 +13,12 @@
 <body>
 
 <header>
-  <a href="#inicio" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small></a>
+  <a href="#inicio" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small> <small>v.2</small></a>
   <nav>
     <a href="#inicio"><span class="es">Inicio</span><span class="en">Home</span></a>
     <a href="#apps"><span class="es">Las apps</span><span class="en">The apps</span></a>
     <a href="#howto"><span class="es">Cómo empezar</span><span class="en">How to start</span></a>
+    <a href="instruments.html"><span class="es">Instrumentos</span><span class="en">Instruments</span></a>
     <a href="#aula"><span class="es">Aula del Coach</span><span class="en">Coach Classroom</span></a>
     <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
   </nav>
@@ -133,10 +134,11 @@
     <div class="app" style="--c:var(--violet)">
       <div class="tag">⊞ Coach <span class="wip">· en construcción</span></div>
       <h3><span class="es">El asesor</span><span class="en">The advisor</span></h3>
-      <p><span class="es">Escucha la suite en silencio y aparece solo cuando hace falta, con una ayuda en el momento justo. Para alguien sin teoría: te orienta sin darte una clase.</span><span class="en">Listens to the suite silently and surfaces only when needed, with help at the right moment. For someone without theory: it guides you without a lecture.</span></p>
+      <p><span class="es">Escucha la suite en silencio y aparece cuando hace falta. Y ahora además <b>enseña</b>: conduce el juego de composición, donde empezás con una melodía modelo y terminás con una obra a cuatro voces escrita por vos, sin haber estudiado teoría.</span><span class="en">Listens to the suite silently and surfaces when needed. And now it also <b>teaches</b>: it leads the composition game, where you start from a model melody and end with a four-voice piece written by you, without having studied theory.</span></p>
       <ul>
         <li><span class="es">🎓 en las 4 apps: un clic lo despierta o lo duerme — nunca es una imposición</span><span class="en">🎓 in all 4 apps: one click wakes or sleeps it — never imposed</span></li>
-        <li><span class="es">Su primer consejo ya corre: los silencios que completan el compás, con minilección</span><span class="en">Its first advice is live: the rests that complete the measure, with a mini-lesson</span></li>
+        <li><span class="es"><b>Nivel 1 completo</b>: seis etapas, de la melodía al cuarteto, y una ★ al terminar</span><span class="en"><b>Level 1 complete</b>: six stages, from melody to quartet, and a ★ at the end</span></li>
+        <li><span class="es">Te avisa de los saltos difíciles y de las quintas paralelas — avisos, nunca bloqueos</span><span class="en">It flags hard leaps and parallel fifths — warnings, never blocks</span></li>
         <li><span class="es">Solfeo básico, técnico (vigila las apps) y estilos (Barroco, Clásico…)</span><span class="en">Basic solfège, technical (watches the apps) and styles (Baroque, Classical…)</span></li>
         <li><span class="es">El pulso rítmico: latido visible y tap-tempo</span><span class="en">The rhythmic pulse: visible beat + tap-tempo</span></li>
       </ul>
@@ -175,6 +177,20 @@
   <div class="eyebrow"><span class="es">Aula del Coach</span><span class="en">Coach Classroom</span></div>
   <h2><span class="es">Cada tema, a tu nivel</span><span class="en">Each subject, at your level</span></h2>
   <p><span class="es">Elige <b>Para empezar</b> (sin teoría) o <b>Para músicos</b> (con el detalle técnico). El contenido crece con la suite.</span><span class="en">Pick <b>Getting started</b> (no theory) or <b>For musicians</b> (with the technical detail). This grows with the suite.</span></p>
+
+  <div class="lesson" data-lvl="new">
+    <h3><span class="es">El juego de composición — Nivel 1</span><span class="en">The composition game — Level 1</span></h3>
+    <div class="levels">
+      <button class="on" onclick="setLvl(this,'new')"><span class="es">Para empezar</span><span class="en">Getting started</span></button>
+      <button onclick="setLvl(this,'pro')"><span class="es">Para músicos</span><span class="en">For musicians</span></button>
+    </div>
+    <div class="lvl-new">
+      <p><span class="es">Un solo archivo que crece. Arriba queda una melodía modelo, con candado, y vos escribís las tuyas debajo. Cuando completás una etapa la obra crece sola con la parte siguiente: primero melodías, después la sección B, la parte C, el bajo, la voz interior y el tenor. Al final tenés una obra a cuatro voces que escribiste vos, y el Coach te firma con una ★. Se juega desde su ventana; el progreso viaja dentro del archivo, así que guardás y volvés cuando quieras. <a href="coach.html">Ver el detalle →</a></span><span class="en">One file that grows. A model melody stays at the top, locked, and you write your own underneath. When you complete a stage the work grows into the next part by itself: melodies first, then section B, part C, the bass, the inner voice and the tenor. In the end you have a four-voice piece you wrote yourself, and the Coach signs you with a ★. It is played from its window; progress travels inside the file, so you save and come back whenever you like. <a href="coach.html">See the detail →</a></span></p>
+    </div>
+    <div class="lvl-pro">
+      <p><span class="es"><span class="lvl-tag">forma A·B·C · contrapunto · SATB</span><br>Sobre <i>Ah! vous dirai-je, maman</i> — el tema que Mozart varió en la K.265. La partitura son 32 canales en 8 bloques de 4: melodía, 2ª, 3ª y bajo. Las etapas 1 a 3 construyen la forma A·B·C con reglas melódicas en aviso (tritono, séptima, recuperación de salto, tónica de inicio y final); la B queda sin cadencia a propósito. De la etapa 4 en adelante entra el motor vertical: paralelas, movimiento directo y cruce, primero contra el bajo en clave de Fa —al que no se le aplican las reglas de salto—, después con la 2ª voz y el tenor hasta cerrar SATB por bloque. Un nivel es un paquete de datos, no código: los Niveles 2 a 7 se fabrican con la misma receta.</span><span class="en"><span class="lvl-tag">A·B·C form · counterpoint · SATB</span><br>Built on <i>Ah! vous dirai-je, maman</i> — the theme Mozart varied in K.265. The score is 32 channels in 8 blocks of 4: melody, 2nd, 3rd and bass. Stages 1 to 3 build the A·B·C form with melodic rules as warnings (tritone, seventh, leap recovery, tonic start and end); B is deliberately left without a cadence. From stage 4 the vertical engine comes in: parallels, direct motion and crossing, first against the bass in F clef — which the leap rules do not apply to — then with the 2nd voice and the tenor until each block closes as SATB. A level is a data package, not code: Levels 2 to 7 are built with the same recipe.</span></p>
+    </div>
+  </div>
 
   <div class="lesson" data-lvl="new">
     <h3><span class="es">Las dos casas: la tónica y el pulso</span><span class="en">The two homes: tonic and pulse</span></h3>
@@ -237,7 +253,7 @@
 </main>
 
 <footer>
-  <a href="#inicio" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small></a>
+  <a href="#inicio" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small> <small>v.2</small></a>
   <p><span class="es">Suite de afinación pitagórica · © 2001–2026 Music Motion. Todos los derechos reservados.</span><span class="en">Pythagorean tuning suite · © 2001–2026 Music Motion. All rights reserved.</span></p>
   <p style="margin-top:8px;color:var(--violet)" class="mono"><span class="es">Sitio en construcción — crece día a día con la suite.</span><span class="en">Site under construction — grows day by day with the suite.</span></p>
   <p style="margin-top:6px"><span class="es">Idiomas del sitio: español e inglés. Las aplicaciones tienen nombres de interfaz en hasta doce idiomas.</span><span class="en">Site languages: Spanish and English. The apps carry UI names in up to twelve languages.</span></p>
