@@ -1,0 +1,53 @@
+/* ═══════════ PORTAL — Music Motion (entrada de marca) ═══════════
+   Complementa site.css (copia del shell de la suite: header · nav · tools · cards · steps).
+   Acá solo lo que el portal necesita y la suite no: pie con marco, tarjetas de producto
+   con estado, bloques de idea, botón principal. Colores: los tokens de mm-theme.css. */
+
+/* pie */
+footer{border-top:1px solid var(--border);background:var(--panel);padding:34px 26px 40px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin-top:40px}
+footer p{font-size:var(--fs-sm);margin:2px 0}
+footer .foot-links{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
+footer .foot-links a{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--textm)}
+footer .foot-links a:hover{color:var(--gold)}
+
+/* hero del portal: marca grande */
+.hero-logo{height:64px;width:auto;display:block;margin:0 0 22px}
+.hero-logo.logo-onlight{display:none}
+[data-theme="clear"] .hero-logo.logo-ondark{display:none}
+[data-theme="clear"] .hero-logo.logo-onlight{display:block}
+@media (max-width:520px){.hero-logo{height:48px}}
+.hero-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+
+/* botón principal (relleno) y secundario (contorno) — mismo trazo que .btn-launch */
+.btn-main{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-mono);font-size:.8rem;letter-spacing:1px;padding:10px 18px;border:1px solid var(--gold);border-radius:var(--rad);color:#0a0a10;background:var(--gold);font-weight:500;transition:all .15s}
+.btn-main:hover{filter:brightness(1.08)}
+[data-theme="clear"] .btn-main{color:#f6efda}
+
+/* tarjetas de producto: la .app de la suite + estado + pie de tarjeta */
+.prod{display:flex;flex-direction:column}
+.prod .status{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;text-transform:uppercase;color:var(--textd);margin-top:4px}
+.prod .status b{color:var(--teal);font-weight:500}
+.prod .status b.soon{color:var(--violet)}
+.prod .apps-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.prod .apps-list span{font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.5px;padding:3px 8px;border:1px solid var(--border);border-radius:20px;color:var(--textm)}
+.prod .launch{margin-top:auto;padding-top:16px}
+
+/* bloques de idea (presentación) */
+.ideas{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:26px}
+.idea{background:var(--panel);border:1px solid var(--border);border-radius:var(--rad);padding:18px 20px}
+.idea .tag{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--violet);font-weight:500}
+.idea h3{margin:6px 0 8px;font-size:1.1rem;color:var(--text)}
+.idea p{font-size:var(--fs-sm);margin:0}
+
+/* lista de requisitos / condiciones */
+.plain{list-style:none;margin-top:10px}
+.plain li{font-size:var(--fs-sm);color:var(--textm);padding:4px 0 4px 15px;position:relative}
+.plain li::before{content:"";position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+
+/* fila producto en descargas */
+.dl{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px dashed var(--line)}
+.dl:last-child{border-bottom:none}
+.dl .who{flex:none;width:170px;font-family:var(--ff-display);font-weight:700;color:var(--text)}
+.dl .what{flex:1}
+.dl .what p{margin:2px 0;font-size:var(--fs-sm)}
+@media (max-width:640px){.dl{flex-direction:column;gap:6px}.dl .who{width:auto}}

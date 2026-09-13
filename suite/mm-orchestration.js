@@ -4,7 +4,7 @@
 // y del REGIONS del Register. R-K, textual: "Each of these instruments has four registers:
 // low, middle, high and extremely high." Suplementos de Adler marcados [A] en el texto.
 // Carga: <script src="mm-orchestration.js"></script> (file:// ok). Consumidor: el Coach.
-// Creado 2026-06-17 (render Score .96 · Coach v0.1.6). Investigación: _Investigacion-instrumentos/orquestacion-rk-tablas.md
+// Creado 2026-06-17 (render Score .96 · Coach v0.1.6). Investigación: _Investigacion-instrumentos/registros-y-orquestacion/orquestacion-rk-tablas.md
 // fza: 0 débil · 1 media · 2 llena · 3 fuerte. scope = zonas de máxima expresión (R-K).
 window.MM_RK = {
   source: 'Rimsky-Korsakov, Principles of Orchestration (Agate 1922, Gutenberg #33900)',
@@ -189,7 +189,7 @@ window.MM_TECH = {
       ]
     },
     piano_grand_tonal: {
-      ref: '_Tests/tests instruments/GrandPiano-Tonal/piano_grand_tonal-settings.md',
+      ref: '_Investigacion-instrumentos/INSTRUMENTS SETTINGS/piano/piano_grand_tonal-settings.md',
       escribe: [
         { sig:'matices por tecla', sigEn:'dynamics by key',
           es:'El piano SÍ tiene dinámica de tecla: el matiz escrito cambia el volumen y el timbre, porque el martillo golpea más rápido y el espectro se abre. Es lo contrario del clavecín.',
@@ -248,7 +248,7 @@ window.MM_TECH = {
       en:'In the bass, 77 partials spaced 65 Hz apart fall eight to a critical band: that is roughness, and it is heard as a box of cutlery on a table. In the treble the same partials spread out and the effect vanishes — not a defect, the arithmetic of the harmonic series.' }
   ];
   function copia(arr){ return arr.map(function(o){ var c={}; for(var k in o) c[k]=o[k]; return c; }); }
-  var REF_CLAV = '_Investigacion-instrumentos/teclados/clavecin-investigacion.md · _Tests/tests instruments/Harpsichord/harpsichord-settings.md';
+  var REF_CLAV = '_Investigacion-instrumentos/teclados/clavecin-investigacion.md · _Investigacion-instrumentos/INSTRUMENTS SETTINGS/harpsichord/harpsichord-settings.md';
 
   L.reg.harpsichord = { ref: REF_CLAV, escribe: copia(clavEscribe), toca: copia(clavToca).concat([
     { sig:'afinación: la de la casa', sigEn:'tuning: the house’s own',

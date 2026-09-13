@@ -71,8 +71,8 @@
     <button class="ks-print" onclick="window.print()">🖨 <span class="es">Imprimir</span><span class="en">Print</span></button>
   </div>
   <p class="lead" style="font-size:.95em">
-    <span class="es">Referencia imprimible: teclas y mouse del Score, por zona. Versión V2.7.75.</span>
-    <span class="en">Printable reference: Score keyboard &amp; mouse, by area. Version V2.7.75.</span>
+    <span class="es">Referencia imprimible: teclas y mouse del Score, por zona. Versión V2.7.106.</span>
+    <span class="en">Printable reference: Score keyboard &amp; mouse, by area. Version V2.7.106.</span>
   </p>
 
   <div class="ks-grid" id="ksGrid"></div>
@@ -112,16 +112,19 @@
       ["Shift + clic en una tecla","Shift + click a key","Escribir como acorde","Write as a chord"],
     ]},
     { es:"Num pad — duraciones", en:"Num pad — durations", rows:[
-      ["1 … 7","1 … 7","1 semifusa · 2 fusa · 3 16th · 4 corchea · 5 negra · 6 blanca · 7 redonda","1 64th · 2 32nd · 3 16th · 4 8th · 5 quarter · 6 half · 7 whole"],
+      ["1 … 7","1 … 7","1 semifusa · 2 fusa · 3 semicorchea · 4 corchea · 5 negra · 6 blanca · 7 redonda","1 64th · 2 32nd · 3 16th · 4 8th · 5 quarter · 6 half · 7 whole"],
+      ["la misma otra vez","the same key again","Nota ↔ silencio de esa figura. Es la misma regla del mouse en la info-line: el segundo toque sobre la figura ya armada la pasa a silencio. Otra figura vuelve a nota","Note ↔ rest of that figure. Same rule as the mouse in the info-line: a second press on the already-armed figure turns it into a rest. A different figure goes back to note"],
+      ["0","0","Dice qué hay armado —figura, puntillo, nota o silencio— y no cambia nada","Says what is armed —figure, dot, note or rest— and changes nothing"],
       [".",".","Puntillo (toggle)","Dot (toggle)"],
       ["*","*","Abre el popup Tuplet (tresillo)","Open the Tuplet popup"],
       ["+ / −","+ / −","APO en vivo ±2 (solo en TODAL write)","Live APO ±2 (TODAL write only)"],
+      ["—","—","Cada tecla del num pad anuncia la figura en un aviso que se borra solo: en write no hay dónde verla sin irse a la info-line","Every num pad key announces the figure in a notice that clears itself: in write there is nowhere to see it without going to the info-line"],
     ]},
     { es:"Notas y ritmo", en:"Notes &amp; rhythm", rows:[
       ["1 (fila de arriba)","1 (top row)","Duplicar la nota al unísono","Unison double of the note"],
       ["2 … 9 (fila de arriba)","2 … 9 (top row)","Acorde: agrega 2ª … 9ª diatónica sobre la nota","Chord: add a 2nd … 9th above the note"],
       ["0 (fila de arriba)","0 (top row)","Acorde: agrega 10ª","Chord: add a 10th"],
-      ["R","R","Insertar un silencio en el cursor","Insert a rest at the cursor"],
+      ["R","R","Insertar un silencio en el cursor, con la figura armada. No cambia lo armado — para eso, la misma tecla del num pad dos veces","Insert a rest at the cursor, with the armed figure. It does not change what is armed — for that, the same num pad key twice"],
       ["/","/","Romper / unir la barra (beam) en la nota o la selección","Toggle the beam (break / join) on the note or selection"],
     ]},
     { es:"Selección — ` entra / sale", en:"Selection — ` to enter / leave", rows:[

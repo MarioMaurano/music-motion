@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El formato MMF — Music Motion v.2</title>
+<meta name="description" content="El formato nativo de Music Motion: cada nota con su identidad pitagórica exacta. En qué se diferencia de MIDI y MusicXML, demos descargables y copyright. / Music Motion's native format: every note with its exact Pythagorean identity. How it differs from MIDI and MusicXML, downloadable demos and copyright.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mm-theme.css">
+<link rel="stylesheet" href="site.css">
+<style>
+  /* comparación de formatos y filas de demo — tokens de mm-theme.css */
+  .fmt3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:22px}
+  .fmt{background:var(--panel);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px}
+  .fmt.mmf{border-top:3px solid var(--teal)}
+  .fmt h3{margin:0 0 4px;font-size:1.02rem}
+  .fmt .k{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--textd)}
+  .fmt p{font-size:var(--fs-sm);margin:8px 0 0}
+  .fmt.mmf .k{color:var(--teal)}
+  table.cmp{border-collapse:collapse;width:100%;margin-top:20px;font-size:var(--fs-sm)}
+  table.cmp th,table.cmp td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.cmp th{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;text-transform:uppercase;color:var(--textd);font-weight:500}
+  table.cmp td:first-child{color:var(--text);font-weight:600;white-space:nowrap}
+  table.cmp .yes{color:var(--teal)} table.cmp .no{color:var(--textd)}
+  .cmp-wrap{overflow-x:auto}
+  .demo{display:flex;gap:16px;align-items:flex-start;padding:15px 0;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+  .demo:last-child{border-bottom:none}
+  .demo .who{flex:1 1 320px;min-width:0}
+  .demo .who h3{margin:0 0 3px;font-size:1.04rem}
+  .demo .who .pc{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;text-transform:uppercase;color:var(--textd)}
+  .demo .who p{font-size:var(--fs-sm);margin:6px 0 0}
+  .demo .get{flex:0 0 auto;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+  .dl-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--ff-mono);font-size:.74rem;letter-spacing:.5px;padding:8px 14px;border:1px solid var(--teal);border-radius:var(--rad);color:var(--teal);background:transparent;transition:all .15s;white-space:nowrap;justify-content:center}
+  .dl-btn:hover{background:var(--teal);color:#0a0a10}
+  .pending{font-family:var(--ff-mono);font-size:.62rem;letter-spacing:1px;text-transform:uppercase;color:var(--violet)}
+  .licence{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--rad) var(--rad) 0;padding:14px 18px;margin-top:18px}
+  .licence p{margin:6px 0}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small> <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="es">Inicio</span><span class="en">Home</span></a>
+    <a href="index.html#apps"><span class="es">Las apps</span><span class="en">The apps</span></a>
+    <a href="index.html#howto"><span class="es">Cómo empezar</span><span class="en">How to start</span></a>
+    <a href="instruments.html"><span class="es">Instrumentos</span><span class="en">Instruments</span></a>
+    <a href="mmf.html"><span class="es">Formato MMF</span><span class="en">MMF format</span></a>
+    <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog">
+      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
+      <button id="b-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main style="--c:var(--teal)">
+
+<!-- ───────── HERO ───────── -->
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="es">Volver a la suite</span><span class="en">Back to the suite</span></a>
+  <div class="app-eyebrow"><span class="es">El formato</span><span class="en">The format</span></div>
+  <h1>
+    <span class="es">MMF: la obra con su <span class="hl">afinación exacta</span> adentro.</span>
+    <span class="en">MMF: the piece with its <span class="hl">exact tuning</span> inside.</span>
+  </h1>
+  <p class="lead">
+    <span class="es">MMF es el formato nativo de Music Motion. A diferencia de un MIDI —que guarda números de tecla temperados— un MMF guarda la <b>identidad pitagórica exacta de cada nota</b>: sabe si es un Do♯ o un Re♭, y suena distinto. Se abre en el Score y en el Player, y suena en el Cosmic Keyboard.</span>
+    <span class="en">MMF is Music Motion's native format. Unlike a MIDI file —which stores tempered key numbers— an MMF stores <b>each note's exact Pythagorean identity</b>: it knows whether a note is a C♯ or a D♭, and it sounds different. It opens in the Score and the Player, and it sounds in the Cosmic Keyboard.</span>
+  </p>
+</section>
+
+<!-- ───────── QUÉ GUARDA ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="es">Qué guarda un MMF</span><span class="en">What an MMF holds</span></div>
+  <h2><span class="es">No las notas: la interpretación entera</span><span class="en">Not the notes: the whole performance</span></h2>
+  <p>
+    <span class="es">Un MMF no es una foto de la partitura ni una lista de teclas. Es la obra tal como la suite la entiende, por canales, con todo lo que hace que suene como música:</span>
+    <span class="en">An MMF is neither a picture of the score nor a list of keys. It is the piece as the suite understands it, by channels, with everything that makes it sound like music:</span>
+  </p>
+  <ul style="list-style:none;margin-top:12px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="es"><b>La altura exacta de cada nota</b> — su razón pitagórica, no un número redondeado. Do♯ y Re♭ son dos alturas distintas y quedan escritas como tales.</span><span class="en"><b>Each note's exact pitch</b> — its Pythagorean ratio, not a rounded number. C♯ and D♭ are two different pitches and are written as such.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="es"><b>La dinámica como dato relativo</b> — las marcas (ppp…fff), los reguladores y los acentos, no como volúmenes fijos.</span><span class="en"><b>Dynamics as relative data</b> — the marks (ppp…fff), hairpins and accents, not as fixed volumes.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="es"><b>La articulación y el gesto</b> — ligados con su dirección, arcadas, tremolo, staccato, agógica y el timbre de cada instrumento.</span><span class="en"><b>Articulation and gesture</b> — slurs with their direction, bowings, tremolo, staccato, agogics and each instrument's timbre.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="es"><b>Los 32 canales y su orquestación</b> — cada uno con su instrumento pitagórico, sus pentagramas y sus grupos.</span><span class="en"><b>The 32 channels and their orchestration</b> — each with its Pythagorean instrument, its staves and its groups.</span></li>
+  </ul>
+  <div class="note">
+    <span class="es">Por eso un MMF que abrís hoy suena igual que el día que se guardó: la afinación no se recalcula, viaja dentro del archivo.</span>
+    <span class="en">That is why an MMF you open today sounds the same as the day it was saved: the tuning is not recomputed, it travels inside the file.</span>
+  </div>
+</section>
+
+<!-- ───────── MMF Y OTROS FORMATOS ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="es">MMF frente a otros formatos</span><span class="en">MMF vs other formats</span></div>
+  <h2><span class="es">Cada formato guarda una cosa distinta</span><span class="en">Each format stores a different thing</span></h2>
+
+  <div class="fmt3">
+    <div class="fmt">
+      <div class="k">MIDI · .mid</div>
+      <h3><span class="es">La ejecución</span><span class="en">The performance</span></h3>
+      <p><span class="es">Números de tecla (0–127), velocidad y tiempo. Es temperado por diseño: un Do♯ y un Re♭ son la misma tecla. No sabe de afinación ni de grafía.</span><span class="en">Key numbers (0–127), velocity and timing. Tempered by design: a C♯ and a D♭ are the same key. It knows nothing of tuning or spelling.</span></p>
+    </div>
+    <div class="fmt">
+      <div class="k">MusicXML · .xml/.mxl</div>
+      <h3><span class="es">La partitura</span><span class="en">The notation</span></h3>
+      <p><span class="es">Cómo se ve la hoja: notas, plicas, alteraciones, compases. Distingue Do♯ de Re♭ en la escritura, pero al sonar se reproduce temperado.</span><span class="en">How the page looks: notes, stems, accidentals, bars. It tells C♯ from D♭ in writing, but plays back tempered.</span></p>
+    </div>
+    <div class="fmt mmf">
+      <div class="k">MMF · .mmf</div>
+      <h3><span class="es">La identidad y el sonido</span><span class="en">Identity and sound</span></h3>
+      <p><span class="es">La altura pitagórica exacta de cada nota más la interpretación entera. Do♯ ≠ Re♭ en la escritura <b>y</b> en el aire. El formato nativo de la suite.</span><span class="en">Each note's exact Pythagorean pitch plus the whole performance. C♯ ≠ D♭ in writing <b>and</b> in the air. The suite's native format.</span></p>
+    </div>
+  </div>
+
+  <div class="cmp-wrap">
+  <table class="cmp">
+    <thead><tr>
+      <th></th><th>MIDI</th><th>MusicXML</th><th>MMF</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><span class="es">Distingue Do♯ de Re♭</span><span class="en">Tells C♯ from D♭</span></td>
+        <td class="no"><span class="es">no</span><span class="en">no</span></td>
+        <td class="yes"><span class="es">en la grafía</span><span class="en">in notation</span></td>
+        <td class="yes"><span class="es">en grafía y sonido</span><span class="en">in notation and sound</span></td></tr>
+      <tr><td><span class="es">Afinación</span><span class="en">Tuning</span></td>
+        <td class="no"><span class="es">temperada</span><span class="en">tempered</span></td>
+        <td class="no"><span class="es">temperada</span><span class="en">tempered</span></td>
+        <td class="yes"><span class="es">pitagórica exacta</span><span class="en">exact Pythagorean</span></td></tr>
+      <tr><td><span class="es">Guarda la interpretación</span><span class="en">Stores the performance</span></td>
+        <td class="yes"><span class="es">parcial</span><span class="en">partial</span></td>
+        <td class="no"><span class="es">poco</span><span class="en">little</span></td>
+        <td class="yes"><span class="es">sí (dinámica, arco, agógica)</span><span class="en">yes (dynamics, bowing, agogics)</span></td></tr>
+      <tr><td><span class="es">Abre en la suite</span><span class="en">Opens in the suite</span></td>
+        <td class="yes"><span class="es">se importa</span><span class="en">imported</span></td>
+        <td class="yes"><span class="es">se importa</span><span class="en">imported</span></td>
+        <td class="yes"><span class="es">nativo</span><span class="en">native</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small" style="margin-top:14px">
+    <span class="es">El Player acuña un MIDI o un MusicXML en MMF: entra temperado y nace pitagórico, organizado por la armadura del archivo.</span>
+    <span class="en">The Player mints a MIDI or a MusicXML into MMF: it comes in tempered and is born Pythagorean, organized by the file's key signature.</span>
+  </p>
+</section>
+
+<!-- ───────── DEMOS ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="es">Demos</span><span class="en">Demos</span></div>
+  <h2><span class="es">Obras para abrir en la suite</span><span class="en">Pieces to open in the suite</span></h2>
+  <p>
+    <span class="es">Los primeros demos aprobados, de <b>dominio público</b>, transcritos y afinados en Music Motion. Se abren en el Score o el Player de la suite. <span class="pending">Se irán sumando más.</span></span>
+    <span class="en">The first approved demos, in the <b>public domain</b>, transcribed and tuned in Music Motion. They open in the suite's Score or Player. <span class="pending">More will be added.</span></span>
+  </p>
+  <div style="margin-top:14px">
+    <div class="demo">
+      <div class="who">
+        <div class="pc">Béla Bartók · piano</div>
+        <h3><span class="es">Danzas populares rumanas (Sz. 56)</span><span class="en">Romanian Folk Dances (Sz. 56)</span></h3>
+        <p><span class="es">Las seis danzas, en el piano pitagórico: los medios tonos folclóricos, donde la afinación exacta se oye de entrada.</span><span class="en">The six dances, on the Pythagorean piano: the folk semitones, where exact tuning is heard from the first bar.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="demos/bartok-danzas-rumanas.zip" download>▼ .zip · 48 KB</a>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="who">
+        <div class="pc">J. S. Bach · clavecín</div>
+        <h3><span class="es">Sinfonías (Invenciones a 3 voces), BWV 787–801</span><span class="en">Sinfonias (Three-part Inventions), BWV 787–801</span></h3>
+        <p><span class="es">Las quince, a tres voces, en <b>dos clavecines</b>: el <b>Cosmic</b> —pitagórico, la afinación de la suite— y el <b>Well-tempered</b> —Werckmeister III—. La misma obra en las dos afinaciones: el único demo donde oís lo pitagórico contra un temperamento histórico.</span><span class="en">All fifteen, in three voices, on <b>two harpsichords</b>: the <b>Cosmic</b> —Pythagorean, the suite's tuning— and the <b>Well-tempered</b> —Werckmeister III—. The same piece in both tunings: the one demo where you hear Pythagorean against a historical temperament.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="demos/bach-sinfonias-bwv787-801.zip" download>▼ .zip · 342 KB</a>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="who">
+        <div class="pc">Maurice Ravel · piano</div>
+        <h3><span class="es">Concierto en Sol — 2.º mov. (Adagio assai)</span><span class="en">Piano Concerto in G — 2nd mov. (Adagio assai)</span></h3>
+        <p><span class="es">Piano Grand Tonal. La melodía larga de la mano derecha sobre el ostinato: dinámica relativa y matices que respiran.</span><span class="en">Grand Tonal piano. The long right-hand melody over the ostinato: relative dynamics and breathing nuances.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="demos/ravel-concierto-sol-2mov.zip" download>▼ .zip · 61 KB</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── COPYRIGHT ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="es">Copyright y uso</span><span class="en">Copyright and use</span></div>
+  <h2><span class="es">De quién es qué</span><span class="en">Who owns what</span></h2>
+  <div class="licence">
+    <p><span class="es"><b>Las obras musicales son de dominio público.</b> Bartók, Bach y Ravel: sus obras están libres de derechos, y por eso pueden ofrecerse aquí.</span><span class="en"><b>The musical works are in the public domain.</b> Bartók, Bach and Ravel: their works are out of copyright, which is why they can be offered here.</span></p>
+    <p><span class="es"><b>El formato MMF y estos archivos son propiedad de Music Motion.</b> La transcripción, la afinación pitagórica y la interpretación guardada en cada archivo son obra de Music Motion. © 2001–2026 Music Motion. Todos los derechos reservados. Music Motion es una marca registrada.</span><span class="en"><b>The MMF format and these files are Music Motion's property.</b> The transcription, the Pythagorean tuning and the performance stored in each file are Music Motion's work. © 2001–2026 Music Motion. All rights reserved. Music Motion is a registered trademark.</span></p>
+    <p><span class="es"><b>Uso personal y educativo.</b> Podés descargar, abrir y estudiar estos archivos. Está prohibido venderlos o cobrar por su uso, y redistribuirlos modificados.</span><span class="en"><b>Personal and educational use.</b> You may download, open and study these files. Selling them or charging for their use, and redistributing them modified, is prohibited.</span></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>®</small> <small>v.2</small></a>
+  <p><span class="es">Suite de afinación pitagórica · © 2001–2026 Music Motion. Todos los derechos reservados.</span><span class="en">Pythagorean tuning suite · © 2001–2026 Music Motion. All rights reserved.</span></p>
+  <p style="margin-top:8px;color:var(--violet)" class="mono"><span class="es">Sitio en construcción — crece día a día con la suite.</span><span class="en">Site under construction — grows day by day with the suite.</span></p>
+</footer>
+
+<script src="mm-theme.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

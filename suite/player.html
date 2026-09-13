@@ -56,7 +56,7 @@
   </p>
 
   <div class="launch">
-    <a class="btn-launch" href="mm-player.html">▶ <span class="es">Abrir el Player</span><span class="en">Open the Player</span></a>
+    <a class="btn-launch" href="https://musicmotion.mariomaurano.com/descargas.html">▶ <span class="es">Descargar Cosmic Keyboard</span><span class="en">Download Cosmic Keyboard</span></a>
   </div>
   <div class="note">
     <span class="es">El Player <b>no produce sonido</b>: transmite cada nota al <b>Cosmic Keyboard</b> — el único motor de la suite — que resuelve la frecuencia con su base pitagórica. Versión 11: reconstrucción completa sobre los contratos de la suite. Desde v11.4 el copista además corrige: clic en una nota del roll y la enmiendas en la red pitagórica (apotoma, lima, tono, octava, re-deletreo enharmónico, duración, velocity) — o un pasaje entero con shift+arrastre. Y el Score Intelligence ya vive: identifica la obra y trae época, estilo y tempos de referencia (siempre opcional, con tu propia clave; la información nunca se impone).</span>
@@ -68,6 +68,16 @@
     <div class="spec">
       <h3><span class="es">MIDI → MMF</span><span class="en">MIDI → MMF</span></h3>
       <p><span class="es">Lee el archivo MIDI — notas, key signature, tempo, pistas — y organiza las alturas según la armadura: cada nota recibe su deletreo correcto (Fa♯ no es Sol♭) y con él su proporción exacta. Eso es «acuñar»: del MIDI temperado nace un MMF pitagórico.</span><span class="en">It reads the MIDI file — notes, key signature, tempo, tracks — and organizes pitches by the key signature: every note gets its correct spelling (F♯ is not G♭) and with it its exact ratio. That is "minting": from tempered MIDI, a Pythagorean MMF is born.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">Las pistas, alineadas</span><span class="en">Tracks, aligned</span></h3>
+      <p><span class="es">Muchos exportadores dejan cada instrumento corrido unos ticks respecto de la grilla — la flauta un poco tarde, el cello un poco más. No se oye al reproducir, pero al escribirlo ensuciaba la copia: el compaseo encontraba cada nota empezando un pelo tarde y rellenaba el hueco con un silencio brevísimo, uno por compás y por voz, más puntillos que nadie escribió. Ahora, al importar el MIDI, el copista mide el corrimiento parejo de cada pista y se lo quita entero. Lo que <b>nunca</b> hace es cuantizar nota por nota: ahí vive el rubato, y eso no se toca.</span><span class="en">Many exporters leave each instrument shifted a few ticks off the grid — the flute a little late, the cello a little more. You don't hear it on playback, but writing it down fouled the copy: the barring found every note starting a hair late and filled the gap with a very short rest, one per bar and per voice, plus dots nobody wrote. Now, on MIDI import, the copyist measures each track's even offset and takes the whole of it out. What it <b>never</b> does is quantize note by note: that is where the rubato lives, and it is left alone.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="es">Los matices, deducidos de las velocidades</span><span class="en">Dynamics, deduced from velocities</span></h3>
+      <p><span class="es">Un MIDI no trae dinámicas escritas. Pero cuando viene de una partitura tocada, las velocidades no son un continuo: forman una <b>escalera</b> de niveles, y esos peldaños son los matices. El copista la lee y escribe el matiz en la partitura, con dos condiciones para no llenar la página de marcas: el nivel tiene que <b>sostenerse</b> al menos un compás y <b>saltar</b> lo suficiente respecto del que rige. Lo que no pasa el filtro no se pierde — sigue vivo en la velocity de cada nota, que es la que suena. Los matices viajan dentro del MMF y el Score los coloca junto a sus notas. Tenelo presente: lo que leés ahí es la <b>interpretación grabada en el MIDI</b>, no lo que escribió el compositor — una entrada puede salir <i>mf</i> donde la partitura dice <i>ppp</i>.</span><span class="en">A MIDI file carries no written dynamics. But when it comes from a score that was played, the velocities are not a continuum: they form a <b>staircase</b> of levels, and those steps are the dynamics. The copyist reads it and writes the marking into the score, under two conditions so the page doesn't fill up with marks: the level has to be <b>held</b> for at least a bar and to <b>jump</b> far enough from the one in force. Whatever fails the filter is not lost — it lives on in each note's velocity, which is what you hear. The markings travel inside the MMF and the Score places them beside their notes. Keep it in mind: what you read there is the <b>interpretation recorded in the MIDI</b>, not what the composer wrote — an entrance can come out <i>mf</i> where the score says <i>ppp</i>.</span></p>
     </div>
 
     <div class="spec">

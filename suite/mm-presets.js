@@ -1,4 +1,166 @@
+// 2026-09-13 (checkpoint · Cosmic V2.3.35 · Score V2.7.107) — DIEZ INSTRUMENTOS POPULARES, A OÍDO CON MARIO.
+//   Entran al banco, clase «Popular · Latino»: acordeón vallenato, bajo eléctrico, Rhodes, congas, bongós,
+//   timbales, claves, cencerro, maracas y cajón. Afinados por reporte de Mario, no por defaults de biblioteca:
+//   se cortó la resonancia colgada del bajo eléctrico y el Rhodes; congas y bongós más huecos y con menos
+//   definición de frecuencia; maracas con menos golpe de entrada; los dos acordeones acercados al cello (menos
+//   ataque). Ganancias recalibradas por medición (acordeón, timbales, cencerro, claves, cajón — el cajón en
+//   modo ruido no responde a ganancia: su pico es el transitorio).
+//
+// 2026-09-10 (con Mario, sobre la Shéhérazade y la muestra VSCO `VlnEns_Pizz_A3_v2_rr2`) — EL PIZZICATO NACE
+//   COMO UNA CUERDA PULSADA. Mario, oyendo el pizz de los violines segundos: «suena correctamente como sonaría
+//   con arco». Tenía razón y la prueba estaba en el propio banco: el CLAVECÍN —la otra cuerda pulsada— declara
+//   resp.atk [0.06, 0.05, 0.04, 0.04] y mide 4,8 ms de ataque, mientras `strings_pizzicato` declaraba
+//   [2.4, 2.0, 1.8, 1.4] y medía 67,3 ms. Catorce veces más lento: eso es un arco empujando la cuerda hasta que
+//   arranca, no un dedo soltándola. Su idea, textual: «¿deberían parecerse más los pizzicatos a un clavecín en
+//   su ataque?». Dos casillas, medidas contra la muestra en el A4 y aprobadas de oído:
+//   · resp.atk [2.4, 2.0, 1.8, 1.4] → [0.48, 0.40, 0.36, 0.28] — 67,3 ms → 13,6 ms. NO se puso el ataque de la
+//     muestra (27 ms) porque ése es de ENSEMBLE: adentro está el escalonado de los atriles, que el Cosmic pone
+//     aparte con el coro de sección (Rasch 10-40 ms, contrato del 30-08). La ficha declara el ataque de UN
+//     ejecutante y la sección agrega la dispersión; declarar 27 acá lo sumaría dos veces.
+//   · env.decay [22, 8.7, 2.5, 0.8] → [1.76, 0.70, 0.20, 0.064] — a los 200 ms del pico: −2,3 dB → −31,0 dB,
+//     contra los −31,9 dB de la muestra. Antes la nota no se moría: era una nota sostenida con otro nombre.
+//   La SOLISTA `pizzicato` va por la misma ley, con sus números: resp.atk [1.4, 1.2, 1.0, 0.8] → [0.28, 0.24,
+//   0.20, 0.16] (36,2 ms → 7,7 ms, más rápido que la de sección porque es UN ejecutante) y env.decay
+//   [6.7, 4.5, 1.9, 0.7] → [2.01, 1.35, 0.57, 0.21] (cola más larga que la de sección: no hay coro que la tape).
+//   Mario, oyendo las dos: «ambos están muy buenos, y creo que son comunes a las cuerdas pulsadas».
+//   EL HUECO DE LA CAJA (mismo día, idea de Mario: «lo único que aumentaría es el hueco de la caja del
+//   violín»). Medido en el ataque, banda 250-300 Hz relativa a 100-1200: la muestra da −17,1 dB y nosotros
+//   −31,7. Primero probé una entrada en `form.bank` a 275 Hz y NO HACE NADA (0,4 dB con siete combinaciones):
+//   `form.bank` es una cadena de filtros PEAKING, o sea ecualización sobre lo que pasa, y en 275 Hz no pasa
+//   nada — la nota tiene parciales en 440, 880, 1320. Realzar una banda vacía realza silencio; es la misma ley
+//   del contrato de la resonancia del 09-09. Lo que lleva la caja en un pellizco es el GOLPE, y para eso está
+//   `onset.band`: ruido por resonadores fijos Q 8, lo que vibra igual toque lo que toque. Entra
+//   band [275, 460] — el aire del violín (A0, las efes) y el cuerpo principal (B1+) — con bandMs 60.
+//   `bandHit` va por REGISTRO y no escalar, porque estas dos fichas cubren toda la cuerda: en el ancla grave
+//   queda en 0 (un contrabajo no tiene la caja del violín) y sube hacia el agudo. Medido en el A4: −31,7 →
+//   −15,3 dB con la curva, contra los −17,1 de la muestra; el escalar daba −12,4 y le ponía caja de violín al
+//   contrabajo. La banda se mide en el A4 a propósito: en el Sol2 el tercer parcial cae en 294 Hz y contamina.
+//   NOTA DE MÉTODO: hasta hoy medí con `startVoice(f,fenv,noOnset)` en `true` —copiado de guardia-parcial—, o
+//   sea SIN el golpe del pellizco, justo la parte que hace que un pizz sea un pizz. Corregido en la guardia.
+//   EL RANGO DINÁMICO DE UNA CUERDA PULSADA (mismo día, pedido de Mario: «los pizz deberían salir un poquito
+//   más como sección, sin cambiar la dinámica para respetar a RK»). Las dos fichas no declaraban
+//   `class.velRangeDb`, así que corrían por la ley LINEAL y la `p` escrita se traducía a 16/127 pelado: −18,0 dB,
+//   el MISMO lugar donde cae una sección de cellos con arco (velRangeDb 30 → −18,7). Está al revés de la física:
+//   un pizzicato tiene rango ESTRECHO —no se puede pellizcar muy suave ni muy fuerte, la cuerda da lo que da—, y
+//   un rango estrecho pone la `p` cerca de la `f`, que es justo por qué el pizz de la sección SALE aunque esté
+//   escrito piano. No es subirle el volumen: es declarar el rango que el instrumento tiene. Con 18 dB la `p` pasa
+//   de −18,0 a −11,2 y el recorrido entero de ppp a fff se comprime a 11 dB. El solista lleva 20: puede variar
+//   algo más con el punto y la carne del dedo. La partitura no se toca — sigue diciendo `p`.
+//   Y EL NIVEL DE FÁBRICA (mismo día, medido por Mario con el fader de la Console): con el rango declarado
+//   todavía le faltaban 4 dB, y para conseguirlos tuvo que subir el fader del canal a 117 sobre 127 —casi el
+//   tope—. Que haga falta ir al máximo del fader es la señal de que el número no es de la mezcla de esta obra
+//   sino del instrumento: `mix.vol` es el nivel de fábrica y el Score lo aplica al canal como round(vol×127).
+//   Ninguna ficha del banco lo declaraba, así que todas arrancan en el nominal 100. Las dos de pizz declaran
+//   ahora 0.874 → 111, y ahí llegó por dos pasos: primero 0.92 → 117, el número que sacó con el fader, y
+//   después −5 % al oírlo en contexto con las notas del pasaje en velocity 60. Su criterio, textual: «es muy
+//   claro y similar a como se escucha en el podium» — que es el calibre que vale, cuarenta y cinco años de
+//   oírlo desde el atril. Con eso el fader vuelve a 100 y el balance queda puesto para esta obra y para la
+//   próxima. Son las primeras fichas del banco con mix.vol: el nominal sigue siendo 100 y sólo se aparta la
+//   que tenga un motivo medido.
+//   REPARTO, para que ningún número esté dos veces: `velRangeDb` es la LEY del instrumento (una cuerda pulsada
+//   tiene poco recorrido, vale en toda obra), `mix.vol` es su nivel de fábrica, y la velocity de las notas es
+//   la INTERPRETACIÓN de la página — Mario: «para RK, p pizz = 60». Los tres empujan en la misma dirección, así
+//   que se midieron sumados: p=16 lineal −18,0 dB · p=16 con el rango −11,2 · p=60 con el rango −5,0 · más el
+//   nivel de fábrica. Si algún día suena de más, lo que sobra es el nivel de fábrica, no la ley.
+//   Medido con `guardia-pizz.js` (envolvente del render, no lo que declara la ficha). Y hubo que arreglar el
+//   banco primero: el Register clampeaba el sustain en 0,05 (−26 dB) y ninguna ficha pulsada podía apagarse ahí
+//   — ver mm-guardia.md. PENDIENTE del mismo parentesco: la GUITARRA (atk [1.0, 1.0, 1.1, 0.8]) y el ARPA
+//   ([1.6, 1.0, 1.15, 0.85]) arrastran ataques de arco igual que el pizz; y las cuatro anclas de estas dos
+//   fichas salieron de UNA sola muestra (A4) escalando la curva — hacen falta un pizz agudo y uno de contrabajo
+//   para que las otras tres se midan en vez de escalarse.
+// 2026-09-09 (2a sesion, pedido de Mario: «por que no esta puesto en flute?») — LAS VARIANTES APROBADAS PASAN A SU
+//   CLAVE BASE. `flute_medido`, `bassoon_medido` y `oboe_medido` se funden en `flute`, `bassoon` y `oboe`, y las tres
+//   variantes se retiran; `horn_medido` se retira sin fundir porque era un DUPLICADO EXACTO de `horn` (sus recorridos
+//   de srcTilt se retiraron el 01-09 y la clave quedo vacia, prometiendo algo que no tenia). Motivo: los mmf de las
+//   demos declaran la clave BASE, asi que nada de lo medido sonaba salvo cambiando el canal a mano — el Bruckner
+//   tocaba `flute`, `oboe` y `bassoon` sin una sola de las correcciones. Las referencias a las cuatro variantes en
+//   los .mmf de _Tests se reescribieron a su clave base. Los comentarios con el porque de cada numero quedan arriba
+//   de la ficha base. Y la CONVENCION cambia (Mario, mismo dia): las variantes `_medido` fueron iniciativa mia y no
+//   suya, justificadas como «proteger lo hecho», y el argumento no se sostiene porque los backups ya existen
+//   (_HISTORY/versiones-presets, los .bak con fecha, git). El costo fue real: lo que su oido aprobaba no sonaba en
+//   sus demos, que declaran la clave base. De aca en adelante se mide, lo oye, y se escribe SOBRE LA CLAVE BASE, con
+//   el valor viejo y el porque en el comentario. `pizzicato_medido` se borro a pedido suyo («por el momento no
+//   estamos ahi») y sus numeros quedaron como pendiente arriba de `pizzicato`. `cellos_section_medido` se borro despues («estamos en violines») y su contenido quedo
+//   anotado arriba de `cellos_section`. NO QUEDA NINGUNA VARIANTE `_medido` EN EL BANCO.
+// 2026-09-09 (checkpoint · Cosmic V2.3.33 · Register V2.1.12 · Register·WAV v0.3.2) — EL FAGOT DEJA DE SER UN CLAXON,
+//   Y LA FLAUTA DEJA DE TENER EL MISMO TECHO EN TODA SU EXTENSIÓN. Dos claves NUEVAS de variante para el A/B; `bassoon` y
+//   `flute` quedan INTACTAS. Todo salió de comparar contra la VSCO-2-CE con el oído de Mario, un cambio por vez.
+//   (1) bassoon_medido — cinco cambios. EL CLAXON ERA EL FILTRO, no el brillo: del k3 al k8 el fagot real cae 47,6 dB
+//   (−34 dB/oct) y el nuestro 3,9 (−2,8), dieciséis armónicos casi al mismo nivel. Con src.tilt −8 la fuente no puede caer
+//   más de −8 dB/oct ni con el brillo en el piso, así que el trabajo es del corte: filt.cut [38,25,13,4] → [25, 6.5, 2.6, 1.7]
+//   (medido en las cuatro anclas; el techo pasa de ~2.200 Hz a ~500-600 en el registro medio). Mover el brillo a fondo ganaba
+//   6 dB; bajar el corte, 20. · resp.atk ×0.68 → 35 ms en el A3, donde la muestra llega al 90 % (el nuestro tardaba 300).
+//   · onset.air 0.05 → 0.90: la perilla va AL REVÉS de su nombre (1200+(1−air)·2600), así que el 0.05 ponía la consonante
+//   en 3.670 Hz — un tic de teclado; el centroide de los primeros 10 ms de la muestra es 1.114 Hz. onset.ms 45 → 120.
+//   · filt.env 0.2 → 0 (la entrada no abre el filtro; coincide con la ficha propia de Mario, Notes_basoons.txt).
+//   · EL HUECO Y LA QUINTA, las dos entradas NEGATIVAS del bank [-1,-12,1.1] y [-3,+12,1.6] (parcial, no Hz — contrato
+//   nuevo del Cosmic V2.3.33): en el A3 real la fundamental está 23,5 dB bajo la octava y el 3er parcial a 3,4, o sea
+//   440 con 660, una quinta justa sin raíz. Fichas medidas: INSTRUMENTS WAV TESTS/fagotes/bassoon_medido-vsco-sus-v{1,2}.txt.
+//   (2) flute_medido — UN cambio: filt.cut 5 (escalar) → [7, 4, 1.7, 1.3]. Un escalar mantiene el techo siempre en 5·f0,
+//   la misma cantidad de armónicos en toda la extensión; la flauta real es rica abajo (en el C4 el parcial más fuerte es
+//   el 4º) y casi una sinusoide arriba (en el C7 el k2 está a −24,4). Error contra la muestra: 8,0 dB de media con el
+//   escalar, 4,2 con la curva.
+//   MEDIDO Y NO ESCRITO (necesita el contrato del arco): la flauta arma su color en 100 ms y la nuestra lo tiene completo
+//   en la muestra cero; su aire es 20 dB más fuerte en el C4 que en el E5 (resp.air dice lo contrario) y su vibrato se
+//   ACHICA hacia el agudo (±6,9 ¢ en el E5, ±4,4 en el E6) mientras resp.vib [4,8,10,8] lo agranda.
+// 2026-09-08 (checkpoint · Cosmic V2.3.32) — LOS MATICES SE SEPARAN, Y LA FLAUTA ENCUENTRA SU FORMANTE.
+//   (1) MM_VELRANGE_SOSTENIDO = 25 (abajo, antes del banco): la BASE del rango dinámico para las 23 claves de
+//   régimen sostenido que no declaran class.velRangeDb. Con la ley lineal, la escalera del Score dejaba mf·f·ff·fff
+//   dentro de 4,7 dB; con la base son 7,1 y el mf no se mueve. Percusivo/pulsado/percutido siguen lineales.
+//   (2) FLAUTA: form.f2 [9000,2,1.2] → [1550,4,1.6] (el pico medido más fuerte, debajo del cutoff de Boehm; el 9000
+//   del riser cae fuera de la banda medida) · resp.air [0.18,0.14,0.12,0.10] → [0.06,0.14,0.16,0.05] (la pendiente
+//   estaba invertida) · resp.atk 65/60/55/50 ms → 95/90/75/60. Con el 1550 puesto, el resp.tilt que puso el oído el
+//   01-09 cae sobre el centroide medido. Ficha flute-settings.md §10; guardia del banco: dos filas nuevas.
+// 2026-09-10 — EL VIOLÍN VUELVE A LA ESCALA DE LA CASA, Y LA VIOLA ABRE EL AGUDO. Mario, sobre el pasaje de
+//   violas de la Shéhérazade: «para lograr un balance como está ahora tengo que darle a las violas fff y la nota
+//   de arriba suena mucho menos, este pasaje lo marca RK como piano... pero se tiene que oír». Medido en el
+//   Cosmic a velocity 52, una nota en el registro donde cada uno toca: flauta −0,1 · clarinete +4,0 · fagot +1,6
+//   · oboe −5,2 · corno −9,5 · violas +4,5 · contrabajos +5,2 · chelos −14,9 · VIOLINES +46,4. La casa entera
+//   entre −5 y +5 y el violín 40 dB encima — las tres cosas que Mario reportó el mismo día (las violas no se
+//   oyen, V I en p=16 tapa a todos, el master satura en pocos compases) eran ésta.
+//   (1) violins_section resp.gain [0.8,0.95,1,0.95] → [0.1473,0.0772,0.0507,0.0079] y violin (solista)
+//   → [0.2845,0.1496,0.0998,0.0220]: el arreglo NO es un factor único porque el violín además SUBÍA 25 dB de
+//   G3 a E5; la corrección va por ancla y lo deja plano. Timbre intacto (resp.tilt, form y filt no se tocan).
+//   (2) violas_section: el agudo se apagaba —resp.tilt [0.9,0.8,0.6,0.42] y filt.cut [30.58,19.09,8.12,2.84],
+//   casi sólo fundamental arriba—, así que en la figura de Mario (F3 contra F4) la nota que canta entraba 6 dB
+//   por debajo del pedal. tilt → [0.9,0.88,0.85,0.82] · filt.cut → [30.58,22,16,12] · resp.gain
+//   [0.0404,0.0549,0.058,0.0492] → [0.0100,0.0146,0.0383,0.2466]. Medido después: F3 y F4 a vel 52 dan las dos
+//   +5,4 dB — la de arriba ya no se cae.
+//   Verificado en la obra: CH10 (Vln I) pasa de +5,5 dB a −24,2 y la suma pre-limitador de +1,8 a −11,1 — el
+//   limitador del master deja de morder, que es la saturación que Mario oía.
+//   Guardia nueva: _Tests/regresiones/guardia-secciones.js (swing ≤12 dB por sección · distancia entre secciones
+//   = class.bal ±3 dB). CHELOS Y CONTRABAJOS quedan `pendiente`: el chelo está 13 dB por debajo de lo que declara
+//   su bal y es el próximo paso, acordado con Mario.
+// 2026-09-01 — EL RANGO DINÁMICO ENTRA AL BANCO (contrato spl.* → class.velRangeDb, escalar o a4). Metales por DPA/Meyer (corno
+//   [40 40 30 20] en horn_medido); cuerdas por la escalera de Meyer (Rindel; _Investigacion-instrumentos/dinamica): violín 32 ·
+//   viola 25 · cello 30 · contrabajo 22, solo y sección. Sin desglose por registro publicado para cuerdas: escalar.
 // mm-presets.js — banco de presets Default de Music Motion (v2 · baseline acústica · +lista canónica de instrumentos 2026-06-17 · +paleta de instrumentos en columnas MM_openInstrumentPalette 2026-08-23)
+// 2026-08-29 — ENTRA LA INVESTIGACION, DOCE FICHAS DE UNA VEZ (pedido de Mario: «meter todos los valores
+//   tal cual y seguimos abriendo uno a uno empezando con el cello»). De la baseline de junio salen, con su
+//   informe citado detras: violin · viola · cello (deep-research nueva, 2026-08-29) · horn · trumpet ·
+//   trombone · tuba · oboe · english_horn · bassoon · contrabassoon · alto_flute_g. La flauta se verifico
+//   campo por campo y ya estaba aplicada (no-op). Regla de siempre: la medicion se escribe SOBRE la ficha y
+//   lo que no se mide no se toca — name, class, lo, hi intactos en las doce.
+//   LO QUE CAMBIA EL SONIDO, en una linea: la INVERSION DE BRILLO se corrige en las nueve fichas que la
+//   tenian (resp.tilt bajaba hacia el agudo en la realidad y subia en el banco); el violin recupera sus
+//   formantes DENTRO de su caja (3000/5000 Hz -> 500/2400, con form.bank de los modos de McLennan); la viola
+//   baja su f1 de 500 a 220/350 y estrena el formante de 1600 que es su nasalidad; el cello ancla en el
+//   racimo de modos que termina en su La al aire (C2·G2·A3·A5) y estrena filt.cut a4; el corno pierde el
+//   formante del trombon (450/1000 -> 340/750); la trompeta corrige un src.tilt de -8.5 que era un ff
+//   aplicado a todo el registro (-20.5); la tuba pierde una inarmonicidad que no tiene (0.005 -> 0). Y las
+//   cuerdas frotadas estrenan vibrato: estaban en cero, en los instrumentos del vibrato.
+//   UNIDADES: filt.cut es MULTIPLICADOR de f0 (cbase = f*fcM), no kHz. Los informes lo dan en kHz y se
+//   convirtio dividiendo por la f0 de cada ancla. El informe del contrabajo tiene ese error de unidad sin
+//   corregir: NO aplicar su tabla tal cual.
+//   NO ESCRITO por no existir el contrato: nl.* (no linealidad de metales), spl.* (capacidad dinamica en dB),
+//   form.f1 como vector por ancla (trombon, 386 cents medidos), resp.ring, src.hasFundamental. Y ojo:
+//   src.partials solo se lee en modo inharm — en harm el motor arma 16 parciales fijos, asi que en las
+//   cuerdas queda escrito pero inerte hasta que buildWaveG acepte un techo.
+//   PENDIENTE DE OIDO (Mario, una por una, empezando por el cello): el signo de filt.env. El motor arranca en
+//   cbase*2^env y BAJA (mordida y se cierra); los informes describen lo contrario («entra oscuro y se
+//   aclara»), que pediria env negativo — y el knob del Register declara 0..4, asi que un negativo le da NaN
+//   al dibujo. Se dejo el valor POSITIVO de las tablas: el signo es decision de motor, no de ficha.
+//   Respaldo del banco anterior: _HISTORY/versiones-presets/mm-presets-2026-08-29-pre-numerizacion.js (hasta el 02-09 estaba en _BASE)
 // 2026-08-26 (Score V2.7.87 / Keyboard V2.3.22, con Mario sobre el bajo del 2do mov del Ravel — todo de oido,
 //   nota por nota, con G3 como control intocable). EL BAJO DEL PIANO, EN CUATRO PASOS.
 //   (1) decayTilt de piano_grand_tonal: escalar 0.2 -> a4 [1.6, 2.4, 2.8, 3.0]. Con 0.2 los parciales 2-5 duraban MAS que
@@ -226,10 +388,23 @@
 //   (formantes 470/3000 + 6 res · ataque de arco ~90 ms medido) · contrabajo (6 res graves · arco lento ~110 ms).
 //   Flauta en Sol: aire movido al registro grave (0.42→0.20). Medido de WAV reales (violin.wav / bass.wav).
 
+// 2026-09-08 (Mario: «igualarlas en las claves que no lo declaren para tener una misma base de trabajo»).
+// BASE DEL RANGO DINÁMICO. La escalera del Score (POINT_DYN_VEL: ppp 6 · pp 9 · p 16 · mp 29 · mf 50 ·
+// f 59 · ff 74 · fff 86 sobre 127) con la ley LINEAL —la que corre cuando la clave no declara
+// class.velRangeDb— deja los cuatro matices de arriba dentro de 4,7 dB, en pasos de 1,3 a 2,0: por
+// debajo de lo que se distingue en contexto. Con este número, las claves de régimen SOSTENIDO que no
+// declaran el suyo corren la misma ley exponencial que el fagot, el saxo y las cuerdas: mismo mf que
+// antes (−8,9 dB contra −8,1) y 7,1 dB de mf a fff en vez de 4,7.
+// Es una BASE, no una medición: el número que cada clave se merezca sale de su informe o del oído, y
+// cuando lo declare deja de usar ésta. Los regímenes percusivo/pulsado/percutido NO la usan — ahí la
+// velocity es el golpe o la pulsación y su ley ya se afinó de oído (piano, arpa, clavecín 6 dB).
+window.MM_VELRANGE_SOSTENIDO = 25;
+
 window.MM_PRESETS_DEFAULT = {
   "piccolo": {
     "name": "piccolo",
     "class": {
+      "bal": 2,
       "family": "maderas",
       "instrument": "piccolo",
       "label": "Piccolo",
@@ -268,16 +443,16 @@ window.MM_PRESETS_DEFAULT = {
         0.7
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        3,
+        6,
+        8,
+        6
       ],
       "vibRate": [
         6.0,
         6.0,
-        6.2,
-        6.2
+        6.0,
+        6.0
       ],
       "oddEven": [
         0.5,
@@ -327,9 +502,20 @@ window.MM_PRESETS_DEFAULT = {
       "ms": 25
     }
   },
+  // 2026-09-01 — flauta, paso 1 (Bartók N123, las quintas): resp.tilt [0.95 0.90 0.85 0.80] → [0.95 0.82 0.78 0.60] — la referencia
+  //   coincide en el grave (0.94) y cierra hacia arriba (0.75 · 0.72 · 0.43, flute/medido-flute-2026-09-01); a mitad de camino en el
+  //   agudo. La ficha era la más sana de las maderas. Todo lo demás intacto.
+  // 2026-09-08 — flauta, color (medido-flute-2026-09-01 + maderas/flauta-addendum-2026-08-23.md): form.f2 9000 → 1550
+  //   (+4, Q 1.6) — el pico medido mas fuerte, +9.6 dB sobre la recta, es el amontonamiento debajo del cutoff de agujeros;
+  //   el 9000 del riser nunca se midio (el whitening llega a 6 kHz) y era BANDERA. Con el 1550 puesto, la curva resp.tilt
+  //   que puso el oido el 01-09 cae sobre el centroide medido (pide 0.95/0.80/0.83/0.58): el oido estaba compensando un
+  //   formante que faltaba. resp.air [0.18 0.14 0.12 0.10] → [0.06 0.14 0.16 0.05]: la pendiente estaba invertida — medido
+  //   0.06/0.13/0.15/0.04, la flauta es limpia en el grave y soplada en el medio (ruido de chorro ∝ Uj², misma direccion
+  //   que la flauta en Sol §5). resp.atk 65/60/55/50 ms → 95/90/75/60: la subida medida es 102/131/112/250 ms.
   "flute": {
     "name": "flute",
     "class": {
+      "bal": -2,
       "family": "maderas",
       "instrument": "flute",
       "label": "Flute",
@@ -350,28 +536,28 @@ window.MM_PRESETS_DEFAULT = {
         0.9
       ],
       "air": [
-        0.18,
+        0.06,
         0.14,
-        0.12,
-        0.1
+        0.16,
+        0.05
       ],
       "tilt": [
         0.95,
-        0.9,
-        0.85,
-        0.8
+        0.82,
+        0.78,
+        0.6
       ],
       "atk": [
-        1.3,
-        1.2,
-        1.1,
-        1.0
+        1.9,
+        1.8,
+        1.5,
+        1.2
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        4,
+        8,
+        10,
+        8
       ],
       "vibRate": [
         5.2,
@@ -402,13 +588,18 @@ window.MM_PRESETS_DEFAULT = {
         1.4
       ],
       "f2": [
-        9000,
-        2,
-        1.2
+        1550,
+        4,
+        1.6
       ]
     },
     "filt": {
-      "cut": 5.0,
+      "cut": [
+        7,
+        4,
+        1.7,
+        1.3
+      ],
       "q": 0.7,
       "env": 0.0,
       "t": 0.08
@@ -444,22 +635,22 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "G6",
     "resp": {
       "gain": [
-        0.8,
         1.0,
-        1.0,
-        0.9
+        0.95,
+        0.85,
+        0.7
       ],
       "air": [
-        0.08,
-        0.08,
-        0.06,
-        0.05
+        0.16,
+        0.22,
+        0.32,
+        0.44
       ],
       "tilt": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        0.18,
+        0.24,
+        0.32,
+        0.4
       ],
       "atk": [
         1.4,
@@ -468,16 +659,16 @@ window.MM_PRESETS_DEFAULT = {
         1.2
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        4,
+        8,
+        10,
+        8
       ],
       "vibRate": [
-        5.5,
-        5.5,
-        5.5,
-        5.5
+        4.75,
+        4.75,
+        4.75,
+        4.75
       ],
       "oddEven": [
         0.5,
@@ -487,7 +678,7 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -20.0,
+      "tilt": -11.5,
       "inharm": 0.0,
       "mode": "harm",
       "nb": [
@@ -497,9 +688,9 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        2500,
-        6.0,
-        1.5
+        1700,
+        0,
+        1.0
       ],
       "f2": [
         0,
@@ -508,7 +699,7 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "filt": {
-      "cut": 3.5,
+      "cut": 6.5,
       "q": 0.7,
       "env": 0.0,
       "t": 0.1
@@ -524,12 +715,18 @@ window.MM_PRESETS_DEFAULT = {
     "onset": {
       "hit": 0.02,
       "air": 0.1,
-      "ms": 35
+      "ms": 60
     }
   },
+  // 2026-09-01 — oboe, paso 1 (Bartók N123, los tercios de M8+): resp.tilt [0.72 0.75 0.62 0.42] → [0.50 0.43 0.30 0.20], a mitad
+  //   de camino hacia la referencia medida ([0.29 0.12 0 0], oboes/medido-oboe-2026-09-01 con src −9) — la ficha era casi pendiente
+  //   cero, el instrumento más brillante del banco; la caña real es más oscura que la caricatura. src −9 y formantes (1400/2500) intactos.
+  //   Paso 2 (Mario: «el oboe puede ser más nasal»): el formante principal 1400 Hz de [+7, Q 3] → [+9, Q 3.5] — más alto y más
+  //   angosto, la vocal nasal del oboe. El 2500 queda.
   "oboe": {
     "name": "oboe",
     "class": {
+      "bal": 0,
       "family": "maderas",
       "instrument": "oboe",
       "label": "Oboe",
@@ -542,53 +739,59 @@ window.MM_PRESETS_DEFAULT = {
     },
     "lo": "Bb3",
     "hi": "G6",
+    "anchors": [
+      "Bb3",
+      "C5",
+      "A5",
+      "G6"
+    ],
     "resp": {
       "gain": [
-        0.8,
-        1.0,
         0.95,
-        0.85
+        1.0,
+        0.92,
+        0.72
       ],
       "air": [
-        0.05,
+        0.06,
         0.04,
         0.04,
-        0.06
+        0.07
       ],
       "tilt": [
-        0.65,
-        0.7,
-        0.75,
-        0.8
+        0.5,
+        0.43,
+        1.0,
+        0.65
       ],
       "atk": [
-        0.9,
+        2.4,
+        1.0,
         0.8,
-        0.76,
-        0.7
+        0.68
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        2.2,
+        1.5,
+        2.9,
+        4.7
       ],
       "vibRate": [
-        5.5,
+        5.0,
+        5.4,
         5.6,
-        5.8,
-        5.8
+        5.6
       ],
       "oddEven": [
-        0.45,
-        0.48,
         0.5,
-        0.52
+        0.5,
+        0.5,
+        0.5
       ]
     },
     "src": {
-      "tilt": -10.0,
-      "inharm": 0.002,
+      "tilt": -9.0,
+      "inharm": 0.0012,
       "mode": "harm",
       "nb": [
         2000,
@@ -597,34 +800,82 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        1200,
-        6.0,
-        1.5
+        1400,
+        13,
+        4.5
       ],
       "f2": [
-        3000,
-        6.0,
-        1.2
+        2500,
+        4.0,
+        2.5
+      ],
+      "bank": [
+        [
+          1400,
+          13,
+          4.5
+        ],
+        [
+          2500,
+          4,
+          2.5
+        ],
+        [
+          240,
+          -24,
+          3.0
+        ],
+        [
+          2000,
+          -12,
+          1.0
+        ],
+        [
+          3200,
+          -12,
+          1.0
+        ]
       ]
     },
     "filt": {
-      "cut": 9.0,
-      "q": 1.1,
-      "env": 0.0,
-      "t": 0.05
+      "cut": [
+        7.7,
+        3.4,
+        2.0,
+        1.15
+      ],
+      "q": 0.8,
+      "env": -0.6,
+      "t": 0.08
     },
     "env": {
       "decay": 0.05,
-      "sustain": 1
+      "sustain": 1,
+      "release": [
+        0.1,
+        0.07,
+        0.05,
+        0.03
+      ]
     },
     "char": {
-      "noise": 0.04,
+      "noise": 0.05,
       "noiseAM": 0.02
     },
     "onset": {
-      "hit": 0.06,
-      "air": 0.05,
-      "ms": 15
+      "hit": [
+        0.16,
+        0.08,
+        0.07,
+        0.09
+      ],
+      "air": 1.0,
+      "ms": [
+        120,
+        45,
+        30,
+        25
+      ]
     }
   },
   "english_horn": {
@@ -642,6 +893,12 @@ window.MM_PRESETS_DEFAULT = {
     },
     "lo": "E3",
     "hi": "C6",
+    "anchors": [
+      "E3",
+      "F4",
+      "D5",
+      "F5"
+    ],
     "resp": {
       "gain": [
         0.85,
@@ -656,10 +913,10 @@ window.MM_PRESETS_DEFAULT = {
         0.06
       ],
       "tilt": [
-        0.75,
-        0.8,
-        0.85,
-        0.9
+        0.55,
+        0.48,
+        0.35,
+        0.25
       ],
       "atk": [
         1.1,
@@ -668,10 +925,10 @@ window.MM_PRESETS_DEFAULT = {
         0.8
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        8,
+        16,
+        20,
+        14
       ],
       "vibRate": [
         5.2,
@@ -680,15 +937,15 @@ window.MM_PRESETS_DEFAULT = {
         5.5
       ],
       "oddEven": [
-        0.48,
+        0.5,
         0.5,
         0.5,
         0.5
       ]
     },
     "src": {
-      "tilt": -13.5,
-      "inharm": 0.003,
+      "tilt": -11.0,
+      "inharm": 0.0012,
       "mode": "harm",
       "nb": [
         2000,
@@ -697,21 +954,21 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        600,
-        6.0,
-        1.4
+        950,
+        7.0,
+        3.0
       ],
       "f2": [
         1900,
-        6.0,
-        1.2
+        4.0,
+        2.5
       ]
     },
     "filt": {
       "cut": 6.5,
       "q": 0.9,
-      "env": 0.0,
-      "t": 0.06
+      "env": 0.4,
+      "t": 0.027
     },
     "env": {
       "decay": 0.06,
@@ -724,12 +981,22 @@ window.MM_PRESETS_DEFAULT = {
     "onset": {
       "hit": 0.05,
       "air": 0.06,
-      "ms": 22
+      "ms": [
+        144,
+        54,
+        36,
+        30
+      ]
     }
   },
+  // 2026-09-01 — clarinete, paso 1 (Bartók N123; Mario: «le falta hueco»): oddEven [0.12 0.20 0.45 0.50] → [0.90 0.85 0.65 0.55].
+  //   En el motor 1 = solo IMPARES y 0 = pares dominantes: la ficha tenía el chalumeau al revés (pares más fuertes). La referencia
+  //   mide 0.86-0.94 abajo con la misma métrica (clarinets/medido-clarinet-2026-09-01) — el «hueco» del clarinete SON los impares;
+  //   sobre el quiebre los pares vuelven (0.63 medido en G6). Lo demás intacto.
   "clarinet": {
     "name": "clarinet",
     "class": {
+      "bal": 0,
       "family": "maderas",
       "instrument": "clarinet",
       "label": "Clarinet",
@@ -780,10 +1047,117 @@ window.MM_PRESETS_DEFAULT = {
         5.5
       ],
       "oddEven": [
-        0.12,
-        0.2,
-        0.45,
-        0.5
+        0.9,
+        0.85,
+        0.65,
+        0.55
+      ]
+    },
+    "src": {
+      "tilt": -12.0,
+      "inharm": 0,
+      "mode": "harm",
+      "nb": [
+        2000,
+        1.2
+      ]
+    },
+    "form": {
+      "f1": [
+        1400,
+        4,
+        1.5
+      ],
+      "f2": [
+        2100,
+        2,
+        3
+      ]
+    },
+    "filt": {
+      "cut": 6,
+      "q": 0.7,
+      "env": 0.0,
+      "t": 0.08
+    },
+    "env": {
+      "decay": 0.06,
+      "sustain": 1
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": 0.03,
+      "air": 0.06,
+      "ms": 25
+    },
+    "anchors": [
+      "D3",
+      "F4",
+      "A4",
+      "G6"
+    ]
+  },
+  "clarinet_a": {
+    "name": "clarinet_a",
+    "class": {
+      "bal": 0,
+      "family": "maderas",
+      "instrument": "clarinet_a",
+      "label": "Clarinet in A",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "C#3",
+    "hi": "G#6",
+    "resp": {
+      "gain": [
+        0.95,
+        0.88,
+        1,
+        0.9
+      ],
+      "air": [
+        0.08,
+        0.09,
+        0.05,
+        0.07
+      ],
+      "tilt": [
+        0.82,
+        0.7,
+        0.88,
+        0.8
+      ],
+      "atk": [
+        1.1,
+        1.0,
+        0.85,
+        0.7
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.9,
+        0.85,
+        0.65,
+        0.55
       ]
     },
     "src": {
@@ -836,6 +1210,7 @@ window.MM_PRESETS_DEFAULT = {
   "bass_clarinet": {
     "name": "bass_clarinet",
     "class": {
+      "bal": -1,
       "family": "maderas",
       "instrument": "bass_clarinet",
       "label": "Bass Clarinet",
@@ -886,10 +1261,10 @@ window.MM_PRESETS_DEFAULT = {
         5.2
       ],
       "oddEven": [
-        0.12,
-        0.22,
-        0.45,
-        0.5
+        0.9,
+        0.85,
+        0.65,
+        0.55
       ]
     },
     "src": {
@@ -939,12 +1314,28 @@ window.MM_PRESETS_DEFAULT = {
       "F5"
     ]
   },
+  // 2026-09-01 — fagot, paso 1 (Bartók N123, las sextas que abren el movimiento): resp.tilt [0.85 0.80 0.65 0.35] → [1.00 0.75 0.40 0.20]
+  //   — la forma medida (fagotes/medido-bassoon-2026-09-01 con src −8: 1.17 · 0.73 · 0.15 · 0.02, tomada a mitad de camino arriba):
+  //   la caña gorda vive ABAJO (más brillante que la ficha en Bb1) y se cierra mucho antes hacia el agudo. Formantes (600 medido ≈
+  //   470 del informe) y src intactos.
+  //   Paso 2 (Mario: «no tienen sonido de fagot, les falta tudel y mucho más hueco»): el TUDEL es el formante de 440-500 Hz —
+  //   la vocal «o» del fagot, el andamio de todo el registro (Fletcher & Rossing; Pätynen ve la anomalía en 400-500)— y sube de
+  //   [+6, Q 2] a [+9, Q 2.8] en f1 y en el bank; el HUECO es la fundamental débil del grave (la caña cierra del todo y k1 nace
+  //   pobre — Wolfe/Fransson): el estante de 80 Hz baja de −6 a −11 dB. La nota vive en el formante, no en su fundamental.
+  //   Paso 3 (Mario: «las dinámicas están exageradas en los bajos, ff = 96 — un fagot ni puede eso»): class.velRangeDb 22 —
+  //   el sobre MEDIDO del fagot (Weinzierl 2018: ff 104 / pp 82; «a minimum of 18-22 dB for the double reeds»). La caña doble es
+  //   de piso alto y techo normal: ni susurra ni grita. Con 22, ff queda +1.4 dB sobre el centro y pp −5.4 — la escalera real.
+  //   Paso 4 (Mario, las entradas de fagot 1 y 2: «hay que quitarles ataque — ¿qué diferencia hace el tudel?»): el tudel es la
+  //   punta del cono — el pulso de la caña pasa por el cuello angosto y llega REDONDEADO al tubo (Wolfe: «no es un accesorio»).
+  //   onset.hit 0.07 → 0.03 · onset.air 0.10 → 0.05: la entrada cubierta; el picado lo sigue poniendo el gate del staccato.
   "bassoon": {
     "name": "bassoon",
     "class": {
+      "bal": 0,
       "family": "maderas",
       "instrument": "bassoon",
       "label": "Bassoon",
+      "velRangeDb": 22,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -954,40 +1345,46 @@ window.MM_PRESETS_DEFAULT = {
     },
     "lo": "Bb1",
     "hi": "Eb5",
+    "anchors": [
+      "Bb1",
+      "F2",
+      "F3",
+      "D5"
+    ],
     "resp": {
       "gain": [
-        1.0,
-        1.0,
-        0.9,
-        0.8
+        0.4,
+        1,
+        0.84,
+        0.93
       ],
       "air": [
-        0.08,
-        0.06,
-        0.05,
-        0.05
+        0.71,
+        0.51,
+        0.35,
+        0.3
       ],
       "tilt": [
-        0.7,
-        0.75,
-        0.8,
-        0.85
+        0.74,
+        0.52,
+        0.14,
+        0.16
       ],
       "atk": [
-        1.2,
-        1.1,
-        1.0,
-        0.9
+        1.77,
+        1.29,
+        0.75,
+        0.51
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        2,
+        2.5,
+        2.9,
+        2.5
       ],
       "vibRate": [
-        4.8,
-        5.0,
+        4.6,
+        4.9,
         5.2,
         5.4
       ],
@@ -999,8 +1396,8 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -11.0,
-      "inharm": 0.004,
+      "tilt": -8,
+      "inharm": 0,
       "mode": "harm",
       "nb": [
         2000,
@@ -1009,37 +1406,75 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        500,
-        6.0,
-        1.3
+        470,
+        9,
+        2.8
       ],
       "f2": [
-        1100,
-        6.0,
-        1.2
+        1250,
+        3,
+        2
+      ],
+      "bank": [
+        [
+          80,
+          -11,
+          1
+        ],
+        [
+          470,
+          9,
+          2.8
+        ],
+        [
+          1250,
+          3,
+          2
+        ],
+        [
+          -1,
+          -12,
+          1.1
+        ],
+        [
+          -3,
+          12,
+          1.6
+        ]
       ]
     },
     "filt": {
-      "cut": 5.0,
-      "q": 1.0,
-      "env": 0.0,
-      "t": 0.08
+      "cut": [
+        25,
+        6.5,
+        2.6,
+        1.7
+      ],
+      "q": 0.9,
+      "env": 0,
+      "t": 0.1
     },
     "env": {
-      "decay": 0.07,
-      "sustain": 1
+      "decay": 0.06,
+      "sustain": 1,
+      "release": [
+        0.1,
+        0.08,
+        0.05,
+        0.04
+      ]
     },
     "char": {
-      "noise": 0.05,
-      "noiseAM": 0.03
+      "noise": 0.1,
+      "noiseAM": 0.05
     },
     "onset": {
-      "hit": 0.06,
-      "air": 0.08,
-      "ms": 25
+      "hit": 0.03,
+      "air": 0.9,
+      "ms": 120
     }
   },
-  "contrabassoon": {
+"contrabassoon": {
     "name": "contrabassoon",
     "class": {
       "family": "maderas",
@@ -1053,31 +1488,37 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "lo": "Bb0",
-    "hi": "Bb4",
+    "hi": "D4",
+    "anchors": [
+      "Bb0",
+      "F1",
+      "F2",
+      "D4"
+    ],
     "resp": {
       "gain": [
+        0.9,
         1.0,
         1.0,
-        0.85,
-        0.75
+        0.8
       ],
       "air": [
-        0.15,
+        0.2,
+        0.14,
         0.1,
-        0.08,
         0.08
       ],
       "tilt": [
-        0.75,
-        0.8,
-        0.85,
-        0.9
+        0.88,
+        0.82,
+        0.68,
+        0.38
       ],
       "atk": [
-        1.6,
+        3.4,
+        2.4,
         1.4,
-        1.2,
-        1.0
+        0.9
       ],
       "vib": [
         0.0,
@@ -1087,9 +1528,9 @@ window.MM_PRESETS_DEFAULT = {
       ],
       "vibRate": [
         4.5,
-        4.5,
         4.8,
-        5.0
+        5.0,
+        5.2
       ],
       "oddEven": [
         0.5,
@@ -1099,8 +1540,8 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -13.0,
-      "inharm": 0.006,
+      "tilt": -9.0,
+      "inharm": 0,
       "mode": "harm",
       "nb": [
         2000,
@@ -1109,39 +1550,68 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        250,
-        6.0,
-        1.4
+        240,
+        6,
+        2.0
       ],
       "f2": [
-        800,
-        6.0,
-        1.1
+        640,
+        3,
+        2.0
+      ],
+      "bank": [
+        [
+          45,
+          -7,
+          1.0
+        ],
+        [
+          240,
+          6,
+          2.0
+        ],
+        [
+          640,
+          3,
+          2.0
+        ]
       ]
     },
     "filt": {
-      "cut": 3.5,
+      "cut": [
+        38,
+        25,
+        13,
+        4
+      ],
       "q": 0.9,
-      "env": 0.0,
-      "t": 0.12
+      "env": 0.18,
+      "t": 0.14
     },
     "env": {
-      "decay": 0.1,
-      "sustain": 1
+      "decay": 0.08,
+      "sustain": 1,
+      "release": [
+        0.16,
+        0.12,
+        0.08,
+        0.06
+      ]
     },
     "char": {
-      "noise": 0.1,
-      "noiseAM": 0.06
+      "noise": 0.16,
+      "noiseAM": 0.08
     },
     "onset": {
-      "hit": 0.08,
-      "air": 0.15,
-      "ms": 35
+      "hit": 0.09,
+      "air": 0.16,
+      "ms": 45
     }
   },
   "saxophone": {
     "name": "saxophone",
     "class": {
+      "bal": 5,
       "family": "maderas",
       "instrument": "saxophone",
       "label": "Saxophone",
@@ -1149,47 +1619,49 @@ window.MM_PRESETS_DEFAULT = {
       "articulations": [
         "legato",
         "staccato",
-        "tenuto"
-      ]
+        "tenuto",
+        "portato"
+      ],
+      "velRangeDb": 29
     },
     "lo": "Db3",
     "hi": "A5",
     "resp": {
       "gain": [
-        0.85,
+        0.8,
         1.0,
-        0.95,
-        0.9
+        1.0,
+        0.92
       ],
       "air": [
-        0.08,
-        0.05,
-        0.05,
-        0.06
+        0.14,
+        0.07,
+        0.06,
+        0.09
       ],
       "tilt": [
-        0.65,
-        0.7,
-        0.75,
-        0.8
+        0.88,
+        0.78,
+        0.66,
+        0.5
       ],
       "atk": [
-        1.0,
-        0.9,
-        0.8,
-        0.76
+        2.4,
+        1.7,
+        1.35,
+        1.1
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        34,
+        40,
+        46,
+        50
       ],
       "vibRate": [
-        5.2,
         5.4,
-        5.5,
-        5.5
+        5.6,
+        5.8,
+        6.0
       ],
       "oddEven": [
         0.5,
@@ -1199,45 +1671,66 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -9.5,
-      "inharm": 0.002,
+      "tilt": -7.5,
+      "inharm": 0.0005,
       "mode": "harm",
       "nb": [
-        2000,
-        1.2
+        1800,
+        1.0
       ]
     },
     "form": {
       "f1": [
-        900,
-        6.0,
+        840,
+        6,
         1.4
       ],
       "f2": [
-        2400,
-        6.0,
-        1.2
+        2150,
+        4,
+        1.0
       ]
     },
     "filt": {
-      "cut": 8.5,
-      "q": 1.0,
-      "env": 0.0,
-      "t": 0.06
+      "cut": [
+        6.0,
+        2.5,
+        1.8,
+        1.2
+      ],
+      "q": 0.9,
+      "env": -0.45,
+      "t": 0.05
     },
     "env": {
       "decay": 0.06,
       "sustain": 1
     },
     "char": {
-      "noise": 0.06,
-      "noiseAM": 0.04
+      "noise": 0.09,
+      "noiseAM": 0.06
     },
     "onset": {
-      "hit": 0.05,
+      "hit": [
+        0.1,
+        0.09,
+        0.08,
+        0.08
+      ],
       "air": 0.08,
-      "ms": 18
-    }
+      "ms": [
+        40,
+        28,
+        22,
+        18
+      ]
+    },
+    "anchors": [
+      "Db3",
+      "F4",
+      "C5",
+      "Ab5"
+    ]
   },
   "kena": {
     "name": "kena",
@@ -1253,43 +1746,43 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "lo": "G4",
-    "hi": "G7",
+    "hi": "A6",
     "resp": {
       "gain": [
-        0.8,
+        0.72,
+        0.9,
         1.0,
-        0.95,
-        0.85
+        0.88
       ],
       "air": [
-        0.25,
-        0.2,
-        0.18,
-        0.22
+        0.22,
+        0.34,
+        0.26,
+        0.42
       ],
       "tilt": [
-        1.0,
-        1.0,
-        0.95,
-        0.9
+        0.85,
+        0.78,
+        0.62,
+        0.42
       ],
       "atk": [
-        1.3,
-        1.2,
-        1.1,
-        1.0
+        1.4,
+        1.15,
+        1.0,
+        0.85
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        8,
+        10,
+        12,
+        14
       ],
       "vibRate": [
+        4.8,
+        5.0,
         5.2,
-        5.4,
-        5.5,
-        5.6
+        5.4
       ],
       "oddEven": [
         0.5,
@@ -1299,19 +1792,19 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -19.0,
-      "inharm": 0.015,
+      "tilt": -14,
+      "inharm": 0.001,
       "mode": "harm",
       "nb": [
-        2000,
-        1.2
+        1600,
+        0.7
       ]
     },
     "form": {
       "f1": [
-        2800,
-        6.0,
-        1.4
+        0,
+        0,
+        0
       ],
       "f2": [
         0,
@@ -1320,10 +1813,15 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "filt": {
-      "cut": 4.5,
-      "q": 0.75,
-      "env": 0.0,
-      "t": 0.08
+      "cut": [
+        12,
+        9,
+        8,
+        4.5
+      ],
+      "q": 0.7,
+      "env": 0.8,
+      "t": 0.04
     },
     "env": {
       "decay": 0.08,
@@ -1331,21 +1829,64 @@ window.MM_PRESETS_DEFAULT = {
     },
     "char": {
       "noise": 0.22,
-      "noiseAM": 0.12
+      "noiseAM": 0.18
     },
     "onset": {
-      "hit": 0.03,
+      "hit": [
+        0.03,
+        0.03,
+        0.02,
+        0.02
+      ],
       "air": 0.25,
-      "ms": 38
-    }
+      "ms": [
+        48,
+        38,
+        32,
+        26
+      ]
+    },
+    "anchors": [
+      "G4",
+      "F#5",
+      "G5",
+      "F#6"
+    ]
   },
+  // 2026-09-01 — EL CORNO TOMA LO DEL horn_medido (Mario: «ahora está bien, ¿puedes hacer el corno en F lo mismo?»): src.tilt −23.3 ·
+  //   tilt [0.68 0.43 0.29 0.00] · air [0.02 0.03 0.06 0.17] · atk [2.6 2.2 1.8 1.4] · filt.env −0.6 · onset.hit −12 dB · onset.air 0.03.
+  //   gain, form (Meyer 340/750/1225/2000), oddEven, onset.ms, release: intactos. Afinado de oído sobre Bruckner 7, M3-M6, con la
+  //   respiración bloom +3/−2. horn_medido queda idéntico como testigo hasta el render, donde se retira.
+  // 2026-09-02 — form.bank MEDIDO sobre la VSCO-2-CE (Mario: la librería pasa a ser la referencia principal,
+  //   los renders de Finale quedan de contraste). Método nuevo: LTAS sobre los 29 samples del sostenido
+  //   (INSTRUMENTS WAV TESTS/mm-ltas.py) — cada nota normalizada en energía, promedio de todas las alturas,
+  //   menos la recta global, suavizado a 1/6 de octava. El whitening por armónico de mm-medir.py no sirve con
+  //   samples sueltos: el pico seguía al fundamental (250 Hz grave · 1025 medio · 4175 agudo). Con LTAS se
+  //   queda quieto: 675 Hz aparece en grave (+11.2), medio (+10.7) y agudo (+21.7, solo 2 samples).
+  //   340/750/1225/2000 (Meyer) → 525/675/1050/1325: lo real está más apretado y con el peso en 675. El render
+  //   de Finale, con el otro método y otro corno, había dado F1 650 · F2 1050 — dos referencias que convergen.
+  //   Las FRECUENCIAS son las medidas; dB y Q no se copian del residuo (no es la ganancia de un peaking en
+  //   serie y las Q altas están en el límite del suavizado): se entra plano, Q 2.0-2.8, y lo afina el oído.
+  //   f1/f2 se mueven con el banco: no cambian el sonido (bodyRes pisa f1/f2 en el motor) pero son lo que usa
+  //   la medición, y con 340/750 el tilt se pegaba al techo de 1.2 en todo el registro. Sin tocar nada más.
+  // 2026-09-02 quater — LA ESCALERA (Mario: «los mf que corregimos los bajamos a +/- 50»). El 50 no era
+  //   un nivel: era el tramo donde la ley LINEAL todavia separa una dinamica de otra. Sin velRangeDb el
+  //   nivel es 20*log10(v) y los escalones se aplastan hacia arriba — mf→f 1.6 dB y ff→fff 1.1, contra
+  //   6.3 de ppp→pp. Toda la resolucion en el piano y nada en el forte, que es justo al reves.
+  //   Vuelve class.velRangeDb [40 40 30 20] (DPA/Meyer, dinamica/capacidad-dinamica-metales §2.2: el
+  //   rango REAL por ancla, mas ancho abajo que arriba). Se habia probado el 2026-09-01 y se retiro en la
+  //   vuelta al punto, pero no por estar mal: venia apilado con otras cuatro capas sin oido entre ellas.
+  //   Esta vez va SOLO, y el mf casi no se mueve — vel 80 pasa de -4.0 a -4.8 dB. Lo que cambia es la
+  //   escalera: p -13.6 (era -8.3) y ff +5.3 (era -1.1). horn_medido queda sin el, de testigo.
   "horn": {
     "name": "horn",
     "class": {
+      "bal": 9,
       "family": "metales",
       "instrument": "horn",
-      "label": "Horn",
+      "label": "Horn in F",
       "regime": "sostenido",
+      "_velRangeDb_retirado_2026-09-08": [40, 40, 30, 20],
       "articulations": [
         "legato",
         "staccato",
@@ -1353,37 +1894,43 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "lo": "F1",
-    "hi": "F5",
+    "hi": "A5",
+    "anchors": [
+      "B1",
+      "F3",
+      "C4",
+      "F5"
+    ],
     "resp": {
       "gain": [
+        0.72,
         0.9,
         1.0,
-        0.95,
-        0.85
+        0.9
       ],
       "air": [
         0.02,
-        0.02,
         0.03,
-        0.04
+        0.06,
+        0.17
       ],
       "tilt": [
-        0.7,
-        0.75,
-        0.8,
-        0.85
+        0.68,
+        0.43,
+        0.29,
+        0.0
       ],
       "atk": [
-        1.6,
-        1.4,
-        1.2,
-        1.1
+        2.6,
+        2.2,
+        1.8,
+        1.4
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        2,
+        3,
+        3,
+        2
       ],
       "vibRate": [
         5.2,
@@ -1399,49 +1946,106 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -12.5,
+      "tilt": -23.3,
       "inharm": 0.0,
       "mode": "harm",
       "nb": [
-        2000,
-        1.2
+        1600,
+        1.1
       ]
     },
     "form": {
       "f1": [
-        450,
-        6.0,
-        1.4
+        340,
+        6,
+        2.8
       ],
       "f2": [
-        1000,
-        6.0,
-        1.1
+        750,
+        4,
+        2.2
+      ],
+      "bank": [
+        [
+          340,
+          6,
+          2.8
+        ],
+        [
+          750,
+          4,
+          2.2
+        ],
+        [
+          1225,
+          2.5,
+          2
+        ],
+        [
+          2000,
+          1.5,
+          2
+        ]
       ]
     },
     "filt": {
-      "cut": 4.5,
+      "cut": [
+        42.1,
+        16.0,
+        11.5,
+        4.6
+      ],
       "q": 0.85,
-      "env": 0.0,
-      "t": 0.08
+      "env": -0.6,
+      "t": 0.07
     },
     "env": {
       "decay": 0.08,
-      "sustain": 1
+      "sustain": 1,
+      "release": [
+        0.12,
+        0.1,
+        0.07,
+        0.05
+      ]
     },
     "char": {
-      "noise": 0.03,
+      "noise": 0.05,
       "noiseAM": 0.02
     },
     "onset": {
-      "hit": 0.04,
+      "hit": [
+        0.01,
+        0.012,
+        0.02,
+        0.035
+      ],
       "air": 0.03,
-      "ms": 30
+      "ms": [
+        80,
+        60,
+        40,
+        30
+      ]
     }
   },
+  // 2026-09-01 — trompeta, paso 1 (Bartók N123, coral M1-M8): filt.env +0.5 → −0.5 — el Cosmic ARRANCA en cbase·2^env y va a cbase:
+  //   con signo positivo entraba abierta y se cerraba; Luce & Clark miden en toda la familia que los parciales agudos llegan tarde
+  //   (entra oscura y se abre). Mismo arreglo que el corno. Un paso por vez, el oído entre cada uno.
+  //   → REVERTIDO el mismo día (Mario: «las trompetas suenan un poco a horn»): el signo del filtro NO es de familia. La trompeta
+  //   entra con su consonante de lengua, brillante (Luce & Clark: banda ancha donde dominan los agudos, 30-50 ms; blip 3-10 ms);
+  //   el corno entra cerrado. filt.env queda +0.5. Referencia medida: trumpets/medido-trumpet-2026-09-01 (tilt 1.2 en E3/C4).
+  //   Paso 2 (Mario: «las encuentro muy opacas»; su derivación del banco de medición y la mía coinciden): src.tilt −20.5 → −14.5.
+  //   Pendiente efectiva (src + 12·tilt): la referencia a mf está en −6…−10 dB/oct y la ficha estaba en −12…−16; con −14.5 queda
+  //   E3 −6.1 · C4 −7.2 · C5 −8.6 · C6 −10.2. Pätynen (−20.5) mide por encima de 1.5 kHz; el modelo de una pendiente + formantes
+  //   necesita la fuente más abierta para dar el mismo espectro. Formantes intactos (1200/2000/3000 = Meyer = la derivación).
+  //   Paso 3 (Mario: «mucho mejor; ¿puedes aumentar ruido de embocadura? algo así como thrhrhrhh»): char.noise 0.03 → 0.05 (el soplo
+  //   en banda 2·f) y char.noiseAM 0.02 → 0.12 (la modulación de amplitud por ruido — el granulado del labio, el «thrr»). BANDERA
+  //   en el informe (no hay medición de ruido de labio de trompeta): esto es oído.
   "trumpet": {
     "name": "trumpet",
     "class": {
+      "bal": 8,
       "family": "metales",
       "instrument": "trumpet",
       "label": "Trumpet",
@@ -1454,30 +2058,36 @@ window.MM_PRESETS_DEFAULT = {
     },
     "lo": "E3",
     "hi": "C6",
+    "anchors": [
+      "E3",
+      "C4",
+      "C5",
+      "C6"
+    ],
     "resp": {
       "gain": [
-        0.8,
+        0.82,
+        0.95,
         1.0,
-        1.0,
-        0.95
+        0.92
       ],
       "air": [
-        0.02,
-        0.02,
-        0.02,
-        0.03
+        0.03,
+        0.03,
+        0.03,
+        0.04
       ],
       "tilt": [
-        0.6,
-        0.65,
         0.7,
-        0.75
+        0.61,
+        0.49,
+        0.36
       ],
       "atk": [
-        0.9,
-        0.8,
-        0.76,
-        0.7
+        1.45,
+        1.1,
+        1.0,
+        0.9
       ],
       "vib": [
         0.0,
@@ -1488,8 +2098,8 @@ window.MM_PRESETS_DEFAULT = {
       "vibRate": [
         5.5,
         5.5,
-        5.6,
-        5.6
+        5.8,
+        6.0
       ],
       "oddEven": [
         0.5,
@@ -1499,12 +2109,12 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -8.5,
+      "tilt": -14.5,
       "inharm": 0.0,
       "mode": "harm",
       "nb": [
-        2000,
-        1.2
+        3000,
+        1.1
       ]
     },
     "form": {
@@ -1514,34 +2124,229 @@ window.MM_PRESETS_DEFAULT = {
         1.3
       ],
       "f2": [
-        2800,
-        6.0,
-        1.1
+        2000,
+        4.0,
+        1.2
+      ],
+      "bank": [
+        [
+          1200,
+          6.0,
+          1.3
+        ],
+        [
+          2000,
+          4.0,
+          1.2
+        ],
+        [
+          3000,
+          2.5,
+          1.2
+        ]
       ]
     },
     "filt": {
-      "cut": 9.5,
+      "cut": [
+        27.3,
+        19.1,
+        10.5,
+        5.7
+      ],
       "q": 1.0,
-      "env": 0.0,
-      "t": 0.05
+      "env": 0.5,
+      "t": 0.02
     },
     "env": {
-      "decay": 0.05,
-      "sustain": 1
+      "decay": 0.04,
+      "sustain": 1,
+      "release": [
+        0.07,
+        0.06,
+        0.04,
+        0.03
+      ]
+    },
+    "char": {
+      "noise": 0.05,
+      "noiseAM": 0.12
+    },
+    "onset": {
+      "hit": [
+        0.08,
+        0.08,
+        0.09,
+        0.11
+      ],
+      "air": 0.03,
+      "ms": [
+        16,
+        12,
+        11,
+        10
+      ]
+    }
+  },
+  "trumpet_f": {
+    "name": "trumpet_f",
+    "class": {
+      "family": "metales",
+      "instrument": "trumpet_f",
+      "label": "Trumpet in F",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "A3",
+    "hi": "C6",
+    "anchors": [
+      "E3",
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "resp": {
+      "gain": [
+        0.82,
+        0.95,
+        1.0,
+        0.92
+      ],
+      "air": [
+        0.03,
+        0.03,
+        0.03,
+        0.04
+      ],
+      "tilt": [
+        0.7,
+        0.61,
+        0.49,
+        0.36
+      ],
+      "atk": [
+        1.45,
+        1.1,
+        1.0,
+        0.9
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.8,
+        6.0
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -20.5,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        3000,
+        1.1
+      ]
+    },
+    "form": {
+      "f1": [
+        1200,
+        6.0,
+        1.3
+      ],
+      "f2": [
+        2000,
+        4.0,
+        1.2
+      ],
+      "bank": [
+        [
+          1200,
+          6.0,
+          1.3
+        ],
+        [
+          2000,
+          4.0,
+          1.2
+        ],
+        [
+          3000,
+          2.5,
+          1.2
+        ]
+      ]
+    },
+    "filt": {
+      "cut": [
+        27.3,
+        19.1,
+        10.5,
+        5.7
+      ],
+      "q": 1.0,
+      "env": 0.5,
+      "t": 0.02
+    },
+    "env": {
+      "decay": 0.04,
+      "sustain": 1,
+      "release": [
+        0.07,
+        0.06,
+        0.04,
+        0.03
+      ]
     },
     "char": {
       "noise": 0.03,
       "noiseAM": 0.02
     },
     "onset": {
-      "hit": 0.07,
-      "air": 0.02,
-      "ms": 15
+      "hit": [
+        0.08,
+        0.08,
+        0.09,
+        0.11
+      ],
+      "air": 0.03,
+      "ms": [
+        16,
+        12,
+        11,
+        10
+      ]
     }
   },
+  // 2026-09-01 — trombón, paso 1 (Bartók N123, coral): resp.tilt [0.70 0.63 0.56 0.38] → [1.00 1.00 0.87 0.41] — la FORMA por registro
+  //   medida en el render de Finale (trombons/medido-trombone-2026-09-01, conversión con src −13) y en la derivación de Mario: la
+  //   referencia cae de 1.2 en el grave a 0.2 en el agudo; la ficha estaba casi plana, 4-5 dB/oct opaca en grave y medio. Es la
+  //   escalera del informe (9 parciales resonantes en E2 → 1.6 en Bb4). src.tilt, formantes (Meyer), filt.env: intactos.
+  //   Paso 2 (Mario: «muy abierto el sonido, un poco liso»): a mitad de camino entre la ficha y la referencia, [0.85 0.81 0.71 0.40] —
+  //   como en el corno, el oído quiere el metal más cerrado que la biblioteca. El «liso» va aparte (char.noiseAM, siguiente paso).
+  //   Paso 3 (Mario: «le falta bastante labio, sobre todo en los agudos»): char.noiseAM 0.02 → 0.14 (el grano del labio) y noise 0.04 →
+  //   0.05; el grano escala con resp.air por ancla, así que air [0.04 0.03 0.03 0.04] → [0.04 0.04 0.06 0.09] lo pone en el agudo.
+  //   BANDERA en el informe (sin medición de ruido de labio de trombón): oído.
+  //   Paso 4 (Mario: «le falta grano»): la cuenta del Cosmic — carAM = noise·air·2.5·noiseAM — daba 0.001 con los valores de arriba:
+  //   inaudible. El camino del grano está ~10× subescalado en el motor (a corregir en el Cosmic y renormalizar las fichas); mientras,
+  //   noise 0.30 · noiseAM 0.60 · air [0.06 0.07 0.10 0.14] → grano 0.02-0.06 y soplo aditivo −32 dB (noise·air·1.5·(1−AM)).
   "trombone": {
     "name": "trombone",
     "class": {
+      "bal": 11,
       "family": "metales",
       "instrument": "trombone",
       "label": "Trombone",
@@ -1554,30 +2359,36 @@ window.MM_PRESETS_DEFAULT = {
     },
     "lo": "E2",
     "hi": "Bb5",
+    "anchors": [
+      "E2",
+      "Bb2",
+      "F3",
+      "Bb4"
+    ],
     "resp": {
       "gain": [
-        0.95,
+        0.88,
+        0.96,
         1.0,
-        1.0,
-        0.9
+        0.92
       ],
       "air": [
-        0.02,
-        0.02,
-        0.02,
-        0.03
+        0.06,
+        0.07,
+        0.10,
+        0.14
       ],
       "tilt": [
-        0.65,
-        0.7,
-        0.75,
-        0.8
+        0.85,
+        0.81,
+        0.71,
+        0.40
       ],
       "atk": [
         1.2,
-        1.1,
         1.0,
-        0.9
+        1.35,
+        1.8
       ],
       "vib": [
         0.0,
@@ -1586,9 +2397,9 @@ window.MM_PRESETS_DEFAULT = {
         0.0
       ],
       "vibRate": [
+        5.0,
+        5.0,
         5.2,
-        5.2,
-        5.4,
         5.4
       ],
       "oddEven": [
@@ -1599,49 +2410,237 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -10.5,
+      "tilt": -13.0,
       "inharm": 0.0,
       "mode": "harm",
       "nb": [
-        2000,
-        1.2
+        1500,
+        1.1
       ]
     },
     "form": {
       "f1": [
-        600,
+        520,
         6.0,
-        1.3
+        1.4
       ],
       "f2": [
-        1600,
-        6.0,
-        1.1
+        1000,
+        4.0,
+        1.2
+      ],
+      "bank": [
+        [
+          520,
+          6.0,
+          1.4
+        ],
+        [
+          1000,
+          4.0,
+          1.2
+        ],
+        [
+          1500,
+          2.5,
+          1.2
+        ]
       ]
     },
     "filt": {
-      "cut": 6.5,
+      "cut": [
+        29.1,
+        23.2,
+        17.2,
+        7.3
+      ],
       "q": 0.9,
-      "env": 0.0,
+      "env": 0.8,
       "t": 0.06
     },
     "env": {
       "decay": 0.06,
-      "sustain": 1
+      "sustain": 1,
+      "release": [
+        0.12,
+        0.1,
+        0.08,
+        0.05
+      ]
     },
     "char": {
-      "noise": 0.03,
+      "noise": 0.30,
+      "noiseAM": 0.60
+    },
+    "onset": {
+      "hit": [
+        0.06,
+        0.06,
+        0.08,
+        0.11
+      ],
+      "air": 0.035,
+      "ms": [
+        26,
+        22,
+        30,
+        40
+      ]
+    }
+  },
+  "trombone_alto": {
+    "name": "trombone_alto",
+    "class": {
+      "family": "metales",
+      "instrument": "trombone_alto",
+      "label": "Alto Trombone",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ]
+    },
+    "lo": "A2",
+    "hi": "E5",
+    "anchors": [
+      "E2",
+      "Bb2",
+      "F3",
+      "Bb4"
+    ],
+    "resp": {
+      "gain": [
+        0.88,
+        0.96,
+        1.0,
+        0.92
+      ],
+      "air": [
+        0.04,
+        0.03,
+        0.03,
+        0.04
+      ],
+      "tilt": [
+        0.7,
+        0.63,
+        0.56,
+        0.38
+      ],
+      "atk": [
+        1.2,
+        1.0,
+        1.35,
+        1.8
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.0,
+        5.0,
+        5.2,
+        5.4
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -13.0,
+      "inharm": 0.0,
+      "mode": "harm",
+      "nb": [
+        1500,
+        1.1
+      ]
+    },
+    "form": {
+      "f1": [
+        520,
+        6.0,
+        1.4
+      ],
+      "f2": [
+        1000,
+        4.0,
+        1.2
+      ],
+      "bank": [
+        [
+          520,
+          6.0,
+          1.4
+        ],
+        [
+          1000,
+          4.0,
+          1.2
+        ],
+        [
+          1500,
+          2.5,
+          1.2
+        ]
+      ]
+    },
+    "filt": {
+      "cut": [
+        29.1,
+        23.2,
+        17.2,
+        7.3
+      ],
+      "q": 0.9,
+      "env": 0.8,
+      "t": 0.06
+    },
+    "env": {
+      "decay": 0.06,
+      "sustain": 1,
+      "release": [
+        0.12,
+        0.1,
+        0.08,
+        0.05
+      ]
+    },
+    "char": {
+      "noise": 0.04,
       "noiseAM": 0.02
     },
     "onset": {
-      "hit": 0.06,
-      "air": 0.02,
-      "ms": 22
+      "hit": [
+        0.06,
+        0.06,
+        0.08,
+        0.11
+      ],
+      "air": 0.035,
+      "ms": [
+        26,
+        22,
+        30,
+        40
+      ]
     }
   },
+  // 2026-09-01 — tuba, paso 1 (Bartók N123; Mario: «muy forte, tengo que ponerle ppp o suena mucho en los graves»): resp.gain
+  //   [0.72 0.92 1.00 0.90] → [0.40 0.55 0.75 0.85] — con filt.cut 51×f0 el grave enciende ~50 parciales y el rms se dispara a igual
+  //   gain; el Bb0 real es pedal, sin pico de impedancia (informe §6.4). Y la ley de Mario, de tubista: «entre más bajo necesita más
+  //   aire que un tubista no puede mantener» — el grave se paga en soplo: resp.air [0.08 0.06 0.05 0.05] → [0.14 0.10 0.06 0.05].
+  //   Color (tilt) y formantes (250/400, Mertens · Strong & Clark) intactos.
   "tuba": {
     "name": "tuba",
     "class": {
+      "bal": 11,
       "family": "metales",
       "instrument": "tuba",
       "label": "Tuba",
@@ -1654,30 +2653,36 @@ window.MM_PRESETS_DEFAULT = {
     },
     "lo": "Bb0",
     "hi": "F4",
+    "anchors": [
+      "Bb0",
+      "Bb1",
+      "F2",
+      "Bb3"
+    ],
     "resp": {
       "gain": [
-        1.0,
+        0.4,
+        0.55,
+        0.75,
+        0.85
+      ],
+      "air": [
+        0.14,
+        0.1,
+        0.06,
+        0.05
+      ],
+      "tilt": [
+        0.77,
+        0.65,
+        0.58,
+        0.4
+      ],
+      "atk": [
+        1.3,
         1.0,
         0.9,
         0.8
-      ],
-      "air": [
-        0.05,
-        0.04,
-        0.03,
-        0.03
-      ],
-      "tilt": [
-        0.6,
-        0.65,
-        0.7,
-        0.75
-      ],
-      "atk": [
-        2.0,
-        1.8,
-        1.6,
-        1.4
       ],
       "vib": [
         0.0,
@@ -1700,10 +2705,10 @@ window.MM_PRESETS_DEFAULT = {
     },
     "src": {
       "tilt": -15.0,
-      "inharm": 0.005,
+      "inharm": 0.0,
       "mode": "harm",
       "nb": [
-        2000,
+        800,
         1.2
       ]
     },
@@ -1714,29 +2719,62 @@ window.MM_PRESETS_DEFAULT = {
         1.5
       ],
       "f2": [
-        600,
-        6.0,
-        1.2
+        400,
+        4.0,
+        1.3
+      ],
+      "bank": [
+        [
+          250,
+          6.0,
+          1.5
+        ],
+        [
+          400,
+          4.0,
+          1.3
+        ]
       ]
     },
     "filt": {
-      "cut": 3.0,
+      "cut": [
+        51.5,
+        29.2,
+        21.8,
+        9.4
+      ],
       "q": 0.8,
-      "env": 0.0,
+      "env": 0.6,
       "t": 0.1
     },
     "env": {
       "decay": 0.1,
-      "sustain": 1
+      "sustain": 1,
+      "release": [
+        0.22,
+        0.16,
+        0.12,
+        0.07
+      ]
     },
     "char": {
       "noise": 0.05,
       "noiseAM": 0.03
     },
     "onset": {
-      "hit": 0.09,
+      "hit": [
+        0.1,
+        0.09,
+        0.08,
+        0.08
+      ],
       "air": 0.08,
-      "ms": 45
+      "ms": [
+        65,
+        50,
+        45,
+        40
+      ]
     }
   },
   "timpani": {
@@ -1749,16 +2787,17 @@ window.MM_PRESETS_DEFAULT = {
       "articulations": [
         "golpe",
         "redoble"
-      ]
+      ],
+      "velRangeDb": 40
     },
     "lo": "C2",
     "hi": "C4",
     "resp": {
       "gain": [
-        0.8,
-        1.0,
-        1.0,
-        0.85
+        0.24,
+        0.3,
+        0.3,
+        0.255
       ],
       "air": [
         0,
@@ -1808,9 +2847,9 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        150,
-        6,
-        1
+        1200,
+        3,
+        0.7
       ],
       "f2": [
         400,
@@ -1825,7 +2864,12 @@ window.MM_PRESETS_DEFAULT = {
       "t": 0.1
     },
     "env": {
-      "decay": 1.2,
+      "decay": [
+        3.5,
+        3,
+        2.2,
+        1.6
+      ],
       "sustain": 0
     },
     "char": {
@@ -1833,9 +2877,19 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.6,
+      "hit": [
+        0.5,
+        0.55,
+        0.6,
+        0.7
+      ],
       "air": 0,
-      "ms": 8
+      "ms": [
+        8,
+        7,
+        6,
+        5
+      ]
     }
   },
   "glockenspiel": {
@@ -1847,16 +2901,17 @@ window.MM_PRESETS_DEFAULT = {
       "regime": "percusivo",
       "articulations": [
         "clear"
-      ]
+      ],
+      "velRangeDb": 25
     },
     "lo": "G5",
     "hi": "C9",
     "resp": {
       "gain": [
-        0.8,
-        0.9,
-        1.0,
-        0.9
+        0.24,
+        0.27,
+        0.3,
+        0.27
       ],
       "air": [
         0.0,
@@ -1900,9 +2955,9 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        4000,
-        6.0,
-        1.3
+        2500,
+        2,
+        1
       ],
       "f2": [
         0,
@@ -1917,7 +2972,12 @@ window.MM_PRESETS_DEFAULT = {
       "t": 0.06
     },
     "env": {
-      "decay": 3.0,
+      "decay": [
+        2.5,
+        2,
+        1.3,
+        0.9
+      ],
       "sustain": 0
     },
     "char": {
@@ -1925,7 +2985,12 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.75,
+      "hit": [
+        0.4,
+        0.42,
+        0.45,
+        0.5
+      ],
       "air": 0.0,
       "ms": 2
     }
@@ -1939,7 +3004,8 @@ window.MM_PRESETS_DEFAULT = {
       "regime": "percusivo",
       "articulations": [
         "seco"
-      ]
+      ],
+      "velRangeDb": 30
     },
     "lo": "F4",
     "hi": "C8",
@@ -2009,7 +3075,12 @@ window.MM_PRESETS_DEFAULT = {
       "t": 0.04
     },
     "env": {
-      "decay": 0.4,
+      "decay": [
+        0.45,
+        0.15,
+        0.08,
+        0.08
+      ],
       "sustain": 0
     },
     "char": {
@@ -2017,7 +3088,12 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.7,
+      "hit": [
+        0.5,
+        0.6,
+        0.7,
+        0.8
+      ],
       "air": 0.0,
       "ms": 2
     }
@@ -2032,16 +3108,17 @@ window.MM_PRESETS_DEFAULT = {
       "articulations": [
         "sustained",
         "staccato"
-      ]
+      ],
+      "velRangeDb": 30
     },
     "lo": "F3",
     "hi": "F6",
     "resp": {
       "gain": [
-        0.9,
-        0.95,
-        1.0,
-        0.9
+        0.27,
+        0.285,
+        0.3,
+        0.27
       ],
       "air": [
         0.0,
@@ -2116,7 +3193,12 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.45,
+      "hit": [
+        0.1,
+        0.12,
+        0.16,
+        0.22
+      ],
       "air": 0.0,
       "ms": 3
     }
@@ -2131,7 +3213,8 @@ window.MM_PRESETS_DEFAULT = {
       "articulations": [
         "normal",
         "staccato"
-      ]
+      ],
+      "velRangeDb": 30
     },
     "lo": "A1",
     "hi": "C7",
@@ -2201,7 +3284,12 @@ window.MM_PRESETS_DEFAULT = {
       "t": 0.03
     },
     "env": {
-      "decay": 1.5,
+      "decay": [
+        2.0,
+        1.2,
+        0.38,
+        0.2
+      ],
       "sustain": 0
     },
     "char": {
@@ -2209,7 +3297,12 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.5,
+      "hit": [
+        0.25,
+        0.3,
+        0.4,
+        0.5
+      ],
       "air": 0.0,
       "ms": 3
     }
@@ -2223,16 +3316,17 @@ window.MM_PRESETS_DEFAULT = {
       "regime": "percusivo",
       "articulations": [
         "sustained"
-      ]
+      ],
+      "velRangeDb": 35
     },
     "lo": "C4",
     "hi": "G5",
     "resp": {
       "gain": [
-        1.0,
-        1.0,
-        0.95,
-        0.9
+        0.3,
+        0.3,
+        0.285,
+        0.27
       ],
       "air": [
         0.0,
@@ -2276,9 +3370,9 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        600,
-        6.0,
-        1.2
+        0,
+        0,
+        0
       ],
       "f2": [
         3500,
@@ -2288,12 +3382,17 @@ window.MM_PRESETS_DEFAULT = {
     },
     "filt": {
       "cut": 8.0,
-      "q": 1.1,
+      "q": 0.7,
       "env": 0.5,
       "t": 0.25
     },
     "env": {
-      "decay": 3.0,
+      "decay": [
+        6,
+        5,
+        4,
+        3
+      ],
       "sustain": 0
     },
     "char": {
@@ -2301,7 +3400,12 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.8,
+      "hit": [
+        0.55,
+        0.6,
+        0.7,
+        0.8
+      ],
       "air": 0.0,
       "ms": 4
     }
@@ -2405,26 +3509,32 @@ window.MM_PRESETS_DEFAULT = {
       "ms": 10
     }
   },
-  "bass_drum": {
-    "name": "bass_drum",
+  // 2026-09-01 — snare_off «Snare drum (snares off)» (Mario, Bartók N123: el «tamburo piccolo senza corde» que abre y cierra el
+  //   movimiento — CH10 dice Allways without snares). La caja sin la alfombrilla: sin el fritado de 4.2 kHz — queda el parche:
+  //   banda 4200/Q0.6 → 1100/Q2.2, src.tilt −13, tilt 0.55, cola 0.2 → 0.3 (sin bordones el parche suena un pelo más). Copia de
+  //   snare en lo demás; afinar de oído.
+  //   Paso 2 (Mario: «suena como si le pega al borde, le falta cuero»): la banda baja al parche — 1100/Q2.2 → 550/Q1.6 (el
+  //   fundamental de membrana de una caja de 14", más ancho = más cuerpo); el click del palo queda en el onset.
+  "snare_off": {
+    "name": "snare_off",
     "class": {
       "family": "percusion",
-      "instrument": "bass_drum",
-      "label": "Bass Drum",
+      "instrument": "snare_off",
+      "label": "Snare drum (snares off)",
       "regime": "percutido",
       "articulations": [
         "staccato",
         "acento"
       ]
     },
-    "lo": "C1",
-    "hi": "C3",
+    "lo": "C3",
+    "hi": "C5",
     "resp": {
       "gain": [
-        0.7,
-        1.0,
-        1.0,
-        0.85
+        1.4,
+        1.8,
+        1.8,
+        1.6
       ],
       "air": [
         0.0,
@@ -2433,10 +3543,10 @@ window.MM_PRESETS_DEFAULT = {
         0.0
       ],
       "tilt": [
-        0.2,
-        0.2,
-        0.2,
-        0.2
+        0.55,
+        0.55,
+        0.55,
+        0.55
       ],
       "atk": [
         1.0,
@@ -2464,12 +3574,12 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -10.0,
+      "tilt": -13.0,
       "inharm": 0.0,
       "mode": "noise",
       "nb": [
-        80,
-        1.0
+        550,
+        1.6
       ]
     },
     "form": {
@@ -2485,13 +3595,13 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "filt": {
-      "cut": 10.0,
+      "cut": 22.0,
       "q": 1.0,
       "env": 0.0,
       "t": 0.1
     },
     "env": {
-      "decay": 0.4,
+      "decay": 0.3,
       "sustain": 0
     },
     "char": {
@@ -2499,9 +3609,109 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.7,
+      "hit": 1.2,
       "air": 0.0,
-      "ms": 4
+      "ms": 10
+    }
+  },
+  "bass_drum": {
+    "name": "bass_drum",
+    "class": {
+      "family": "percusion",
+      "instrument": "bass_drum",
+      "label": "Bass Drum",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ],
+      "velRangeDb": 60
+    },
+    "lo": "C1",
+    "hi": "C3",
+    "resp": {
+      "gain": [
+        0.21,
+        0.3,
+        0.3,
+        0.255
+      ],
+      "air": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tilt": [
+        0.14,
+        0.2,
+        0.3,
+        0.45
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -14,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        80,
+        1.0
+      ]
+    },
+    "form": {
+      "f1": [
+        200,
+        4,
+        1.2
+      ],
+      "f2": [
+        1800,
+        3,
+        1.0
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.6,
+      "t": 0.25
+    },
+    "env": {
+      "decay": 2.5,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.12,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.55,
+      "air": 0.0,
+      "ms": 14
     }
   },
   "cymbals": {
@@ -2514,16 +3724,17 @@ window.MM_PRESETS_DEFAULT = {
       "articulations": [
         "staccato",
         "acento"
-      ]
+      ],
+      "velRangeDb": 60
     },
     "lo": "C4",
     "hi": "C7",
     "resp": {
       "gain": [
-        0.7,
-        1.0,
-        1.0,
-        0.85
+        0.21,
+        0.3,
+        0.3,
+        0.255
       ],
       "air": [
         0.0,
@@ -2532,10 +3743,10 @@ window.MM_PRESETS_DEFAULT = {
         0.0
       ],
       "tilt": [
-        0.9,
-        0.9,
-        0.9,
-        0.9
+        0.86,
+        0.92,
+        0.95,
+        0.8
       ],
       "atk": [
         1.0,
@@ -2563,43 +3774,43 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -10.0,
+      "tilt": -3.0,
       "inharm": 0.0,
       "mode": "noise",
       "nb": [
-        6000,
-        0.7
+        4000,
+        0.45
       ]
     },
     "form": {
       "f1": [
-        1000,
-        0,
-        2.0
+        350,
+        5,
+        3.0
       ],
       "f2": [
-        3000,
-        0,
-        2.5
+        3500,
+        4,
+        1.0
       ]
     },
     "filt": {
       "cut": 10.0,
       "q": 1.0,
-      "env": 0.0,
-      "t": 0.1
+      "env": -1.8,
+      "t": 0.6
     },
     "env": {
-      "decay": 1.5,
+      "decay": 3.0,
       "sustain": 0
     },
     "char": {
-      "noise": 1.0,
+      "noise": 0.3,
       "noiseAM": 0.0
     },
     "onset": {
       "hit": 0.4,
-      "air": 0.0,
+      "air": 0.55,
       "ms": 2
     }
   },
@@ -2613,16 +3824,17 @@ window.MM_PRESETS_DEFAULT = {
       "articulations": [
         "staccato",
         "acento"
-      ]
+      ],
+      "velRangeDb": 70
     },
     "lo": "C2",
     "hi": "C4",
     "resp": {
       "gain": [
-        0.7,
-        1.0,
-        1.0,
-        0.85
+        0.21,
+        0.3,
+        0.3,
+        0.255
       ],
       "air": [
         0.0,
@@ -2631,108 +3843,9 @@ window.MM_PRESETS_DEFAULT = {
         0.0
       ],
       "tilt": [
-        0.5,
-        0.5,
-        0.5,
-        0.5
-      ],
-      "atk": [
-        1.0,
-        1.0,
-        0.9,
-        0.85
-      ],
-      "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
-      ],
-      "vibRate": [
-        5.5,
-        5.5,
-        5.5,
-        5.5
-      ],
-      "oddEven": [
-        0.5,
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
-    "src": {
-      "tilt": -10.0,
-      "inharm": 0.0,
-      "mode": "noise",
-      "nb": [
-        400,
-        0.6
-      ]
-    },
-    "form": {
-      "f1": [
-        1000,
-        0,
-        2.0
-      ],
-      "f2": [
-        3000,
-        0,
-        2.5
-      ]
-    },
-    "filt": {
-      "cut": 10.0,
-      "q": 1.0,
-      "env": 0.0,
-      "t": 0.1
-    },
-    "env": {
-      "decay": 3,
-      "sustain": 0
-    },
-    "char": {
-      "noise": 1.0,
-      "noiseAM": 0.0
-    },
-    "onset": {
-      "hit": 0.4,
-      "air": 0.0,
-      "ms": 6
-    }
-  },
-  "triangle": {
-    "name": "triangle",
-    "class": {
-      "family": "percusion",
-      "instrument": "triangle",
-      "label": "Triangle",
-      "regime": "percutido",
-      "articulations": [
-        "staccato",
-        "acento"
-      ]
-    },
-    "lo": "C5",
-    "hi": "C7",
-    "resp": {
-      "gain": [
-        0.7,
-        1.0,
-        1.0,
-        0.85
-      ],
-      "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
-      ],
-      "tilt": [
-        0.95,
-        0.95,
-        0.95,
+        0.22,
+        0.72,
+        0.8,
         0.95
       ],
       "atk": [
@@ -2761,24 +3874,24 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -10.0,
+      "tilt": -6.0,
       "inharm": 0.0,
       "mode": "noise",
       "nb": [
-        4000,
-        3.0
+        250,
+        0.35
       ]
     },
     "form": {
       "f1": [
-        1000,
-        0,
-        2.0
+        250,
+        6,
+        1.5
       ],
       "f2": [
-        3000,
-        0,
-        2.5
+        2500,
+        5,
+        0.8
       ]
     },
     "filt": {
@@ -2788,39 +3901,40 @@ window.MM_PRESETS_DEFAULT = {
       "t": 0.1
     },
     "env": {
-      "decay": 1.5,
+      "decay": 6.0,
       "sustain": 0
     },
     "char": {
-      "noise": 1.0,
+      "noise": 0.3,
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.3,
+      "hit": 0.25,
       "air": 0.0,
-      "ms": 1
+      "ms": 25
     }
   },
-  "tambourine": {
-    "name": "tambourine",
+  "triangle": {
+    "name": "triangle",
     "class": {
       "family": "percusion",
-      "instrument": "tambourine",
-      "label": "Tambourine",
+      "instrument": "triangle",
+      "label": "Triangle",
       "regime": "percutido",
       "articulations": [
         "staccato",
         "acento"
-      ]
+      ],
+      "velRangeDb": 60
     },
-    "lo": "C4",
-    "hi": "C6",
+    "lo": "C5",
+    "hi": "C7",
     "resp": {
       "gain": [
-        0.7,
-        1.0,
-        1.0,
-        0.85
+        0.21,
+        0.3,
+        0.3,
+        0.255
       ],
       "air": [
         0.0,
@@ -2829,10 +3943,10 @@ window.MM_PRESETS_DEFAULT = {
         0.0
       ],
       "tilt": [
-        0.85,
-        0.85,
-        0.85,
-        0.85
+        0.3,
+        0.5,
+        0.7,
+        0.8
       ],
       "atk": [
         1.0,
@@ -2860,19 +3974,19 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -10.0,
+      "tilt": -12,
       "inharm": 0.0,
-      "mode": "noise",
+      "mode": "harm",
       "nb": [
-        6000,
-        1.0
+        2000,
+        1.2
       ]
     },
     "form": {
       "f1": [
         1000,
         0,
-        2.0
+        2
       ],
       "f2": [
         3000,
@@ -2887,16 +4001,116 @@ window.MM_PRESETS_DEFAULT = {
       "t": 0.1
     },
     "env": {
+      "decay": 0.8,
+      "sustain": 0
+    },
+    "char": {
+      "noise": 0.0,
+      "noiseAM": 0.0
+    },
+    "onset": {
+      "hit": 0.2,
+      "air": 0.0,
+      "ms": 4
+    }
+  },
+  "tambourine": {
+    "name": "tambourine",
+    "class": {
+      "family": "percusion",
+      "instrument": "tambourine",
+      "label": "Tambourine",
+      "regime": "percutido",
+      "articulations": [
+        "staccato",
+        "acento"
+      ],
+      "velRangeDb": 55
+    },
+    "lo": "C4",
+    "hi": "C6",
+    "resp": {
+      "gain": [
+        0.7,
+        1.0,
+        1.0,
+        0.85
+      ],
+      "air": [
+        0.55,
+        0.5,
+        0.4,
+        0.7
+      ],
+      "tilt": [
+        0.9,
+        0.84,
+        0.72,
+        0.95
+      ],
+      "atk": [
+        1.0,
+        1.0,
+        0.9,
+        0.85
+      ],
+      "vib": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "vibRate": [
+        5.5,
+        5.5,
+        5.5,
+        5.5
+      ],
+      "oddEven": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "src": {
+      "tilt": -5.0,
+      "inharm": 0.0,
+      "mode": "noise",
+      "nb": [
+        3500,
+        0.5
+      ]
+    },
+    "form": {
+      "f1": [
+        400,
+        6,
+        2.5
+      ],
+      "f2": [
+        2200,
+        4,
+        1.2
+      ]
+    },
+    "filt": {
+      "cut": 10.0,
+      "q": 1.0,
+      "env": 0.0,
+      "t": 0.1
+    },
+    "env": {
       "decay": 0.3,
       "sustain": 0
     },
     "char": {
-      "noise": 1.0,
+      "noise": 0.3,
       "noiseAM": 0.0
     },
     "onset": {
       "hit": 0.5,
-      "air": 0.0,
+      "air": 0.65,
       "ms": 2
     }
   },
@@ -2909,7 +4123,8 @@ window.MM_PRESETS_DEFAULT = {
       "regime": "percutido",
       "articulations": [
         "golpe"
-      ]
+      ],
+      "velRangeDb": 45
     },
     "lo": "C4",
     "hi": "C6",
@@ -2927,10 +4142,10 @@ window.MM_PRESETS_DEFAULT = {
         0
       ],
       "tilt": [
-        0.65,
-        0.7,
-        0.7,
-        0.75
+        0.45,
+        0.62,
+        0.8,
+        0.92
       ],
       "atk": [
         0.3,
@@ -2958,38 +4173,38 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -8,
+      "tilt": -12.0,
       "inharm": 0.0,
       "mode": "noise",
       "nb": [
-        1700,
-        4
+        1500,
+        6
       ]
     },
     "form": {
       "f1": [
-        1200,
-        6,
-        3
+        1100,
+        7,
+        4
       ],
       "f2": [
-        2500,
-        4,
+        2800,
+        5,
         3
       ]
     },
     "filt": {
       "cut": 10,
       "q": 2,
-      "env": 0.0,
-      "t": 0.1
+      "env": 0.8,
+      "t": 0.015
     },
     "env": {
-      "decay": 0.08,
+      "decay": 0.1,
       "sustain": 0
     },
     "char": {
-      "noise": 0.0,
+      "noise": 0.04,
       "noiseAM": 0.0
     },
     "onset": {
@@ -3001,6 +4216,7 @@ window.MM_PRESETS_DEFAULT = {
   "harp": {
     "name": "harp",
     "class": {
+      "bal": -1,
       "family": "cuerdas",
       "instrument": "harp",
       "label": "Harp",
@@ -3515,7 +4731,7 @@ window.MM_PRESETS_DEFAULT = {
     "class": {
       "family": "teclados",
       "instrument": "harpsichord",
-      "label": "Harpsichord (Tonal)",
+      "label": "Harpsichord (Cosmic)",
       "regime": "percusivo",
       "detache": 0.22,
       "velRangeDb": 6,
@@ -3534,11 +4750,12 @@ window.MM_PRESETS_DEFAULT = {
       "F6"
     ],
     "resp": {
+      // 2026-09-12 (Mario, de oido): salia fortisimo y saturaba -> bajado en dos escuchas a la cuarta parte (-12 dB). Antes: [0.32,0.52,0.7,0.63]
       "gain": [
-        0.32,
-        0.52,
-        0.7,
-        0.63
+        0.08,
+        0.13,
+        0.175,
+        0.1575
       ],
       "air": [
         0.1,
@@ -3770,11 +4987,12 @@ window.MM_PRESETS_DEFAULT = {
       "F6"
     ],
     "resp": {
+      // 2026-09-12 (Mario, de oido): salia fortisimo y saturaba -> bajado en dos escuchas a la cuarta parte (-12 dB). Antes: [0.32,0.52,0.7,0.63]
       "gain": [
-        0.32,
-        0.52,
-        0.7,
-        0.63
+        0.08,
+        0.13,
+        0.175,
+        0.1575
       ],
       "air": [
         0.1,
@@ -4003,10 +5221,10 @@ window.MM_PRESETS_DEFAULT = {
         0.9
       ],
       "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.02,
+        0.02,
+        0.02,
+        0.03
       ],
       "tilt": [
         0.95,
@@ -4015,10 +5233,10 @@ window.MM_PRESETS_DEFAULT = {
         1.0
       ],
       "atk": [
-        0.3,
-        0.3,
-        0.3,
-        0.3
+        1,
+        1,
+        1,
+        1
       ],
       "vib": [
         0.0,
@@ -4041,7 +5259,7 @@ window.MM_PRESETS_DEFAULT = {
     },
     "src": {
       "tilt": -22.0,
-      "inharm": 0.045,
+      "inharm": 0,
       "mode": "harm",
       "nb": [
         2000,
@@ -4075,10 +5293,21 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0.0
     },
     "onset": {
-      "hit": 0.55,
+      "hit": [
+        0.08,
+        0.1,
+        0.12,
+        0.15
+      ],
       "air": 0.0,
       "ms": 2
-    }
+    },
+    "anchors": [
+      "C4",
+      "C5",
+      "C6",
+      "C8"
+    ]
   },
   "pipe_organ": {
     "name": "pipe_organ",
@@ -4177,7 +5406,13 @@ window.MM_PRESETS_DEFAULT = {
       "hit": 0.1,
       "air": 0.06,
       "ms": 12
-    }
+    },
+    "anchors": [
+      "C1",
+      "C3",
+      "C5",
+      "C7"
+    ]
   },
   "accordion": {
     "name": "accordion",
@@ -4196,8 +5431,8 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "A6",
     "resp": {
       "gain": [
-        0.8,
-        1.0,
+        0.82,
+        1,
         0.95,
         0.85
       ],
@@ -4214,10 +5449,10 @@ window.MM_PRESETS_DEFAULT = {
         0.8
       ],
       "atk": [
-        0.8,
-        0.7,
-        0.6,
-        0.5
+        2.2,
+        1.8,
+        1.3,
+        0.9
       ],
       "vib": [
         0.0,
@@ -4232,9 +5467,9 @@ window.MM_PRESETS_DEFAULT = {
         0.0
       ],
       "oddEven": [
-        0.5,
-        0.5,
-        0.5,
+        0.44,
+        0.46,
+        0.48,
         0.5
       ]
     },
@@ -4260,31 +5495,50 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "filt": {
-      "cut": 7.0,
+      "cut": [
+        24,
+        20,
+        16,
+        10
+      ],
       "q": 0.8,
-      "env": 0.0,
+      "env": 0.3,
       "t": 0.05
     },
     "env": {
       "decay": 0.03,
-      "sustain": 1
+      "sustain": 1,
+      "release": [
+        0.1,
+        0.08,
+        0.06,
+        0.05
+      ]
     },
     "char": {
-      "noise": 0.02,
-      "noiseAM": 0.01
+      "noise": 0.05,
+      "noiseAM": 0.03
     },
     "onset": {
-      "hit": 0.06,
-      "air": 0.04,
-      "ms": 15
-    }
+      "hit": 0.0,
+      "air": 0.14,
+      "ms": 65
+    },
+    "anchors": [
+      "F2",
+      "C4",
+      "C5",
+      "A6"
+    ]
   },
   "violin": {
     "name": "violin",
     "class": {
+      "bal": -4,
       "family": "cuerdas",
       "instrument": "violin",
       "label": "Violin",
+      "velRangeDb": 32,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -4296,40 +5550,40 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "E7",
     "resp": {
       "gain": [
-        0.85,
-        1.0,
-        0.95,
-        0.85
-      ],
+          0.2845,
+          0.1496,
+          0.0998,
+          0.0220
+        ],
       "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.07,
+        0.06,
+        0.06,
+        0.08
       ],
       "tilt": [
-        0.7,
-        0.75,
+        0.5,
+        0.65,
         0.8,
-        0.85
+        0.97
       ],
       "atk": [
-        1.2,
-        1.0,
-        0.9,
-        0.8
+        1.7,
+        1.15,
+        0.8,
+        0.55
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        24,
+        30,
+        36,
+        44
       ],
       "vibRate": [
-        5.5,
-        5.5,
-        5.5,
-        5.5
+        5.6,
+        5.8,
+        6.0,
+        6.3
       ],
       "oddEven": [
         0.5,
@@ -4339,52 +5593,155 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -10.0,
-      "inharm": 0.001,
+      "tilt": -9.0,
+      "inharm": [
+        0.0005,
+        0.0005,
+        0.0008,
+        0.0015
+      ],
       "mode": "harm",
       "nb": [
-        2000,
-        1.2
+        2500,
+        1.5
+      ],
+      "partials": [
+        26,
+        17,
+        12,
+        14
       ]
     },
     "form": {
       "f1": [
-        3000,
+        500,
         6.0,
-        1.3
+        4.0
       ],
       "f2": [
-        5000,
-        6.0,
-        1.1
+        2400,
+        5.0,
+        2.2
+      ],
+      "bank": [
+        [
+          285,
+          4.0,
+          10
+        ],
+        [
+          385,
+          2.5,
+          40
+        ],
+        [
+          422,
+          5.5,
+          45
+        ],
+        [
+          528,
+          5.5,
+          45
+        ],
+        [
+          600,
+          3.0,
+          45
+        ],
+        [
+          2400,
+          5.0,
+          2.5
+        ]
       ]
     },
     "filt": {
-      "cut": 8.0,
-      "q": 1.0,
-      "env": 0.0,
-      "t": 0.1
+      "cut": [
+        25.51,
+        17.03,
+        12.5,
+        13.65
+      ],
+      "q": 0.8,
+      "env": 0.4,
+      "t": 0.04
     },
     "env": {
-      "decay": 0.05,
-      "sustain": 1
+      "decay": 0.06,
+      "sustain": 1,
+      "release": [
+        0.09,
+        0.07,
+        0.05,
+        0.04
+      ]
     },
     "char": {
-      "noise": 0.05,
+      "noise": 0.06,
       "noiseAM": 0.03
     },
     "onset": {
-      "hit": 0.08,
-      "air": 0.0,
-      "ms": 25
-    }
+      "hit": [
+        0.1,
+        0.09,
+        0.08,
+        0.07
+      ],
+      "air": 0.15,
+      "ms": [
+        50,
+        34,
+        23,
+        15
+      ],
+      "freq": 285,
+      "band": [
+        285,
+        528
+      ],
+      "bandHit": [
+        0.06,
+        0.09,
+        0.1,
+        0.12
+      ],
+      "bandMs": 35
+    },
+    "anchors": [
+      "G3",
+      "D4",
+      "A4",
+      "E5"
+    ]
   },
+  // 2026-09-02 — LA VIOLA ENTRA OSCURA (Mario: «ningún instrumento de la orquesta tiene ataque directo salvo
+  //   percusión, teclados y cuerdas pulsadas; el sonido viene DESPUÉS de poner la cuerda en movimiento — por eso
+  //   suenan artificiales»). De las 41 fichas de régimen sostenido, la única con filt.env negativo era el corno,
+  //   y el corno es justo la que su oído salva. filt.env +0.35 → −0.35: el Cosmic arranca en cbase·2^env, así que
+  //   con negativo entra por debajo y ABRE — el gesto de establecimiento. Mismo giro que el corno el 2026-09-01,
+  //   con la magnitud propia de la viola, no la del corno. Un solo número; si falta, el paso siguiente es −0.6.
+  //   Solo y sección juntas: la obra suena la sección, y son el mismo instrumento.
+  // 2026-09-02 bis — NIVEL: −19 dB (Mario midió 19 dB entre la viola en mf y el corno en mf, que es su techo
+  //   para la sección). gain × 0.112, la curva entera sin cambiar de forma: [0.70 0.95 1.00 0.85] → [0.078 0.106
+  //   0.112 0.095]. Es una compensación, no una corrección: lo que está mal es que el motor iguala AMPLITUD y no
+  //   sonoridad, y la fuente del corno (src.tilt −23.3) es 13 dB/oct más oscura que la de la viola (−10.5), así que
+  //   con el mismo rms el corno suena mucho menos. Si algún día el corno recupera su sonoridad, esto vuelve a subir.
+  //   Y hay causa debajo: la pendiente efectiva de la viola es +0.3 dB/oct en C3 (src.tilt + 12·tilt) — una fuente
+  //   PLANA. Una cuerda frotada va cerca de −6 (Helmholtz; la VSCO mide −5.6 y −6.0 en el cello, −2.5 y −3.7 en la
+  //   viola). Arreglar eso se lleva ~7 de los 19 dB y de paso saca dureza; cuando se haga, el gain sube otro tanto.
+  // 2026-09-02 ter — EL NIVEL VUELVE A LA FICHA (Mario: «baja la ficha»). Habia bajado a mano el vel
+  //   de UNA marca de mf de la viola, de 80 a 51, y con velRangeDb 25 eso son −5.71 dB. Una marca no
+  //   es el lugar: quince mf mas en ese pentagrama seguian en 80 y cada uno hubiera quedado a un nivel
+  //   distinto. El recorte pasa al gain (×0.518) y la marca vuelve a 80, que es lo que dice la pagina.
   "viola": {
     "name": "viola",
     "class": {
+      "bal": -6,
       "family": "cuerdas",
       "instrument": "viola",
       "label": "Viola",
+      "velRangeDb": 25,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -4396,40 +5753,40 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "A6",
     "resp": {
       "gain": [
-        0.9,
-        1.0,
-        0.95,
-        0.85
+        0.0404,
+        0.0549,
+        0.058,
+        0.0492
       ],
       "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.09,
+        0.07,
+        0.06,
+        0.08
       ],
       "tilt": [
-        0.75,
+        0.9,
         0.8,
-        0.85,
-        0.9
+        0.6,
+        0.42
       ],
       "atk": [
-        1.4,
-        1.2,
-        1.1,
-        1.0
+        1.7,
+        1.0,
+        0.55,
+        0.33
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        16,
+        20,
+        30,
+        38
       ],
       "vibRate": [
+        5.0,
         5.2,
-        5.2,
-        5.4,
-        5.5
+        5.5,
+        5.7
       ],
       "oddEven": [
         0.5,
@@ -4439,52 +5796,130 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -12.5,
+      "tilt": -10.5,
       "inharm": 0.002,
       "mode": "harm",
       "nb": [
-        2000,
+        1600,
         1.2
+      ],
+      "partials": [
+        76,
+        45,
+        18,
+        6
       ]
     },
     "form": {
       "f1": [
-        500,
+        220,
         6.0,
-        1.4
+        3.0
       ],
       "f2": [
-        2200,
-        6.0,
-        1.2
+        350,
+        5.0,
+        3.0
+      ],
+      "bank": [
+        [
+          220,
+          6.0,
+          3.0
+        ],
+        [
+          350,
+          5.0,
+          3.0
+        ],
+        [
+          600,
+          3.0,
+          2.5
+        ],
+        [
+          1600,
+          4.5,
+          2.0
+        ]
       ]
     },
     "filt": {
-      "cut": 5.5,
+      "cut": [
+        30.58,
+        19.09,
+        8.12,
+        2.84
+      ],
       "q": 0.85,
-      "env": 0.0,
-      "t": 0.1
+      "env": -0.35,
+      "t": 0.06
     },
     "env": {
-      "decay": 0.05,
-      "sustain": 1
+      "decay": 0.06,
+      "sustain": 1,
+      "release": [
+        0.9,
+        0.54,
+        0.21,
+        0.067
+      ],
+      "decayTilt": [
+        0.45,
+        0.45,
+        0.45,
+        0.45
+      ]
     },
     "char": {
-      "noise": 0.04,
-      "noiseAM": 0.02
+      "noise": 0.07,
+      "noiseAM": 0.04
     },
     "onset": {
-      "hit": 0.07,
-      "air": 0.0,
-      "ms": 28
-    }
+      "hit": [
+        0.1,
+        0.07,
+        0.05,
+        0.04
+      ],
+      "air": 0.09,
+      "ms": [
+        76,
+        45,
+        18,
+        6
+      ],
+      "band": [
+        220,
+        350
+      ],
+      "bandHit": [
+        0.1,
+        0.08,
+        0.07,
+        0.07
+      ],
+      "bandMs": 140
+    },
+    "anchors": [
+      "C3",
+      "A3",
+      "C#5",
+      "A6"
+    ]
   },
+  // 2026-09-02 — NIVEL, junto con la viola (Mario: «baja la ficha al igual que la del violoncello»).
+  //   Medido sobre el espectro que arma la ficha con ponderacion A —la sonoridad que el motor NO iguala,
+  //   porque normaliza amplitud— el cello quedaba +20.5 dB sobre la viola ya corregida, parejo en toda la
+  //   zona comun (G2 +19.6 · C3 +20.5 · G3 +19.3 · C4 +20.5 · G4 +21.5). gain ×0.095, un solo factor.
   "cello": {
     "name": "cello",
     "class": {
+      "bal": -3,
       "family": "cuerdas",
       "instrument": "cello",
       "label": "Cello",
+      "velRangeDb": 30,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -4496,40 +5931,40 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "C6",
     "resp": {
       "gain": [
-        0.95,
-        1.0,
-        0.95,
-        0.85
+        0.0779,
+        0.095,
+        0.095,
+        0.0836
       ],
       "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.06,
+        0.05,
+        0.05,
+        0.07
       ],
       "tilt": [
-        0.7,
-        0.75,
-        0.8,
-        0.85
+        0.62,
+        0.56,
+        0.44,
+        0.26
       ],
       "atk": [
-        1.6,
-        1.4,
-        1.2,
-        1.1
+        2.4,
+        1.9,
+        1.1,
+        0.5
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        14,
+        20,
+        30,
+        40
       ],
       "vibRate": [
-        5.0,
-        5.0,
         5.2,
-        5.4
+        5.5,
+        6.0,
+        6.5
       ],
       "oddEven": [
         0.5,
@@ -4539,52 +5974,132 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -11.5,
-      "inharm": 0.003,
+      "tilt": -12.0,
+      "inharm": 0.001,
       "mode": "harm",
       "nb": [
         2000,
         1.2
+      ],
+      "partials": [
+        40,
+        32,
+        20,
+        10
       ]
     },
     "form": {
       "f1": [
-        250,
-        6.0,
-        1.4
+        175,
+        7.0,
+        6.0
       ],
       "f2": [
-        1500,
-        6.0,
-        1.2
+        1300,
+        4.0,
+        2.5
+      ],
+      "bank": [
+        [
+          104,
+          6.0,
+          8
+        ],
+        [
+          145,
+          4.0,
+          6
+        ],
+        [
+          175,
+          7.0,
+          6
+        ],
+        [
+          219,
+          6.0,
+          6
+        ],
+        [
+          400,
+          3.0,
+          3
+        ],
+        [
+          1300,
+          4.0,
+          2.5
+        ]
       ]
     },
     "filt": {
-      "cut": 6.5,
-      "q": 0.9,
-      "env": 0.0,
+      "cut": [
+        30,
+        24,
+        15,
+        7
+      ],
+      "q": 0.8,
+      "env": 0.25,
       "t": 0.1
     },
     "env": {
-      "decay": 0.06,
-      "sustain": 1
+      "decay": 0.08,
+      "sustain": 1,
+      "release": [
+        0.24,
+        0.16,
+        0.08,
+        0.04
+      ]
     },
     "char": {
-      "noise": 0.04,
-      "noiseAM": 0.02
+      "noise": 0.055,
+      "noiseAM": 0.035
     },
     "onset": {
-      "hit": 0.08,
-      "air": 0.0,
-      "ms": 32
-    }
+      "hit": [
+        0.08,
+        0.07,
+        0.05,
+        0.04
+      ],
+      "air": 0.085,
+      "ms": [
+        110,
+        80,
+        45,
+        22
+      ],
+      "freq": 1400,
+      "band": [
+        104,
+        175,
+        219
+      ],
+      "bandHit": [
+        0.06,
+        0.05,
+        0.03,
+        0.02
+      ],
+      "bandMs": 70
+    },
+    "anchors": [
+      "C2",
+      "G2",
+      "A3",
+      "A5"
+    ]
   },
   "contrabass": {
     "name": "contrabass",
     "class": {
+      "bal": -1,
       "family": "cuerdas",
       "instrument": "contrabass",
       "label": "Contrabass",
+      "velRangeDb": 22,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -4715,9 +6230,12 @@ window.MM_PRESETS_DEFAULT = {
   "violins_section": {
     "name": "violins_section",
     "class": {
+      "bal": -4,
       "family": "cuerdas",
       "instrument": "violins_section",
+      "players": 16,
       "label": "Sección de Violines",
+      "velRangeDb": 51.5,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -4729,40 +6247,40 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "E7",
     "resp": {
       "gain": [
-        1.0,
-        1.0,
-        0.95,
-        0.9
-      ],
+          0.1473,
+          0.0772,
+          0.0507,
+          0.0079
+        ],
       "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.07,
+        0.06,
+        0.06,
+        0.08
       ],
       "tilt": [
-        0.75,
+        0.5,
+        0.65,
         0.8,
-        0.85,
-        0.9
+        0.97
       ],
       "atk": [
-        2.0,
-        2.0,
-        2.0,
-        1.6
+        1.7,
+        1.15,
+        0.8,
+        0.55
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        16,
+        20,
+        24,
+        29
       ],
       "vibRate": [
-        5.5,
-        5.5,
-        5.5,
-        5.5
+        5.6,
+        5.8,
+        6.0,
+        6.3
       ],
       "oddEven": [
         0.5,
@@ -4772,52 +6290,156 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -12.0,
-      "inharm": 0.015,
+      "tilt": -9.0,
+      "inharm": [
+        0.0005,
+        0.0005,
+        0.0008,
+        0.0015
+      ],
       "mode": "harm",
       "nb": [
-        2000,
-        1.2
+        2500,
+        1.5
+      ],
+      "partials": [
+        26,
+        17,
+        12,
+        14
       ]
     },
     "form": {
       "f1": [
-        2500,
-        6.0,
-        1.5
+        500,
+        3.0,
+        2.8
       ],
       "f2": [
-        4000,
-        6.0,
-        1.2
+        2400,
+        2.5,
+        1.54
+      ],
+      "bank": [
+        [
+          285,
+          2.0,
+          7.0
+        ],
+        [
+          385,
+          1.25,
+          28.0
+        ],
+        [
+          422,
+          2.75,
+          31.5
+        ],
+        [
+          528,
+          2.75,
+          31.5
+        ],
+        [
+          600,
+          1.5,
+          31.5
+        ],
+        [
+          2400,
+          2.5,
+          1.75
+        ]
       ]
     },
     "filt": {
-      "cut": 6.5,
-      "q": 0.7,
-      "env": 0.0,
-      "t": 0.1
+      "cut": [
+        25.51,
+        17.03,
+        12.5,
+        13.65
+      ],
+      "q": 0.8,
+      "env": 0.4,
+      "t": 0.04
     },
     "env": {
-      "decay": 0.1,
-      "sustain": 1
+      "decay": 0.06,
+      "sustain": 1,
+      "release": [
+        0.09,
+        0.07,
+        0.05,
+        0.04
+      ]
     },
     "char": {
-      "noise": 0.08,
-      "noiseAM": 0.04
+      "noise": 0.06,
+      "noiseAM": 0.03
     },
     "onset": {
-      "hit": 0.02,
-      "air": 0.0,
-      "ms": 60
-    }
+      "hit": [
+        0.05,
+        0.045,
+        0.04,
+        0.035
+      ],
+      "air": 0.15,
+      "ms": [
+        75,
+        51,
+        34,
+        22
+      ],
+      "freq": 285,
+      "band": [
+        285,
+        528
+      ],
+      "bandHit": [
+        0.06,
+        0.09,
+        0.1,
+        0.12
+      ],
+      "bandMs": 35
+    },
+    "anchors": [
+      "G3",
+      "D4",
+      "A4",
+      "E5"
+    ]
   },
+  // 2026-09-02 — LA VIOLA ENTRA OSCURA (Mario: «ningún instrumento de la orquesta tiene ataque directo salvo
+  //   percusión, teclados y cuerdas pulsadas; el sonido viene DESPUÉS de poner la cuerda en movimiento — por eso
+  //   suenan artificiales»). De las 41 fichas de régimen sostenido, la única con filt.env negativo era el corno,
+  //   y el corno es justo la que su oído salva. filt.env +0.35 → −0.35: el Cosmic arranca en cbase·2^env, así que
+  //   con negativo entra por debajo y ABRE — el gesto de establecimiento. Mismo giro que el corno el 2026-09-01,
+  //   con la magnitud propia de la viola, no la del corno. Un solo número; si falta, el paso siguiente es −0.6.
+  //   Solo y sección juntas: la obra suena la sección, y son el mismo instrumento.
+  // 2026-09-02 bis — NIVEL: −19 dB (Mario midió 19 dB entre la viola en mf y el corno en mf, que es su techo
+  //   para la sección). gain × 0.112, la curva entera sin cambiar de forma: [0.70 0.95 1.00 0.85] → [0.078 0.106
+  //   0.112 0.095]. Es una compensación, no una corrección: lo que está mal es que el motor iguala AMPLITUD y no
+  //   sonoridad, y la fuente del corno (src.tilt −23.3) es 13 dB/oct más oscura que la de la viola (−10.5), así que
+  //   con el mismo rms el corno suena mucho menos. Si algún día el corno recupera su sonoridad, esto vuelve a subir.
+  //   Y hay causa debajo: la pendiente efectiva de la viola es +0.3 dB/oct en C3 (src.tilt + 12·tilt) — una fuente
+  //   PLANA. Una cuerda frotada va cerca de −6 (Helmholtz; la VSCO mide −5.6 y −6.0 en el cello, −2.5 y −3.7 en la
+  //   viola). Arreglar eso se lleva ~7 de los 19 dB y de paso saca dureza; cuando se haga, el gain sube otro tanto.
+  // 2026-09-02 ter — EL NIVEL VUELVE A LA FICHA (Mario: «baja la ficha»). Habia bajado a mano el vel
+  //   de UNA marca de mf de la viola, de 80 a 51, y con velRangeDb 25 eso son −5.71 dB. Una marca no
+  //   es el lugar: quince mf mas en ese pentagrama seguian en 80 y cada uno hubiera quedado a un nivel
+  //   distinto. El recorte pasa al gain (×0.518) y la marca vuelve a 80, que es lo que dice la pagina.
   "violas_section": {
     "name": "violas_section",
     "class": {
+      "bal": -6,
       "family": "cuerdas",
       "instrument": "violas_section",
+      "players": 12,
       "label": "Sección de Violas",
+      "velRangeDb": 25,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -4829,40 +6451,40 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "A6",
     "resp": {
       "gain": [
-        1.0,
-        1.0,
-        0.95,
-        0.9
-      ],
+          0.0100,
+          0.0146,
+          0.0383,
+          0.2466
+        ],
       "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.09,
+        0.07,
+        0.06,
+        0.08
       ],
       "tilt": [
-        0.8,
-        0.85,
-        0.9,
-        0.95
-      ],
+          0.9,
+          0.88,
+          0.85,
+          0.82
+        ],
       "atk": [
-        2.0,
-        2.0,
-        2.0,
-        2.0
+        1.7,
+        1.0,
+        0.55,
+        0.33
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        10,
+        11,
+        12,
+        14
       ],
       "vibRate": [
+        5.0,
         5.2,
-        5.2,
-        5.4,
-        5.5
+        5.5,
+        5.7
       ],
       "oddEven": [
         0.5,
@@ -4872,52 +6494,135 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -14.0,
-      "inharm": 0.018,
+      "tilt": -10.5,
+      "inharm": 0.002,
       "mode": "harm",
       "nb": [
-        2000,
+        1600,
         1.2
+      ],
+      "partials": [
+        76,
+        45,
+        18,
+        6
       ]
     },
     "form": {
       "f1": [
-        450,
-        6.0,
-        1.5
+        220,
+        3.0,
+        2.1
       ],
       "f2": [
-        2000,
-        6.0,
-        1.2
+        350,
+        2.5,
+        2.1
+      ],
+      "bank": [
+        [
+          220,
+          3.0,
+          2.1
+        ],
+        [
+          350,
+          2.5,
+          2.1
+        ],
+        [
+          600,
+          1.5,
+          1.75
+        ],
+        [
+          1600,
+          2.25,
+          1.4
+        ]
       ]
     },
     "filt": {
-      "cut": 4.8,
-      "q": 0.65,
-      "env": 0.0,
-      "t": 0.1
+      "cut": [
+          30.58,
+          22.0,
+          16.0,
+          12.0
+        ],
+      "q": 0.85,
+      "env": -0.35,
+      "t": 0.06
     },
     "env": {
-      "decay": 0.12,
-      "sustain": 1
+      "decay": 0.06,
+      "sustain": 1,
+      "release": [
+        0.9,
+        0.54,
+        0.21,
+        0.067
+      ],
+      "decayTilt": [
+        0.45,
+        0.45,
+        0.45,
+        0.45
+      ]
     },
     "char": {
-      "noise": 0.06,
-      "noiseAM": 0.03
+      "noise": 0.07,
+      "noiseAM": 0.04
     },
     "onset": {
-      "hit": 0.01,
-      "air": 0.0,
-      "ms": 70
-    }
+      "hit": 0.02,
+      "air": 0.09,
+      "ms": [
+        106,
+        63,
+        25,
+        8
+      ],
+      "band": [
+        220,
+        350
+      ],
+      "bandHit": [
+        0.1,
+        0.08,
+        0.07,
+        0.07
+      ],
+      "bandMs": 140
+    },
+    "anchors": [
+      "C3",
+      "A3",
+      "C#5",
+      "A6"
+    ]
   },
+  // 2026-09-02 — NIVEL, junto con la viola (Mario: «baja la ficha al igual que la del violoncello»).
+  //   Medido sobre el espectro que arma la ficha con ponderacion A —la sonoridad que el motor NO iguala,
+  //   porque normaliza amplitud— el cello quedaba +20.5 dB sobre la viola ya corregida, parejo en toda la
+  //   zona comun (G2 +19.6 · C3 +20.5 · G3 +19.3 · C4 +20.5 · G4 +21.5). gain ×0.095, un solo factor.
+  // 2026-09-09 — SECCION DE CELLOS: lo que decia la variante que se borro. Existio un `cellos_section_medido` sin
+  //   comentario de origen, nunca pasado por el oido de Mario y sin respaldo: medido contra la VSCO Cello Section
+  //   (susvib, seis alturas) empata con esta ficha —error de forma 6,5 dB la base contra 6,4 el testigo, gana en tres
+  //   notas y pierde en tres—, y ademas le faltaba `class.bal: -3`, el asiento de la seccion. Lo que proponia, por si
+  //   alguna vez se retoma: resp.tilt [0.62, 0.56, 0.44, 0.26] → [0.50, 0.46, 0.42, 0.39] · resp.atk [3.4, 2.9, 2.1,
+  //   1.5] → [2.4, 1.9, 1.1, 0.5] · oddEven 0.50 → 0.53 · src.tilt −12 → −11.5 · env.release [0.24, 0.16, 0.08, 0.04]
+  //   → [0.71, 0.64, 0.69, 0.73] (tres veces mas cola, pareja en todo el registro) · y los formantes del cuerpo mucho
+  //   mas altos, sobre todo el f2 de 1300 Hz, de +2 a +7 dB. Lo que lo separa de esta ficha es cola y cuerpo, que se
+  //   deciden de oido y no por tabla. Borrada a pedido de Mario: «estamos en violines».
   "cellos_section": {
     "name": "cellos_section",
     "class": {
+      "bal": -3,
       "family": "cuerdas",
       "instrument": "cellos_section",
+      "players": 10,
       "label": "Sección de Violonchelos",
+      "velRangeDb": 30,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -4929,40 +6634,35 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "C6",
     "resp": {
       "gain": [
-        1.0,
-        1.0,
-        0.95,
-        0.9
+        0.0779,
+        0.095,
+        0.095,
+        0.0836
       ],
       "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.078,
+        0.065,
+        0.065,
+        0.091
       ],
       "tilt": [
-        0.75,
-        0.8,
-        0.85,
-        0.9
+        0.62,
+        0.56,
+        0.44,
+        0.26
       ],
-      "atk": [
-        2.0,
-        2.0,
-        2.0,
-        2.0
-      ],
+      "atk": [3.4, 2.9, 2.1, 1.5],   // 2026-09-02 (paso 3, cuerdas con el modelo del toque): la sección arranca DESPUÉS que el solista — el solo (informe §4, Guettler) es 120/95/55/25 ms y la sección le suma el desfase de los atriles (Rasch 30-50 ms) en vez de multiplicarlo: +50 ms por ancla. Medido en el Cello Section de la VSCO (rise 10-90 % en forte 120-270 ms, con el swell de los samples adentro). BANDERA: a calibrar de oído. Previo [2.4, 1.9, 1.1, 0.5] (= el solo)
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        12,
+        14,
+        17,
+        20
       ],
       "vibRate": [
-        5.0,
-        5.0,
         5.2,
-        5.4
+        5.5,
+        6.0,
+        6.5
       ],
       "oddEven": [
         0.5,
@@ -4972,52 +6672,133 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -13.0,
-      "inharm": 0.02,
+      "tilt": -12.0,
+      "inharm": 0.001,
       "mode": "harm",
       "nb": [
         2000,
         1.2
+      ],
+      "partials": [
+        40,
+        32,
+        20,
+        10
       ]
     },
     "form": {
       "f1": [
-        220,
-        6.0,
-        1.5
+        175,
+        3.5,
+        4.2
       ],
       "f2": [
         1300,
-        6.0,
-        1.2
+        2.0,
+        1.75
+      ],
+      "bank": [
+        [
+          104,
+          5.0,
+          5.6
+        ],
+        [
+          145,
+          3.5,
+          4.2
+        ],
+        [
+          175,
+          5.5,
+          4.2
+        ],
+        [
+          219,
+          4.5,
+          4.2
+        ],
+        [
+          400,
+          1.0,
+          2.1
+        ],
+        [
+          1300,
+          0.5,
+          1.75
+        ]
       ]
     },
     "filt": {
-      "cut": 5.2,
-      "q": 0.7,
-      "env": 0.0,
+      "cut": [
+        30,
+        24,
+        15,
+        7
+      ],
+      "q": 0.8,
+      "env": 0.25,
       "t": 0.1
     },
     "env": {
-      "decay": 0.15,
-      "sustain": 1
+      "decay": 0.08,
+      "sustain": 1,
+      "release": [
+        0.24,
+        0.16,
+        0.08,
+        0.04
+      ]
     },
     "char": {
-      "noise": 0.06,
-      "noiseAM": 0.03
+      "noise": 0.055,
+      "noiseAM": 0.035
     },
     "onset": {
-      "hit": 0.02,
-      "air": 0.0,
-      "ms": 75
-    }
+      "hit": [
+        0.04,
+        0.035,
+        0.025,
+        0.02
+      ],
+      "air": 0.085,
+      "ms": [
+        165,
+        120,
+        68,
+        33
+      ],
+      "freq": 1400,
+      "band": [
+        104,
+        175,
+        219
+      ],
+      "bandHit": [
+        0.06,
+        0.05,
+        0.03,
+        0.02
+      ],
+      "bandMs": 70
+    },
+    "anchors": [
+      "C2",
+      "G2",
+      "A3",
+      "A5"
+    ]
   },
   "contrabasses_section": {
     "name": "contrabasses_section",
     "class": {
+      "bal": -1,
       "family": "cuerdas",
       "instrument": "contrabasses_section",
+      "players": 8,
       "label": "Sección de Contrabajos",
+      "velRangeDb": 22,
       "regime": "sostenido",
       "articulations": [
         "legato",
@@ -5053,10 +6834,10 @@ window.MM_PRESETS_DEFAULT = {
         2.0
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        7,
+        10,
+        13,
+        16
       ],
       "vibRate": [
         4.2,
@@ -5154,16 +6935,16 @@ window.MM_PRESETS_DEFAULT = {
         0.85
       ],
       "vib": [
-        0.18,
-        0.18,
-        0.18,
-        0.18
+        11,
+        14,
+        17,
+        20
       ],
       "vibRate": [
-        6.0,
-        6.0,
-        6.0,
-        6.0
+        5.2,
+        5.4,
+        5.6,
+        5.8
       ],
       "oddEven": [
         0.5,
@@ -5254,16 +7035,16 @@ window.MM_PRESETS_DEFAULT = {
         2.0
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        11,
+        14,
+        17,
+        20
       ],
       "vibRate": [
-        5.0,
         5.2,
         5.4,
-        5.5
+        5.6,
+        5.8
       ],
       "oddEven": [
         0.5,
@@ -5274,7 +7055,7 @@ window.MM_PRESETS_DEFAULT = {
     },
     "src": {
       "tilt": -13.5,
-      "inharm": 0.025,
+      "inharm": 0,
       "mode": "harm",
       "nb": [
         2000,
@@ -5313,9 +7094,26 @@ window.MM_PRESETS_DEFAULT = {
       "ms": 80
     }
   },
+  // 2026-09-09 — PIZZ: MEDIDO Y NO ESCRITO. Se probó una variante con tres cambios y Mario la retiró («por el momento
+  //   no estamos ahí»), así que `pizzicato` queda como estaba y acá quedan los números para cuando toque. Todo medido
+  //   contra `LLVln_Pizz_A4` de la VSCO —la toma que él dio por buena— y contra sus grabaciones del Barbé del 06-09.
+  //   (1) resp.atk [1.4, 1.2, 1.0, 0.8] → 0.15: una cuerda pellizcada NO TIENE RAMPA. Pico de cada período: la muestra
+  //   llega al máximo en el 4º (9 ms) con el primero ya a −6,8 dB del máximo; la ficha empieza 11,6 dB abajo y llega
+  //   en el período 16 (32 ms). Con 0.15 el arranque queda calcado (−6,9 · máximo en el 3º-4º). Mario lo oyó como
+  //   «menos tensión».
+  //   (2) env.decay [6.7, 4.5, 1.9, 0.7] → [2.0, 1.3, 0.5, 0.13]: el Do3 pierde 8,8 dB en un segundo, o sea que suena
+  //   MÁS LARGO que la cuerda al aire de su Barbé (T60 3,3 a 6,2 s medido en sus tomas; el Do queda fuera, mal grabado)
+  //   y mucho más que la nota PISADA del violín de la biblioteca (0,97 · 1,16 · 1,03 s). El pizz de orquesta es casi
+  //   siempre pisado. Falta además distinguir pisada de al aire: hoy la curva es sólo por registro.
+  //   (3) src.tilt −14 → −22 dB/oct: el pellizco nace con doce parciales arriba y la muestra con tres y medio.
+  //   Y sin resolver: la caída de altura del pellizco (la medición cambia de SIGNO según cómo se detecte el arranque)
+  //   y el golpe del dedo (la muestra tiene 10 dB más entre 60 y 250 Hz en los primeros 12 ms, y es brillante en el
+  //   golpe y oscura en el cuerpo; mover onset.freq y hit no movió ninguna de las dos bandas).
   "pizzicato": {
     "name": "pizzicato",
+    "mix": { "vol": 0.874 },
     "class": {
+      "velRangeDb": 20,
       "family": "cuerdas",
       "instrument": "pizzicato",
       "label": "Pizzicato",
@@ -5333,9 +7131,19 @@ window.MM_PRESETS_DEFAULT = {
       "gain": [0.90, 0.95, 1.00, 0.85],
       "air": [0.10, 0.10, 0.12, 0.15],
       "tilt": [0.30, 0.35, 0.40, 0.50],
-      "atk": [1.4, 1.2, 1.0, 0.8],
-      "vib": [0, 0, 0, 0],
-      "vibRate": [0, 0, 0, 0],
+      "atk": [0.28, 0.24, 0.20, 0.16],
+      "vib": [
+        6,
+        8,
+        10,
+        8
+      ],
+      "vibRate": [
+        5.0,
+        5.2,
+        5.5,
+        5.7
+      ],
       "oddEven": [0.5, 0.5, 0.5, 0.5]
     },
     "src": {
@@ -5366,7 +7174,7 @@ window.MM_PRESETS_DEFAULT = {
       "t": 0.12
     },
     "env": {
-      "decay": [6.7, 4.5, 1.9, 0.7],
+      "decay": [2.01, 1.35, 0.57, 0.21],
       "sustain": 0,
       "release": [0.05, 0.05, 0.04, 0.03],
       "bloom": [0.45, 0.35, 0.20, 0.10],
@@ -5378,6 +7186,9 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0
     },
     "onset": {
+      "band": [275, 460],
+      "bandHit": [0, 0.10, 0.40, 0.50],
+      "bandMs": 60,
       "hit": [0.48, 0.42, 0.38, 0.35],
       "air": 0.30,
       "ms": 15,
@@ -5388,7 +7199,9 @@ window.MM_PRESETS_DEFAULT = {
   },
   "strings_pizzicato": {
     "name": "strings_pizzicato",
+    "mix": { "vol": 0.874 },
     "class": {
+      "velRangeDb": 18,
       "family": "cuerdas",
       "instrument": "strings_pizzicato",
       "label": "Strings Pizzicato",
@@ -5405,9 +7218,19 @@ window.MM_PRESETS_DEFAULT = {
       "gain": [1.00, 1.00, 0.95, 0.85],
       "air": [0.20, 0.20, 0.22, 0.25],
       "tilt": [0.25, 0.30, 0.38, 0.48],
-      "atk": [2.4, 2.0, 1.8, 1.4],
-      "vib": [0, 0, 0, 0],
-      "vibRate": [0, 0, 0, 0],
+      "atk": [0.48, 0.40, 0.36, 0.28],
+      "vib": [
+        5,
+        6,
+        8,
+        6
+      ],
+      "vibRate": [
+        5.0,
+        5.2,
+        5.5,
+        5.7
+      ],
       "oddEven": [0.5, 0.5, 0.5, 0.5]
     },
     "src": {
@@ -5439,7 +7262,7 @@ window.MM_PRESETS_DEFAULT = {
       "t": 0.15
     },
     "env": {
-      "decay": [22, 8.7, 2.5, 0.8],
+      "decay": [1.76, 0.70, 0.20, 0.064],
       "sustain": 0,
       "release": [0.08, 0.07, 0.06, 0.05],
       "bloom": [0.50, 0.45, 0.30, 0.15],
@@ -5451,6 +7274,9 @@ window.MM_PRESETS_DEFAULT = {
       "noiseAM": 0
     },
     "onset": {
+      "band": [275, 460],
+      "bandHit": [0, 0.08, 0.35, 0.45],
+      "bandMs": 60,
       "hit": [0.32, 0.28, 0.24, 0.22],
       "air": 0.35,
       "ms": 22,
@@ -5469,47 +7295,50 @@ window.MM_PRESETS_DEFAULT = {
       "articulations": [
         "legato",
         "staccato",
-        "notes_tenues"
+        "notes_tenues",
+        "detache",
+        "legatissimo",
+        "tenuto"
       ]
     },
     "lo": "A1",
     "hi": "D5",
     "resp": {
       "gain": [
-        0.85,
-        0.95,
-        1.0,
-        0.85
+        0.68,
+        0.82,
+        1,
+        0.9
       ],
       "air": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0.09,
+        0.08,
+        0.07,
+        0.09
       ],
       "tilt": [
-        0.8,
-        0.85,
-        0.9,
-        0.95
+        0.55,
+        0.45,
+        0.7,
+        0.85
       ],
       "atk": [
-        1.6,
+        1.8,
         1.4,
-        1.2,
-        1.0
+        0.8,
+        0.3
       ],
       "vib": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        18
       ],
       "vibRate": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        5
       ],
       "oddEven": [
         0.5,
@@ -5519,19 +7348,19 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -14.5,
+      "tilt": -12.0,
       "inharm": 0.001,
       "mode": "harm",
       "nb": [
-        2000,
+        1500,
         1.2
       ]
     },
     "form": {
       "f1": [
-        450,
-        6.0,
-        1.4
+        260,
+        6,
+        3.5
       ],
       "f2": [
         1800,
@@ -5542,22 +7371,44 @@ window.MM_PRESETS_DEFAULT = {
     "filt": {
       "cut": 4.5,
       "q": 0.8,
-      "env": 0.0,
-      "t": 0.1
+      "env": 0.5,
+      "t": 0.06
     },
     "env": {
-      "decay": 0.04,
-      "sustain": 1
+      "decay": 0.08,
+      "sustain": 1,
+      "release": [
+        0.16,
+        0.13,
+        0.08,
+        0.05
+      ]
     },
     "char": {
-      "noise": 0.05,
-      "noiseAM": 0.02
+      "noise": 0.07,
+      "noiseAM": 0.03
     },
     "onset": {
-      "hit": 0.05,
+      "hit": [
+        0.05,
+        0.05,
+        0.04,
+        0.04
+      ],
       "air": 0.0,
-      "ms": 30
-    }
+      "ms": [
+        90,
+        68,
+        38,
+        14
+      ]
+    },
+    "anchors": [
+      "A1",
+      "D2",
+      "C3",
+      "A4"
+    ]
   },
   "guitar": {
     "name": "guitar",
@@ -5648,47 +7499,259 @@ window.MM_PRESETS_DEFAULT = {
   //   la lleva resp.tilt, que es donde corresponde.
   "recorder_alto": {
     "name": "recorder_alto",
-    "class": { "family": "maderas", "instrument": "recorder_alto", "label": "Recorder (alto)", "regime": "sostenido",
-      "articulations": ["legato", "staccato", "tenuto"] },
-    "lo": "F4", "hi": "G6",
-    "anchors": ["F4", "C5", "F5", "G6"],
-    "resp": {
-      "gain": [0.80, 1.00, 0.95, 0.62],
-      "air": [0.34, 0.28, 0.26, 0.30],
-      "tilt": [0.62, 0.55, 0.45, 0.28],
-      "atk": [2.2, 1.8, 1.5, 1.2],
-      "vib": [0, 3, 4, 3],
-      "vibRate": [4.5, 5.0, 5.2, 5.2],
-      "oddEven": [0.30, 0.33, 0.36, 0.42]
+    "class": {
+      "family": "maderas",
+      "instrument": "recorder_alto",
+      "label": "Recorder (alto)",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ],
+      "velRangeDb": 6
     },
-    "src": { "tilt": -18.0, "inharm": 0, "mode": "harm", "nb": [2400, 1.1] },
-    "form": { "f1": [900, 2.5, 1.2], "f2": [2400, 2.0, 0.9] },
-    "filt": { "cut": [8.6, 5.0, 3.2, 2.5], "q": 0.7, "env": 0.5, "t": 0.06 },
-    "env": { "decay": 0.10, "sustain": 1, "release": [0.16, 0.10, 0.08, 0.04] },
-    "char": { "noise": 0.55, "noiseAM": 0.03 },
-    "onset": { "hit": [0.10, 0.08, 0.07, 0.06], "air": 0.42, "ms": 60 }
+    "lo": "F4",
+    "hi": "G6",
+    "anchors": [
+      "F4",
+      "C5",
+      "F5",
+      "G6"
+    ],
+    "resp": {
+      "gain": [
+        0.8,
+        1.0,
+        0.95,
+        0.62
+      ],
+      "air": [
+        0.34,
+        0.28,
+        0.26,
+        0.3
+      ],
+      "tilt": [
+        0.62,
+        0.55,
+        0.45,
+        0.28
+      ],
+      "atk": [
+        2.2,
+        1.8,
+        1.5,
+        1.2
+      ],
+      "vib": [
+        0,
+        3,
+        4,
+        3
+      ],
+      "vibRate": [
+        4.5,
+        5.0,
+        5.2,
+        5.2
+      ],
+      "oddEven": [
+        0.3,
+        0.33,
+        0.36,
+        0.42
+      ]
+    },
+    "src": {
+      "tilt": -18.0,
+      "inharm": 0.0008,
+      "mode": "harm",
+      "nb": [
+        2400,
+        1.1
+      ]
+    },
+    "form": {
+      "f1": [
+        900,
+        2.5,
+        1.2
+      ],
+      "f2": [
+        2400,
+        2.0,
+        0.9
+      ]
+    },
+    "filt": {
+      "cut": [
+        8.6,
+        5.0,
+        3.2,
+        1.15
+      ],
+      "q": 0.7,
+      "env": 0.5,
+      "t": 0.06
+    },
+    "env": {
+      "decay": 0.1,
+      "sustain": 1,
+      "release": [
+        0.16,
+        0.1,
+        0.08,
+        0.04
+      ]
+    },
+    "char": {
+      "noise": 0.55,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": [
+        0.1,
+        0.08,
+        0.07,
+        0.06
+      ],
+      "air": 0.42,
+      "ms": [
+        70,
+        55,
+        45,
+        35
+      ]
+    }
   },
   "recorder_soprano": {
     "name": "recorder_soprano",
-    "class": { "family": "maderas", "instrument": "recorder_soprano", "label": "Recorder (soprano)", "regime": "sostenido",
-      "articulations": ["legato", "staccato", "tenuto"] },
-    "lo": "C5", "hi": "D7",
-    "anchors": ["C5", "G5", "C6", "D7"],
-    "resp": {
-      "gain": [0.82, 1.00, 0.93, 0.55],
-      "air": [0.32, 0.26, 0.25, 0.30],
-      "tilt": [0.58, 0.50, 0.40, 0.22],
-      "atk": [1.9, 1.6, 1.4, 1.1],
-      "vib": [0, 3, 4, 3],
-      "vibRate": [4.8, 5.2, 5.4, 5.4],
-      "oddEven": [0.30, 0.33, 0.36, 0.44]
+    "class": {
+      "family": "maderas",
+      "instrument": "recorder_soprano",
+      "label": "Recorder (soprano)",
+      "regime": "sostenido",
+      "articulations": [
+        "legato",
+        "staccato",
+        "tenuto"
+      ],
+      "velRangeDb": 5
     },
-    "src": { "tilt": -18.5, "inharm": 0, "mode": "harm", "nb": [3000, 1.1] },
-    "form": { "f1": [1350, 2.5, 1.2], "f2": [3000, 2.0, 0.9] },
-    "filt": { "cut": [8.0, 4.6, 2.9, 2.5], "q": 0.7, "env": 0.5, "t": 0.06 },
-    "env": { "decay": 0.09, "sustain": 1, "release": [0.11, 0.07, 0.05, 0.025] },
-    "char": { "noise": 0.50, "noiseAM": 0.03 },
-    "onset": { "hit": [0.11, 0.09, 0.08, 0.06], "air": 0.38, "ms": 45 }
+    "lo": "C5",
+    "hi": "D7",
+    "anchors": [
+      "C5",
+      "G5",
+      "C6",
+      "D7"
+    ],
+    "resp": {
+      "gain": [
+        0.82,
+        1.0,
+        0.93,
+        0.55
+      ],
+      "air": [
+        0.32,
+        0.26,
+        0.25,
+        0.3
+      ],
+      "tilt": [
+        0.58,
+        0.5,
+        0.4,
+        0.22
+      ],
+      "atk": [
+        1.9,
+        1.6,
+        1.4,
+        1.1
+      ],
+      "vib": [
+        0,
+        3,
+        4,
+        3
+      ],
+      "vibRate": [
+        4.8,
+        5.2,
+        5.4,
+        5.4
+      ],
+      "oddEven": [
+        0.3,
+        0.33,
+        0.36,
+        0.44
+      ]
+    },
+    "src": {
+      "tilt": -18.5,
+      "inharm": 0.0008,
+      "mode": "harm",
+      "nb": [
+        3000,
+        1.1
+      ]
+    },
+    "form": {
+      "f1": [
+        1350,
+        2.5,
+        1.2
+      ],
+      "f2": [
+        3000,
+        2.0,
+        0.9
+      ]
+    },
+    "filt": {
+      "cut": [
+        8.0,
+        4.6,
+        2.9,
+        1.02
+      ],
+      "q": 0.7,
+      "env": 0.5,
+      "t": 0.06
+    },
+    "env": {
+      "decay": 0.09,
+      "sustain": 1,
+      "release": [
+        0.11,
+        0.07,
+        0.05,
+        0.025
+      ]
+    },
+    "char": {
+      "noise": 0.5,
+      "noiseAM": 0.03
+    },
+    "onset": {
+      "hit": [
+        0.11,
+        0.09,
+        0.08,
+        0.06
+      ],
+      "air": 0.38,
+      "ms": [
+        55,
+        45,
+        38,
+        28
+      ]
+    }
   },
 
   // PULSADOS FOLK — el banjo es OTRO instrumento, no una guitarra con parche: Woodhouse mide su
@@ -5794,6 +7857,12 @@ window.MM_PRESETS_DEFAULT = {
         "legato",
         "staccato",
         "tenuto"
+      ],
+      "velRangeDb": [
+        40,
+        45,
+        45,
+        30
       ]
     },
     "lo": "C4",
@@ -5812,10 +7881,10 @@ window.MM_PRESETS_DEFAULT = {
         0.08
       ],
       "tilt": [
-        0.6,
-        0.65,
+        0.72,
         0.7,
-        0.75
+        0.56,
+        0.42
       ],
       "atk": [
         1.2,
@@ -5843,7 +7912,7 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -12,
+      "tilt": -8.0,
       "inharm": 0.0,
       "mode": "harm",
       "nb": [
@@ -5853,14 +7922,14 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        800,
-        7,
-        1.2
+        825,
+        8,
+        8.0
       ],
       "f2": [
-        2900,
+        3050,
         5,
-        1.5
+        2.5
       ]
     },
     "filt": {
@@ -5881,7 +7950,13 @@ window.MM_PRESETS_DEFAULT = {
       "hit": 0.02,
       "air": 0.08,
       "ms": 40
-    }
+    },
+    "anchors": [
+      "C4",
+      "Eb4",
+      "F#5",
+      "C6"
+    ]
   },
   "voice_alto": {
     "name": "voice_alto",
@@ -5894,6 +7969,12 @@ window.MM_PRESETS_DEFAULT = {
         "legato",
         "staccato",
         "tenuto"
+      ],
+      "velRangeDb": [
+        42,
+        45,
+        45,
+        38
       ]
     },
     "lo": "F3",
@@ -5912,10 +7993,10 @@ window.MM_PRESETS_DEFAULT = {
         0.07
       ],
       "tilt": [
+        0.7,
+        0.64,
         0.55,
-        0.6,
-        0.65,
-        0.7
+        0.48
       ],
       "atk": [
         1.3,
@@ -5943,7 +8024,7 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -14,
+      "tilt": -7.5,
       "inharm": 0.0,
       "mode": "harm",
       "nb": [
@@ -5953,14 +8034,14 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        650,
-        7,
-        1.2
+        830,
+        8,
+        9.0
       ],
       "f2": [
-        2600,
-        5,
-        1.5
+        2950,
+        10,
+        2.5
       ]
     },
     "filt": {
@@ -5981,7 +8062,13 @@ window.MM_PRESETS_DEFAULT = {
       "hit": 0.02,
       "air": 0.07,
       "ms": 42
-    }
+    },
+    "anchors": [
+      "F3",
+      "A4",
+      "D5",
+      "F5"
+    ]
   },
   "voice_tenor": {
     "name": "voice_tenor",
@@ -5994,6 +8081,12 @@ window.MM_PRESETS_DEFAULT = {
         "legato",
         "staccato",
         "tenuto"
+      ],
+      "velRangeDb": [
+        42,
+        45,
+        45,
+        32
       ]
     },
     "lo": "C3",
@@ -6012,10 +8105,10 @@ window.MM_PRESETS_DEFAULT = {
         0.06
       ],
       "tilt": [
-        0.6,
-        0.65,
-        0.7,
-        0.7
+        0.72,
+        0.66,
+        0.58,
+        0.5
       ],
       "atk": [
         1.3,
@@ -6043,7 +8136,7 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -13,
+      "tilt": -7.0,
       "inharm": 0.0,
       "mode": "harm",
       "nb": [
@@ -6053,14 +8146,14 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        600,
-        7,
-        1.2
+        700,
+        8,
+        9.0
       ],
       "f2": [
-        2800,
-        6,
-        2
+        2850,
+        11,
+        2.5
       ]
     },
     "filt": {
@@ -6081,7 +8174,13 @@ window.MM_PRESETS_DEFAULT = {
       "hit": 0.03,
       "air": 0.07,
       "ms": 40
-    }
+    },
+    "anchors": [
+      "C3",
+      "D4",
+      "G4",
+      "C5"
+    ]
   },
   "voice_bass": {
     "name": "voice_bass",
@@ -6094,6 +8193,12 @@ window.MM_PRESETS_DEFAULT = {
         "legato",
         "staccato",
         "tenuto"
+      ],
+      "velRangeDb": [
+        42,
+        45,
+        45,
+        38
       ]
     },
     "lo": "E2",
@@ -6112,10 +8217,10 @@ window.MM_PRESETS_DEFAULT = {
         0.06
       ],
       "tilt": [
-        0.5,
-        0.55,
+        0.75,
+        0.68,
         0.6,
-        0.65
+        0.52
       ],
       "atk": [
         1.4,
@@ -6143,7 +8248,7 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "src": {
-      "tilt": -15,
+      "tilt": -7.0,
       "inharm": 0.0,
       "mode": "harm",
       "nb": [
@@ -6153,14 +8258,14 @@ window.MM_PRESETS_DEFAULT = {
     },
     "form": {
       "f1": [
-        500,
-        7,
-        1.2
+        700,
+        8,
+        9.0
       ],
       "f2": [
-        2600,
-        5,
-        2
+        2400,
+        11,
+        2.5
       ]
     },
     "filt": {
@@ -6181,7 +8286,13 @@ window.MM_PRESETS_DEFAULT = {
       "hit": 0.03,
       "air": 0.06,
       "ms": 45
-    }
+    },
+    "anchors": [
+      "E2",
+      "Ab3",
+      "Db4",
+      "E4"
+    ]
   },
   "ping": {
     "name": "ping",
@@ -6483,6 +8594,194 @@ window.MM_PRESETS_DEFAULT = {
       "air": 0.0,
       "ms": 8
     }
+  },
+  // 2026-09-12 (Mario, «estilo Tomita, transparentes y misteriosos»): pads a bajo nivel, vibrato marcado,
+  //   barridos de filtro resonantes y espectro limpio. El motor no tiene reverb/eco/phaser (el "wash" de
+  //   Tomita) — eso se prototipa en un lab aparte. Max 5. A afinar de oido.
+  "synth_aahs": {
+    "name": "synth_aahs",
+    "class": { "family": "sinteticos", "instrument": "synth_aahs", "label": "Synth Aahs", "regime": "sostenido", "articulations": ["legato", "tenuto"] },
+    "lo": "C2", "hi": "C6",
+    "resp": { "gain": [0.4, 0.46, 0.48, 0.42], "air": [0, 0, 0, 0], "tilt": [0.5, 0.5, 0.46, 0.4], "atk": [1, 1, 0.9, 0.85], "vib": [4, 5, 6, 6], "vibRate": [5.2, 5.4, 5.6, 5.6], "oddEven": [0.5, 0.5, 0.5, 0.5] },
+    "src": { "tilt": -12, "inharm": 0, "mode": "harm", "nb": [2000, 1.2] },
+    "form": { "f1": [750, 7, 6], "f2": [1200, 6, 4] },
+    "filt": { "cut": 8, "q": 1.4, "env": 0.5, "t": 0.8 },
+    "env": { "decay": 0.4, "sustain": 1 },
+    "char": { "noise": 0.04, "noiseAM": 0.03 },
+    "onset": { "hit": 0.02, "air": 0.06, "ms": 240 }
+  },
+  "warm_pad": {
+    "name": "warm_pad",
+    "class": { "family": "sinteticos", "instrument": "warm_pad", "label": "Warm Pad", "regime": "sostenido", "articulations": ["legato", "tenuto"] },
+    "lo": "C1", "hi": "C7",
+    "resp": { "gain": [0.4, 0.45, 0.48, 0.42], "air": [0, 0, 0, 0], "tilt": [0.38, 0.4, 0.42, 0.46], "atk": [1, 1, 0.9, 0.85], "vib": [3, 3, 4, 4], "vibRate": [4.4, 4.5, 4.7, 4.7], "oddEven": [0.5, 0.5, 0.5, 0.5] },
+    "src": { "tilt": -16, "inharm": 0, "mode": "harm", "nb": [2000, 1.2] },
+    "form": { "f1": [450, 3, 1.5], "f2": [1600, 2, 1.5] },
+    "filt": { "cut": 6, "q": 1.6, "env": 1.0, "t": 2.2 },
+    "env": { "decay": 0.5, "sustain": 1 },
+    "char": { "noise": 0, "noiseAM": 0 },
+    "onset": { "hit": 0, "air": 0, "ms": 420 }
+  },
+  "space_sweep": {
+    "name": "space_sweep",
+    "class": { "family": "sinteticos", "instrument": "space_sweep", "label": "Space Sweep", "regime": "sostenido", "articulations": ["legato", "tenuto"] },
+    "lo": "C1", "hi": "C7",
+    "resp": { "gain": [0.35, 0.42, 0.45, 0.4], "air": [0, 0, 0, 0], "tilt": [0.5, 0.55, 0.6, 0.55], "atk": [1, 1, 0.9, 0.85], "vib": [5, 6, 7, 7], "vibRate": [3.4, 3.7, 3.9, 3.9], "oddEven": [0.5, 0.5, 0.5, 0.5] },
+    "src": { "tilt": -10, "inharm": 0, "mode": "harm", "nb": [2000, 1.2] },
+    "form": { "f1": [1100, 5, 2], "f2": [3200, 4, 2] },
+    "filt": { "cut": 10, "q": 3, "env": 2.6, "t": 3.0 },
+    "env": { "decay": 0.6, "sustain": 1 },
+    "char": { "noise": 0.02, "noiseAM": 0.03 },
+    "onset": { "hit": 0, "air": 0.04, "ms": 520 }
+  },
+  "cosmic_whistle": {
+    "name": "cosmic_whistle",
+    "class": { "family": "sinteticos", "instrument": "cosmic_whistle", "label": "Cosmic Whistle", "regime": "sostenido", "articulations": ["legato", "tenuto"] },
+    "lo": "C4", "hi": "C8",
+    "resp": { "gain": [0.42, 0.46, 0.46, 0.4], "air": [0, 0, 0, 0], "tilt": [0.3, 0.3, 0.3, 0.3], "atk": [1, 1, 0.9, 0.85], "vib": [7, 9, 11, 11], "vibRate": [5.5, 5.8, 6, 6], "oddEven": [0.5, 0.5, 0.5, 0.5] },
+    "src": { "tilt": -22, "inharm": 0, "mode": "harm", "nb": [2000, 1.2] },
+    "form": { "f1": [1000, 0, 2], "f2": [3000, 0, 2] },
+    "filt": { "cut": 10, "q": 1, "env": 0.2, "t": 0.3 },
+    "env": { "decay": 0.3, "sustain": 1 },
+    "char": { "noise": 0.02, "noiseAM": 0.02 },
+    "onset": { "hit": 0.01, "air": 0.05, "ms": 120 }
+  },
+  "glass_bells": {
+    "name": "glass_bells",
+    "class": { "family": "sinteticos", "instrument": "glass_bells", "label": "Glass Bells", "regime": "percusivo", "articulations": ["staccato", "acento"] },
+    "lo": "C3", "hi": "C7",
+    "resp": { "gain": [0.4, 0.45, 0.45, 0.4], "air": [0, 0, 0, 0], "tilt": [0.5, 0.55, 0.6, 0.6], "atk": [1, 1, 0.9, 0.85], "vib": [2, 3, 4, 4], "vibRate": [4, 4.5, 5, 5], "oddEven": [0.5, 0.5, 0.5, 0.5] },
+    "src": { "tilt": -12, "inharm": 0.06, "mode": "harm", "nb": [2000, 1.2] },
+    "form": { "f1": [2000, 3, 2], "f2": [4500, 3, 2] },
+    "filt": { "cut": 10, "q": 2, "env": 1.0, "t": 1.0 },
+    "env": { "decay": [3, 2.5, 2, 1.5], "sustain": 0 },
+    "char": { "noise": 0.02, "noiseAM": 0.02 },
+    "onset": { "hit": 0.1, "air": 0.02, "ms": 8 }
+  },
+
+  // ── 2026-09-12 (con Mario): POPULAR · LATINO — bajo eléctrico, acordeón vallenato, Rhodes y percusión
+  //   latina. Aditivo, mismo motor; primeros borradores para afinar de oído (la musette del acordeón queda
+  //   como paso de oído). ────────────────────────────────────────────────────────────────────────────
+  "electric_bass": {
+    "name": "electric_bass",
+    "class": { "family": "cuerdas", "instrument": "electric_bass", "label": "Electric Bass", "regime": "percusivo", "articulations": ["legato","staccato","apoyado"], "velRangeDb": 18 },
+    "lo": "E1", "hi": "G4",
+    "anchors": ["E1","A2","D3","G4"],
+    "resp": { "gain": [1.0,1.0,0.9,0.72], "air": [0.02,0.03,0.04,0.05], "tilt": [0.30,0.38,0.42,0.38], "atk": [1.0,1.0,1.0,0.9], "vib": [0,0,0,0], "vibRate": [0,0,0,0], "oddEven": [0.42,0.45,0.48,0.5] },
+    "src": { "tilt": -13.0, "inharm": [0.0012,0.0011,0.0016,0.004], "mode": "inharm", "partials": [28,24,18,10], "phaseMs": 1.2, "nb": [1600,1.2] },
+    "form": { "f1": [110,6,12], "f2": [750,3,3], "bank": [[110,6,12],[250,3,6],[750,3,3]] },
+    "filt": { "cut": [20,14,9,5], "q": 0.8, "env": 0.4, "t": 0.22 },
+    "env": { "decay": [2.0,1.7,1.3,0.8], "sustain": 0, "bloom": [0.35,0.30,0.25,0.15], "decayTilt": [0.30,0.32,0.34,0.42], "relNoise": [0.10,0.10,0.08,0.06] },
+    "char": { "noise": 0.02, "noiseAM": 0.0 },
+    "onset": { "hit": [0.30,0.32,0.34,0.40], "air": 0.14, "ms": 9, "freq": 90, "pitch": 4, "pitchMs": 30 }
+  },
+  "accordion_vallenato": {
+    "name": "accordion_vallenato",
+    "class": { "family": "vientos", "instrument": "accordion_vallenato", "label": "Acordeón vallenato", "regime": "sostenido", "articulations": ["legato","staccato","bellows_shake"] },
+    "lo": "F3", "hi": "A6",
+    "resp": { "gain": [0.035,0.041,0.040,0.037], "air": [0.05,0.04,0.04,0.05], "tilt": [0.72,0.8,0.88,0.92], "atk": [2.0,1.7,1.2,0.8], "vib": [0.10,0.12,0.14,0.14], "vibRate": [5.2,5.4,5.6,5.6], "oddEven": [0.5,0.52,0.54,0.55] },
+    "src": { "tilt": -6.0, "inharm": 0.0, "mode": "harm", "nb": [2500,1.0] },
+    "form": { "f1": [950,5,1.2], "f2": [2900,5,1.0] },
+    "filt": { "cut": [32,28,24,18], "q": 0.8, "env": 0.25, "t": 0.04 },
+    "env": { "decay": 0.03, "sustain": 1, "release": [0.1,0.08,0.06,0.05] },
+    "char": { "noise": 0.12, "noiseAM": 0.06 },
+    "onset": { "hit": 0.0, "air": 0.12, "ms": 55 }
+  },
+  "rhodes": {
+    "name": "rhodes",
+    "class": { "family": "teclados", "instrument": "rhodes", "label": "Rhodes (e-piano)", "regime": "percusivo", "articulations": ["legato","staccato"], "velRangeDb": 26 },
+    "lo": "C1", "hi": "C7",
+    "resp": { "gain": [0.9,1.0,0.95,0.85], "air": [0.02,0.02,0.02,0.03], "tilt": [0.55,0.65,0.7,0.7], "atk": [1,1,1,1], "vib": [0,0,0,0], "vibRate": [0,0,0,0], "oddEven": [0.5,0.5,0.5,0.5] },
+    "src": { "tilt": -15.0, "inharm": 0.0016, "mode": "harm", "nb": [2000,1.2] },
+    "form": { "f1": [1400,4,1.4], "f2": [3000,3,1.6] },
+    "filt": { "cut": [8,6,5,4], "q": 0.7, "env": 0.55, "t": 0.05 },
+    "env": { "decay": [2.5,2.1,1.6,1.0], "sustain": 0 },
+    "char": { "noise": 0.0, "noiseAM": 0.0 },
+    "onset": { "hit": [0.15,0.2,0.3,0.4], "air": 0.0, "ms": 6 }
+  },
+  "congas": {
+    "name": "congas",
+    "class": { "family": "percusion", "instrument": "congas", "label": "Congas", "regime": "percutido", "articulations": ["golpe","slap"], "velRangeDb": 40 },
+    "lo": "A2", "hi": "A4",
+    "resp": { "gain": [0.85,1.0,1.0,0.9], "air": [0,0,0,0], "tilt": [0.4,0.5,0.6,0.7], "atk": [1,1,0.9,0.85], "vib": [0,0,0,0], "vibRate": [5.5,5.5,5.5,5.5], "oddEven": [0.5,0.5,0.5,0.5] },
+    "src": { "tilt": -15.0, "inharm": 0.30, "mode": "harm", "nb": [400,1.0] },
+    "form": { "f1": [280,6,1.1], "f2": [1400,3,1.2] },
+    "filt": { "cut": 6.0, "q": 1.0, "env": 0.5, "t": 0.05 },
+    "env": { "decay": [0.55,0.45,0.35,0.28], "sustain": 0 },
+    "char": { "noise": 0.40, "noiseAM": 0.0 },
+    "onset": { "hit": 0.5, "air": 0.0, "ms": 8 }
+  },
+  "bongos": {
+    "name": "bongos",
+    "class": { "family": "percusion", "instrument": "bongos", "label": "Bongos", "regime": "percutido", "articulations": ["golpe","slap"], "velRangeDb": 40 },
+    "lo": "C4", "hi": "C6",
+    "resp": { "gain": [0.85,1.0,1.0,0.9], "air": [0,0,0,0], "tilt": [0.5,0.6,0.7,0.8], "atk": [1,1,0.9,0.85], "vib": [0,0,0,0], "vibRate": [5.5,5.5,5.5,5.5], "oddEven": [0.5,0.5,0.5,0.5] },
+    "src": { "tilt": -13.0, "inharm": 0.30, "mode": "harm", "nb": [700,1.0] },
+    "form": { "f1": [560,6,1.1], "f2": [2200,3,1.2] },
+    "filt": { "cut": 8.0, "q": 1.0, "env": 0.5, "t": 0.04 },
+    "env": { "decay": [0.35,0.28,0.22,0.18], "sustain": 0 },
+    "char": { "noise": 0.42, "noiseAM": 0.0 },
+    "onset": { "hit": 0.6, "air": 0.0, "ms": 6 }
+  },
+  "timbales": {
+    "name": "timbales",
+    "class": { "family": "percusion", "instrument": "timbales", "label": "Timbales", "regime": "percutido", "articulations": ["golpe","cascara"], "velRangeDb": 45 },
+    "lo": "C4", "hi": "C6",
+    "resp": { "gain": [0.22,0.25,0.25,0.22], "air": [0,0,0,0], "tilt": [0.6,0.7,0.8,0.88], "atk": [1,1,0.9,0.85], "vib": [0,0,0,0], "vibRate": [5.5,5.5,5.5,5.5], "oddEven": [0.5,0.5,0.5,0.5] },
+    "src": { "tilt": -9.0, "inharm": 0.12, "mode": "harm", "nb": [900,0.9] },
+    "form": { "f1": [500,3,1.2], "f2": [3200,3,1.0] },
+    "filt": { "cut": 12.0, "q": 1.0, "env": 0.4, "t": 0.05 },
+    "env": { "decay": [0.4,0.32,0.25,0.2], "sustain": 0 },
+    "char": { "noise": 0.15, "noiseAM": 0.0 },
+    "onset": { "hit": 0.7, "air": 0.0, "ms": 5 }
+  },
+  "claves": {
+    "name": "claves",
+    "class": { "family": "percusion", "instrument": "claves", "label": "Claves", "regime": "percutido", "articulations": ["golpe"], "velRangeDb": 40 },
+    "lo": "C5", "hi": "C7",
+    "resp": { "gain": [2.7,3.0,3.0,2.7], "air": [0,0,0,0], "tilt": [0.7,0.8,0.9,0.95], "atk": [0.3,0.3,0.3,0.3], "vib": [0,0,0,0], "vibRate": [5.5,5.5,5.5,5.5], "oddEven": [0.5,0.5,0.5,0.5] },
+    "src": { "tilt": -10.0, "inharm": 0.0, "mode": "noise", "nb": [2500,7] },
+    "form": { "f1": [2500,7,5], "f2": [4200,4,3] },
+    "filt": { "cut": 12, "q": 2, "env": 0.8, "t": 0.012 },
+    "env": { "decay": 0.11, "sustain": 0 },
+    "char": { "noise": 0.03, "noiseAM": 0.0 },
+    "onset": { "hit": 0.9, "air": 0.0, "ms": 4 }
+  },
+  "cowbell": {
+    "name": "cowbell",
+    "class": { "family": "percusion", "instrument": "cowbell", "label": "Cowbell", "regime": "percutido", "articulations": ["golpe"], "velRangeDb": 40 },
+    "lo": "C4", "hi": "C6",
+    "resp": { "gain": [0.083,0.099,0.099,0.088], "air": [0,0,0,0], "tilt": [0.7,0.8,0.85,0.9], "atk": [0.4,0.4,0.4,0.4], "vib": [0,0,0,0], "vibRate": [5.5,5.5,5.5,5.5], "oddEven": [0.6,0.6,0.6,0.6] },
+    "src": { "tilt": -7.0, "inharm": 0.5, "mode": "harm", "nb": [2000,1.0] },
+    "form": { "f1": [540,4,1.5], "f2": [850,4,1.5] },
+    "filt": { "cut": 14, "q": 1.5, "env": 0.3, "t": 0.04 },
+    "env": { "decay": [0.4,0.35,0.3,0.25], "sustain": 0 },
+    "char": { "noise": 0.05, "noiseAM": 0.0 },
+    "onset": { "hit": 0.7, "air": 0.0, "ms": 5 }
+  },
+  "maracas": {
+    "name": "maracas",
+    "class": { "family": "percusion", "instrument": "maracas", "label": "Maracas", "regime": "percutido", "articulations": ["golpe"], "velRangeDb": 35 },
+    "lo": "C5", "hi": "C6",
+    "resp": { "gain": [0.7,0.8,0.8,0.7], "air": [0,0,0,0], "tilt": [0.9,0.9,0.9,0.9], "atk": [0.3,0.3,0.3,0.3], "vib": [0,0,0,0], "vibRate": [5.5,5.5,5.5,5.5], "oddEven": [0.5,0.5,0.5,0.5] },
+    "src": { "tilt": -2.0, "inharm": 0.0, "mode": "noise", "nb": [7000,0.5] },
+    "form": { "f1": [5000,2,1.5], "f2": [9000,2,1.2] },
+    "filt": { "cut": 20, "q": 1.0, "env": 0.0, "t": 0.02 },
+    "env": { "decay": 0.07, "sustain": 0 },
+    "char": { "noise": 1.0, "noiseAM": 0.0 },
+    "onset": { "hit": 0.25, "air": 0.0, "ms": 6 }
+  },
+  "cajon": {
+    "name": "cajon",
+    "class": { "family": "percusion", "instrument": "cajon", "label": "Cajón", "regime": "percutido", "articulations": ["bajo","slap"], "velRangeDb": 50 },
+    "lo": "C2", "hi": "C4",
+    "resp": { "gain": [3.5,5,5.5,5], "air": [0,0,0,0], "tilt": [0.3,0.45,0.6,0.75], "atk": [1,1,0.9,0.85], "vib": [0,0,0,0], "vibRate": [5.5,5.5,5.5,5.5], "oddEven": [0.5,0.5,0.5,0.5] },
+    "src": { "tilt": -12.0, "inharm": 0.0, "mode": "noise", "nb": [120,1.0] },
+    "form": { "f1": [110,4,1.2], "f2": [2500,4,1.0] },
+    "filt": { "cut": 10.0, "q": 1.0, "env": 0.5, "t": 0.08 },
+    "env": { "decay": [0.7,0.5,0.35,0.25], "sustain": 0 },
+    "char": { "noise": 0.35, "noiseAM": 0.0 },
+    "onset": { "hit": 1.0, "air": 0.0, "ms": 10 }
   }
 };
 
@@ -6492,19 +8791,33 @@ window.MM_PRESETS_DEFAULT = {
 // sinteticos al final. Las etiquetas salen de class.label (EN). Las apps arman su <select> con
 // MM_instrumentOptionsHTML(map, selected, opts) para que la lista sea identica en toda la suite.
 // ============================================================================
+// ── TIPO DE ORQUESTA (2026-08-30, Mario: «gran orquesta tiene 8 contrabajos, en mis tiempos fueron 10») ──
+// La sección no tiene UN tamaño: lo declara la ORQUESTA de la obra (scoreInfo.orchestra, popup
+// Score Info). class.players de cada ficha _section es el default (sinfónica moderna); esta tabla
+// da los atriles por tipo. Hoy es dato e información (tooltip de la paleta); el contrato de motor
+// (spread y coro escalando con el tamaño real) queda pendiente, como spl.* y nl.*.
+window.MM_ORCHESTRAS = {
+  chamber:   { es:'Orquesta de cámara',        en:'Chamber orchestra',        strings:{ violins_section:8,  violas_section:4,  cellos_section:4,  contrabasses_section:2  } },
+  classical: { es:'Orquesta clásica',          en:'Classical orchestra',      strings:{ violins_section:10, violas_section:6,  cellos_section:4,  contrabasses_section:3  } },
+  modern:    { es:'Sinfónica moderna',         en:'Modern symphonic',         strings:{ violins_section:16, violas_section:12, cellos_section:10, contrabasses_section:8  } },
+  grand:     { es:'Gran orquesta romántica',   en:'Grand romantic orchestra', strings:{ violins_section:16, violas_section:14, cellos_section:12, contrabasses_section:10 } },
+};
+
 window.MM_INSTRUMENT_SECTIONS = [
-  { section:'Woodwinds', items:['piccolo','flute','alto_flute_g','oboe','english_horn','clarinet','bass_clarinet','bassoon','contrabassoon','saxophone','kena'] },
-  { section:'Brass', items:['horn','trumpet','trombone','tuba'] },
-  { section:'Percussion', items:['timpani','glockenspiel','xylophone','vibraphone','marimba','tubular_bells','snare','bass_drum','cymbals','tam_tam','triangle','tambourine','woodblock'] },
+  { section:'Woodwinds', items:['piccolo','flute','alto_flute_g','oboe','english_horn','clarinet','clarinet_a','bass_clarinet','bassoon','contrabassoon','saxophone','kena'] },
+  { section:'Brass', items:['horn','trumpet','trumpet_f','trombone','trombone_alto','tuba'] },
+  { section:'Percussion', items:['timpani','glockenspiel','xylophone','vibraphone','marimba','tubular_bells','snare','snare_off','bass_drum','cymbals','tam_tam','triangle','tambourine','woodblock'] },
   { section:'Harp & Keyboards', items:['harp','piano','piano_steinway','piano_grand_tonal','harpsichord','harpsichord_wt','celesta','pipe_organ','accordion'] },
   { section:'Strings', items:['violin','viola','cello','contrabass','violins_section','violas_section','cellos_section','contrabasses_section','strings','full_strings','pizzicato','strings_pizzicato','gamba','guitar'] },
   { section:'Voice', items:['voice_soprano','voice_alto','voice_tenor','voice_bass'] },
   { section:'Synths', items:['ping','sine','organ'] },
+  { section:'Synths \u00b7 Pads', items:['synth_aahs','warm_pad','space_sweep','cosmic_whistle','glass_bells'] },
   // 2026-08-24 (idea de Mario): los parientes NO orquestales viven aparte y por familia, para que
   // la lista de la orquesta no se llene de repeticiones. Se suman al final; la paleta los muestra
   // como dos grupos propios en las cuatro apps.
   { section:'Other · Recorders', items:['recorder_soprano','recorder_alto'] },
-  { section:'Other · Folk plucked', items:['banjo','mandolin'] }
+  { section:'Other · Folk plucked', items:['banjo','mandolin'] },
+  { section:'Popular · Latino', items:['electric_bass','accordion_vallenato','rhodes','congas','bongos','timbales','claves','cowbell','maracas','cajon'] }
 ];
 window.MM_INSTRUMENT_ORDER = window.MM_INSTRUMENT_SECTIONS.reduce(function(a,s){ return a.concat(s.items); }, []);
 // Devuelve el HTML de <optgroup>/<option> (value=clave, texto=etiqueta) en orden canonico.
@@ -6553,14 +8866,18 @@ window.MM_openInstrumentPalette = function(opts){
       '.mmip-filter:focus{border-color:var(--gold,#c8a84a)}'+
       '.mmip-pin{cursor:pointer;font-size:12px;color:var(--textm,#c0c0e0);background:none;border:none;line-height:1;flex:none}'+
       '.mmip-pin.on{color:#9a7ad8}'+
-      '.mmip-cols{padding:10px 14px;column-gap:22px;max-height:min(70vh,560px);overflow:auto}'+
+      '.mmip-cols{padding:10px 14px;max-height:min(70vh,560px);overflow:auto}'+
+      '.mmip-grid{column-gap:22px}'+
       '.mmip-sec{break-inside:avoid;margin:0 0 10px}'+
       '.mmip-sect{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold,#c8a84a);border-bottom:1px solid var(--border,#1e1e34);padding:2px 0 3px;margin-bottom:3px;white-space:nowrap}'+
       '.mmip-it{font-size:11px;color:var(--textm,#c0c0e0);padding:2px 6px;cursor:pointer;white-space:nowrap;border-left:2px solid transparent}'+
       '.mmip-it:hover{color:var(--text,#e0e0f4);background:var(--panel2,#111120)}'+
       '.mmip-it.on{color:var(--gold,#c8a84a);border-left-color:var(--gold,#c8a84a)}'+
       '.mmip-it.ghost{opacity:.35;cursor:default}'+
-      '.mmip-it.ghost:hover{background:none;color:var(--textm,#c0c0e0)}';
+      '.mmip-it.ghost:hover{background:none;color:var(--textm,#c0c0e0)}'+
+      '.mmip-grip{position:absolute;right:0;bottom:0;width:15px;height:15px;cursor:nwse-resize;'+
+        'background:linear-gradient(135deg,transparent 0 46%,var(--border,#1e1e34) 46% 56%,transparent 56% 72%,var(--border,#1e1e34) 72% 82%,transparent 82%)}'+
+      '.mmip-grip:hover{background:linear-gradient(135deg,transparent 0 46%,var(--kb-border,#501828) 46% 56%,transparent 56% 72%,var(--kb-border,#501828) 72% 82%,transparent 82%)}';
     doc.head.appendChild(css);
     pal = doc.createElement('div'); pal.id = 'mm-inst-palette'; pal.className = 'lang-sync';   // regla del idioma: pares data-es/en, el Score los aplica via _prefsSyncLang
     pal.innerHTML =
@@ -6569,7 +8886,8 @@ window.MM_openInstrumentPalette = function(opts){
         '<input class="mmip-filter" id="mmip-filter" type="text" placeholder="filter" data-title-es="Filtrar por nombre" data-title-en="Filter by name" title="Filter by name">'+
         '<button class="mmip-pin on" id="mmip-pin" data-title-es="Fijar (clic afuera no cierra)" data-title-en="Pin (outside click keeps it open)" title="Pin (outside click keeps it open)">⊗</button>'+
       '</div>'+
-      '<div class="mmip-cols" id="mmip-cols"></div>';
+      '<div class="mmip-cols" id="mmip-cols"><div class="mmip-grid" id="mmip-grid"></div></div>'+
+      '<div class="mmip-grip" id="mmip-grip" data-title-es="Arrastrar para dimensionar" data-title-en="Drag to resize" title="Drag to resize"></div>';
     doc.body.appendChild(pal);
     pal._pinned = true;
     var pin = doc.getElementById('mmip-pin');
@@ -6582,7 +8900,56 @@ window.MM_openInstrumentPalette = function(opts){
       var r = pal.getBoundingClientRect(); pal.style.left = r.left+'px'; pal.style.top = r.top+'px';
       dx = e.clientX - r.left; dy = e.clientY - r.top; drag = true; try{ hd.setPointerCapture(e.pointerId); }catch(_){ } });
     hd.addEventListener('pointermove', function(e){ if(drag){ pal.style.left = (e.clientX-dx)+'px'; pal.style.top = (e.clientY-dy)+'px'; } });
-    hd.addEventListener('pointerup', function(){ drag = false; });
+    hd.addEventListener('pointerup', function(){ if(drag){ drag = false; pal._guardarSitio(); } });   // 2026-09-10: al soltar, el sitio se recuerda
+    var LSK = 'mm-inst-palette-size';                                        // el tamaño viaja entre aperturas y entre apps (mismo origen)
+    // 2026-09-10 (con Mario: «la corrés al costado, vas a otro canal y vuelve a saltar encima de CHANNELS»):
+  // la memoria guardaba SOLO el tamaño, así que cada apertura re-anclaba la paleta debajo del campo
+  // clickeado — y ese campo vive adentro del popup CHANNELS. Ahora el sitio viaja en la misma entrada:
+  // se guarda al soltar el arrastre y manda sobre el ancla en la próxima apertura.
+  pal._guardarSitio = function(){ try{
+    var v = JSON.parse(localStorage.getItem(LSK) || '{}') || {};
+    var r = pal.getBoundingClientRect();
+    v.x = Math.round(r.left); v.y = Math.round(r.top);
+    localStorage.setItem(LSK, JSON.stringify(v));
+  }catch(_){ } };
+  pal._leerSitio = function(){ try{
+    var v = JSON.parse(localStorage.getItem(LSK) || 'null');
+    if(v && typeof v.x === 'number' && typeof v.y === 'number') return { x: v.x, y: v.y };
+  }catch(_){ } return null; };
+  pal._leerTam = function(){ try{ var v = JSON.parse(localStorage.getItem(LSK) || 'null');
+      return (v && v.w > 240 && v.h > 140) ? v : null; }catch(_){ return null; } };
+    pal._aplicarTam = function(t){ var hd2 = doc.getElementById('mmip-hd'), cl = doc.getElementById('mmip-cols'),
+                                    gr2 = doc.getElementById('mmip-grid');
+      if(!t){ pal.style.width = ''; pal.style.height = ''; pal.style.maxWidth = '';
+              cl.style.height = ''; cl.style.maxHeight = '';
+              gr2.style.height = ''; gr2.style.columnFill = ''; return; }
+      pal.style.maxWidth = '96vw'; pal.style.width = Math.round(t.w)+'px'; pal.style.height = Math.round(t.h)+'px';
+      // dimensionada, la lista CRECE EN LOS DOS EJES (pedido de Mario, 2026-09-08): la grilla toma el
+      // alto del panel y llena por altura (column-fill:auto), así que estirar hacia abajo alarga las
+      // columnas y estirar hacia el costado muestra más; lo que no entra sigue a la derecha y la caja
+      // scrollea en los dos ejes, como antes del arreglo del 07-09.
+      var alto = Math.max(60, Math.round(t.h - hd2.offsetHeight - 2));
+      cl.style.maxHeight = 'none'; cl.style.height = alto+'px';
+      gr2.style.height = (alto - 20)+'px'; gr2.style.columnFill = 'auto'; };
+    pal._columnas = function(){ var cl = doc.getElementById('mmip-grid');
+      var n = cl.querySelectorAll('.mmip-it').length, c;
+      if(pal._tam) c = Math.floor((pal._tam.w - 28) / 170);                   // dimensionada: las columnas las decide el ANCHO
+      else c = Math.ceil(n / 12);                                            // sin dimensionar: la regla de siempre (4-5 con la lista llena)
+      cl.style.columnCount = String(Math.max(1, Math.min(pal._tam ? 8 : 5, Math.min(c, n || 1)))); };
+    var grip = doc.getElementById('mmip-grip'), rz = false, rw = 0, rh = 0, rx = 0, ry = 0;
+    grip.addEventListener('pointerdown', function(e){ e.stopPropagation(); e.preventDefault();
+      var r = pal.getBoundingClientRect(); rw = r.width; rh = r.height; rx = e.clientX; ry = e.clientY; rz = true;
+      try{ grip.setPointerCapture(e.pointerId); }catch(_){ } });
+    grip.addEventListener('pointermove', function(e){ if(!rz) return;
+      var r = pal.getBoundingClientRect();
+      var w = Math.min(Math.max(260, rw + (e.clientX - rx)), window.innerWidth  - r.left - 8);
+      var h = Math.min(Math.max(160, rh + (e.clientY - ry)), window.innerHeight - r.top  - 8);
+      pal._tam = { w: w, h: h }; pal._aplicarTam(pal._tam); pal._columnas(); });
+    grip.addEventListener('pointerup', function(e){ if(!rz) return; rz = false;
+      try{ grip.releasePointerCapture(e.pointerId); }catch(_){ }
+      if(pal._tam){ try{ var _v = JSON.parse(localStorage.getItem(LSK) || '{}') || {};   // 2026-09-10: merge, no reemplazo — el tamaño no puede borrar el sitio
+      _v.w = Math.round(pal._tam.w); _v.h = Math.round(pal._tam.h);
+      localStorage.setItem(LSK, JSON.stringify(_v)); }catch(_){ } } });
     var filt = doc.getElementById('mmip-filter');
     filt.addEventListener('pointerdown', function(e){ e.stopPropagation(); });
     filt.addEventListener('input', function(){ var q = this.value.trim().toLowerCase();
@@ -6617,13 +8984,17 @@ window.MM_openInstrumentPalette = function(opts){
   secs.forEach(function(s){ if(!s.items.length) return;
     html += '<div class="mmip-sec"><div class="mmip-sect">'+esc(s.section)+'</div>';
     s.items.forEach(function(k){ var ghost = !map[k];
-      html += '<div class="mmip-it'+(k===sel?' on':'')+(ghost?' ghost':'')+'" data-k="'+esc(k)+'"'+
-              (ghost?' data-title-es="No está en la lista activa" data-title-en="Not in the active list" title="Not in the active list"':'')+'>'+esc(lab(k))+'</div>'; });
+      // 2026-08-30: las secciones dicen sus atriles — el número efectivo lo da la orquesta de la
+      // obra (hook del Score, MM_orchestraPlayers); sin él, el default de la ficha (sinfónica moderna).
+      var _pj = map[k] || bank[k] || {}, _pl = _pj.class && _pj.class.players;
+      if (_pl && typeof window.MM_orchestraPlayers === 'function') _pl = window.MM_orchestraPlayers(k) || _pl;
+      var tt = ghost ? ' data-title-es="No está en la lista activa" data-title-en="Not in the active list" title="Not in the active list"'
+             : (_pl ? ' data-title-es="'+_pl+' atriles (orquesta de la obra)" data-title-en="'+_pl+' players (the work\'s orchestra)" title="'+_pl+' players"' : '');
+      html += '<div class="mmip-it'+(k===sel?' on':'')+(ghost?' ghost':'')+'" data-k="'+esc(k)+'"'+tt+'>'+esc(lab(k))+'</div>'; });
     html += '</div>'; });
-  var cols = doc.getElementById('mmip-cols');
+  var cols = doc.getElementById('mmip-grid');
   cols.innerHTML = html;
-  var n = cols.querySelectorAll('.mmip-it').length;
-  cols.style.columnCount = String(Math.max(1, Math.min(5, Math.ceil(n/12))));   // 4-5 columnas con la lista llena; menos si hay poco (percusion)
+  if(pal._tam === undefined) pal._tam = pal._leerTam();                         // el tamaño de la sesion anterior
   var filtEl = doc.getElementById('mmip-filter'); filtEl.value = '';
   pal._anchor = opts.anchor || null;
   pal._onPick = opts.onPick || null;
@@ -6637,10 +9008,36 @@ window.MM_openInstrumentPalette = function(opts){
     if(pal._onPick) pal._onPick(it.dataset.k);
     if(!pal._pinned) pal.classList.remove('open'); };
   pal.classList.add('open');
+  // 2026-09-08 (Mario: «el cuadro negro sale mas chico que el layer de los nombres»): el tamaño se aplicaba con
+  // la paleta TODAVIA oculta, y ahi el header mide 0 — la caja quedaba 32 px mas alta de lo que debia y los
+  // nombres se salian por abajo del panel. Al dimensionar se corregia solo, porque entonces si estaba visible.
+  // Se aplica DESPUES de abrir, que es cuando se puede medir. El diseno (columnas por ancho, llenado por altura)
+  // no cambia: cambia el momento.
+  pal._aplicarTam(opts.onlyKeys ? null : pal._tam);                             // el set de percusion es corto: va a su tamaño natural
+  var _t = pal._tam; if(opts.onlyKeys) pal._tam = null;
+  pal._columnas(); pal._tam = _t;
   var w = pal.offsetWidth, h = pal.offsetHeight, x = 80, y = 80;               // bajo el ancla, sin salirse del viewport
-  if(opts.anchor && opts.anchor.getBoundingClientRect){ var r2 = opts.anchor.getBoundingClientRect(); x = r2.left; y = r2.bottom + 6; }
+  var _sitio = pal._leerSitio && pal._leerSitio();
+    if(_sitio){ x = _sitio.x; y = _sitio.y; }   // 2026-09-10: donde la dejaste, canal tras canal
+    else if(opts.anchor && opts.anchor.getBoundingClientRect){ var r2 = opts.anchor.getBoundingClientRect(); x = r2.left; y = r2.bottom + 6;
+      // primera vez, sin memoria: no nacer encima del popup que la abrió (el campo vive adentro de
+      // CHANNELS). Si el sitio anclado se superpone con él, la paleta se corre al lado libre.
+      try{
+        var _duenio = opts.anchor.closest && opts.anchor.closest('.channels-panel, #channelsPanel, .group-popup, .popup');
+        if(_duenio){
+          var rp = _duenio.getBoundingClientRect();
+          if(!(x + w < rp.left || x > rp.right || y + h < rp.top || y > rp.bottom)){
+            if(rp.right + 8 + w <= window.innerWidth - 8) x = rp.right + 8;
+            else if(rp.left - 8 - w >= 8)                 x = rp.left - 8 - w;
+            else                                           y = rp.bottom + 8;
+            y = Math.min(y, Math.max(8, window.innerHeight - 8 - h));
+          }
+        }
+      }catch(_){ }
+    }
   if(x + w > window.innerWidth - 8)  x = Math.max(8, window.innerWidth - 8 - w);
   if(y + h > window.innerHeight - 8) y = Math.max(8, window.innerHeight - 8 - h);
+  if(x < 8) x = 8; if(y < 8) y = 8;   // 2026-09-10: un sitio guardado en negativo la abría fuera de la pantalla, sin header para agarrarla
   pal.style.left = Math.round(x)+'px'; pal.style.top = Math.round(y)+'px';
   if(window._prefsSyncLang){ try{ window._prefsSyncLang(); }catch(_){ } }       // idioma del Coach al vuelo (solo existe en Score)
   return pal;
