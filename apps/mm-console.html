@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script>try{var t=localStorage['getItem']('mmTheme');if(['dark','gray','clear','contrast']['indexOf'](t)>=0x0)document['documentElement']['setAttribute']('data-theme',t);}catch(a){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>m Δ° m CONSOLE · mmk · V2.1.4</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Montserrat:wght@400;700;900&family=Playfair+Display:wght@400;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07070e; --panel:#0d0d18; --panel2:#111120; --border:#1e1e34;
+    --gold:#c8a84a; --gold-d:#5a4a18;
+    --teal:#38b09a; --teal-d:#184840;
+    --rose:#c04468; --rose-d:#501828;
+    --blue:#4868c0;
+    --text:#e0e0f4; --textd:#9898c8; --textm:#c0c0e0;
+    --kb-border:#501828;   /* wine red — suite top-border accent */
+    --led-lo:#38b09a; --led-mid:#c8a84a; --led-hi:#c04468;
+    --meter-off:#07070e;   /* lo apagado del medidor = el fondo de su bahia */
+    --meter-tick:rgba(255,255,255,.30);   /* graduacion grabada: se lee con el medidor en cero */
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:'DM Mono',monospace;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+
+  /* ── TOP BAR ─────────────────────────────────────────── */
+  .topbar{
+    display:flex;align-items:center;gap:14px;
+    padding:8px 14px;border-bottom:2px solid var(--kb-border);
+    background:var(--panel);
+  }
+  .brand{display:flex;flex-direction:column;line-height:1}
+  .brand-logo{display:flex;align-items:center;gap:8px}
+  .brand-mm-logo{flex-shrink:0;height:32px;width:auto;color:var(--text)}
+  .brand-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:25px;
+    letter-spacing:3px;color:var(--text);text-transform:uppercase}
+  .brand-score{font-family:'Montserrat',sans-serif;font-weight:400;font-size:10px;
+    letter-spacing:1px;color:#ff8c00;text-transform:lowercase;margin-left:4px}
+  .topbar-spacer{flex:1}
+  .pill{
+    font-size:9px;letter-spacing:2px;text-transform:uppercase;
+    border:1px solid var(--border);color:var(--textd);
+    padding:5px 10px;border-radius:2px;
+  }
+  .pill.sync{border-color:var(--teal-d);color:var(--teal)}
+  .pill.hint{border-color:var(--gold-d);color:var(--gold)}
+
+  /* ── CONSOLE SURFACE ─────────────────────────────────── */
+  .console-body{flex:1;display:flex;min-height:0}   /* canales (scrollean) + master fijo a la derecha */
+  .surface{
+    flex:1;min-width:0;display:flex;gap:6px;align-items:stretch;
+    padding:14px;overflow-x:auto;
+  }
+  /* MASTER: columna fija a la derecha, no scrollea, siempre visible al achicar */
+  .master-col{
+    flex:none;display:flex;align-items:stretch;
+    padding:14px 14px 14px 8px;
+    border-left:2px solid var(--kb-border);   /* separador wine = zona master */
+    background:var(--panel2);
+  }
+  /* La tira cede ancho para que el mueble entre en la ventana: 78px es su tamano natural y 58 el
+     minimo en el que el rotulo del instrumento todavia dice algo — el limite lo pone el nombre,
+     no la bahia: un canal se encuentra por como se llama. Una mesa muestra sus
+     canales; recien cuando ni encogiendo entran, vuelve el scroll. */
+  .strip{
+    flex:1 1 78px;max-width:78px;min-width:66px;
+    display:flex;flex-direction:column;align-items:center;
+    background:var(--panel2);border:1px solid var(--border);
+    border-top:2px solid var(--kb-border);
+    padding:8px 6px;gap:8px;
+  }
+  /* #2 — canal activo: franja superior en su propio color (los inactivos quedan con el wine neutro) */
+  .surface .strip:not(.dim){border-top:3px solid var(--chc)}
+  .strip.dim{opacity:.4}
+  /* 2026-08-29: los canales que la obra no usa NO ocupan sitio. Atenuados seguian gastando 78px
+     cada uno: con una orquesta de 18 quedaban 14 columnas vacias empujando al resto fuera de la
+     ventana, y encontrar un canal era rodar a ciegas. El boton EN USO / 32 CH abre el mueble entero. */
+  .strip.off{display:none}
+  /* 2026-08-24 (Mario: «en uso parece otra aplicacion»): el recuadro es el lenguaje de los botones
+     ⊞ — abren OTRA ventana. Este no abre nada, filtra lo que se ve en esta mesa, asi que pierde el
+     borde y el relleno del hover y queda como rotulo encendido/apagado. */
+  .banco{
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:3px 4px;
+    border:none;background:transparent;color:var(--teal);
+    cursor:pointer;white-space:nowrap;transition:color .12s,opacity .12s;margin-right:8px;opacity:.9;
+  }
+  .banco:hover{opacity:1;text-decoration:underline;text-underline-offset:3px}
+  .banco.todos{color:var(--textd)}
+  .ch-head{display:flex;align-items:center;gap:6px;width:100%}
+  .surface .ch-head{cursor:pointer}                       /* el cabezal es el SEL del canal */
+  .surface .strip.sel{box-shadow:inset 0 0 0 1px var(--gold)}
+  .surface .strip.sel .ch-num{color:var(--gold)}
+  .ch-dot{width:10px;height:10px;border-radius:2px;flex:0 0 auto;transition:box-shadow .18s}
+  .surface .strip:not(.dim) .ch-dot{filter:brightness(1.32) saturate(1.06);box-shadow:0 0 6px var(--chc), 0 0 2px var(--chc)}   /* canal activo = más luminoso (mismo color code) */
+  .ch-head{overflow:hidden}
+  .ch-num{font-size:10px;font-weight:500;letter-spacing:0;color:var(--text);white-space:nowrap}
+  .ch-instr{
+    width:100%;background:var(--panel);color:var(--textm);
+    border:1px solid var(--border);border-radius:2px;
+    font-family:'DM Mono',monospace;font-size:9px;
+    padding:4px 4px;text-align:center;cursor:pointer;
+  }
+  .ch-instr:hover{border-color:var(--gold)}
+  /* 2026-08-29: la chapa del canal (ch.abbr del Score) — 'fl I', 'vn II'. Va en el color del
+     canal, el mismo codigo que el punto y la franja. Vacia no ocupa: nada de cajita fantasma. */
+  .ch-abbr{width:100%;text-align:center;font-size:9px;letter-spacing:1px;color:var(--chc);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:-4px}
+  .ch-abbr:empty{display:none}
+  .sec-abbr{width:100%;text-align:center;font-size:10px;letter-spacing:1px;color:var(--gold);margin-top:-2px}
+  .sec-abbr:empty{display:none}
+
+  /* pan knob */
+  .knob-wrap{display:flex;flex-direction:column;align-items:center;gap:2px}
+  .knob{width:46px;height:46px;cursor:ns-resize;touch-action:none}
+  .knob-track{stroke:var(--border);stroke-width:3;fill:none}
+  .knob-ind{stroke:var(--gold);stroke-width:2;stroke-linecap:round}
+  .knob-dial{fill:var(--panel);stroke:var(--border);stroke-width:1}
+  .pan-val{font-size:8px;color:var(--textd);letter-spacing:1px}
+  .bal-led{width:7px;height:7px;border-radius:50%;background:var(--textd);opacity:.4;transition:background .1s,box-shadow .1s,opacity .1s}
+  /* 2026-08-24 (Mario: «¿la Console no deberia tener REV, TONO y CAL sincronizados con el Keyboard?»):
+     el master de la suite estaba partido — nivel y balance aca, reverb/tono/calor alla, donde vive el
+     motor. Estas tres perillas son MANDOS A DISTANCIA de las del Keyboard, con el mismo contrato
+     bidireccional que VOL y BAL: aplicar no emite, solo el gesto emite. Sin Keyboard abierto no hay
+     motor que las obedezca, y se apagan (.nolink) con la misma presencia que enciende los botones ⊞. */
+  /* La tira del master mide 78 px (max-width de .strip): las tres no entran en fila, van apiladas
+     — rotulo · perilla · LED — que ademas es como se leen en el Keyboard, una debajo de la otra. */
+  .mfx{display:flex;flex-direction:row;gap:4px;align-items:flex-start;justify-content:center;width:100%;padding:3px 0 1px;transition:opacity .2s}
+  .mfx.nolink{opacity:.3}
+  .mfx-cell{display:flex;flex-direction:column;align-items:center;gap:1px}
+  .mfx-lbl{font-size:7px;letter-spacing:1px;color:var(--textd);text-transform:uppercase}
+  .strip.master .mfx .knob{width:30px;height:30px;flex:none}
+  .mfx .bal-led{width:5px;height:5px;flex:none}
+
+  /* meter + fader row */
+  .mf{display:flex;gap:6px;align-items:flex-end;flex:1;width:100%;justify-content:center;padding:2px 0}
+  /* MEDIDOR (2026-08-29): la escalera de color es FIJA y vive en el fondo — una consola tiene el
+     rojo arriba SIEMPRE, no al 100% de la barra que hay. Lo apagado se tapa desde arriba con .shade.
+     El fondo lo pinta _pielMedidor() con la MISMA tabla que la escala, para que marcas y escala no
+     puedan separarse. .pk es la retencion de pico y .over el testigo, que queda prendido hasta el clic. */
+  .meter{
+    width:10px;height:100%;min-height:160px;background-color:var(--meter-off);
+    border:1px solid var(--border);border-radius:1px;
+    position:relative;overflow:hidden;cursor:pointer;
+  }
+  .meter .shade{position:absolute;left:0;right:0;top:0;height:100%;background:var(--meter-off);pointer-events:none}
+  /* La escala va ENCIMA de la tapa: grabada en la bahia, visible con el medidor en cero. */
+  .meter .scale{position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none}
+  .meter .pk{position:absolute;left:0;right:0;height:2px;background:var(--text);opacity:0;pointer-events:none}
+  .meter .over{position:absolute;left:0;right:0;top:0;height:3px;pointer-events:none}
+  .meter .over.on{background:var(--led-hi);box-shadow:0 0 5px var(--led-hi)}
+  /* 2026-08-29: el bloque FX se fue de la tira y el fader recupera su alto — en una mesa es el
+     elemento mas alto, no el que cede. Y deja de vestirse como el medidor: la ranura recorrida va
+     en el DORADO del cursor (el medidor tiene la escalera verde/ambar/roja, que es suya). */
+  .fader{
+    position:relative;width:26px;height:100%;min-height:160px;
+    cursor:ns-resize;touch-action:none;
+  }
+  .fader-track{
+    position:absolute;left:50%;top:0;transform:translateX(-50%);
+    width:4px;height:100%;background:var(--border);border-radius:2px;
+  }
+  .fader-fill{
+    position:absolute;left:50%;transform:translateX(-50%);
+    width:4px;background:var(--gold-d);border-radius:2px;bottom:0;
+  }
+  .fader-cap{
+    position:absolute;left:50%;transform:translate(-50%,50%);
+    width:26px;height:13px;background:var(--panel);
+    border:1px solid var(--gold);border-radius:2px;
+    box-shadow:0 1px 4px rgba(0,0,0,.6);
+  }
+  .fader-cap::after{content:"";position:absolute;left:3px;right:3px;top:50%;
+    height:1px;background:var(--gold);transform:translateY(-50%)}
+  .db{font-size:9.5px;color:var(--text);letter-spacing:.3px;min-height:12px;white-space:nowrap}   /* 2026-09-01: legible — dB · % */
+
+  /* mute / solo */
+  .ms{display:flex;gap:4px;width:100%}
+  .ms button{
+    flex:1;background:var(--panel);border:1px solid var(--border);
+    color:var(--textd);font-family:'DM Mono',monospace;font-size:9px;
+    letter-spacing:1px;padding:5px 0;cursor:pointer;border-radius:2px;
+  }
+  .ms button:hover{border-color:var(--gold);color:var(--gold)}
+  .ms button.m.on{background:var(--rose-d);border-color:var(--rose);color:#f0c0cc}
+  .ms button.s.on{background:var(--gold-d);border-color:var(--gold);color:var(--gold)}
+
+  /* per-channel effect toggles (lit buttons, default on, click = bypass) */
+  .fx{width:100%;border-top:1px dashed var(--border);padding-top:6px;display:flex;flex-direction:column;gap:5px}
+  .fx-title{font-size:7px;letter-spacing:2px;color:var(--textd);text-transform:uppercase;text-align:center}
+  /* 2026-08-28 (Mario: «es un poco dificil de leer»): UNA celda por linea. En dos columnas el
+     knob no pasaba de 26px dentro de una tira de 78 — con una sola columna entra al doble, y
+     el boton con su LED gana el ancho entero de la tira. El fader cede el sitio: es un numero
+     y ya tiene su lectura al pie. */
+  .fx-grid{display:grid;grid-template-columns:1fr;gap:7px}
+  .fx-cell{display:flex;flex-direction:column;align-items:center;gap:3px}
+  .fx-knob{width:46px;height:46px;cursor:ns-resize;touch-action:none}
+  .fx-knob .kd{fill:var(--panel2);stroke:var(--border);stroke-width:1}
+  .fx-knob .kt{stroke:var(--border);stroke-width:3;fill:none}
+  .fx-knob .ki{stroke:var(--fxl);stroke-width:2.5;stroke-linecap:round}
+  .fxbtn{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;white-space:nowrap;background:var(--panel);
+    border:1px solid var(--border);border-radius:2px;padding:4px 5px;cursor:pointer;font-size:9px;
+    letter-spacing:1px;color:#aeaebc;user-select:none}
+  .fxbtn .led{width:6px;height:6px;border-radius:50%;background:var(--border);flex:0 0 auto}
+  .fx-cell.on .fxbtn .led{background:var(--fxc)}
+  .fx-cell:not(.on){opacity:.4}
+
+  /* SECCION DE CANAL: las perillas que no son de escucha, una sola vez, sobre el canal elegido */
+  .strip.chsec{flex:0 0 132px;border-top-color:var(--gold);background:var(--panel)}
+  .strip.chsec .ch-head{justify-content:center}
+  .chsec .ch-num{color:var(--gold)}
+  .sec-inst{width:100%;text-align:center;font-size:9px;letter-spacing:1px;color:var(--textm);
+    padding:4px 2px;border:1px solid var(--border);border-radius:2px;background:var(--panel2);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chsec .fx{flex:1;display:flex;flex-direction:column}
+  .chsec .fx-grid{flex:1;justify-content:space-evenly}
+  .chsec .fx-knob{width:64px;height:64px}
+  .chsec .fxbtn{font-size:10px;padding:6px 5px}
+
+  /* master strip */
+  .strip.master{flex:0 0 124px;max-width:124px;border-top-color:var(--gold);background:var(--panel)}   /* más ancho que los canales (78px): es el general.
+     2026-08-24: el max-width:78px de .strip lo recortaba y la regla de arriba no hacia nada — la tira general medía lo mismo que un canal cualquiera. */
+  .strip.master .ch-head{justify-content:center}   /* título MASTER centrado */
+  .strip.master .knob{width:60px;height:60px}      /* L/R más grande: es general, no por canal */
+  .master .ch-num{color:var(--gold)}
+  .master .fader-fill{background:var(--gold)}
+  .master .fader-cap{border-color:var(--gold)}
+
+  /* ── FOOTER ──────────────────────────────────────────── */
+  .footer{
+    border-top:1px solid var(--border);background:var(--panel);
+    padding:9px 18px;font-size:11px;letter-spacing:1px;color:var(--textd);
+    display:flex;align-items:center;
+  }
+  .footer .v{color:var(--gold)}
+  .footer .mock{color:var(--rose)}
+  .footer strong{color:#fff;font-weight:700}
+  .footer a{color:var(--text)}
+
+  /* ── TRANSPORT (treatment B · synced via mm-sync) ─────── */
+  .pill.sync.on{border-color:var(--teal);background:var(--teal-d);color:var(--teal)}
+  .transport{
+    position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;row-gap:8px;
+    padding:12px 20px;border-top:2px solid var(--kb-border);background:var(--panel);
+  }
+  .transport-controls{display:flex;gap:5px;flex:1 1 0;min-width:max-content}
+  .transport-btn{
+    background:var(--panel2);border:1px solid var(--border);color:var(--textm);
+    font-size:19px;line-height:1;padding:8px 13px;border-radius:2px;cursor:pointer;
+  }
+  .transport-btn:hover{border-color:var(--blue);color:var(--blue)}
+  .transport-btn.playing{border-color:var(--teal);background:var(--teal-d);color:var(--teal)}
+  .transport-btn.nosync{opacity:.35;cursor:default}
+  .transport-btn.nosync:hover{border-color:var(--border);color:var(--textm)}
+  /* 2026-08-24 (pedido de Mario: «Go|Loop es parte esencial del uso, dale mas importancia»):
+     el navegador deja de colgar del reloj como una linea chica y pasa a ser una CAJA al lado del
+     tiempo, en la misma fila. Debajo de 880 px vuelve a apilarse, que es donde la fila no entra
+     entre el transporte y los contadores. */
+  .time-wrap{display:flex;flex:0 1 auto;margin:0 auto;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 18px;text-align:center}
+  .time-col{display:flex;flex-direction:column;align-items:center}
+  .ro-lbl{font-size:8px;letter-spacing:3px;color:var(--textd);text-transform:uppercase}
+  .time-wrap .time{font-size:28px;font-weight:500;color:var(--teal);letter-spacing:1px;line-height:1.05}
+  .transport-families{display:flex;gap:30px;flex:1 1 0;min-width:max-content;justify-content:flex-end}
+  .ro-grp{display:flex;gap:14px}
+  .ro-cell{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .ro-cell .ro-val{font-size:17px;font-weight:500;color:var(--text)}
+  /* 2026-08-24: el total, al lado del numero vigente (compas) y bajo el reloj (tiempo). SUBDIV se
+     fue: era la grilla de ESCRITURA del Score (STATE.gridDiv), que ni siquiera viaja por el bus —
+     mostraba 1 desde que se abria la app. En una mesa no significa nada; el total, si. */
+  .ro-tot{font-size:11px;font-weight:500;color:var(--textd);margin-left:1px}
+  .time-hdr{display:flex;align-items:baseline;gap:6px}
+  .time-tot{font-size:10px;color:var(--textd);letter-spacing:1px;line-height:1}
+  .ro-cell.gold .ro-val{color:var(--gold)}
+  /* 2026-08-28: el navegador de trabajo, colgado del reloj. La Console no conoce la partitura:
+     manda el numero de compas y el Score resuelve (GOTO / LOOP). */
+  .nav-row{display:flex;align-items:center;gap:6px;padding:5px 11px;border:1px solid var(--border);
+    border-radius:3px;background:var(--panel2)}
+  .nav-in{width:36px;background:transparent;border:none;border-bottom:1px solid var(--border);
+    color:var(--text);font-family:inherit;font-size:15px;text-align:center;padding:0 1px;outline:none}
+  .nav-in::placeholder{color:var(--textd);font-size:12px}
+  .nav-in:focus{border-bottom-color:var(--teal);color:var(--teal)}
+  .nav-lbl{font-size:9px;letter-spacing:2px}
+  .nav-lbl.go{color:var(--teal)}
+  .nav-lbl.loop{color:var(--gold)}
+  .nav-sep{width:1px;height:20px;background:var(--border);margin:0 3px}
+  .nav-row .transport-btn{font-size:14px;padding:4px 8px}
+  /* 2026-08-24 (Mario): A y B toman el color que tienen en el Score, donde el triangulo de A es
+     teal y el de B azul (SCORE NAVIGATOR, renderTriangle). El oro queda para el 🔁 encendido, que
+     es el color del boton LOOP activo del Score (.btn.active). */
+  .nav-row .nav-take{font-size:11px;padding:3px 6px;opacity:.7}
+  .nav-row .nav-take:hover{opacity:1}
+  .nav-row #takeA{color:var(--teal)}
+  .nav-row #takeA:hover{color:var(--teal);border-color:var(--teal)}
+  .nav-row #takeB{color:#5b8dee}
+  .nav-row #takeB:hover{color:#5b8dee;border-color:#5b8dee}
+  #loopAIn{color:var(--teal)}
+  #loopAIn:focus{border-bottom-color:var(--teal);color:var(--teal)}
+  #loopBIn{color:#5b8dee}
+  #loopBIn:focus{border-bottom-color:#5b8dee;color:#5b8dee}
+  .nav-row .nav-clr:hover{color:var(--rose);border-color:var(--rose)}
+  .nav-row .transport-btn.on{border-color:var(--gold);background:var(--gold-d);color:var(--gold)}
+  .nav-dash{font-size:12px;color:var(--textm)}
+  /* el reloj ya no esta posicionado en absoluto: los tres bloques del transporte son columnas de
+     un flex (los dos laterales con flex:1 1 0, asi el centro queda centrado de verdad) y el
+     navegador BAJA solo cuando la fila no entra, en vez de superponerse. */
+.themetog{display:inline-flex;gap:7px;align-items:center;vertical-align:middle;flex:none}
+.themetog button{width:16px;height:16px;border-radius:50%;border:1px solid var(--border);cursor:pointer;padding:0;transition:transform .12s,box-shadow .12s}
+.themetog button:hover{transform:scale(1.15)}
+.themetog button.on{box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--gold)}
+
+/* ── animación de cards y botones — TODOS los temas (clear overridea el color de la sombra) ── */
+.strip{transition:transform .15s,box-shadow .15s,border-color .15s}
+.strip:not(.dim):hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.55)}
+.transport-btn{transition:transform .12s,box-shadow .12s,border-color .12s,color .12s}
+.transport-btn:not(.nosync):hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.fxbtn{transition:transform .12s,box-shadow .12s,border-color .12s}
+.fx-cell.on:hover .fxbtn{transform:translateY(-1px);box-shadow:0 3px 9px rgba(0,0,0,.45)}
+.fx-cell.on:hover .fxbtn .led{box-shadow:0 0 6px var(--fxc)}
+.ms button{transition:transform .12s,box-shadow .12s,border-color .12s,color .12s}
+.ms button:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.45)}
+</style>
+<link rel="stylesheet" href="mm-theme.css">
+<style>
+/* ── CLEAR afinado para la densidad de la Console (no toca el canónico del sitio) ── */
+[data-theme="clear"]{
+  --bg:#e6dcb8;                 /* fondo más profundo → más contraste de texto + strips despegan */
+  --panel:#f7efd6;
+  --panel2:#fdf7e6;             /* strips más claros que el fondo = panel elevado */
+  --border:#bda268;             /* borde más marcado para separar bloques */
+  --text:#2a2410; --textm:#5e5436; --textd:#5e3c1a;   /* clear: los labels/títulos (gris claro en dark) → terracotta */
+  --gold:#936610; --gold-d:#ecdcae;
+  --teal:#2c8a5a; --teal-d:#c4e4cc;   /* teal jade cálido (2026-06-10) */
+  --rose:#a62f4e; --rose-d:#f0c6d0;
+  --blue:#36539c;
+  --kb-border:#7a2c42;
+  --led-lo:#2c8a5a; --led-mid:#936610; --led-hi:#a62f4e;
+}
+/* inactivos: menos fantasmal sobre crema */
+[data-theme="clear"] .strip.dim{opacity:.62}
+[data-theme="clear"] .fx-cell:not(.on){opacity:.5}
+/* sombras cálidas sobre crema (la animación base es de todos los temas) */
+[data-theme="clear"] .strip:not(.dim){box-shadow:0 2px 11px rgba(120,90,30,.17)}
+[data-theme="clear"] .strip:not(.dim):hover{box-shadow:0 12px 28px rgba(120,90,30,.24)}
+[data-theme="clear"] .transport-btn:not(.nosync):hover{box-shadow:0 4px 12px rgba(120,90,30,.20)}
+/* textos hardcodeados claro-sobre-claro → legibles en crema */
+[data-theme="clear"] .footer strong{color:#2a2410}
+/* header y footer en caramelo claro (más oscuros que el papel = marco cálido) */
+[data-theme="clear"] .topbar{background:#d6c186}
+[data-theme="clear"] .footer{background:#d6c186}
+[data-theme="clear"] .transport{background:#e3d2a0}   /* más claro que el marco → queda "adentro", no es la barra oscura */
+[data-theme="clear"] .strip.master{background:#e3d2a0}        /* master = mismo color que el transport */
+[data-theme="clear"] .master-col{background:#e3d2a0}          /* columna del master = mismo fondo que el transport */
+/* logo: el naranja Δ° se apaga sobre caramelo → caramelo-naranja más profundo */
+[data-theme="clear"] .topbar path[fill="#ea8b18"],
+[data-theme="clear"] .footer path[fill="#ea8b18"]{fill:#b5651d}
+[data-theme="clear"] .brand-score{color:#5e3c1a}   /* mmk en brown oscuro */
+/* estados activos apagados (tinte bajo en croma, no chillan sobre crema) */
+[data-theme="clear"] .ms button.m.on{background:#d6ccb6;border-color:#574b3b;color:#3f352a}   /* mute: marrón/grafito neutro ("apagado"), no el rose de dark */
+[data-theme="clear"] .ms button.s.on{background:#e9ddbb;border-color:#936610;color:#6e4e0e}
+[data-theme="clear"] .fxbtn{background:#f3ead0;border-color:#c2ad78;color:#5e3c1a}
+/* legibilidad en clear: los labels mono chicos se leen débiles por finos, no por color → más peso */
+[data-theme="clear"] .ch-num,
+[data-theme="clear"] .ro-lbl,
+[data-theme="clear"] .fx-title,
+[data-theme="clear"] .pan-val,
+[data-theme="clear"] .db,
+[data-theme="clear"] .fxbtn,
+[data-theme="clear"] .ch-instr,
+[data-theme="clear"] .pill{font-weight:500}
+/* y un escalón de tamaño en los labels de 7px, ilegibles a ese tamaño sobre crema */
+[data-theme="clear"] .fx-title{font-size:8px}
+[data-theme="clear"] .fxbtn{font-size:8px}
+[data-theme="clear"] .fxbtn .led{width:9px;height:9px}
+[data-theme="clear"] .ro-lbl{font-size:9px}
+[data-theme="clear"] .db{font-size:9px}
+[data-theme="clear"] .pan-val{font-size:9px}
+[data-theme="clear"] .fx-cell.on .fxbtn{border-color:#bda268}
+
+/* knobs legibles: pista + dial con más cuerpo sobre crema */
+[data-theme="clear"] .knob-track{stroke:#8a5d24}
+[data-theme="clear"] .knob-dial{fill:#f0e6c8;stroke:#8a5d24}
+[data-theme="clear"] .knob-ind{stroke:#936610}
+[data-theme="clear"] .fx-knob .kd{fill:#f0e6c8;stroke:#8a5d24}
+[data-theme="clear"] .fx-knob .kt{stroke:#8a5d24}
+/* #1 — bahía del fader: groove + meter recesados (que se lean sobre crema) + cap más presente */
+[data-theme="clear"] .fader-track{width:5px;background:#c6b083;box-shadow:inset 0 0 2px rgba(94,60,26,.38)}
+[data-theme="clear"]{--meter-off:#e3d7b6;--meter-tick:rgba(94,60,26,.45)}
+[data-theme="clear"] .meter{border-color:#c2ad78;box-shadow:inset 0 1px 2px rgba(94,60,26,.20)}
+[data-theme="clear"] .fader-cap{width:30px;height:13px;background:#f3ead0;border-color:#8a5d24;box-shadow:0 1px 4px rgba(94,60,26,.30)}
+/* knobs del header (luminosidad + volumen): resaltan contra el caramelo */
+[data-theme="clear"] #scVolKnob circle{fill:#f4ead0;stroke:#7a4f1c}
+[data-theme="clear"] #scVolKnob path{stroke:#7a4f1c}
+
+/* luces e indicadores: deepear los pastel inline para que piquen sobre crema */
+[data-theme="clear"] .ch-dot{box-shadow:0 0 0 1px rgba(60,45,15,.2)}
+/* fx en clear: 4 hues bien separados (oro · púrpura · rojo · azul) para no confundirse */
+[data-theme="clear"] .fx-cell[data-fx="agog"]{--fxc:#a8780e!important;--fxl:#a8780e!important}
+[data-theme="clear"] .fx-cell[data-fx="asym"]{--fxc:#7e3aa8!important;--fxl:#7e3aa8!important}
+[data-theme="clear"] .fx-cell[data-fx="pres"]{--fxc:#b0303a!important;--fxl:#b0303a!important}
+[data-theme="clear"] .fx-cell[data-fx="art"]{--fxc:#2a5db0!important;--fxl:#2a5db0!important}
+
+/* sombras cálidas de los botones chicos (la animación base es de todos los temas) */
+[data-theme="clear"] .fx-cell.on:hover .fxbtn{box-shadow:0 3px 9px rgba(120,90,30,.20)}
+[data-theme="clear"] .ms button:hover{box-shadow:0 3px 8px rgba(120,90,30,.18)}
+</style>
+<script src="mm-theme.js"></script>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-logo">
+        <a href="https://musicmotion.mariomaurano.com/" target="_blank" rel="noopener" data-title-es="Abrir el sitio Music Motion" data-title-en="Open the Music Motion site" title="Open the Music Motion site" style="display:inline-flex;align-items:center;vertical-align:middle;text-decoration:none"><svg class="brand-mm-logo" viewBox="0 0 1500 500" height="24" style="width:auto" role="img" aria-label="m∆°m Music Motion" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path fill="currentColor" d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path fill="#ea8b18" d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path fill="#ea8b18" d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg></a>
+        <span class="brand-name">CONSOLE</span><span class="brand-score">mmk</span>
+        <button id="coachEarBtn" data-title-es="Coach escuchando — clic para dormirlo" data-title-en="Coach listening — click to put it to sleep" title="Coach listening — click to put it to sleep">🎓</button>
+      </div>
+    </div>
+    <div class="topbar-spacer"></div>
+    <span class="lum-ctl" data-title-es="Luminosidad — brillo + contraste · doble clic = normal" data-title-en="Luminosity — brightness + contrast · double-click = normal" title="Luminosity — brightness + contrast · double-click = normal" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;flex:none;margin-right:8px;"><svg id="lumIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold,#c8a84a)" stroke-width="2" stroke-linecap="round" style="opacity:.85;flex:none;" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg><svg id="lumKnob" viewBox="0 0 40 40" width="42" height="42" style="cursor:ns-resize;touch-action:none;flex:none;" role="slider" aria-label="Luminosidad (brillo y contraste)"><circle cx="20" cy="20" r="16" fill="var(--panel,#0d0d18)" stroke="var(--border,#1e1e34)" stroke-width="2"/><circle cx="20" cy="20" r="16" fill="none" stroke="var(--gold,#c8a84a)" stroke-width="1" opacity="0.35"/><line id="lumInd" x1="20" y1="20" x2="20" y2="6" stroke="var(--gold,#c8a84a)" stroke-width="3" stroke-linecap="round" transform="rotate(-135 20 20)"/><circle cx="20" cy="20" r="2.2" fill="var(--gold,#c8a84a)"/></svg></span>
+    <button class="banco" id="bancoBtn"
+      data-title-es="Mostrar solo los canales que usa la obra, o el mueble entero de 32"
+      data-title-en="Show only the channels the work uses, or the full 32-channel desk"
+      title="Show only the channels the work uses">EN USO</button>
+    <button class="banco" id="neutroBtn" data-title-es="Console neutra: todos los faders de canal a 0 dB (100), sin mutes ni solos, y el master a 40 % — el punto de partida para calibrar la tabla del oído" data-title-en="Neutral desk: every channel fader to 0 dB (100) and the master to 40% — the starting point for the ear table" title="Neutral desk — channels 0 dB, no mute/solo, master 40%">NEUTRO</button>
+    <button class="banco" id="calibBtn" data-title-es="La tabla del oído — cada fader de canal que soltás anota instrumento · matiz · vel · fader · pico. Clic = descargar la tabla · doble clic = vaciar" data-title-en="The ear table — every channel fader you release logs instrument · dynamic · vel · fader · peak. Click = download · double-click = clear" title="The ear table — click = download · double-click = clear">CALIB 0</button>
+    <span style="display:inline-flex;gap:6px;align-items:center"><button class="mm-relief" onclick="openSimulatorWin()" data-title-es="Abrir ⊞ register sim" data-title-en="Open ⊞ register sim" title="Open ⊞ register sim" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:3px 9px;border:1px solid var(--rose);background:transparent;color:var(--rose);cursor:pointer;white-space:nowrap;transition:all .12s" onmouseover="this.style.background='var(--rose)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--rose)'">⊞ register sim</button><button class="mm-relief" onclick="openScoreWin()" data-title-es="Abrir ⊞ score" data-title-en="Open ⊞ score" title="Open ⊞ score" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:3px 9px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;white-space:nowrap;transition:all .12s" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--gold)'">⊞ score</button><button class="mm-relief" onclick="openKeyboardWin()" data-title-es="Abrir ⊞ keyboard" data-title-en="Open ⊞ keyboard" title="Open ⊞ keyboard" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:3px 9px;border:1px solid var(--blue);background:transparent;color:var(--blue);cursor:pointer;white-space:nowrap;transition:all .12s" onmouseover="this.style.background='var(--blue)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--blue)'">⊞ keyboard</button><button class="mm-relief" onclick="openCoach()" data-title-es="Coach (próximamente)" data-title-en="Coach (coming soon)" title="Coach (coming soon)" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:3px 9px;border:1px solid #9a7ad8;background:transparent;color:#9a7ad8;cursor:pointer;white-space:nowrap;transition:all .12s" onmouseover="this.style.background='#9a7ad8';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='#9a7ad8'">⊞ coach</button><button class="mm-relief" onclick="openPlayerWin()" data-title-es="Abrir ⊞ player" data-title-en="Open ⊞ player" title="Open ⊞ player" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:3px 9px;border:1px solid #6aa832;background:transparent;color:#6aa832;cursor:pointer;white-space:nowrap;transition:all .12s" onmouseover="this.style.background='#6aa832';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='#6aa832'">⊞ player</button></span>
+    <span class="themetog" title="Tema / Theme" style="margin-left:8px">
+      <button data-th="dark" class="on" onclick="setTheme('dark')" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" onclick="setTheme('gray')" style="background:#2c2e38" title="Gray"></button>
+      <button data-th="clear" onclick="setTheme('clear')" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" onclick="setTheme('contrast')" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </span>
+  </div>
+
+  <div class="console-body">
+    <div class="surface" id="surface"></div>
+    <div class="master-col" id="masterCol"></div>
+  </div>
+
+  
+  <div class="transport">
+    <div class="transport-controls">
+      <button class="transport-btn" data-goto="first" data-title-es="Primero · Ir al compas 1" data-title-en="First · Go to bar 1" title="First · Go to bar 1">⏮</button>
+      <button class="transport-btn" data-goto="prev" data-title-es="Compás anterior · Un compas atras" data-title-en="Previous bar · One bar back" title="Previous bar · One bar back">⏪</button>
+      <button class="transport-btn" id="playBtn" title="Play">▶</button>
+      <button class="transport-btn" id="pauseBtn" title="Pause">⏸</button>
+      <button class="transport-btn" id="stopBtn" title="Stop">⏹</button>
+      <button class="transport-btn" data-goto="next" data-title-es="Compás siguiente · Un compas adelante" data-title-en="Next bar · One bar forward" title="Next bar · One bar forward">⏩</button>
+      <button class="transport-btn" data-goto="last" data-title-es="Último · Ir al ultimo compas" data-title-en="Last · Go to the last bar" title="Last · Go to the last bar">⏭</button>
+    </div>
+    <div class="time-wrap"><div class="time-col"><span class="time-hdr"><span class="ro-lbl">Time</span><span class="time-tot" id="timeTot"></span></span><span class="time" id="positionDisplay">00:00.000</span></div>
+      <div class="nav-row">
+        <span class="ro-lbl nav-lbl go">Go</span>
+        <input class="nav-in" id="goToM" inputmode="numeric" placeholder="M"
+          data-title-es="Ir a un compas — escribi el numero y Enter" data-title-en="Go to a bar — type the number and Enter" title="Go to a bar — type the number and Enter">
+        <span class="nav-sep"></span>
+        <span class="ro-lbl nav-lbl loop">Loop</span>
+        <input class="nav-in" id="loopAIn" inputmode="numeric" placeholder="A"
+          data-title-es="Compas donde empieza el loop" data-title-en="Bar where the loop starts" title="Bar where the loop starts">
+        <button class="transport-btn nav-take" id="takeA"
+          data-title-es="Tomar el compas donde esta el playhead — parado o sonando" data-title-en="Stamp the bar the playhead is on — paused or playing" title="Stamp the bar the playhead is on">&#9673;</button>
+        <span class="nav-dash">&#8211;</span>
+        <input class="nav-in" id="loopBIn" inputmode="numeric" placeholder="B"
+          data-title-es="Compas donde termina el loop" data-title-en="Bar where the loop ends" title="Bar where the loop ends">
+        <button class="transport-btn nav-take" id="takeB"
+          data-title-es="Tomar el compas donde esta el playhead: se escribe el SIGUIENTE, porque B es donde vuelve" data-title-en="Stamp the bar the playhead is on: writes the NEXT one, because B is where it jumps back" title="Stamp the bar the playhead is on (writes the next one: B is where it jumps back)">&#9673;</button>
+        <button class="transport-btn" id="loopTgl"
+          data-title-es="Prender / apagar el loop A-B" data-title-en="Turn the A-B loop on / off" title="Turn the A-B loop on / off">&#128257;</button>
+        <button class="transport-btn nav-take nav-clr" id="loopClr"
+          data-title-es="Borrar el loop: quita A y B y lo apaga, aca y en la partitura" data-title-en="Clear the loop: removes A and B and turns it off, here and in the score" title="Clear the loop: removes A and B and turns it off">&#10005;</button>
+      </div>
+    </div>
+    <div class="transport-families">
+      <div class="ro-grp">
+        <div class="ro-cell" data-title-es="Compás vigente y total de la obra" data-title-en="Current bar and the work's total" title="Current bar and the work's total"><span class="ro-lbl">Measure</span><span><span class="ro-val" id="mVal">1</span><span class="ro-tot" id="mTot"></span></span></div>
+        <div class="ro-cell"><span class="ro-lbl">Beat</span><span class="ro-val" id="bVal">1</span></div>
+      </div>
+      <div class="ro-grp">
+        <div class="ro-cell gold" data-title-es="Tempo vigente en el compás que suena" data-title-en="Tempo in force at the sounding bar" title="Tempo in force at the sounding bar"><span class="ro-lbl">BPM</span><span class="ro-val" id="bpmVal">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span style="flex:1;min-width:0"><a href="../suite/index.html" target="_blank" rel="noopener" data-title-es="Abrir el sitio Music Motion" data-title-en="Open the Music Motion site" title="Open the Music Motion site" style="display:inline-flex;align-items:center;vertical-align:middle;text-decoration:none"><svg viewBox="0 0 1500 500" height="17" style="width:auto;vertical-align:middle" role="img" aria-label="m∆°m" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path fill="currentColor" d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path fill="#ea8b18" d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path fill="#ea8b18" d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg></a><span style="font-family:'Montserrat',sans-serif;font-size:10px"> Music Motion®</span> · <a href="../suite/console.html" target="_blank" rel="noopener" data-title-es="Abrir la página de la Console en el sitio" data-title-en="Open the Console page on the site" title="Open the Console page on the site" style="color:inherit;text-decoration:none">CONSOLE V2.1.4</a> · © 2001–2026 Music Motion</span>
+    <span style="font-size:10px;color:var(--textm);flex:1;min-width:0;text-align:right">All rights reserved</span>
+  </div>
+
+<script src="mm-presets.js"></script>
+<script>function mmLang(){try{return localStorage['getItem']('mmCoachLang')==='es'?'es':'en';}catch(a){return'en';}}function mmT(a,b){return mmLang()==='es'?a:b;}function mmSyncTexts(){const a=mmLang()==='es';document['querySelectorAll']('[data-es]')['forEach'](b=>{const c=a?b['dataset']['es']:b['dataset']['en'];if(c)b['textContent']=c;});try{pintarVisibles();}catch(b){}}window['addEventListener']('storage',a=>{if(a['key']==='mmCoachLang')mmSyncTexts();});const CH_COLORS=['#38b09a','#c8a84a','#c04468','#4868c0','#8870c8','#4aa8b0','#b09a38','#c06844','#6880c0','#70c888','#c88870','#88c870','#a848c0','#48c0a8','#c0a848','#8848c0','#d06890','#58b0d0','#b0c040','#9858b8','#40b070','#d09040','#6850b0','#d05858','#50b8a0','#c070b0','#80a850','#5070c8','#c89858','#70b0c0','#a8c068','#b85870'],CH_COLORS_CLEAR=['#14795f','#936610','#a62f4e','#34509c','#5a44a8','#166e78','#6f5e12','#9a4824','#3e57a0','#2e8a4e','#9c5640','#5a8a34','#82308f','#14826a','#8a7012','#5e2e94','#a8456b','#2e7e9c','#7a8a18','#6a3a8c','#1c8048','#9c6014','#443186','#a63030','#1e8670','#92407e','#587618','#2e4a9a','#946a1e','#3e7e8e','#6f8a2e','#8e3450'];function chPalette(){return document['documentElement']['getAttribute']('data-theme')==='clear'?CH_COLORS_CLEAR:CH_COLORS;}function applyChDots(){const a=chPalette();document['querySelectorAll']('.surface\x20.strip:not(.master)')['forEach'](function(b,d){const f=state[d],g=f&&f['color']?f['color']:a[d%a['length']];b['style']['setProperty']('--chc',g);});}const _extraPresets={};let _listActive=null;function instrumentMap(){if(_listActive)return _listActive;return Object['assign']({},window['MM_PRESETS_DEFAULT']||{},_extraPresets);}function instrumentList(){if(_listActive)return['\u2014']['concat'](Object['keys'](_listActive));if(window['MM_PRESETS_DEFAULT']){const a=Object['assign']({},window['MM_PRESETS_DEFAULT'],_extraPresets);return['\u2014']['concat'](Object['keys'](a));}return['—'];}let INSTRUMENTS=instrumentList();function rebuildInstrumentSelects(){INSTRUMENTS=instrumentList(),document['querySelectorAll']('.surface\x20.strip:not(.master)\x20.ch-instr')['forEach'](a=>{const b=a['value'];a['innerHTML']=window['MM_instrumentOptionsHTML'](instrumentMap(),b,{'includeNone':!![]});if(b&&INSTRUMENTS['indexOf'](b)<0x0)a['add'](new Option(b,b));if(b)a['value']=b;});}const surface=document['getElementById']('surface'),state=[],stripUpdaters=[],chActive=[];function masterLabel(a){if(a<=0.001)return'-∞\x20dB\x20·\x200%';const b=0x28*Math['log10'](a);return(b>0x0?'+':'')+b['toFixed'](0x0)+'\x20dB\x20·\x20'+Math['round'](a*0x64)+'%';}const CH_UNITY=0.65;function posToMix(a){return a<=CH_UNITY?Math['round'](a/CH_UNITY*0x64):Math['round'](0x64+(a-CH_UNITY)/(0x1-CH_UNITY)*0x1b);}function mixToPos(a){return a<=0x64?a/0x64*CH_UNITY:CH_UNITY+(a-0x64)/0x1b*(0x1-CH_UNITY);}function mixToDb(a){return a<=0x0?-Infinity:a<=0x64?0x14*Math['log10'](a/0x64):(a-0x64)/0x1b*0x6;}function dbLabel(a){const b=posToMix(a);if(b<=0x0)return'-∞\x20·\x200';const c=mixToDb(b);return(c>0x0?'+':'')+c['toFixed'](0x0)+'\x20dB\x20·\x20'+b;}function makeStrip(a){const b=chPalette()[a%CH_COLORS['length']];state[a]={'vol':CH_UNITY,'pan':0x0,'mute':![],'solo':![],'name':INSTRUMENTS[a%(INSTRUMENTS['length']-0x1)+0x1]||'—','abbr':'','level':0x0,'fx':{'agog':{'on':![],'amt':0x0},'pres':{'on':!![],'amt':0x64},'art':{'on':!![],'amt':0x64}}};const c=document['createElement']('div');c['className']='strip',c['dataset']['ch']=a,c['style']['setProperty']('--chc',b),c['innerHTML']='\x0a\x20\x20\x20\x20<div\x20class=\x22ch-head\x22>\x0a\x20\x20\x20\x20\x20\x20<span\x20class=\x22ch-dot\x22\x20style=\x22background:var(--chc)\x22></span>\x0a\x20\x20\x20\x20\x20\x20<span\x20class=\x22ch-num\x22>CH\x20'+(a+0x1)+'</span>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<select\x20class=\x22ch-instr\x22>'+window['MM_instrumentOptionsHTML'](instrumentMap(),state[a]['name'],{'includeNone':!![]})+'</select>\x0a\x20\x20\x20\x20<div\x20class=\x22ch-abbr\x22></div>\x0a\x20\x20\x20\x20<div\x20class=\x22knob-wrap\x22>\x0a\x20\x20\x20\x20\x20\x20<svg\x20class=\x22knob\x22\x20viewBox=\x220\x200\x2040\x2040\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<circle\x20class=\x22knob-dial\x22\x20cx=\x2220\x22\x20cy=\x2220\x22\x20r=\x2214\x22></circle>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<path\x20class=\x22knob-track\x22\x20d=\x22M9\x2028\x20A14\x2014\x200\x201\x201\x2031\x2028\x22></path>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<line\x20class=\x22knob-ind\x22\x20x1=\x2220\x22\x20y1=\x2220\x22\x20x2=\x2220\x22\x20y2=\x229\x22></line>\x0a\x20\x20\x20\x20\x20\x20</svg>\x0a\x20\x20\x20\x20\x20\x20<span\x20class=\x22bal-led\x22></span>\x0a\x20\x20\x20\x20\x20\x20<span\x20class=\x22pan-val\x22>C</span>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20class=\x22mf\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22meter\x22><div\x20class=\x22shade\x22></div><div\x20class=\x22scale\x22></div><div\x20class=\x22pk\x22></div><div\x20class=\x22over\x22></div></div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22fader\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22fader-track\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22fader-fill\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22fader-cap\x22></div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20class=\x22db\x22>0</div>\x0a\x20\x20\x20\x20<div\x20class=\x22ms\x22>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22m\x22>M</button>\x0a\x20\x20\x20\x20\x20\x20<button\x20class=\x22s\x22>S</button>\x0a\x20\x20\x20\x20</div>',surface['appendChild'](c),wireStrip(c,a);}function wireStrip(a,b){const c=a['querySelector']('.fader'),d=a['querySelector']('.fader-cap'),f=a['querySelector']('.fader-fill'),g=a['querySelector']('.db'),h=a['querySelector']('.knob'),j=a['querySelector']('.knob-ind'),k=a['querySelector']('.pan-val'),l=a['querySelector']('.bal-led'),m=a['querySelector']('.m'),n=a['querySelector']('.s'),o=a['querySelector']('.ch-instr');function p(){const t=state[b]['vol'];f['style']['height']=t*0x64+'%',d['style']['bottom']=t*0x64+'%',g['textContent']=dbLabel(t);}function q(){const t=state[b]['pan'],u=t*0x87;j['setAttribute']('transform','rotate('+u+'\x2020\x2020)'),k['textContent']=t===0x0?'C':Math['abs'](Math['round'](t*0x32))+(t<0x0?'L':'R');if(l){const v=Math['abs'](t),w=v>0.02,x=t<0x0?'#e23b3b':'#27c24c';l['style']['background']=w?x:'var(--textd)',l['style']['boxShadow']=w?'0\x200\x20'+(0x3+v*0x9)['toFixed'](0x1)+'px\x20'+x:'none',l['style']['opacity']=w?(0.55+v*0.45)['toFixed'](0x2):'0.4';}}p(),q(),stripUpdaters[b]={'fader':p,'pan':q,'mute':()=>{m['classList']['toggle']('on',state[b]['mute']);},'abbr':()=>{const t=a['querySelector']('.ch-abbr');if(t)t['textContent']=state[b]['abbr']||'';},'instr':()=>{const t=state[b]['name']||'—';if(t!=='—'&&!Array['prototype']['some']['call'](o['options'],u=>u['value']===t))o['add'](new Option(t,t));o['value']=t;}},drag(c,(t,u)=>{const w=0x1-(event['clientY']-u['top'])/u['height'];let x=Math['max'](0x0,Math['min'](0x1,w));if(x<0.04)x=0x0;if(x>0.97)x=0x1;if(Math['abs'](x-CH_UNITY)<0.025)x=CH_UNITY;state[b]['vol']=x,p(),emitMix(b,'volume',posToMix(x));}),c['addEventListener']('pointerup',()=>{emitMix(b,'volume',posToMix(state[b]['vol']));try{coachBalance(b);}catch(t){}try{calibAnotar(b);}catch(u){}});let r=0x0,s=0x0;h['addEventListener']('pointerdown',t=>{h['setPointerCapture'](t['pointerId']),r=t['clientY'],s=state[b]['pan'];const u=w=>{state[b]['pan']=Math['max'](-0x1,Math['min'](0x1,s-(w['clientY']-r)/0x50)),q();},v=()=>{h['removeEventListener']('pointermove',u),h['removeEventListener']('pointerup',v),emitMix(b,'pan',Math['round']((state[b]['pan']+0x1)/0x2*0x7f));};h['addEventListener']('pointermove',u),h['addEventListener']('pointerup',v);}),h['addEventListener']('dblclick',()=>{state[b]['pan']=0x0,q(),emitMix(b,'pan',0x40);}),m['addEventListener']('click',()=>{state[b]['mute']=!state[b]['mute'],m['classList']['toggle']('on',state[b]['mute']),applySolo(),emitMix(b,'muted',state[b]['mute']);}),n['addEventListener']('click',()=>{state[b]['solo']=!state[b]['solo'],n['classList']['toggle']('on',state[b]['solo']),applySoloAsMute(),applySolo();}),o['addEventListener']('change',()=>{state[b]['name']=o['value'],emitMix(b,'instrument',o['value']==='—'?null:o['value']);}),o['addEventListener']('mousedown',t=>{if(!window['MM_openInstrumentPalette'])return;t['preventDefault'](),o['blur'](),window['MM_openInstrumentPalette']({'anchor':o,'map':instrumentMap(),'includeNone':!![],'selected':o['value'],'onPick':u=>{if(![...o['options']]['some'](v=>v['value']===u))o['add'](new Option(u,u));o['value']=u,o['dispatchEvent'](new Event('change'));}});}),a['querySelector']('.ch-head')['addEventListener']('click',()=>seleccionarCanal(b));}const CMD_FX={'art':'FX_ART','pres':'FX_PRES','agog':'FX_AGOG'},SEC_FX=[{'key':'agog','lbl':'AGÓG','c':'#a08a46','l':'#d8bd6a'},{'key':'pres','lbl':'PRES','c':'#a86a52','l':'#d6936f'},{'key':'art','lbl':'ART','c':'#7f9bd6','l':'#a6bdee'}];let selCh=0x0;const secRender=[];function makeSeccionCanal(){const a=document['createElement']('div');a['className']='strip\x20chsec',a['innerHTML']='<div\x20class=\x22ch-head\x22><span\x20class=\x22ch-dot\x22\x20id=\x22secDot\x22></span><span\x20class=\x22ch-num\x22\x20id=\x22secNum\x22>CH\x201</span></div>'+'<div\x20class=\x22sec-inst\x22\x20id=\x22secInst\x22\x20data-title-es=\x22Canal\x20elegido\x20—\x20se\x20elige\x20con\x20un\x20clic\x20en\x20su\x20cabezal\x22\x20data-title-en=\x22Selected\x20channel\x20—\x20click\x20a\x20strip\x20header\x20to\x20choose\x20it\x22\x20title=\x22Selected\x20channel\x22>—</div>'+'<div\x20class=\x22sec-abbr\x22\x20id=\x22secAbbr\x22></div>'+'<div\x20class=\x22fx\x22><div\x20class=\x22fx-title\x22\x20data-es=\x22canal\x22\x20data-en=\x22channel\x22>'+mmT('canal','channel')+'</div><div\x20class=\x22fx-grid\x22>'+SEC_FX['map'](function(b){return'<div\x20class=\x22fx-cell\x20on\x22\x20data-fx=\x22'+b['key']+'\x22\x20style=\x22--fxc:'+b['c']+';--fxl:'+b['l']+'\x22>'+'<svg\x20class=\x22fx-knob\x22\x20viewBox=\x220\x200\x2040\x2040\x22><circle\x20class=\x22kd\x22\x20cx=\x2220\x22\x20cy=\x2220\x22\x20r=\x2214\x22></circle>'+'<path\x20class=\x22kt\x22\x20d=\x22M9\x2028\x20A14\x2014\x200\x201\x201\x2031\x2028\x22></path><line\x20class=\x22ki\x22\x20x1=\x2220\x22\x20y1=\x2220\x22\x20x2=\x2220\x22\x20y2=\x229\x22></line></svg>'+'<div\x20class=\x22fxbtn\x22><span\x20class=\x22led\x22></span><span\x20class=\x22fxlbl\x22>'+b['lbl']+'</span></div></div>';})['join']('')+'</div></div>',(document['getElementById']('masterCol')||surface)['appendChild'](a),wireSeccion(a);}function wireSeccion(a){a['querySelectorAll']('.fx-cell')['forEach'](b=>{const c=b['dataset']['fx'],d=b['querySelector']('.fx-knob'),f=b['querySelector']('.ki'),g=b['querySelector']('.fxbtn'),h=b['querySelector']('.fxlbl'),j=h['textContent'];function k(){const o=state[selCh];if(!o||!o['fx']||!o['fx'][c])return;const p=o['fx'][c]['amt'];f['setAttribute']('transform','rotate('+(p-0x64)/0x64*0x87+'\x2020\x2020)');const q=c==='pres'?(p-0x64)/0x32:null,r=c==='agog'?_agogNivel(p):null,s=q!=null?(q>0x0?'+':'\u2212')+Math['abs'](q)['toFixed'](0x1):r!=null?r===0x0?'OFF':'L'+r:String(p),u=c==='agog'?0x0:0x64;h['textContent']=p===u?j:s;const w=c['toUpperCase']()+'\x20'+(q!=null?s+'\x20escalones':r!=null?r===0x0?'sin\x20respiracion\x20automatica':'respiracion\x20automatica\x20nivel\x20'+r:p+'%');d['setAttribute']('title',w),d['setAttribute']('data-tip-up','');if(d['hasAttribute']('data-tip'))d['setAttribute']('data-tip',w);b['classList']['toggle']('on',o['fx'][c]['on']);}secRender['push'](k);const l=()=>{const o=CMD_FX[c];if(!o||!state[selCh])return;mmChannel['postMessage']({'cmd':o,'channel':selCh,'amt':state[selCh]['fx'][c]['amt'],'on':state[selCh]['fx'][c]['on'],'level':_agogNivel(state[selCh]['fx'][c]['amt']),'source':'console'}),markSync();};let m=0x0,n=0x0;d['addEventListener']('pointerdown',o=>{if(!state[selCh])return;d['setPointerCapture'](o['pointerId']),m=o['clientY'],n=state[selCh]['fx'][c]['amt'];const p=r=>{state[selCh]['fx'][c]['amt']=Math['max'](0x0,Math['min'](0xc8,Math['round'](n-(r['clientY']-m)))),k();},q=()=>{d['removeEventListener']('pointermove',p),d['removeEventListener']('pointerup',q),l();};d['addEventListener']('pointermove',p),d['addEventListener']('pointerup',q);}),d['addEventListener']('dblclick',()=>{if(!state[selCh])return;state[selCh]['fx'][c]['amt']=c==='agog'?0x0:0x64,k(),l();}),g['addEventListener']('click',()=>{if(!state[selCh])return;state[selCh]['fx'][c]['on']=!state[selCh]['fx'][c]['on'],k(),l();});});}function renderSeccion(){const a=state[selCh];if(!a)return;const b=document['querySelector']('.surface\x20.strip[data-ch=\x22'+selCh+'\x22]'),c=document['getElementById']('secDot');if(c&&b)c['style']['background']=b['style']['getPropertyValue']('--chc');const d=document['getElementById']('secNum');if(d)d['textContent']='CH\x20'+(selCh+0x1);const f=document['getElementById']('secInst');if(f){const h=b&&b['querySelector']('.ch-instr'),j=h&&h['selectedOptions']&&h['selectedOptions'][0x0];f['textContent']=j?j['textContent']:a['name']||'—';}const g=document['getElementById']('secAbbr');if(g)g['textContent']=a['abbr']||'';secRender['forEach'](k=>k());}function seleccionarCanal(a){if(!state[a])return;selCh=a,document['querySelectorAll']('.surface\x20.strip')['forEach'](b=>b['classList']['toggle']('sel',+b['dataset']['ch']===a)),renderSeccion();}function drag(a,b){a['addEventListener']('pointerdown',c=>{a['setPointerCapture'](c['pointerId']);const d=a['getBoundingClientRect'](),f=h=>{window['event']=h,b(h['clientY'],d);},g=()=>{a['removeEventListener']('pointermove',f),a['removeEventListener']('pointerup',g);};a['addEventListener']('pointermove',f),a['addEventListener']('pointerup',g),window['event']=c,b(c['clientY'],d);});}let verTodos=![],_panelSnap=null,_panelIds=null;function pintarVisibles(){let a=0x0,c=-0x1;document['querySelectorAll']('.surface\x20.strip:not(.master)')['forEach'](f=>{const g=+f['dataset']['ch'],h=chActive[g]!==![],j=verTodos||h;f['classList']['toggle']('off',!j);if(j){a++;if(c<0x0)c=g;}});const d=document['getElementById']('bancoBtn');if(d){const f=_panelIds?_panelIds['filter'](g=>chActive[g]!==![])['length']:0x0;d['textContent']=_panelIds?'PANEL\x20·\x20'+f:verTodos?state['length']+'\x20CH':mmT('EN\x20USO','IN\x20USE')+'\x20·\x20'+a,d['classList']['toggle']('todos',verTodos);}if(c>=0x0&&!verTodos&&chActive[selCh]===![])seleccionarCanal(c);}function applySolo(){const a=state['some'](b=>b['solo']);document['querySelectorAll']('.surface\x20.strip:not(.master)')['forEach'](b=>{const c=+b['dataset']['ch'],d=chActive[c]!==![],f=d&&!state[c]['mute']&&(!a||state[c]['solo']);b['classList']['toggle']('dim',!f);}),pintarVisibles();}function resetFx(){state['forEach']((a,b)=>{if(!a||!a['fx'])return;for(const c in a['fx']){const d=c==='agog'?0x0:0x64;a['fx'][c]['amt']=d,a['fx'][c]['on']=d>0x0;}}),renderSeccion();}function applyRoster(a){if(!Array['isArray'](a))return;a['forEach'](b=>{const d=b['id'];if(d==null||!state[d])return;chActive[d]=!!b['visible'];if(b['muted']!=null)state[d]['mute']=!!b['muted'];if(b['volume']!=null)state[d]['vol']=Math['max'](0x0,Math['min'](0x1,mixToPos(b['volume'])));if(b['pan']!=null)state[d]['pan']=Math['max'](-0x1,Math['min'](0x1,(b['pan']-0x40)/0x3f));state[d]['name']=b['instrument']||'—',state[d]['abbr']=b['abbr']||'';const f=document['querySelector']('.surface\x20.strip[data-ch=\x22'+d+'\x22]');if(f){if(b['color'])f['style']['setProperty']('--chc',b['color']);const h=f['querySelector']('.m');if(h)h['classList']['toggle']('on',state[d]['mute']);}const g=stripUpdaters[d]||{};g['fader']&&g['fader'](),g['pan']&&g['pan'](),g['instr']&&g['instr'](),g['abbr']&&g['abbr']();}),applySolo(),renderSeccion();}function makeMaster(){masterState={'vol':0.4,'levelL':0x0,'levelR':0x0,'bal':0x0};const a=document['createElement']('div');a['className']='strip\x20master',a['innerHTML']='\x0a\x20\x20\x20\x20<div\x20class=\x22ch-head\x22><span\x20class=\x22ch-num\x22>MASTER</span></div>\x0a\x20\x20\x20\x20<select\x20class=\x22ch-instr\x22\x20disabled><option>Stereo\x20Out</option></select>\x0a\x20\x20\x20\x20<div\x20class=\x22knob-wrap\x22><svg\x20class=\x22knob\x22\x20viewBox=\x220\x200\x2040\x2040\x22>\x0a\x20\x20\x20\x20\x20\x20<circle\x20class=\x22knob-dial\x22\x20cx=\x2220\x22\x20cy=\x2220\x22\x20r=\x2214\x22></circle>\x0a\x20\x20\x20\x20\x20\x20<path\x20class=\x22knob-track\x22\x20d=\x22M9\x2028\x20A14\x2014\x200\x201\x201\x2031\x2028\x22></path>\x0a\x20\x20\x20\x20\x20\x20<line\x20class=\x22knob-ind\x22\x20x1=\x2220\x22\x20y1=\x2220\x22\x20x2=\x2220\x22\x20y2=\x229\x22\x20style=\x22stroke:var(--gold)\x22></line>\x0a\x20\x20\x20\x20</svg><span\x20class=\x22bal-led\x22\x20id=\x22mBalLed\x22></span><span\x20class=\x22pan-val\x22>L\x20·\x20R</span></div>\x0a\x20\x20\x20\x20<div\x20class=\x22mfx\x20nolink\x22\x20id=\x22mFx\x22><div\x20class=\x22mfx-cell\x22\x20data-title-es=\x22Reverb\x20del\x20master\x20—\x20la\x20misma\x20perilla\x20REV\x20del\x20Keyboard\x20·\x20doble\x20clic\x20=\x2020\x22\x20data-title-en=\x22Master\x20reverb\x20—\x20the\x20same\x20REV\x20knob\x20as\x20the\x20Keyboard\x20·\x20double-click\x20=\x2020\x22\x20title=\x22Master\x20reverb\x20—\x20the\x20same\x20REV\x20knob\x20as\x20the\x20Keyboard\x20·\x20double-click\x20=\x2020\x22><span\x20class=\x22mfx-lbl\x22>Rev</span><svg\x20class=\x22knob\x22\x20data-fx=\x22rev\x22\x20viewBox=\x220\x200\x2040\x2040\x22><circle\x20class=\x22knob-dial\x22\x20cx=\x2220\x22\x20cy=\x2220\x22\x20r=\x2214\x22></circle><path\x20class=\x22knob-track\x22\x20d=\x22M9\x2028\x20A14\x2014\x200\x201\x201\x2031\x2028\x22></path><line\x20class=\x22knob-ind\x22\x20x1=\x2220\x22\x20y1=\x2220\x22\x20x2=\x2220\x22\x20y2=\x229\x22\x20style=\x22stroke:var(--teal)\x22></line></svg><span\x20class=\x22bal-led\x22\x20data-led=\x22rev\x22></span></div><div\x20class=\x22mfx-cell\x22\x20data-title-es=\x22Eco\x20del\x20master\x20—\x20la\x20misma\x20perilla\x20ECO\x20del\x20Keyboard\x20·\x20doble\x20clic\x20=\x200\x22\x20data-title-en=\x22Master\x20echo\x20—\x20the\x20same\x20ECO\x20knob\x20as\x20the\x20Keyboard\x20·\x20double-click\x20=\x200\x22\x20title=\x22Master\x20echo\x20—\x20the\x20same\x20ECO\x20knob\x20as\x20the\x20Keyboard\x20·\x20double-click\x20=\x200\x22><span\x20class=\x22mfx-lbl\x22>Eco</span><svg\x20class=\x22knob\x22\x20data-fx=\x22echo\x22\x20viewBox=\x220\x200\x2040\x2040\x22><circle\x20class=\x22knob-dial\x22\x20cx=\x2220\x22\x20cy=\x2220\x22\x20r=\x2214\x22></circle><path\x20class=\x22knob-track\x22\x20d=\x22M9\x2028\x20A14\x2014\x200\x201\x201\x2031\x2028\x22></path><line\x20class=\x22knob-ind\x22\x20x1=\x2220\x22\x20y1=\x2220\x22\x20x2=\x2220\x22\x20y2=\x229\x22\x20style=\x22stroke:var(--blue)\x22></line></svg><span\x20class=\x22bal-led\x22\x20data-led=\x22echo\x22></span></div><div\x20class=\x22mfx-cell\x22\x20data-title-es=\x22Tono\x20del\x20master\x20—\x20la\x20misma\x20perilla\x20TONO\x20del\x20Keyboard\x20·\x20doble\x20clic\x20=\x20plano\x22\x20data-title-en=\x22Master\x20tone\x20—\x20the\x20same\x20TONO\x20knob\x20as\x20the\x20Keyboard\x20·\x20double-click\x20=\x20flat\x22\x20title=\x22Master\x20tone\x20—\x20the\x20same\x20TONO\x20knob\x20as\x20the\x20Keyboard\x20·\x20double-click\x20=\x20flat\x22><span\x20class=\x22mfx-lbl\x22>Tono</span><svg\x20class=\x22knob\x22\x20data-fx=\x22tone\x22\x20viewBox=\x220\x200\x2040\x2040\x22><circle\x20class=\x22knob-dial\x22\x20cx=\x2220\x22\x20cy=\x2220\x22\x20r=\x2214\x22></circle><path\x20class=\x22knob-track\x22\x20d=\x22M9\x2028\x20A14\x2014\x200\x201\x201\x2031\x2028\x22></path><line\x20class=\x22knob-ind\x22\x20x1=\x2220\x22\x20y1=\x2220\x22\x20x2=\x2220\x22\x20y2=\x229\x22\x20style=\x22stroke:var(--gold)\x22></line></svg><span\x20class=\x22bal-led\x22\x20data-led=\x22tone\x22></span></div><div\x20class=\x22mfx-cell\x22\x20data-title-es=\x22Calor\x20del\x20master\x20—\x20la\x20misma\x20perilla\x20CAL\x20del\x20Keyboard\x20·\x20doble\x20clic\x20=\x200\x22\x20data-title-en=\x22Master\x20warmth\x20—\x20the\x20same\x20CAL\x20knob\x20as\x20the\x20Keyboard\x20·\x20double-click\x20=\x200\x22\x20title=\x22Master\x20warmth\x20—\x20the\x20same\x20CAL\x20knob\x20as\x20the\x20Keyboard\x20·\x20double-click\x20=\x200\x22><span\x20class=\x22mfx-lbl\x22>Cal</span><svg\x20class=\x22knob\x22\x20data-fx=\x22warm\x22\x20viewBox=\x220\x200\x2040\x2040\x22><circle\x20class=\x22knob-dial\x22\x20cx=\x2220\x22\x20cy=\x2220\x22\x20r=\x2214\x22></circle><path\x20class=\x22knob-track\x22\x20d=\x22M9\x2028\x20A14\x2014\x200\x201\x201\x2031\x2028\x22></path><line\x20class=\x22knob-ind\x22\x20x1=\x2220\x22\x20y1=\x2220\x22\x20x2=\x2220\x22\x20y2=\x229\x22\x20style=\x22stroke:var(--rose)\x22></line></svg><span\x20class=\x22bal-led\x22\x20data-led=\x22warm\x22></span></div></div>\x0a\x20\x20\x20\x20<div\x20class=\x22mf\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22meter\x22\x20id=\x22mL\x22><div\x20class=\x22shade\x22></div><div\x20class=\x22scale\x22></div><div\x20class=\x22pk\x22></div><div\x20class=\x22over\x22></div></div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22meter\x22\x20id=\x22mR\x22><div\x20class=\x22shade\x22></div><div\x20class=\x22scale\x22></div><div\x20class=\x22pk\x22></div><div\x20class=\x22over\x22></div></div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22fader\x22><div\x20class=\x22fader-track\x22></div><div\x20class=\x22fader-fill\x22></div><div\x20class=\x22fader-cap\x22></div></div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20class=\x22db\x22\x20id=\x22mdb\x22\x20style=\x22font-size:10px;color:var(--text);min-height:13px\x22>0</div>\x0a\x20\x20\x20\x20<div\x20class=\x22ms\x22><button\x20class=\x22m\x22\x20id=\x22masterMute\x22>MUTE</button></div>',(document['getElementById']('masterCol')||surface)['appendChild'](a);const b=a['querySelector']('.fader'),c=a['querySelector']('.fader-cap'),d=a['querySelector']('.fader-fill'),f=a['querySelector']('#mdb');function g(){d['style']['height']=masterState['vol']*0x64+'%',c['style']['bottom']=masterState['vol']*0x64+'%',f['textContent']=masterLabel(masterState['vol']);}g(),masterState['render']=g,drag(b,(u,w)=>{let x=Math['max'](0x0,Math['min'](0x1,0x1-(event['clientY']-w['top'])/w['height']));if(x<0.04)x=0x0;if(x>0.97)x=0x1;masterState['vol']=x,g(),emitMaster();}),b['addEventListener']('pointerup',emitMaster),a['querySelector']('#masterMute')['addEventListener']('click',u=>{masterState['mute']=!masterState['mute'],u['target']['classList']['toggle']('on',masterState['mute']),emitMaster();});const h=a['querySelector']('.knob'),j=a['querySelector']('.knob-ind'),k=a['querySelector']('.pan-val'),l=a['querySelector']('#mBalLed');function m(){const u=masterState['bal'];j['setAttribute']('transform','rotate('+u*0x87+'\x2020\x2020)'),k['textContent']=u===0x0?'L·R':Math['abs'](Math['round'](u*0x32))+(u<0x0?'L':'R');if(l){const v=Math['abs'](u),w=v>0.02,x=u<0x0?'#e23b3b':'#27c24c';l['style']['background']=w?x:'var(--textd)',l['style']['boxShadow']=w?'0\x200\x20'+(0x3+v*0x9)['toFixed'](0x1)+'px\x20'+x:'none',l['style']['opacity']=w?(0.55+v*0.45)['toFixed'](0x2):'0.4';}}masterState['renderBal']=m,m();let n=![],o=0x0,p=0x0;h['addEventListener']('pointerdown',u=>{n=!![],o=u['clientY'],p=masterState['bal'];try{h['setPointerCapture'](u['pointerId']);}catch(v){}u['preventDefault']();}),h['addEventListener']('pointermove',u=>{if(!n)return;masterState['bal']=Math['max'](-0x1,Math['min'](0x1,p-(u['clientY']-o)/0x50)),m(),emitMasterBal();});function q(){n&&(n=![],emitMasterBal());}h['addEventListener']('pointerup',q),h['addEventListener']('pointercancel',q),h['addEventListener']('lostpointercapture',q),h['addEventListener']('dblclick',()=>{masterState['bal']=0x0,m(),emitMasterBal();});const s={'rev':{'v':0x14,'cmd':'MASTER_REV','col':'var(--teal)','def':0x14,'bipolar':![]},'tone':{'v':0x37,'cmd':'MASTERTONE','col':'var(--gold)','def':0x32,'bipolar':!![]},'warm':{'v':0x32,'cmd':'MASTER_WARM','col':'var(--rose)','def':0x0,'bipolar':![]},'echo':{'v':0x0,'cmd':'MASTER_ECHO','col':'var(--blue)','def':0x0,'bipolar':![]}};masterState['fx']=s;function t(u){const v=s[u];if(!v)return;const w=a['querySelector']('.knob[data-fx=\x22'+u+'\x22]\x20.knob-ind'),x=a['querySelector']('[data-led=\x22'+u+'\x22]');if(w)w['setAttribute']('transform','rotate('+(-0x87+v['v']/0x64*0x10e)['toFixed'](0x1)+'\x2020\x2020)');if(x){const y=v['bipolar']?Math['abs'](v['v']-0x32)/0x32:v['v']/0x64,z=y>0.02;x['style']['background']=z?v['col']:'var(--textd)',x['style']['boxShadow']=z?'0\x200\x20'+(0x3+y*0x9)['toFixed'](0x1)+'px\x20'+v['col']:'none',x['style']['opacity']=z?(0.55+y*0.45)['toFixed'](0x2):'0.4';}}masterState['renderFx']=t,Object['keys'](s)['forEach'](u=>{t(u);const v=a['querySelector']('.knob[data-fx=\x22'+u+'\x22]');if(!v)return;const w=()=>{!COACH['fx']&&(COACH['fx']=!![],coachDecir('master-fx','REV,\x20TONO\x20y\x20CAL\x20son\x20del\x20master\x20del\x20Keyboard:\x20ajustes\x20de\x20la\x20sesión,\x20no\x20de\x20la\x20obra.\x20No\x20viajan\x20en\x20el\x20.mmf\x20—\x20si\x20afinás\x20un\x20pasaje\x20con\x20esto\x20puesto,\x20mañana\x20el\x20archivo\x20no\x20lo\x20trae.','REV,\x20TONO\x20and\x20CAL\x20belong\x20to\x20the\x20Keyboard\x20master:\x20session\x20settings,\x20not\x20the\x20work.\x20They\x20do\x20not\x20travel\x20in\x20the\x20.mmf\x20—\x20if\x20you\x20tune\x20a\x20passage\x20with\x20these\x20set,\x20tomorrow\x20the\x20file\x20will\x20not\x20carry\x20it.',{'knob':u}));const B={'cmd':s[u]['cmd'],'value':Math['round'](s[u]['v']),'source':'console'};mmChannel['postMessage'](B);try{if(window['opener']&&!window['opener']['closed'])window['opener']['postMessage'](B,'*');}catch(C){}markSync();};let x=![],y=0x0,z=0x0;v['addEventListener']('pointerdown',B=>{x=!![],y=B['clientY'],z=s[u]['v'];try{v['setPointerCapture'](B['pointerId']);}catch(C){}B['preventDefault']();}),v['addEventListener']('pointermove',B=>{if(!x)return;s[u]['v']=Math['max'](0x0,Math['min'](0x64,z-(B['clientY']-y)/1.6)),t(u),w();});const A=()=>{x&&(x=![],w());};v['addEventListener']('pointerup',A),v['addEventListener']('pointercancel',A),v['addEventListener']('lostpointercapture',A),v['addEventListener']('wheel',B=>{B['preventDefault'](),s[u]['v']=Math['max'](0x0,Math['min'](0x64,s[u]['v']-Math['sign'](B['deltaY'])*0x4)),t(u),w();},{'passive':![]}),v['addEventListener']('dblclick',()=>{s[u]['v']=s[u]['def'],t(u),w();});});}let masterState;for(let i=0x0;i<0x20;i++)makeStrip(i);makeSeccionCanal(),makeMaster(),seleccionarCanal(0x0),document['getElementById']('bancoBtn')['addEventListener']('click',()=>{verTodos=!verTodos,pintarVisibles();}),pintarVisibles(),applyChDots(),document['addEventListener']('mm-theme',applyChDots);const transport={'playing':![]},mmChannel=new BroadcastChannel('mm-sync'),playBtn=document['getElementById']('playBtn'),pauseBtn=document['getElementById']('pauseBtn'),stopBtn=document['getElementById']('stopBtn'),positionDisplay=document['getElementById']('positionDisplay'),mVal=document['getElementById']('mVal'),bVal=document['getElementById']('bVal'),mTot=document['getElementById']('mTot'),timeTot=document['getElementById']('timeTot');let _totBars=null,_totDur='';function fmtTot(a){a=Math['max'](0x0,Math['round'](a));const b=Math['floor'](a/0x3c),c=a%0x3c;return b+':'+String(c)['padStart'](0x2,'0');}function pintarTotales(){if(mTot)mTot['textContent']=_totBars?'\x20/\x20'+_totBars:'';if(timeTot)timeTot['textContent']=_totDur?'/\x20'+_totDur:'';}const bpmVal=document['getElementById']('bpmVal'),syncPill=document['getElementById']('syncPill');function setPlaying(a){transport['playing']=a,playBtn['classList']['toggle']('playing',a);}function resetPosition(){positionDisplay['textContent']='00:00.000',mVal['textContent']='1',bVal['textContent']='1',pintarTotales();}let syncTimer=null;function markSync(){if(!syncPill)return;syncPill['classList']['add']('on'),syncPill['textContent']='●\x20sync\x20·\x20active',clearTimeout(syncTimer),syncTimer=setTimeout(()=>{syncPill['classList']['remove']('on'),syncPill['textContent']='◯\x20sync\x20·\x20idle';},0x9c4);}playBtn['addEventListener']('click',()=>{mmChannel['postMessage']({'cmd':'PLAY','source':'console'}),setPlaying(!![]),markSync(),coachMezcla();}),pauseBtn['addEventListener']('click',()=>{mmChannel['postMessage']({'cmd':'PAUSE','source':'console'}),setPlaying(![]),markSync();}),stopBtn['addEventListener']('click',()=>{mmChannel['postMessage']({'cmd':'STOP','source':'console'}),setPlaying(![]),resetPosition(),markSync();}),document['querySelectorAll']('.transport-btn[data-goto]')['forEach'](a=>{a['addEventListener']('click',()=>{mmChannel['postMessage']({'cmd':'GOTO','where':a['dataset']['goto'],'source':'console'}),markSync();});});function _agogNivel(a){return Math['max'](0x0,Math['min'](0x2,Math['round'](a/0x64)));}const goToM=document['getElementById']('goToM'),loopAIn=document['getElementById']('loopAIn'),loopBIn=document['getElementById']('loopBIn'),loopTgl=document['getElementById']('loopTgl'),_num=a=>{const b=parseInt(a['value'],0xa);return isFinite(b)&&b>0x0?b:null;},emitirLoop=a=>{mmChannel['postMessage']({'cmd':'LOOP','a':_num(loopAIn),'b':_num(loopBIn),'on':a!=null?a:loopTgl['classList']['contains']('on'),'source':'console'}),markSync();};goToM['addEventListener']('keydown',a=>{if(a['key']!=='Enter')return;const b=_num(goToM);if(b==null)return;mmChannel['postMessage']({'cmd':'GOTO','where':b,'source':'console'}),markSync(),goToM['blur']();}),[loopAIn,loopBIn]['forEach'](a=>{a['addEventListener']('change',()=>emitirLoop()),a['addEventListener']('keydown',b=>{if(b['key']==='Enter')a['blur']();});}),loopTgl['addEventListener']('click',()=>emitirLoop(!loopTgl['classList']['contains']('on')));let _posM=0x1;document['getElementById']('takeA')['addEventListener']('click',()=>{loopAIn['value']=_posM,emitirLoop(loopTgl['classList']['contains']('on'));}),document['getElementById']('takeB')['addEventListener']('click',()=>{loopBIn['value']=_posM+0x1,emitirLoop(_num(loopAIn)!=null?!![]:loopTgl['classList']['contains']('on'));}),document['getElementById']('loopClr')['addEventListener']('click',()=>{loopAIn['value']='',loopBIn['value']='',emitirLoop(![]);});function pintarLoop(a){if(document['activeElement']!==loopAIn)loopAIn['value']=a['a']!=null?a['a']:'';if(document['activeElement']!==loopBIn)loopBIn['value']=a['b']!=null?a['b']:'';loopTgl['classList']['toggle']('on',!!a['on']);}function emitMix(a,b,c){mmChannel['postMessage']({'cmd':'MIX','chId':a,'field':b,'value':c,'source':'console'}),markSync();}let _soloMuteSnap=null;function applySoloAsMute(){const a=state['some'](b=>b['solo']);if(a){if(!_soloMuteSnap)_soloMuteSnap=state['map'](b=>!!b['mute']);for(let b=0x0;b<state['length'];b++){if(chActive[b]===![])continue;const c=!state[b]['solo'];if(state[b]['mute']!==c){state[b]['mute']=c;const d=stripUpdaters[b];if(d&&d['mute'])d['mute']();emitMix(b,'muted',c);}}}else{if(_soloMuteSnap){for(let f=0x0;f<state['length'];f++){if(chActive[f]===![])continue;const g=!!_soloMuteSnap[f];if(state[f]['mute']!==g){state[f]['mute']=g;const h=stripUpdaters[f];if(h&&h['mute'])h['mute']();emitMix(f,'muted',g);}}_soloMuteSnap=null;}}}function panelSolo(a,c){c=Array['isArray'](c)?c:[];if(a){if(!_panelSnap)_panelSnap=state['map'](d=>!!d['solo']);for(let d=0x0;d<state['length'];d++){if(chActive[d]===![])continue;state[d]['solo']=c['includes'](d);}_panelIds=c['slice'](),verTodos=![];}else{if(!_panelSnap)return;for(let f=0x0;f<state['length'];f++){if(chActive[f]===![])continue;state[f]['solo']=!!_panelSnap[f];}_panelSnap=null,_panelIds=null;}for(let g=0x0;g<state['length'];g++){const h=document['querySelector']('.surface\x20.strip[data-ch=\x22'+g+'\x22]\x20.s');if(h)h['classList']['toggle']('on',!!state[g]['solo']);}applySoloAsMute(),applySolo();}const COACH={'fx':![],'mix':![],'bal':{}};function coachDespierto(){try{return localStorage['getItem']('mmCoachEar')!=='off';}catch(a){return!![];}}function coachDecir(a,b,c,d){if(!coachDespierto())return;const f={'cmd':'COACH','topic':a,'source':'console','text':mmT(b,c),'data':d||{}};try{mmChannel['postMessage'](f);}catch(g){}try{if(window['opener']&&!window['opener']['closed'])window['opener']['postMessage'](f,'*');}catch(h){}}function coachMezcla(){if(COACH['mix'])return;let a=0x0,b=0x0;const c=[];state['forEach']((d,f)=>{if(chActive[f]===![])return;a++;if(d['mute'])b++;if(d['solo'])c['push'](d['name']||'CH'+(f+0x1));});if(!a)return;if(c['length'])COACH['mix']=!![],coachDecir('mix-context','Estás\x20en\x20solo:\x20suena\x20'+c['join'](',\x20')+'\x20y\x20nada\x20más.\x20El\x20solo\x20es\x20de\x20la\x20mesa,\x20no\x20de\x20la\x20partitura\x20—\x20lo\x20que\x20oigas\x20no\x20es\x20la\x20obra\x20hasta\x20que\x20lo\x20saques.','You\x20are\x20soloing:\x20only\x20'+c['join'](',\x20')+'\x20is\x20sounding.\x20Solo\x20belongs\x20to\x20the\x20desk,\x20not\x20to\x20the\x20score\x20—\x20what\x20you\x20hear\x20is\x20not\x20the\x20work\x20until\x20you\x20clear\x20it.',{'solos':c,'enObra':a});else b&&(COACH['mix']=!![],coachDecir('mix-context','Estás\x20oyendo\x20'+(a-b)+'\x20de\x20'+a+'\x20voces:\x20hay\x20'+b+'\x20apagada'+(b>0x1?'s':'')+'\x20en\x20la\x20mesa.\x20Media\x20hora\x20de\x20trabajo\x20con\x20una\x20voz\x20muda\x20es\x20media\x20hora\x20sobre\x20una\x20orquestación\x20que\x20no\x20existe.','You\x20are\x20hearing\x20'+(a-b)+'\x20of\x20'+a+'\x20voices:\x20'+b+'\x20muted\x20at\x20the\x20desk.\x20Half\x20an\x20hour\x20of\x20work\x20with\x20a\x20voice\x20muted\x20is\x20half\x20an\x20hour\x20on\x20an\x20orchestration\x20that\x20does\x20not\x20exist.',{'enObra':a,'mudas':b}));}const BAL_GAP_DB=0xc;function coachBalance(a){if(COACH['bal'][a])return;const b=g=>g<=0.001?-Infinity:0x14*Math['log10'](g);let c=-Infinity;state['forEach']((g,h)=>{if(h===a||chActive[h]===![]||g['mute'])return;c=Math['max'](c,b(g['vol']));});if(!isFinite(c))return;const d=b(state[a]['vol']);if(!(c-d>=BAL_GAP_DB)||!isFinite(d))return;COACH['bal'][a]=!![];const f=state[a]['name']||'CH\x20'+(a+0x1);coachDecir('balance',f+'\x20quedó\x20'+Math['round'](c-d)+'\x20dB\x20por\x20debajo\x20del\x20resto.\x20En\x20la\x20orquesta\x20real,\x20a\x20esa\x20distancia\x20el\x20instrumento\x20ya\x20no\x20se\x20oye\x20dentro\x20del\x20tutti:\x20no\x20está\x20bajo,\x20está\x20afuera.',f+'\x20is\x20now\x20'+Math['round'](c-d)+'\x20dB\x20below\x20the\x20rest.\x20In\x20a\x20real\x20orchestra,\x20at\x20that\x20distance\x20the\x20instrument\x20is\x20no\x20longer\x20heard\x20inside\x20the\x20tutti:\x20it\x20is\x20not\x20quiet,\x20it\x20is\x20out.',{'ch':a+0x1,'instrument':f,'gap':Math['round'](c-d)});}function emitMaster(){const a=masterState&&masterState['mute']?0x0:Math['round'](((masterState&&masterState['vol'])!=null?masterState['vol']:0.4)*0x7f),b={'cmd':'MASTER','value':a,'source':'console'};mmChannel['postMessage'](b);try{if(window['opener']&&!window['opener']['closed'])window['opener']['postMessage'](b,'*');}catch(c){}markSync();}function emitMasterBal(){const a=masterState&&masterState['bal']!=null?masterState['bal']:0x0;mmChannel['postMessage']({'cmd':'MASTER_BAL','value':Math['round'](a*0x3f+0x40),'source':'console'}),markSync();}mmChannel['onmessage']=a=>{const b=a['data']||{};if(b['source']==='console')return;if(b['cmd']==='LEVELS'){recibirLevels(b);return;}markSync();switch(b['cmd']){case'PLAY':setPlaying(!![]),coachMezcla();break;case'PAUSE':setPlaying(![]);break;case'STOP':setPlaying(![]),resetPosition();break;case'POSITION':if(b['time']!=null)positionDisplay['textContent']=b['time'];b['measure']!=null&&(mVal['textContent']=b['measure'],_posM=b['measure']);if(b['beat']!=null)bVal['textContent']=b['beat'];b['dur']!=null&&(_totDur=typeof b['dur']==='number'?fmtTot(b['dur']):String(b['dur']),pintarTotales());if(b['bpm']!=null)bpmVal['textContent']=Math['round'](b['bpm']*0x64)/0x64;break;case'MIX':{const c=b['chId'];if(c==null||!state[c])break;const d=stripUpdaters[c]||{};switch(b['field']){case'muted':state[c]['mute']=!!b['value'],d['mute']&&d['mute'](),applySolo();break;case'volume':state[c]['vol']=mixToPos(b['value']??0x64),d['fader']&&d['fader']();break;case'pan':{let f=((b['value']??0x40)-0x40)/0x3f;state[c]['pan']=Math['max'](-0x1,Math['min'](0x1,f)),d['pan']&&d['pan']();break;}case'instrument':state[c]['name']=b['value']||'—',d['instr']&&d['instr'](),renderSeccion();break;case'abbr':state[c]['abbr']=b['value']||'',d['abbr']&&d['abbr'](),renderSeccion();break;}break;}case'MASTER':{masterState['vol']=Math['max'](0x0,Math['min'](0x1,(b['value']??0x64)/0x7f));if(masterState['render'])masterState['render']();break;}case'MASTER_BAL':{masterState['bal']=Math['max'](-0x1,Math['min'](0x1,((b['value']??0x40)-0x40)/0x3f));if(masterState['renderBal'])masterState['renderBal']();break;}case'MASTER_REV':case'MASTERTONE':case'MASTER_WARM':case'MASTER_ECHO':{const g=b['cmd']==='MASTER_REV'?'rev':b['cmd']==='MASTERTONE'?'tone':b['cmd']==='MASTER_WARM'?'warm':'echo';if(masterState&&masterState['fx']&&masterState['fx'][g]){masterState['fx'][g]['v']=Math['max'](0x0,Math['min'](0x64,Math['round'](b['value']??masterState['fx'][g]['v'])));if(masterState['renderFx'])masterState['renderFx'](g);}break;}case'ROSTER':applyRoster(b['channels']);if(b['obra']!=null)window['_obraNombre']=String(b['obra']);if(b['bars']!=null)_totBars=Math['max'](0x1,b['bars']|0x0);if(b['dur']!=null)_totDur=typeof b['dur']==='number'?fmtTot(b['dur']):String(b['dur']);pintarTotales();break;case'FX_RESET':resetFx();break;case'PANEL_SOLO':panelSolo(!!b['on'],b['channelIds']);break;case'LOOP_STATE':pintarLoop(b);break;case'AGOG_STATE':(b['levels']||[])['forEach']((h,j)=>{if(!state[j]||!state[j]['fx']||!state[j]['fx']['agog'])return;state[j]['fx']['agog']['amt']=Math['max'](0x0,Math['min'](0x2,h|0x0))*0x64,state[j]['fx']['agog']['on']=(h|0x0)>0x0;}),renderSeccion();break;case'PRESET':b['name']&&b['cfg']&&(_extraPresets[b['name']]=b['cfg'],rebuildInstrumentSelects());break;case'LIST':if(b['presets']&&Object['keys'](b['presets'])['length']){_listActive=b['presets'];for(const h in b['presets'])_extraPresets[h]=b['presets'][h];rebuildInstrumentSelects();}else b['presets']&&(_listActive=null,rebuildInstrumentSelects());break;}},mmChannel['postMessage']({'cmd':'ROSTER_REQ','source':'console'}),mmChannel['postMessage']({'cmd':'LIST_REQ','source':'console'}),mmChannel['postMessage']({'cmd':'MASTER_FX_REQ','source':'console'});try{window['opener']&&(window['opener']['postMessage']({'cmd':'ROSTER_REQ','source':'console'},'*'),window['opener']['postMessage']({'cmd':'LIST_REQ','source':'console'},'*'));}catch(D){}window['addEventListener']('message',a=>{const b=a['data'];if(b&&b['cmd'])try{mmChannel['onmessage']({'data':b});}catch(c){}});const MTR_ESCALA=[[0x0,0x64],[-0x3,0x5e],[-0x6,0x58],[-0xa,0x50],[-0xe,0x48],[-0x14,0x3e],[-0x1e,0x2e],[-0x28,0x20],[-0x32,0x16],[-0x3c,0xc],[-0x48,0x0]],MTR_CAIDA=0x14,MTR_PICO_HOLD=0x5dc,MTR_PICO_CAIDA=0xc,MTR_OVER=-0.5;let METER_FLOOR=-0x48;function dbToPct(c){if(c>=0x0)return 0x64;const f=MTR_ESCALA[MTR_ESCALA['length']-0x1];if(c<=f[0x0])return 0x0;for(let g=0x1;g<MTR_ESCALA['length'];g++){const h=MTR_ESCALA[g-0x1],j=MTR_ESCALA[g];if(c>=j[0x0])return j[0x1]+(c-j[0x0])/(h[0x0]-j[0x0])*(h[0x1]-j[0x1]);}return 0x0;}function _escaleraMedidor(){const a=dbToPct(-0xc)['toFixed'](0x1),b=dbToPct(-0x3)['toFixed'](0x1);return'linear-gradient(to\x20top,var(--led-lo)\x200%,var(--led-lo)\x20'+a+'%,'+'var(--led-mid)\x20'+a+'%,var(--led-mid)\x20'+b+'%,var(--led-hi)\x20'+b+'%)';}function _marcasMedidor(){const a=[-0x6,-0x14,-0x28,-0x3c]['map'](function(c){const f=dbToPct(c)['toFixed'](0x1);return'linear-gradient(to\x20top,transparent\x20calc('+f+'%\x20-\x201px),var(--meter-tick)\x20calc('+f+'%\x20-\x201px),'+'var(--meter-tick)\x20'+f+'%,transparent\x20'+f+'%)';})['join'](','),b='repeating-linear-gradient(to\x20top,rgba(0,0,0,.6)\x200\x201px,transparent\x201px\x205px)';return a+','+b;}function _armarMedidor(a){a['style']['backgroundImage']=_escaleraMedidor(),a['querySelector']('.scale')['style']['backgroundImage']=_marcasMedidor();const b={'shade':a['querySelector']('.shade'),'pkEl':a['querySelector']('.pk'),'overEl':a['querySelector']('.over'),'db':METER_FLOOR,'target':METER_FLOOR,'pico':METER_FLOOR,'picoT':0x0,'over':![]};return a['addEventListener']('click',function(){b['over']=![];}),b;}const mtrCh=[...document['querySelectorAll']('.surface\x20.strip:not(.master)\x20.meter')]['map'](_armarMedidor),mtrMaster=['mL','mR']['map'](function(a){return _armarMedidor(document['getElementById'](a));}),mtrTodos=mtrCh['concat'](mtrMaster);function _apuntar(a,b){a['target']=b;if(b>a['db'])a['db']=b;b>a['pico']&&(a['pico']=b,a['picoT']=performance['now']());if(b>=MTR_OVER)a['over']=!![];}let _vels=[];function recibirLevels(a){if(a['floor']!=null)METER_FLOOR=a['floor'];if(Array['isArray'](a['vels']))_vels=a['vels'];const b=a['levels']||[],c=a['master']||[];for(let d=0x0;d<mtrCh['length'];d++)_apuntar(mtrCh[d],b[d]!=null?b[d]:METER_FLOOR);_apuntar(mtrMaster[0x0],c[0x0]!=null?c[0x0]:METER_FLOOR),_apuntar(mtrMaster[0x1],c[0x1]!=null?c[0x1]:METER_FLOOR);}const CALIB_DYN=[['ppp',0x10],['pp',0x21],['p',0x31],['mp',0x40],['mf',0x50],['f',0x60],['ff',0x70],['fff',0x7f]];function calibDyn(a){if(a==null)return'—';let c='—',d=0x3b9aca00;for(const [f,g]of CALIB_DYN){const h=Math['abs'](a-g);h<d&&(d=h,c=f);}return c;}function calibLeer(){try{return JSON['parse'](localStorage['getItem']('mm-calib')||'[]');}catch(a){return[];}}function calibGuardar(c){try{localStorage['setItem']('mm-calib',JSON['stringify'](c));}catch(f){}const d=document['getElementById']('calibBtn');if(d)d['textContent']='CALIB\x20'+c['length'];}function calibAnotar(b){const c=state[b]['vol'],d=_vels[b],f=mtrCh[b],g=f?Math['round'](Math['max'](f['pico'],f['db'])*0xa)/0xa:null,h=(masterState&&masterState['vol'])!=null?masterState['vol']:0.4,j={'t':new Date()['toISOString']()['slice'](0x0,0x10)['replace']('T','\x20'),'ch':b+0x1,'instr':state[b]['name']||'—','dyn':calibDyn(d),'vel':d==null?null:d,'fader':posToMix(c),'faderDb':c>0.001?Math['round'](mixToDb(posToMix(c))*0xa)/0xa:null,'picoDb':g,'masterPct':Math['round'](h*0x64),'masterDb':h>0.001?Math['round'](0x28*Math['log10'](h)*0xa)/0xa:null,'obra':window['_obraNombre']||document['title']||''},k=calibLeer();k['push'](j),calibGuardar(k),console['log']('[calib]',j['instr'],j['dyn'],'vel',j['vel'],'·\x20fader',j['faderPct']+'%\x20'+j['faderDb']+'\x20dB','·\x20pico',j['picoDb'],'dBFS\x20·\x20master',j['masterPct']+'%');}function calibDescargar(){const b=calibLeer();if(!b['length']){alert('CALIB:\x20todavía\x20no\x20hay\x20filas\x20—\x20soltá\x20un\x20fader\x20de\x20canal\x20mientras\x20suena.');return;}const c=['#\x20Calibración\x20—\x20filas\x20anotadas\x20en\x20la\x20Console\x20(formato\x20de\x20dinamicas-por-instrumento.md:\x20vel\x20·\x20master%\x20·\x20dB)','','|\x20fecha\x20|\x20ch\x20|\x20instrumento\x20|\x20matiz\x20|\x20vel\x20|\x20fader\x20(100\x20=\x200\x20dB)\x20|\x20fader\x20dB\x20|\x20pico\x20canal\x20dBFS\x20|\x20master\x20%\x20|\x20master\x20dB\x20|\x20obra\x20|','|---|---|---|---|---|---|---|---|---|---|---|'];for(const l of b)c['push']('|\x20'+[l['t'],l['ch'],l['instr'],l['dyn'],l['vel']==null?'':l['vel'],l['fader']!=null?l['fader']:l['faderPct'],l['faderDb']==null?'-∞':l['faderDb'],l['picoDb']==null?'':l['picoDb'],l['masterPct'],l['masterDb']==null?'-∞':l['masterDb'],l['obra']]['join']('\x20|\x20')+'\x20|');c['push']('','##\x20Celdas\x20listas\x20para\x20pegar\x20(última\x20fila\x20por\x20instrumento\x20y\x20matiz)','');const d={};for(const m of b)d[m['instr']+'|'+m['dyn']]=m;for(const n in d){const o=d[n],p=o['fader']!=null?o['fader']:Math['round']((o['faderPct']||0x0)*1.27);c['push']('-\x20`'+o['instr']+'`\x20'+o['dyn']+':\x20`'+(o['vel']==null?'?':o['vel'])+'\x20·\x20'+(p===0x64?o['masterPct']+'%':'VOL\x20'+p)+'\x20·\x20'+(o['faderDb']==null?'?':o['faderDb'])+'`\x20\x20(pico\x20'+(o['picoDb']==null?'?':o['picoDb'])+'\x20dBFS\x20·\x20master\x20'+o['masterPct']+'%)');}const g=new Blob([c['join']('\x0a')],{'type':'text/markdown'}),h=URL['createObjectURL'](g),j=document['createElement']('a');j['href']=h,j['download']='calibracion-dinamicas-'+new Date()['toISOString']()['slice'](0x0,0xa)+'.md',document['body']['appendChild'](j),j['click'](),j['remove'](),setTimeout(()=>URL['revokeObjectURL'](h),0x7d0);}function consoleNeutra(){for(let a=0x0;a<state['length'];a++){if(!state[a])continue;state[a]['vol']=CH_UNITY;const b=stripUpdaters[a];if(b&&b['fader'])b['fader']();emitMix(a,'volume',0x64);if(state[a]['mute']){state[a]['mute']=![];if(b&&b['mute'])b['mute']();emitMix(a,'muted',![]);}if(state[a]['solo']){state[a]['solo']=![];const c=document['querySelector']('.surface\x20.strip[data-ch=\x22'+a+'\x22]\x20.s');if(c)c['classList']['remove']('on');}}try{applySolo();}catch(d){}if(masterState){masterState['vol']=0.4;if(masterState['render'])masterState['render']();emitMaster();}}(function(){const a=document['getElementById']('neutroBtn');if(a)a['addEventListener']('click',consoleNeutra);}()),(function(){const a=document['getElementById']('calibBtn');if(!a)return;a['textContent']='CALIB\x20'+calibLeer()['length'];let c=null;a['addEventListener']('click',()=>{if(c){clearTimeout(c),c=null;return;}c=setTimeout(()=>{c=null,calibDescargar();},0x104);}),a['addEventListener']('dblclick',()=>{if(confirm('CALIB:\x20¿vaciar\x20las\x20'+calibLeer()['length']+'\x20filas\x20anotadas?'))calibGuardar([]);});}());let _mtrT=performance['now']();function pintarMedidores(a){const b=Math['min'](0.1,(a-_mtrT)/0x3e8);_mtrT=a;for(let c=0x0;c<mtrTodos['length'];c++){const d=mtrTodos[c];if(d['target']>d['db'])d['db']=d['target'];else d['db']=Math['max'](METER_FLOOR,d['db']-MTR_CAIDA*b);if(a-d['picoT']>MTR_PICO_HOLD)d['pico']=d['pico']-MTR_PICO_CAIDA*b;if(d['pico']<d['db'])d['pico']=d['db'];d['shade']['style']['height']=(0x64-dbToPct(d['db']))['toFixed'](0x1)+'%',d['pkEl']['style']['bottom']=dbToPct(d['pico'])['toFixed'](0x1)+'%',d['pkEl']['style']['opacity']=d['pico']>METER_FLOOR?'1':'0',d['overEl']['classList']['toggle']('on',d['over']);}requestAnimationFrame(pintarMedidores);}requestAnimationFrame(pintarMedidores);</script>
+<script>(function(){var a='mm-luminosity',b=0x0,c='<circle\x20cx=\x2212\x22\x20cy=\x2212\x22\x20r=\x224\x22/><path\x20d=\x22M12\x202v2M12\x2020v2M2\x2012h2M20\x2012h2M5.6\x205.6l1.4\x201.4M17\x2017l1.4\x201.4M18.4\x205.6L17\x207M7\x2017l-1.4\x201.4\x22/>',d='<path\x20d=\x22M20.5\x2013.2A8.5\x208.5\x200\x201\x201\x2010.8\x203.5\x206.6\x206.6\x200\x200\x200\x2020.5\x2013.2Z\x22/>';function e(k){var l=document['getElementById']('lumIcon');if(l)l['innerHTML']=k?d:c;}function f(k){return Math['max'](0x0,Math['min'](0x64,k));}function g(k){b=f(k);var l=document['documentElement']['getAttribute']('data-theme')==='clear';e(l);var m='';b>0x0&&(l?m='brightness('+(0x1-b/0x64*0.32)['toFixed'](0x3)+')':m='brightness('+(0x1+b/0x64*0.55)['toFixed'](0x3)+')\x20contrast('+(0x1+b/0x64*0.25)['toFixed'](0x3)+')');document['documentElement']['style']['filter']=m;var n=document['getElementById']('lumInd');if(n)n['setAttribute']('transform','rotate('+(-0x87+b/0x64*0x10e)['toFixed'](0x1)+'\x2020\x2020)');}document['addEventListener']('mm-theme',function(){g(b);});function h(){try{localStorage['setItem'](a,String(Math['round'](b)));}catch(k){}}function i(){var k=parseFloat(localStorage['getItem'](a));return k>=0x0&&k<=0x64?k:0x0;}function j(){var l=document['getElementById']('lumKnob');if(!l)return;g(i());var m=![],n=0x0,o=0x0;l['addEventListener']('pointerdown',function(p){m=!![],n=p['clientY'],o=b;try{l['setPointerCapture'](p['pointerId']);}catch(q){}p['preventDefault']();}),l['addEventListener']('pointermove',function(p){if(m)g(o+(n-p['clientY'])*0.7);}),l['addEventListener']('pointerup',function(){m&&(m=![],h());}),l['addEventListener']('dblclick',function(){g(0x0),h();}),l['addEventListener']('wheel',function(p){p['preventDefault'](),g(b-Math['sign'](p['deltaY'])*0x4),h();},{'passive':![]});}if(document['readyState']!=='loading')j();else document['addEventListener']('DOMContentLoaded',j);window['addEventListener']('storage',function(k){if(k['key']===a){var l=parseFloat(k['newValue']);if(l>=0x0&&l<=0x64)g(l);}});}());</script>
+<script>const _suiteWins={};function _openWin(a,b,c,d){const e=_suiteWins[b];if(e&&!e['closed']){e['focus']();return;}_suiteWins[b]=window['open'](a,b,'width='+c+',height='+d+',menubar=no,toolbar=no,status=no,resizable=yes');}function openCoach(){}function openKeyboardWin(){_openWin('mmk-scorekeyboard.html','mm-keyboard',0x500,0x384);}function openScoreWin(){_openWin('mm-score-page.html','mm-score',0x4b0,0x35c);}function openSimulatorWin(){_openWin('mm-register-simulator.html','mm-regsim',0x44c,0x334);}function openPlayerWin(){_openWin('mm-player.html','mm-player',0x4b0,0x370);}</script>
+<script>(function(){try{var a=document['createElement']('style');a['textContent']='option,optgroup{background:var(--panel2,#111120);color:var(--text,#e0e0f4)}optgroup{color:var(--textd,#9898c8);font-style:normal}',(document['head']||document['documentElement'])['appendChild'](a);}catch(l){}var b=null,c=null,d=null,e=null;function f(){if(b)return b;return b=document['createElement']('div'),b['style']['cssText']='position:fixed;transform:translateX(-50%);z-index:99999;pointer-events:none;opacity:0;transition:opacity\x20.12s;background:var(--panel,#0d0d18);color:var(--text,#b0b0c8);border:1px\x20solid\x20var(--border,#1e1e34);border-top:2px\x20solid\x20var(--kb-border,#501828);border-radius:6px;padding:6px\x2011px;font:500\x2012px/1.45\x20\x22DM\x20Mono\x22,monospace;max-width:300px;text-align:center',document['body']['appendChild'](b),b;}function g(m){m&&m['getAttribute']&&m['getAttribute']('title')!=null&&(m['setAttribute']('data-tip',m['getAttribute']('title')||''),m['removeAttribute']('title'));}var h=0x190,i=0xa28;function j(){clearTimeout(d),clearTimeout(e),c=null;if(b)b['style']['opacity']='0';}function k(m){var n=f();n['textContent']=m['getAttribute']('data-tip');var o=m['getBoundingClientRect']();n['style']['opacity']='1';var p=window['innerWidth']||document['documentElement']['clientWidth'],q=window['innerHeight']||document['documentElement']['clientHeight'],s=n['offsetWidth']/0x2,u=o['left']+o['width']/0x2;n['style']['left']=Math['max'](s+0x4,Math['min'](u,p-s-0x4))+'px';var v=n['offsetHeight'],w=o['bottom']+0x6,x=o['top']-v-0x6;n['style']['top']=(m['hasAttribute']('data-tip-up')?x<0x4?w:x:w+v>q-0x4?Math['max'](0x4,x):w)+'px',e=setTimeout(j,i);}document['addEventListener']('pointerover',function(m){var n=m['target']['closest']?m['target']['closest']('[title]'):null;if(n)g(n);else n=m['target']['closest']?m['target']['closest']('[data-tip]'):null;if(!n||!n['getAttribute']('data-tip')){j();return;}if(n===c)return;j(),c=n,d=setTimeout(function(){if(c===n)k(n);},h);}),document['addEventListener']('pointerout',j),document['addEventListener']('pointerdown',j),window['addEventListener']('wheel',j,{'passive':!![]}),window['addEventListener']('blur',j);try{document['querySelectorAll']('[title]')['forEach'](g);}catch(m){}}());</script>
+<script>(function(){var a='console',b={};function c(k){k=(k||'')['toLowerCase']();if(k['indexOf']('console')>=0x0)return'console';if(k['indexOf']('keyboard')>=0x0)return'keyboard';if(k['indexOf']('simulator')>=0x0||k['indexOf']('register')>=0x0)return'simulator';if(k['indexOf']('player')>=0x0)return'player';if(k['indexOf']('score')>=0x0)return'score';return null;}function d(){return Array['prototype']['slice']['call'](document['querySelectorAll']('button'))['filter'](function(k){var l=(k['textContent']||'')['trim']();return l['indexOf']('⊞')===0x0&&!!c(l);});}function e(){return document['documentElement']['getAttribute']('data-theme')==='clear'?'#f6efda':'#000';}function f(k){if(k['_navInit'])return;k['_navInit']=!![];var l=k['style']['color'];if(!l)l=k['style']['borderColor']||getComputedStyle(k)['borderColor'];k['_accent']=l,k['onmouseover']=function(){k['style']['background']=l,k['style']['color']=e();},k['onmouseout']=function(){k['_open']?(k['style']['background']=l,k['style']['color']=e()):(k['style']['background']='transparent',k['style']['color']=l);};}var g=null;function h(){if(!g||!g['length'])g=d();var k=Date['now']();g['forEach'](function(n){f(n);var o=c(n['textContent']),p=!!(o&&o!==a&&b[o]&&k-b[o]<0xdac);p!==n['_open']&&(n['_open']=p,p?(n['style']['background']=n['_accent'],n['style']['color']=e()):(n['style']['background']='transparent',n['style']['color']=n['_accent']));});var l=document['getElementById']('mFx');if(l){var m=!!(b['keyboard']&&k-b['keyboard']<0xdac);l['classList']['toggle']('nolink',!m);if(!m)l['_asked']=![];else{if(!l['_asked']){l['_asked']=!![];try{mmChannel['postMessage']({'cmd':'MASTER_FX_REQ','source':'console'});}catch(n){}}}}}function i(k){try{k['addEventListener']('message',function(l){var m=l['data'];if(m&&m['cmd']==='PRESENCE'&&m['app'])b[m['app']]=Date['now']();});}catch(l){}setInterval(function(){try{k['postMessage']({'cmd':'PRESENCE','app':a});}catch(m){}},0x5dc);try{k['postMessage']({'cmd':'PRESENCE','app':a});}catch(m){}setInterval(h,0x3e8),h();}function j(){try{if(mmChannel){i(mmChannel);return;}}catch(k){}setTimeout(j,0x1f4);}if(document['readyState']!=='loading')j();else document['addEventListener']('DOMContentLoaded',j);}());</script>
+<script>try{if(window['setTheme']&&window['getTheme'])setTheme(getTheme());}catch(a){}</script>
+<style>
+/* 🎓 coach — oreja de la suite (estado compartido mmCoachEar) · despierto = pulso violeta 60/min */
+#coachEarBtn{background:transparent;border:none;cursor:pointer;font-size:20px;
+  padding:3px 7px;margin-left:8px;opacity:.85;transition:opacity .15s;line-height:1;
+  border-radius:6px;vertical-align:middle;}
+#coachEarBtn.awake{opacity:1;animation:coachPulse 1s ease-in-out infinite;}
+@keyframes coachPulse{0%,100%{background:transparent}50%{background:rgba(154,122,216,.28)}}
+</style>
+<script>(function(){var a=document['getElementById']('coachEarBtn');if(!a)return;function b(){try{return localStorage['getItem']('mmCoachEar')!=='off';}catch(g){return!![];}}function c(){var g=b();a['classList']['toggle']('awake',g),a['title']=g?'Coach\x20escuchando\x20—\x20clic\x20para\x20dormirlo':'Coach\x20dormido\x20—\x20clic\x20para\x20despertarlo';}a['addEventListener']('click',function(g){g['stopPropagation']();try{localStorage['setItem']('mmCoachEar',b()?'off':'on');}catch(h){}c();}),window['addEventListener']('storage',function(g){if(g['key']==='mmCoachEar')c();}),c();function d(){try{return localStorage['getItem']('mmCoachSelect')||'suite';}catch(g){return'suite';}}function e(){try{return localStorage['getItem']('mmCoachLang')==='es'?'es':'en';}catch(g){return'en';}}function f(g,h){var i=document['getElementById']('coachSelMenu');!i&&(i=document['createElement']('div'),i['id']='coachSelMenu',i['style']['cssText']='position:fixed;z-index:12000;display:none;min-width:160px;'+'background:var(--panel,#0d0d18);border:1px\x20solid\x20var(--border,#1e1e34);border-top:2px\x20solid\x20var(--kb-border,#501828);'+'box-shadow:0\x208px\x2024px\x20rgba(0,0,0,.45);font-family:\x27DM\x20Mono\x27,monospace;font-size:11px;'+'color:var(--text,#e0e0f4);padding:4px\x200;',document['body']['appendChild'](i),document['addEventListener']('click',function(o){if(!i['contains'](o['target']))i['style']['display']='none';}));var j=d(),k=e(),l=k==='es';i['innerHTML']='<div\x20style=\x22padding:4px\x2012px;font-size:8px;letter-spacing:2px;color:var(--textd,#666);text-transform:uppercase;border-bottom:1px\x20solid\x20var(--border,#1e1e34);margin-bottom:3px;\x22>🎓\x20'+(l?'elegir\x20coach':'choose\x20coach')+'</div>'+'<div\x20class=\x22cs-item\x22\x20data-coach=\x22suite\x22\x20style=\x22padding:5px\x2012px;cursor:pointer;'+(j==='suite'?'color:var(--gold,#c8a84a);':'')+'\x22>'+(j==='suite'?'✓\x20':'&nbsp;&nbsp;')+'Suite\x20Coach</div>'+'<div\x20style=\x22padding:5px\x2012px;color:var(--textd,#666);opacity:.5;cursor:default;font-style:italic;\x22\x20title=\x22'+(l?'Próximamente':'Coming\x20soon')+'\x22>&nbsp;&nbsp;Salieri\x20·\x20'+(l?'inactivo':'inactive')+'</div>'+'<div\x20style=\x22padding:4px\x2012px;font-size:8px;letter-spacing:2px;color:var(--textd,#666);text-transform:uppercase;border-top:1px\x20solid\x20var(--border,#1e1e34);border-bottom:1px\x20solid\x20var(--border,#1e1e34);margin:3px\x200;\x22>🌐\x20idioma\x20·\x20language</div>'+'<div\x20class=\x22cs-lang\x22\x20data-lang=\x22es\x22\x20style=\x22padding:5px\x2012px;cursor:pointer;'+(k==='es'?'color:var(--gold,#c8a84a);':'')+'\x22>'+(k==='es'?'✓\x20':'&nbsp;&nbsp;')+'Español</div>'+'<div\x20class=\x22cs-lang\x22\x20data-lang=\x22en\x22\x20style=\x22padding:5px\x2012px;cursor:pointer;'+(k==='en'?'color:var(--gold,#c8a84a);':'')+'\x22>'+(k==='en'?'✓\x20':'&nbsp;&nbsp;')+'English</div>';var n=i['querySelector']('[data-coach=\x22suite\x22]');n['addEventListener']('mouseenter',function(){n['style']['background']='var(--gold-d,\x20rgba(200,168,74,.12))';}),n['addEventListener']('mouseleave',function(){n['style']['background']='transparent';}),n['addEventListener']('click',function(o){o['stopPropagation']();try{localStorage['setItem']('mmCoachSelect','suite');}catch(p){}i['style']['display']='none';}),i['querySelectorAll']('.cs-lang')['forEach'](function(o){o['addEventListener']('mouseenter',function(){o['style']['background']='var(--gold-d,\x20rgba(200,168,74,.12))';}),o['addEventListener']('mouseleave',function(){o['style']['background']='transparent';}),o['addEventListener']('click',function(p){p['stopPropagation']();try{localStorage['setItem']('mmCoachLang',o['dataset']['lang']);}catch(q){}i['style']['display']='none';try{if(window['mmSyncTitles'])window['mmSyncTitles']();}catch(r){}try{mmSyncTexts();}catch(s){}});}),i['style']['display']='block',i['style']['left']=Math['min'](g,window['innerWidth']-0xb4)+'px',i['style']['top']=Math['min'](h,window['innerHeight']-0x64)+'px';}a['addEventListener']('contextmenu',function(g){g['preventDefault'](),g['stopPropagation'](),f(g['clientX'],g['clientY']);});}());</script>
+<script>(function(){function a(){try{return localStorage['getItem']('mmCoachLang')==='es'?'es':'en';}catch(c){return'en';}}function b(){var c=a()==='es';document['querySelectorAll']('[data-title-es]')['forEach'](function(d){var e=c?d['dataset']['titleEs']:d['dataset']['titleEn'];if(e)d['title']=e;});}window['mmSyncTitles']=b,window['addEventListener']('storage',function(c){if(c['key']==='mmCoachLang')b();});if(document['readyState']==='loading')document['addEventListener']('DOMContentLoaded',b);else b();}());</script>
+</body>
+</html>
