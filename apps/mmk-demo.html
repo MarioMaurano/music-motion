@@ -553,11 +553,13 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;b
 .rec-dl { display:none !important; }
 /* el mensaje del Coach, un poco mas presente que en el Keyboard: aca hay alguien perdido */
 #coach-msg { font-size:11px !important; }
-/* EL ANCHO DEL TECLADO (Mario, 2026-09-14: «salio deforme en netlify»). El SVG se estira
-   al ancho del marco, y con la mitad de octavas cada tecla salia del doble de ancha y de
-   alta. El marco se limita a la mitad y las teclas vuelven a su tamano de siempre:
-   29 blancas en 1600 = 55 px cada una; 15 blancas = 825. */
-.kb-frame { max-width:840px !important; margin:0 auto !important; }
+/* EL TAMANO DE LAS TECLAS (Mario, 2026-09-14: «las teclas estan desproporcionadas»).
+   El SVG se estira al ancho del marco, asi que con la mitad de octavas cada tecla sale
+   mas grande. La forma nunca se deforma —el viewBox manda y la proporcion es 4,73 en los
+   dos— pero el tamano si: medido, 51x241 en el demo contra 34x163 en el Keyboard.
+   El marco se limita para que la escala sea la MISMA: viewBox 700 a 0,78 = 547 px de
+   dibujo, mas 48 de padding = 595. Asi la tecla del demo mide lo que la de la casa. */
+.kb-frame { max-width:600px !important; margin:0 auto !important; }
 </style>
 <body>
 
