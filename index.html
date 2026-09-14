@@ -78,7 +78,10 @@
   <div class="hero-links">
     <a class="btn-main" href="#productos"><span class="es">Ver los productos</span><span class="en">See the products</span></a>
     <a class="btn-launch" href="music-motion.html" style="--c:var(--violet)"><span class="es">Qué es Music Motion →</span><span class="en">What Music Motion is →</span></a>
-    <a class="btn-launch" id="btn-demo" href="apps/mmk-demo.html" data-local="../_RELEASE/sitio/apps/mmk-demo.html" style="--c:var(--gold)"><span class="es">▶ Probarlo ahora — gratis</span><span class="en">▶ Play it now — free</span></a>
+    <!-- 2026-09-14: va a la landing, no al demo suelto. Alli el visitante encuentra el
+         instrumento embebido y ademas el relato del teclado fisico. Cuando exista
+         mmk.musicmotionsuite.com, cambiar solo esta direccion. -->
+    <a class="btn-launch" id="btn-demo" href="https://mmk.mariomaurano.com/" style="--c:var(--gold)"><span class="es">▶ Probarlo ahora — gratis</span><span class="en">▶ Play it now — free</span></a>
   </div>
 </section>
 
@@ -156,20 +159,20 @@
 // En _RELEASE\sitio\ y publicado, el enlace canonico suite/index.html ya resuelve solo.
 if(location.protocol==='file:'&&/\/portal\//i.test(location.pathname)){document.querySelectorAll('a[data-local]').forEach(function(a){a.href=a.getAttribute('data-local');});}
 
-// El demo tarda en llegar: mostrar la marca respirando y recien entonces navegar.
+// Si la pagina tarda en llegar, la marca respirando ocupa la espera. Si llega rapido,
+// la capa no alcanza a aparecer: se arma recien a los 250 ms, para no dar un parpadeo.
 (function(){
   var b=document.getElementById('btn-demo'); if(!b) return;
   b.addEventListener('click',function(e){
     if(e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0) return;   // abrir en pestaña nueva: sin capa
-    e.preventDefault();
-    var c=document.createElement('div'); c.id='mm-cargando';
-    c.innerHTML='<img class="logo-ondark" src="mm-logo.svg" alt="">'
-              + '<img class="logo-onlight" src="mm-logo-dark.svg" alt="">'
-              + '<p><span class="es">Cargando el instrumento…</span>'
-              + '<span class="en">Loading the instrument…</span></p>';
-    document.body.appendChild(c);
-    var destino=b.href;
-    requestAnimationFrame(function(){ setTimeout(function(){ location.href=destino; },60); });
+    setTimeout(function(){
+      var c=document.createElement('div'); c.id='mm-cargando';
+      c.innerHTML='<img class="logo-ondark" src="mm-logo.svg" alt="">'
+                + '<img class="logo-onlight" src="mm-logo-dark.svg" alt="">'
+                + '<p><span class="es">Cargando el instrumento…</span>'
+                + '<span class="en">Loading the instrument…</span></p>';
+      document.body.appendChild(c);
+    },250);
   });
 })();
 </script>
