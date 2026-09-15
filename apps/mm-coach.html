@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <script>try{var t=localStorage['getItem']('mmTheme');if(['dark','gray','clear','contrast']['indexOf'](t)>=0x0)document['documentElement']['setAttribute']('data-theme',t);}catch(a){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>m Δ° m COACH · mmk · V2.5.3</title>
+<title>m Δ° m COACH · mmk · V2.5.4</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Montserrat:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   :root{ --kb-border:#501828; }
@@ -89,6 +89,13 @@
   .p-name{font-family:'DM Mono',monospace;font-size:13px;color:var(--text);letter-spacing:.5px}
   .p-char{font-size:11px;color:var(--textm);margin-top:5px;line-height:1.5}
 
+  /* 2026-09-15 (Mario) — EL ? VA DERECHO A LA PAGINA. En el Score el ? abre el popup del
+     Coach y el «mas» lleva al sitio; aca no hay popup y no hace falta: el Coach ya es una
+     pagina de lectura, asi que el ? es un enlace a su seccion de website/coach.html. Las
+     anclas son ids ELEGIDOS, no derivados del titulo. */
+  .qm{color:var(--teal);text-decoration:none;font-size:10px;line-height:1;cursor:pointer}
+  .qm:hover{color:var(--gold)}
+
   .footer{margin-top:auto;border-top:1px solid var(--border);background:var(--panel);padding:8px 18px;font-size:9px;letter-spacing:1px;color:var(--textd);display:flex;align-items:center;gap:8px}
   .footer a{color:var(--text);display:inline-flex;align-items:center;gap:8px;text-decoration:none}
   .footer .v{color:var(--gold)}
@@ -143,9 +150,9 @@
 
     
     <div class="wrap" id="tab-coach">
-      <div class="eyebrow">⊞ Coach · el asesor de la suite</div>
+      <div class="eyebrow">⊞ Coach · el asesor de la suite <a class="qm" href="../suite/coach.html#pestana-coach" target="_blank" rel="noopener" data-title-es="Qué es esta pestaña — lo cuenta el sitio" data-title-en="What this tab is — the site explains it" title="What this tab is — the site explains it">?</a></div>
       <h1>El coach dice.</h1>
-      <p class="lead">Acá vive la voz del Coach: lo que va contando mientras escribís en la suite, y la minilección cuando pedís el porqué (el 🎓 del mensajito). Elegí quién te acompaña — nunca es una imposición: el 🎓 junto al título de cada app lo despierta o lo duerme.</p>
+      <p class="lead">Acá vive la voz del Coach: lo que va contando mientras escribís en la suite, y la minilección cuando pedís el porqué (el 🎓 del mensajito). Elegí quién te acompaña — nunca es una imposición: el 🎓 junto al título de cada app lo despierta o lo duerme. <a class="qm" href="../suite/coach.html#otros-coaches" target="_blank" rel="noopener" data-title-es="Los otros coaches — lo cuenta el sitio" data-title-en="The other coaches — the site explains it" title="The other coaches — the site explains it">?</a></p>
 
       <div class="persona-row">
         <div class="persona" id="persona-suite" onclick="coachPickPersona('suite')" data-title-es="Coach por defecto de la suite" data-title-en="The suite's default coach" title="The suite's default coach">
@@ -157,14 +164,14 @@
           <div class="p-char">Maestro de corte: formal, exigente, elegante. Sabe todo cuanto enseña el default — y además, exige.</div>
         </div>
       </div>
-      <div class="lib-sub" id="coachEarLine" style="margin:10px 0 16px"></div>
+      <div class="lib-sub" style="margin:10px 0 16px;display:flex;align-items:baseline;gap:6px"><span id="coachEarLine"></span><a class="qm" href="../suite/coach.html#la-oreja" target="_blank" rel="noopener" data-title-es="Cómo se despierta y se duerme la oreja — lo cuenta el sitio" data-title-en="How the ear is woken and put to sleep — the site explains it" title="How the ear is woken and put to sleep — the site explains it">?</a></div>
 
       <div id="coachLog"></div>
     </div>
 
     
     <div class="wrap" id="tab-orq" style="display:none">
-      <div class="eyebrow">⊞ Coach · biblioteca de la suite</div>
+      <div class="eyebrow">⊞ Coach · biblioteca de la suite <a class="qm" href="../suite/coach.html#pestana-orquestacion" target="_blank" rel="noopener" data-title-es="Qué es el cofre de instrumentos — lo cuenta el sitio" data-title-en="What the instrument chest is — the site explains it" title="What the instrument chest is — the site explains it">?</a></div>
       <h1>El cofre de la suite.</h1>
       <p class="lead">Acá vive el banco de instrumentos que comparte toda la suite. Cada instrumento es un preset: lo diseña y lo graba el <b style="color:var(--rose)">Register Simulator</b>, el <b style="color:var(--gold)">Score</b> lo carga y lo asigna por canal, la <b style="color:var(--teal)">Console</b> lo refleja y mezcla, y el <b style="color:var(--blue)">Keyboard</b> lo hace sonar.</p>
 
@@ -177,12 +184,12 @@
 
     
     <div class="wrap" id="tab-aula" style="display:none">
-      <div class="eyebrow">⊞ Coach · aula</div>
+      <div class="eyebrow">⊞ Coach · aula <a class="qm" href="../suite/coach.html#pestana-aula" target="_blank" rel="noopener" data-title-es="Qué es el Aula — lo cuenta el sitio" data-title-en="What the Classroom is — the site explains it" title="What the Classroom is — the site explains it">?</a></div>
       <h1>Las minilecciones.</h1>
       <p class="lead">Lo que el coach enseña en el momento, acá lo podés leer con calma. El Aula crece con cada consejo nuevo de la suite.</p>
 
       <div class="coach-say" style="max-width:760px">
-        <span class="coach-say-eyebrow">NIVEL 1 · el juego de composición — "Ah, vous dirai-je, Maman"</span>
+        <span class="coach-say-eyebrow">NIVEL 1 · el juego de composición — "Ah, vous dirai-je, Maman" <a class="qm" href="../suite/coach.html#la-cuenta-del-juego" target="_blank" rel="noopener" data-title-es="Por qué tu melodía es una entre billones — lo cuenta el sitio" data-title-en="Why your melody is one in billions — the site explains it" title="Why your melody is one in billions — the site explains it">?</a></span>
         <span id="leccion0Body"></span><br><br>
         <input id="leccion0Autor" type="text" maxlength="40" placeholder="Tu nombre — va como autor © de tu copia" data-title-es="Se escribe en el Score info (Author y ©) de tu archivo de la lección" data-title-en="Written into the Score info (Author and ©) of your lesson file" title="Written into the Score info (Author and ©) of your lesson file" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:4px 9px;background:transparent;border:1px solid var(--gold);border-radius:0;color:inherit;min-width:250px;margin-right:6px">
         <button class="navbtn mm-relief" onclick="openLeccionWin(0)" data-title-es="Abre el Score con la Lección 0 cargada" data-title-en="Opens the Score with Lesson 0 loaded" title="Opens the Score with Lesson 0 loaded" style="border:1px solid var(--gold);color:var(--gold)">⊞ Abrir la Lección 0 en el Score</button>
@@ -193,7 +200,7 @@
       </div>
 
       <div class="coach-say" style="max-width:760px">
-        <span class="coach-say-eyebrow">Minilección · el compás siempre suma</span>
+        <span class="coach-say-eyebrow">Minilección · el compás siempre suma <a class="qm" href="../suite/coach.html#el-compas-siempre-suma" target="_blank" rel="noopener" data-title-es="El compás siempre suma — lo cuenta el sitio" data-title-en="The bar always adds up — the site explains it" title="The bar always adds up — the site explains it">?</a></span>
         Mirá: un compás de 4/4 es una caja de 4 tiempos — lleve notas o no, la caja se llena igual.
         Si cada voz entrara cuando se le canta, sin contar, sería un lindo quilombo: por eso lo que
         no suena se escribe con <b>silencios</b>. Cada figura tiene su silencio gemelo, que dura
@@ -210,17 +217,17 @@
 
     
     <div class="wrap" id="tab-progreso" style="display:none">
-      <div class="eyebrow">🧭 Coach · progreso</div>
+      <div class="eyebrow">🧭 Coach · progreso <a class="qm" href="../suite/coach.html#pestana-progreso" target="_blank" rel="noopener" data-title-es="Qué es el viaje — lo cuenta el sitio" data-title-en="What the journey is — the site explains it" title="What the journey is — the site explains it">?</a></div>
       <h1 id="progTitle">El viaje.</h1>
       <p class="lead" id="progLead">Abrí la Lección 0 (o continuá tu copia) desde el Aula y acá se dibuja tu progreso.</p>
 
       <div class="coach-say" style="max-width:760px">
-        <span class="coach-say-eyebrow">Las etapas del viaje</span>
+        <span class="coach-say-eyebrow">Las etapas del viaje <a class="qm" href="../suite/coach.html#como-se-cumple-una-etapa" target="_blank" rel="noopener" data-title-es="Cuándo está cumplida una etapa — lo cuenta el sitio" data-title-en="When a stage is completed — the site explains it" title="When a stage is completed — the site explains it">?</a></span>
         <div id="progStages" style="font-size:11px">—</div>
       </div>
 
       <div class="coach-say" style="max-width:760px">
-        <span class="coach-say-eyebrow">Sugerencia de trabajo</span>
+        <span class="coach-say-eyebrow">Sugerencia de trabajo <a class="qm" href="../suite/coach.html#las-imitaciones" target="_blank" rel="noopener" data-title-es="Las ideas que propone, con tus propias notas — lo cuenta el sitio" data-title-en="The ideas it suggests, from your own notes — the site explains it" title="The ideas it suggests, from your own notes — the site explains it">?</a></span>
         <span id="progSugg">Todavía no hay lección abierta.</span>
       </div>
 
@@ -230,7 +237,7 @@
       </div>
 
       <div class="coach-say" style="max-width:760px">
-        <span class="coach-say-eyebrow">Bitácora del viaje · timelog</span>
+        <span class="coach-say-eyebrow">Bitácora del viaje · timelog <a class="qm" href="../suite/coach.html#la-bitacora" target="_blank" rel="noopener" data-title-es="La bitácora viaja en la obra — lo cuenta el sitio" data-title-en="The logbook travels inside the piece — the site explains it" title="The logbook travels inside the piece — the site explains it">?</a></span>
         <div id="progLog" style="font-size:11px;line-height:1.8">—</div>
       </div>
     </div>
@@ -238,7 +245,7 @@
   </div>
 
   <div class="footer">
-    <a href="../suite/index.html" target="_blank" rel="noopener" data-title-es="Abrir el sitio Music Motion" data-title-en="Open the Music Motion site" title="Open the Music Motion site"><svg viewBox="0 0 1500 500" height="13" style="width:auto;vertical-align:middle" role="img" aria-label="m∆°m" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path fill="currentColor" d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path fill="#ea8b18" d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path fill="#ea8b18" d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg> Music Motion®</a> · <a href="../suite/coach.html" target="_blank" rel="noopener" data-title-es="Abrir la página del Coach en el sitio" data-title-en="Open the Coach page on the site" title="Open the Coach page on the site" style="color:inherit;text-decoration:none">COACH <span class="v">V2.5.3</span></a> · Pythagorean pitch space · © 2001–2026 Music Motion · All rights reserved
+    <a href="../suite/index.html" target="_blank" rel="noopener" data-title-es="Abrir el sitio Music Motion" data-title-en="Open the Music Motion site" title="Open the Music Motion site"><svg viewBox="0 0 1500 500" height="13" style="width:auto;vertical-align:middle" role="img" aria-label="m∆°m" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path fill="currentColor" d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path fill="#ea8b18" d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path fill="#ea8b18" d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg> Music Motion®</a> · <a href="../suite/coach.html" target="_blank" rel="noopener" data-title-es="Abrir la página del Coach en el sitio" data-title-en="Open the Coach page on the site" title="Open the Coach page on the site" style="color:inherit;text-decoration:none">COACH <span class="v">V2.5.4</span></a> · Pythagorean pitch space · © 2001–2026 Music Motion · All rights reserved
   </div>
 
 <script src="mm-presets.js"></script>
