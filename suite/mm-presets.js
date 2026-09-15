@@ -1,3 +1,15 @@
+// 2026-09-15 (checkpoint · Score V2.7.109 · Cosmic V2.3.37 · Register V2.1.14) — LA LISTA HABLA TU IDIOMA.
+//   Reporte de Mario con captura: la lista de instrumentos salía mezclada. De las 81 fichas, 73 traían
+//   class.label en inglés y 8 en castellano (Órgano de Tubos · Acordeón · las cuatro Sección de… ·
+//   Acordeón vallenato · Cajón), y los once rótulos de sección existían sólo en inglés; ni
+//   MM_instrumentOptionsHTML ni la paleta en columnas miraban el idioma. class.label NO se traduce: es la
+//   etiqueta canónica de la ficha, la que usa el banco. Los nombres de PANTALLA viven ahora en
+//   MM_INSTRUMENT_NAMES, al lado de MM_INSTRUMENT_SECTIONS, con sólo el nombre que faltaba por entrada
+//   (es para las 73, en para las 8); sin par manda class.label, así que una ficha nueva aparece igual.
+//   Eligen MM_instLabel y MM_instSection leyendo coachLang() y, si la app no lo define, mmCoachLang del
+//   storage — esta lista la abren cuatro apps y no puede depender de ninguna. Los once rótulos de sección
+//   ganaron su `es`. Verificado cargando la página en los dos idiomas: 81 opciones y once grupos en cada uno.
+//
 // 2026-09-13 (checkpoint · Cosmic V2.3.35 · Score V2.7.107) — DIEZ INSTRUMENTOS POPULARES, A OÍDO CON MARIO.
 //   Entran al banco, clase «Popular · Latino»: acordeón vallenato, bajo eléctrico, Rhodes, congas, bongós,
 //   timbales, claves, cencerro, maracas y cajón. Afinados por reporte de Mario, no por defaults de biblioteca:
@@ -8804,22 +8816,72 @@ window.MM_ORCHESTRAS = {
 };
 
 window.MM_INSTRUMENT_SECTIONS = [
-  { section:'Woodwinds', items:['piccolo','flute','alto_flute_g','oboe','english_horn','clarinet','clarinet_a','bass_clarinet','bassoon','contrabassoon','saxophone','kena'] },
-  { section:'Brass', items:['horn','trumpet','trumpet_f','trombone','trombone_alto','tuba'] },
-  { section:'Percussion', items:['timpani','glockenspiel','xylophone','vibraphone','marimba','tubular_bells','snare','snare_off','bass_drum','cymbals','tam_tam','triangle','tambourine','woodblock'] },
-  { section:'Harp & Keyboards', items:['harp','piano','piano_steinway','piano_grand_tonal','harpsichord','harpsichord_wt','celesta','pipe_organ','accordion'] },
-  { section:'Strings', items:['violin','viola','cello','contrabass','violins_section','violas_section','cellos_section','contrabasses_section','strings','full_strings','pizzicato','strings_pizzicato','gamba','guitar'] },
-  { section:'Voice', items:['voice_soprano','voice_alto','voice_tenor','voice_bass'] },
-  { section:'Synths', items:['ping','sine','organ'] },
-  { section:'Synths \u00b7 Pads', items:['synth_aahs','warm_pad','space_sweep','cosmic_whistle','glass_bells'] },
+  { section:'Woodwinds', es:'Maderas', items:['piccolo','flute','alto_flute_g','oboe','english_horn','clarinet','clarinet_a','bass_clarinet','bassoon','contrabassoon','saxophone','kena'] },
+  { section:'Brass', es:'Metales', items:['horn','trumpet','trumpet_f','trombone','trombone_alto','tuba'] },
+  { section:'Percussion', es:'Percusión', items:['timpani','glockenspiel','xylophone','vibraphone','marimba','tubular_bells','snare','snare_off','bass_drum','cymbals','tam_tam','triangle','tambourine','woodblock'] },
+  { section:'Harp & Keyboards', es:'Arpa y teclados', items:['harp','piano','piano_steinway','piano_grand_tonal','harpsichord','harpsichord_wt','celesta','pipe_organ','accordion'] },
+  { section:'Strings', es:'Cuerdas', items:['violin','viola','cello','contrabass','violins_section','violas_section','cellos_section','contrabasses_section','strings','full_strings','pizzicato','strings_pizzicato','gamba','guitar'] },
+  { section:'Voice', es:'Voz', items:['voice_soprano','voice_alto','voice_tenor','voice_bass'] },
+  { section:'Synths', es:'Sintetizadores', items:['ping','sine','organ'] },
+  { section:'Synths \u00b7 Pads', es:'Sintetizadores \u00b7 Pads', items:['synth_aahs','warm_pad','space_sweep','cosmic_whistle','glass_bells'] },
   // 2026-08-24 (idea de Mario): los parientes NO orquestales viven aparte y por familia, para que
   // la lista de la orquesta no se llene de repeticiones. Se suman al final; la paleta los muestra
   // como dos grupos propios en las cuatro apps.
-  { section:'Other · Recorders', items:['recorder_soprano','recorder_alto'] },
-  { section:'Other · Folk plucked', items:['banjo','mandolin'] },
-  { section:'Popular · Latino', items:['electric_bass','accordion_vallenato','rhodes','congas','bongos','timbales','claves','cowbell','maracas','cajon'] }
+  { section:'Other · Recorders', es:'Otros · Flautas dulces', items:['recorder_soprano','recorder_alto'] },
+  { section:'Other · Folk plucked', es:'Otros · Pulsados folk', items:['banjo','mandolin'] },
+  { section:'Popular · Latino', es:'Popular · Latino', items:['electric_bass','accordion_vallenato','rhodes','congas','bongos','timbales','claves','cowbell','maracas','cajon'] }
 ];
 window.MM_INSTRUMENT_ORDER = window.MM_INSTRUMENT_SECTIONS.reduce(function(a,s){ return a.concat(s.items); }, []);
+
+// ── LA LISTA HABLA EL IDIOMA DEL COACH (2026-09-15, Mario: «están mezclados») ──────────────────
+// La lista salía en los dos idiomas a la vez: de las 81 fichas, 73 traían class.label en inglés y
+// 8 en castellano, y los rótulos de sección existían sólo en inglés. class.label queda como está
+// —es la etiqueta canónica de la ficha, la que usa el banco— y los nombres de PANTALLA viven acá,
+// en un solo sitio, con su par. Sin par manda class.label: una ficha nueva aparece igual.
+// El idioma es el mismo de toda la suite (coachLang → mmCoachLang, EN por defecto); esta lista la
+// abren cuatro apps, así que no puede depender de que la app defina coachLang: cae al storage.
+window.MM_instEs = function(){
+  try { if (typeof window.coachLang === 'function') return window.coachLang() === 'es'; } catch(e){}
+  try { return localStorage.getItem('mmCoachLang') === 'es'; } catch(e){ return false; }
+};
+window.MM_INSTRUMENT_NAMES = {
+  piccolo:{es:'Flautín'}, flute:{es:'Flauta'}, alto_flute_g:{es:'Flauta alto (Sol)'}, oboe:{es:'Oboe'},
+  english_horn:{es:'Corno inglés'}, clarinet:{es:'Clarinete'}, clarinet_a:{es:'Clarinete en La'},
+  bass_clarinet:{es:'Clarinete bajo'}, bassoon:{es:'Fagot'}, contrabassoon:{es:'Contrafagot'},
+  saxophone:{es:'Saxofón'}, kena:{es:'Quena'},
+  horn:{es:'Corno en Fa'}, trumpet:{es:'Trompeta'}, trumpet_f:{es:'Trompeta en Fa'},
+  trombone:{es:'Trombón'}, trombone_alto:{es:'Trombón alto'}, tuba:{es:'Tuba'},
+  timpani:{es:'Timbales (orquesta)'}, glockenspiel:{es:'Glockenspiel'}, xylophone:{es:'Xilófono'},
+  vibraphone:{es:'Vibráfono'}, marimba:{es:'Marimba'}, tubular_bells:{es:'Campanas tubulares'},
+  snare:{es:'Redoblante'}, snare_off:{es:'Redoblante (sin bordones)'}, bass_drum:{es:'Bombo'},
+  cymbals:{es:'Platillos'}, tam_tam:{es:'Tam-tam'}, triangle:{es:'Triángulo'},
+  tambourine:{es:'Pandereta'}, woodblock:{es:'Caja china'},
+  harp:{es:'Arpa'}, piano:{es:'Piano (vertical)'}, piano_steinway:{es:'Piano (de cola)'},
+  piano_grand_tonal:{es:'Piano (de cola · Tonal)'}, harpsichord:{es:'Clavecín (Cosmic)'},
+  harpsichord_wt:{es:'Clavecín (bien temperado)'}, celesta:{es:'Celesta'},
+  pipe_organ:{en:'Pipe Organ'}, accordion:{en:'Accordion'},
+  violin:{es:'Violín'}, viola:{es:'Viola'}, cello:{es:'Violonchelo'}, contrabass:{es:'Contrabajo'},
+  violins_section:{en:'Violins (section)'}, violas_section:{en:'Violas (section)'},
+  cellos_section:{en:'Cellos (section)'}, contrabasses_section:{en:'Double Basses (section)'},
+  strings:{es:'Cuerdas'}, full_strings:{es:'Cuerdas (tutti)'}, pizzicato:{es:'Pizzicato'},
+  strings_pizzicato:{es:'Cuerdas pizzicato'}, gamba:{es:'Viola da gamba'}, guitar:{es:'Guitarra'},
+  voice_soprano:{es:'Soprano'}, voice_alto:{es:'Contralto'}, voice_tenor:{es:'Tenor'}, voice_bass:{es:'Bajo'},
+  ping:{es:'Ping'}, sine:{es:'Senoidal'}, organ:{es:'Órgano'},
+  synth_aahs:{es:'Aahs de sintetizador'}, warm_pad:{es:'Pad cálido'}, space_sweep:{es:'Barrido espacial'},
+  cosmic_whistle:{es:'Silbido cósmico'}, glass_bells:{es:'Campanas de cristal'},
+  recorder_soprano:{es:'Flauta dulce (soprano)'}, recorder_alto:{es:'Flauta dulce (contralto)'},
+  banjo:{es:'Banjo'}, mandolin:{es:'Mandolina'},
+  electric_bass:{es:'Bajo eléctrico'}, accordion_vallenato:{en:'Vallenato Accordion'},
+  rhodes:{es:'Rhodes (piano eléctrico)'}, congas:{es:'Congas'}, bongos:{es:'Bongós'},
+  timbales:{es:'Timbales (latinos)'}, claves:{es:'Claves'}, cowbell:{es:'Cencerro'},
+  maracas:{es:'Maracas'}, cajon:{en:'Cajón'}
+};
+window.MM_instLabel = function(p, k){
+  var n = window.MM_INSTRUMENT_NAMES[k], base = (p && p.class && p.class.label) || k;
+  if (!n) return base;
+  return (window.MM_instEs() ? n.es : n.en) || base;
+};
+window.MM_instSection = function(sec){ return (window.MM_instEs() && sec.es) || sec.section; };
 // Devuelve el HTML de <optgroup>/<option> (value=clave, texto=etiqueta) en orden canonico.
 //   map: mapa de presets para resolver etiqueta y presencia (default: banco). selected: clave activa.
 //   opts.includeNone: antepone la opcion "—" (sin instrumento). opts.onlyKeys: subconjunto plano (p.ej. percusion CH10).
@@ -8827,17 +8889,17 @@ window.MM_instrumentOptionsHTML = function(map, selected, opts){
   opts = opts || {}; map = map || window.MM_PRESETS_DEFAULT || {};
   var NONE = '—';
   var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); };
-  var lab = function(k){ var p=map[k]; return (p && p.class && p.class.label) || k; };
+  var lab = function(k){ return window.MM_instLabel(map[k], k); };
   var optHTML = function(k){ return '<option value="'+esc(k)+'"'+(k===selected?' selected':'')+'>'+esc(lab(k))+'</option>'; };
   var html = opts.includeNone ? ('<option value="'+NONE+'"'+((selected===NONE||selected==null)?' selected':'')+'>'+NONE+'</option>') : '';
   if(opts.onlyKeys){ html += opts.onlyKeys.filter(function(k){ return k!==NONE && map[k]; }).map(optHTML).join(''); return html; }
   var seen = {};
   (window.MM_INSTRUMENT_SECTIONS||[]).forEach(function(sec){
     var present = sec.items.filter(function(k){ seen[k]=1; return map[k]; });
-    if(present.length) html += '<optgroup label="'+NONE+' '+esc(sec.section)+' '+NONE+'">'+present.map(optHTML).join('')+'</optgroup>';
+    if(present.length) html += '<optgroup label="'+NONE+' '+esc(window.MM_instSection(sec))+' '+NONE+'">'+present.map(optHTML).join('')+'</optgroup>';
   });
   var extra = Object.keys(map).filter(function(k){ return !seen[k]; });
-  if(extra.length) html += '<optgroup label="'+NONE+' Other '+NONE+'">'+extra.map(optHTML).join('')+'</optgroup>';
+  if(extra.length) html += '<optgroup label="'+NONE+' '+(window.MM_instEs()?'Otros':'Other')+' '+NONE+'">'+extra.map(optHTML).join('')+'</optgroup>';
   return html;
 };
 
@@ -8969,20 +9031,20 @@ window.MM_openInstrumentPalette = function(opts){
   var map = opts.map || window.MM_PRESETS_DEFAULT || {};
   var bank = window.MM_PRESETS_DEFAULT || {};
   var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); };
-  var lab = function(k){ var p = map[k] || bank[k]; return (p && p.class && p.class.label) || k; };
+  var lab = function(k){ return window.MM_instLabel(map[k] || bank[k], k); };
   var secs, seen = {};
-  if(opts.onlyKeys){ secs = [{ section:'Percussion', items: opts.onlyKeys.filter(function(k){ return map[k]; }) }]; }
+  if(opts.onlyKeys){ secs = [{ section:'Percussion', es:'Percusión', items: opts.onlyKeys.filter(function(k){ return map[k]; }) }]; }
   else {
     secs = (window.MM_INSTRUMENT_SECTIONS || []).map(function(s){
       s.items.forEach(function(k){ seen[k] = 1; });
-      return { section: s.section, items: s.items.filter(function(k){ return map[k] || bank[k]; }) }; });
+      return { section: s.section, es: s.es, items: s.items.filter(function(k){ return map[k] || bank[k]; }) }; });
     var extra = Object.keys(map).filter(function(k){ return !seen[k]; });
-    if(extra.length) secs.push({ section:'Other', items: extra });
+    if(extra.length) secs.push({ section:'Other', es:'Otros', items: extra });
   }
   var sel = opts.selected, html = '';
   if(opts.includeNone) html += '<div class="mmip-sec"><div class="mmip-it'+((sel==='—'||sel==null)?' on':'')+'" data-k="—">—</div></div>';
   secs.forEach(function(s){ if(!s.items.length) return;
-    html += '<div class="mmip-sec"><div class="mmip-sect">'+esc(s.section)+'</div>';
+    html += '<div class="mmip-sec"><div class="mmip-sect">'+esc(window.MM_instSection(s))+'</div>';
     s.items.forEach(function(k){ var ghost = !map[k];
       // 2026-08-30: las secciones dicen sus atriles — el número efectivo lo da la orquesta de la
       // obra (hook del Score, MM_orchestraPlayers); sin él, el default de la ficha (sinfónica moderna).
