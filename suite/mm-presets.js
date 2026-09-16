@@ -123,6 +123,37 @@
 //   del riser cae fuera de la banda medida) · resp.air [0.18,0.14,0.12,0.10] → [0.06,0.14,0.16,0.05] (la pendiente
 //   estaba invertida) · resp.atk 65/60/55/50 ms → 95/90/75/60. Con el 1550 puesto, el resp.tilt que puso el oído el
 //   01-09 cae sobre el centroide medido. Ficha flute-settings.md §10; guardia del banco: dos filas nuevas.
+// 2026-09-16 — EL VIOLÍN NO SE CAE EN EL AGUDO (Mario, sobre la Shéhérazade: «por qué no suena? está en CH 10»).
+//   El Violín I, con su p escrito, salía 18 dB debajo de las violas y 25 debajo del pizz de los segundos. La
+//   corrección del 10-09 se midió con playAudio, y ahí la velocity casi no mueve el nivel (de 44 a 92 el violín
+//   se movía 0,5 dB): por el camino real —NOTE_ON al Cosmic, que es como toca el Score— ese mismo tramo vale
+//   30,7 dB, y la curva por ancla que quedó escrita CAÍA 21,5 dB de G3 a E5 en p. El Violín I de este pasaje vive
+//   en E5-G5: su melodía entraba por debajo de todo. Es la misma queja que Mario hizo el 10-09 con las violas —
+//   «la nota de arriba suena mucho menos»—, en el instrumento de al lado y sin ver, porque la guardia medía la
+//   magnitud que no se mueve.
+//   violins_section resp.gain [0.1473,0.0772,0.0507,0.0079] → [0.0947,0.0772,0.0818,0.0603], corregido por ancla
+//   contra el D4 (que es el que cumple el bal): medido en p, G3 −49,4 · D4 −50,0 · A4 −49,7 · E5 −49,7, swing
+//   21,5 → 0,6 dB. El D4 no se movió, así que la distancia a las violas sigue siendo la que pide class.bal.
+//   Timbre intacto: resp.tilt, form y filt no se tocan.
+//   Y DESPUÉS, DE OÍDO (Mario, escuchando el pasaje ya plano): «suena muy poco, queda cubierto, subile
+//   bastante». La curva se sube entera ×7,943 (+18 dB) sin cambiar su forma: [0.0947,0.0772,0.0818,0.0603] →
+//   [0.7522,0.6132,0.6497,0.4790]. En la obra el Violín I pasa de −27,6 a −9,8 dB: queda 4 dB encima del pizz de
+//   los segundos y 11 encima de las violas, que es el melodía-sobre-acompañamiento que él oye desde el podio.
+//   LO QUE ESTO DEJA DICHO, y es más grande que el violín: sobre el camino real la casa NO está entre −5 y +5.
+//   Medido en p, D4/A3/G2/D2: violines −50,2 · violas −50,6 · chelos −44,6 · CONTRABAJOS −22,7. El contrabajo
+//   está 28 dB encima de todos y 23 fuera de lo que declara su propio bal. O sea que el `class.bal` de la cuerda
+//   describe una escala que existía en la medición con playAudio y no en la que suena. Este +18 sube al violín
+//   HACIA esa casa real, no por encima de ella, pero deja al violín 18 dB lejos de su bal declarado: la fila del
+//   bal queda `pendiente` en la guardia, con el mismo motivo que chelos y contrabajos. Re-escalar la familia
+//   entera sobre el camino real es el próximo trabajo, y es de oído de Mario, no de tabla.
+//   Guardia nueva: _Tests/regresiones/guardia-escala-dinamica.js — mide por el camino NOTE_ON y en TRES dinámicas
+//   (p 44 · mf 62 · f 75, los tres valores escritos en la Shéhérazade), con silencio verificado antes de cada
+//   toma (sin eso la misma nota daba −47,7 y −33,2 en la misma corrida). Verificada ROJA antes del cambio.
+//   PENDIENTE, visto por la guardia y no tocado: violas_section SUBE 17,5 dB de C3 a A6 en p — el agudo que se
+//   abrió el 10-09 quedó abierto de más.
+//   Y UN DATO QUE CONVIENE SABER ANTES DE TOCAR ESA CASILLA: `class.velRangeDb` NO mueve este preset. Medido con
+//   51,5 (lo que dice la ficha) y con 32 (lo que escribió la investigación del 01-09, acá abajo), el violín da el
+//   mismo tramo de 32 dB de p a ff. La casilla está en la ficha pero no en el camino del sonido.
 // 2026-09-10 — EL VIOLÍN VUELVE A LA ESCALA DE LA CASA, Y LA VIOLA ABRE EL AGUDO. Mario, sobre el pasaje de
 //   violas de la Shéhérazade: «para lograr un balance como está ahora tengo que darle a las violas fff y la nota
 //   de arriba suena mucho menos, este pasaje lo marca RK como piano... pero se tiene que oír». Medido en el
@@ -6259,10 +6290,10 @@ window.MM_PRESETS_DEFAULT = {
     "hi": "E7",
     "resp": {
       "gain": [
-          0.1473,
-          0.0772,
-          0.0507,
-          0.0079
+          0.7522,
+          0.6132,
+          0.6497,
+          0.4790
         ],
       "air": [
         0.07,
