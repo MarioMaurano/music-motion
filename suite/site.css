@@ -42,6 +42,7 @@ footer .brand-logo-img{height:18px}
 nav{display:flex;gap:18px;flex:1;flex-wrap:wrap}
 nav a{color:var(--textm);font-size:.82rem;font-weight:500;letter-spacing:.3px;transition:color .15s}
 nav a:hover{color:var(--gold)}
+nav a.nav-hi,footer.foot-bar .foot-links a.nav-hi{color:var(--gold)}   /* Colegios: destacado en el menu, 2026-09-17 */
 .tools{display:flex;gap:12px;align-items:center}
 .langtog{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden}
 .langtog button{background:transparent;border:none;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;cursor:pointer;transition:all .15s}

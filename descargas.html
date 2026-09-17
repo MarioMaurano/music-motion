@@ -20,7 +20,7 @@
     <a href="index.html"><span class="es">Inicio</span><span class="en">Home</span></a>
     <a href="index.html#productos"><span class="es">Productos</span><span class="en">Products</span></a>
     <a href="music-motion.html"><span class="es">Qué es Music Motion</span><span class="en">What Music Motion is</span></a>
-    <a href="colegios.html"><span class="es">Colegios</span><span class="en">Schools</span></a>
+    <a href="colegios.html" class="nav-hi"><span class="es">Colegios</span><span class="en">Schools</span></a>
     <a href="descargas.html"><span class="es">Descargas</span><span class="en">Downloads</span></a>
   </nav>
   <div class="tools">
@@ -118,10 +118,47 @@
   <h3><span class="es">Lista de espera</span><span class="en">Waiting list</span></h3>
   <p><span class="es">El paquete sale cuando la suite esté terminada, y no antes; no hay fecha. Hasta entonces hay una <b>lista de espera</b>: se pide con un correo, la solicitud queda anotada y se avisa el día que el paquete salga. Anotarse no cuesta nada ni compromete a nada.</span><span class="en">The package ships when the suite is finished, and not before; there is no date. Until then there is a <b>waiting list</b>: you ask by email, the request is noted, and you are told the day the package ships. Joining costs nothing and commits you to nothing.</span></p>
   <p><span class="es">Conviene decirlo desde ahora: el paquete de escritorio va a ser una <b>licencia de pago, por única vez</b> —no una suscripción—, todavía sin precio anunciado. Lo que está en línea sigue como está: el Tuner es gratis, y la suite se abre desde el navegador.</span><span class="en">Worth saying up front: the desktop package will be a <b>one-time paid licence</b> — not a subscription — with no price announced yet. What is online stays as it is: the Tuner is free, and the suite opens from the browser.</span></p>
-  <div class="launch">
-    <a class="btn-main" href="mailto:contacto@musicmotionsuite.com?subject=ScoreSuite%20%E2%80%94%20lista%20de%20espera%20del%20paquete"><span class="es">Anotarme en la lista</span><span class="en">Join the waiting list</span></a>
+  <!-- Antes esto era un mailto: y con Gmail en el navegador muchas veces no abria nada:
+       el visitante apretaba, no pasaba NADA y se iba. Ahora el correo se anota aca mismo
+       y cae en la pestana "Interesados" de la Base de Datos (action=interes, v5 del
+       script). Si el script no contesta, queda el enlace de Gmail de aca debajo.
+       2026-09-17, reportado por Mario. -->
+  <div class="launch" style="align-items:center;gap:10px;flex-wrap:wrap">
+    <input type="email" id="mm-espera-mail" autocomplete="email" placeholder="correo · email"
+           style="padding:9px 12px;min-width:15rem;font:inherit;font-size:.86rem;background:var(--panel2,#11111c);border:1px solid var(--border,#1e1e34);border-radius:6px;color:inherit">
+    <button type="button" class="btn-main" id="mm-espera-btn" onclick="mmAnotarme()"><span class="es">Anotarme en la lista</span><span class="en">Join the waiting list</span></button>
   </div>
-  <!-- El boton de arriba es un mailto:, y un mailto: depende de que la maquina tenga un
+  <p id="mm-espera-eco" style="font-size:.8rem;color:var(--textm,#8a8aa0);margin:8px 0 0;min-height:1.2em"></p>
+  <script>
+  function mmAnotarme(){
+    var i=document.getElementById('mm-espera-mail'),
+        b=document.getElementById('mm-espera-btn'),
+        eco=document.getElementById('mm-espera-eco'),
+        en=document.documentElement.getAttribute('data-lang')==='en',
+        c=(i.value||'').trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(c)){
+      eco.textContent = en ? 'Check the address.' : 'Revisá la dirección.'; i.focus(); return;
+    }
+    b.disabled=true; eco.textContent = en ? 'Saving…' : 'Anotando…';
+    var p=new URLSearchParams({action:'interes',correo:c,idioma:en?'en':'es',
+          origen:location.hostname+location.pathname,formulario:'lista-de-espera'});
+    fetch('https://script.google.com/macros/s/AKfycbxBbtMDqXziUUpWcntf6tDuNSnAMOhxLHGTXZTPRSrUg2VGvyR4zQw44ZAqFnKhnbSkPg/exec?'+p.toString())
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(!d||!d.ok) throw 0;
+        i.style.display='none'; b.style.display='none';
+        eco.textContent = en ? 'You are on the list. We will write the day the package ships.'
+                             : 'Anotado. Te escribimos el día que salga el paquete.';
+      })
+      .catch(function(){
+        b.disabled=false;
+        eco.textContent = en ? 'It could not be saved. Write to us — the address is just below.'
+                             : 'No se pudo anotar. Escribinos, la dirección está acá debajo.';
+      });
+  }
+  </script>
+  <!-- Lo de aca abajo son las otras salidas, por si el visitante prefiere escribir o si
+       el script no contesta. Antes eran el remedio del mailto: que depende de que la maquina tenga un
        programa de correo configurado. Con Gmail en el navegador, muchas veces no pasa NADA:
        el visitante aprieta, no se abre nada y se va. Por eso, debajo, tres salidas que no
        dependen de su computadora: la direccion escrita (se copia con un clic), y un enlace
@@ -162,7 +199,7 @@
     <a href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener">Pythagorean Tuner</a>
     <a href="suite/index.html" data-local="../website/index.html">ScoreSuite</a>
     <a href="apps/mmk-scorekeyboard.html" data-local="../_BASE/mmk-scorekeyboard.html">Cosmic Keyboard</a>
-    <a href="colegios.html"><span class="es">Colegios</span><span class="en">Schools</span></a>
+    <a href="colegios.html" class="nav-hi"><span class="es">Colegios</span><span class="en">Schools</span></a>
     <a href="descargas.html"><span class="es">Descargas</span><span class="en">Downloads</span></a>
   </div>
   <span class="foot-rights">© 2001–2026 Music Motion · <span class="es">marca registrada · todos los derechos reservados</span><span class="en">registered trademark · all rights reserved</span></span>
