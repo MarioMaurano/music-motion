@@ -121,6 +121,28 @@
   <div class="launch">
     <a class="btn-main" href="mailto:contacto@musicmotionsuite.com?subject=ScoreSuite%20%E2%80%94%20lista%20de%20espera%20del%20paquete"><span class="es">Anotarme en la lista</span><span class="en">Join the waiting list</span></a>
   </div>
+  <!-- El boton de arriba es un mailto:, y un mailto: depende de que la maquina tenga un
+       programa de correo configurado. Con Gmail en el navegador, muchas veces no pasa NADA:
+       el visitante aprieta, no se abre nada y se va. Por eso, debajo, tres salidas que no
+       dependen de su computadora: la direccion escrita (se copia con un clic), y un enlace
+       que abre el redactor de Gmail con todo puesto. 2026-09-17, reportado por Mario. -->
+  <p class="mm-contacto" style="font-family:var(--ff-mono,monospace);font-size:.78rem;letter-spacing:.06em;opacity:.9;margin-top:10px;line-height:2">
+    <span class="es">O escribinos a</span><span class="en">Or write to us at</span>
+    <a href="mailto:contacto@musicmotionsuite.com" id="mm-mail">contacto@musicmotionsuite.com</a>
+    <button type="button" class="mm-copiar" onclick="mmCopiarCorreo(this)" style="margin-left:8px;padding:2px 8px;font:inherit;background:transparent;border:1px solid var(--line,#333);border-radius:5px;color:inherit;cursor:pointer"><span class="es">copiar</span><span class="en">copy</span></button>
+    <span style="opacity:.5;margin:0 6px">·</span>
+    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=contacto@musicmotionsuite.com&amp;su=ScoreSuite%20%E2%80%94%20lista%20de%20espera&amp;body=" target="_blank" rel="noopener"><span class="es">abrir en Gmail</span><span class="en">open in Gmail</span></a>
+  </p>
+  <script>
+  function mmCopiarCorreo(b){
+    var t='contacto@musicmotionsuite.com';
+    var ok=function(){ var s=b.innerHTML; b.textContent=(document.documentElement.getAttribute('data-lang')==='en'?'copied':'copiado'); setTimeout(function(){ b.innerHTML=s; },1600); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(ok,function(){}); return; }
+    var i=document.createElement('input'); i.value=t; document.body.appendChild(i); i.select();
+    try{ document.execCommand('copy'); ok(); }catch(e){}
+    document.body.removeChild(i);
+  }
+  </script>
 
   <h3 id="colegios"><span class="es">Colegios y conservatorios</span><span class="en">Schools and conservatoires</span></h3>
   <p><span class="es">La suite es gratuita; lo que se paga es el sonido, por día de uso y no por alumno. Un colegio es una sola cuenta, sin registro de alumnos y sin nada que instalar. La oferta completa, con el precio y cómo funciona, está en <a href="colegios.html">la página para colegios</a>.</span><span class="en">The suite is free; what is paid for is the sound, by day of use and not per student. A school is a single account, with no student sign-up and nothing to install. The full offer, with the price and how it works, is on <a href="colegios.html">the schools page</a>.</span></p>
