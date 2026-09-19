@@ -28,3 +28,48 @@ document.querySelectorAll('.sizetog button').forEach(function(b){
 // el tema lo restaura mm-theme.js
 try{ var sl=localStorage.getItem('mmSiteLang'); setLang(sl||'en');   // default EN para visitantes nuevos; la elección guardada se respeta
      var sz=localStorage.getItem('mmSiteSize'); if(sz) setSize(parseInt(sz,10)); }catch(e){}
+
+// ── Menu: marcar en oro donde estamos (2026-09-20, Mario) ───────────────────────────────
+// Dos casos en el mismo menu: enlaces a OTRA pagina (instruments.html, colegios.html...) y
+// anclas de ESTA pagina (#apps, #aula...). Los primeros se marcan una vez; las anclas se
+// van marcando segun la seccion que queda debajo del encabezado al rodar la pagina.
+(function(){
+  var aqui = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  if(aqui === '') aqui = 'index.html';
+  var espias = [];
+  document.querySelectorAll('nav a').forEach(function(a){
+    var href = a.getAttribute('href') || '';
+    if(!href || /^(https?:|mailto:|tel:)/i.test(href)) return;
+    var i = href.indexOf('#');
+    var ruta = i < 0 ? href : href.slice(0, i);
+    var ancla = i < 0 ? ''   : href.slice(i);
+    var archivo = (ruta.split('/').pop() || '').toLowerCase();
+    var estaPagina = (ruta === '' || archivo === aqui);
+    if(!estaPagina) return;                       // enlace a otra pagina: no se toca
+    var sec = null;
+    try{ sec = document.querySelector(ancla || '#inicio'); }catch(e){}
+    if(sec) espias.push({a:a, sec:sec});          // ancla viva: la vigila el rodado
+    else if(!ancla) a.setAttribute('aria-current','page');   // pagina suelta, sin secciones
+  });
+  if(!espias.length) return;
+  var pendiente = false;
+  function mirar(){
+    pendiente = false;
+    var cab = document.querySelector('header');
+    var tope = (cab ? cab.offsetHeight : 0) + 12;
+    var elegida = espias[0];
+    espias.forEach(function(e){
+      if(e.sec.getBoundingClientRect().top <= tope) elegida = e;
+    });
+    // al final de la pagina gana siempre la ultima, aunque no haya llegado al tope
+    if(window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) elegida = espias[espias.length-1];
+    espias.forEach(function(e){
+      if(e === elegida) e.a.setAttribute('aria-current','location');
+      else e.a.removeAttribute('aria-current');
+    });
+  }
+  function pedir(){ if(!pendiente){ pendiente = true; requestAnimationFrame(mirar); } }
+  window.addEventListener('scroll', pedir, {passive:true});
+  window.addEventListener('resize', pedir);
+  mirar();
+})();
