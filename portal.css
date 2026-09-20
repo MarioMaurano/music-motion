@@ -51,3 +51,74 @@ footer .foot-links a:hover{color:var(--gold)}
 .dl .what{flex:1}
 .dl .what p{margin:2px 0;font-size:var(--fs-sm)}
 @media (max-width:640px){.dl{flex-direction:column;gap:6px}.dl .who{width:auto}}
+
+/* ═══════════ FICHA DE REPRESENTANTE (2026-09-20, Mario) ═══════════
+   Cada representante tiene su página: foto a la izquierda, datos a la derecha, y
+   debajo la forma de contacto. La foto es <img src="rep-<pais>.jpg"> con
+   onerror → marco vacío con las iniciales, así la página no se rompe mientras
+   no haya retrato. Todo por variable de tema: sirve en dark, gray, clear y contrast. */
+.ficha{display:flex;gap:22px;align-items:flex-start;background:var(--panel);
+  border:1px solid var(--border);border-left:3px solid var(--gold);
+  border-radius:0 var(--rad) var(--rad) 0;padding:20px 22px;margin-top:24px}
+.ficha .retrato{flex:none;width:132px}
+.ficha .retrato img{width:132px;height:160px;object-fit:cover;display:block;
+  border-radius:var(--rad);border:1px solid var(--border);background:var(--panel2)}
+.ficha .retrato .sinfoto{width:132px;height:160px;border-radius:var(--rad);
+  border:1px dashed var(--border);background:var(--panel2);display:flex;
+  align-items:center;justify-content:center;font-family:var(--ff-display);
+  font-weight:800;font-size:1.5rem;letter-spacing:2px;color:var(--textd)}
+.ficha .datos{flex:1;min-width:0}
+.ficha .cargo{font-family:var(--ff-mono);font-size:.7rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gold);font-weight:500}
+.ficha h3{font-family:var(--ff-display);font-size:1.3rem;font-weight:700;
+  color:var(--text);margin:5px 0 12px;line-height:1.2}
+.ficha dl{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;margin:0;font-size:var(--fs-sm)}
+.ficha dt{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--textd);padding-top:3px;white-space:nowrap}
+.ficha dd{margin:0;color:var(--textm)}
+.ficha dd a{color:var(--gold)}
+.ficha .pend{color:var(--textd);font-style:italic}
+@media (max-width:620px){.ficha{flex-direction:column;gap:16px}
+  .ficha .retrato,.ficha .retrato img,.ficha .retrato .sinfoto{width:100%;height:auto;aspect-ratio:132/160}}
+
+/* ═══════════ FORMA DE CONTACTO (2026-09-20) ═══════════
+   Genérica: la misma en las cinco páginas. Manda al Worker mm-pagos (/contacto)
+   sin salir de la página; mm-contacto.js hace el envío y pinta el resultado.
+   El mailto: quedó descartado — en 2026-09-17 Mario reportó que con Gmail en el
+   navegador el visitante aprieta y no pasa NADA. */
+.formam{background:var(--panel);border:1px solid var(--border);border-radius:var(--rad);
+  padding:20px 22px;margin-top:22px;max-width:680px}
+.formam .campos{display:grid;grid-template-columns:1fr 1fr;gap:13px 16px}
+.formam label{display:flex;flex-direction:column;gap:5px;font-family:var(--ff-mono);
+  font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--textd)}
+.formam label.ancho{grid-column:1/-1}
+.formam input,.formam textarea{font-family:var(--ff-text);font-size:var(--fs-sm);
+  color:var(--text);background:var(--bg);border:1px solid var(--border);
+  border-radius:6px;padding:9px 11px;width:100%;transition:border-color .15s}
+.formam input:focus,.formam textarea:focus{outline:none;border-color:var(--gold)}
+.formam textarea{min-height:110px;resize:vertical;line-height:1.5}
+.formam .trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.formam .pie{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.formam .nota{font-size:.72rem;color:var(--textd);margin:0;max-width:none}
+.formam button[type=submit]{display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--ff-mono);font-size:.8rem;letter-spacing:1px;padding:10px 20px;
+  border:1px solid var(--gold);border-radius:var(--rad);color:#0a0a10;
+  background:var(--gold);font-weight:500;cursor:pointer;transition:all .15s}
+.formam button[type=submit]:hover{filter:brightness(1.08)}
+.formam button[type=submit][disabled]{opacity:.55;cursor:default;filter:none}
+[data-theme="clear"] .formam button[type=submit]{color:#f6efda}
+.formam .aviso{margin-top:14px;padding:11px 14px;border-radius:var(--rad);
+  font-size:var(--fs-sm);display:none}
+.formam .aviso.ok{display:block;background:var(--panel2);border:1px solid var(--teal);
+  border-left:3px solid var(--teal);color:var(--text)}
+.formam .aviso.mal{display:block;background:var(--panel2);border:1px solid var(--rose);
+  border-left:3px solid var(--rose);color:var(--text)}
+.formam .aviso a{color:var(--gold)}
+.formam .falta{border-color:var(--rose)!important}
+@media (max-width:620px){.formam{padding:16px 17px}.formam .campos{grid-template-columns:1fr}}
+
+/* tarjeta-enlace del indice de contactos: la .vent-item del sitio, pero clicable entera */
+a.vent-item{display:block;color:inherit}
+a.vent-item .flecha{display:block;margin-top:10px;font-family:var(--ff-mono);font-size:.72rem;
+  letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
+a.vent-item:hover .flecha{text-decoration:underline}
