@@ -59,7 +59,7 @@ footer .foot-links a:hover{color:var(--gold)}
    no haya retrato. Todo por variable de tema: sirve en dark, gray, clear y contrast. */
 .ficha{display:flex;gap:22px;align-items:flex-start;background:var(--panel);
   border:1px solid var(--border);border-left:3px solid var(--gold);
-  border-radius:0 var(--rad) var(--rad) 0;padding:20px 22px;margin-top:24px}
+  border-radius:0 var(--rad) var(--rad) 0;padding:20px 22px;margin-top:24px;max-width:680px}
 .ficha .retrato{flex:none;width:132px}
 .ficha .retrato img{width:132px;height:160px;object-fit:cover;display:block;
   border-radius:var(--rad);border:1px solid var(--border);background:var(--panel2)}
