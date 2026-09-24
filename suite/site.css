@@ -106,9 +106,17 @@ p{color:var(--textm);margin:10px 0;max-width:68ch}
 .note b{color:var(--gold)}
 
 /* ═══════════ APPS ═══════════ */
-.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:26px}
-.app{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--c);border-radius:var(--rad);padding:18px 20px;transition:transform .15s,box-shadow .15s,border-color .15s}
+.apps{display:flex;flex-direction:column;gap:22px;margin-top:26px}
+.app{display:grid;grid-template-columns:1fr 1.05fr;overflow:hidden;background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--c);border-radius:var(--rad);transition:transform .15s,box-shadow .15s,border-color .15s}
 .app:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.28)}
+.app-body{padding:18px 20px;grid-column:1}
+.app-media{grid-column:2;position:relative;min-height:230px;background:color-mix(in srgb,var(--c) 12%,var(--panel));border-left:1px solid var(--border)}
+.app:nth-child(even) .app-body{grid-column:2}
+.app:nth-child(even) .app-media{grid-column:1;border-left:none;border-right:1px solid var(--border)}
+.app-media img,.app-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.app-media img.missing,.app-media video.missing{display:none}
+.app-media::after{content:attr(data-label);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;font-family:var(--ff-mono);font-size:.74rem;letter-spacing:2px;text-transform:uppercase;color:var(--c);opacity:.5;pointer-events:none}
+@media(max-width:720px){.app,.app:nth-child(even){grid-template-columns:1fr}.app .app-body,.app:nth-child(even) .app-body{grid-column:1;grid-row:2}.app .app-media,.app:nth-child(even) .app-media{grid-column:1;grid-row:1;border-left:none;border-right:none;border-bottom:1px solid var(--border);min-height:190px}}
 .app .tag{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--c);font-weight:500}
 .app h3{margin:5px 0 7px;font-size:1.15rem;color:var(--text)}
 .app p{font-size:var(--fs-sm);margin:0 0 4px}

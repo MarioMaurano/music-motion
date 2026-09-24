@@ -1,0 +1,25 @@
+Imágenes / videos de cada app para la página "Las apps" (suite/index.html).
+
+Dejá caer aquí los archivos con estos nombres exactos y aparecen solos, uno por fila:
+
+  keyboard.png   → Cosmic Keyboard
+  score.png      → Score Editor
+  console.png    → Console
+  register.png   → Register Response
+  player.png     → Player
+  coach.png      → Coach
+
+Mientras un archivo no esté, la fila muestra un recuadro con el color de la app
+y su nombre (no se rompe nada).
+
+Para usar un mp4 en vez de una imagen: en website/index.html, dentro del
+<div class="app-media"> de esa app, reemplazá la línea
+
+  <img src="media/keyboard.png" ... >
+
+por
+
+  <video src="media/keyboard.mp4" autoplay muted loop playsinline
+         onerror="this.classList.add('missing')"></video>
+
+Formato sugerido: horizontal (~4:3 o 16:10), el recorte se ajusta solo (object-fit:cover).

@@ -83,8 +83,8 @@
     <span class="en">Music tuned <span class="hl">by ear</span>, not by formulas.</span>
   </h1>
   <p class="lead">
-    <span class="es">Music Motion es una familia de herramientas que comparten una misma base: la afinación pitagórica pura —proporciones de 2 y 3, sin los redondeos del temperamento— y el oído como juez. Funcionan en el navegador.</span>
-    <span class="en">Music Motion is a family of tools that share one base: pure Pythagorean tuning — ratios of 2 and 3, without equal temperament's rounding — and the ear as the judge. They run in the browser.</span>
+    <span class="es">Music Motion es una familia de herramientas que comparten una misma base: la afinación pitagórica pura —proporciones de 2 y 3, sin los redondeos del temperamento— y el oído como juez. Funcionan en el navegador, <b>desde cualquier lugar con internet</b> y en cualquier dispositivo.</span>
+    <span class="en">Music Motion is a family of tools that share one base: pure Pythagorean tuning — ratios of 2 and 3, without equal temperament's rounding — and the ear as the judge. They run in the browser, <b>from anywhere with an internet connection</b> and on any device.</span>
   </p>
   <div class="note">
     <span class="es"><b>Un sostenido no es un bemol.</b> Re♯ y Mi♭ son dos alturas distintas, y aquí suenan distintas: en el afinador, en el teclado y en la partitura.</span>
@@ -112,6 +112,8 @@
       <div class="tag">⊞ Pythagorean Tuner</div>
       <h3><span class="es">El afinador</span><span class="en">The tuner</span></h3>
       <div class="status"><b>●</b> <span class="es">en línea · gratis</span><span class="en">online · free</span></div>
+      <a href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener"><img src="media/tuner.webp" alt="Pythagorean Tuner" loading="lazy" style="display:block;width:100%;max-width:520px;height:auto;border:1px solid var(--border);border-radius:var(--rad);margin:12px 0"></a>
+      <p class="note" style="border-left-color:var(--teal)"><span class="es"><b>El primer afinador no temperado</b>, en la compu o en el teléfono — una contribución de Music Motion a los amantes de la música.</span><span class="en"><b>The first non-tempered tuner</b>, on your computer or your phone — a Music Motion contribution to music lovers.</span></p>
       <p><span class="es">El único afinador que muestra la grafía musical verdadera: Do♯ ≠ Re♭. Entonación pitagórica pura, con sostenidos, bemoles, dobles alteraciones y posición tonal. Para guitarra, violín, viola, cello y contrabajo, y un modo libre para cualquier instrumento.</span><span class="en">The only tuner that shows true musical spelling: C♯ ≠ D♭. Pure Pythagorean intonation, with sharps, flats, double alterations and tonal position. For guitar, violin, viola, cello and bass, plus an unlocked mode for any instrument.</span></p>
       <ul>
         <li><span class="es">Medidor ♭♭ ♭ ● ♯ ♯♯: la nota con su nombre exacto, no la más cercana</span><span class="en">♭♭ ♭ ● ♯ ♯♯ meter: the note with its exact name, not the nearest one</span></li>
@@ -130,6 +132,21 @@
       <p><span class="es">Seis aplicaciones en el navegador que se hablan en tiempo real: un motor de sonido pitagórico, un editor de partituras que toca por grados, una consola de mezcla, un banco de timbres, un copista de MIDI y un coach que enseña a componer sin haber estudiado teoría.</span><span class="en">Six browser apps talking to each other in real time: a Pythagorean sound engine, a score editor that plays by degrees, a mixing console, a timbre bench, a MIDI copyist and a coach that teaches composition without prior theory.</span></p>
       <div class="apps-list">
         <span>Cosmic Keyboard</span><span>Score Editor</span><span>Console</span><span>Register Response</span><span>Player</span><span>Coach</span>
+      </div>
+
+      <div class="mmc" data-mmc>
+        <div class="mmc-stage">
+          <img class="mmc-img on" src="media/keyboard.webp" data-name="Cosmic Keyboard" alt="Cosmic Keyboard" loading="lazy">
+          <img class="mmc-img" src="media/score.webp" data-name="Score Editor" alt="Score Editor" loading="lazy">
+          <img class="mmc-img" src="media/console.webp" data-name="Console" alt="Console" loading="lazy">
+          <img class="mmc-img" src="media/register.webp" data-name="Register Response" alt="Register Response" loading="lazy">
+          <img class="mmc-img" src="media/player.webp" data-name="Player" alt="Player" loading="lazy">
+          <img class="mmc-img" src="media/coach.webp" data-name="Coach" alt="Coach" loading="lazy">
+          <button class="mmc-nav mmc-prev" type="button" aria-label="Anterior">‹</button>
+          <button class="mmc-nav mmc-next" type="button" aria-label="Siguiente">›</button>
+          <div class="mmc-cap" aria-live="polite">Cosmic Keyboard</div>
+        </div>
+        <div class="mmc-dots" role="tablist"></div>
       </div>
       <ul>
         <li><span class="es">Más de sesenta instrumentos, todos pitagóricos — también el piano</span><span class="en">More than sixty instruments, all Pythagorean — the piano included</span></li>
@@ -192,6 +209,33 @@ if(location.protocol==='file:'&&/\/portal\//i.test(location.pathname)){document.
       document.body.appendChild(c);
     },250);
   });
+})();
+
+// Carrusel de la ScoreSuite (imágenes de las 6 apps). Fade + puntos + auto-avance con pausa al pasar el mouse.
+(function(){
+  var root=document.querySelector('[data-mmc]'); if(!root) return;
+  var imgs=[].slice.call(root.querySelectorAll('.mmc-img'));
+  var cap=root.querySelector('.mmc-cap'), dotsBox=root.querySelector('.mmc-dots');
+  if(!imgs.length) return;
+  var i=0, timer=null;
+  imgs.forEach(function(_,n){
+    var d=document.createElement('button'); d.type='button'; d.className='mmc-dot'+(n===0?' on':'');
+    d.setAttribute('aria-label','Imagen '+(n+1));
+    d.addEventListener('click',function(){ go(n); reset(); });
+    dotsBox.appendChild(d);
+  });
+  var dots=[].slice.call(dotsBox.children);
+  function go(n){ i=(n+imgs.length)%imgs.length;
+    imgs.forEach(function(im,k){ im.classList.toggle('on',k===i); });
+    dots.forEach(function(dt,k){ dt.classList.toggle('on',k===i); });
+    if(cap) cap.textContent=imgs[i].getAttribute('data-name')||'';
+  }
+  function reset(){ if(timer)clearInterval(timer); timer=setInterval(function(){ go(i+1); },3800); }
+  root.querySelector('.mmc-next').addEventListener('click',function(){ go(i+1); reset(); });
+  root.querySelector('.mmc-prev').addEventListener('click',function(){ go(i-1); reset(); });
+  root.addEventListener('mouseenter',function(){ if(timer)clearInterval(timer); });
+  root.addEventListener('mouseleave',reset);
+  reset();
 })();
 </script>
 </body>

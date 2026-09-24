@@ -35,6 +35,7 @@
     <a href="instruments.html"><span class="es">Instrumentos</span><span class="en">Instruments</span></a>
     <a href="mmf.html"><span class="es">Formato MMF</span><span class="en">MMF format</span></a>
     <a href="#aula"><span class="es">Aula del Coach</span><span class="en">Coach Classroom</span></a>
+    <a href="ejercicios/index.html"><span class="es">Ejercicios</span><span class="en">Exercises</span></a>
     <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
   </nav>
   <div class="tools">
@@ -75,8 +76,8 @@
   </div>
   <p class="small" style="margin-top:16px;color:var(--textd)">
     <span class="pill mono">mm-sync</span>
-    <span class="es">Las aplicaciones se conectan por un canal común: tocas en una y las demás responden. Se sirven desde un mismo <span class="mono">localhost</span>.</span>
-    <span class="en">The apps connect over one shared channel: play in one and the others respond. Served from a single <span class="mono">localhost</span>.</span>
+    <span class="es">Las aplicaciones se conectan por un canal común: tocas en una y las demás responden. Corren en el navegador, <b>desde cualquier lugar con internet</b> — en compu, tablet o teléfono, sin instalar nada.</span>
+    <span class="en">The apps connect over one shared channel: play in one and the others respond. They run in the browser, <b>from anywhere with an internet connection</b> — on computer, tablet or phone, nothing to install.</span>
   </p>
 </section>
 
@@ -89,6 +90,12 @@
   <p><span class="es">Un instrumento, un editor de partituras y una consola de orquesta, sin instalar nada y sin más aparato que el ordenador que ya se tiene.</span><span class="en">An instrument, a score editor and an orchestra console — nothing to install, and no equipment beyond the computer you already have.</span></p>
 
   <div class="vent">
+
+    <div class="vent-item">
+      <span class="tag"><span class="es">En línea</span><span class="en">Online</span></span>
+      <h3><span class="es">Desde cualquier lugar, en cualquier dispositivo</span><span class="en">Anywhere, on any device</span></h3>
+      <p><span class="es">Corre en el navegador desde <b>musicmotionsuite.com</b>: sin instalar y sin cuenta para empezar. En el aula, en casa o de viaje —compu, tablet o teléfono—, la suite está <b>siempre disponible</b> con solo tener conexión.</span><span class="en">It runs in the browser from <b>musicmotionsuite.com</b>: nothing to install, no account to begin. In the classroom, at home or travelling — computer, tablet or phone — the suite is <b>always available</b> with just a connection.</span></p>
+    </div>
 
     <div class="vent-item">
       <span class="tag"><span class="es">Teclado</span><span class="en">Keyboard</span></span>
@@ -154,6 +161,10 @@
   <div class="apps">
 
     <div class="app" style="--c:var(--blue)">
+      <div class="app-media" data-label="Cosmic Keyboard">
+        <img src="media/keyboard.webp" alt="Cosmic Keyboard" loading="lazy" onerror="this.classList.add('missing')">
+      </div>
+      <div class="app-body">
       <div class="tag">⊞ Cosmic Keyboard</div>
       <h3><span class="es">El motor de sonido</span><span class="en">The sound engine</span></h3>
       <p><span class="es">El corazón: la única aplicación que produce sonido para toda la suite. Cada tecla está dividida — arriba la altura pitagórica pura, abajo una franja temperada (12-TET) para comparar.</span><span class="en">The heart: the only app that makes sound for the whole suite. Each key is split — pure Pythagorean pitch on top, an equal-tempered (12-TET) strip below to compare.</span></p>
@@ -165,9 +176,14 @@
       <a class="card-link" href="../apps/mmk-scorekeyboard.html"><span class="es">▶ Abrir →</span><span class="en">▶ Open →</span></a>
       <a class="card-link" href="keyboard.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
       <a class="card-link" href="keyboard-shortcuts.html"><span class="es">⌨ Atajos →</span><span class="en">⌨ Shortcuts →</span></a>
+      </div>
     </div>
 
     <div class="app" style="--c:var(--gold)">
+      <div class="app-media" data-label="Score Editor">
+        <img src="media/score.webp" alt="Score Editor" loading="lazy" onerror="this.classList.add('missing')">
+      </div>
+      <div class="app-body">
       <div class="tag">⊞ Score Editor</div>
       <h3><span class="es">La partitura</span><span class="en">The score</span></h3>
       <p><span class="es">Escribes música por canales. Su minikeyboard en modo TODAL permite tocar por grados de la tonalidad (en Fa mayor, el grado IV suena Si♭, de forma automática).</span><span class="en">You write music by channels. Its minikeyboard in TODAL mode lets you play by scale degrees (in F major, degree IV sounds B♭, automatically).</span></p>
@@ -179,9 +195,14 @@
       </ul>
       <a class="card-link" href="score.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
       <a class="card-link" href="score-shortcuts.html"><span class="es">⌨ Atajos →</span><span class="en">⌨ Shortcuts →</span></a>
+      </div>
     </div>
 
     <div class="app" style="--c:var(--teal)">
+      <div class="app-media" data-label="Console">
+        <img src="media/console.webp" alt="Console" loading="lazy" onerror="this.classList.add('missing')">
+      </div>
+      <div class="app-body">
       <div class="tag">⊞ Console</div>
       <h3><span class="es">La mezcla</span><span class="en">The mixer</span></h3>
       <p><span class="es">El equilibrio entre los instrumentos de la partitura: volumen y silencio por canal, y el volumen maestro común a la suite.</span><span class="en">The balance between the score's instruments: per-channel volume and mute, plus the master volume shared across the suite.</span></p>
@@ -190,9 +211,14 @@
         <li><span class="es">Transporte de reproducción (play/pausa/stop)</span><span class="en">Playback transport (play/pause/stop)</span></li>
       </ul>
       <a class="card-link" href="console.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
+      </div>
     </div>
 
     <div class="app" style="--c:var(--rose)">
+      <div class="app-media" data-label="Register Response">
+        <img src="media/register.webp" alt="Register Response" loading="lazy" onerror="this.classList.add('missing')">
+      </div>
+      <div class="app-body">
       <div class="tag">⊞ Register Response</div>
       <h3><span class="es">La respuesta del registro</span><span class="en">Register response</span></h3>
       <p><span class="es">Explora cómo responde cada registro del instrumento a lo largo del teclado.</span><span class="en">Explore how each register of the instrument responds across the keyboard.</span></p>
@@ -200,9 +226,14 @@
         <li><span class="es">Banco de pruebas de timbre y registro</span><span class="en">Timbre & register test bench</span></li>
       </ul>
       <a class="card-link" href="register.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
+      </div>
     </div>
 
     <div class="app" style="--c:#6aa832">
+      <div class="app-media" data-label="Player">
+        <img src="media/player.webp" alt="Player" loading="lazy" onerror="this.classList.add('missing')">
+      </div>
+      <div class="app-body">
       <div class="tag">⊞ Player <span class="wip">· en construcción</span></div>
       <h3><span class="es">El copista</span><span class="en">The Copyist</span></h3>
       <p><span class="es">Carga MIDI y lo acuña como MMF — el formato nativo, con la identidad pitagórica exacta de cada nota. Transporte maestro de la suite; suena en el Cosmic.</span><span class="en">Loads MIDI and mints it as MMF — the native format, with each note's exact Pythagorean identity. The suite's master transport; it sounds through the Cosmic.</span></p>
@@ -211,9 +242,14 @@
         <li><span class="es">Score Intelligence: identifica la obra y sus tempos (con Claude)</span><span class="en">Score Intelligence: identifies the piece and its tempos (with Claude)</span></li>
       </ul>
       <a class="card-link" href="player.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
+      </div>
     </div>
 
     <div class="app" style="--c:var(--violet)">
+      <div class="app-media" data-label="Coach">
+        <img src="media/coach.webp" alt="Coach" loading="lazy" onerror="this.classList.add('missing')">
+      </div>
+      <div class="app-body">
       <div class="tag">⊞ Coach <span class="wip">· en construcción</span></div>
       <h3><span class="es">El asesor</span><span class="en">The advisor</span></h3>
       <p><span class="es">Escucha la suite en silencio y aparece cuando hace falta. Y ahora además <b>enseña</b>: conduce el juego de composición, donde empezás con una melodía modelo y terminás con una obra a cuatro voces escrita por vos, sin haber estudiado teoría.</span><span class="en">Listens to the suite silently and surfaces when needed. And now it also <b>teaches</b>: it leads the composition game, where you start from a model melody and end with a four-voice piece written by you, without having studied theory.</span></p>
@@ -225,6 +261,8 @@
         <li><span class="es">El pulso rítmico: latido visible y tap-tempo</span><span class="en">The rhythmic pulse: visible beat + tap-tempo</span></li>
       </ul>
       <a class="card-link" href="coach.html"><span class="es">Ver detalle →</span><span class="en">See details →</span></a>
+      <a class="card-link" href="ejercicios/index.html"><span class="es">Ejercicios →</span><span class="en">Exercises →</span></a>
+      </div>
     </div>
 
   </div>
@@ -328,6 +366,11 @@
     <div class="lvl-pro">
       <p><span class="es"><span class="lvl-tag">apotome · ♯♯/♭♭</span><br>↑/↓ aplican un apotome (2187/2048 = 3⁷/2¹¹) sobre la nota sostenida, en vivo, sin reataque. El tope es absoluto en ♯♯ y ♭♭ (índices −2..+2): por ejemplo, desde Fa♯, un ↑ da Fa𝄪; el siguiente lo bloquea y el Coach muestra «2 alteraciones — límite». La iluminación sigue la inflexión (♮→♯→𝄪 / ♮→♭→𝄫). Todo en factores de 2 y 3, sin cents.</span><span class="en"><span class="lvl-tag">apotome · ♯♯/♭♭</span><br>↑/↓ apply an apotome (2187/2048 = 3⁷/2¹¹) to the held note, live, without retrigger. The cap is absolute at ♯♯ and ♭♭ (indices −2..+2): e.g. from F♯, one ↑ gives F𝄪; the next is blocked and the Coach shows "2 alterations — limit". Illumination follows the inflection (♮→♯→𝄪 / ♮→♭→𝄫). All in factors of 2 and 3 — no cents.</span></p>
     </div>
+  </div>
+
+  <div class="note">
+    <span class="es"><b>¿Listo para practicar?</b> Los <a href="ejercicios/index.html">Ejercicios</a> te llevan paso a paso: tocás la obra desde el teclado y después la escribís en el Score.</span>
+    <span class="en"><b>Ready to practise?</b> The <a href="ejercicios/index.html">Exercises</a> take you step by step: you play the piece from the keyboard and then write it in the Score.</span>
   </div>
 
 </section>
