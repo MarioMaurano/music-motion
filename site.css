@@ -160,6 +160,16 @@ p{color:var(--textm);margin:10px 0;max-width:68ch}
 .btn-launch{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-mono);font-size:.8rem;letter-spacing:1px;padding:10px 18px;border:1px solid var(--c,var(--blue));border-radius:var(--rad);color:var(--c,var(--blue));background:transparent;transition:all .15s;cursor:pointer}
 .btn-launch:hover{background:var(--c,var(--blue));color:#0a0a10}
 
+/* ═══════════ LA CAJITA DE MEDIA DE CADA SUBTÍTULO (2026-09-25, pedido de Mario del 21-09) ═══════════
+   Un <figure class="shot"> dentro del .spec: flota a la derecha del texto con una o dos imágenes
+   (o un mp4 corto) y su leyenda en mono chico. En pantallas angostas baja debajo del texto. */
+.spec{overflow:hidden}
+.spec .shot{float:right;width:min(46%,360px);margin:2px 0 10px 22px}
+.spec .shot img,.spec .shot video{display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad);background:#0a0a10}
+.spec .shot img+img,.spec .shot video+img{margin-top:8px}
+.spec .shot figcaption{font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px;line-height:1.4}
+@media (max-width:720px){.spec .shot{float:none;width:100%;margin:10px 0 4px}}
+
 /* ═══════════ FOOTER COMPACTO (2026-09-14) ═══════════
    La barra fina de las apps, traida al sitio: una sola linea, fondo panel,
    filo arriba. Reemplaza el pie alto de tres o cuatro parrafos. */

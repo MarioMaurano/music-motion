@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ — Music Motion</title>
+<meta name="description" content="Music Motion — preguntas frecuentes / frequently asked questions.">
+<link rel="canonical" href="https://musicmotionsuite.com/faq.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Music Motion">
+<meta property="og:title" content="FAQ — Music Motion">
+<meta property="og:url" content="https://musicmotionsuite.com/faq.html">
+<meta property="og:image" content="https://musicmotionsuite.com/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mm-theme.css">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="portal.css">
+<style>
+/* FAQ (2026-09-26, Mario: «una página extra… tomar el modelo del tuner (múltiples idiomas)
+   que iremos haciendo a medida que incluimos respuestas»).
+   Idiomas: el modelo del Tuner v.12.1.4 — botón 🌐 + ventanita con 12 banderas, diccionario
+   por idioma, respaldo en inglés, árabe de derecha a izquierda. El resto del sitio sigue en
+   ES/EN: el marco común (menú, pie) se muestra en ES si el idioma es ES y en EN en los demás. */
+.lang-wrap{position:relative}
+.lang-btn{background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--textm);
+  font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;cursor:pointer;transition:all .15s}
+.lang-btn:hover,.lang-btn.open{border-color:var(--gold);color:var(--gold)}
+.lang-popup{display:none;position:absolute;right:0;top:calc(100% + 8px);z-index:60;background:var(--panel);
+  border:1px solid var(--border);border-radius:var(--rad);padding:12px;width:300px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.lang-popup.open{display:block}
+.lang-popup-title{font-family:var(--ff-mono);font-size:.64rem;letter-spacing:2px;text-transform:uppercase;color:var(--textd);margin-bottom:9px}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.lang-item{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid transparent;border-radius:6px;cursor:pointer;color:var(--text)}
+.lang-item:hover{border-color:var(--border)}
+.lang-item.on{border-color:var(--gold)}
+.lang-flag{font-size:1.1rem;line-height:1}
+.lang-code{font-family:var(--ff-mono);font-size:.66rem;color:var(--gold);letter-spacing:1px;margin-right:5px}
+.lang-native{font-size:.82rem}
+
+#faq h1{max-width:none}
+.faq-list{display:flex;flex-direction:column;gap:10px;margin-top:28px;max-width:78ch}
+.faq-item{background:var(--panel);border:1px solid var(--border);border-radius:var(--rad);overflow:hidden}
+.faq-item[open]{border-color:var(--gold)}
+.faq-item summary{list-style:none;cursor:pointer;padding:15px 18px;font-family:var(--ff-display);font-weight:700;
+  font-size:1.02rem;color:var(--text);display:flex;gap:12px;align-items:baseline}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::before{content:"+";font-family:var(--ff-mono);color:var(--gold);flex:none;width:1ch}
+.faq-item[open] summary::before{content:"−"}
+.faq-a{padding:0 18px 16px 42px;color:var(--textm);font-size:var(--fs-sm);line-height:1.65}
+[dir="rtl"] .faq-a{padding:0 42px 16px 18px}
+.faq-a p{margin:0 0 10px}
+.faq-a ol,.faq-a ul{margin:0 0 12px;padding-inline-start:22px}
+.faq-a li{margin-bottom:6px}
+.faq-a b{color:var(--text)}
+.faq-a .faq-nota{border-inline-start:3px solid var(--gold);padding-inline-start:10px;color:var(--textd);margin-top:6px}
+.faq-more{margin-top:26px;color:var(--textm)}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="brand" title="Music Motion"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion</a>
+  <nav>
+    <a href="index.html"><span class="es">Inicio</span><span class="en">Home</span></a>
+    <a href="index.html#productos"><span class="es">Productos</span><span class="en">Products</span></a>
+    <a href="music-motion.html"><span class="es">Qué es Music Motion</span><span class="en">What Music Motion is</span></a>
+    <a href="colegios.html" class="nav-hi"><span class="es">Colegios</span><span class="en">Schools</span></a>
+    <a href="descargas.html"><span class="es">Descargas</span><span class="en">Downloads</span></a>
+    <a href="faq.html"><span class="es">Preguntas</span><span class="en">FAQ</span></a>
+    <a href="contacto.html"><span class="es">Contacto</span><span class="en">Contact</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="lang-wrap">
+      <button class="lang-btn" id="langBtn" type="button">🌐 <span id="langCode">EN</span></button>
+      <div class="lang-popup" id="langPopup">
+        <div class="lang-popup-title">Language · Idioma · Langue</div>
+        <div class="lang-grid" id="langGrid"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="faqMain">
+<section id="faq">
+  <div class="eyebrow" data-i18n="eyebrow">Help</div>
+  <h1 data-i18n="title">Frequently asked questions</h1>
+  <p class="lead" data-i18n="intro"></p>
+  <div class="faq-list" id="faqList"></div>
+  <p class="faq-more"><span data-i18n="more"></span> <a href="contacto.html" data-i18n="more-link"></a></p>
+</section>
+</main>
+
+<footer class="foot-bar">
+  <a href="index.html" class="foot-brand" title="Music Motion"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <div class="foot-links">
+    <a href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener">Pythagorean Tuner</a>
+    <a href="suite/index.html" data-local="../website/index.html">ScoreSuite</a>
+    <a href="colegios.html" class="nav-hi"><span class="es">Colegios</span><span class="en">Schools</span></a>
+    <a href="descargas.html"><span class="es">Descargas</span><span class="en">Downloads</span></a>
+    <a href="contacto.html"><span class="es">Contacto</span><span class="en">Contact</span></a>
+  </div>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="es">m Δ° m es marca registrada (BOIP 1544147) · todos los derechos reservados</span><span class="en">m Δ° m is a registered trademark (BOIP 1544147) · all rights reserved</span></span>
+</footer>
+
+<script src="mm-theme.js"></script>
+<script src="site.js"></script>
+<script>
+if(location.protocol==='file:'&&/\/portal\//i.test(location.pathname)){document.querySelectorAll('a[data-local]').forEach(function(a){a.href=a.getAttribute('data-local');});}
+
+/* ── Idiomas: mismo orden y banderas que el Tuner ─────────────────────────── */
+var LANG_META = {
+  en:{flag:'🇬🇧', code:'EN', native:'English'},
+  es:{flag:'🇪🇸', code:'ES', native:'Español'},
+  it:{flag:'🇮🇹', code:'IT', native:'Italiano'},
+  fr:{flag:'🇫🇷', code:'FR', native:'Français'},
+  de:{flag:'🇩🇪', code:'DE', native:'Deutsch'},
+  nl:{flag:'🇳🇱', code:'NL', native:'Nederlands'},
+  pt:{flag:'🇧🇷', code:'PT', native:'Português'},
+  pl:{flag:'🇵🇱', code:'PL', native:'Polski'},
+  ru:{flag:'🇷🇺', code:'RU', native:'Русский'},
+  zh:{flag:'🇨🇳', code:'ZH', native:'中文'},
+  ja:{flag:'🇯🇵', code:'JA', native:'日本語'},
+  ar:{flag:'🇸🇦', code:'AR', native:'العربية'}
+};
+
+/* ── Textos de la página ──────────────────────────────────────────────────── */
+var T = {
+  en:{eyebrow:'Help', title:'Frequently asked questions', intro:'Questions our users ask us, with their answers. The list grows as new questions come in.', more:"Can't find your question?", 'more-link':'Write to us →'},
+  es:{eyebrow:'Ayuda', title:'Preguntas frecuentes', intro:'Las preguntas que nos hacen los usuarios, con su respuesta. La lista crece a medida que llegan preguntas nuevas.', more:'¿No encuentras tu pregunta?', 'more-link':'Escríbenos →'},
+  it:{eyebrow:'Aiuto', title:'Domande frequenti', intro:"Le domande che ci fanno gli utenti, con la risposta. L'elenco cresce man mano che arrivano nuove domande.", more:'Non trovi la tua domanda?', 'more-link':'Scrivici →'},
+  fr:{eyebrow:'Aide', title:'Questions fréquentes', intro:"Les questions que nous posent les utilisateurs, avec leur réponse. La liste s'agrandit au fil des nouvelles questions.", more:'Vous ne trouvez pas votre question ?', 'more-link':'Écrivez-nous →'},
+  de:{eyebrow:'Hilfe', title:'Häufige Fragen', intro:'Fragen, die uns Nutzer stellen, mit Antwort. Die Liste wächst mit jeder neuen Frage.', more:'Deine Frage ist nicht dabei?', 'more-link':'Schreib uns →'},
+  nl:{eyebrow:'Hulp', title:'Veelgestelde vragen', intro:'Vragen die gebruikers ons stellen, met het antwoord. De lijst groeit naarmate er nieuwe vragen binnenkomen.', more:'Staat je vraag er niet bij?', 'more-link':'Schrijf ons →'},
+  pt:{eyebrow:'Ajuda', title:'Perguntas frequentes', intro:'Perguntas que os usuários nos fazem, com a resposta. A lista cresce à medida que chegam novas perguntas.', more:'Não encontrou sua pergunta?', 'more-link':'Escreva para nós →'},
+  pl:{eyebrow:'Pomoc', title:'Najczęściej zadawane pytania', intro:'Pytania, które zadają nam użytkownicy, wraz z odpowiedziami. Lista rośnie wraz z nowymi pytaniami.', more:'Nie ma tu twojego pytania?', 'more-link':'Napisz do nas →'},
+  ru:{eyebrow:'Помощь', title:'Частые вопросы', intro:'Вопросы, которые нам задают пользователи, с ответами. Список пополняется по мере поступления новых вопросов.', more:'Не нашли свой вопрос?', 'more-link':'Напишите нам →'},
+  zh:{eyebrow:'帮助', title:'常见问题', intro:'用户向我们提出的问题及解答。随着新问题的到来，列表会不断更新。', more:'没有找到你的问题？', 'more-link':'联系我们 →'},
+  ja:{eyebrow:'ヘルプ', title:'よくある質問', intro:'ユーザーから寄せられた質問と、その回答です。新しい質問が届くたびに追加していきます。', more:'お探しの質問が見つかりませんか？', 'more-link':'お問い合わせ →'},
+  ar:{eyebrow:'مساعدة', title:'الأسئلة الشائعة', intro:'أسئلة يطرحها علينا المستخدمون مع إجاباتها. تتّسع القائمة كلما وصلتنا أسئلة جديدة.', more:'لم تجد سؤالك؟', 'more-link':'راسلنا ←'}
+};
+
+/* ── LAS PREGUNTAS ────────────────────────────────────────────────────────────
+   Una pregunta nueva = un bloque nuevo en esta lista (copiar el de abajo).
+   id → dirección directa para mandarle a un usuario: faq.html#<id>
+   Si falta un idioma, se muestra el inglés.                                   */
+var FAQ = [
+{ id:'volumen', q:{
+    en:'The sound is very quiet. How do I turn it up?',
+    es:'El sonido es muy bajo. ¿Cómo lo subo?',
+    it:'Il suono è molto basso. Come lo alzo?',
+    fr:'Le son est très faible. Comment l’augmenter ?',
+    de:'Der Ton ist sehr leise. Wie mache ich ihn lauter?',
+    nl:'Het geluid is erg zacht. Hoe zet ik het harder?',
+    pt:'O som está muito baixo. Como aumento?',
+    pl:'Dźwięk jest bardzo cichy. Jak go podgłośnić?',
+    ru:'Звук очень тихий. Как сделать громче?',
+    zh:'声音很小，怎么调大？',
+    ja:'音がとても小さいです。どうすれば大きくなりますか？',
+    ar:'الصوت منخفض جدًا. كيف أرفعه؟'
+  }, a:{
+    en:'<p>First check three things — the answer is almost always here:</p><ol><li><b>The device volume</b> — with the volume keys or the speaker icon.</li><li><b>The browser tab</b> — make sure it is not muted (a crossed-out speaker on the tab).</li><li><b>The volume inside the app</b>, if it has its own control.</li></ol><p>If it is still too quiet, the device’s speaker is the most likely cause. Music Motion works on any device; this is what we recommend for each case:</p><ul><li><b>Laptop:</b> its speakers are small and give almost no bass, so a double bass or a cello sounds weak. Use headphones or small external speakers (USB or Bluetooth).</li><li><b>Tablet or phone:</b> headphones. To practise with your instrument, a small Bluetooth speaker lets you hear the app and your instrument at the same time.</li><li><b>Desktop computer:</b> ordinary desk speakers are enough. An external sound card improves the quality, but it is not needed.</li><li><b>For the Tuner</b>, which listens to your instrument through the microphone: an external microphone picks up better than the laptop’s, especially on low instruments.</li></ul><p class="faq-nota">None of this is required — these are simply ways to make the experience more comfortable.</p>',
+    es:'<p>Primero revisa tres cosas; casi siempre la respuesta está aquí:</p><ol><li><b>El volumen del aparato</b> — con las teclas de volumen o el icono del altavoz.</li><li><b>La pestaña del navegador</b> — que no esté silenciada (un altavoz tachado en la pestaña).</li><li><b>El volumen dentro de la aplicación</b>, si tiene su propio control.</li></ol><p>Si aun así suena poco, lo más probable es que sea el altavoz del aparato. Music Motion funciona en cualquier equipo; esto es lo que recomendamos en cada caso:</p><ul><li><b>Portátil:</b> sus altavoces son pequeños y casi no dan graves, así que un contrabajo o un cello se oyen débiles. Usa auriculares o unos altavoces externos pequeños (USB o Bluetooth).</li><li><b>Tableta o móvil:</b> auriculares. Para practicar con tu instrumento, un altavoz Bluetooth pequeño te deja oír la aplicación y tu instrumento a la vez.</li><li><b>Ordenador de sobremesa:</b> con unos altavoces de escritorio normales basta. Una tarjeta de sonido externa mejora la calidad, pero no es necesaria.</li><li><b>Para el Tuner</b>, que escucha tu instrumento por el micrófono: un micrófono externo capta mejor que el del portátil, sobre todo en los instrumentos graves.</li></ul><p class="faq-nota">Nada de esto es obligatorio: son maneras de que la experiencia sea más cómoda.</p>',
+    it:'<p>Prima controlla tre cose: quasi sempre la risposta è qui:</p><ol><li><b>Il volume del dispositivo</b> — con i tasti del volume o l’icona dell’altoparlante.</li><li><b>La scheda del browser</b> — che non sia silenziata (un altoparlante barrato sulla scheda).</li><li><b>Il volume dentro l’applicazione</b>, se ha un suo controllo.</li></ol><p>Se suona ancora piano, la causa più probabile è l’altoparlante del dispositivo. Music Motion funziona su qualsiasi dispositivo; ecco cosa consigliamo in ogni caso:</p><ul><li><b>Portatile:</b> i suoi altoparlanti sono piccoli e quasi non danno bassi, quindi un contrabbasso o un violoncello si sentono deboli. Usa le cuffie o piccoli altoparlanti esterni (USB o Bluetooth).</li><li><b>Tablet o telefono:</b> le cuffie. Per esercitarti con il tuo strumento, un piccolo altoparlante Bluetooth ti permette di sentire l’app e lo strumento insieme.</li><li><b>Computer fisso:</b> bastano normali altoparlanti da scrivania. Una scheda audio esterna migliora la qualità, ma non è necessaria.</li><li><b>Per il Tuner</b>, che ascolta il tuo strumento dal microfono: un microfono esterno capta meglio di quello del portatile, soprattutto con gli strumenti gravi.</li></ul><p class="faq-nota">Niente di tutto questo è obbligatorio: sono solo modi per rendere l’esperienza più comoda.</p>',
+    fr:'<p>Vérifiez d’abord trois choses : la réponse est presque toujours là.</p><ol><li><b>Le volume de l’appareil</b> — avec les touches de volume ou l’icône du haut-parleur.</li><li><b>L’onglet du navigateur</b> — vérifiez qu’il n’est pas en sourdine (un haut-parleur barré sur l’onglet).</li><li><b>Le volume dans l’application</b>, si elle a son propre réglage.</li></ol><p>Si le son reste faible, la cause la plus probable est le haut-parleur de l’appareil. Music Motion fonctionne sur tout appareil ; voici ce que nous conseillons dans chaque cas :</p><ul><li><b>Ordinateur portable :</b> ses haut-parleurs sont petits et ne rendent presque pas les graves ; une contrebasse ou un violoncelle sonnent donc faiblement. Utilisez un casque ou de petites enceintes externes (USB ou Bluetooth).</li><li><b>Tablette ou téléphone :</b> un casque. Pour travailler avec votre instrument, une petite enceinte Bluetooth vous permet d’entendre l’application et votre instrument en même temps.</li><li><b>Ordinateur de bureau :</b> des enceintes de bureau ordinaires suffisent. Une carte son externe améliore la qualité, mais elle n’est pas nécessaire.</li><li><b>Pour le Tuner</b>, qui écoute votre instrument par le micro : un micro externe capte mieux que celui du portable, surtout pour les instruments graves.</li></ul><p class="faq-nota">Rien de tout cela n’est obligatoire : ce sont simplement des moyens de rendre l’expérience plus confortable.</p>',
+    de:'<p>Prüfe zuerst drei Dinge – fast immer liegt es daran:</p><ol><li><b>Die Lautstärke des Geräts</b> – mit den Lautstärketasten oder über das Lautsprechersymbol.</li><li><b>Der Browser-Tab</b> – er darf nicht stummgeschaltet sein (durchgestrichener Lautsprecher im Tab).</li><li><b>Die Lautstärke in der App</b>, falls sie einen eigenen Regler hat.</li></ol><p>Ist es dann immer noch zu leise, liegt es sehr wahrscheinlich am Lautsprecher des Geräts. Music Motion läuft auf jedem Gerät; das empfehlen wir für jeden Fall:</p><ul><li><b>Laptop:</b> Seine Lautsprecher sind klein und geben kaum Bass wieder, deshalb klingen Kontrabass oder Cello schwach. Nutze Kopfhörer oder kleine externe Lautsprecher (USB oder Bluetooth).</li><li><b>Tablet oder Handy:</b> Kopfhörer. Zum Üben mit deinem Instrument lässt dich ein kleiner Bluetooth-Lautsprecher die App und dein Instrument gleichzeitig hören.</li><li><b>Desktop-PC:</b> Normale Schreibtischlautsprecher reichen. Eine externe Soundkarte verbessert die Qualität, ist aber nicht nötig.</li><li><b>Für den Tuner</b>, der dein Instrument über das Mikrofon hört: Ein externes Mikrofon nimmt besser auf als das des Laptops, besonders bei tiefen Instrumenten.</li></ul><p class="faq-nota">Nichts davon ist Pflicht – es sind nur Wege, die Nutzung angenehmer zu machen.</p>',
+    nl:'<p>Controleer eerst drie dingen – meestal ligt het daaraan:</p><ol><li><b>Het volume van het toestel</b> – met de volumetoetsen of het luidsprekericoon.</li><li><b>Het tabblad van de browser</b> – het mag niet gedempt zijn (een doorgestreepte luidspreker op het tabblad).</li><li><b>Het volume in de app</b>, als die een eigen regelaar heeft.</li></ol><p>Is het dan nog te zacht, dan ligt het waarschijnlijk aan de luidspreker van het toestel. Music Motion werkt op elk toestel; dit raden we per geval aan:</p><ul><li><b>Laptop:</b> de luidsprekers zijn klein en geven bijna geen lage tonen weer, waardoor een contrabas of cello zwak klinkt. Gebruik een koptelefoon of kleine externe luidsprekers (USB of Bluetooth).</li><li><b>Tablet of smartphone:</b> een koptelefoon. Om met je instrument te oefenen, laat een kleine Bluetooth-luidspreker je de app en je instrument tegelijk horen.</li><li><b>Desktopcomputer:</b> gewone bureauluidsprekers volstaan. Een externe geluidskaart verbetert de kwaliteit, maar is niet nodig.</li><li><b>Voor de Tuner</b>, die je instrument via de microfoon hoort: een externe microfoon vangt beter op dan die van de laptop, vooral bij lage instrumenten.</li></ul><p class="faq-nota">Niets hiervan is verplicht – het zijn gewoon manieren om het gebruik aangenamer te maken.</p>',
+    pt:'<p>Primeiro verifique três coisas — quase sempre a resposta está aqui:</p><ol><li><b>O volume do aparelho</b> — com as teclas de volume ou o ícone do alto-falante.</li><li><b>A aba do navegador</b> — confira se não está silenciada (um alto-falante riscado na aba).</li><li><b>O volume dentro do aplicativo</b>, se ele tiver controle próprio.</li></ol><p>Se ainda estiver baixo, a causa mais provável é o alto-falante do aparelho. O Music Motion funciona em qualquer aparelho; isto é o que recomendamos para cada caso:</p><ul><li><b>Notebook:</b> os alto-falantes são pequenos e quase não reproduzem graves, por isso um contrabaixo ou um violoncelo soam fracos. Use fones de ouvido ou caixinhas de som externas pequenas (USB ou Bluetooth).</li><li><b>Tablet ou celular:</b> fones de ouvido. Para praticar com seu instrumento, uma caixinha Bluetooth pequena permite ouvir o aplicativo e o instrumento ao mesmo tempo.</li><li><b>Computador de mesa:</b> caixas de som comuns bastam. Uma placa de som externa melhora a qualidade, mas não é necessária.</li><li><b>Para o Tuner</b>, que ouve seu instrumento pelo microfone: um microfone externo capta melhor que o do notebook, sobretudo nos instrumentos graves.</li></ul><p class="faq-nota">Nada disso é obrigatório: são só maneiras de tornar a experiência mais confortável.</p>',
+    pl:'<p>Najpierw sprawdź trzy rzeczy — prawie zawsze problem leży tutaj:</p><ol><li><b>Głośność urządzenia</b> — klawiszami głośności lub ikoną głośnika.</li><li><b>Karta przeglądarki</b> — upewnij się, że nie jest wyciszona (przekreślony głośnik na karcie).</li><li><b>Głośność w aplikacji</b>, jeśli ma własną regulację.</li></ol><p>Jeśli nadal gra za cicho, najpewniej winny jest głośnik urządzenia. Music Motion działa na każdym urządzeniu; oto nasze zalecenia dla każdego przypadku:</p><ul><li><b>Laptop:</b> jego głośniki są małe i prawie nie oddają basu, więc kontrabas czy wiolonczela brzmią słabo. Użyj słuchawek albo małych głośników zewnętrznych (USB lub Bluetooth).</li><li><b>Tablet lub telefon:</b> słuchawki. Do ćwiczenia z instrumentem mały głośnik Bluetooth pozwoli ci słyszeć jednocześnie aplikację i swój instrument.</li><li><b>Komputer stacjonarny:</b> wystarczą zwykłe głośniki biurkowe. Zewnętrzna karta dźwiękowa poprawia jakość, ale nie jest konieczna.</li><li><b>Do Tunera</b>, który słucha twojego instrumentu przez mikrofon: zewnętrzny mikrofon zbiera dźwięk lepiej niż wbudowany w laptopie, zwłaszcza przy niskich instrumentach.</li></ul><p class="faq-nota">Nic z tego nie jest obowiązkowe — to tylko sposoby, by korzystanie było wygodniejsze.</p>',
+    ru:'<p>Сначала проверьте три вещи — почти всегда дело в них:</p><ol><li><b>Громкость устройства</b> — клавишами громкости или через значок динамика.</li><li><b>Вкладка браузера</b> — убедитесь, что звук на ней не отключён (перечёркнутый динамик на вкладке).</li><li><b>Громкость в самом приложении</b>, если у него есть свой регулятор.</li></ol><p>Если всё равно тихо, скорее всего, причина в динамике устройства. Music Motion работает на любом устройстве; вот что мы советуем в каждом случае:</p><ul><li><b>Ноутбук:</b> динамики маленькие и почти не воспроизводят низкие частоты, поэтому контрабас или виолончель звучат слабо. Используйте наушники или небольшие внешние колонки (USB или Bluetooth).</li><li><b>Планшет или телефон:</b> наушники. Для занятий с инструментом небольшая Bluetooth-колонка позволит одновременно слышать приложение и свой инструмент.</li><li><b>Настольный компьютер:</b> достаточно обычных настольных колонок. Внешняя звуковая карта улучшает качество, но она не обязательна.</li><li><b>Для Tuner</b>, который слушает ваш инструмент через микрофон: внешний микрофон улавливает звук лучше встроенного в ноутбук, особенно у низких инструментов.</li></ul><p class="faq-nota">Ничего из этого не обязательно — это просто способы сделать работу удобнее.</p>',
+    zh:'<p>先检查三件事——问题几乎总出在这里：</p><ol><li><b>设备音量</b>——用音量键或扬声器图标调节。</li><li><b>浏览器标签页</b>——确认没有被静音（标签页上的扬声器图标带斜线）。</li><li><b>应用内的音量</b>——如果应用有自己的音量控制。</li></ol><p>如果声音仍然太小，最可能的原因是设备的扬声器。Music Motion 可以在任何设备上使用；以下是我们针对不同情况的建议：</p><ul><li><b>笔记本电脑：</b>扬声器很小，几乎放不出低音，所以低音提琴或大提琴听起来很弱。请使用耳机或小型外接音箱（USB 或蓝牙）。</li><li><b>平板或手机：</b>使用耳机。如果要跟着乐器练习，一个小型蓝牙音箱能让你同时听到应用和自己的乐器。</li><li><b>台式电脑：</b>普通桌面音箱就够了。外置声卡能提升音质，但不是必需的。</li><li><b>使用 Tuner 时</b>（它通过麦克风聆听你的乐器）：外接麦克风比笔记本自带的收音效果更好，低音乐器尤其明显。</li></ul><p class="faq-nota">以上都不是必需的——只是让使用体验更舒适的方法。</p>',
+    ja:'<p>まず次の3点を確認してください。ほとんどの場合、原因はここにあります。</p><ol><li><b>端末の音量</b> — 音量キーまたはスピーカーのアイコンで調整します。</li><li><b>ブラウザのタブ</b> — ミュートになっていないか確認します（タブに斜線入りのスピーカーが表示されます）。</li><li><b>アプリ内の音量</b> — アプリに独自の音量調整がある場合。</li></ol><p>それでも音が小さい場合は、端末のスピーカーが原因である可能性が高いです。Music Motion はどの端末でも使えます。ケースごとのおすすめは次のとおりです。</p><ul><li><b>ノートパソコン：</b>スピーカーが小さく低音がほとんど出ないため、コントラバスやチェロの音が弱く聞こえます。ヘッドホンか、小型の外付けスピーカー（USB または Bluetooth）を使ってください。</li><li><b>タブレット・スマートフォン：</b>ヘッドホンを使ってください。楽器と一緒に練習するなら、小型の Bluetooth スピーカーでアプリと自分の楽器を同時に聴くことができます。</li><li><b>デスクトップパソコン：</b>一般的なデスクトップ用スピーカーで十分です。外付けサウンドカードを使うと音質は上がりますが、必須ではありません。</li><li><b>Tuner を使う場合</b>（マイクで楽器の音を聴き取ります）：外付けマイクのほうがノートパソコン内蔵のものよりよく音を拾います。特に低音楽器で差が出ます。</li></ul><p class="faq-nota">どれも必須ではありません。より快適に使うための方法です。</p>',
+    ar:'<p>تحقّق أولًا من ثلاثة أمور، فالمشكلة غالبًا تكمن فيها:</p><ol><li><b>مستوى صوت الجهاز</b> — بأزرار الصوت أو من أيقونة مكبّر الصوت.</li><li><b>علامة تبويب المتصفح</b> — تأكّد أنها غير مكتومة (يظهر مكبّر صوت مشطوب على علامة التبويب).</li><li><b>مستوى الصوت داخل التطبيق</b>، إن كان له مفتاح تحكّم خاص.</li></ol><p>إذا ظلّ الصوت منخفضًا، فالسبب الأرجح هو مكبّر صوت الجهاز. يعمل Music Motion على أي جهاز، وهذه توصياتنا لكل حالة:</p><ul><li><b>الحاسوب المحمول:</b> مكبّرات الصوت فيه صغيرة ولا تكاد تُخرج الترددات المنخفضة، لذلك يبدو صوت الكونترباص أو التشيلو ضعيفًا. استخدم سماعات الرأس أو مكبّرات صوت خارجية صغيرة (USB أو Bluetooth).</li><li><b>الجهاز اللوحي أو الهاتف:</b> سماعات الرأس. وللتمرّن مع آلتك، يتيح لك مكبّر صوت Bluetooth صغير سماع التطبيق وآلتك في الوقت نفسه.</li><li><b>الحاسوب المكتبي:</b> تكفي مكبّرات صوت مكتبية عادية. بطاقة الصوت الخارجية تحسّن الجودة، لكنها ليست ضرورية.</li><li><b>مع الـ Tuner</b>، الذي يستمع إلى آلتك عبر الميكروفون: الميكروفون الخارجي يلتقط الصوت أفضل من ميكروفون الحاسوب المحمول، خاصةً مع الآلات المنخفضة.</li></ul><p class="faq-nota">لا شيء من هذا إلزامي؛ إنها مجرد طرق لجعل التجربة أكثر راحة.</p>'
+  }}
+];
+
+var currentLang = 'en';
+function pick(obj){ return (obj && (obj[currentLang] || obj.en)) || ''; }
+function t(key){ return (T[currentLang] && T[currentLang][key]) || T.en[key] || ''; }
+
+function renderFaq(){
+  var list = document.getElementById('faqList');
+  var abiertas = {};
+  list.querySelectorAll('details[open]').forEach(function(d){ abiertas[d.id] = true; });
+  list.innerHTML = '';
+  FAQ.forEach(function(item){
+    var d = document.createElement('details');
+    d.className = 'faq-item'; d.id = item.id;
+    if(abiertas[item.id] || location.hash === '#'+item.id) d.open = true;
+    var s = document.createElement('summary'); s.textContent = pick(item.q);
+    var a = document.createElement('div'); a.className = 'faq-a'; a.innerHTML = pick(item.a);
+    d.appendChild(s); d.appendChild(a); list.appendChild(d);
+  });
+}
+
+function applyLang(lang){
+  if(!LANG_META[lang]) lang = 'en';
+  currentLang = lang;
+  // marco común del sitio (menú, pie): ES en español, EN en los demás idiomas
+  var marco = lang === 'es' ? 'es' : 'en';
+  document.documentElement.setAttribute('data-lang', marco);
+  document.documentElement.setAttribute('lang', lang);
+  document.getElementById('faqMain').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  document.querySelectorAll('[data-i18n]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i18n')); });
+  document.title = t('title') + ' — Music Motion';
+  document.getElementById('langCode').textContent = LANG_META[lang].code;
+  document.querySelectorAll('.lang-item').forEach(function(el){ el.classList.toggle('on', el.dataset.lang === lang); });
+  renderFaq();
+  try{ localStorage.setItem('mmFaqLang', lang); if(lang==='es'||lang==='en') localStorage.setItem('mmSiteLang', lang); }catch(e){}
+}
+
+function buildLangGrid(){
+  var grid = document.getElementById('langGrid');
+  Object.keys(LANG_META).forEach(function(code){
+    var m = LANG_META[code];
+    var div = document.createElement('div');
+    div.className = 'lang-item'; div.dataset.lang = code;
+    div.innerHTML = '<span class="lang-flag">'+m.flag+'</span><span><span class="lang-code">'+m.code+'</span><span class="lang-native">'+m.native+'</span></span>';
+    div.addEventListener('click', function(){ applyLang(code); toggleLangPopup(false); });
+    grid.appendChild(div);
+  });
+}
+function toggleLangPopup(force){
+  var p = document.getElementById('langPopup'), b = document.getElementById('langBtn');
+  var open = typeof force === 'boolean' ? force : !p.classList.contains('open');
+  p.classList.toggle('open', open); b.classList.toggle('open', open);
+}
+document.getElementById('langBtn').addEventListener('click', function(e){ e.stopPropagation(); toggleLangPopup(); });
+document.addEventListener('click', function(e){
+  var p = document.getElementById('langPopup');
+  if(p.classList.contains('open') && !p.contains(e.target)) toggleLangPopup(false);
+});
+window.addEventListener('hashchange', renderFaq);
+
+// idioma inicial: el elegido aquí antes → el del resto del sitio → el del navegador → inglés
+(function(){
+  var l = null;
+  try{ var f = localStorage.getItem('mmFaqLang'), s = localStorage.getItem('mmSiteLang');
+       l = (f && f !== 'es' && f !== 'en') ? f : (s || f); }catch(e){}
+  if(!l || !LANG_META[l]){ var nav = (navigator.language||'en').slice(0,2).toLowerCase(); l = LANG_META[nav] ? nav : 'en'; }
+  buildLangGrid();
+  applyLang(l);
+})();
+</script>
+
+</body>
+</html>

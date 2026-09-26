@@ -23,3 +23,15 @@ por
          onerror="this.classList.add('missing')"></video>
 
 Formato sugerido: horizontal (~4:3 o 16:10), el recorte se ajusta solo (object-fit:cover).
+
+────────────────────────────────────────────────────────────────────────
+ESTA CARPETA VIAJA A GIT Y AL SITIO PUBLICADO.
+
+Deja aquí SÓLO lo que una página enlaza. Todo lo demás —portadas, fotos,
+grabaciones en crudo, pruebas— va en  _Media\  (ver _Media\_LEEME.md).
+
+Los originales de video, que pesaban 352 MB, se mudaron el 2026-09-25 de
+website\media\source\ a _Media\video-fuente\, fuera de git: GitHub
+rechaza cualquier archivo de más de 100 MB y Score.mp4 pesa 162 MB.
+────────────────────────────────────────────────────────────────────────
+
