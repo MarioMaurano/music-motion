@@ -1,3 +1,4 @@
+// 2026-09-29 — redacción formal en la card del contrafagot: «caen de a ocho» → «caen de ocho en ocho».
 // mm-orchestration.js — MM Orchestration (Coach V2.5.5, 2026-09-24 — cards bilingües ES/EN:
 //   fzaLabelEn, cls/car/din con EN + fallback; +saxofón y 23 instrumentos sumados desde la
 //   deep-research; aliases de variantes → card del instrumento padre; L.get/resolve).
@@ -383,7 +384,7 @@ window.MM_TECH = {
       es:'El material cambia en el tenor, entre F2 y F3: el latón tiene más amortiguación interna y mata antes los parciales altos, así que el grave suena más opaco que el agudo aunque las dos cuerdas duren mucho.',
       en:'The material changes in the tenor, between F2 and F3: brass has more internal damping and kills the high partials sooner, so the bass sounds more opaque than the treble even though both strings last long.' },
     { sig:'la cajita de cubiertos', sigEn:'the box of cutlery',
-      es:'En el grave, 77 parciales separados 65 Hz caen de a ocho en cada banda crítica: eso es rugosidad, y se oye como una caja de cubiertos sobre una mesa. En el agudo los mismos parciales se separan y el efecto desaparece — no es un defecto, es aritmética de la serie armónica.',
+      es:'En el grave, 77 parciales separados 65 Hz caen de ocho en ocho en cada banda crítica: eso es rugosidad, y se oye como una caja de cubiertos sobre una mesa. En el agudo los mismos parciales se separan y el efecto desaparece — no es un defecto, es aritmética de la serie armónica.',
       en:'In the bass, 77 partials spaced 65 Hz apart fall eight to a critical band: that is roughness, and it is heard as a box of cutlery on a table. In the treble the same partials spread out and the effect vanishes — not a defect, the arithmetic of the harmonic series.' }
   ];
   function copia(arr){ return arr.map(function(o){ var c={}; for(var k in o) c[k]=o[k]; return c; }); }
