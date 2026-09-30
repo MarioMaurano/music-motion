@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="mm-theme.css">
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="portal.css">
-</head>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/colegios.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/colegios.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/colegios.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/colegios.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/colegios.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/colegios.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
 <body>
 
 <header>
@@ -49,10 +49,7 @@
       <button data-th="clear" style="background:#f6efda" title="Clear"></button>
       <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
     </div>
-    <div class="langtog">
-      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
-      <button id="b-en" onclick="setLang('en')">EN</button>
-    </div>
+    <div class="langtog"><button id="b-es" onclick="setLang('es')">ES</button><button id="b-en" onclick="setLang('en')">EN</button><a href="fr/colegios.html">FR</a><a href="nl/colegios.html">NL</a><a href="de/colegios.html">DE</a></div>
   </div>
 </header>
 
@@ -133,5 +130,6 @@
 // En _RELEASE\sitio\ y publicado, el enlace canonico suite/index.html ya resuelve solo.
 if(location.protocol==='file:'&&/\/portal\//i.test(location.pathname)){document.querySelectorAll('a[data-local]').forEach(function(a){a.href=a.getAttribute('data-local');});}
 </script>
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
 </body>
 </html>

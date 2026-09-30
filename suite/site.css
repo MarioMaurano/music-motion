@@ -42,7 +42,7 @@ footer .brand-logo-img{height:18px}
 nav{display:flex;gap:18px;flex:1;flex-wrap:wrap}
 nav a{color:var(--textm);font-size:.82rem;font-weight:500;letter-spacing:.3px;transition:color .15s}
 nav a:hover{color:var(--gold)}
-nav a.nav-hi,footer.foot-bar .foot-links a.nav-hi{color:var(--gold)}   /* Colegios: destacado en el menu, 2026-09-17 */
+/* 2026-09-30 (Mario): Colegios ya no va siempre en oro; se marca como los demas, cuando se esta en la pagina. Antes: nav a.nav-hi,footer.foot-bar .foot-links a.nav-hi{color:var(--gold)} */
 /* ── Enlace ACTIVO del menu (2026-09-20, Mario: «los links que se vuelven amarillo en hover
    podrian quedar amarillos en la pagina activa»). Mismo oro del hover, fijo, con un filo
    debajo para distinguirlo de Colegios, que ya va en oro siempre. Lo marca site.js con
