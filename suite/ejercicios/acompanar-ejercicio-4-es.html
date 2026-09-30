@@ -83,6 +83,14 @@
   table.mov td:first-child { font-family:Consolas, monospace; font-weight:bold; color:var(--navy); white-space:nowrap; }
   .pendiente { background:#fbeeee; border-left:5px solid #a33; border-radius:4px; padding:10px 14px; margin:12px 0; font-size:14.5px; }
   .pendiente b { color:#7a1f1f; }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
 </style>
 </head>
 <body>

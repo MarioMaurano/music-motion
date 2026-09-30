@@ -81,6 +81,14 @@
   table.mov { border-collapse:collapse; margin:8px 0 4px; font-size:14px; }
   table.mov td { border-bottom:1px solid #e3eaef; padding:5px 10px; vertical-align:top; }
   table.mov td:first-child { font-family:Consolas, monospace; font-weight:bold; color:var(--navy); white-space:nowrap; }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
 </style>
 </head>
 <body>

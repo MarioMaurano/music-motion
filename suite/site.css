@@ -187,3 +187,22 @@ footer.foot-bar .foot-links a{font-family:var(--ff-mono);font-size:.64rem;letter
 footer.foot-bar .foot-links a:hover{color:var(--gold)}
 footer.foot-bar .foot-rights{font-family:var(--ff-mono);font-size:.58rem;letter-spacing:1px;color:var(--textd)}
 @media (max-width:640px){footer.foot-bar{padding:10px 18px}}
+
+/* ── pantallas angostas (2026-09-30, Mario: «estas páginas se deben ver bien en tablet o phone») ──
+   tablet: marca + herramientas en un renglón, el menú en otro que se desliza de lado.
+   teléfono: además la barra deja de ser fija, para que no tape el texto. */
+@media (max-width:1000px){
+  header{gap:8px 16px;padding:9px 18px}
+  .tools{margin-left:auto}
+  nav{order:3;flex:1 1 100%;flex-wrap:nowrap;overflow-x:auto;gap:18px;padding:2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav::-webkit-scrollbar{display:none}
+  nav a{white-space:nowrap;flex:none}
+}
+@media (max-width:720px){
+  header{position:static;padding:8px 16px}
+  .tools{margin-left:0;flex-wrap:wrap;gap:8px}
+  main{padding:0 16px}
+}
+@media (max-height:520px){
+  header{position:static}   /* teléfono en horizontal: la barra se va al leer, no tapa el texto */
+}
