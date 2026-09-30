@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Music Motion — accord pythagoricien à l’oreille</title>
+<meta name="description" content="Des outils musicaux accordés à l’oreille sur une base pythagoricienne pure. Pythagorean Tuner et ScoreSuite.">
+<link rel="canonical" href="https://musicmotionsuite.com/fr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Music Motion">
+<meta property="og:title" content="Music Motion — accord pythagoricien à l’oreille">
+<meta property="og:description" content="Des outils musicaux accordés à l’oreille sur une base pythagoricienne pure. Pythagorean Tuner et ScoreSuite.">
+<meta property="og:url" content="https://musicmotionsuite.com/fr/">
+<meta property="og:image" content="https://musicmotionsuite.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="m Δ° m — Music Motion">
+<meta property="og:locale" content="fr_BE">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../mm-theme.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../portal.css">
+<style>
+/* Capa de carga del demo (2026-09-14, Mario: «y mientras abre usa el logo que mueve»).
+   El demo pesa mas de un mega: entre el clic y la primera pintura el navegador se queda
+   quieto sobre esta pagina. Esta capa ocupa ese hueco con la marca respirando. */
+#mm-cargando{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:18px}
+#mm-cargando img{height:76px;width:auto;animation:mm-respira 1.4s ease-in-out infinite alternate}
+#mm-cargando .logo-onlight{display:none}
+[data-theme="clear"] #mm-cargando .logo-ondark{display:none}
+[data-theme="clear"] #mm-cargando .logo-onlight{display:block}
+#mm-cargando p{font-family:var(--ff-mono);font-size:.74rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--textd);margin:0}
+@keyframes mm-respira{from{opacity:.45;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){#mm-cargando img{animation:none}}
+</style>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
+<body>
+
+<header>
+  <a href="index.html" class="brand" title="Music Motion"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"> Music Motion</a>
+  <nav>
+    <a href="index.html"><span class="tr">Accueil</span></a>
+    <a href="index.html#productos"><span class="tr">Produits</span></a>
+    <a href="../music-motion.html"><span class="tr">Ce qu’est Music Motion</span></a>
+    <a href="../colegios.html" class="nav-hi"><span class="tr">Écoles</span></a>
+    <a href="../descargas.html"><span class="tr">Téléchargements</span></a>
+    <a href="../faq.html?lang=fr"><span class="tr">FAQ</span></a>
+    <a href="../contacto.html"><span class="tr">Contact</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../index.html?lang=es">ES</a><a href="../index.html?lang=en">EN</a><a class="on" href="index.html">FR</a><a href="../nl/index.html">NL</a><a href="../de/index.html">DE</a></div>
+  </div>
+</header>
+
+<main>
+
+<!-- ───────────── INICIO ───────────── -->
+<section id="inicio">
+  <img class="hero-logo logo-ondark" src="../mm-logo.svg" alt="m Δ° m — Music Motion">
+  <img class="hero-logo logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m — Music Motion">
+  <div class="eyebrow"><span class="tr">Accord pythagoricien à l’oreille</span></div>
+  <h1>
+    
+    <span class="tr">Une musique qui s’accorde <span class="hl">à l’oreille</span>, pas avec des formules.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Music Motion est une famille d’outils qui partagent une même base : l’<a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">accord pythagoricien</a> pur — des rapports de 2 et de 3, c’est-à-dire des <a href="../faq.html?lang=fr#octava-quinta" title="Questions fréquentes">octaves et des quintes</a> pures, sans les arrondis du <a href="../faq.html?lang=fr#temperado" title="Questions fréquentes">tempérament égal</a> — et l’oreille comme juge. Ils fonctionnent dans le navigateur, <b>partout où il y a une connexion internet</b>, et sur tout appareil.</span>
+  </p>
+  <p class="lead">
+    
+    <span class="tr">Ils sont conçus pour une <b>immersion progressive</b> : chaque aspect de la musique — l’accord, l’écriture, l’interprétation, l’accompagnement, l’orchestration — peut être abordé pas à pas et à différents niveaux, au rythme de celui qui apprend seul ou de celui qui enseigne.</span>
+  </p>
+  <div class="note">
+    
+    <span class="tr"><b>Un dièse n’est pas un bémol.</b> Ré♯ et Mi♭ sont <a href="../faq.html?lang=fr#midi-mmf" title="Questions fréquentes">deux hauteurs différentes</a>, et ici elles sonnent différemment : dans l’accordeur, sur le clavier et dans la partition.</span>
+  </div>
+  <div class="hero-links">
+    <a class="btn-main" href="#productos"><span class="tr">Voir les produits</span></a>
+    <a class="btn-launch" href="../music-motion.html" style="--c:var(--violet)"><span class="tr">Ce qu’est Music Motion →</span></a>
+    <!-- 2026-09-14: va a la landing, no al demo suelto. Alli el visitante encuentra el
+         instrumento embebido y ademas el relato del teclado fisico. Cuando exista
+         mmk.musicmotionsuite.com, cambiar solo esta direccion. -->
+    <a class="btn-launch" id="btn-demo" href="https://mmk.musicmotionsuite.com/" style="--c:var(--gold)"><span class="tr">▶ L’essayer maintenant — gratuit</span></a>
+  </div>
+</section>
+
+<!-- ───────────── PRODUCTOS ───────────── -->
+<section id="productos">
+  <div class="eyebrow"><span class="tr">Les produits</span></div>
+  <h2><span class="tr">Deux outils, un seul accord</span></h2>
+  <p><span class="tr">Ce que vous accordez dans l’un sonne de la même façon dans l’autre : sous les deux se trouve la même table de hauteurs, écrite en rapports exacts.</span></p>
+
+  <div class="apps">
+
+    <div class="app prod" style="--c:var(--teal)">
+      <div class="tag">⊞ Pythagorean Tuner</div>
+      <h3><span class="tr">L’accordeur</span></h3>
+      <div class="status"><b>●</b> <span class="tr">en ligne · gratuit</span></div>
+      <a href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener"><img src="../media/tuner.webp" alt="Pythagorean Tuner" loading="lazy" style="display:block;width:100%;max-width:520px;height:auto;border:1px solid var(--border);border-radius:var(--rad);margin:12px 0"></a>
+      <p class="note" style="border-left-color:var(--teal)"><span class="tr"><b>Le premier accordeur non tempéré</b>, sur votre ordinateur ou votre téléphone — vous pouvez le télécharger, offert par Music Motion.</span></p>
+      <p><span class="tr">Le seul accordeur qui affiche la véritable orthographe musicale : Do♯ ≠ Ré♭. Intonation pythagoricienne pure, avec dièses, bémols, doubles altérations et position tonale. Pour guitare, violon, alto, violoncelle et contrebasse, et un mode libre pour tout instrument.</span></p>
+      <ul>
+        <li><span class="tr">Indicateur ♭♭ ♭ ● ♯ ♯♯ : la note avec son nom exact, pas la plus proche</span></li>
+        <li><span class="tr">La4 = 440 Hz, réglable (415 · 430 · 432 · 440 · 442 · 466)</span></li>
+        <li><span class="tr">Depuis le microphone, traité sur votre appareil : rien n’est enregistré ni envoyé. Rien à installer.</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener"><span class="tr">▶ Ouvrir le Tuner</span></a>
+      </div>
+    </div>
+
+    <div class="app prod" style="--c:var(--gold)">
+      <div class="tag">⊞ ScoreSuite</div>
+      <h3><span class="tr">La suite</span></h3>
+      <div class="status"><b>●</b> <span class="tr">v.2 · en ligne, en construction</span></div>
+      <p><span class="tr">Six applications de navigateur qui dialoguent en temps réel : un moteur sonore pythagoricien, un éditeur de partitions qui joue par degrés, une console de mixage, un banc de timbres, un copiste <a href="https://musicmotionsuite.com/faq.html?lang=fr#midi" title="Questions fréquentes">MIDI</a> et un coach qui enseigne la composition sans théorie préalable.</span></p>
+      <div class="apps-list">
+        <span>Cosmic Keyboard</span><span>Score Editor</span><span>Console</span><span>Register Response</span><span>Player</span><span>Coach</span>
+      </div>
+
+      <div class="mmc" data-mmc>
+        <div class="mmc-stage">
+          <img class="mmc-img on" src="../media/keyboard.webp" data-name="Cosmic Keyboard" alt="Cosmic Keyboard" loading="lazy">
+          <img class="mmc-img" src="../media/score.webp" data-name="Score Editor" alt="Score Editor" loading="lazy">
+          <img class="mmc-img" src="../media/console.webp" data-name="Console" alt="Console" loading="lazy">
+          <img class="mmc-img" src="../media/register.webp" data-name="Register Response" alt="Register Response" loading="lazy">
+          <img class="mmc-img" src="../media/player.webp" data-name="Player" alt="Player" loading="lazy">
+          <img class="mmc-img" src="../media/coach.webp" data-name="Coach" alt="Coach" loading="lazy">
+          <button class="mmc-nav mmc-prev" type="button" aria-label="Anterior">‹</button>
+          <button class="mmc-nav mmc-next" type="button" aria-label="Siguiente">›</button>
+          <div class="mmc-cap" aria-live="polite">Cosmic Keyboard</div>
+        </div>
+        <div class="mmc-dots" role="tablist"></div>
+      </div>
+      <ul>
+        <li><span class="tr">Plus de soixante instruments, tous pythagoriciens — le piano compris</span></li>
+        <li><span class="tr">Guide d’utilisation, raccourcis et bibliothèque d’instruments, en espagnol et en anglais</span></li>
+        <li><span class="tr">Son propre format, <a href="../suite/mmf.html" data-local="../website/mmf.html">MMF</a> — l’œuvre avec son accord exact et son interprétation à l’intérieur —, avec trois œuvres à télécharger et à ouvrir</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="../suite/index.html" data-local="../website/index.html"><span class="tr">▶ Entrer dans la suite</span></a>
+        <a class="btn-launch" href="../apps/mmk-scorekeyboard.html" data-local="../_BASE/mmk-scorekeyboard.html" style="--c:var(--blue)"><span class="tr">Le clavier où Ré♯ ≠ Mi♭ →</span></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ───────────── DESCARGAS ───────────── -->
+<section id="descargas">
+  <div class="eyebrow"><span class="tr">Téléchargements</span></div>
+  <h2><span class="tr">Ce que vous pouvez télécharger, et ce qui arrive</span></h2>
+  <p><span class="tr">Les outils vivent dans le navigateur et ne demandent aucune installation. Ce qui sera téléchargeable, c’est le <b>paquet de bureau ScoreSuite</b> — les six applications, leur lanceur local, le manuel et le guide —, en préparation : il sortira quand la suite sera terminée, ce sera une licence payante unique, et d’ici là il existe une liste d’attente.</span></p>
+  <div class="launch">
+    <a class="btn-launch" href="../descargas.html" style="--c:var(--violet)"><span class="tr">Voir les téléchargements →</span></a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="index.html" class="foot-brand" title="Music Motion"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <div class="foot-links">
+    <a href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener">Pythagorean Tuner</a>
+    <a href="../suite/index.html" data-local="../website/index.html">ScoreSuite</a>
+    <a href="../apps/mmk-scorekeyboard.html" data-local="../_BASE/mmk-scorekeyboard.html">Cosmic Keyboard</a>
+    <a href="../colegios.html" class="nav-hi"><span class="tr">Écoles</span></a>
+    <a href="../descargas.html"><span class="tr">Téléchargements</span></a>
+    <a href="../faq.html?lang=fr"><span class="tr">FAQ</span></a>
+    <a href="../contacto.html"><span class="tr">Contact</span></a>
+  </div>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">m Δ° m est une marque déposée (BOIP 1544147) · tous droits réservés</span></span>
+</footer>
+
+<script src="../mm-theme.js"></script>
+<script src="../site.js"></script>
+<script>
+// Vista local del PORTAL fuente (file://, carpeta portal\): la suite vive en ../website/.
+// En _RELEASE\sitio\ y publicado, el enlace canonico suite/index.html ya resuelve solo.
+if(location.protocol==='file:'&&/\/portal\//i.test(location.pathname)){document.querySelectorAll('a[data-local]').forEach(function(a){a.href=a.getAttribute('data-local');});}
+
+// Si la pagina tarda en llegar, la marca respirando ocupa la espera. Si llega rapido,
+// la capa no alcanza a aparecer: se arma recien a los 250 ms, para no dar un parpadeo.
+(function(){
+  var b=document.getElementById('btn-demo'); if(!b) return;
+  b.addEventListener('click',function(e){
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0) return;   // abrir en pestaña nueva: sin capa
+    setTimeout(function(){
+      var c=document.createElement('div'); c.id='mm-cargando';
+      c.innerHTML='<img class="logo-ondark" src="../mm-logo.svg" alt="">'
+                + '<img class="logo-onlight" src="../mm-logo-dark.svg" alt="">'
+                + '<p>'
+                + '<span class="tr">Chargement de l’instrument…</span></p>';
+      document.body.appendChild(c);
+    },250);
+  });
+})();
+
+// Carrusel de la ScoreSuite (imágenes de las 6 apps). Fade + puntos + auto-avance con pausa al pasar el mouse.
+(function(){
+  var root=document.querySelector('[data-mmc]'); if(!root) return;
+  var imgs=[].slice.call(root.querySelectorAll('.mmc-img'));
+  var cap=root.querySelector('.mmc-cap'), dotsBox=root.querySelector('.mmc-dots');
+  if(!imgs.length) return;
+  var i=0, timer=null;
+  imgs.forEach(function(_,n){
+    var d=document.createElement('button'); d.type='button'; d.className='mmc-dot'+(n===0?' on':'');
+    d.setAttribute('aria-label','Imagen '+(n+1));
+    d.addEventListener('click',function(){ go(n); reset(); });
+    dotsBox.appendChild(d);
+  });
+  var dots=[].slice.call(dotsBox.children);
+  function go(n){ i=(n+imgs.length)%imgs.length;
+    imgs.forEach(function(im,k){ im.classList.toggle('on',k===i); });
+    dots.forEach(function(dt,k){ dt.classList.toggle('on',k===i); });
+    if(cap) cap.textContent=imgs[i].getAttribute('data-name')||'';
+  }
+  function reset(){ if(timer)clearInterval(timer); timer=setInterval(function(){ go(i+1); },3800); }
+  root.querySelector('.mmc-next').addEventListener('click',function(){ go(i+1); reset(); });
+  root.querySelector('.mmc-prev').addEventListener('click',function(){ go(i-1); reset(); });
+  root.addEventListener('mouseenter',function(){ if(timer)clearInterval(timer); });
+  root.addEventListener('mouseleave',reset);
+  reset();
+})();
+</script>
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','fr');</script>
+</body>
+</html>

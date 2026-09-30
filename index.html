@@ -39,7 +39,7 @@
 @keyframes mm-respira{from{opacity:.45;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){#mm-cargando img{animation:none}}
 </style>
-</head>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
 <body>
 
 <header>
@@ -65,10 +65,7 @@
       <button data-th="clear" style="background:#f6efda" title="Clear"></button>
       <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
     </div>
-    <div class="langtog">
-      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
-      <button id="b-en" onclick="setLang('en')">EN</button>
-    </div>
+    <div class="langtog"><button id="b-es" onclick="setLang('es')">ES</button><button id="b-en" onclick="setLang('en')">EN</button><a href="fr/index.html">FR</a><a href="nl/index.html">NL</a><a href="de/index.html">DE</a></div>
   </div>
 </header>
 
@@ -244,5 +241,6 @@ if(location.protocol==='file:'&&/\/portal\//i.test(location.pathname)){document.
   reset();
 })();
 </script>
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
 </body>
 </html>
