@@ -37,7 +37,7 @@
                '<b>Thank you.</b> Your message arrived. We reply within two working days to the address you left.'],
     mal:      ['No se pudo enviar el mensaje. Nada se perdió: ',
                'The message could not be sent. Nothing is lost: '],
-    gmail:    ['abrilo en Gmail con todo escrito →', 'open it in Gmail, already written →']
+    gmail:    ['ábrelo en Gmail con todo escrito →', 'open it in Gmail, already written →']
   };
   function t(k) { return T[k][en() ? 1 : 0]; }
 

@@ -65,6 +65,11 @@
     .intro, .leerbox, .check, .ojo, .falta { break-inside:avoid; }
     @page { margin:70px 50px 60px; }
   }
+
+/* 2026-09-30 (Mario: «mucho espacio vacío en la primera página»): el recuadro de las cinco palabras no cabía entero
+   al pie de la página 1 y saltaba a la 2, dejando media página en blanco. Al imprimir puede partirse entre
+   palabras; cada palabra con su explicación sigue junta (en print la lista deja de ser grilla: Chrome no la partía). */
+@media print { .leerbox { break-inside:auto; } .leerbox dl { display:block; } .leerbox dt { float:left; clear:left; width:9.5em; } .leerbox dd { margin-left:10.5em; break-inside:avoid; } }
 </style>
 </head>
 <body>
