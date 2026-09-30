@@ -31,7 +31,7 @@
     enviar:   ['Enviar el mensaje', 'Send the message'],
     falta:    ['Faltan el nombre, el correo o el mensaje.',
                'The name, the email or the message is missing.'],
-    correomal:['Ese correo no parece completo — revisalo, por ahí lo usamos para contestarte.',
+    correomal:['Ese correo no parece completo; revísalo, porque lo usamos para contestarte.',
                'That email looks incomplete — please check it; it is how we reply.'],
     ok:       ['<b>Gracias.</b> El mensaje llegó. Te contestamos dentro de dos días hábiles al correo que dejaste.',
                '<b>Thank you.</b> Your message arrived. We reply within two working days to the address you left.'],
@@ -39,7 +39,8 @@
                'The message could not be sent. Nothing is lost: '],
     gmail:    ['ábrelo en Gmail con todo escrito →', 'open it in Gmail, already written →']
   };
-  function t(k) { return T[k][en() ? 1 : 0]; }
+  // 2026-09-30: en las versiones /fr/ /nl/ /de/ armar-idiomas deja los mensajes en window.MM_CONTACTO_IDIOMA
+  function t(k) { var X = window.MM_CONTACTO_IDIOMA; if (X && X[k]) return X[k]; return T[k][en() ? 1 : 0]; }
 
   function gmail(correo, asunto, cuerpo) {
     return 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(correo) +
