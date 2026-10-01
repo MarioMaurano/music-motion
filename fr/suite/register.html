@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register Response — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/register.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/register.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/register.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/register.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/register.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/register.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Accueil</span></a>
+    <a href="index.html#apps"><span class="tr">Les applications</span></a>
+    <a href="index.html#howto"><span class="tr">Comment commencer</span></a>
+    <a href="instruments.html"><span class="tr">Instruments</span></a>
+    <a href="index.html#aula"><span class="tr">Classe du Coach</span></a>
+    <a href="UserGuide.html"><span class="tr">Guide d’utilisation</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/register.html?lang=es">ES</a><a href="../../suite/register.html?lang=en">EN</a><a class="on" href="register.html">FR</a><a href="../../nl/suite/register.html">NL</a><a href="../../de/suite/register.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--rose)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Retour à la suite</span></a>
+  <div class="app-eyebrow">⊞ Register Response</div>
+  <h1>
+    
+    <span class="tr">La réponse du registre.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Un banc d’essai du timbre et du registre : explorez comment chaque registre de l’instrument répond sur toute l’étendue du clavier, et concevez les presets qu’utilisent ensuite le Keyboard et la Console. Parcourez l’instrument <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">octave</a> par octave : chaque note sonne en <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">accord pythagoricien</a>.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Ouvrir le Cosmic Keyboard</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">Il partage la liste des instruments avec la Console et le Keyboard par <b>mm-sync</b> : servez-le avec le reste depuis un seul <span class="mono">localhost</span>.</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3 id="banco-de-pruebas"><span class="tr">Banc d’essai</span></h3>
+      <p><span class="tr">Parcourez le clavier et écoutez comment le caractère de l’instrument change selon les zones : grave, médium, aigu. Une façon directe de comprendre le registre avant d’orchestrer.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="editor-de-presets"><span class="tr">Éditeur de presets</span></h3>
+      <p><span class="tr">Concevez et ajustez le timbre de chaque instrument. Chaque preset est un JSON que vous pouvez copier, coller, appliquer au simulateur et télécharger sous forme de fichier.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="lista-compartida"><span class="tr">Liste partagée</span></h3>
+      <p><span class="tr">La liste active des instruments est partagée avec la Console et le Keyboard : ce que vous définissez ici est disponible dans toute la suite, sans export manuel.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="cabina-de-pruebas"><span class="tr">Cabine d’essai</span></h3>
+      <p><span class="tr"><b>follow KB</b> fait sonner le preset à l’unisson de chaque note du Keyboard ; <b>play KB</b> transmet votre frappe au Keyboard (la souris reste libre) ; <b>+ / −</b> règlent le volume master de toute la suite ; l’indicateur <b>suite</b> affiche le master synchronisé (clic = détacher). VOL et L·R sont le niveau et la place de l’instrument — enregistrés dans le preset.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="enviar-al-score"><span class="tr">Envoyer au Score</span></h3>
+      <p><span class="tr">Envoyez un preset au Score sur-le-champ par <strong>mm-sync</strong> — le Score est propriétaire de la liste des instruments et la diffuse à toute la suite. Des commandes de volume, de panoramique (avec voyant rouge L / vert R) et d’éclairage de l’interface pour affiner le test.</span></p>
+    </div>
+
+  </div>
+</section>
+
+<section id="howto">
+  <div class="app-eyebrow"><span class="tr">Comment l’utiliser</span></div>
+  <p class="lead">
+    
+    <span class="tr">C’est un <b>synthétiseur</b>, pas un échantillonneur — il ne charge aucun audio : chaque preset est un ensemble de nombres que le moteur interprète.</span>
+  </p>
+  <ol style="margin:14px 0 0 22px;line-height:1.9">
+    <li><span class="tr">Choisissez un <b>instrument</b> dans le sélecteur → il est appliqué au moteur immédiatement. Appuyez sur <b>note</b> pour l’entendre.</span></li>
+    <li><span class="tr"><b>Copy JSON</b> → verse ses nombres dans la zone de texte (mode édition).</span></li>
+    <li><span class="tr">Modifiez les nombres, ou collez un <span class="mono">JSON</span> venu d’ailleurs.</span></li>
+    <li><span class="tr"><b>stop</b> — assurez-vous qu’aucune note ne reste en train de sonner.</span></li>
+    <li><span class="tr"><b>Apply from box</b> → applique au moteur ce qui se trouve dans la zone.</span></li>
+    <li><span class="tr"><b>note</b> → écoutez et vérifiez. Revenez à l’étape 2 autant de fois que vous le souhaitez.</span></li>
+    <li><span class="tr"><b>Download .txt</b> → l’enregistre sous <span class="mono">&lt;name&gt;.txt</span> (le nom vient du champ <i>name</i>).</span></li>
+    <li><span class="tr"><b>↺ preset / ↺ factory</b> — le bouton indique ce qu’il va faire : avec un preset actif, le premier clic annule vos modifications (retour au preset) ; le second revient aux réglages d’usine.</span></li>
+  </ol>
+  <div class="note" style="margin-top:16px">
+    
+    <span class="tr">Même modèle que le moteur : <span class="mono">p</span> = la position logarithmique de la note dans la tessiture (0 grave, 1 aigu) ; les quatre réponses interpolent entre grave/médium/aigu et modulent l’amplitude, le bruit de souffle, les partiels supérieurs et le temps d’attaque. Les <b>courbes</b> sont la forme du registre (elles changent selon l’instrument) ; le <b>timbre de base</b> est son caractère.</span>
+  </div>
+</section>
+
+<section id="design">
+  <div class="app-eyebrow"><span class="tr">Concevez votre son</span></div>
+  <p class="lead">
+    
+    <span class="tr">Vous ne partez pas de zéro : la banque comprend <b>45 instruments</b> (42 d’orchestre et populaires + 3 synthétiseurs). Choisissez-en un, sculptez-le jusqu’à ce qu’il soit le vôtre, et enregistrez-le — dans votre liste, sur votre ordinateur, ou directement dans votre partition.</span>
+  </p>
+
+  <ol style="margin:14px 0 0 22px;line-height:1.9">
+    <li><span class="tr"><b>Partez d’un réglage par défaut</b> — choisissez un instrument dans le sélecteur : les courbes, les boutons rotatifs et la zone JSON se chargent d’eux-mêmes. Appuyez sur <b>note</b> ou <b>sweep</b> pour l’entendre du grave à l’aigu.</span></li>
+    <li><span class="tr"><b>Sculptez</b> — les curseurs <b>Response</b> sont la façon dont l’instrument respire sur son registre ; les boutons rotatifs sont son caractère (ci-dessous, ce que fait chacun, sans jargon). VOL et L·R sont son niveau et sa place dans l’orchestre : ils s’enregistrent aussi avec le son.</span></li>
+    <li><span class="tr"><b>Enregistrez-le</b> — <b>Save preset to list</b> : il rejoint votre liste active, cet instrument seulement (un <i>name</i> différent conserve l’original — <span class="mono">oboe_scuro</span> n’écrase pas <span class="mono">oboe</span>). <b>Download .txt</b> : un fichier sur votre ordinateur avec le son complet. <b>Export list…</b> : toute votre liste sous forme de <span class="mono">mm-presets-&lt;name&gt;.js</span>, le format que comprend toute la suite.</span></li>
+  </ol>
+
+  <h1 style="font-size:1.3em;margin-top:34px"><span class="tr">Où va-t-il ? — vers le Score</span></h1>
+  <p>
+    
+    <span class="tr"><b>▶ Send to Score</b> envoie le preset en direct. Le Score est le <b>propriétaire de la liste des instruments</b> : il le reçoit et le diffuse à la Console et au Keyboard. La conséquence : <b>chaque canal de votre partition qui utilise cet instrument se met à sonner avec votre version, instantanément</b> — rien à recharger. <b>Save preset to list</b> le diffuse aussi à l’enregistrement.</span>
+  </p>
+  <p style="margin-top:10px">
+    
+    <span class="tr">Et dans le Score ? Ses canaux (CHANNELS) choisissent une liste : celle <b>par défaut</b> ou une liste <b>personnalisée</b> — c’est là que vous chargez le <span class="mono">mm-presets-….js</span> que vous avez exporté, et toute la pièce sonne avec vos timbres. Pour revenir à la banque d’usine : dans le Register, <b>List ▾ → Reset to default list</b>.</span>
+  </p>
+  <div class="note" style="margin-top:14px">
+    
+    <span class="tr"><b>Exemple :</b> « Je veux un hautbois plus sombre pour mon adagio. » Choisissez <span class="mono">Oboe</span> → baissez <i>brightness</i> dans le médium et l’aigu et ajoutez une touche d’<i>air</i> dans le grave → écoutez avec <b>note</b> à travers les registres → <i>name</i> : <span class="mono">oboe_scuro</span> → <b>Save preset to list</b> (il a déjà voyagé jusqu’au Score) → sur le canal de hautbois de votre partition, choisissez <span class="mono">oboe_scuro</span> → votre adagio sonne avec votre hautbois. <b>Export list…</b> et ce son est à vous pour toujours, dans n’importe quelle session.</span>
+  </div>
+
+  <h1 style="font-size:1.3em;margin-top:34px"><span class="tr">Ce que fait chaque bouton rotatif — sans jargon</span></h1>
+  <div class="specs">
+    <div class="spec">
+      <h3>Response</h3>
+      <p><span class="tr">Les 7 rangées (low·mid·high·top) sont la signature de l’instrument sur son registre : <b>body</b> = combien de corps a chaque zone · <b>air</b> = combien de souffle on entend · <b>brightness</b> = combien il brille · <b>response</b> = à quelle vitesse il parle (les notes graves mettent plus de temps) · <b>vibrato ¢</b> et <b>vib rate</b> = de combien et à quelle vitesse il ondule · <b>odd/even</b> = rond et creux comme une clarinette (partiels impairs) ↔ plein et égal (tous les partiels).</span></p>
+    </div>
+    <div class="spec">
+      <h3>Output</h3>
+      <p><span class="tr"><b>VOL</b> = le volume de <i>cet</i> instrument par rapport aux autres (son niveau d’usine). <b>L·R</b> = sa place sur scène : cors à gauche, contrebasses à droite. Les deux voyagent dans le preset.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Base timbre</h3>
+      <p><span class="tr"><b>base noise</b> = le souffle constant de l’instrument — une flûte souffle beaucoup, une trompette à peine. <b>AM noise</b> = ce souffle pulse avec le son (plus granuleux, plus vivant).</span></p>
+    </div>
+    <div class="spec">
+      <h3>Source</h3>
+      <p><span class="tr"><b>mode</b> = la matière première : <i>harmonic</i> (notes à hauteur déterminée — presque tout), <i>inharmonic</i> (cloches, marimbas), <i>noise</i> (percussions à hauteur indéterminée). <b>source tilt</b> = né sombre ↔ né brillant. <b>inharm.</b> = à quel point il ressemble à une cloche. <b>band Hz / Q</b> = où siffle le bruit et avec quelle étroitesse.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Filter</h3>
+      <p><span class="tr">La brillance qui passe. <b>cutoff ×f</b> = combien de brillance (il suit la note : il monte avec elle). <b>resonance</b> = une arête nasale juste au bord. <b>open oct</b> = la bouche s’ouvre davantage à l’attaque (ce « wah » initial) et <b>time s</b> = le temps qu’elle met à se refermer.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Attack &amp; Envelope</h3>
+      <p><span class="tr">La consonne par laquelle la note commence : <b>hit</b> = la frappe de la langue ou du marteau · <b>time ms</b> = courte (tic) ou longue (thu) · <b>air</b> = la frappe est plus souffle que coup. Et la vie qui suit : <b>decay</b> = de combien elle retombe après l’attaque · <b>sustain</b> = le niveau qu’elle garde tant que vous tenez la note (à 0, elle s’éteint d’elle-même, comme un piano).</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="el-ataque-por-registro"><span class="tr">L’attaque, par registre</span></h3>
+      <p><span class="tr">Le temps d’attaque — le bouton rotatif <b>time ms</b> dans <i>Attack &amp; Envelope</i> — peut être donné <b>par registre</b>, comme les autres réponses : une note grave de violoncelle met quelque 110 ms à s’installer et une note aiguë 22, et l’archet ne parle pas de la même façon dans l’aigu que dans le grave. Le bouton affiche le <b>centre</b> et l’écoute <b>interpole</b> entre les zones ; bougez-le à la main et il abandonne la courbe, pour revenir à une seule valeur pour tout l’instrument.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-paleta-de-instrumentos-todos-a-la-vista"><span class="tr">La palette d’instruments : tous d’un coup d’œil</span></h3>
+      <p><span class="tr">Le <code>&lt;select&gt;</code> natif ne sait pas faire de colonnes — c’est le système d’exploitation qui dessine cette liste déroulante —, si bien qu’un clic sur le champ de l’instrument ouvre à la place une <b>palette en colonnes</b> : toutes les familles visibles d’un coup d’œil, chacune dans sa colonne, avec un <b>filtre par nom</b> en haut. Les instruments que la banque possède mais que la carte active n’a pas sont affichés <i>estompés</i> plutôt que cachés : vous voyez qu’ils existent et qu’ils ne sont pas chargés aujourd’hui. L’<b>épingle</b> la garde ouverte pour en essayer plusieurs à la suite et comparer à l’oreille ; sans épingle, en choisir un la referme. Le choix revient par le chemin habituel, donc rien ne change dans le mixage. C’est la même palette dans les quatre applications — Score, Keyboard, Console et Register —, servie par <code>mm-presets.js</code>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-lista-en-tu-idioma"><span class="tr">La liste des instruments parle votre langue</span></h3>
+      <p><span class="tr">La liste sortait autrefois mélangée — certains noms en anglais, d’autres en espagnol, et les titres des familles toujours en anglais. Désormais, toute la liste parle la langue que vous avez choisie, titres de familles compris, aussi bien dans la liste déroulante que dans la palette en colonnes ; la langue est celle utilisée dans toute la suite. <b>Ce que vous voyez change ; ce que le banc mesure et exporte, non</b> : chaque fiche garde son nom interne, qui n’est jamais traduit, si bien qu’une banque construite ici dit la même chose dans n’importe quelle langue. Au passage, l’étiquette <b>term</b> du Lexicon et l’infobulle de <b>🎓</b> ont cessé de sortir en espagnol quand l’anglais était choisi. Raconté en détail dans <a href="UserGuide.html#lista-en-tu-idioma">le Guide d’utilisation</a>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3>Formants F1 | F2</h3>
+      <p><span class="tr">La « gorge » de l’instrument : deux zones qui <b>ne suivent pas la note</b> — elles sont fixes, comme la caisse d’un violon ou une bouche qui forme une voyelle. <b>freq Hz</b> = où se situe chacune · <b>gain dB</b> = avec quelle force elle pousse · <b>Q</b> = avec quelle étroitesse. C’est ce qui fait dire « eh » à un hautbois et « oh » à un cor.</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite d’accord pythagoricien · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">tous droits réservés</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','fr');</script>
+</body>
+</html>

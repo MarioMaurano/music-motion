@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Console — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/console.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/console.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/console.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/console.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/console.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/console.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Start</span></a>
+    <a href="index.html#apps"><span class="tr">Die Apps</span></a>
+    <a href="index.html#howto"><span class="tr">Erste Schritte</span></a>
+    <a href="instruments.html"><span class="tr">Instrumente</span></a>
+    <a href="index.html#aula"><span class="tr">Coach-Klassenzimmer</span></a>
+    <a href="UserGuide.html"><span class="tr">Benutzerhandbuch</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/console.html?lang=es">ES</a><a href="../../suite/console.html?lang=en">EN</a><a href="../../fr/suite/console.html">FR</a><a href="../../nl/suite/console.html">NL</a><a class="on" href="console.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--teal)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Zurück zur Suite</span></a>
+  <div class="app-eyebrow">⊞ Console</div>
+  <h1>
+    
+    <span class="tr">Das Mischpult.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Die Balance zwischen den Instrumenten der Partitur: Lautstärke und Mute pro Kanal, dazu die Master-Lautstärke, die die ganze Suite gemeinsam nutzt. Jeder Kanal klingt in <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Das Buch — zum Vertiefen">pythagoreischer Stimmung</a>: Der Mix ändert, wie laut jedes Instrument ist, niemals seine Tonhöhe.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Cosmic Keyboard öffnen</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">Die Console wirkt über <b>mm-sync</b> auf das Audio des Keyboard: Lade sie zusammen mit den übrigen Apps von einem einzigen <span class="mono">localhost</span>.</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3 id="faders-por-canal-y-master"><span class="tr">Kanal- &amp; Master-Fader</span></h3>
+      <p><span class="tr">Ein Fader pro Kanal der Partitur, dazu der Master-Fader. Der Master bewegt die Gesamtlautstärke der ganzen Suite — denselben Pegel wie der VOL-Regler des Keyboard.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="silencio-y-solo"><span class="tr">Mute &amp; Solo</span></h3>
+      <p><span class="tr">Schalte Kanäle stumm, um den Rest zu hören, oder isoliere einen mit Solo. Praktisch, um eine Stimme im Ensemble zu prüfen, ohne im Score etwas umzuschreiben.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="transporte"><span class="tr">Transport</span></h3>
+      <p><span class="tr">Die Wiedergabe des Stücks: Play, Pause und Stop, synchron mit der Suite. Und die vier Positionsbuttons — erster · vorheriger · nächster · letzter — bewegen den Abspielkopf taktweise: Sie bringen den Score zum gewünschten Takt, und der Cursor bleibt dort, bereit, ab dieser Stelle zu spielen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-navegador-go-loop"><span class="tr">Der Navigator GO|LOOP</span></h3>
+      <p><span class="tr">Rechts neben der Uhr sitzt ein Arbeitskästchen. Tippe einen Takt in <b>GO</b>, drück Enter, und das Werk springt dorthin: Der Score bringt den Cursor zu diesem Takt, und du machst ab dieser Stelle weiter. Daneben markieren <b>A</b> und <b>B</b> den Abschnitt, der sich wiederholt. Jeder hat sein <b>◉</b>, das den Takt einträgt, auf dem der Abspielkopf steht — gestoppt oder spielend —; das von B schreibt den <i>nächsten</i>, weil B der Punkt ist, von dem aus es zurückgeht. Das <b>🔁</b> schaltet die Schleife ein, und das <b>✕</b> löscht beide Enden, hier und in der Partitur. <b>A</b> ist petrol und <b>B</b> blau: dieselben Farben, mit denen der Score seine beiden Dreiecke zeichnet, so dass beide Fenster dasselbe auf dieselbe Weise benennen. Es ist die Schleife des Score selbst, vom Pult aus gesehen: Lass eine Passage kreisen und arbeite darüber an der Balance.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="donde-estas-y-cuanto-falta"><span class="tr">Wo du stehst und wie viel noch bleibt</span></h3>
+      <p><span class="tr"><b>MEASURE</b> nennt nicht mehr nur den aktuellen Takt: Es sagt auch, wie viele das Werk hat — <span class="mono">64 / 216</span> —, so dass du auf einen Blick siehst, wo du im Ganzen stehst. Und die Uhr trägt die Dauer der Datei daneben: <span class="mono">TIME / 7:31</span>. Beide Summen kommen vom Score, während das Werk lädt, bereits Takt für Takt mit Taktart und Tempo jedes Abschnitts gezählt. Das Pult schätzt sie nicht: Es empfängt sie.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-master-completo"><span class="tr">Der Master, vollständig</span></h3>
+      <p><span class="tr">Die <b>MASTER</b>-Leiste ist nicht mehr geteilt. Über Pegel und Balance hinaus trägt sie jetzt <b>REV</b>, <b>ECHO</b>, <b>TONE</b> und <b>WARM</b>: genau dieselben Regler wie am Keyboard, wo die Audio-Engine wohnt. Drehst du hier einen, bewegt er sich dort; drehst du ihn dort, bewegt er sich hier. Es sind nicht zwei ähnliche Einstellungen: Es ist eine einzige, aus zwei Fenstern gesehen. Und es lohnt sich, es deutlich zu sagen: Das sind Einstellungen der <b>Sitzung</b>, keine Einstellungen des Werks. <b>Sie reisen nicht in der <code>.mmf</code>-Datei mit</b> — speichere, öffne sie morgen, und das Werk kommt so zurück, wie es geschrieben ist, während diese drei dorthin zurückkehren, wo sie gerade standen. Ist das Keyboard nicht offen, wird der Block dunkel: Es sind Fernbedienungen, und ohne Engine gibt es nichts zu steuern.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-coach-en-la-mesa"><span class="tr">Der Coach am Pult</span></h3>
+      <p><span class="tr">Das Ohr <b>🎓</b> oben ist in diesem Fenster nicht mehr stumm. Hier sagt der Coach die drei Dinge, die nur das Pult weiß, und jedes davon einmal. Dass ein <b>Mute</b> oder ein <b>Solo</b> zum Pult gehört und nicht zur Partitur: Was du hörst, ist nicht das Werk, bis du sie wieder ausschaltest. Dass <b>REV · ECHO · TONE · WARM</b> zur Sitzung gehören und nie in der Datei mitreisen. Und dass ein Instrument, das weit unter den übrigen liegt, nicht leise ist: Es steht <i>außerhalb</i> des Klanggewebes, was nicht dasselbe ist und sich nicht durch Anheben der Gesamtlautstärke beheben lässt. Wenn du lieber in Ruhe arbeitest, schickt ein Klick auf das Ohr <b>🎓</b> ihn schlafen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="cuatro-perillas-por-canal-oir-para-decidir"><span class="tr">Vier Regler pro Kanal: hören, dann entscheiden</span></h3>
+      <p>
+      <span class="tr">Jede Leiste hat ihr Effektraster: <b>AGOG</b> (Agogik pro Note), <b>ASYM</b> (Agogik der Phrase), <b>PRES</b> (Präsenz des Anschlags — Aufstrich oder Abstrich, gehaucht oder mit der Zunge angestoßen) und <b>ART</b> (geschriebene Artikulation). Der Regler ersetzt nicht, was die Partitur sagt: Er <i>skaliert ihre Abweichung vom Neutralen</i>. Ein Kanal mit Staccato auf 50 % des Notenwerts klingt bei halb aufgedrehtem Regler auf 75 %; ganz aufgedreht schließt sie sich noch weiter; bei null dauert die Note wieder ihren vollen Wert. Er dient dem, was ein Dirigent mit der Hand tut: hören, wie sich eine Geste im Ensemble ausbalanciert, und sie dann auf dem Notenblatt korrigieren. <b>ART ist bereits angeschlossen</b> und ist live zu hören, ohne die Wiedergabe anzuhalten; die anderen drei drehen sich und warten, bis sie an der Reihe sind.<br><br>Und sie sind <b>Zuhören, nicht Dokument</b>: Sie reisen nie in die <code>.mmf</code>, sie kommen nie als Bearbeitung zurück, und sie <b>beginnen bei jeder Datei auf neutral</b> — was du beim Anhören eines Stücks einstellst, bleibt nicht über dem nächsten liegen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="sincronia-con-la-suite"><span class="tr">Synchron mit der Suite</span></h3>
+      <p><span class="tr">Sie übernimmt die Kanäle des Score und das Audio des Keyboard und gibt der ganzen Suite die Balance live zurück. Die Pegelanzeigen werden vorerst im Demo-Modus angezeigt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-paleta-de-instrumentos-todos-a-la-vista"><span class="tr">Die Instrumentenpalette: alle auf einen Blick</span></h3>
+      <p><span class="tr">Das native <code>&lt;select&gt;</code> kann keine Spalten — dieses Dropdown zeichnet das Betriebssystem —, deshalb öffnet ein Klick auf das Instrumentenfeld stattdessen eine <b>Spaltenpalette</b>: jede Familie auf einen Blick sichtbar, jede in ihrer eigenen Spalte, mit einem <b>Namensfilter</b> oben. Instrumente, die die Bank hat, die aktive Map aber nicht, werden <i>abgeblendet</i> statt verborgen angezeigt: Du siehst, dass es sie gibt und dass sie heute nicht geladen sind. Die <b>Pinnadel</b> hält die Palette offen, damit du mehrere nacheinander ausprobieren und nach Gehör vergleichen kannst; ohne Pinnadel schließt sie sich, sobald du eines wählst. Die Auswahl kehrt über den üblichen Weg zurück, am Mix ändert sich also nichts. Es ist dieselbe Palette in allen vier Apps — Score, Keyboard, Console und Register —, bereitgestellt von <code>mm-presets.js</code>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="treinta-y-dos-canales"><span class="tr">Zweiunddreißig Kanäle</span></h3>
+      <p><span class="tr">Das Pult ist mit der Suite gewachsen: zweiunddreißig Leisten, eine pro Kanal der Partitur, mit derselben Farbpalette, die Score und Console teilen. Ein Orchesterwerk passt vollständig hinein, ohne dass du es auf zwei Fenster aufteilen musst.</span></p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite in pythagoreischer Stimmung · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle Rechte vorbehalten</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','de');</script>
+</body>
+</html>

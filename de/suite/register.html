@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register Response — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/register.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/register.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/register.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/register.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/register.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/register.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Start</span></a>
+    <a href="index.html#apps"><span class="tr">Die Apps</span></a>
+    <a href="index.html#howto"><span class="tr">Erste Schritte</span></a>
+    <a href="instruments.html"><span class="tr">Instrumente</span></a>
+    <a href="index.html#aula"><span class="tr">Coach-Klassenzimmer</span></a>
+    <a href="UserGuide.html"><span class="tr">Benutzerhandbuch</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/register.html?lang=es">ES</a><a href="../../suite/register.html?lang=en">EN</a><a href="../../fr/suite/register.html">FR</a><a href="../../nl/suite/register.html">NL</a><a class="on" href="register.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--rose)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Zurück zur Suite</span></a>
+  <div class="app-eyebrow">⊞ Register Response</div>
+  <h1>
+    
+    <span class="tr">Register Response.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Ein Prüfstand für Klangfarbe & Register: Erkunde, wie jedes Register des Instruments über die Tastatur hinweg anspricht, und entwirf die Presets, die dann Keyboard und Console verwenden. Geh das Instrument <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Das Buch — zum Vertiefen">Oktave</a> für Oktave durch: Jede Note klingt in <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Das Buch — zum Vertiefen">pythagoreischer Stimmung</a>.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Cosmic Keyboard öffnen</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">Es teilt die Instrumentenliste über <b>mm-sync</b> mit Console und Keyboard: Lade es zusammen mit den übrigen Apps von einem einzigen <span class="mono">localhost</span>.</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3 id="banco-de-pruebas"><span class="tr">Prüfstand</span></h3>
+      <p><span class="tr">Fahr über die Tastatur und hör, wie sich der Charakter des Instruments nach Zonen ändert: tief, mittel, hoch. Ein direkter Weg, das Register zu verstehen, bevor du orchestrierst.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="editor-de-presets"><span class="tr">Preset-Editor</span></h3>
+      <p><span class="tr">Entwirf und justiere die Klangfarbe jedes Instruments. Jedes Preset ist ein JSON, das du kopieren, einfügen, auf den Simulator anwenden und als Datei herunterladen kannst.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="lista-compartida"><span class="tr">Gemeinsame Liste</span></h3>
+      <p><span class="tr">Die aktive Instrumentenliste wird mit Console und Keyboard geteilt: Was du hier definierst, steht in der ganzen Suite zur Verfügung, ohne manuellen Export.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="cabina-de-pruebas"><span class="tr">Testkabine</span></h3>
+      <p><span class="tr"><b>follow KB</b> lässt das Preset im Unisono mit jeder Note des Keyboard klingen; <b>play KB</b> leitet dein Tippen an das Keyboard weiter (die Maus bleibt frei); <b>+ / −</b> bewegen die Master-Lautstärke der ganzen Suite; die Anzeige <b>suite</b> zeigt den synchronisierten Master (Klick = abkoppeln). VOL und L·R sind Pegel und Platz des Instruments — sie werden im Preset gespeichert.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="enviar-al-score"><span class="tr">An den Score senden</span></h3>
+      <p><span class="tr">Schick ein Preset sofort über <strong>mm-sync</strong> an den Score — der Score besitzt die Instrumentenliste und verteilt sie an die ganze Suite. Regler für Lautstärke, Panorama (mit rotem L- und grünem R-Licht) und das Licht der Oberfläche, um den Test fein abzustimmen.</span></p>
+    </div>
+
+  </div>
+</section>
+
+<section id="howto">
+  <div class="app-eyebrow"><span class="tr">So benutzt du es</span></div>
+  <p class="lead">
+    
+    <span class="tr">Es ist ein <b>Synthesizer</b>, kein Sampler — es lädt kein Audio: Jedes Preset ist ein Satz von Zahlen, die die Engine interpretiert.</span>
+  </p>
+  <ol style="margin:14px 0 0 22px;line-height:1.9">
+    <li><span class="tr">Wähle im Auswahlfeld ein <b>Instrument</b> → es wird sofort auf die Engine angewendet. Drück <b>note</b>, um es zu hören.</span></li>
+    <li><span class="tr"><b>Copy JSON</b> → schreibt seine Zahlen in das Textfeld (Bearbeitungsmodus).</span></li>
+    <li><span class="tr">Bearbeite die Zahlen oder füge ein <span class="mono">JSON</span> von außen ein.</span></li>
+    <li><span class="tr"><b>stop</b> — stell sicher, dass keine Note weiterklingt.</span></li>
+    <li><span class="tr"><b>Apply from box</b> → wendet den Inhalt des Feldes auf die Engine an.</span></li>
+    <li><span class="tr"><b>note</b> → anhören und prüfen. Geh so oft du willst zu Schritt 2 zurück.</span></li>
+    <li><span class="tr"><b>Download .txt</b> → speichert es als <span class="mono">&lt;name&gt;.txt</span> (der Name kommt aus dem Feld <i>name</i>).</span></li>
+    <li><span class="tr"><b>↺ preset / ↺ factory</b> — der Button sagt, was er tun wird: Bei aktivem Preset macht der erste Klick deine Änderungen rückgängig (zurück zum Preset); der zweite geht zur Werkseinstellung.</span></li>
+  </ol>
+  <div class="note" style="margin-top:16px">
+    
+    <span class="tr">Dasselbe Modell wie die Engine: <span class="mono">p</span> = die logarithmische Position der Note im Tonumfang (0 tief, 1 hoch); die vier Response-Werte interpolieren zwischen tief/mittel/hoch und skalieren Amplitude, Atemgeräusch, obere Teiltöne und Anschlagszeit. Die <b>Kurven</b> sind die Form des Registers (sie ändern sich je nach Instrument); die <b>Grundklangfarbe</b> ist sein Charakter.</span>
+  </div>
+</section>
+
+<section id="design">
+  <div class="app-eyebrow"><span class="tr">Gestalte deinen Klang</span></div>
+  <p class="lead">
+    
+    <span class="tr">Du fängst nicht bei null an: Die Bank bringt <b>45 Instrumente</b> mit (42 Orchester- & Volksinstrumente + 3 Synths). Wähle eines, forme es, bis es deins ist, und speichere es — in deiner Liste, auf deinem Computer oder direkt in deiner Partitur.</span>
+  </p>
+
+  <ol style="margin:14px 0 0 22px;line-height:1.9">
+    <li><span class="tr"><b>Von einer Vorgabe ausgehen</b> — wähle ein Instrument im Auswahlfeld: Die Kurven, die Regler und das JSON-Feld laden sich von selbst. Drück <b>note</b> oder <b>sweep</b>, um es von tief bis hoch zu hören.</span></li>
+    <li><span class="tr"><b>Formen</b> — die <b>Response</b>-Schieberegler zeigen, wie das Instrument über sein Register atmet; die Regler sind sein Charakter (unten steht ohne Fachjargon, was jeder tut). VOL und L·R sind sein Pegel und sein Platz im Orchester: Auch sie werden mit dem Klang gespeichert.</span></li>
+    <li><span class="tr"><b>Speichern</b> — <b>Save preset to list</b>: Es kommt in deine aktive Liste, nur dieses Instrument (ein anderer <i>name</i> bewahrt das Original — <span class="mono">oboe_scuro</span> überschreibt <span class="mono">oboe</span> nicht). <b>Download .txt</b>: eine Datei auf deinem Computer mit dem vollständigen Klang. <b>Export list…</b>: deine ganze Liste als <span class="mono">mm-presets-&lt;name&gt;.js</span>, das Format, das die ganze Suite versteht.</span></li>
+  </ol>
+
+  <h1 style="font-size:1.3em;margin-top:34px"><span class="tr">Wohin geht es? — zum Score</span></h1>
+  <p>
+    
+    <span class="tr"><b>▶ Send to Score</b> schickt das Preset live. Der Score ist der <b>Eigentümer der Instrumentenliste</b>: Er empfängt es und verteilt es an Console und Keyboard. Die Folge: <b>Jeder Kanal deiner Partitur, der dieses Instrument verwendet, klingt sofort mit deiner Version</b> — nichts muss neu geladen werden. Auch <b>Save preset to list</b> verteilt es beim Speichern.</span>
+  </p>
+  <p style="margin-top:10px">
+    
+    <span class="tr">Und im Score? Seine Kanäle (CHANNELS) wählen eine Liste: die Liste <b>default</b> oder eine <b>custom</b>-Liste — dort lädst du die exportierte <span class="mono">mm-presets-….js</span>, und das ganze Stück klingt mit deinen Klangfarben. Zurück zur Werksbank: im Register, <b>List ▾ → Reset to default list</b>.</span>
+  </p>
+  <div class="note" style="margin-top:14px">
+    
+    <span class="tr"><b>Beispiel:</b> „Ich will eine dunklere Oboe für mein Adagio.“ Wähle <span class="mono">Oboe</span> → senke <i>brightness</i> bei mid/high und gib bei low einen Hauch <i>air</i> dazu → hör mit <b>note</b> durch die Register → <i>name</i>: <span class="mono">oboe_scuro</span> → <b>Save preset to list</b> (es ist schon zum Score gereist) → wähle auf dem Oboenkanal deiner Partitur <span class="mono">oboe_scuro</span> → dein Adagio klingt mit deiner Oboe. <b>Export list…</b>, und dieser Klang gehört dir für immer, in jeder Sitzung.</span>
+  </div>
+
+  <h1 style="font-size:1.3em;margin-top:34px"><span class="tr">Was jeder Regler tut — ohne Fachjargon</span></h1>
+  <div class="specs">
+    <div class="spec">
+      <h3>Response</h3>
+      <p><span class="tr">Die 7 Zeilen (low·mid·high·top) sind die Signatur des Instruments über sein Register: <b>body</b> = wie viel Körper jede Zone hat · <b>air</b> = wie viel Atem du hörst · <b>brightness</b> = wie sehr es glänzt · <b>response</b> = wie schnell es anspricht (tiefe Noten brauchen länger) · <b>vibrato ¢</b> und <b>vib rate</b> = wie stark und wie schnell es schwingt · <b>odd/even</b> = rund und hohl wie eine Klarinette (ungerade Teiltöne) ↔ voll und gleichmäßig (alle).</span></p>
+    </div>
+    <div class="spec">
+      <h3>Output</h3>
+      <p><span class="tr"><b>VOL</b> = wie laut <i>dieses</i> Instrument im Verhältnis zu den anderen ist (sein Werkspegel). <b>L·R</b> = wo es auf der Bühne sitzt: Hörner links, Kontrabässe rechts. Beide reisen im Preset mit.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Base timbre</h3>
+      <p><span class="tr"><b>base noise</b> = der ständige Atem des Instruments — eine Flöte atmet viel, eine Trompete kaum. <b>AM noise</b> = dieser Atem pulsiert mit dem Klang (körniger, lebendiger).</span></p>
+    </div>
+    <div class="spec">
+      <h3>Source</h3>
+      <p><span class="tr"><b>mode</b> = das Rohmaterial: <i>harmonic</i> (Noten mit Tonhöhe — fast alles), <i>inharmonic</i> (Glocken, Marimbas), <i>noise</i> (Schlagwerk ohne Tonhöhe). <b>source tilt</b> = dunkel geboren ↔ hell geboren. <b>inharm.</b> = wie glockenartig es wird. <b>band Hz / Q</b> = wo das Rauschen pfeift und wie schmal.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Filter</h3>
+      <p><span class="tr">Die Helligkeit, die durchkommt. <b>cutoff ×f</b> = wie viel Helligkeit (sie folgt der Note: steigt mit ihr). <b>resonance</b> = eine nasale Kante genau am Rand. <b>open oct</b> = der Mund öffnet sich beim Anschlag zusätzlich (dieses anfängliche „wah“), und <b>time s</b> = wie lange er braucht, um sich zu schließen.</span></p>
+    </div>
+    <div class="spec">
+      <h3>Attack &amp; Envelope</h3>
+      <p><span class="tr">Der Konsonant, mit dem die Note beginnt: <b>hit</b> = der Stoß von Zunge oder Hammer · <b>time ms</b> = kurz (tic) oder lang (thu) · <b>air</b> = der Stoß ist mehr Atem als Schlag. Und das Leben danach: <b>decay</b> = wie stark sie nach dem Anschlag abfällt · <b>sustain</b> = der Pegel, den sie hält, solange du sie aushältst (bei 0 verklingt sie von selbst, wie bei einem Klavier).</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="el-ataque-por-registro"><span class="tr">Anschlag, nach Register</span></h3>
+      <p><span class="tr">Die Anschlagszeit — der Regler <b>time ms</b> in <i>Attack &amp; Envelope</i> — lässt sich <b>pro Register</b> angeben, wie die anderen Response-Werte: Eine tiefe Cellonote braucht etwa 110 ms, um sich einzuschwingen, und eine hohe 22, und der Bogen spricht oben nicht so an wie unten. Der Regler zeigt die <b>Mitte</b>, und das Probehören <b>interpoliert</b> zwischen den Zonen; bewegst du ihn von Hand, löst er sich von der Kurve, zurück zu einem einzigen Wert für das ganze Instrument.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-paleta-de-instrumentos-todos-a-la-vista"><span class="tr">Die Instrumentenpalette: alle auf einen Blick</span></h3>
+      <p><span class="tr">Das native <code>&lt;select&gt;</code> kann keine Spalten — dieses Dropdown zeichnet das Betriebssystem —, deshalb öffnet ein Klick auf das Instrumentenfeld stattdessen eine <b>Spaltenpalette</b>: jede Familie auf einen Blick sichtbar, jede in ihrer eigenen Spalte, mit einem <b>Namensfilter</b> oben. Instrumente, die die Bank hat, die aktive Map aber nicht, werden <i>abgeblendet</i> statt verborgen angezeigt: Du siehst, dass es sie gibt und dass sie heute nicht geladen sind. Die <b>Pinnadel</b> hält die Palette offen, damit du mehrere nacheinander ausprobieren und nach Gehör vergleichen kannst; ohne Pinnadel schließt sie sich, sobald du eines wählst. Die Auswahl kehrt über den üblichen Weg zurück, am Mix ändert sich also nichts. Es ist dieselbe Palette in allen vier Apps — Score, Keyboard, Console und Register —, bereitgestellt von <code>mm-presets.js</code>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-lista-en-tu-idioma"><span class="tr">Die Instrumentenliste spricht deine Sprache</span></h3>
+      <p><span class="tr">Die Liste kam früher gemischt heraus — manche Namen auf Englisch, andere auf Spanisch, und die Familientitel immer auf Englisch —. Jetzt spricht die ganze Liste die Sprache, die du gewählt hast, samt den Familientiteln, sowohl im Dropdown als auch in der Spaltenpalette; die Sprache ist die der ganzen Suite. <b>Was du siehst, ändert sich; was der Prüfstand misst und exportiert, nicht</b>: Jede Karte behält ihren internen Namen, der nie übersetzt wird, so dass eine hier gebaute Bank in jeder Sprache dasselbe sagt. Im selben Durchgang hörten das Etikett <b>term</b> des Lexicon und der Tooltip von <b>🎓</b> auf, bei gewähltem Englisch auf Spanisch zu erscheinen. Ausführlich erzählt im <a href="UserGuide.html#lista-en-tu-idioma">Benutzerhandbuch</a>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3>Formants F1 | F2</h3>
+      <p><span class="tr">Die „Kehle“ des Instruments: zwei Zonen, die <b>nicht der Note folgen</b> — sie sind fest, wie der Korpus einer Violine oder ein Mund, der einen Vokal formt. <b>freq Hz</b> = wo jede sitzt · <b>gain dB</b> = wie stark sie anhebt · <b>Q</b> = wie schmal. Sie sind es, die eine Oboe „eh“ und ein Horn „oh“ sagen lassen.</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite in pythagoreischer Stimmung · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle Rechte vorbehalten</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','de');</script>
+</body>
+</html>

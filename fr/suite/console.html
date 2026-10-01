@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Console — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/console.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/console.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/console.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/console.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/console.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/console.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Accueil</span></a>
+    <a href="index.html#apps"><span class="tr">Les applications</span></a>
+    <a href="index.html#howto"><span class="tr">Comment commencer</span></a>
+    <a href="instruments.html"><span class="tr">Instruments</span></a>
+    <a href="index.html#aula"><span class="tr">Classe du Coach</span></a>
+    <a href="UserGuide.html"><span class="tr">Guide d’utilisation</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/console.html?lang=es">ES</a><a href="../../suite/console.html?lang=en">EN</a><a class="on" href="console.html">FR</a><a href="../../nl/suite/console.html">NL</a><a href="../../de/suite/console.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--teal)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Retour à la suite</span></a>
+  <div class="app-eyebrow">⊞ Console</div>
+  <h1>
+    
+    <span class="tr">La table de mixage.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">L’équilibre entre les instruments de la partition : volume et mute par canal, plus le volume master commun à toute la suite. Chaque canal sonne en <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">accord pythagoricien</a> : le mixage change le volume de chaque instrument, jamais sa hauteur.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Ouvrir le Cosmic Keyboard</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">La Console agit sur l’audio du Keyboard par <b>mm-sync</b> : servez-la avec le reste depuis un seul <span class="mono">localhost</span>.</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3 id="faders-por-canal-y-master"><span class="tr">Faders par canal et master</span></h3>
+      <p><span class="tr">Un fader par canal de la partition, plus le fader master. Le master règle le volume global de toute la suite — le même niveau que le bouton rotatif VOL du Keyboard.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="silencio-y-solo"><span class="tr">Mute et solo</span></h3>
+      <p><span class="tr">Coupez des canaux (mute) pour entendre les autres, ou isolez-en un avec solo. Pratique pour vérifier une voix dans l’ensemble sans rien réécrire dans le Score.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="transporte"><span class="tr">Transport</span></h3>
+      <p><span class="tr">La lecture de la pièce : lecture, pause et arrêt, synchronisés avec la suite. Et les quatre boutons de position — première · précédente · suivante · dernière — déplacent la tête de lecture par mesures : ils amènent le Score à la mesure demandée et le curseur y reste, prêt à jouer à partir de ce point.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-navegador-go-loop"><span class="tr">Le navigateur GO|LOOP</span></h3>
+      <p><span class="tr">À droite de l’horloge se trouve une case de travail. Tapez une mesure dans <b>GO</b>, appuyez sur Entrée et l’œuvre s’y rend : le Score amène le curseur à cette mesure et vous reprenez à partir de ce point. À côté, <b>A</b> et <b>B</b> marquent le passage qui se répète. Chacun a son <b>◉</b>, qui inscrit la mesure où se trouve la tête de lecture — à l’arrêt ou en lecture — ; celui de B inscrit la <i>suivante</i>, car c’est en B que la boucle revient en arrière. Le <b>🔁</b> active la boucle et le <b>✕</b> efface les deux extrémités, ici et dans la partition. <b>A</b> est sarcelle et <b>B</b> est bleu : les mêmes couleurs que celles avec lesquelles le Score dessine ses deux triangles, si bien que les deux fenêtres nomment la même chose de la même façon. C’est la boucle même du Score, vue depuis la table de mixage : laissez un passage tourner en boucle et travaillez l’équilibre par-dessus.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="donde-estas-y-cuanto-falta"><span class="tr">Où vous en êtes, et ce qu’il reste</span></h3>
+      <p><span class="tr"><b>MEASURE</b> n’indique plus seulement la mesure en cours : il indique aussi combien l’œuvre en compte — <span class="mono">64 / 216</span> —, si bien que vous voyez d’un coup d’œil où vous vous situez dans l’ensemble. Et l’horloge porte à côté d’elle la durée du fichier : <span class="mono">TIME / 7:31</span>. Les deux totaux viennent du Score au chargement de l’œuvre, déjà comptés mesure par mesure avec la métrique et le tempo de chaque section. La table de mixage ne les estime pas : elle les reçoit.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-master-completo"><span class="tr">Le master, au complet</span></h3>
+      <p><span class="tr">La tranche <b>MASTER</b> n’est plus scindée. Outre le niveau et la balance, elle porte désormais <b>REV</b>, <b>ECHO</b>, <b>TONE</b> et <b>WARM</b> : exactement les mêmes boutons rotatifs que ceux du Keyboard, où vit le moteur audio. Tournez-en un ici et il bouge là-bas ; tournez-le là-bas et il bouge ici. Ce ne sont pas deux réglages semblables : c’est un seul et même réglage, vu depuis deux fenêtres. Et il vaut la peine de le préciser : ce sont des réglages de <b>session</b>, pas des réglages de l’œuvre. <b>Ils ne voyagent pas dans le fichier <code>.mmf</code></b> — enregistrez, rouvrez-le demain, et l’œuvre revient telle qu’elle a été écrite tandis que ces trois-là reviennent là où ils étaient. Si le Keyboard n’est pas ouvert, le bloc s’éteint : ce sont des télécommandes, et sans moteur il n’y a rien à commander.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-coach-en-la-mesa"><span class="tr">Le Coach à la table de mixage</span></h3>
+      <p><span class="tr">L’oreille <b>🎓</b> du haut n’est plus muette dans cette fenêtre. Ici, le Coach dit les trois choses que seule la table de mixage sait, et chacune une seule fois. Qu’un <b>mute</b> ou un <b>solo</b> appartient à la table de mixage et non à la partition : ce que vous entendez n’est pas l’œuvre tant que vous ne les avez pas retirés. Que <b>REV · ECHO · TONE · WARM</b> appartiennent à la session et ne voyagent jamais dans le fichier. Et qu’un instrument qui se trouve bien en dessous des autres n’est pas discret : il est <i>hors</i> de la texture, ce qui n’est pas la même chose et ne se corrige pas en montant le volume général. Si vous préférez travailler en silence, un clic sur l’oreille <b>🎓</b> l’endort.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="cuatro-perillas-por-canal-oir-para-decidir"><span class="tr">Quatre boutons rotatifs par canal : écouter, puis décider</span></h3>
+      <p>
+      <span class="tr">Chaque tranche a sa grille d’effets : <b>AGOG</b> (agogique par note), <b>ASYM</b> (agogique de phrase), <b>PRES</b> (présence de l’attaque — poussé ou tiré, soufflée ou articulée à la langue) et <b>ART</b> (articulation écrite). Le bouton rotatif ne remplace pas ce que dit la partition : il <i>module son écart par rapport au neutre</i>. Un canal avec un staccato à 50 % de la figure sonne à 75 % avec le bouton à mi-course ; au maximum, il raccourcit davantage ; à zéro, la note retrouve toute sa valeur. C’est ce que fait un chef avec la main : entendre comment un geste s’équilibre dans l’ensemble, puis le corriger sur la page. <b>ART est déjà câblé</b> et s’entend en direct, sans arrêter la lecture ; les trois autres tournent et attendent leur tour.<br><br>Et ils relèvent de <b>l’écoute, pas du document</b> : ils ne voyagent jamais dans le <code>.mmf</code>, ne reviennent jamais sous forme de modification, et <b>repartent du neutre à chaque fichier</b> — ce que vous réglez en écoutant une pièce ne reste pas posé sur la suivante.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="sincronia-con-la-suite"><span class="tr">Synchronisé avec la suite</span></h3>
+      <p><span class="tr">Elle reçoit les canaux du Score et l’audio du Keyboard, et renvoie l’équilibre à toute la suite en direct. Les vumètres sont pour l’instant affichés en mode démo.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-paleta-de-instrumentos-todos-a-la-vista"><span class="tr">La palette d’instruments : tous d’un coup d’œil</span></h3>
+      <p><span class="tr">Le <code>&lt;select&gt;</code> natif ne sait pas faire de colonnes — c’est le système d’exploitation qui dessine cette liste déroulante —, si bien qu’un clic sur le champ de l’instrument ouvre à la place une <b>palette en colonnes</b> : toutes les familles visibles d’un coup d’œil, chacune dans sa colonne, avec un <b>filtre par nom</b> en haut. Les instruments que la banque possède mais que la carte active n’a pas sont affichés <i>estompés</i> plutôt que cachés : vous voyez qu’ils existent et qu’ils ne sont pas chargés aujourd’hui. L’<b>épingle</b> la garde ouverte pour en essayer plusieurs à la suite et comparer à l’oreille ; sans épingle, en choisir un la referme. Le choix revient par le chemin habituel, donc rien ne change dans le mixage. C’est la même palette dans les quatre applications — Score, Keyboard, Console et Register —, servie par <code>mm-presets.js</code>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="treinta-y-dos-canales"><span class="tr">Trente-deux canaux</span></h3>
+      <p><span class="tr">La table de mixage a grandi avec la suite : trente-deux tranches, une par canal de la partition, avec la même palette de couleurs que partagent le Score et la Console. Une œuvre pour orchestre y tient tout entière, sans avoir à la répartir sur deux fenêtres.</span></p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite d’accord pythagoricien · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">tous droits réservés</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','fr');</script>
+</body>
+</html>

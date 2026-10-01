@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lexicon — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/lexicon.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/lexicon.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/lexicon.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/lexicon.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/lexicon.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/lexicon.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Start</span></a>
+    <a href="index.html#apps"><span class="tr">Die Apps</span></a>
+    <a href="index.html#howto"><span class="tr">Erste Schritte</span></a>
+    <a href="instruments.html"><span class="tr">Instrumente</span></a>
+    <a href="index.html#aula"><span class="tr">Coach-Klassenzimmer</span></a>
+    <a href="UserGuide.html"><span class="tr">Benutzerhandbuch</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/lexicon.html?lang=es">ES</a><a href="../../suite/lexicon.html?lang=en">EN</a><a href="../../fr/suite/lexicon.html">FR</a><a href="../../nl/suite/lexicon.html">NL</a><a class="on" href="lexicon.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:#b58a3c">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Zurück zur Suite</span></a>
+  <div class="app-eyebrow">⊞ Lexicon <span class="wip">· en construcción / under construction</span></div>
+  <h1>
+    
+    <span class="tr">Das Lexikon des Klangs.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">In Music Motion ist die Identität jeder Note ein Wort: ihr pythagoreisches Paar 3ⁿ/2ᵐ, ausbuchstabiert. Das Lexicon schließt den Kreis: <b>Auch der Zustand des Klangs ist ein Wort</b> — sieben Buchstaben, einer pro Achse: Dynamik, Effekt, Verlauf, Anschlag, Aushalten, Resonanz und Akzent.</span>
+  </p>
+
+  <div class="note">
+    
+    <span class="tr">Es ist keine App: Es ist eine lebendige Datenbank (<span class="mono">mm-lexicon.js</span>), die die Apps befragen. Die üblichen Zeichen — <i>pp, sfz, pizz, cresc, marcato</i> — werden in ein Wort aus 7 Buchstaben übersetzt, das das Cosmic Keyboard <b>pro Note, in ihrem eigenen Register</b> auflöst: Ein Piano-Pizzicato der Violine auf der G-Saite klingt nicht wie eines auf der E-Saite. Ein Raum von über 800.000 Ausdruckszuständen, beschrieben von etwa 49 Begriffen.</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3 id="ejes-del-sonido"><span class="tr">Sieben Achsen, sieben Werte</span></h3>
+      <p><span class="tr">Jeder Klangzustand ist eine 7-stellige Koordinate, geschrieben im Alphabet F K G D A E B. Der Buchstabe D — die Mitte — ist der Neutralwert jeder Achse, wie das D0 des konzentrischen Gitters: Das neutrale Wort ist DDDDDDD, und gespeichert werden nur die Abweichungen von der Mitte.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-dinamica-es-timbre"><span class="tr">Dynamik ist Klangfarbe</span></h3>
+      <p><span class="tr">Ein Orchester, das pianissimo spielt, liefert weniger Dezibel, verliert aber keine Präsenz: Das Spektrum ändert sich, nicht die Entfernung. Im Lexicon dunkelt pp die Farbe ab und mildert den Anschlag, während die Lautstärke kaum sinkt. Der Fader gehört zum Mix, nicht zum Ausdruck.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="por-nota-en-su-registro"><span class="tr">Pro Note, in ihrem Register</span></h3>
+      <p><span class="tr">Jeder Begriff lebt über 4 Registeranker verteilt — bei der Violine buchstäblich ihre Saiten: G·D·A·E. Während jede Note klingt, interpoliert das Cosmic die Werte auf ihrer tatsächlichen Tonhöhe. Artikulation und Dynamik hören auf, ein Schmuck für den ganzen Kanal zu sein.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="herencia-orquestal"><span class="tr">Orchestrales Erbe</span></h3>
+      <p><span class="tr">Ein positionaler Baum: Was gemeinsam ist, wird einmal definiert (default), jede Familie passt das Ihre an, und jedes Instrument speichert nur, was es unterscheidet — das tiefe Pizzicato der Violine hat mehr Körper, und das ist eine einzige Zeile in der Datenbank.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-capa-interprete-en-evolucion"><span class="tr">Die Interpretationsschicht <span class="wip">· in Entwicklung</span></span></h3>
+      <p><span class="tr">Der Score führt einen Ausdruck pro Note relativ zur Dynamik ein: Das Notenzeichen (Aufblühen &lt;, Abklingen &gt;, messa &lt;&gt;, invers &gt;º&lt;, niente º) führt die Note zu zwei Dynamiken hin und zurück; der Bogen erhält eine Polarität (vorwärts klingt ab, rückwärts wächst). Ein Nachbar der Achse TRANS/WORD des Lexicon — Verlauf zwischen Noten —, aber vorerst lebt er auf der Note des Score, nicht im Wort aus 7 Buchstaben. Das Modell entwickelt sich noch.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="trans-la-preparacion-del-salto-ahora-al-sonar-el"><span class="tr">TRANS · die Sprungvorbereitung, jetzt beim Abspielen im Score</span></h3>
+      <p><span class="tr">Die Achse <b>TRANS</b> des Lexicon (wie eine Note vorbereitet wird, die nach einem Sprung ankommt) war bereits definiert, aber ruhte. Jetzt <b>wirkt sie, wenn der Score spielt</b>: Wenn eine Note gebunden einsetzt und der Sprung von der vorherigen <b>einen pythagoreischen Ganzton</b> übersteigt (das Frequenzverhältnis ist größer als 9/8 — und das Verhältnis wird aus den pythagoreischen Exponenten berechnet, nie aus gleichstufig <a href="https://musicmotionsuite.com/faq.html?lang=de#temperado" title="Häufige Fragen">temperierten</a> Halbtönen), sagt der Score dem Keyboard, woher sie kam, und das Lexicon wendet <b>trans.leap</b> an: etwas mehr Anschlag und Luft und etwas dunkler, im Verhältnis zur Größe des Sprungs. Kleine Schritte werden nicht vorbereitet; Sprünge schon.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-clavecin-un-nodo-que-aplana-la-dinamica"><span class="tr">Das Cembalo: ein Knoten, der die Dynamik abflacht</span></h3>
+      <p><span class="tr">Wenn die Physik eines Instruments sagt, dass die Kraft die Klangfarbe nicht ändert, sagt es der <b>Knoten</b> des Lexicon, nicht die Engine. Das Cembalo hat keine Dynamik pro Taste (der Kiel gibt die Saite immer aus derselben Auslenkung frei: 1,7 dB zwischen pp und ff), daher überschreibt sein Knoten <span class="mono">harpsichord</span> — und sein Klon <span class="mono">harpsichord_wt</span>, der wohltemperierte — jeden DYN-Begriff der Familie: nahezu flacher Pegel (pp ×0,92 → fff ×1,10), Farbe, Anschlag und Luft fest; das Einzige, was mit der Velocity atmet, ist das Mechanikgeräusch — das „tac“ der Springer, ×0,55 bei pp und ×2 bei fff —. Der Ausdruck des Cembalos ist Artikulation, Registrierung und Zeit, nicht Kraft. Tasteninstrument-Knoten mit den Ankern F1·C3·C5·F6.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-cuerda-pulsada-el-arco-manda-el-brillo-el-ded"><span class="tr">Zupfsaiten: Der Bogen bestimmt die Helligkeit, der Finger nicht</span></h3>
+      <p><span class="tr">Harfe, Gitarre und Pizzicato — solo und als Gruppe — haben jetzt eigene Knoten (<span class="mono">harp</span> · <span class="mono">guitar</span> · <span class="mono">pizzicato</span> · <span class="mono">strings_pizzicato</span>). Bisher fielen sie unter das Gesetz der Familie <i>cuerdas</i>, und das ist das der <b>gestrichenen</b> Saiten: Die Helligkeit öffnet sich mit der Kraft. Zupfen funktioniert nicht so — der Finger lässt die Saite aus einem Dreieck los, und die Form des Spektrums bestimmen der Zupfpunkt und die Breite der Fingerkuppe, nicht die Kraft: Von pp bis ff steigt die Farbe fast als Block. Was wächst, ist der <b>hit</b> — der Schlag von Resonanzboden und Steg — und das Kontaktgeräusch. Daher bewegen diese Knoten die Farbe kaum und den hit stark: Harfe +0,08 Farbe und +8 dB hit; Gitarre +0,10 und +8 dB; Pizzicato +0,15 und +10 dB. Kein Vibrato. Und auf einem Kanal, der <i>bereits</i> Pizzicato ist, wird das Zeichen <span class="mono">pizz</span> neutralisiert: Es verdoppelte den Anschlag.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-techo-del-agudo-es-del-tono-no-del-golpe"><span class="tr">Die Obergrenze im Diskant gehört zum Ton, nicht zum hit</span></h3>
+      <p><span class="tr">Der Knoten <b>harp</b> ließ den hit in den lauten Dynamiken zum Diskant hin <i>abfallen</i>, gestützt auf die „niedrige Obergrenze im Diskant“ seiner Recherchekarte. Beim Hören von Mahlers Harfe ab E5 aufwärts — „kurz, hoch, augenblicklich, schmerzhaft“ — wurde klar, dass diese Obergrenze zum <b>Ton</b> gehört: Teiltöne über dem Grundton fügen keine Lautstärke hinzu. Was sich mit der Dynamik öffnet, ist die <b>Nichtlinearität</b> — Phantomteilton, Gleiten, Schlag des Resonanzbodens, Gleitgeräusch —, also war es verkehrt, die Obergrenze des Tons auf den Transienten anzuwenden: Der Harfenist drückte, und die Engine senkte den hit. Jetzt öffnet sich der hit bei <b>f · ff · fff</b> im Diskant <i>stärker</i> als im Bass; die Farbe bleibt unangetastet, da dort die Obergrenze des Diskants sehr wohl gilt. Von pp bis mp ändert sich nichts. Und die <b>Anker</b> des Knotens sind zu den gemessenen Materialgrenzen des Presets gewandert — umsponnen · Darm · Nylon · die kürzeste Saite —, denn mit fremden Ankern wurden die Dynamikkurven an Registerpositionen gelesen, die nicht die dieses Instruments waren.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-grupeto-pide-prestada-la-ley-del-mordente"><span class="tr">Der Doppelschlag leiht sich das Gesetz des Mordents</span></h3>
+      <p><span class="tr">Die Synonymtabelle fügt <span class="mono">turn</span> · <span class="mono">grupeto</span> · <span class="mono">gruppetto</span> → <b>mordente</b> hinzu. Der Doppelschlag klingt jetzt — der Score realisiert ihn als vier Noten: Obernote · Hauptnote · Unternote · Hauptnote, beginnend <i>auf</i> dem Schlag — und er brauchte ein Anschlagsgesetz: Er verwendet das des Mordents, das dieselbe kurze Verzierungsgeste ist. Die Achse <b>ACC</b> hat sieben Plätze mit dem Neutralwert in der Mitte (marcatissimo · marcato · accento · — · tr · mordente · tremolo), daher wird dafür kein achter hinzugefügt: Wenn ACC wächst, bekommt der Doppelschlag einen eigenen Platz. Es ist das übliche Kriterium — die Tinte wird so gespeichert, wie sie geschrieben ist, und hier auf den kanonischen Begriff zurückgeführt, so wie <span class="mono">mordent</span> → mordente oder <span class="mono">trill</span> → tr.</span></p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite in pythagoreischer Stimmung · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle Rechte vorbehalten</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','de');</script>
+</body>
+</html>

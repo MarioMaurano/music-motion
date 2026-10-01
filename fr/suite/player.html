@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Player — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/player.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/player.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/player.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/player.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/player.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/player.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Accueil</span></a>
+    <a href="index.html#apps"><span class="tr">Les applications</span></a>
+    <a href="index.html#howto"><span class="tr">Comment commencer</span></a>
+    <a href="instruments.html"><span class="tr">Instruments</span></a>
+    <a href="index.html#aula"><span class="tr">Classe du Coach</span></a>
+    <a href="UserGuide.html"><span class="tr">Guide d’utilisation</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/player.html?lang=es">ES</a><a href="../../suite/player.html?lang=en">EN</a><a class="on" href="player.html">FR</a><a href="../../nl/suite/player.html">NL</a><a href="../../de/suite/player.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:#6aa832">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Retour à la suite</span></a>
+  <div class="app-eyebrow">⊞ Player</div>
+  <h1>
+    
+    <span class="tr">Le copiste.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Chargez un fichier <a href="https://musicmotionsuite.com/faq.html?lang=fr#midi" title="Questions fréquentes">MIDI</a> et frappez-le en <b>MMF</b> — le format natif de la suite, où chaque note conserve son identité pythagoricienne exacte (rapports 3ⁿ/2ᵐ, et non des fréquences). C’est aussi le transport maître : il dirige la lecture et toute la suite suit.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Ouvrir le Cosmic Keyboard</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">Le Player <b>ne produit aucun son</b> : il transmet chaque note au <b>Cosmic Keyboard</b> — le seul moteur de la suite —, qui résout la fréquence à partir de sa base de données pythagoricienne. Le copiste corrige aussi : cliquez sur une note du rouleau et rectifiez-la dans le réseau pythagoricien (ton, limma, apotome, comma, <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">octave</a>, durée, vélocité) — ou tout un passage avec Shift + glisser. Et Score Intelligence est vivant : il identifie l’œuvre et apporte l’époque, le style et les tempos de référence (toujours facultatif, avec votre propre clé ; l’information n’est jamais imposée).</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3><span class="tr">MIDI → MMF</span></h3>
+      <p><span class="tr">Il lit le fichier MIDI — notes, armure, tempo, pistes — et organise les hauteurs selon l’armure : chaque note reçoit sa graphie correcte (Fa♯ n’est pas Sol♭) et, avec elle, son rapport exact. C’est cela, « frapper » : d’un MIDI <a href="https://musicmotionsuite.com/faq.html?lang=fr#temperado" title="Questions fréquentes">tempéré</a> naît un MMF pythagoricien.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Des pistes alignées</span></h3>
+      <p><span class="tr">Beaucoup de programmes d’export laissent chaque instrument décalé de quelques ticks par rapport à la grille — la flûte un peu en retard, le violoncelle un peu plus. On ne l’entend pas à la lecture, mais à l’écriture cela salissait la copie : la mise en mesures trouvait chaque note commençant un rien en retard et comblait l’écart par un silence très bref, un par mesure et par voix, plus des points que personne n’avait écrits. Désormais, à l’importation du MIDI, le copiste mesure le décalage constant de chaque piste et le retire en totalité. Ce qu’il ne fait <b>jamais</b>, c’est quantifier note par note : c’est là que vit le rubato, et on n’y touche pas.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Les nuances, déduites des vélocités</span></h3>
+      <p><span class="tr">Un fichier MIDI ne porte aucune nuance écrite. Mais lorsqu’il provient d’une partition qui a été jouée, les vélocités ne forment pas un continuum : elles forment un <b>escalier</b> de niveaux, et ces marches sont les nuances. Le copiste le lit et écrit l’indication dans la partition, à deux conditions pour que la page ne se remplisse pas de signes : le niveau doit être <b>tenu</b> au moins une mesure et <b>sauter</b> suffisamment loin de celui qui est en vigueur. Ce qui ne passe pas le filtre n’est pas perdu — cela continue de vivre dans la vélocité de chaque note, qui est ce que vous entendez. Les indications voyagent dans le MMF et le Score les place à côté de leurs notes. Gardez-le à l’esprit : ce que vous y lisez est l’<b>interprétation enregistrée dans le MIDI</b>, et non ce que le compositeur a écrit — une entrée peut ressortir <i>mf</i> là où la partition indique <i>ppp</i>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">La correction du copiste</span></h3>
+      <p><span class="tr">Un clic sur une note du rouleau ouvre le copiste : son nom, sa place dans le réseau <b>[<a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">quintes</a>, octaves]</b> et sa fréquence. Les boutons de hauteur sont sur deux rangées, <b>+</b> en haut et <b>−</b> en bas : <b>T</b> = ton · <b>L</b> = limma, le demi-ton diatonique, la lettre change (Do → Si) · <b>A</b> = apotome, le demi-ton chromatique, la lettre reste (Ré → Ré♯) · <b>K</b> = comma : le <b>voisin de comma</b>, avec son propre nom — La♭3 +K = Sol♯3, Do5 +K = Si♯4. Sol♯ et La♭ sont deux notes différentes ; la limite est une double altération. Aussi ±8va, ♯↔♭, delete, la durée et la vélocité, avec ♪ pour écouter. Shift + glisser prend tout un passage et lui applique la même chose en bloc. Ce que vous corrigez est marqué et voyage dans le MMF.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Le Score Roll</span></h3>
+      <p><span class="tr">Chaque note est un tiret : sa <b>hauteur</b> est la hauteur du son, sa longueur est sa durée et sa <b>couleur</b> est la piste — une couleur par instrument. Dans un trio de 2 hautbois et basson, les hautbois sont les bandes du haut et le basson la bande grave ; survolez une note pour l’identifier. En bas, une <b>règle des mesures</b> numérotée comme la partition (l’anacrouse est la mesure 0), et l’horloge donne la position en <b>mesure:temps</b>. Pour vous déplacer : <b>Ctrl + molette</b> = zoom autour du curseur ; une fois le zoom fait, <b>molette</b> = monter et descendre dans les hauteurs et <b>Shift + molette</b> = avancer et reculer dans le temps ; un double-clic dans un espace vide ramène à toute l’œuvre. Le <b>clic droit</b> ne sert qu’à la boucle : <b>Set A here · Set B here · clear</b> (aussi avec les touches I/O), et le transport fait tourner la section en boucle. Pour enregistrer par parties, le bouton <b>⭳ export</b> de l’en-tête du rouleau : par instrument, la sélection ou la section A–B, chacune en MMF avec l’armure de son mouvement. <b>⤢</b> agrandit le rouleau, et les signes <b>?</b> mènent au Guide d’utilisation.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Plusieurs fichiers, une œuvre</span></h3>
+      <p><span class="tr">Déposez plusieurs fichiers MIDI à la fois et chaque fichier entre comme un <b>mouvement</b> de la même œuvre, dans l’ordre des noms de fichier, avec les nombres lus correctement (1, 2, 10). Avec une œuvre déjà chargée, un fichier MIDI de plus est <b>ajouté à la fin</b> comme un autre mouvement — y compris si vous avez déjà corrigé des notes avec le copiste ou ouvert l’œuvre depuis un .mmf : vos corrections sont conservées. Un fichier MIDI contenant plusieurs pièces, comme les Danses roumaines de Bartók, reste une seule œuvre, et dans le Score chaque pièce commence après une double barre. Pour retirer un mouvement : clic droit dessus → <b>✕ remove from work</b>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Transport maître</span></h3>
+      <p><span class="tr">Lecture, pause, arrêt, déplacement et le tempo du chef — avec le tempo du fichier comme référence. La pièce sonne dans le Cosmic et les autres applications suivent.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Commandes et langue</span></h3>
+      <p><span class="tr">Dans l’en-tête, deux boutons rotatifs maîtres synchronisés par mm-sync : <b>VOL</b> (volume de la suite) et <b>TONE</b> (brillance du Cosmic). L’oreille 🎓 du Coach active ou désactive l’écoute et, d’un clic droit, choisit la langue : le Player est bilingue es/en, avec les commandes universelles (play/stop) gardées en anglais. Le rouleau et la Console gèrent jusqu’à 32 canaux. Sur les thèmes sombres, les fenêtres et les menus du Player portent une ombre qui les détache du rouleau.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Score Intelligence</span></h3>
+      <p><span class="tr">Il identifie la pièce chargée — compositeur, mouvements, tempos de référence — et construit la carte des tempos par mouvement. Propulsé par Claude (Anthropic) ; votre clé API ne vit que dans votre navigateur, jamais dans le fichier.</span></p>
+      <p><span class="tr"><b>Et il nomme l’œuvre.</b> Un fichier MIDI ne porte ni titre ni compositeur (tout au plus le nom du fichier) ; avec la fiche Score Intelligence, l’œuvre reçoit son titre et son compositeur, qui voyagent dans le .mmf et que le Score reçoit à l’ouverture, avec l’indication de tempo.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Enregistrer</span></h3>
+      <p><span class="tr"><b>MMF</b> : le format natif, prêt à être ouvert dans le Score avec l’accord exact. <b>MIDI</b> : le voyage de retour, pour utiliser la pièce hors de la suite. La notation modifiable et le MusicXML restent du ressort du Score, qui le fait mieux.</span></p>
+    </div>
+
+  </div>
+</section>
+
+<section id="howto">
+  <div class="app-eyebrow"><span class="tr">Comment l’utiliser</span></div>
+  <ol style="margin:14px 0 0 22px;line-height:1.9">
+    <li><span class="tr"><b>Déposez le fichier</b> — faites glisser un <span class="mono">.mid</span> ou un <span class="mono">.mmf</span> sur la zone de chargement (ou cliquez pour choisir) ; plusieurs fichiers .mid à la fois deviennent une seule œuvre avec ses mouvements. Le Player affiche le titre, l’armure, les pistes, les notes et la durée.</span></li>
+    <li><span class="tr"><b>Ouvrez le Cosmic Keyboard</b> — c’est lui qui sonne. Le bouton clavier ⊞ l’ouvre et reste allumé tant qu’il est ouvert.</span></li>
+    <li><span class="tr"><b>▶ Play</b> — la pièce sonne en <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">accord pythagoricien</a> ; ajustez le tempo du chef pour une lecture différente.</span></li>
+    <li><span class="tr"><b>Enregistrez le MMF</b> — et ouvrez-le dans le Score : la pièce arrive avec son identité exacte, prête à être modifiée.</span></li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite d’accord pythagoricien · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">tous droits réservés</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','fr');</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="nl" data-lang="nl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Player — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/player.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/player.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/player.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/player.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/player.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/player.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Home</span></a>
+    <a href="index.html#apps"><span class="tr">De apps</span></a>
+    <a href="index.html#howto"><span class="tr">Hoe je begint</span></a>
+    <a href="instruments.html"><span class="tr">Instrumenten</span></a>
+    <a href="index.html#aula"><span class="tr">Klas van de Coach</span></a>
+    <a href="UserGuide.html"><span class="tr">Gebruikshandleiding</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/player.html?lang=es">ES</a><a href="../../suite/player.html?lang=en">EN</a><a href="../../fr/suite/player.html">FR</a><a class="on" href="player.html">NL</a><a href="../../de/suite/player.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:#6aa832">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Terug naar de suite</span></a>
+  <div class="app-eyebrow">⊞ Player</div>
+  <h1>
+    
+    <span class="tr">De kopiist.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Laad een <a href="https://musicmotionsuite.com/faq.html?lang=nl#midi" title="Veelgestelde vragen">MIDI</a>-bestand en munt het als <b>MMF</b> — het eigen formaat van de suite, waarin elke noot haar exacte pythagorese identiteit bewaart (verhoudingen 3ⁿ/2ᵐ, geen frequenties). Hij is ook het mastertransport: hij dirigeert het afspelen en de hele suite volgt.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Open het Cosmic Keyboard</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">De Player <b>maakt geen klank</b>: hij stuurt elke noot door naar het <b>Cosmic Keyboard</b> — de enige motor van de suite — dat de frequentie bepaalt uit zijn pythagorese database. De kopiist verbetert ook: klik op een noot op de rol en corrigeer haar binnen het pythagorese rooster (hele toon, limma, apotome, komma, <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Het boek — om verder te gaan">octaaf</a>, duur, velocity) — of een hele passage met Shift + slepen. En Score Intelligence leeft: het identificeert het werk en brengt periode, stijl en referentietempo's aan (altijd optioneel, met je eigen sleutel; de informatie wordt nooit opgelegd).</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3><span class="tr">MIDI → MMF</span></h3>
+      <p><span class="tr">Hij leest het MIDI-bestand — noten, voortekening, tempo, tracks — en ordent de toonhoogten volgens de voortekening: elke noot krijgt haar juiste spelling (fis is geen ges) en daarmee haar exacte verhouding. Dat is „munten”: uit <a href="https://musicmotionsuite.com/faq.html?lang=nl#temperado" title="Veelgestelde vragen">getempereerde</a> MIDI wordt een pythagorese MMF geboren.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Tracks, uitgelijnd</span></h3>
+      <p><span class="tr">Veel exportprogramma's laten elk instrument een paar ticks naast het raster staan — de fluit iets te laat, de cello nog iets later. Bij het afspelen hoor je dat niet, maar bij het uitschrijven bevuilde het de kopie: de maatindeling zag elke noot een haartje te laat beginnen en vulde het gat met een heel korte rust, één per maat en per stem, plus punten die niemand had geschreven. Nu meet de kopiist bij de MIDI-import de gelijkmatige verschuiving van elke track en haalt die er volledig uit. Wat hij <b>nooit</b> doet, is noot voor noot kwantiseren: daar woont het rubato, en dat blijft onaangeroerd.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Dynamiek, afgeleid uit de velocity's</span></h3>
+      <p><span class="tr">Een MIDI-bestand bevat geen geschreven dynamiek. Maar als het afkomstig is van een partituur die gespeeld werd, vormen de velocity's geen continuüm: ze vormen een <b>trap</b> van niveaus, en die treden zijn de dynamiek. De kopiist leest die trap af en schrijft de aanduiding in de partituur, onder twee voorwaarden, zodat het blad niet volloopt met tekens: het niveau moet minstens een maat <b>aangehouden</b> worden en ver genoeg <b>springen</b> ten opzichte van het geldende niveau. Wat niet door de filter komt, gaat niet verloren — het leeft voort in de velocity van elke noot, en dat is wat je hoort. De aanduidingen reizen mee in de MMF en de Score plaatst ze naast hun noten. Houd er rekening mee: wat je daar leest, is de <b>interpretatie die in de MIDI is opgenomen</b>, niet wat de componist schreef — een inzet kan als <i>mf</i> uitkomen waar de partituur <i>ppp</i> zegt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">De correctie van de kopiist</span></h3>
+      <p><span class="tr">Een klik op een noot op de rol opent de kopiist: haar naam, haar plaats in het rooster <b>[<a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="Het boek — om verder te gaan">kwinten</a>, octaven]</b> en haar frequentie. De toonhoogteknoppen staan in twee rijen, <b>+</b> boven en <b>−</b> onder: <b>T</b> = hele toon · <b>L</b> = limma, de diatonische halve toon, de letter verandert (c → b) · <b>A</b> = apotome, de chromatische halve toon, de letter blijft (d → dis) · <b>K</b> = komma: de <b>kommabuur</b>, met een eigen naam — as3 +K = gis3, c5 +K = bis4. Gis en as zijn twee verschillende noten; de grens is een dubbel voorteken. Verder ±8va, ♯↔♭, delete, duur en velocity, met ♪ om te luisteren. Shift + slepen neemt een hele passage en past daar in één keer hetzelfde op toe. Wat je verbetert, wordt gemarkeerd en reist mee in de MMF.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">De Score Roll</span></h3>
+      <p><span class="tr">Elke noot is een streepje: de <b>hoogte</b> is de toonhoogte, de lengte is hoe lang ze duurt en de <b>kleur</b> is de track — één kleur per instrument. In een trio van 2 hobo's en fagot zijn de hobo's de bovenste banden en de fagot de lage band; beweeg de muis over een noot om haar te identificeren. Onderaan een <b>maatliniaal</b>, genummerd zoals de partituur (de opmaat is maat 0), en de klok geeft de positie in <b>maat:tel</b>. Om te bewegen: <b>Ctrl + scrollwiel</b> = zoomen rond de cursor; eenmaal ingezoomd, <b>scrollwiel</b> = op en neer door de toonhoogten en <b>Shift + scrollwiel</b> = vooruit en achteruit in de tijd; dubbelklikken op een lege plek brengt je terug naar het hele werk. De <b>rechtsklik</b> dient alleen voor de loop: <b>Set A here · Set B here · clear</b> (ook met de toetsen I/O), en het transport speelt het gedeelte in een lus. Om in delen op te slaan: de knop <b>⭳ export</b> in de kop van de rol — per instrument, de selectie of het A–B-gedeelte, elk als MMF met de voortekening van zijn deel. <b>⤢</b> vergroot de rol, en de <b>?</b>-tekens leiden naar de gebruikshandleiding.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Meerdere bestanden, één werk</span></h3>
+      <p><span class="tr">Laat meerdere MIDI-bestanden tegelijk los en elk bestand komt binnen als een <b>deel</b> van hetzelfde werk, in de volgorde van de bestandsnamen, met getallen correct gelezen (1, 2, 10). Is er al een werk geladen, dan wordt een extra MIDI-bestand als nog een deel <b>toegevoegd</b> — ook als je al noten met de kopiist hebt verbeterd of het werk vanuit een .mmf hebt geopend: je correcties blijven bewaard. Een MIDI-bestand met meerdere stukken erin, zoals de Roemeense dansen van Bartók, blijft één werk, en in de Score begint elk stuk na een dubbele maatstreep. Om een deel te verwijderen: rechtsklik erop → <b>✕ remove from work</b>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Mastertransport</span></h3>
+      <p><span class="tr">Play, pause, stop, zoeken en het tempo van de dirigent — met het tempo van het bestand als referentie. Het stuk klinkt in het Cosmic en de andere apps volgen mee.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Bediening en taal</span></h3>
+      <p><span class="tr">In de kop twee masterknoppen, gesynchroniseerd via mm-sync: <b>VOL</b> (volume van de suite) en <b>TONE</b> (helderheid van het Cosmic). Het oor 🎓 van de Coach zet het luisteren aan of uit en kiest, met een rechtsklik, de taal: de Player is tweetalig es/en, met de universele bediening (play/stop) in het Engels. De rol en de Console verwerken tot 32 kanalen. Bij de donkere thema's dragen de vensters en menu's van de Player een schaduw die ze van de rol optilt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Score Intelligence</span></h3>
+      <p><span class="tr">Het identificeert het geladen stuk — componist, delen, referentietempo's — en bouwt de tempokaart per deel op. Aangedreven door Claude (Anthropic); je API-sleutel staat alleen in je browser, nooit in het bestand.</span></p>
+      <p><span class="tr"><b>En het geeft het werk een naam.</b> Een MIDI-bestand bevat geen titel of componist (hooguit de bestandsnaam); met de werkfiche van Score Intelligence krijgt het werk zijn titel en componist, die meereizen in de .mmf en die de Score bij het openen ontvangt, samen met de tempoaanduiding.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3><span class="tr">Opslaan</span></h3>
+      <p><span class="tr"><b>MMF</b>: het eigen formaat, klaar om in de Score te openen met exacte stemming. <b>MIDI</b>: de terugreis, om het stuk buiten de suite te gebruiken. Bewerkbare notatie en MusicXML blijven bij de Score, die dat beter doet.</span></p>
+    </div>
+
+  </div>
+</section>
+
+<section id="howto">
+  <div class="app-eyebrow"><span class="tr">Hoe je hem gebruikt</span></div>
+  <ol style="margin:14px 0 0 22px;line-height:1.9">
+    <li><span class="tr"><b>Laat het bestand los</b> — sleep een <span class="mono">.mid</span> of <span class="mono">.mmf</span> naar de laadzone (of klik om te kiezen); meerdere .mid-bestanden tegelijk worden één werk met zijn delen. De Player toont titel, voortekening, tracks, noten en duur.</span></li>
+    <li><span class="tr"><b>Open het Cosmic Keyboard</b> — dat is wat klinkt. De keyboardknop ⊞ opent het en blijft verlicht zolang het open is.</span></li>
+    <li><span class="tr"><b>▶ Play</b> — het stuk klinkt in <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Het boek — om verder te gaan">pythagorese stemming</a>; pas het tempo van de dirigent aan voor een andere lezing.</span></li>
+    <li><span class="tr"><b>Bewaar de MMF</b> — en open hem in de Score: het stuk komt aan met zijn exacte identiteit, klaar om te bewerken.</span></li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite voor pythagorese stemming · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle rechten voorbehouden</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','nl');</script>
+</body>
+</html>
