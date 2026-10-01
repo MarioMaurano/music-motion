@@ -38,7 +38,7 @@
   .licence{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--rad) var(--rad) 0;padding:14px 18px;margin-top:18px}
   .licence p{margin:6px 0}
 </style>
-</head>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/mmf.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/mmf.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/mmf.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/mmf.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/mmf.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/mmf.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
 <body>
 
 <header>
@@ -63,10 +63,7 @@
       <button data-th="clear" style="background:#f6efda" title="Clear"></button>
       <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
     </div>
-    <div class="langtog">
-      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
-      <button id="b-en" onclick="setLang('en')">EN</button>
-    </div>
+    <div class="langtog"><button id="b-es" onclick="setLang('es')">ES</button><button id="b-en" onclick="setLang('en')">EN</button><a href="../fr/suite/mmf.html">FR</a><a href="../nl/suite/mmf.html">NL</a><a href="../de/suite/mmf.html">DE</a></div>
   </div>
 </header>
 
@@ -287,5 +284,6 @@
 
 <script src="mm-theme.js"></script>
 <script src="site.js"></script>
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
 </body>
 </html>

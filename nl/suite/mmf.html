@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="nl" data-lang="nl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Het MMF-formaat — Music Motion v.2</title>
+<meta name="description" content="Het eigen formaat van Music Motion: elke noot met haar exacte pythagorese identiteit. Hoe het verschilt van MIDI en MusicXML, downloadbare demo's en auteursrecht.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<style>
+  /* comparación de formatos y filas de demo — tokens de mm-theme.css */
+  .fmt3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:22px}
+  .fmt{background:var(--panel);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px}
+  .fmt.mmf{border-top:3px solid var(--teal)}
+  .fmt h3{margin:0 0 4px;font-size:1.02rem}
+  .fmt .k{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--textd)}
+  .fmt p{font-size:var(--fs-sm);margin:8px 0 0}
+  .fmt.mmf .k{color:var(--teal)}
+  table.cmp{border-collapse:collapse;width:100%;margin-top:20px;font-size:var(--fs-sm)}
+  table.cmp th,table.cmp td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.cmp th{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;text-transform:uppercase;color:var(--textd);font-weight:500}
+  table.cmp td:first-child{color:var(--text);font-weight:600;white-space:nowrap}
+  table.cmp .yes{color:var(--teal)} table.cmp .no{color:var(--textd)}
+  .cmp-wrap{overflow-x:auto}
+  .demo{display:flex;gap:16px;align-items:flex-start;padding:15px 0;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+  .demo:last-child{border-bottom:none}
+  .demo .who{flex:1 1 320px;min-width:0}
+  .demo .who h3{margin:0 0 3px;font-size:1.04rem}
+  .demo .who .pc{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;text-transform:uppercase;color:var(--textd)}
+  .demo .who p{font-size:var(--fs-sm);margin:6px 0 0}
+  .demo .get{flex:0 0 auto;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+  .dl-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--ff-mono);font-size:.74rem;letter-spacing:.5px;padding:8px 14px;border:1px solid var(--teal);border-radius:var(--rad);color:var(--teal);background:transparent;transition:all .15s;white-space:nowrap;justify-content:center}
+  .dl-btn:hover{background:var(--teal);color:#0a0a10}
+  .pending{font-family:var(--ff-mono);font-size:.62rem;letter-spacing:1px;text-transform:uppercase;color:var(--violet)}
+  .licence{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--rad) var(--rad) 0;padding:14px 18px;margin-top:18px}
+  .licence p{margin:6px 0}
+</style>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/mmf.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/mmf.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/mmf.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/mmf.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/mmf.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/mmf.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Home</span></a>
+    <a href="index.html#apps"><span class="tr">De apps</span></a>
+    <a href="index.html#howto"><span class="tr">Hoe je begint</span></a>
+    <a href="../../suite/instruments.html"><span class="tr">Instrumenten</span></a>
+    <a href="mmf.html"><span class="tr">MMF-formaat</span></a>
+    <a href="UserGuide.html"><span class="tr">Gebruikshandleiding</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/mmf.html?lang=es">ES</a><a href="../../suite/mmf.html?lang=en">EN</a><a href="../../fr/suite/mmf.html">FR</a><a class="on" href="mmf.html">NL</a><a href="../../de/suite/mmf.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--teal)">
+
+<!-- ───────── HERO ───────── -->
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Terug naar de suite</span></a>
+  <div class="app-eyebrow"><span class="tr">Het formaat</span></div>
+  <h1>
+    
+    <span class="tr">MMF: het stuk met zijn <span class="hl">exacte stemming</span> erin.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">MMF is het eigen formaat van Music Motion. Anders dan een <a href="https://musicmotionsuite.com/faq.html?lang=nl#midi" title="Veelgestelde vragen">MIDI</a>-bestand — dat <a href="https://musicmotionsuite.com/faq.html?lang=nl#temperado" title="Veelgestelde vragen">getempereerde</a> toetsnummers opslaat — slaat een MMF <b>de exacte pythagorese identiteit van elke noot</b> op: het weet of een noot een <a href="https://musicmotionsuite.com/faq.html?lang=nl#midi-mmf" title="Veelgestelde vragen">cis of een des</a> is, en ze klinkt anders. Het opent in de Score en de Player, en het klinkt in het Cosmic Keyboard.</span>
+  </p>
+</section>
+
+<!-- ───────── QUÉ GUARDA ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="tr">Wat een MMF bevat</span></div>
+  <h2><span class="tr">Niet de noten: de hele uitvoering</span></h2>
+  <p>
+    
+    <span class="tr">Een MMF is geen afbeelding van de partituur en ook geen lijst van toetsen. Het is het stuk zoals de suite het begrijpt, per kanaal, met alles wat het als muziek doet klinken:</span>
+  </p>
+  <ul style="list-style:none;margin-top:12px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De exacte toonhoogte van elke noot</b> — haar pythagorese verhouding, geen afgerond getal. Cis en des zijn twee verschillende toonhoogtes en worden ook zo geschreven.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Dynamiek als relatieve gegevens</b> — de aanduidingen (ppp…fff), crescendo- en decrescendovorken en accenten, niet als vaste volumes.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Articulatie en gebaar</b> — legatobogen met hun richting, streken, tremolo, staccato, agogiek en de klankkleur van elk instrument.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De 32 kanalen en hun orkestratie</b> — elk met zijn pythagorese instrument, zijn notenbalken en zijn groepen.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Vertolking die over een passage wordt geschreven</b> — galm, echo, portamento en vibrato als regio van het stuk, en de regio's van ritmische ongelijkheid: per kanaal en per stem, niet per track.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De werkfiche</b> — het <b>werkelijke tonale centrum</b> van elk deel, dat niet altijd de geschreven voortekening is, met de maten waar het verandert. Daaruit weet het klavier in welk huis de muziek zich bevindt, en het stemt zichzelf opnieuw.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Het pedaal</b> — waar het wordt ingedrukt, waar de motor het opnieuw vastlegt en hoe ver de <i>simile</i> reikt; en de agogiek van het werk, met haar notatie.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Het niveau van de balkgroepen van het werk</b> — hoeveel elke positie binnen de balk daalt; dat is wat een loopje laat klinken als een frase in plaats van een rij identieke noten.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>En de vorderingen van de leerling</b>, wanneer het bestand een oefening van de Coach is: de les reist in hetzelfde bestand mee als de muziek.</span></li>
+  </ul>
+  <div class="note">
+    
+    <span class="tr">Daarom klinkt een MMF dat je vandaag opent hetzelfde als op de dag dat het werd opgeslagen: de stemming wordt niet opnieuw berekend, ze reist mee in het bestand.</span>
+  </div>
+</section>
+
+<!-- ───────── MMF Y OTROS FORMATOS ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="tr">MMF tegenover andere formaten</span></div>
+  <h2><span class="tr">Elk formaat slaat iets anders op</span></h2>
+
+  <div class="fmt3">
+    <div class="fmt">
+      <div class="k">MIDI · .mid</div>
+      <h3><span class="tr">De uitvoering</span></h3>
+      <p><span class="tr">Toetsnummers (0–127), velocity en timing. Getempereerd van opzet: een cis en een des zijn dezelfde toets. Het weet niets van stemming of spelling.</span></p>
+    </div>
+    <div class="fmt">
+      <div class="k">MusicXML · .xml/.mxl</div>
+      <h3><span class="tr">De notatie</span></h3>
+      <p><span class="tr">Hoe de pagina eruitziet: noten, stokken, voortekens, maten. Het onderscheidt cis van des op papier, maar speelt getempereerd af.</span></p>
+    </div>
+    <div class="fmt mmf">
+      <div class="k">MMF · .mmf</div>
+      <h3><span class="tr">Identiteit en klank</span></h3>
+      <p><span class="tr">De exacte pythagorese toonhoogte van elke noot plus de hele uitvoering. Cis ≠ des op papier <b>en</b> in de lucht. Het eigen formaat van de suite.</span></p>
+    </div>
+  </div>
+
+  <div class="cmp-wrap">
+  <table class="cmp">
+    <thead><tr>
+      <th></th><th>MIDI</th><th>MusicXML</th><th>MMF</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><span class="tr">Onderscheidt cis van des</span></td>
+        <td class="no"><span class="tr">nee</span></td>
+        <td class="yes"><span class="tr">in de notatie</span></td>
+        <td class="yes"><span class="tr">in notatie en klank</span></td></tr>
+      <tr><td><span class="tr">Stemming</span></td>
+        <td class="no"><span class="tr">getempereerd</span></td>
+        <td class="no"><span class="tr">getempereerd</span></td>
+        <td class="yes"><span class="tr">exact pythagorees</span></td></tr>
+      <tr><td><span class="tr">Slaat de uitvoering op</span></td>
+        <td class="yes"><span class="tr">gedeeltelijk</span></td>
+        <td class="no"><span class="tr">weinig</span></td>
+        <td class="yes"><span class="tr">ja (dynamiek, streken, agogiek)</span></td></tr>
+      <tr><td><span class="tr">Opent in de suite</span></td>
+        <td class="yes"><span class="tr">geïmporteerd</span></td>
+        <td class="yes"><span class="tr">geïmporteerd</span></td>
+        <td class="yes"><span class="tr">eigen formaat</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small" style="margin-top:14px">
+    
+    <span class="tr">De Player zet een MIDI- of MusicXML-bestand om naar MMF: het komt getempereerd binnen en wordt pythagorees geboren, geordend volgens de voortekening van het bestand.</span>
+  </p>
+
+  <p><span class="tr">En het gaat weer naar buiten zoals het binnenkwam: de Score <b>exporteert MusicXML</b> met de toonaard en de maatsoort van elk segment, de sleutels en hun wisselingen, de voortekens volgens de geldende maatsoort, en de majeur- of mineurmodus die de werkfiche aangeeft. Zo reist het stuk in <b>drie formaten</b>, in beide richtingen: MMF sluit je werk niet op, het bewaart het beter.</span></p>
+
+  <p><span class="tr"><b>De formaatversie is 1.1</b>, en elk bestand legt vast welke Score het heeft opgeslagen. Bij het openen past de suite de migraties toe die dat bestand nog niet heeft gezien, zodat een MMF van zes maanden geleden in de huidige versie identiek opent — en dat is wat de belofte hierboven waarmaakt: het klinkt zoals op de dag dat het werd opgeslagen.</span></p>
+</section>
+
+<!-- ───────── DEMOS ───────── -->
+<section id="demos">
+  <div class="app-eyebrow"><span class="tr">Demo's</span></div>
+  <h2><span class="tr">Stukken om in de suite te openen</span></h2>
+  <p>
+    
+    <span class="tr">De eerste goedgekeurde demo's, uit het <b>publieke domein</b>, getranscribeerd en gestemd in Music Motion. Ze openen in de Score of de Player van de suite en staan ook bij de <a href="../descargas.html">downloads</a> van de site. <span class="pending">Er komen er nog meer bij.</span></span>
+  </p>
+  <div style="margin-top:14px">
+    <div class="demo">
+      <div class="who">
+        <div class="pc">Béla Bartók · piano</div>
+        <h3><span class="tr">Roemeense volksdansen (Sz. 56)</span></h3>
+        <p><span class="tr">De zes dansen, op de pythagorese piano: de volkse halve tonen, waar de exacte stemming vanaf de eerste maat hoorbaar is.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="../../suite/demos/bartok-danzas-rumanas.zip" download>▼ .zip · 48 KB</a>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="who">
+        <div class="pc">J. S. Bach · clavecín</div>
+        <h3><span class="tr">Sinfonia's (driestemmige inventies), BWV 787–801</span></h3>
+        <p><span class="tr">Alle vijftien, in drie stemmen, in <b>drie stemmingen</b> van dezelfde uitvoering: het <b>Cosmic</b>-klavecimbel — pythagorees, de stemming van de suite —, het <b>welgetempereerde</b> — Werckmeister III — en een <b>.mid in gelijkzwevende stemming</b>, die het Keyboard opent en op zijn cyaan toetsen speelt. Dezelfde noten en hetzelfde tempo in alle drie: alleen de stemming verandert.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="../../suite/demos/bach-sinfonias-bwv787-801.zip" download>▼ .zip · 438 KB</a>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="who">
+        <div class="pc">Maurice Ravel · piano</div>
+        <h3><span class="tr">Pianoconcerto in G — 2e deel (Adagio assai)</span></h3>
+        <p><span class="tr">Grand Tonal-piano. De lange melodie van de rechterhand boven het ostinato: relatieve dynamiek en nuances van ademhaling.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="../../suite/demos/ravel-concierto-sol-2mov.zip" download>▼ .zip · 61 KB</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── COPYRIGHT ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="tr">Auteursrecht en gebruik</span></div>
+  <h2><span class="tr">Wie wat bezit</span></h2>
+  <div class="licence">
+    <p><span class="tr"><b>De muziekwerken behoren tot het publieke domein.</b> Bartók, Bach en Ravel: hun werken zijn niet meer auteursrechtelijk beschermd, en daarom kunnen ze hier worden aangeboden.</span></p>
+    <p><span class="tr"><b>Het MMF-formaat en deze bestanden zijn eigendom van Music Motion.</b> De transcriptie, de <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Het boek — om verder te gaan">pythagorese stemming</a> en de uitvoering die in elk bestand zijn opgeslagen, zijn werk van Music Motion. © 2001–2026 Music Motion. Alle rechten voorbehouden. Het logo m Δ° m is een gedeponeerd merk (BOIP 1544147).</span></p>
+
+    <p><span class="tr"><b>Persoonlijk en educatief gebruik.</b> De specificatie van het MMF-formaat en de demonstratiebestanden die hier worden gepubliceerd, worden aangeboden onder de licentie Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International (<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a>): je mag ze downloaden, openen en bestuderen, met naamsvermelding van Music Motion; je mag ze niet verkopen of geld vragen voor het gebruik ervan, en ze ook niet in gewijzigde vorm herverspreiden.</span></p>
+    <p><span class="tr"><b>MMF is een eigendomsformaat, geen open standaard.</b> Het wordt gepubliceerd en gedocumenteerd zodat het gelezen, bestudeerd en onderwezen kan worden; daarom ligt de specificatie open en bloot. De naam en het formaat zijn beschermd door het auteursrecht en door hun gedateerde deponeringen (Zenodo en i-DEPOT), en de inschrijving van het merk MUSIC MOTION SCORESUITE bij het BOIP is in behandeling: een ander programma mag een bestand lezen, maar mag wat het doet niet voorstellen als MMF of als Music Motion. En wie het formaat, de specificatie ervan of deze bestanden in een <b>commercieel</b> product of een commerciële dienst wil gebruiken, heeft een overeenkomst met Music Motion nodig — schrijf naar <a href="mailto:contacto@musicmotionsuite.com?subject=MMF%20%E2%80%94%20licence">contacto@musicmotionsuite.com</a> en we praten erover.</span></p>
+  </div>
+</section>
+
+<!-- ───────── ORIGINALIDAD Y REGISTRO (2026-09-15) ───────── -->
+<section id="originalidad">
+  <div class="app-eyebrow"><span class="tr">Originaliteit en vastlegging</span></div>
+  <h2><span class="tr">Wat hier is ontstaan</span></h2>
+  <p><span class="tr"><b>De vastlegging.</b> Beeldmerk m∆°m (het logo): BOIP — het Benelux-Bureau voor de Intellectuele Eigendom — nr. 1544147, ingeschreven op 9 maart 2026, klassen 9 (downloadbare inhoud en onderwijsapparatuur), 15 (klavierinstrumenten) en 41 (onderwijs en ontspanning; uitgeven van teksten), geldig tot 2036. Woordmerken MUSIC MOTION SCORESUITE (BOIP-aanvraag nr. 1558210) en COSMIC KEYBOARD, ingediend op 18 september 2026, in behandeling. i-DEPOT nr. 158643, BOIP, 27 maart 2026: verzegeld bewijs van inhoud en datum. Openbaar, citeerbaar en gedateerd depot op Zenodo: <span class="mono">10.5281/zenodo.19261067</span>. ORCID <span class="mono">0009-0000-9767-8667</span>. Deze pagina werd gepubliceerd op 15 september 2026; laatst herzien op 18 september 2026.</span></p>
+  <p><span class="tr"><b>Wat wordt opgeëist en wat niet.</b> Bijna niets in de muziek is helemaal nieuw, en deze suite bouwt voort op eerder werk dat we hieronder noemen. Wat volgt, scheidt twee dingen: eerst wat, voor zover ons onderzoek reikt, geen precedent heeft; daarna onze eigen manier om dingen op te lossen die gedeeltelijk al bestonden. Waar er een precedent is, zeggen we dat.</span></p>
+  <h3 style="margin-top:24px"><span class="tr">Zonder bekend precedent</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De getekende balkgroep is de eenheid van vertolking.</b> De motor leest de balkgroepering <i>zoals ze op de pagina staat</i> — ook groeperingen die de maatsoort tegenspreken —, niet een metrische hiërarchie die opnieuw uit de maatsoort wordt afgeleid; binnen die groep is de geschreven dynamiek het <b>plafond</b> en gaat geen enkele noot erboven, en elke positie daalt met een <b>vaste verhouding</b> ten opzichte van de vorige, volgens haar plaats in de groep. Automatische metrische nadruk bestaat (Sibelius, Finale, music21) en instelbare groepering bestaat (LilyPond, Sibelius, Dorico); de <i>notatie</i> van de groepering als gegeven voor de vertolking bestaat niet. Een balk verbindt noten: wat de pagina tekent, is wat de motor speelt.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De vorm van de legatoboog is een parameter van de vertolking.</b> Niet zijn aanwezigheid of zijn reikwijdte — die in elk programma het legato bepalen — maar zijn <i>geometrie</i>: de kromming, de richting en de fase worden gelezen als frasering en geven vorm aan de aanzet en de ademhaling van de noten die hij omspant. In het eerdere werk zijn de controlepunten van de kromme graveergegevens en niets meer.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Het effect is een regio die aan een stem toebehoort.</b> Galm, echo, portamento en vibrato worden over een passage geschreven en horen bij <i>één stem binnen het gedeelde kanaal</i>, opgeslagen in het partituurbestand en zonder kanalen of instanties van de motor te vermenigvuldigen. Effectregio's per passage bestaan (MuseScore, Dorico, Sibelius), en effecten per stem bestaan in Dorico, ten koste van één kanaal per stem. Ritmische ongelijkheid die tot een stem is beperkt — niet tot een notenbalk of een instrument — hebben we elders evenmin gevonden.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>TODAL.</b> Een trappenklavier met vaste hand, waarop dezelfde positie in elke toonaard de juiste trap laat klinken, versmolten met zuivere pythagorese herstemming per toonaard over 35 toonhoogtes en een enharmonisch correcte spelling — cis en des zijn niet dezelfde noot —, plus het verhogen van de leidtoon. Trappenindelingen bestaan in gelijkzwevende stemming (Ableton Push "In Key", Novation Launchpad, het octrooi van Coles uit 1992) en herstemming die het tonale centrum volgt bestaat (Justonic; het octrooi van Panaiotis uit 2018, dat pythagorese stemming noemt maar noch reine stemming, noch verhoging van de leidtoon, noch enharmonische spelling specificeert). De combinatie van de drie is van ons.</span></li>
+  </ul>
+  <p style="margin-top:26px"><span class="tr"><b>En dit is onze manier om het te doen.</b> Wat volgt, wordt niet aangeboden als uitvinding, maar als de manier waarop deze suite dingen doet, waarvan sommige bekend zijn: het is het werk, en het is wat het laat klinken zoals het klinkt.</span></p>
+  <h3 style="margin-top:24px"><span class="tr">Het instrument</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Cosmic Keyboard · de gedeelde toets.</b> Elke witte toets is verdeeld: de bovenste 4/5 geven de natuurlijke toon, de onderste 1/5 de getempereerde referentie. Beide stemmingen worden op hetzelfde klavier gespeeld en vergeleken, noot voor noot.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Het computertoetsenbord als instrument.</b> ZXCVBNM voor het lage <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Het boek — om verder te gaan">octaaf</a>, ASDFGHJ voor het hoge, cijfers voor kruisen en Shift voor mollen: een pythagorees instrument in de handen van iedereen met een QWERTY-toetsenbord — geen hardware, niets te installeren. In de modus Tonal geven diezelfde rijen de trappen (TODAL), en het Minikeyboard van de Score is hetzelfde klavier binnen de editor.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Axiomatisch systeem en tonaal systeem</b>, met de apotome (2187/2048 = 3⁷/2¹¹) en de pythagorese komma (3¹²/2¹⁹) noot voor noot toepasbaar zonder dat de noot haar naam verliest. Tonale positie en Chord Lab. De pythagorese stemming en het enharmonische onderscheid zijn eeuwenoud en behoren tot het publieke domein: die eisen we niet op.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>⬦ Tempered en de cyaan stroken.</b> Dezelfde uitvoering in beide stemmingen tegelijk: dezelfde noten, hetzelfde tempo, één enkele veranderde variabele.</span></li>
+  </ul>
+  <h3 style="margin-top:24px"><span class="tr">Schrift dat klinkt</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>AGOG · geschreven agogiek</b>, met een eigen notatie, en agogiek van de frase: de solist speelt met de tijd terwijl het maatraster blijft staan. Dat een getekende kromme het tempo bepaalt, bestond al — de <i>Executable Shapes</i> van Finale, Live Tempo van Sibelius —; van ons zijn het repertoire van tekens en het feit dat de agogiek in de partituur leeft als een bewerkbare laag naast de rest.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>ASYM · asymmetrische regio's</b> per kanaal en per stem: ongelijkheid is niet langer een afspeelinstelling, maar wordt een gegeven van de partituur. Swing per passage en per notenbalk bestaat (Dorico, Sibelius, Finale); de reikwijdte per stem, en het delen van de groepseenheid met de balken, zijn van ons.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Legatobogen die hun bestemming en hun frasering behouden.</b> Omhoog of omlaag, de fase, de adem, de aanzet die niet opnieuw begint. Dat een legatoboog legato activeert en noten verkort of verlengt, is standaard — Dorico doet het met zijn percentages, Human Playback van Finale doet het, samplebibliotheken doen het —, en dat een overbinding klinkt zonder nieuwe aanzet, is de definitie van het formaat: dat hebben wij niet uitgevonden. Van ons is de vorm van de kromme als gegeven, hierboven.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Relatieve dynamiek.</b> Acht treden in vaste verhouding, en het plafond als eigenschap van elke stem: een bas die als pianissimo-orgelpunt dient, steelt de kracht niet van de begeleiding die leven heeft. Dat een dynamiek relatief is in plaats van een vast volume, is niet van ons — MusicXML definieert het als een percentage van forte en Humdrum publiceert een dynamiekschaal in decibel met een constante stap —, en de dynamiek per stem, die in Dorico bestaat, evenmin. Van ons is haar rol als <i>plafond van de balkgroep</i>, hierboven.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Aanpasbare ART, vorken en expressies.</b> Articulatie, tekstvorken en expressies per kanaal en per selectie, die de motor bij het klinken respecteert in plaats van ze als inkt te laten staan.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Toonaard en maatsoort per segment</b>, en de werkfiche die het <b>werkelijke tonale centrum</b> aangeeft tegenover de geschreven voortekening: het klavier kleurt en stemt opnieuw waar de muziek van huis verandert, niet waar de kruisen veranderen.</span></li>
+  </ul>
+  <h3 style="margin-top:24px"><span class="tr">De klank, zonder opnames</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De bank.</b> Elk instrument is de fysische beschrijving van hoe het klinkt, geen opgenomen sample: krommen verankerd aan de eigen toonhoogtes van dat instrument, resonantie die de noot volgt (een boventoon in plaats van een vaste frequentie), de volgorde van de filters, en dynamisch bereik en balans vastgelegd op één enkele schaal voor het hele orkest.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Lexicon · het woord en de aanraking.</b> Knooppunten per familie die het geschreven teken vertalen naar het fysieke gebaar dat bij dat instrument hoort, in plaats van één effect voor allemaal.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Register Response en de meetbank.</b> Draaiknoppen in de taal van het onderzoek — corpus, lucht, helling, opening — en een WAV die een fiche wordt: de meting wordt BOVENOP de fiche van het instrument geschreven, nooit in haar plaats.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De snarenbank · de aanrakingssimulator.</b> Strijkstok op snaar in vier krommen: snelheid, gewicht, contactpunt en de klok van de stok (10–2), met streken bij naam — détaché, martelé, tremolo, sautillé, staccato, spiccato, flautato, pizzicato, col legno.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Alles pythagorees, klavieren inbegrepen.</b> In deze suite is temperatuur de aangekondigde uitzondering, niet het vertrekpunt.</span></li>
+  </ul>
+  <h3 style="margin-top:24px"><span class="tr">Het formaat en de suite als één instrument</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>MMF.</b> Het stuk met zijn exacte stemming en zijn uitvoering erin: geen afbeelding van de partituur en geen lijst van toetsen.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De apps als één instrument.</b> Score, Cosmic, Console, Register, Player en Coach praten live met elkaar: wat geschreven is, klinkt in de motor en wordt aan de mengtafel gemengd zonder iets te exporteren. De aanspraak is de hele integratie als werkend systeem, niet elke laag op zich.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>De Console als meetinstrument.</b> Faders in echte dB, een neutraalstand die alles naar nul terugbrengt, en de tabel van het gehoor die elke beslissing vastlegt, zodat je ze opnieuw kunt bekijken.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Player · de kopiist.</b> Hij verwijdert de constante verschuiving van elke track zonder noot voor noot te kwantiseren — daar leeft het rubato — en leidt de geschreven dynamiek af uit de gespeelde velocity's.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Coach.</b> Melodische regels en lessen met de oefening erin; de vorderingen van de leerling reizen mee in diens eigen bestand.</span></li>
+  </ul>
+  <h3 style="margin-top:24px"><span class="tr">Wat we niet opeisen</span></h3>
+  <p><span class="tr">De pythagorese stemming en het enharmonische onderscheid, eeuwenoud en publiek domein. Trappenklavieren in gelijkzwevende stemming en herstemming die het tonale centrum volgt (Ableton Push, Novation Launchpad, Justonic, de octrooien van Coles en Panaiotis). Expressieve weergave op basis van regels, waarvan het KTH-regelsysteem de stand van de techniek is — inclusief zijn timingregels die afhangen van sprongen —. Relatieve dynamiek (MusicXML) en de dynamiekschaal met geometrische verhouding (Humdrum). Dynamiek en effecten per stem, en speeltechnieken per regio (Dorico, MuseScore, Sibelius). Instelbare balkgroepering (LilyPond, Sibelius, Dorico, music21). Automatische metrische nadruk (Sibelius, Finale). De getekende kromme die het tempo bepaalt (Finale, Sibelius). Legato dat door de legatoboog wordt geactiveerd en de overbinding zonder nieuwe aanzet (Dorico, Finale, MusicXML). Expressiecontrole per noot (VST3, MPE, MIDI 2.0). De logaritmische of geometrische coördinaat, die elementaire wiskunde is. En notennaamcijfers, een eeuwenoude traditie.</span></p>
+  <p style="margin-top:22px"><span class="tr">De eigennamen van de suite — Cosmic Keyboard, Minikeyboard, TODAL, AGOG, ASYM, Intelligent Beams, Lexicon, Register Response, Coach, MMF — worden gebruikt als merken van Music Motion. Het auteursrecht dekt de code van de apps, de instrumentenbank en deze teksten zoals ze geschreven zijn. Deze publicatie dateert het bovenstaande als bewijs van auteurschap en als defensief eerder werk; het is geen octrooi en wil niet monopoliseren wat hierboven als publiek domein wordt vermeld. © 2001–2026 Music Motion. Alle rechten voorbehouden.</span></p>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite voor pythagorese stemming · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle rechten voorbehouden</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','nl');</script>
+</body>
+</html>

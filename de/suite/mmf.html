@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Das MMF-Format — Music Motion v.2</title>
+<meta name="description" content="Das native Format von Music Motion: jeder Ton mit seiner exakten pythagoreischen Identität. Wie es sich von MIDI und MusicXML unterscheidet, Demos zum Herunterladen und Urheberrecht.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
+<style>
+  /* comparación de formatos y filas de demo — tokens de mm-theme.css */
+  .fmt3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:22px}
+  .fmt{background:var(--panel);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px}
+  .fmt.mmf{border-top:3px solid var(--teal)}
+  .fmt h3{margin:0 0 4px;font-size:1.02rem}
+  .fmt .k{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--textd)}
+  .fmt p{font-size:var(--fs-sm);margin:8px 0 0}
+  .fmt.mmf .k{color:var(--teal)}
+  table.cmp{border-collapse:collapse;width:100%;margin-top:20px;font-size:var(--fs-sm)}
+  table.cmp th,table.cmp td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.cmp th{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;text-transform:uppercase;color:var(--textd);font-weight:500}
+  table.cmp td:first-child{color:var(--text);font-weight:600;white-space:nowrap}
+  table.cmp .yes{color:var(--teal)} table.cmp .no{color:var(--textd)}
+  .cmp-wrap{overflow-x:auto}
+  .demo{display:flex;gap:16px;align-items:flex-start;padding:15px 0;border-bottom:1px dashed var(--line);flex-wrap:wrap}
+  .demo:last-child{border-bottom:none}
+  .demo .who{flex:1 1 320px;min-width:0}
+  .demo .who h3{margin:0 0 3px;font-size:1.04rem}
+  .demo .who .pc{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:1px;text-transform:uppercase;color:var(--textd)}
+  .demo .who p{font-size:var(--fs-sm);margin:6px 0 0}
+  .demo .get{flex:0 0 auto;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+  .dl-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--ff-mono);font-size:.74rem;letter-spacing:.5px;padding:8px 14px;border:1px solid var(--teal);border-radius:var(--rad);color:var(--teal);background:transparent;transition:all .15s;white-space:nowrap;justify-content:center}
+  .dl-btn:hover{background:var(--teal);color:#0a0a10}
+  .pending{font-family:var(--ff-mono);font-size:.62rem;letter-spacing:1px;text-transform:uppercase;color:var(--violet)}
+  .licence{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--rad) var(--rad) 0;padding:14px 18px;margin-top:18px}
+  .licence p{margin:6px 0}
+</style>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/mmf.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/mmf.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/mmf.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/mmf.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/mmf.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/mmf.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Start</span></a>
+    <a href="index.html#apps"><span class="tr">Die Apps</span></a>
+    <a href="index.html#howto"><span class="tr">Erste Schritte</span></a>
+    <a href="../../suite/instruments.html"><span class="tr">Instrumente</span></a>
+    <a href="mmf.html"><span class="tr">MMF-Format</span></a>
+    <a href="UserGuide.html"><span class="tr">Benutzerhandbuch</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/mmf.html?lang=es">ES</a><a href="../../suite/mmf.html?lang=en">EN</a><a href="../../fr/suite/mmf.html">FR</a><a href="../../nl/suite/mmf.html">NL</a><a class="on" href="mmf.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--teal)">
+
+<!-- ───────── HERO ───────── -->
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Zurück zur Suite</span></a>
+  <div class="app-eyebrow"><span class="tr">Das Format</span></div>
+  <h1>
+    
+    <span class="tr">MMF: das Stück mit seiner <span class="hl">exakten Stimmung</span> im Inneren.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">MMF ist das native Format von Music Motion. Anders als eine <a href="https://musicmotionsuite.com/faq.html?lang=de#midi" title="Häufige Fragen">MIDI</a>-Datei — die <a href="https://musicmotionsuite.com/faq.html?lang=de#temperado" title="Häufige Fragen">temperierte</a> Tastennummern speichert — speichert eine MMF-Datei <b>die exakte pythagoreische Identität jedes Tons</b>: Sie weiß, ob ein Ton ein <a href="https://musicmotionsuite.com/faq.html?lang=de#midi-mmf" title="Häufige Fragen">Cis oder ein Des</a> ist, und er klingt anders. Sie öffnet sich im Score und im Player und erklingt im Cosmic Keyboard.</span>
+  </p>
+</section>
+
+<!-- ───────── QUÉ GUARDA ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="tr">Was eine MMF-Datei enthält</span></div>
+  <h2><span class="tr">Nicht die Noten: die ganze Interpretation</span></h2>
+  <p>
+    
+    <span class="tr">Eine MMF-Datei ist weder ein Bild der Partitur noch eine Liste von Tasten. Sie ist das Stück, wie die Suite es versteht, nach Kanälen, mit allem, was es wie Musik klingen lässt:</span>
+  </p>
+  <ul style="list-style:none;margin-top:12px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die exakte Tonhöhe jedes Tons</b> — sein pythagoreisches Verhältnis, keine gerundete Zahl. Cis und Des sind zwei verschiedene Tonhöhen und werden auch so geschrieben.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Dynamik als relative Daten</b> — die Zeichen (ppp…fff), Gabeln und Akzente, nicht als feste Lautstärken.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Artikulation und Gestik</b> — Bögen mit ihrer Richtung, Bogenstriche, Tremolo, Staccato, Agogik und die Klangfarbe jedes Instruments.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die 32 Kanäle und ihre Orchestrierung</b> — jeder mit seinem pythagoreischen Instrument, seinen Notensystemen und seinen Gruppen.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Interpretation, über eine Passage geschrieben</b> — Hall, Echo, Portamento und Vibrato als Bereich des Stücks, dazu die Bereiche rhythmischer Ungleichheit: pro Kanal und pro Stimme, nicht pro Spur.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die Werkkarte</b> — das <b>tatsächliche tonale Zentrum</b> jedes Satzes, das nicht immer der notierten Tonartvorzeichnung entspricht, mit den Takten, in denen es wechselt. Daraus weiß die Tastatur, in welchem Zuhause die Musik ist, und stimmt sich selbst um.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Das Pedal</b> — wo es gedrückt wird, wo die Engine es wieder aufnimmt und wie weit das <i>simile</i> reicht; dazu die Agogik des Werks mit ihrer Notation.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die Balkengruppen-Ebene des Werks</b> — wie weit jede Position innerhalb des Balkens abfällt; das ist es, was einen Lauf wie eine Phrase klingen lässt statt wie eine Reihe gleicher Töne.</span></li>
+  <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Und der Fortschritt des Schülers</b>, wenn die Datei eine Coach-Übung ist: Die Lektion reist in derselben Datei wie die Musik.</span></li>
+  </ul>
+  <div class="note">
+    
+    <span class="tr">Deshalb klingt eine MMF-Datei, die du heute öffnest, genauso wie an dem Tag, an dem sie gespeichert wurde: Die Stimmung wird nicht neu berechnet, sie reist in der Datei mit.</span>
+  </div>
+</section>
+
+<!-- ───────── MMF Y OTROS FORMATOS ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="tr">MMF im Vergleich zu anderen Formaten</span></div>
+  <h2><span class="tr">Jedes Format speichert etwas anderes</span></h2>
+
+  <div class="fmt3">
+    <div class="fmt">
+      <div class="k">MIDI · .mid</div>
+      <h3><span class="tr">Die Interpretation</span></h3>
+      <p><span class="tr">Tastennummern (0–127), Anschlagsstärke und Timing. Temperiert von Grund auf: Ein Cis und ein Des sind dieselbe Taste. Es weiß nichts von Stimmung oder Schreibweise.</span></p>
+    </div>
+    <div class="fmt">
+      <div class="k">MusicXML · .xml/.mxl</div>
+      <h3><span class="tr">Die Notation</span></h3>
+      <p><span class="tr">Wie die Seite aussieht: Noten, Hälse, Vorzeichen, Takte. Es unterscheidet Cis von Des in der Schrift, spielt aber temperiert ab.</span></p>
+    </div>
+    <div class="fmt mmf">
+      <div class="k">MMF · .mmf</div>
+      <h3><span class="tr">Identität und Klang</span></h3>
+      <p><span class="tr">Die exakte pythagoreische Tonhöhe jedes Tons plus die ganze Interpretation. Cis ≠ Des in der Schrift <b>und</b> in der Luft. Das native Format der Suite.</span></p>
+    </div>
+  </div>
+
+  <div class="cmp-wrap">
+  <table class="cmp">
+    <thead><tr>
+      <th></th><th>MIDI</th><th>MusicXML</th><th>MMF</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><span class="tr">Unterscheidet Cis von Des</span></td>
+        <td class="no"><span class="tr">nein</span></td>
+        <td class="yes"><span class="tr">in der Notation</span></td>
+        <td class="yes"><span class="tr">in Notation und Klang</span></td></tr>
+      <tr><td><span class="tr">Stimmung</span></td>
+        <td class="no"><span class="tr">temperiert</span></td>
+        <td class="no"><span class="tr">temperiert</span></td>
+        <td class="yes"><span class="tr">exakt pythagoreisch</span></td></tr>
+      <tr><td><span class="tr">Speichert die Interpretation</span></td>
+        <td class="yes"><span class="tr">teilweise</span></td>
+        <td class="no"><span class="tr">wenig</span></td>
+        <td class="yes"><span class="tr">ja (Dynamik, Bogenstriche, Agogik)</span></td></tr>
+      <tr><td><span class="tr">Öffnet sich in der Suite</span></td>
+        <td class="yes"><span class="tr">importiert</span></td>
+        <td class="yes"><span class="tr">importiert</span></td>
+        <td class="yes"><span class="tr">nativ</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small" style="margin-top:14px">
+    
+    <span class="tr">Der Player prägt eine MIDI- oder MusicXML-Datei in MMF um: Sie kommt temperiert herein und wird pythagoreisch geboren, geordnet nach der Tonartvorzeichnung der Datei.</span>
+  </p>
+
+  <p><span class="tr">Und es geht so hinaus, wie es hereingekommen ist: Der Score <b>exportiert MusicXML</b> mit Tonart und Taktart jedes Abschnitts, den Schlüsseln und ihren Wechseln, den Vorzeichen nach der jeweils geltenden Taktart und dem Dur- oder Moll-Geschlecht, das die Werkkarte angibt. So reist das Stück in <b>drei Formaten</b>, in beide Richtungen: MMF sperrt deine Arbeit nicht ein, es bewahrt sie besser.</span></p>
+
+  <p><span class="tr"><b>Die Formatversion ist 1.1</b>, und jede Datei vermerkt, welcher Score sie gespeichert hat. Beim Öffnen wendet die Suite die Migrationen an, die diese Datei noch nicht gesehen hat, sodass sich eine MMF-Datei von vor sechs Monaten in der heutigen Version identisch öffnet — und das stützt das obige Versprechen: Sie klingt so wie an dem Tag, an dem sie gespeichert wurde.</span></p>
+</section>
+
+<!-- ───────── DEMOS ───────── -->
+<section id="demos">
+  <div class="app-eyebrow"><span class="tr">Demos</span></div>
+  <h2><span class="tr">Stücke zum Öffnen in der Suite</span></h2>
+  <p>
+    
+    <span class="tr">Die ersten freigegebenen Demos, <b>gemeinfrei</b>, in Music Motion transkribiert und gestimmt. Sie öffnen sich im Score oder im Player der Suite und sind auch in den <a href="../descargas.html">Downloads</a> der Website aufgeführt. <span class="pending">Weitere kommen hinzu.</span></span>
+  </p>
+  <div style="margin-top:14px">
+    <div class="demo">
+      <div class="who">
+        <div class="pc">Béla Bartók · piano</div>
+        <h3><span class="tr">Rumänische Volkstänze (Sz. 56)</span></h3>
+        <p><span class="tr">Die sechs Tänze auf dem pythagoreischen Klavier: die volkstümlichen Halbtöne, bei denen man die exakte Stimmung vom ersten Takt an hört.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="../../suite/demos/bartok-danzas-rumanas.zip" download>▼ .zip · 48 KB</a>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="who">
+        <div class="pc">J. S. Bach · clavecín</div>
+        <h3><span class="tr">Sinfonien (dreistimmige Inventionen), BWV 787–801</span></h3>
+        <p><span class="tr">Alle fünfzehn, dreistimmig, in <b>drei Stimmungen</b> derselben Interpretation: das <b>Cosmic</b>-Cembalo — pythagoreisch, die Stimmung der Suite —, das <b>wohltemperierte</b> — Werckmeister III — und eine <b>.mid in gleichstufiger Stimmung</b>, die das Keyboard öffnet und auf seinen cyanfarbenen Tasten spielt. Dieselben Töne und dasselbe Tempo in allen dreien: Nur die Stimmung ändert sich.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="../../suite/demos/bach-sinfonias-bwv787-801.zip" download>▼ .zip · 438 KB</a>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="who">
+        <div class="pc">Maurice Ravel · piano</div>
+        <h3><span class="tr">Klavierkonzert G-Dur — 2. Satz (Adagio assai)</span></h3>
+        <p><span class="tr">Klavier Grand Tonal. Die lange Melodie der rechten Hand über dem Ostinato: relative Dynamik und Nuancen des Atmens.</span></p>
+      </div>
+      <div class="get">
+        <a class="dl-btn" href="../../suite/demos/ravel-concierto-sol-2mov.zip" download>▼ .zip · 61 KB</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── COPYRIGHT ───────── -->
+<section>
+  <div class="app-eyebrow"><span class="tr">Urheberrecht und Nutzung</span></div>
+  <h2><span class="tr">Wem was gehört</span></h2>
+  <div class="licence">
+    <p><span class="tr"><b>Die musikalischen Werke sind gemeinfrei.</b> Bartók, Bach und Ravel: Ihre Werke sind urheberrechtsfrei, deshalb können sie hier angeboten werden.</span></p>
+    <p><span class="tr"><b>Das MMF-Format und diese Dateien sind Eigentum von Music Motion.</b> Die Transkription, die <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Das Buch — zum Vertiefen">pythagoreische Stimmung</a> und die in jeder Datei gespeicherte Interpretation sind das Werk von Music Motion. © 2001–2026 Music Motion. Alle Rechte vorbehalten. Das Logo m Δ° m ist eine eingetragene Marke (BOIP 1544147).</span></p>
+
+    <p><span class="tr"><b>Persönliche und pädagogische Nutzung.</b> Die Spezifikation des MMF-Formats und die hier veröffentlichten Demonstrationsdateien werden unter der Lizenz Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International (<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a>) angeboten: Du darfst sie herunterladen, öffnen und studieren, unter Nennung von Music Motion; du darfst sie weder verkaufen noch für ihre Nutzung Geld verlangen, noch sie in veränderter Form weiterverbreiten.</span></p>
+    <p><span class="tr"><b>MMF ist ein proprietäres Format, kein offener Standard.</b> Es ist veröffentlicht und dokumentiert, damit es gelesen, studiert und gelehrt werden kann; deshalb liegt die Spezifikation offen vor. Der Name und das Format sind durch das Urheberrecht und durch ihre mit Zeitstempel versehenen Hinterlegungen (Zenodo und i-DEPOT) geschützt, und die Marke MUSIC MOTION SCORESUITE ist beim BOIP zur Eintragung angemeldet: Ein anderes Programm darf eine Datei lesen, aber es darf das, was es tut, nicht als MMF oder als Music Motion ausgeben. Und wer das Format, seine Spezifikation oder diese Dateien in einem <b>kommerziellen</b> Produkt oder Dienst nutzen will, braucht eine Vereinbarung mit Music Motion — schreib an <a href="mailto:contacto@musicmotionsuite.com?subject=MMF%20%E2%80%94%20licence">contacto@musicmotionsuite.com</a>, und wir reden darüber.</span></p>
+  </div>
+</section>
+
+<!-- ───────── ORIGINALIDAD Y REGISTRO (2026-09-15) ───────── -->
+<section id="originalidad">
+  <div class="app-eyebrow"><span class="tr">Originalität und Nachweis</span></div>
+  <h2><span class="tr">Was hier entstanden ist</span></h2>
+  <p><span class="tr"><b>Der Nachweis.</b> Bildmarke m∆°m (das Logo): BOIP — Benelux-Amt für geistiges Eigentum — Nr. 1544147, eingetragen am 9. März 2026, Klassen 9 (herunterladbare Inhalte und Unterrichtsapparate), 15 (Tasteninstrumente) und 41 (Erziehung und Unterhaltung; Veröffentlichung von Texten), gültig bis 2036. Wortmarken MUSIC MOTION SCORESUITE (BOIP-Anmeldung Nr. 1558210) und COSMIC KEYBOARD, angemeldet am 18. September 2026, anhängig. i-DEPOT Nr. 158643, BOIP, 27. März 2026: versiegelter Nachweis von Inhalt und Datum. Öffentliche, zitierfähige Hinterlegung mit Zeitstempel auf Zenodo: <span class="mono">10.5281/zenodo.19261067</span>. ORCID <span class="mono">0009-0000-9767-8667</span>. Diese Seite wurde am 15. September 2026 veröffentlicht; zuletzt überarbeitet am 18. September 2026.</span></p>
+  <p><span class="tr"><b>Was beansprucht wird und was nicht.</b> Fast nichts in der Musik ist völlig neu, und diese Suite baut auf einem Stand der Technik auf, den wir unten nennen. Das Folgende trennt zwei Dinge: zuerst das, wofür es, soweit unsere Prüfung reicht, kein Vorbild gibt; dann unsere eigene Art, Dinge zu lösen, die es zum Teil schon gab. Wo es ein Vorbild gibt, sagen wir es.</span></p>
+  <h3 style="margin-top:24px"><span class="tr">Ohne bekanntes Vorbild</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die gezeichnete Balkengruppe ist die Einheit der Interpretation.</b> Die Engine liest die Balkengruppierung <i>so, wie sie auf der Seite steht</i> — auch Gruppierungen, die der Taktart widersprechen —, nicht eine aus der Taktart neu abgeleitete metrische Hierarchie; innerhalb dieser Gruppe ist die notierte Dynamik die <b>Obergrenze</b>, und kein Ton überschreitet sie, und jede Position fällt gegenüber der vorherigen um ein <b>festes Verhältnis</b> ab, je nach ihrem Platz in der Gruppe. Automatische metrische Betonung gibt es (Sibelius, Finale, music21), und konfigurierbare Gruppierung gibt es (LilyPond, Sibelius, Dorico); die <i>Notation</i> der Gruppierung als interpretatorisches Datum gibt es nicht. Ein Balken verbindet Noten: Was die Seite zeichnet, spielt die Engine.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die Form des Bogens ist ein interpretatorischer Parameter.</b> Nicht sein Vorhandensein oder seine Länge — die in jedem Programm das Legato steuern —, sondern seine <i>Geometrie</i>: Die Kurve, ihre Richtung und ihre Phase werden als Phrasierung gelesen und formen den Anschlag und das Atmen der Töne, die er umspannt. Im Stand der Technik sind die Kontrollpunkte der Kurve Stichdaten und nichts weiter.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Der Effekt ist ein Bereich, der einer Stimme gehört.</b> Hall, Echo, Portamento und Vibrato werden über eine Passage geschrieben und gehören <i>einer Stimme innerhalb des gemeinsamen Kanals</i>, gespeichert in der Partiturdatei und ohne Kanäle oder Engine-Instanzen zu vervielfachen. Effektbereiche pro Passage gibt es (MuseScore, Dorico, Sibelius), und Effekte pro Stimme gibt es in Dorico, um den Preis, für jede Stimme einen Kanal zu öffnen. Rhythmische Ungleichheit, die auf eine Stimme begrenzt ist — nicht auf ein Notensystem oder ein Instrument —, haben wir ebenfalls nirgendwo sonst gefunden.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>TODAL.</b> Eine Stufentastatur mit fester Hand, auf der dieselbe Position in jeder Tonart die richtige Stufe erklingen lässt, verschmolzen mit reiner pythagoreischer Umstimmung je Tonart über 35 Tonhöhen und enharmonisch korrekter Schreibweise — Cis und Des sind nicht derselbe Ton —, dazu die Schärfung des Leittons. Stufenlayouts gibt es in gleichstufiger Stimmung (Ableton Push „In Key“, Novation Launchpad, das Patent von Coles von 1992), und eine Umstimmung, die dem tonalen Zentrum folgt, gibt es auch (Justonic; das Patent von Panaiotis von 2018, das die pythagoreische Stimmung nennt, aber weder reine Intonation noch Erhöhung des Leittons noch enharmonische Schreibweise festlegt). Die Verbindung der drei ist unsere.</span></li>
+  </ul>
+  <p style="margin-top:26px"><span class="tr"><b>Und so machen wir es.</b> Das Folgende wird nicht als Erfindung angeboten, sondern als die Art, wie diese Suite die Dinge tut, manche davon bekannt: Es ist die Arbeit, und es ist das, was sie so klingen lässt, wie sie klingt.</span></p>
+  <h3 style="margin-top:24px"><span class="tr">Das Instrument</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Cosmic Keyboard · die geteilte Taste.</b> Jede weiße Taste ist geteilt: Die oberen 4/5 geben den natürlichen Ton, das untere 1/5 die temperierte Referenz. Beide Stimmungen werden auf derselben Tastatur gespielt und verglichen, Ton für Ton.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die Computertastatur als Instrument.</b> ZXCVBNM für die untere <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Das Buch — zum Vertiefen">Oktave</a>, ASDFGHJ für die obere, Ziffern für Kreuze und Shift für B: ein pythagoreisches Instrument in den Händen von allen, die eine QWERTY-Tastatur haben — keine Hardware, nichts zu installieren. Im Modus Tonal geben dieselben Reihen die Stufen (TODAL), und das Minikeyboard des Score ist dieselbe Tastatur innerhalb des Editors.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Axiomatic System und Tonal System</b>, mit der Apotome (2187/2048 = 3⁷/2¹¹) und dem pythagoreischen Komma (3¹²/2¹⁹), Ton für Ton anwendbar, ohne dass der Ton seinen Namen verliert. Tonal Position und Chord Lab. Die pythagoreische Stimmung und die enharmonische Unterscheidung sind uralt und gemeinfrei: Wir beanspruchen sie nicht.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>⬦ Tempered und die cyanfarbenen Streifen.</b> Dieselbe Interpretation in beiden Stimmungen zugleich: dieselben Töne, dasselbe Tempo, eine einzige veränderte Variable.</span></li>
+  </ul>
+  <h3 style="margin-top:24px"><span class="tr">Schrift, die klingt</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>AGOG · notierte Agogik</b>, mit eigener Notation, und Phrasenagogik: Der Solist spielt mit der Zeit, während das Taktraster stehen bleibt. Dass eine gezeichnete Kurve das Tempo steuert, gab es schon — die <i>Executable Shapes</i> von Finale, Live Tempo von Sibelius —; von uns stammen das Repertoire an Zeichen und die Idee, dass die Agogik als bearbeitbare Ebene neben allem anderen in der Partitur lebt.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>ASYM · asymmetrische Bereiche</b> pro Kanal und pro Stimme: Die Ungleichheit hört auf, eine Wiedergabeeinstellung zu sein, und wird zu Partiturdaten. Swing pro Passage und pro Notensystem gibt es (Dorico, Sibelius, Finale); der Geltungsbereich pro Stimme und die mit den Balken geteilte Gruppeneinheit stammen von uns.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Bögen, die ihr Ziel und ihre Phrasierung behalten.</b> Nach oben oder nach unten, die Phase, der Atem, der Anschlag, der nicht neu einsetzt. Dass ein Bogen Legato auslöst und Töne verkürzt oder verlängert, ist Standard — Dorico tut es mit seinen Prozentwerten, das Human Playback von Finale tut es, Sample-Bibliotheken tun es —, und dass ein Haltebogen ohne neuen Anschlag klingt, ist die Definition des Formats: Das haben wir nicht erfunden. Von uns stammt die Form der Kurve als Datum, siehe oben.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Relative Dynamik.</b> Acht Stufen in festem Verhältnis und die Obergrenze als Eigenschaft jeder Stimme: Ein Bass, der als Pianissimo-Orgelpunkt dient, raubt der Begleitung, die Leben hat, nicht die Kraft. Dass eine Dynamik relativ statt eine feste Lautstärke ist, stammt nicht von uns — MusicXML definiert sie als Prozentsatz des Forte, und Humdrum veröffentlicht eine Dynamikskala in Dezibel mit konstantem Schritt —, ebenso wenig die Dynamik pro Stimme, die es in Dorico gibt. Von uns stammt ihre Rolle als <i>Obergrenze der Balkengruppe</i>, siehe oben.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Anpassbare ART, Gabeln und Ausdrücke.</b> Artikulation, Textgabeln und Ausdrücke pro Kanal und pro Auswahl, die die Engine beim Erklingen berücksichtigt, statt sie als Tinte stehen zu lassen.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Tonart und Taktart pro Abschnitt</b> und die Werkkarte, die das <b>tatsächliche tonale Zentrum</b> gegenüber der notierten Tonartvorzeichnung angibt: Die Tastatur färbt sich neu und stimmt sich um, wo die Musik ihr Zuhause wechselt, nicht wo die Kreuze wechseln.</span></li>
+  </ul>
+  <h3 style="margin-top:24px"><span class="tr">Der Klang, ohne Aufnahmen</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die Bank.</b> Jedes Instrument ist die physikalische Beschreibung seines Klangs, kein aufgenommenes Sample: Kurven, die an den eigenen Tonhöhen dieses Instruments verankert sind, eine Resonanz, die dem Ton folgt (ein Teilton statt einer festen Frequenz), die Filterordnung sowie Dynamikumfang und Balance, angegeben auf einer einzigen Skala für das ganze Orchester.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Lexicon · das Wort und der Anschlag.</b> Knoten nach Familien, die das notierte Zeichen in die physische Geste übersetzen, die zu diesem Instrument gehört, statt eines einzigen Effekts für alle.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Register Response und der Messplatz.</b> Regler in der Sprache der Forschung — Körper, Luft, Neigung, Öffnung — und eine WAV-Datei, die zur Karte wird: Die Messung wird AUF die Karte des Instruments geschrieben, nie an ihre Stelle.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Der Streicher-Messplatz · der Anschlagsimulator.</b> Bogen auf der Saite in vier Kurven: Geschwindigkeit, Gewicht, Kontaktstelle und die Bogenuhr (10–2), mit Stricharten nach Namen — détaché, martelé, tremolo, sautillé, staccato, spiccato, flautato, pizzicato, col legno.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Alles pythagoreisch, Tasteninstrumente eingeschlossen.</b> In dieser Suite ist die Temperierung die erklärte Ausnahme, nicht der Ausgangspunkt.</span></li>
+  </ul>
+  <h3 style="margin-top:24px"><span class="tr">Das Format und die Suite als ein einziges Instrument</span></h3>
+  <ul style="list-style:none;margin-top:8px;padding:0">
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>MMF.</b> Das Stück mit seiner exakten Stimmung und seiner Interpretation im Inneren: weder ein Bild der Partitur noch eine Liste von Tasten.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die Apps als ein Instrument.</b> Score, Cosmic, Console, Register, Player und Coach sprechen live miteinander: Was geschrieben wird, erklingt in der Engine und wird am Pult gemischt, ohne dass etwas exportiert wird. Der Anspruch ist die gesamte Integration als funktionierendes System, nicht jede Schicht für sich.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Die Console als Messinstrument.</b> Fader in echten dB, eine Neutralstellung, die alles auf null zurücksetzt, und die Tabelle des Gehörs, die jede Entscheidung festhält, damit man sie wieder aufgreifen kann.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Player · der Kopist.</b> Er entfernt den konstanten Versatz jeder Spur, ohne Ton für Ton zu quantisieren — dort lebt das Rubato —, und leitet aus den gespielten Anschlagsstärken die notierte Dynamik ab.</span></li>
+    <li style="padding:5px 0 5px 16px;position:relative"><span style="position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--teal)"></span><span class="tr"><b>Coach.</b> Melodische Regeln und Lektionen mit der Übung darin; der Fortschritt des Schülers reist in seiner eigenen Datei.</span></li>
+  </ul>
+  <h3 style="margin-top:24px"><span class="tr">Was wir nicht beanspruchen</span></h3>
+  <p><span class="tr">Die pythagoreische Stimmung und die enharmonische Unterscheidung, uralt und gemeinfrei. Stufentastaturen in gleichstufiger Stimmung und Umstimmung, die dem tonalen Zentrum folgt (Ableton Push, Novation Launchpad, Justonic, die Patente von Coles und Panaiotis). Regelbasierte expressive Wiedergabe, deren Stand der Technik das KTH-Regelsystem ist — einschließlich seiner sprungabhängigen Timing-Regeln. Relative Dynamik (MusicXML) und die Dynamikskala mit geometrischem Verhältnis (Humdrum). Dynamik und Effekte pro Stimme sowie Spieltechniken pro Bereich (Dorico, MuseScore, Sibelius). Konfigurierbare Balkengruppierung (LilyPond, Sibelius, Dorico, music21). Automatische metrische Betonung (Sibelius, Finale). Die gezeichnete Kurve, die das Tempo steuert (Finale, Sibelius). Durch Bogen und Haltebogen ausgelöstes Legato ohne neuen Anschlag (Dorico, Finale, MusicXML). Ausdruckssteuerung pro Ton (VST3, MPE, MIDI 2.0). Die logarithmische oder geometrische Koordinate, die elementare Mathematik ist. Und Chiffren aus Notennamen, eine jahrhundertealte Tradition.</span></p>
+  <p style="margin-top:22px"><span class="tr">Die Eigennamen der Suite — Cosmic Keyboard, Minikeyboard, TODAL, AGOG, ASYM, Intelligent Beams, Lexicon, Register Response, Coach, MMF — werden als Marken von Music Motion verwendet. Das Urheberrecht umfasst den Code der Apps, die Instrumentenbank und diese Texte in ihrer vorliegenden Fassung. Diese Veröffentlichung datiert das oben Genannte als Urheberschaftsnachweis und als defensiven Stand der Technik; sie ist kein Patent und will nicht monopolisieren, was oben als gemeinfrei aufgeführt ist. © 2001–2026 Music Motion. Alle Rechte vorbehalten.</span></p>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite in pythagoreischer Stimmung · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle Rechte vorbehalten</span></span>
+</footer>
+
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','de');</script>
+</body>
+</html>
