@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="es" data-lang="es" data-theme="dark">
+<html lang="fr" data-lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cosmic Keyboard — QWERTY &amp; Shortcuts · Music Motion v.2</title>
+<title>Cosmic Keyboard — QWERTY &amp; raccourcis · Music Motion v.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="mm-theme.css">
-<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="../../suite/mm-theme.css">
+<link rel="stylesheet" href="../../suite/site.css">
 <style>
   .ks-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:16px 0 6px}
   .ks-head h1{line-height:1.25}
@@ -82,11 +82,11 @@
 <body>
 
 <header>
-  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
   <nav>
-    <a href="keyboard.html"><span class="es">← Keyboard</span><span class="en">← Keyboard</span></a>
-    <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
-    <a href="score-shortcuts.html" title="Atajos del Score Editor"><span class="es">⌨ Score</span><span class="en">⌨ Score</span></a>
+    <a href="keyboard.html"><span class="tr">← Keyboard</span></a>
+    <a href="UserGuide.html"><span class="tr">Guide d’utilisation</span></a>
+    <a href="score-shortcuts.html" title="Atajos del Score Editor"><span class="tr">⌨ Score</span></a>
   </nav>
   <div class="tools">
     <div class="themetog" title="Tema / Theme">
@@ -95,23 +95,23 @@
       <button data-th="clear" style="background:#f6efda" title="Clear"></button>
       <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
     </div>
-    <div class="langtog"><button id="b-es" onclick="setLang('es')">ES</button><button id="b-en" onclick="setLang('en')">EN</button><a href="../fr/suite/keyboard-shortcuts.html">FR</a><a href="../nl/suite/keyboard-shortcuts.html">NL</a><a href="../de/suite/keyboard-shortcuts.html">DE</a></div>
+    <div class="langtog"><a href="../../suite/keyboard-shortcuts.html?lang=es">ES</a><a href="../../suite/keyboard-shortcuts.html?lang=en">EN</a><a class="on" href="keyboard-shortcuts.html">FR</a><a href="../../nl/suite/keyboard-shortcuts.html">NL</a><a href="../../de/suite/keyboard-shortcuts.html">DE</a></div>
   </div>
 </header>
 
 <main style="--c:var(--gold)">
-  <a class="backlink" href="keyboard.html">← <span class="es">Volver al Keyboard</span><span class="en">Back to the Keyboard</span></a>
+  <a class="backlink" href="keyboard.html">← <span class="tr">Retour au Keyboard</span></a>
   <div class="app-eyebrow">⊞ Cosmic Keyboard</div>
   <div class="ks-head">
     <h1 style="font-size:1.5em;margin:0">
-      <span class="es">Teclado QWERTY e interacciones.</span>
-      <span class="en">QWERTY keyboard &amp; shortcuts.</span>
+      
+      <span class="tr">Clavier QWERTY &amp; raccourcis.</span>
     </h1>
-    <button class="ks-print" onclick="window.print()">🖨 <span class="es">Imprimir</span><span class="en">Print</span></button>
+    <button class="ks-print" onclick="window.print()">🖨 <span class="tr">Imprimer</span></button>
   </div>
   <p class="lead" style="font-size:.95em">
-    <span class="es">Cómo el teclado de tu computadora toca el Cosmic Keyboard, según el sistema. v7.1.60. Elige tu teclado —QWERTY, AZERTY o QWERTZ— y el dibujo muestra sus letras: lo que cuenta es la <b>posición</b> de la tecla, así que la nota es la misma en todos. Hay tres sistemas: ⬦ Tempered (<a href="https://musicmotionsuite.com/faq.html#12-tet" title="Preguntas frecuentes">12-TET</a>), el piano temperado de siempre, y ◆ Axiomatic y ◈ Tonal, en <a href="https://sites.google.com/view/when-sound-becomes-music/espa%C3%B1ol/sonido-natural/geometr%C3%ADa-del-sonido/intervalos-pitag%C3%B3ricos" target="_blank" rel="noopener" title="El libro — para profundizar">afinación pitagórica</a>.</span>
-    <span class="en">How your computer keyboard plays the Cosmic Keyboard, by system. v7.1.60. Choose your keyboard —QWERTY, AZERTY or QWERTZ— and the drawing shows its letters: what counts is the key's <b>position</b>, so the note is the same on all of them. There are three systems: ⬦ Tempered (<a href="https://musicmotionsuite.com/faq.html#12-tet" title="Frequently asked questions">12-TET</a>), the familiar tempered piano, and ◆ Axiomatic and ◈ Tonal, in <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="The book — to go deeper">Pythagorean tuning</a>.</span>
+    
+    <span class="tr">Comment le clavier de votre ordinateur joue le Cosmic Keyboard, par système. v7.1.60. Choisissez votre clavier — QWERTY, AZERTY ou QWERTZ — et le dessin affiche ses lettres : ce qui compte, c’est la <b>position</b> de la touche, la note est donc la même sur tous. Il y a trois systèmes : ⬦ Tempéré (<a href="https://musicmotionsuite.com/faq.html?lang=fr#12-tet" title="Questions fréquentes">12-TET</a>), le piano tempéré que vous connaissez, et ◆ Axiomatic et ◈ Tonal, en <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">accord pythagoricien</a>.</span>
   </p>
 
   <div class="systog" id="systog">
@@ -120,7 +120,7 @@
     <button data-sys="ton">◈ Tonal</button>
   </div>
   <div class="systog laytog" id="laytog">
-    <span class="lt-lab"><span class="es">Tu teclado</span><span class="en">Your keyboard</span></span>
+    <span class="lt-lab"><span class="tr">Votre clavier</span></span>
     <button data-lay="qwerty">QWERTY</button>
     <button data-lay="azerty">AZERTY</button>
     <button data-lay="qwertz">QWERTZ</button>
@@ -134,28 +134,28 @@
 
   <div class="ks-grid">
     <div class="ks-block">
-      <h2><span class="es">Atajos transversales</span><span class="en">Global shortcuts</span></h2>
+      <h2><span class="tr">Raccourcis globaux</span></h2>
       <table class="ks" id="globalTbl"></table>
     </div>
     <div class="ks-block">
-      <h2><span class="es">Tonal — la tonalidad, en vivo</span><span class="en">Tonal — the key, live</span></h2>
+      <h2><span class="tr">Tonal — la tonalité, en direct</span></h2>
       <table class="ks" id="tonalTbl"></table>
       <p class="leg" style="margin-top:8px">
-        <span class="es">En <b>Tonal</b> tocas por <b>grado</b>: la tónica y el modo definen las notas. Puedes cambiar Key / Mode <b>mientras tocas</b> y los mismos dedos suenan en la tonalidad nueva. Cambiar de <b>sistema</b> sí corta las notas sostenidas (retune).</span>
-        <span class="en">In <b>Tonal</b> you play by <b>degree</b>: the tonic and mode define the notes. You can change Key / Mode <b>while playing</b> and the same fingering sounds in the new key. Switching <b>system</b> does cut held notes (retune).</span>
+        
+        <span class="tr">En <b>Tonal</b>, vous jouez par <b>degré</b> : la tonique et le mode définissent les notes. Vous pouvez changer Key / Mode <b>en cours de jeu</b>, et le même doigté sonne dans la nouvelle tonalité. Changer de <b>système</b>, en revanche, coupe les notes tenues (réaccord).</span>
       </p>
     </div>
   </div>
 </main>
 
 <footer class="foot-bar">
-  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
-  <span class="foot-id"><span class="es">Suite de afinación pitagórica · v.2</span><span class="en">Pythagorean tuning suite · v.2</span></span>
-  <span class="foot-rights">© 2001–2026 Music Motion · <span class="es">todos los derechos reservados</span><span class="en">all rights reserved</span></span>
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite d’accord pythagoricien · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">tous droits réservés</span></span>
 </footer>
 
-<script src="mm-theme.js"></script>
-<script src="site.js"></script>
+<script src="../../suite/mm-theme.js"></script>
+<script src="../../suite/site.js"></script>
 <script>
 (function(){
   // cada tecla física: cap = letra · ax/tet/ton = etiqueta por sistema ('' = inactiva)
@@ -284,6 +284,9 @@
 })();
 </script>
 
-<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','fr');</script>
+<script>/* armar-idiomas: 19 frases de los datos de la pagina (keyboard-shortcuts.datos.txt) */
+window.MM_DATOS_TR={"← / →":"← / →","Octave down / up — shift the window (all systems; = ◀ ▶ buttons)":"Octave inférieure / supérieure — décale la fenêtre (tous les systèmes ; = boutons ◀ ▶)","↑ / ↓":"↑ / ↓","APO ♯ / ♭ on the active note — Tonal only":"APO ♯ / ♭ sur la note active — Tonal uniquement","Shift + letter":"Shift + lettre","Flat of that note — Axiomatic only":"Bémol de cette note — Axiomatic uniquement","Number row":"Rangée des chiffres","Sharps — Axiomatic only":"Dièses — Axiomatic uniquement","Esc":"Esc","Panic: stop all sound":"Panique : arrête tout son","Key + ♭ ♮ ♯":"Key + ♭ ♮ ♯","Tonic name (e.g. E♭ = E + ♭)":"Nom de la tonique (p. ex. Mi♭ = E + ♭)","Mode M / m":"Mode M / m","Major or minor":"Majeur ou mineur","Sens 0 · +1 · +2":"Sens 0 · +1 · +2","The leading tone (VII) and APO: +1 sensitizes VII; +2 carries the comma to chromatics":"La sensible (VII) et l’APO : +1 rehausse le VII ; +2 porte le comma aux notes chromatiques","<b>Axiomatic</b> — letter rows = C D E F G A B (naturals) across 3 octaves ({z} low → {q} high). <b>Shift</b> + letter = flat. <b>Number row</b> = sharps. Pythagorean tuning, perfect intonation.":"<b>Axiomatic</b> — rangées de lettres = Do Ré Mi Fa Sol La Si (naturelles) sur 3 octaves ({z} grave → {q} aigu). <b>Shift</b> + lettre = bémol. <b>Rangée des chiffres</b> = dièses. Accord pythagoricien, intonation juste.","<b>Tempered (12 TET)</b> — one-octave piano layout: home row <b>{ASDFGHJ}</b> = white keys C…B; top row <b>{WE·TYU}</b> = black keys (C♯ D♯ · F♯ G♯ A♯). The rest, mouse only. A4 = 440.":"<b>Tempéré (12 TET)</b> — disposition de piano sur une octave : rangée de base <b>{ASDFGHJ}</b> = touches blanches Do…Si ; rangée du haut <b>{WE·TYU}</b> = touches noires (Do♯ Ré♯ · Fa♯ Sol♯ La♯). Le reste, à la souris uniquement. La4 = 440.","<b>Tonal</b> — letter rows = <b>degrees I–VII</b> of the key across 3 octaves ({KLÑ} and {IOP} = I II III of the next octave). Tonic + mode define the notes. <b>↑ / ↓</b> = APO (♯ / ♭) on the active note.":"<b>Tonal</b> — rangées de lettres = <b>degrés I–VII</b> de la tonalité sur 3 octaves ({KLÑ} et {IOP} = I II III de l’octave suivante). La tonique et le mode définissent les notes. <b>↑ / ↓</b> = APO (♯ / ♭) sur la note active."};
+(function(){var D=window.MM_DATOS_TR;function tr(r){var s=r.querySelectorAll?r.querySelectorAll('span.en:not([data-tr])'):[];for(var i=0;i<s.length;i++){var h=s[i].innerHTML.replace(/\s+/g,' ').trim(),k=s[i].textContent.replace(/\s+/g,' ').trim();s[i].setAttribute('data-tr','1');if(D[h])s[i].innerHTML=D[h];else if(D[k])s[i].textContent=D[k];}}function go(){tr(document.body);new MutationObserver(function(){tr(document.body);}).observe(document.body,{childList:true,subtree:true});}if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);})();</script>
 </body>
 </html>
