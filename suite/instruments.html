@@ -38,7 +38,7 @@
 .ficha-src{margin-top:12px;font-size:10px;color:var(--textd)}
 @media (max-width:640px){ .ficha-row{display:block} .ficha-k{margin-bottom:2px} }
 </style>
-</head>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/instruments.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/instruments.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/instruments.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/instruments.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/instruments.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/instruments.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
 <body>
 
 <header>
@@ -62,10 +62,7 @@
       <button data-th="clear" style="background:#f6efda" title="Clear"></button>
       <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
     </div>
-    <div class="langtog">
-      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
-      <button id="b-en" onclick="setLang('en')">EN</button>
-    </div>
+    <div class="langtog"><button id="b-es" onclick="setLang('es')">ES</button><button id="b-en" onclick="setLang('en')">EN</button><a href="../fr/suite/instruments.html">FR</a><a href="../nl/suite/instruments.html">NL</a><a href="../de/suite/instruments.html">DE</a></div>
   </div>
 </header>
 
@@ -118,6 +115,15 @@
 (function(){
   var SEC_COLOR={'Woodwinds':'var(--gold)','Brass':'var(--rose)','Percussion':'var(--teal)','Harp & Keyboards':'var(--blue)','Strings':'var(--violet)','Voice':'var(--rose)','Synths':'var(--teal)'};
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  // 2026-10-01: todo lo que la ficha muestra va en ES/EN (antes la familia, el régimen, las secciones y la tabla de
+  // Rimsky salían en español también en EN, aunque MM_RK ya trae carEn/dinEn/fzaLabelEn). Así /fr/ /nl/ /de/ lo
+  // traducen desde _idiomas (fichas.txt), con la frase en inglés como llave.
+  var SEC_ES={'Woodwinds':'Maderas','Brass':'Metales','Percussion':'Percusión','Harp & Keyboards':'Arpa y teclados','Strings':'Cuerdas','Voice':'Voz','Synths':'Sintetizadores','Synths · Pads':'Sintetizadores · Pads','Other · Recorders':'Otros · Flautas dulces','Other · Folk plucked':'Otros · Cuerdas pulsadas populares','Popular · Latino':'Popular · Latino','Other':'Otros'};
+  var FAMILIA={maderas:['maderas','woodwinds'],metales:['metales','brass'],percusion:['percusión','percussion'],cuerdas:['cuerdas','strings'],teclados:['teclados','keyboards'],vientos:['vientos','winds'],voz:['voz','voice'],sinteticos:['sintéticos','synthetic']};
+  var REGIMEN={sostenido:['sostenido','sustained'],percutido:['percutido','struck'],percusivo:['percusivo','percussive'],pulsado:['pulsado','plucked']};
+  var ZONA_ES={low:'grave',mid:'medio',high:'agudo',top:'extremo'};
+  function biMap(m,v){ var x=m[v]; return x?'<span class="es">'+esc(x[0])+'</span><span class="en">'+esc(x[1])+'</span>':esc(v); }
+  function bi2(es,en){ return '<span class="es">'+esc(es)+'</span><span class="en">'+esc(en||es)+'</span>'; }
   function build(){
     var root=document.getElementById('lib'); if(!root) return;
     var P=window.MM_PRESETS_DEFAULT||{};
@@ -132,20 +138,20 @@
       var rng=(p.lo!=null&&p.hi!=null)?(esc(p.lo)+'–'+esc(p.hi)):'—';
       var reg=c.regime||'';
       html+='<div class="inst" data-k="'+esc(k)+'" data-fam="'+FAM+'" style="--c:'+col+'"><div class="inst-name">'+esc(lbl)+'</div>'+
-            '<div class="inst-meta"><span class="inst-rng">'+rng+'</span>'+(reg?'<span class="inst-reg">'+esc(reg)+'</span>':'')+'</div></div>';
+            '<div class="inst-meta"><span class="inst-rng">'+rng+'</span>'+(reg?'<span class="inst-reg">'+biMap(REGIMEN,reg)+'</span>':'')+'</div></div>';
     }
     SECS.forEach(function(sec){
       var items=sec.items.filter(function(k){ seen[k]=1; return P[k]; });
       if(!items.length) return;
       var col=SEC_COLOR[sec.section]||'var(--violet)';
       FAM=String(FAMN++);
-      html+='<div class="fam"><div class="fam-h"><span class="dot" style="background:'+col+'"></span>'+esc(sec.section)+' <span class="c">'+items.length+'</span></div><div class="fam-grid">';
+      html+='<div class="fam"><div class="fam-h"><span class="dot" style="background:'+col+'"></span>'+bi2(SEC_ES[sec.section]||sec.section,sec.section)+' <span class="c">'+items.length+'</span></div><div class="fam-grid">';
       items.forEach(function(k){ card(k,col); });
       html+='</div><div class="inst-ficha" id="ficha-'+FAM+'" style="--c:'+col+'"></div></div>';
     });
     var extra=keys.filter(function(k){ return !seen[k]; });
     if(extra.length){ var col='var(--textd)'; FAM=String(FAMN++);
-      html+='<div class="fam"><div class="fam-h"><span class="dot" style="background:'+col+'"></span>Other <span class="c">'+extra.length+'</span></div><div class="fam-grid">';
+      html+='<div class="fam"><div class="fam-h"><span class="dot" style="background:'+col+'"></span>'+bi2('Otros','Other')+' <span class="c">'+extra.length+'</span></div><div class="fam-grid">';
       extra.forEach(function(k){ card(k,col); });
       html+='</div><div class="inst-ficha" id="ficha-'+FAM+'" style="--c:'+col+'"></div></div>'; }
     root.innerHTML=html;
@@ -156,14 +162,14 @@
       var rk=(window.MM_RK&&window.MM_RK.has(k))?window.MM_RK.reg[k]:null;
       var tc=(window.MM_TECH&&window.MM_TECH.has(k))?window.MM_TECH.reg[k]:null;
       var h='<div class="ficha-h">'+esc(c.label||p2.name||k)+'</div>'+
-            '<div class="ficha-sub">'+esc(c.family||'')+(c.regime?' · '+esc(c.regime):'')+
+            '<div class="ficha-sub">'+(c.family?biMap(FAMILIA,c.family):'')+(c.regime?' · '+biMap(REGIMEN,c.regime):'')+
             (p2.lo!=null?' · '+esc(p2.lo)+'–'+esc(p2.hi):'')+'</div>';
       if(rk){
         h+='<div class="ficha-sec">'+bi('Carácter por registro · Rimsky-Korsakov','Character by register · Rimsky-Korsakov')+'</div>';
         window.MM_RK.zones.forEach(function(z,i){
           var zz=rk.z[i], expr=(rk.scope||[]).indexOf(i)>=0;
-          h+='<div class="ficha-row"><div class="ficha-k">'+z+' · '+esc(window.MM_RK.fzaLabel[zz.fza])+(expr?' · expr':'')+
-             '</div><div class="ficha-v">'+esc(zz.car)+' <span style="color:var(--textd)">— '+esc(zz.din)+'</span></div></div>';
+          h+='<div class="ficha-row"><div class="ficha-k">'+bi(ZONA_ES[z]||z,z)+' · '+bi(window.MM_RK.fzaLabel[zz.fza],(window.MM_RK.fzaLabelEn||[])[zz.fza])+(expr?' · expr':'')+
+             '</div><div class="ficha-v">'+bi(zz.car,zz.carEn)+' <span style="color:var(--textd)">— '+bi(zz.din,zz.dinEn)+'</span></div></div>';
         });
         h+='<div class="ficha-src">'+esc(window.MM_RK.source)+'</div>';
       }
@@ -198,5 +204,6 @@
 <script src="mm-theme.js"></script>
 <script src="site.js"></script>
 
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
 </body>
 </html>
