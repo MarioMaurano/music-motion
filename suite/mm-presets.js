@@ -123,6 +123,45 @@
 //   del riser cae fuera de la banda medida) · resp.air [0.18,0.14,0.12,0.10] → [0.06,0.14,0.16,0.05] (la pendiente
 //   estaba invertida) · resp.atk 65/60/55/50 ms → 95/90/75/60. Con el 1550 puesto, el resp.tilt que puso el oído el
 //   01-09 cae sobre el centroide medido. Ficha flute-settings.md §10; guardia del banco: dos filas nuevas.
+// 2026-09-18/19 — SESIÓN DE SONIDO: DIEZ FICHAS DE OÍDO Y LAS CUERDAS EN UNA SOLA ESCALA. Todo con tomas A/B de
+//   Mario (en _Investigacion-instrumentos/INSTRUMENTS WAV TESTS/<instrumento>/tomas-*-2026-09-18|19/) y guardia
+//   roja antes, verde después. Copias previas: los .bak «antes de ... 2026-09-18» al lado de este archivo.
+//   · clarinet / clarinet_a — «pierde madera» al subir: resp.oddEven [0.9,0.85,0.65,0.55] → [0.9,0.85,0.9,0.65].
+//     En el clarín el 2º armónico subía a −5/−8 dB (VSCO y Finale: −13 a −39). guardia-clarinete-madera.js
+//   · bass_clarinet — madera en el grave: filt.cut 4 → [7,5,4,4] (el corte relativo se comía H5-H9 del Si♭1).
+//     Toma C, «está mejor». guardia-clarinete-bajo-grave.js
+//   · bassoon — «de F2 para abajo pierde el color de fagot»: form.bank + [57,−22,2.6] (la VSCO casi no tiene
+//     fundamental en el grave extremo: −45/−53 dB). guardia-fagot-grave.js
+//   · contrabassoon — «se aleja mucho del fagot»: form.bank = el del fagot (formantes 470/1250 fijos + hueco y
+//     quinta) y src.partials [30,26,20,16] (sin techo el motor arma 16 parciales: el Si♭0 terminaba en 466 Hz).
+//     Toma C3, «ahora está muy bien». guardia-contrafagot-color.js
+//   · saxophone — «muy directo / le falta aire y le sobra sonido / vibrato continuo regular / mucho ataque»,
+//     referencia Stan Getz: resp {gain −2 dB, air ×5, tilt −20 %, atk ×3, vib 20-30 ¢, vibVar 0.6, atkShape 1} ·
+//     char {noise 0.5, noiseAM 0.18}. Toma N. Usa las dos casillas nuevas del motor (Keyboard V2.3.38).
+//   · trumpet — «el papelito y el peine»: medido en la sordina recta de la VSCO, el papel NO es ruido sino FORMA
+//     (fundamental débil, energía en 1-2 kHz). form.bank [[1600,8.6,1.3],[3050,6,1.2],[−1,−6,1.1]] (el formante
+//     donde lo mide la VSCO; la ficha decía 1200) · resp.air ×3 · char {noise 0.2, noiseAM 0.8}. Toma L.
+//     trumpet_f: sólo air/char de la primera pasada — su toma con la L y el brillo de la trumpet está PENDIENTE
+//     (queda más oscura: src.tilt −20,5). guardia-trompeta-chicharra.js (trumpet_f como pendiente)
+//   · english_horn — «más cercano al oboe pero con más hueco»: el genoma de la variante O del oboe llevado a su
+//     voz (formantes y techo −25 %: bank [[1050,13,4.5],[1900,4,2.5],[180,−24,3],[1500,−12,1],[2400,−12,1]],
+//     filt.cut [8.2,3.9,2.3,1.9], env −0.6). Toma B, «está súper». guardia-corno-ingles.js
+//   · LAS CUERDAS EN UNA SOLA ESCALA (Mario: «cellos suena menos que contrabajos pero son 12 contra 8 · violas muy
+//     apagadas · contrabajo el triple que cello, viola y violín» · «la sección de contrabajos PORTA más pero SUENA
+//     menos»). Medido por el camino NOTE_ON: contrabajos +13 · chelos −12 · violas −18 dB contra los violines.
+//     La vara es la SONORIDAD (ponderación B, el oído a volumen medio; la A castigaba de más al grave y Mario oyó
+//     enseguida que los bajos seguían fuertes). Un solo factor en resp.gain por ficha, timbre intacto. Lugar final,
+//     de oído, contra violins_section (sin tocar): secciones violas −3 · chelos +3 · contrabajos −6 · solistas
+//     violín −6 · viola −8 · chelo −6 · contrabajo −15. guardia-lista-cuerdas.js
+//     PENDIENTE: la escala está fijada en mf (en p y f las secciones crecen distinto — velRangeDb); el resto de la
+//     lista (maderas, metales, teclados, acordeón, voces, percusión) sigue fuera de escala; guardia-secciones.js
+//     mide contra la escala vieja y hay que revisarla o retirarla.
+//   · guitar — «más seca, más madera, sin tanta resonancia»: toma C. form.bank con Q bajo (la caja no canta),
+//     env.decay [9.5,7.5,6.2,1.1] → [2.4,1.9,1.5,0.4], bloom casi fuera, inharm ≈ ½. Copia: «antes de la guitarra C».
+//   · violao (FICHA NUEVA, 2026-09-19) — la brasileña de nylon: «más seca, se oye más cuerdas de nylon, sin resonancia,
+//     un sonido más discreto — piensa Sergio Mendes». La C llevada a nylon: src.tilt −19, parciales [16,12,10,5],
+//     golpe de yema (hit ×0,4, atk ×1,3), caja casi muda, decay 0,9 s en el grave, −2 dB. Toma E (tocada en un
+//     acompañamiento de bossa), «es excelente». Su nodo en el Lexicon y sus dos filas en el Score (Score V2.7.112).
 // 2026-09-16 — EL VIOLÍN NO SE CAE EN EL AGUDO (Mario, sobre la Shéhérazade: «por qué no suena? está en CH 10»).
 //   El Violín I, con su p escrito, salía 18 dB debajo de las violas y 25 debajo del pizz de los segundos. La
 //   corrección del 10-09 se midió con playAudio, y ahí la velocity casi no mueve el nivel (de 44 a 92 el violín
@@ -942,77 +981,10 @@ window.MM_PRESETS_DEFAULT = {
       "D5",
       "F5"
     ],
-    "resp": {
-      "gain": [
-        0.85,
-        1.0,
-        0.95,
-        0.8
-      ],
-      "air": [
-        0.06,
-        0.05,
-        0.05,
-        0.06
-      ],
-      "tilt": [
-        0.55,
-        0.48,
-        0.35,
-        0.25
-      ],
-      "atk": [
-        1.1,
-        1.0,
-        0.9,
-        0.8
-      ],
-      "vib": [
-        8,
-        16,
-        20,
-        14
-      ],
-      "vibRate": [
-        5.2,
-        5.4,
-        5.5,
-        5.5
-      ],
-      "oddEven": [
-        0.5,
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
-    "src": {
-      "tilt": -11.0,
-      "inharm": 0.0012,
-      "mode": "harm",
-      "nb": [
-        2000,
-        1.2
-      ]
-    },
-    "form": {
-      "f1": [
-        950,
-        7.0,
-        3.0
-      ],
-      "f2": [
-        1900,
-        4.0,
-        2.5
-      ]
-    },
-    "filt": {
-      "cut": 6.5,
-      "q": 0.9,
-      "env": 0.4,
-      "t": 0.027
-    },
+    "resp": {"gain": [0.85, 1, 0.95, 0.8], "air": [0.06, 0.04, 0.04, 0.07], "tilt": [0.5, 0.43, 1, 0.65], "atk": [2.4, 1, 0.8, 0.68], "vib": [2.2, 1.5, 2.9, 4.7], "vibRate": [5, 5.4, 5.6, 5.6], "oddEven": [0.5, 0.5, 0.5, 0.5]},
+    "src": {"tilt": -9, "inharm": 0.0012, "mode": "harm", "nb": [2000, 1.2]},
+    "form": {"f1": [1050, 13, 4.5], "f2": [1900, 4, 2.5], "bank": [[1050, 13, 4.5], [1900, 4, 2.5], [180, -24, 3], [1500, -12, 1], [2400, -12, 1]]},
+    "filt": {"cut": [8.2, 3.9, 2.3, 1.9], "q": 0.8, "env": -0.6, "t": 0.08},
     "env": {
       "decay": 0.06,
       "sustain": 1
@@ -1021,16 +993,7 @@ window.MM_PRESETS_DEFAULT = {
       "noise": 0.05,
       "noiseAM": 0.03
     },
-    "onset": {
-      "hit": 0.05,
-      "air": 0.06,
-      "ms": [
-        144,
-        54,
-        36,
-        30
-      ]
-    }
+    "onset": {"hit": [0.16, 0.08, 0.07, 0.09], "air": 1, "ms": [120, 45, 30, 25]}
   },
   // 2026-09-01 — clarinete, paso 1 (Bartók N123; Mario: «le falta hueco»): oddEven [0.12 0.20 0.45 0.50] → [0.90 0.85 0.65 0.55].
   //   En el motor 1 = solo IMPARES y 0 = pares dominantes: la ficha tenía el chalumeau al revés (pares más fuertes). La referencia
@@ -1089,12 +1052,7 @@ window.MM_PRESETS_DEFAULT = {
         5.5,
         5.5
       ],
-      "oddEven": [
-        0.9,
-        0.85,
-        0.65,
-        0.55
-      ]
+      "oddEven": [0.9, 0.85, 0.9, 0.65]
     },
     "src": {
       "tilt": -12.0,
@@ -1196,12 +1154,7 @@ window.MM_PRESETS_DEFAULT = {
         5.5,
         5.5
       ],
-      "oddEven": [
-        0.9,
-        0.85,
-        0.65,
-        0.55
-      ]
+      "oddEven": [0.9, 0.85, 0.9, 0.65]
     },
     "src": {
       "tilt": -12.0,
@@ -1332,7 +1285,7 @@ window.MM_PRESETS_DEFAULT = {
       ]
     },
     "filt": {
-      "cut": 4,
+      "cut": [7, 5, 4, 4],
       "q": 0.7,
       "env": 0.0,
       "t": 0.1
@@ -1458,7 +1411,7 @@ window.MM_PRESETS_DEFAULT = {
         3,
         2
       ],
-      "bank": [
+      "bank": [[57, -22, 2.6], 
         [
           80,
           -11,
@@ -1582,15 +1535,7 @@ window.MM_PRESETS_DEFAULT = {
         0.5
       ]
     },
-    "src": {
-      "tilt": -9.0,
-      "inharm": 0,
-      "mode": "harm",
-      "nb": [
-        2000,
-        1.2
-      ]
-    },
+    "src": {"tilt": -9, "inharm": 0, "mode": "harm", "nb": [2000, 1.2], "partials": [30, 26, 20, 16]},
     "form": {
       "f1": [
         240,
@@ -1602,23 +1547,7 @@ window.MM_PRESETS_DEFAULT = {
         3,
         2.0
       ],
-      "bank": [
-        [
-          45,
-          -7,
-          1.0
-        ],
-        [
-          240,
-          6,
-          2.0
-        ],
-        [
-          640,
-          3,
-          2.0
-        ]
-      ]
+      "bank": [[45, -7, 1], [470, 9, 2.8], [1250, 3, 2], [-1, -12, 1.1], [-3, 12, 1.6]]
     },
     "filt": {
       "cut": [
@@ -1669,50 +1598,7 @@ window.MM_PRESETS_DEFAULT = {
     },
     "lo": "Db3",
     "hi": "A5",
-    "resp": {
-      "gain": [
-        0.8,
-        1.0,
-        1.0,
-        0.92
-      ],
-      "air": [
-        0.14,
-        0.07,
-        0.06,
-        0.09
-      ],
-      "tilt": [
-        0.88,
-        0.78,
-        0.66,
-        0.5
-      ],
-      "atk": [
-        2.4,
-        1.7,
-        1.35,
-        1.1
-      ],
-      "vib": [
-        34,
-        40,
-        46,
-        50
-      ],
-      "vibRate": [
-        5.4,
-        5.6,
-        5.8,
-        6.0
-      ],
-      "oddEven": [
-        0.5,
-        0.5,
-        0.5,
-        0.5
-      ]
-    },
+    "resp": {"gain": [0.64, 0.8, 0.8, 0.74], "air": [0.7, 0.5, 0.45, 0.5], "tilt": [0.7, 0.62, 0.53, 0.4], "atk": [7.2, 5.1, 4.05, 3.3], "vib": [20, 24, 27, 30], "vibRate": [5.4, 5.6, 5.8, 6], "oddEven": [0.5, 0.5, 0.5, 0.5], "vibVar": [0.6, 0.6, 0.6, 0.6], "atkShape": [1, 1, 1, 1]},
     "src": {
       "tilt": -7.5,
       "inharm": 0.0005,
@@ -1749,10 +1635,7 @@ window.MM_PRESETS_DEFAULT = {
       "decay": 0.06,
       "sustain": 1
     },
-    "char": {
-      "noise": 0.09,
-      "noiseAM": 0.06
-    },
+    "char": {"noise": 0.5, "noiseAM": 0.18},
     "onset": {
       "hit": [
         0.1,
@@ -2114,12 +1997,7 @@ window.MM_PRESETS_DEFAULT = {
         1.0,
         0.92
       ],
-      "air": [
-        0.03,
-        0.03,
-        0.03,
-        0.04
-      ],
+      "air": [0.09, 0.09, 0.09, 0.12],
       "tilt": [
         0.7,
         0.61,
@@ -2160,35 +2038,7 @@ window.MM_PRESETS_DEFAULT = {
         1.1
       ]
     },
-    "form": {
-      "f1": [
-        1200,
-        6.0,
-        1.3
-      ],
-      "f2": [
-        2000,
-        4.0,
-        1.2
-      ],
-      "bank": [
-        [
-          1200,
-          6.0,
-          1.3
-        ],
-        [
-          2000,
-          4.0,
-          1.2
-        ],
-        [
-          3000,
-          2.5,
-          1.2
-        ]
-      ]
-    },
+    "form": {"f1": [1600, 8.6, 1.3], "f2": [3050, 6, 1.2], "bank": [[1600, 8.6, 1.3], [3050, 6, 1.2], [-1, -6, 1.1]]},
     "filt": {
       "cut": [
         27.3,
@@ -2210,10 +2060,7 @@ window.MM_PRESETS_DEFAULT = {
         0.03
       ]
     },
-    "char": {
-      "noise": 0.05,
-      "noiseAM": 0.12
-    },
+    "char": {"noise": 0.2, "noiseAM": 0.8},
     "onset": {
       "hit": [
         0.08,
@@ -2258,12 +2105,7 @@ window.MM_PRESETS_DEFAULT = {
         1.0,
         0.92
       ],
-      "air": [
-        0.03,
-        0.03,
-        0.03,
-        0.04
-      ],
+      "air": [0.3, 0.3, 0.3, 0.4],
       "tilt": [
         0.7,
         0.61,
@@ -2354,10 +2196,7 @@ window.MM_PRESETS_DEFAULT = {
         0.03
       ]
     },
-    "char": {
-      "noise": 0.03,
-      "noiseAM": 0.02
-    },
+    "char": {"noise": 0.2, "noiseAM": 0.8},
     "onset": {
       "hit": [
         0.08,
@@ -5592,12 +5431,7 @@ window.MM_PRESETS_DEFAULT = {
     "lo": "G3",
     "hi": "E7",
     "resp": {
-      "gain": [
-          0.2845,
-          0.1496,
-          0.0998,
-          0.0220
-        ],
+      "gain": [0.1957, 0.103, 0.0687, 0.0151],
       "air": [
         0.07,
         0.06,
@@ -5795,12 +5629,7 @@ window.MM_PRESETS_DEFAULT = {
     "lo": "C3",
     "hi": "A6",
     "resp": {
-      "gain": [
-        0.0404,
-        0.0549,
-        0.058,
-        0.0492
-      ],
+      "gain": [0.0477, 0.0648, 0.0685, 0.0581],
       "air": [
         0.09,
         0.07,
@@ -5973,12 +5802,7 @@ window.MM_PRESETS_DEFAULT = {
     "lo": "C2",
     "hi": "C6",
     "resp": {
-      "gain": [
-        0.0779,
-        0.095,
-        0.095,
-        0.0836
-      ],
+      "gain": [0.0709, 0.0864, 0.0864, 0.0761],
       "air": [
         0.06,
         0.05,
@@ -6153,12 +5977,7 @@ window.MM_PRESETS_DEFAULT = {
     "lo": "C1",
     "hi": "G4",
     "resp": {
-      "gain": [
-        0.85,
-        1,
-        1,
-        0.9
-      ],
+      "gain": [0.0208, 0.0245, 0.0245, 0.022],
       "air": [
         0.05,
         0.06,
@@ -6493,12 +6312,7 @@ window.MM_PRESETS_DEFAULT = {
     "lo": "C3",
     "hi": "A6",
     "resp": {
-      "gain": [
-          0.0100,
-          0.0146,
-          0.0383,
-          0.2466
-        ],
+      "gain": [0.0723, 0.1056, 0.2768, 1.7822],
       "air": [
         0.09,
         0.07,
@@ -6676,12 +6490,7 @@ window.MM_PRESETS_DEFAULT = {
     "lo": "C2",
     "hi": "C6",
     "resp": {
-      "gain": [
-        0.0779,
-        0.095,
-        0.095,
-        0.0836
-      ],
+      "gain": [0.2205, 0.2689, 0.2689, 0.2369],
       "air": [
         0.078,
         0.065,
@@ -6852,12 +6661,7 @@ window.MM_PRESETS_DEFAULT = {
     "lo": "C1",
     "hi": "G4",
     "resp": {
-      "gain": [
-        1.0,
-        1.0,
-        0.9,
-        0.8
-      ],
+      "gain": [0.0489, 0.0489, 0.0438, 0.0389],
       "air": [
         0.0,
         0.0,
@@ -7478,39 +7282,15 @@ window.MM_PRESETS_DEFAULT = {
       "vibRate": [0, 0, 0, 0],
       "oddEven": [0.5, 0.5, 0.5, 0.5]
     },
-    "src": {
-      "tilt": -13.0,
-      "inharm": [0.0019, 0.0017, 0.012, 0.035],
-      "duet": [[1, 1, 1.5, 2], [0.30, 0.30, 0.30, 0.20]],
-      "mode": "inharm",
-      "partials": [32, 24, 20, 8],
-      "phaseMs": 1.5,
-      "nb": [3000, 1.2]
-    },
-    "form": {
-      "f1": [100, 8, 16],
-      "f2": [520, 2, 20],
-      "bank": [
-        [100, 8, 16],
-        [200, 6, 24],
-        [250, 3, 30],
-        [400, 3, 30],
-        [520, 2, 20]
-      ]
-    },
+    "src": {"tilt": -13, "inharm": [0.001, 0.0009, 0.006, 0.018], "duet": [[1, 1, 1.5, 2], [0.3, 0.3, 0.3, 0.2]], "mode": "inharm", "partials": [32, 24, 20, 8], "phaseMs": 1.5, "nb": [3000, 1.2]},
+    "form": {"f1": [100, 5, 3], "f2": [520, 2, 4], "bank": [[100, 5, 3], [200, 5, 4], [250, 3, 4], [400, 3, 5], [520, 2, 4]]},
     "filt": {
       "cut": [60, 40, 32, 7],
       "q": 0.7,
       "env": 0.45,
       "t": 0.25
     },
-    "env": {
-      "decay": [9.5, 7.5, 6.2, 1.1],
-      "sustain": 0,
-      "bloom": [0.45, 0.40, 0.35, 0.15],
-      "decayTilt": [0.25, 0.30, 0.30, 0.40],
-      "relNoise": [0.15, 0.15, 0.12, 0.10]
-    },
+    "env": {"decay": [2.4, 1.9, 1.5, 0.4], "sustain": 0, "bloom": [0.08, 0.06, 0.05, 0.03], "decayTilt": [0.55, 0.6, 0.6, 0.65], "relNoise": [0.18, 0.18, 0.15, 0.12]},
     "char": {
       "noise": 0,
       "noiseAM": 0
@@ -7523,6 +7303,24 @@ window.MM_PRESETS_DEFAULT = {
       "pitch": 6,
       "pitchMs": 40
     }
+  },
+  // 2026-09-19 — VIOLÃO (Mario: «la brasileira es más seca, se oye más cuerdas de nylon, sin resonancia, un sonido más
+  //   discreto — piensa Sergio Mendes»). La guitarra C (hoy en guitar) llevada a nylon: fuente más oscura (src.tilt −19,
+  //   16 parciales arriba), cuerda más blanda (inharm ≈ ½), golpe de yema (hit ×0,4, atk ×1,3), caja casi sin resonancia
+  //   (form.bank bajo, sin bloom) y nota corta (decay 0,9 s en el grave). −2 dB contra guitar. Toma E, «es excelente».
+  "violao": {
+    "name": "violao",
+    "class": {"family": "cuerdas", "instrument": "violao", "label": "Violão", "regime": "percusivo", "articulations": ["legato", "staccato", "apoyado"]},
+    "lo": "E2",
+    "hi": "B5",
+    "anchors": ["E2", "D3", "G3", "B5"],
+    "resp": {"gain": [0.8, 0.8, 0.76, 0.64], "air": [0.05, 0.06, 0.08, 0.1], "tilt": [0.45, 0.55, 0.4, 0.35], "atk": [1.3, 1.3, 1.43, 1.04], "vib": [0, 0, 0, 0], "vibRate": [0, 0, 0, 0], "oddEven": [0.5, 0.5, 0.5, 0.5]},
+    "src": {"tilt": -19, "inharm": [0.0006, 0.0005, 0.003, 0.01], "duet": [[1, 1, 1.5, 2], [0.3, 0.3, 0.3, 0.2]], "mode": "inharm", "partials": [16, 12, 10, 5], "phaseMs": 1.5, "nb": [3000, 1.2]},
+    "form": {"f1": [100, 3, 2], "f2": [520, 1, 3], "bank": [[100, 3, 2], [200, 3, 3], [250, 2, 3], [400, 2, 3], [520, 1, 3]]},
+    "filt": {"cut": [22, 16, 12, 5], "q": 0.7, "env": 0.45, "t": 0.25},
+    "env": {"decay": [0.9, 0.7, 0.6, 0.25], "sustain": 0, "bloom": [0, 0, 0, 0], "decayTilt": [0.7, 0.75, 0.75, 0.8], "relNoise": [0.18, 0.18, 0.15, 0.12]},
+    "char": {"noise": 0, "noiseAM": 0},
+    "onset": {"hit": [0.12, 0.128, 0.14, 0.16], "air": 0.12, "ms": 8, "freq": 120, "pitch": 6, "pitchMs": 40}
   },
 
   // ── 2026-08-24 · OTRAS FAMILIAS, primera tanda ────────────────────────────────────────────────
@@ -8851,7 +8649,7 @@ window.MM_INSTRUMENT_SECTIONS = [
   { section:'Brass', es:'Metales', items:['horn','trumpet','trumpet_f','trombone','trombone_alto','tuba'] },
   { section:'Percussion', es:'Percusión', items:['timpani','glockenspiel','xylophone','vibraphone','marimba','tubular_bells','snare','snare_off','bass_drum','cymbals','tam_tam','triangle','tambourine','woodblock'] },
   { section:'Harp & Keyboards', es:'Arpa y teclados', items:['harp','piano','piano_steinway','piano_grand_tonal','harpsichord','harpsichord_wt','celesta','pipe_organ','accordion'] },
-  { section:'Strings', es:'Cuerdas', items:['violin','viola','cello','contrabass','violins_section','violas_section','cellos_section','contrabasses_section','strings','full_strings','pizzicato','strings_pizzicato','gamba','guitar'] },
+  { section:'Strings', es:'Cuerdas', items:['violin','viola','cello','contrabass','violins_section','violas_section','cellos_section','contrabasses_section','strings','full_strings','pizzicato','strings_pizzicato','gamba','guitar','violao'] },
   { section:'Voice', es:'Voz', items:['voice_soprano','voice_alto','voice_tenor','voice_bass'] },
   { section:'Synths', es:'Sintetizadores', items:['ping','sine','organ'] },
   { section:'Synths \u00b7 Pads', es:'Sintetizadores \u00b7 Pads', items:['synth_aahs','warm_pad','space_sweep','cosmic_whistle','glass_bells'] },
@@ -8895,7 +8693,7 @@ window.MM_INSTRUMENT_NAMES = {
   violins_section:{en:'Violins (section)'}, violas_section:{en:'Violas (section)'},
   cellos_section:{en:'Cellos (section)'}, contrabasses_section:{en:'Double Basses (section)'},
   strings:{es:'Cuerdas'}, full_strings:{es:'Cuerdas (tutti)'}, pizzicato:{es:'Pizzicato'},
-  strings_pizzicato:{es:'Cuerdas pizzicato'}, gamba:{es:'Viola da gamba'}, guitar:{es:'Guitarra'},
+  strings_pizzicato:{es:'Cuerdas pizzicato'}, gamba:{es:'Viola da gamba'}, guitar:{es:'Guitarra'}, violao:{es:'Violão'},
   voice_soprano:{es:'Soprano'}, voice_alto:{es:'Contralto'}, voice_tenor:{es:'Tenor'}, voice_bass:{es:'Bajo'},
   ping:{es:'Ping'}, sine:{es:'Senoidal'}, organ:{es:'Órgano'},
   synth_aahs:{es:'Aahs de sintetizador'}, warm_pad:{es:'Pad cálido'}, space_sweep:{es:'Barrido espacial'},
