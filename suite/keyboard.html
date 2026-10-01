@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="mm-theme.css">
 <link rel="stylesheet" href="site.css">
-</head>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/keyboard.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/keyboard.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/keyboard.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/keyboard.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
 <body>
 
 <header>
@@ -35,10 +35,7 @@
       <button data-th="clear" style="background:#f6efda" title="Clear"></button>
       <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
     </div>
-    <div class="langtog">
-      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
-      <button id="b-en" onclick="setLang('en')">EN</button>
-    </div>
+    <div class="langtog"><button id="b-es" onclick="setLang('es')">ES</button><button id="b-en" onclick="setLang('en')">EN</button><a href="../fr/suite/keyboard.html">FR</a><a href="../nl/suite/keyboard.html">NL</a><a href="../de/suite/keyboard.html">DE</a></div>
   </div>
 </header>
 
@@ -108,6 +105,16 @@
     </div>
 
     <div class="spec">
+      <h3 id="a-diapason"><span class="es">A= · el diapasón de toda la suite</span><span class="en">A= · the reference pitch of the whole suite</span></h3>
+      <p><span class="es">Botón <b>A= 440</b>, arriba a la derecha. Abre <b>Tuning Reference</b>: seis diapasones a un clic —415 barroco, 430 clásico, 432 natural, 440 moderno, 442 brillante, 466 renacentista— y el deslizador <b>fine</b>, de 380 a 480 Hz en medios hercios. Al cambiar el La se mueve con él toda la cadena de quintas: las 35 alturas suben o bajan juntas y los intervalos siguen siendo pitagóricos puros. No transpone la música: la afina más grave o más aguda, entera.</span><span class="en">The <b>A= 440</b> button, top right. It opens <b>Tuning Reference</b>: six reference pitches one click away —415 baroque, 430 classical, 432 natural, 440 modern, 442 bright, 466 renaissance— and the <b>fine</b> slider, from 380 to 480 Hz in half-hertz steps. When the A moves, the whole chain of fifths moves with it: the 35 pitches rise or fall together and the intervals stay purely Pythagorean. It does not transpose the music: it tunes the whole of it lower or higher.</span></p>
+      <p><span class="es"><b>Con el Score en play.</b> El A= del Keyboard y el del Score son el mismo: lo que cambias en uno lo toma el otro. Así puedes poner una partitura a sonar desde el Score y buscar en el Keyboard tu referencia mientras escuchas: la de tu instrumento, la de tu orquesta o la de un repertorio histórico. La nota que está sonando termina como empezó; la siguiente ya entra con el La nuevo. Si después guardas desde el Score, el .mmf recuerda el diapasón y la obra vuelve a abrir con él. El <b>Pythagorean Tuner</b> tiene el mismo control (<i>Reference pitch A4</i>), pero es una aplicación aparte: si afinas tu instrumento a 442 con él, pon también 442 aquí. <a href="https://musicmotionsuite.com/faq.html#diapason" title="Preguntas frecuentes">Más en las preguntas frecuentes</a>.</span><span class="en"><b>With the Score playing.</b> The Keyboard’s A= and the Score’s are one and the same: whatever you change in one, the other takes. So you can set a score playing from the Score and look for your reference on the Keyboard while you listen: your instrument’s, your orchestra’s, or that of a historical repertoire. The note already sounding ends as it began; the next one comes in at the new A. If you then save from the Score, the .mmf remembers the reference pitch and the piece reopens with it. The <b>Pythagorean Tuner</b> has the same control (<i>Reference pitch A4</i>), but it is a separate application: if you tune your instrument to 442 with it, set 442 here as well. <a href="https://musicmotionsuite.com/faq.html#diapason" title="Frequently asked questions">More in the FAQ</a>.</span></p>
+      <figure style="margin:14px 0 2px;overflow-x:auto;max-width:68ch">
+        <img src="ug-keyboard-aref.png" alt="El Cosmic Keyboard con el popup Tuning Reference abierto: botones 415 baroque, 430 classical, 432 natural, 440 modern, 442 bright, 466 renaissance y el deslizador fine en 440.0 Hz" loading="lazy" style="display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad)">
+        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="es">El popup Tuning Reference abierto sobre el Keyboard: los seis diapasones y el deslizador fine, en 440.0 Hz.</span><span class="en">The Tuning Reference popup open over the Keyboard: the six reference pitches and the fine slider, at 440.0 Hz.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="spec">
       <h3 id="vibrato-vivo"><span class="es">Vibrato vivo</span><span class="en">A living vibrato</span></h3>
       <p><span class="es">En las cuerdas frotadas y en todo lo que se sostiene, el vibrato ya no nace pleno junto con la nota: <b>entra después del ataque</b>, como el arco que primero agarra la cuerda y recién entonces empieza a moverse. En una nota corta no entra —no hay tiempo de vibrar—, y de cierto largo en adelante vibra entero. Su <b>velocidad acompaña al gesto</b>, en un recorrido corto a propósito (±12% del rate del preset): el ejecutante mueve mucho más la anchura que la velocidad, e igualarlas suena nervioso en vez de intenso. Y sigue la <b>jerarquía del grupo barrado</b>: la primera nota vibra más que las que la siguen, la misma jerarquía que ya tenía la presión.</span><span class="en">On bowed strings and on everything that sustains, the vibrato no longer starts at full width along with the note: it <b>enters after the attack</b>, like a bow that first grips the string and only then begins to move. On a short note it does not enter —there is no time to vibrate— and from a certain length on it vibrates fully. Its <b>speed follows the gesture</b>, over a deliberately short range (±12% of the preset's rate): a player moves the width far more than the speed, and matching them sounds nervous rather than intense. And it follows the <b>hierarchy of the beamed group</b>: the first note vibrates more than the ones after it, the same hierarchy pressure already had.</span></p>
     </div>
@@ -172,5 +179,6 @@
 <script src="mm-theme.js"></script>
 <script src="site.js"></script>
 
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
 </body>
 </html>

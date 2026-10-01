@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cosmic Keyboard — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../mm-theme.css">
+<link rel="stylesheet" href="../../site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/keyboard.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/keyboard.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/keyboard.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/keyboard.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
+<body>
+
+<header>
+  <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Accueil</span></a>
+    <a href="index.html#apps"><span class="tr">Les applications</span></a>
+    <a href="index.html#howto"><span class="tr">Comment commencer</span></a>
+    <a href="../../instruments.html"><span class="tr">Instruments</span></a>
+    <a href="index.html#aula"><span class="tr">Classe du Coach</span></a>
+    <a href="../../UserGuide.html"><span class="tr">Guide d’utilisation</span></a>
+    <a href="../../keyboard-shortcuts.html"><span class="tr">Raccourcis</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/keyboard.html?lang=es">ES</a><a href="../../suite/keyboard.html?lang=en">EN</a><a class="on" href="keyboard.html">FR</a><a href="../../nl/suite/keyboard.html">NL</a><a href="../../de/suite/keyboard.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--blue)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Retour à la suite</span></a>
+  <div class="app-eyebrow">⊞ Cosmic Keyboard</div>
+  <h1>
+    
+    <span class="tr">Le moteur sonore de la suite.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Le cœur de Music Motion et son unique synthétiseur : la seule application qui produit le son de toute la suite. Chaque touche est divisée — la hauteur pythagoricienne pure en haut, une bande au tempérament égal (<a href="https://musicmotionsuite.com/faq.html?lang=fr#12-tet" title="Questions fréquentes">12-TET</a>) en bas, pour comparer.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Ouvrir le Cosmic Keyboard</span></a>
+    <a class="btn-launch" href="../../keyboard-shortcuts.html">⌨ <span class="tr">QWERTY &amp; raccourcis (à imprimer)</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">Le Keyboard se connecte au reste de la suite par <b>mm-sync</b>, qui exige une origine commune : servez-le depuis un seul <span class="mono">localhost</span>, pas par double-clic.</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3 id="sistema-axiomatico"><span class="tr">Système axiomatique</span></h3>
+      <p><span class="tr">Un système dérivé d’axiomes ou de règles mathématiques incontestables. Exemples : le système pythagoricien, engendré entièrement par le rapport 3:2 (la <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">quinte</a> juste pure), et les systèmes à tempérament égal, construits à partir de la racine x-ième de 2. Tous deux sont axiomatiques : chaque hauteur découle inévitablement de la règle fondatrice. Ce clavier révèle le <strong>comma pythagoricien</strong> — l’écart audible entre Do♯ (278,437 Hz) et Ré♭ (274,690 Hz) que le <a href="https://musicmotionsuite.com/faq.html?lang=fr#temperado" title="Questions fréquentes">tempérament égal</a> efface.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="sistema-tonal"><span class="tr">Système tonal</span></h3>
+      <p><span class="tr">Un système mixte et positionnel, enraciné dans une fondamentale choisie (la tonalité). Ses sept hauteurs principales sont axiomatiques ; les altérations (♭ plus bas, ♯ plus haut) déplacent chaque degré vers le suivant sans le franchir. Un bécarre (♮) peut lui-même agir comme une altération — descendante ou ascendante — selon le contexte. Par exemple, Ré♮ en Sol♭ majeur est un demi-ton chromatique au-dessus de Ré♭ et un demi-ton diatonique au-dessous de Mi♭. Sept tonalités × trois altérations = 21 contextes tonals.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-teclado"><span class="tr">Le clavier</span></h3>
+      <p><span class="tr">Chaque touche blanche est divisée : les 4/5 supérieurs = hauteur exacte · le 1/5 inférieur = référence au tempérament égal. Le La4 n’est pas divisé — c’est la référence universelle, identique dans tous les systèmes. Entre chaque paire de touches blanches — y compris Mi→Fa et Si→Do — se trouve une touche à 3 zones : en bas = tempéré (cyan) · au milieu = ♭ | ♯ · en haut = ♭♭ | ♯♯. Les touches Mi→Fa et Si→Do sont de couleur ivoire avec une bande tempérée turquoise (¼ de ton).</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="acord-lab-acordes-con-el-mouse"><span class="tr">Chord Lab — des accords à la souris</span></h3>
+      <p><span class="tr">Le clic gauche joue une note. Un <strong>clic droit</strong> sur le clavier active le maintien (Hold) : la note tenue continue de sonner avec sa lumière allumée, et chaque nouvelle note s’empile par-dessus, si bien que vous entendez l’accord entier. Un autre <strong>clic droit</strong> éteint tout. Conçu pour entendre des accords complexes sans tenir plusieurs touches enfoncées à la fois.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="posicion-tonal"><span class="tr">Position tonale</span></h3>
+      <p><span class="tr">L’horizon artificiel montre la fonction de chaque note dans le contexte tonal actif. Ligne centrale = axiomatique · horizon qui monte = tonalement plus haut (rose) · horizon qui descend = tonalement plus bas (bleu) · or = quart de ton.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="grabador"><span class="tr">Enregistreur</span></h3>
+      <p><span class="tr">Il capte les fréquences exactes en Hz et les durées en temps réel. Pas de <a href="https://musicmotionsuite.com/faq.html?lang=fr#midi" title="Questions fréquentes">MIDI</a>, pas de quantification, pas de grille à 12 sons. Chaque enregistrement est une pure séquence de fréquences pythagoriciennes dans le temps. La liste accepte aussi des fichiers MIDI — joués comme une couche tempérée sur les bandes cyan — ainsi qu’un réglage du tempo de lecture (×0,5–×2) : enregistrez lentement, écoutez au tempo. Le transport dispose d’une pause et d’un saut de dix secondes en arrière ou en avant, avec une horloge à la milliseconde (00.00.000) ; sautez à une autre danse et le clavier passe dans la tonalité de cette section. Ce que vous venez d’enregistrer apparaît en haut du coffre, avec « garder dans la liste » et « enregistrer en .mmf » à portée de main. Enregistrer pendant que le Score joue est voulu : la prise sort propre, uniquement ce que vous avez joué.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="wav-llevarte-lo-que-estas-oyendo"><span class="tr">⬤ wav — emportez ce que vous entendez</span></h3>
+      <p><span class="tr">Un nouveau bouton dans la barre de l’enregistreur. Un clic lance la capture — le bouton devient rouge et compte les secondes — et un autre clic la referme et télécharge le fichier, en stéréo <b>24 bits</b>. Ce n’est pas un rendu hors ligne : il enregistre <b>en direct</b> ce qui sort réellement du master, avec son fil audio et son limiteur, ce qui est exactement ce qu’il faut pour attraper un clic ou un grattement qu’un mixage idéal n’aurait jamais. Le point d’écoute se situe <i>après</i> le timbre, la chaleur, la réverbération, la balance et le <b>MASTER</b> de la Console : si le MASTER est à 20 %, le fichier sort à 20 %. C’est voulu — ce qui est capté est ce qui sonne, pas un mixage idéal ; c’est pourquoi tout ce que vous bougez dans la Console pendant l’enregistrement se retrouve dans le fichier. L’audio doit déjà être en marche : jouez d’abord une note. La même capture peut être demandée depuis le Score avec <b>File → SAVE AS WAV</b>, qui joue l’œuvre ou la région SELECT et télécharge le fichier au nom de l’œuvre.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-vol-es-el-de-tus-teclas"><span class="tr">VOL est le volume de vos touches</span></h3>
+      <p><span class="tr">Jusqu’ici, le <b>VOL</b> du Keyboard, le <b>Vol</b> du Score et le <b>MASTER</b> de la Console étaient trois poignées sur un même bouton. Désormais, chacun règle ce qui lui revient : le <b>VOL</b> ici, ce que vous jouez sur les touches ; le <b>Score Vol</b>, ce que le Score envoie à jouer ; et le <b>MASTER</b> de la Console, l’ensemble — ce qu’enregistrent ⬤ wav et SAVE AS WAV. Pendant que le Score joue, baissez VOL et seul votre jeu diminue ; baissez le Score Vol et seul le Score diminue. À l’intérieur, chaque canal a deux entrées vers le même panoramique, une par moteur, et les boutons à leurs 40 % habituels sonnent exactement comme avant.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="a-diapason"><span class="tr">A= · la hauteur de référence de toute la suite</span></h3>
+      <p><span class="tr">Le bouton <b>A= 440</b>, en haut à droite. Il ouvre <b>Tuning Reference</b> : six diapasons à un clic — 415 baroque, 430 classique, 432 naturel, 440 moderne, 442 brillant, 466 Renaissance — et le curseur <b>fine</b>, de 380 à 480 Hz par pas d’un demi-hertz. Quand le La bouge, toute la chaîne de quintes bouge avec lui : les 35 hauteurs montent ou descendent ensemble et les intervalles restent purement pythagoriciens. Cela ne transpose pas la musique : cela l’accorde tout entière plus bas ou plus haut.</span></p>
+      <p><span class="tr"><b>Pendant que le Score joue.</b> Le A= du Keyboard et celui du Score ne font qu’un : ce que vous changez dans l’un, l’autre le reprend. Vous pouvez donc lancer une partition depuis le Score et chercher votre référence sur le Keyboard tout en écoutant : celle de votre instrument, de votre orchestre ou d’un répertoire historique. La note qui sonne déjà se termine comme elle a commencé ; la suivante entre au nouveau La. Si vous enregistrez ensuite depuis le Score, le .mmf retient le diapason et l’œuvre se rouvre avec lui. Le <b>Pythagorean Tuner</b> a le même réglage (<i>Reference pitch A4</i>), mais c’est une application distincte : si vous y accordez votre instrument à 442, réglez aussi 442 ici. <a href="https://musicmotionsuite.com/faq.html?lang=fr#diapason" title="Questions fréquentes">Plus d’informations dans la FAQ</a>.</span></p>
+      <figure style="margin:14px 0 2px;overflow-x:auto;max-width:68ch">
+        <img src="../../ug-keyboard-aref.png" alt="El Cosmic Keyboard con el popup Tuning Reference abierto: botones 415 baroque, 430 classical, 432 natural, 440 modern, 442 bright, 466 renaissance y el deslizador fine en 440.0 Hz" loading="lazy" style="display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad)">
+        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">La fenêtre Tuning Reference ouverte sur le Keyboard : les six diapasons et le curseur fine, à 440,0 Hz.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="spec">
+      <h3 id="vibrato-vivo"><span class="tr">Un vibrato vivant</span></h3>
+      <p><span class="tr">Sur les cordes frottées et sur tout ce qui tient le son, le vibrato ne commence plus à pleine amplitude en même temps que la note : il <b>entre après l’attaque</b>, comme un archet qui accroche d’abord la corde et ne se met à bouger qu’ensuite. Sur une note brève, il n’entre pas — il n’y a pas le temps de vibrer — et, à partir d’une certaine durée, il vibre pleinement. Sa <b>vitesse suit le geste</b>, sur une plage volontairement réduite (±12 % de la vitesse du preset) : un instrumentiste fait varier l’amplitude bien plus que la vitesse, et les faire varier ensemble sonne nerveux plutôt qu’intense. Et il suit la <b>hiérarchie du groupe ligaturé</b> : la première note vibre davantage que les suivantes, la même hiérarchie que la pression avait déjà.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="pulse-metronomo"><span class="tr">♩ Pulse — métronome</span></h3>
+      <p><span class="tr">Un métronome de poche dans le Keyboard : une lumière qui bat, le tempo au bouton (30–240), par les termes classiques (de Largo à Presto) ou en le tapant, plus un clic audible facultatif au volume et au timbre réglables. Et il bat avec la musique : jouez un mmf depuis le coffre, ou laissez jouer le Score — y compris dans une boucle A–B — et la lumière suit la mesure tandis que l’affichage indique le tempo de cette section, danse après danse. C’est l’œuvre qui mène : dès que sa pulsation entre, le métronome libre s’arrête. Conçu aussi bien pour le musicien qui travaille que pour le débutant.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="teclado-qwerty"><span class="tr">Touches QWERTY</span></h3>
+      <p><span class="tr">Jouez depuis l’ordinateur : rangées <span class="kbd">z</span> / <span class="kbd">a</span> / <span class="kbd">q</span> = octaves · <span class="kbd">Shift</span> = bémols · rangée des chiffres = dièses. Ce qui compte, c’est la <b>position</b> de la touche, pas sa lettre : sur un clavier AZERTY ou QWERTZ, appuyez sur la touche située à la place de la touche QWERTY.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="todal-tocar-por-grados"><span class="tr">TODAL — jouer par degrés</span></h3>
+      <p><span class="tr">En mode <b>Tonal</b>, les touches de l’ordinateur cessent d’être des notes et deviennent des <b>degrés</b> de la tonalité active : rangées <span class="kbd">z</span> / <span class="kbd">a</span> / <span class="kbd">q</span> = degrés I–VII sur trois octaves (et <span class="kbd">k</span> <span class="kbd">l</span> <span class="kbd">ñ</span> · <span class="kbd">i</span> <span class="kbd">o</span> <span class="kbd">p</span> continuent jusqu’à la dixième), avec le chiffre romain du degré écrit sur la touche. Le même doigt fait sonner la bonne note dans n’importe quelle tonalité — en Fa majeur, le degré IV sonne Si♭ — et le mode mineur change la gamme de lui-même. C’est le même clavier de degrés que le Minikeyboard du Score. Les notes chromatiques de la tonalité restent à la souris, et ↑/↓ appliquent l’apotome à la note tenue.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-paleta-de-instrumentos-todos-a-la-vista"><span class="tr">La palette d’instruments : tous d’un coup d’œil</span></h3>
+      <p><span class="tr">Le <code>&lt;select&gt;</code> natif ne sait pas faire de colonnes — c’est le système d’exploitation qui dessine cette liste déroulante —, si bien qu’un clic sur le champ de l’instrument ouvre à la place une <b>palette en colonnes</b> : toutes les familles visibles d’un coup d’œil, chacune dans sa colonne, avec un <b>filtre par nom</b> en haut. Les instruments que la banque possède mais que la carte active n’a pas sont affichés <i>estompés</i> plutôt que cachés : vous voyez qu’ils existent et qu’ils ne sont pas chargés aujourd’hui. L’<b>épingle</b> la garde ouverte pour en essayer plusieurs à la suite et comparer à l’oreille ; sans épingle, en choisir un la referme. Le choix revient par le chemin habituel, donc rien ne change dans le mixage. C’est la même palette dans les quatre applications — Score, Keyboard, Console et Register —, servie par <code>mm-presets.js</code>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="contar-lo-que-suena"><span class="tr">Ne compter que ce qui sonne</span></h3>
+      <p><span class="tr">Le moteur construit chaque voix <b>avant</b> son heure — pour que le rythme ne dépende pas du temps que prend l’affichage —, et cela a une conséquence qu’il a fallu du temps pour trouver : les plafonds qui limitent la polyphonie contenaient, à tout moment, des notes du <b>futur</b>. Les compter prenait de la place à celles qui sonnaient réellement, et choisir une victime par ordre d’arrivée pouvait faire taire une note qui n’avait pas encore commencé. Désormais, les plafonds ne comptent et ne choisissent que parmi les voix déjà commencées.</span></p>
+      <p><span class="tr">Et une voix dont la résonance est terminée n’occupe plus de place non plus. Les notes de piano, de harpe ou de percussion s’éteignent d’elles-mêmes et personne ne les coupe, mais elles restaient inscrites pour toujours dans le registre des voix : le compteur ne faisait que monter, et une fois le plafond atteint, chaque nouvelle note <b>coupait net</b> une corde qui résonnait encore. Cela fait un clic, un par note, et cela expliquait un symptôme étrange — arrêter et relancer juste avant le passage le corrigeait, parce que l’arrêt remet le registre à zéro. Désormais, une voix quitte le registre quand sa résonance se termine.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="presencia-el-peso-de-cada-dedo"><span class="tr">Présence : le poids de chaque doigt</span></h3>
+      <p><span class="tr">Dans un accord, toutes les notes ne pèsent pas autant : un doigt se pose et les autres restent légers. La <b>Présence</b> est cette répartition, note par note — et elle réside davantage dans l’<b>attaque</b> que dans le volume, comme un tiré qui se pose avec poids face à un poussé qui s’élève léger. Le moteur la traite comme de la physique : la course de la touche, l’étouffoir qui tombe de plus bas à l’intérieur d’un legato, le bruit de la mécanique qui se regroupe vers le temps au lieu de s’entendre note par note.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="sound-fx-por-canal"><span class="tr">Effets sonores par canal : réverbération, écho, porta et vibrato, en direct</span></h3>
+      <p><span class="tr">Le bouton <b>⊕ FX</b> de la barre d’outils ouvre une fenêtre par canal avec cinq boutons — <b>Reverb · Echo wet · Echo fb · Echo time · Porta</b> —, qui affiche le nom de l’instrument et s’exprime dans la langue du Coach. Ils n’agissent que sur ce que vous jouez <b>en direct</b> (moteur A) ; la même fenêtre dans le Score n’agit que sur la lecture (moteur B), et les deux ne se mélangent pas parce que les envois se font par voix. Le <b>Vibrato</b> n’est pas ici : c’est le sixième bouton de la fenêtre du Score, parce qu’il s’écrit comme une région (et là il élargit la <b>profondeur</b> de la hauteur, pas sa vitesse). Le <b>Porta</b> glisse depuis la dernière note du canal. La fenêtre s’ouvre épinglée et se ferme d’un clic sur le cadenas.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-entrada"><span class="tr">La porte : un crédit par jour</span></h3>
+      <p><span class="tr">Ouvert <b>depuis le site</b>, le clavier vous demande votre adresse e-mail <b>une seule fois</b> et vous laisse entrer. Les <b>3 premiers crédits</b> sont offerts, et un crédit correspond à une <b>journée</b> — pas à une note, pas à une session : vous l’ouvrez, vous jouez autant que vous voulez, vous le fermez et vous revenez, et rien d’autre n’est décompté avant le lendemain. Pas de compte, pas de mot de passe, pas de courrier de notre part : l’adresse n’est que votre nom sur le compteur, et le clavier se souvient de votre machine pour ne plus jamais la demander. Quand ils sont épuisés, l’écran du café apparaît : si cela vous est utile, offrez-en un et nous continuons. Et si le serveur ne répond pas, le clavier <b>s’ouvre quand même</b> : une connexion perdue ne peut pas vous laisser en plan au milieu de quelque chose.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-lista-en-tu-idioma"><span class="tr">La liste des instruments parle votre langue</span></h3>
+      <p><span class="tr">Le sélecteur d’instruments sortait jusqu’ici mélangé — certains noms en anglais, d’autres en espagnol, et les titres des familles toujours en anglais. Désormais, toute la liste parle la langue que vous avez choisie, titres des familles compris, aussi bien dans la liste déroulante que dans la palette en colonnes. La langue est celle de toute la suite : vous la choisissez une seule fois, par un clic droit sur <b>COACH</b> ou dans les <b>Preferences</b> du Score. <b>Ce que vous voyez change ; ce que vous entendez, non</b> : le nom interne de chaque instrument n’est jamais traduit. Dans la même passe, les deux infobulles des boutons de <b>Pulse</b> — volume du clic et timbre du clic — ont cessé de s’afficher en espagnol quand l’anglais était choisi. Raconté en détail dans <a href="../../UserGuide.html#lista-en-tu-idioma">le Guide d’utilisation</a>.</span></p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite d’accord pythagoricien · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">tous droits réservés</span></span>
+</footer>
+
+<script src="../../mm-theme.js"></script>
+<script src="../../site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','fr');</script>
+</body>
+</html>

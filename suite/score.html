@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="mm-theme.css">
 <link rel="stylesheet" href="site.css">
-</head>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/score.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/score.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/score.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/score.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/score.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/score.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
 <body>
 
 <header>
@@ -35,10 +35,7 @@
       <button data-th="clear" style="background:#f6efda" title="Clear"></button>
       <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
     </div>
-    <div class="langtog">
-      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
-      <button id="b-en" onclick="setLang('en')">EN</button>
-    </div>
+    <div class="langtog"><button id="b-es" onclick="setLang('es')">ES</button><button id="b-en" onclick="setLang('en')">EN</button><a href="../fr/suite/score.html">FR</a><a href="../nl/suite/score.html">NL</a><a href="../de/suite/score.html">DE</a></div>
   </div>
 </header>
 
@@ -263,7 +260,7 @@
 
     <div class="spec">
       <h3 id="la-marca-donde-se-dibuja"><span class="es">La marca, donde se ve la nota</span><span class="en">The mark, where the note is seen</span></h3>
-      <p><span class="es">Un contrabajo suena una octava más grave de lo que se escribe, y un corno en Fa una <a href="https://sites.google.com/view/when-sound-becomes-music/espa%C3%B1ol/sonido-natural/geometr%C3%ADa-del-sonido/quinta-perfecta" target="_blank" rel="noopener" title="El libro — para profundizar">quinta</a> más agudo. En vista escrita la partitura muestra lo que el músico lee — pero los trémolos del contrabajo caían una octava lejos de su nota, y el clic para seleccionarla erraba por la misma distancia. En violas y cellos no pasaba nada, porque no transponen. Ahora <b>toda marca se posiciona contra la altura que se ve</b>, no contra la que suena, y el clic cae donde está la nota. Vale para cualquier canal que transponga: clarinetes, cornos, trompetas, contrabajos.</span><span class="en">A double bass sounds an octave lower than written, a horn in F a <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="The book — to go deeper">fifth</a> higher. In written view the score shows what the player reads — but the double bass tremolos landed an octave away from their note, and clicking to select it missed by the same distance. Violas and cellos were fine, because they do not transpose. Now <b>every mark is placed against the pitch you see</b>, not the one you hear, and the click lands on the note. This holds for any transposing channel: clarinets, horns, trumpets, double basses.</span></p>
+      <p><span class="es">Un contrabajo suena una octava más grave de lo que se escribe, y un corno en Fa una <a href="https://sites.google.com/view/when-sound-becomes-music/espa%C3%B1ol/sonido-natural/geometr%C3%ADa-del-sonido/quinta-perfecta" target="_blank" rel="noopener" title="El libro — para profundizar">quinta</a> más grave. En vista escrita la partitura muestra lo que el músico lee — pero los trémolos del contrabajo caían una octava lejos de su nota, y el clic para seleccionarla erraba por la misma distancia. En violas y cellos no pasaba nada, porque no transponen. Ahora <b>toda marca se posiciona contra la altura que se ve</b>, no contra la que suena, y el clic cae donde está la nota. Vale para cualquier canal que transponga: clarinetes, cornos, trompetas, contrabajos.</span><span class="en">A double bass sounds an octave lower than written, a horn in F a <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="The book — to go deeper">fifth</a> lower. In written view the score shows what the player reads — but the double bass tremolos landed an octave away from their note, and clicking to select it missed by the same distance. Violas and cellos were fine, because they do not transpose. Now <b>every mark is placed against the pitch you see</b>, not the one you hear, and the click lands on the note. This holds for any transposing channel: clarinets, horns, trumpets, double basses.</span></p>
     </div>
 
     <div class="spec">
@@ -391,5 +388,6 @@
 <script src="mm-theme.js"></script>
 <script src="site.js"></script>
 
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
 </body>
 </html>

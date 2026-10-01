@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Score Editor — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../mm-theme.css">
+<link rel="stylesheet" href="../../site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/score.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/score.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/score.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/score.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/score.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/score.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
+<body>
+
+<header>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="../../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Start</span></a>
+    <a href="index.html#apps"><span class="tr">Die Apps</span></a>
+    <a href="index.html#howto"><span class="tr">Erste Schritte</span></a>
+    <a href="../../instruments.html"><span class="tr">Instrumente</span></a>
+    <a href="index.html#aula"><span class="tr">Coach-Klassenzimmer</span></a>
+    <a href="../../UserGuide.html"><span class="tr">Benutzerhandbuch</span></a>
+    <a href="../../score-shortcuts.html"><span class="tr">Tastenkürzel</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/score.html?lang=es">ES</a><a href="../../suite/score.html?lang=en">EN</a><a href="../../fr/suite/score.html">FR</a><a href="../../nl/suite/score.html">NL</a><a class="on" href="score.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--gold)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Zurück zur Suite</span></a>
+  <div class="app-eyebrow">⊞ Score Editor</div>
+  <h1>
+    
+    <span class="tr">Die Partitur.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Du schreibst Musik nach Kanälen. Sein Mini-Keyboard im TODAL-Modus lässt dich nach Tonleiterstufen spielen (in F-Dur klingt die IV. Stufe automatisch als B). Selbst erzeugt er keinen Klang — den liefert das Keyboard, live synchronisiert.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Cosmic Keyboard öffnen</span></a>
+    <a class="btn-launch" href="../../score-shortcuts.html">⌨ <span class="tr">Tastenkürzel &amp; Interaktionen (zum Ausdrucken)</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">Der Score ist für sich allein stumm: Er schickt seine Noten über <b>mm-sync</b> an das Keyboard, und dafür braucht es einen gemeinsamen Ursprung. Lade ihn von einem einzigen <span class="mono">localhost</span>.</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3 id="escritura-por-canales"><span class="tr">Schreiben nach Kanälen</span></h3>
+      <p><span class="tr">Du komponierst nach Kanälen — bis zu 32 —, jeder mit seinem eigenen Instrument. CH10 ist fest dem Schlagwerk zugeordnet. Pro Kanal kannst du stummschalten und seine Linie ein- oder ausblenden, um dich auf jeweils eine Stimme zu konzentrieren.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-mini-keyboard-modo-todal"><span class="tr">Das Mini-Keyboard (TODAL-Modus)</span></h3>
+      <p><span class="tr">Die untere Leiste, in drei Zonen: links, wie du spielst, in der Mitte die Tasten, rechts der Kanal, in den du schreibst. <b>WRITE</b> schreibt an der Cursorposition, und <b>LISTEN</b> lässt nur klingen, ohne die Partitur anzutasten. Der WRITE-Button schaltet reihum ✏ WRITE → TODAL PLAY → TODAL WRITE: Im <strong>TODAL</strong>-Modus sind die Tasten mit den Stufen der aktiven Tonart beschriftet, und dieselbe Stufe ergibt immer den richtigen Ton — deshalb kann jemand ohne musikalische Ausbildung in jeder Tonart korrekt schreiben, und ein Musiker kann komponieren, ohne Klavier spielen zu können. Darunter die Stimmung: <b>System</b> (reines pythagoreisches Axiom · Tonal mit Positionen), <b>Mode</b> (Dur oder natürliches, harmonisches und melodisches Moll) und <b>Sens</b>, wie weit die Leittonstufe erhöht wird. Und in der rechten Zone die Karte des aktiven Kanals mit ihrer Lautstärke und das Raster der 32, um mit einem Klick den Kanal zu wechseln.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-panel-dos-sistemas-a-la-vista"><span class="tr">Das Panel: zwei Systeme im Blick</span></h3>
+      <p><span class="tr">Der Button <b>▭ PANEL</b> öffnet unter der Partitur eine zweite Ansicht, um zwei Dinge gleichzeitig zu verfolgen: den Solisten und den Bass, die Stimme, die du abschreibst, und die, die du schreibst. Die <b>CH-Chips</b> der Kopfzeile wählen, welche Kanäle es spiegelt — jeden in seiner eigenen Farbe —, und wenn du in einem Kanal schreibst, der nicht dabei war, fügt das Panel ihn von selbst hinzu. Es hat seinen eigenen Zoom (Strg + Mausrad) und wächst, wenn du seine Leiste ziehst. <b>🎧 SOLO</b> bittet die Console, diese Kanäle zu isolieren, und gibt das Pult so zurück, wie es war, wenn du es ausschaltest; <b>🖨 PRINT VIEW</b> öffnet sie in der Druckansicht. Und es ist nicht nur zum Anschauen da: Der Rechtsklick funktioniert auch darin, mit denselben Editoren wie auf dem großen Blatt. Das Panel und das Mini-Keyboard wechseln sich ab: Öffnet man das eine, verschwindet das andere.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="armadura-automatica"><span class="tr">Automatische Tonartvorzeichnung</span></h3>
+      <p><span class="tr">Du wählst den Grundton, und die Vorzeichnung stellt sich von selbst ein. Die Auflösung ist diatonisch nach Vorzeichnung, mit Stufenbezeichnungen in Gold: Du siehst die Funktion jedes Tons, nicht nur seinen Namen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="duraciones-y-silencios"><span class="tr">Notenwerte &amp; Pausen</span></h3>
+      <p><span class="tr">Du legst die Dauer jeder Note fest (von der ganzen Note bis zur Vierundsechzigstel). Ein zweiter Klick auf denselben Wert macht daraus eine Pause, so schreibst du Rhythmus und Pausen mit derselben Geste. Und mit dem <strong>Ziffernblock</strong> wählst du sie mit einer Hand — von 1 (dem kürzesten Wert) bis 7 (der ganzen Note), den Punkt auf der Punkttaste — nach der Konvention der Notensatzprogramme.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-banda-flotante"><span class="tr">Die schwebende Leiste</span></h3>
+      <p><span class="tr">Die Notenwerte reisen mit dir: eine schwebende Leiste mit Notenwerten, Punkt, Vorschlagsnoten und N-tolen, die du dorthin ziehst, wo du gerade schreibst. Zieh sie zu einer Zeile auseinander oder klapp sie zu einem Block zusammen — sie merkt sich, wo du sie gelassen hast. Mit ihr kannst du bei geschlossenem Mini-Keyboard komponieren, mit der Partitur auf der ganzen Seite. Sie ist außerdem ein <strong>Bearbeitungspult</strong>: Auf die ausgewählte Note wendest du Artikulationen (Staccato, Akzent, Tenuto, Marcato, Fermate…) und Dynamik an, ohne andere Panels zu öffnen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="notas-que-se-arrastran"><span class="tr">Noten auf die Notenzeile ziehen</span></h3>
+      <p><span class="tr">Nimm einen Wert aus der Leiste und lass ihn auf der Notenzeile los: Eine Geisternote zeigt dir genau, wo er landen wird — Linie oder Zwischenraum nach dem Schlüssel des Kanals, und die richtige Zählzeit des Takts —, während du ihn auf jeder Höhe leise hörst. Setzt du spät im Takt ein, füllt der Score die Lücke mit den passenden Pausen, und der Coach (wenn er wach ist) sagt dir, warum. Auch Geschriebenes lässt sich bewegen: Ein Klick nimmt die Note auf, sie wandert klingend mit der Maus, und ein zweiter Klick setzt sie ab.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="agogica-nota"><span class="tr">Agogik</span></h3>
+      <p><span class="tr">Ausdrucksakzente pro Note: <strong>+1</strong> dezent und <strong>+2</strong> ausdrucksvoll, mit direkter (π) oder inverser (INV) Kurve. Kleine zeitliche Nuancen, die der Linie Leben geben, ohne das Raster zu verlassen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="asym-agog"><span class="tr">Phrasenagogik: Der Solist spielt frei, das Raster bleibt stehen</span></h3>
+      <p><span class="tr">Die Agogik oben neigt <i>eine</i> Note; diese hier formt einen <b>ganzen Abschnitt</b> eines Kanals. Im SELECT-Modus schließt du eine Auswahl über einem Kanal, Rechtsklick, <b>⌘ ASYM AGOG</b>: Die Region wird über diesem Abschnitt gezeichnet. Darin spielt der Solist mit der Phrase, während die Begleitung auf ihrem Raster bleibt: <b>Das Tempo wird nie angetastet</b>. Es ist Rubato im alten Sinn: Die Harfe läuft unerbittlich weiter, und der Bass spielt mit. Die Region <b>verschiebt</b> nur — der Abschnitt dauert so lange wie geschrieben, und die Phrase findet von selbst zurück —, deshalb funktioniert es auch, wenn das Orchester spielt.<br><br>Die <b>AXIS</b> sagt, was die Kurve abstuft, und das sind drei verschiedene Dinge an einer Note: <b>Tempo</b>, wann sie einsetzt; <b>Pres</b>, womit sie einsetzt — die Präsenz des Ansatzes, Aufstrich oder Abstrich, gehaucht oder angestoßen —; und <b>ART</b>, wie lange sie dauert und mit wie viel Gewicht, indem es skaliert, was die geschriebene Artikulation schon sagt. Jede Achse behält <i>ihre</i> eigene Kurve über demselben Abschnitt, und die Farbe des Bandes zeigt, welche du gerade ansiehst: Limettengrün, Petrol, Lavendel.<br><br>Die <b>Phasen</b> sind die Form der Kurve: <b>Inhale</b> holt beim Eintritt Luft und kehrt zurück, <b>Move</b> drängt durch den Körper und zahlt am Ende zurück, <b>Arrive</b> nimmt aus der Mitte und weitet das Ziel, <b>Exhale</b> entspannt nach dem Höhepunkt. <b>Flat</b> ist keine Kurve: Es ist das Raster — die Linie liegt auf null, und man hört nur, was du von Hand verschiebst; so schreibt man einen Walzer. <b>π⁻¹</b> spiegelt sie. Mit jeder der ersten vier verlässt die Phrase das Raster und kehrt zu ihm zurück: Sie beginnt und endet bei null. <b>INT</b> sagt, wie viel, in der Einheit der Achse, und die Zahl unter der Zeichnung sagt es klar: Millisekunden, Präsenzstufen oder Prozent.<br><br>Die Zeichnung ist keine Dekoration: <b>Jeder Punkt ist eine Note</b> des Abschnitts. Ziehst du einen, korrigierst du nur diese Note, und die Phase bleibt unberührt — die Linie ist weiterhin die Form, und ein Punkt abseits davon ist deine Korrektur. Die Pfeile gehen von Note zu Note, und +/− dienen der Feinabstimmung. Auf der ART-Achse sind die <i>hohlen</i> Punkte Noten ohne geschriebene Artikulation: Dort gibt es nichts zu skalieren.<br><br>Die <b>Kanal-Chips</b> sagen, wen sie erreicht: Eine Phrase, die beide Violinen spielen, ist <i>eine</i> Region, die beide erreicht, nicht zwei Regionen. Und sobald du ihr einen <b>Namen</b> gibst, wird die Region zu einem Muster: Du kannst sie auf einen anderen Abschnitt übertragen — <i>Take · from M to M</i>, wiederholt alle so viele Takte, wie sie lang ist — und alle Regionen mit diesem Namen auf einmal ausblenden oder löschen. Das Muster verankert sich nach dem Metrum: „die Zwei des Takts“ ist eine Zählzeit nach dem Anfang, nicht die zweite Note, die gerade auftaucht. Das <b>?</b> des Popups erzählt die ganze Geschichte, in der Sprache, die du eingestellt hast.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-calderon-sostiene-la-nota"><span class="tr">Die Fermate hält die Note</span></h3>
+      <p><span class="tr">Die Fermate hielt die Uhr an, aber die Note endete trotzdem auf ihrem geschriebenen Wert, und das Warten klang wie Stille. Jetzt wird dieses Warten <b>allem hinzugefügt, was an dieser Stelle noch klingt</b>: der Note, die sie trägt, und allem, was in anderen Kanälen darunter ausgehalten wird, wie im Orchester, wenn der Dirigent den Akkord aushält. Das Atemzeichen und der Doppelstrich bleiben unverändert — das ist wirklich Stille, und die vorherige Note wird nicht verlängert.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-dinamica-va-con-su-nota"><span class="tr">Ein Dynamikzeichen gehört zu seiner Note</span></h3>
+      <p><span class="tr">Ein Dynamikzeichen, das ein Haar vor oder nach seiner Note stand, war nicht nur ein Zeichenproblem: Die Note erreichte es nie und klang ohne es. Ein <i>ppp</i>, um ein Achtel einer Zählzeit zu spät gesetzt, ließ den ganzen Takt roh klingen, und die Angabe griff erst im nächsten. Jetzt <b>rastet die Dynamik an der Note ein</b>, wenn du sie schreibst, und bleibt bei ihr, wenn du sie verschiebst. Und an älteren Arbeiten ist nichts nachzuholen: Beim Öffnen einer Datei findet der Score die Note, zu der jedes Zeichen gehört, setzt es dort fest und sagt es dir — dieselbe Sorgfalt, die er schon bei den Bögen hatte.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-obra-respira-antes-de-empezar"><span class="tr">Das Werk atmet, bevor es beginnt</span></h3>
+      <p><span class="tr">Die Musik begann früher genau im Moment des Klicks: Du drücktest Play, und die erste Note kam aus dem Nichts. Wenn du jetzt <b>von Anfang an</b> startest, gibt es vor dem ersten Klang einen kurzen Augenblick der Stille — den Atem, den ein Dirigent nimmt, bevor er den Auftakt gibt. In der Datei ändert sich nichts: Der Atem wird der <b>Uhr</b> gegeben, nicht der Musik, so dass sich keine Note verschiebt und die Takteinteilung unberührt bleibt. Aus der Mitte heraus beginnt die Wiedergabe weiterhin sofort: Das ist ein Sprung, kein Einsatz.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="guardar-directo"><span class="tr">Direkt speichern</span></h3>
+      <p><span class="tr">Der Button <strong>💾 SAVE</strong> der Werkzeugleiste (oder <strong>Strg/Cmd+S</strong>) schreibt in dieselbe Datei zurück. Beim ersten Mal wählst du die <strong>.mmf</strong>; danach überschreibt jedes Speichern sie mit einem Klick, ohne Dialog — ideal, um beim Schreiben laufend zu speichern. <strong>MENU FILES → EXPORT MMF</strong> gibt es weiterhin, um eine neue Kopie zu exportieren.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="sincronia-con-la-suite"><span class="tr">Synchron mit der Suite</span></h3>
+      <p><span class="tr">Was du auf dem Keyboard spielst, wird hier geschrieben, und die Kanäle werden zum Mischen mit der Console geteilt. Ein Stück, drei Fenster, die in Echtzeit miteinander sprechen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="modo-pagina-editar-sobre-la-hoja"><span class="tr">Seitenmodus: auf dem Blatt bearbeiten</span></h3>
+      <p><span class="tr">Dieselbe Partitur, gesetzt wie das Blatt, das du drucken wirst — und direkt dort bearbeitbar. Die Einstellungen sitzen in der Werkzeugleiste: Takte pro System, Größe der Notenzeile und Abstand zwischen den Systemen in echten Millimetern. Mit <b>Pages</b> legst du fest, wie viele Seiten du willst, und das Blatt ordnet sich selbst, ohne heimlich deine Notenzeilen zu verkleinern.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="imprimir-y-sacar-las-partes"><span class="tr">Drucken und die Stimmen herausziehen</span></h3>
+      <p><span class="tr">Der Score will kein Notensatzprogramm sein — dafür gibt es Dorico und seinesgleichen —, aber das Stück kommt durchaus aufs Papier. Im Panel wählst du mit den Chips die gewünschten Kanäle, und der Button <b>🖨 PRINT VIEW</b> öffnet sie in der Druckansicht, schreibgeschützt und wie das Blatt gesetzt; von dort druckt der Dialog des Browsers auf Papier oder speichert ein <b>PDF</b>. So entstehen die <b>Stimmen nach Instrument</b> — ein Kanal oder die, die sich eine Notenzeile teilen —, ohne die Partitur anzutasten, und mit der Tinte des Blatts: Was nur Hilfe des Editors ist, kommt nie aufs Papier.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-hoja-con-manos-agarra-y-movete"><span class="tr">Ein Blatt mit Händen: greifen und verschieben</span></h3>
+      <p><span class="tr">Im Druck kannst du greifen, was du siehst: Fahr mit der Maus über den Titel, den Untertitel, den Komponisten oder ein beliebiges System, und sein transparenter Rahmen erscheint — klicken, ziehen, fertig. Die Felder der Werkzeugleiste leuchten auf und zeigen dir, was du verschiebst, jedes System verschiebt sich für sich (ohne den Rest der Seite zu stören), und das Blatt richtet sich selbst aus: Kein Satz endet mit einem System aus einem einzigen Takt, das letzte System reicht bis zum rechten Rand, und übriger Platz wird so verteilt, dass keine Seite unten ein Loch hat.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="armadura-por-tramo"><span class="tr">Tonartwechsel nach Abschnitt</span></h3>
+      <p><span class="tr">Das Stück kann die Tonart wechseln, wo immer es nötig ist: Die neue Vorzeichnung tritt in dem Takt ein, den du wählst, und Warnvorzeichen erscheinen von selbst dort, wo der Notensatz sie verlangt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-signo-de-octava-8va-8vb-15ma"><span class="tr">Das Oktavierungszeichen (8va · 8vb · 15ma)</span></h3>
+      <p><span class="tr">Ein Abschnitt eine <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Das Buch — zum Vertiefen">Oktave</a> höher oder tiefer, mit seiner gestrichelten Linie, um die Musik aus den Hilfslinien zu holen. Es ist Tinte: Du zeichnest ihn, ziehst ihn auseinander, und er reist mit der Datei.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="voces-que-comparten-pentagrama"><span class="tr">Stimmen, die sich eine Notenzeile teilen</span></h3>
+      <p><span class="tr">Ein Kanal kann auf der Notenzeile eines anderen Kanals dargestellt werden und dabei ein eigener Kanal bleiben: Die Daten bleiben unberührt, nur die Projektion ändert sich. So teilen sich zwei Stimmen eine Linie, oder die linke Hand eines Klaviers teilt sich in zwei Schichten.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="tresillos"><span class="tr">N-tolen</span></h3>
+      <p><span class="tr">Sie werden gruppiert geschrieben, mit der Klammer auf dem Balken, wo es passt, und haben ihren eigenen Editor: Zahl, Winkel, Länge und Position. Sie klingen als N-tolen, nicht als Annäherung.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-leccion-bloques-y-la-fila-ex"><span class="tr">Die Lektion: Blöcke und die Ex.-Zeile</span></h3>
+      <p><span class="tr">Wenn du eine Übung des Coach öffnest, ordnen sich die 32 Kanäle in acht Blöcke zu je vier Stimmen, und über der Partitur erscheint eine Reihe von <b>Ex.1-8</b>-Chips: ein Klick, und dieser Block steht allein, klingend und zentriert, der Rest stummgeschaltet. Es ist die Ansicht, um an jeweils einer Stimme zu arbeiten. <a href="coach.html">Das Kompositionsspiel →</a></span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="gesto"><span class="tr">Die Geste der Note</span></h3>
+      <p><span class="tr">In einer gebalkten Gruppe entscheiden die intelligenten Balken selbst, welche Note Gewicht trägt. Bei einer einzelnen Note — einer gehaltenen, einer ganzen — tat es niemand, und dafür ist die <b>Geste</b> da: Die Zeile <b>Gesture</b> des Noteneditors bietet <b>&lt;</b> Aufblühen, <b>&gt;</b> Abklingen, <b>&lt;&gt;</b> Messa di voce, <b>&gt;º&lt;</b> invers — sinkt in der Mitte ab und wächst wieder, großartig bei Blechbläsern — oder <b>—</b> Sostenuto, und das <b>º</b> führt dieses Ende ins Nichts. Ein Rechtsklick auf das Zeichen öffnet seinen Editor: Ändere die Geste, ohne zurückzugehen, spiegle sie, verschiebe sie, setze sie unter die Notenzeile und lege fest, wie weit sie steigt und fällt — in Stufen <i>relativ zur dort geltenden Lautstärke</i>, nicht in absoluten Zahlen. Die Engine skaliert sie nach der tatsächlichen Dauer: Eine Achtel deutet sie kaum an, eine ganze Note entfaltet sie. Nicht zu verwechseln mit <b>Pres</b>, das den Ansatz bewegt; die Geste bewegt, was danach geschieht.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="tinta-que-no-llega-al-papel"><span class="tr">Tinte, die nie aufs Papier kommt</span></h3>
+      <p><span class="tr">Die Geste lässt sich ausblenden, so wie es bei Tempoangaben und Ausdrücken schon ging: <b>Hide</b> behält sie in der Datei, zeigt sie gedimmt, solange <b>SHOW HIDDEN</b> aktiv ist — damit du sie weiter bearbeiten kannst — und druckt sie nie. Für das, was man hören, aber nicht sehen soll.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="ligados-que-cruzan-pentagramas"><span class="tr">Bögen zwischen Notenzeilen</span></h3>
+      <p><span class="tr">Eine Harfe, ein Klavier: Die Phrase beginnt in der linken Hand und verklingt in der rechten. Der Bogen kreuzt jetzt — zieh von einer Note der unteren Notenzeile zu einer der oberen, und der Bogen wird zwischen ihnen gezeichnet, jedes Ende in seinem eigenen Schlüssel und auf seiner eigenen Tonhöhe. Er lässt sich auswählen, bearbeiten und spiegeln wie jeder andere, und der vertikale Verschiebeweg im Editor wurde so weit vergrößert, dass er den Abstand zwischen den beiden Notenzeilen abdeckt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="handles-del-ligado"><span class="tr">Bogengriffe: den Bogen von Hand korrigieren</span></h3>
+      <figure class="shot">
+        <img src="../../media/score-slur-handles.webp" alt="Un ligado corto con sus tres handles: inicio, fin y panza" loading="lazy">
+        <img src="../../media/score-slur-arrastre.webp" alt="La fila Arrastre del Slur editor, con Start, End y Panza en espacios" loading="lazy">
+        <figcaption><span class="tr">Oben die drei Punkte auf dem Bogen. Unten die Zeile „Arrastre“ des Editors: was du verschoben hast, in Linienabständen.</span></figcaption>
+      </figure>
+      <p><span class="tr"><b>Rechtsklick auf den Bogen</b>, und drei Punkte erscheinen: <b>Anfang</b>, <b>Ende</b> und <b>Bauch</b>. Zieh sie mit der Maus; sie rasten auf <b>einem Viertel eines Abstands</b> ein — mit Shift auf der Hälfte —, so dass der Bogen dort landet, wo du ihn haben wolltest, ohne Pixel zu zählen. Was du ziehst, wird <b>getrennt</b> von den Button-Versätzen des Editors gespeichert: Eine ältere Datei wird genau wie vorher gezeichnet, und „↺ Arrastre“ macht nur das rückgängig. Der Editor zeigt die Verschiebung in Abständen an („+¾ · +½“), und auch Undo weiß davon.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-arco-largo-se-ata-a-la-plica"><span class="tr">Lange Bögen setzen am Hals an</span></h3>
+      <figure class="shot">
+        <img src="../../media/score-slur-anclaje-antes.webp" alt="Antes: el arco de nueve compases nace en la cabeza del Si3 de la anacrusa y pasa por debajo del Si4 del compás 1" loading="lazy">
+        <img src="../../media/score-slur-anclaje-despues.webp" alt="Ahora: el mismo arco nace sobre el beam del Si3 y pasa por encima del Si4" loading="lazy">
+        <figcaption><span class="tr">Chopin, Prélude Nr. 4, der Bogen des Auftakts. Vorher: vom Kopf des H3 aus, unter dem H4. Jetzt: vom Balken aus, darüber.</span></figcaption>
+      </figure>
+      <p><span class="tr">Ein Bogen über <b>drei oder mehr Takte</b> setzt jedes Ende danach an, auf welcher Seite <i>dieser</i> Note der Bogen gelandet ist: auf der Seite des Notenkopfs am Kopf; auf der Seite des Halses an der <b>Halsspitze</b> oder am <b>Balken</b>. Das ist die Notensatzregel, wie sie immer galt, die auch Dorico und MuseScore befolgen. Vorher begann der neuntaktige Bogen des Préludes am Kopf des Auftakt-H3 und tauchte unter das H4 von Takt 1; jetzt beginnt er über dem Balken und endet am Hals des A4. Kurze und von Hand umgedrehte Bögen bewegen sich um kein Pixel — der Kontrolltest misst es nach.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="pulse-el-pulso-que-se-ve"><span class="tr">PULSE: der Schlag, den du sehen kannst</span></h3>
+      <p><span class="tr">Ein Metronom in der Transportleiste, zwischen PITCH und LOOP. Es wählt das Tempo nicht: Es <b>liest es aus dem Werk</b>, aus dem Abschnitt unter dem Cursor, so dass sich das Licht mitändert, wenn die Partitur das Tempo wechselt. Und es schlägt nach <b>SUBDIV</b>: Bei 1 markiert es die Viertel, bei 2 die Achtel, bei 4 die Sechzehntel, wobei die erste jeder Gruppe heller ist, damit du den Schlag innerhalb der Unterteilung lesen kannst. Eine echte Hilfe bei Hemiolen und zusammengesetzten Taktarten, und für Anfänger leicht zu erfassen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="loop-ab"><span class="tr">A–B-Schleife</span></h3>
+      <p><span class="tr">Auf der Taktleiste markierst du <b>A</b> und <b>B</b> mit einem Rechtsklick, und dieser Abschnitt wiederholt sich endlos, bis du ihn ausschaltest. Jedes Ende setzt eine senkrechte Linie in seiner Farbe — Petrol für A, Blau für B —, so dass du ihn auf einen Blick siehst, und die Dreiecke lassen sich ziehen. Der Button <b>LOOP</b> leuchtet golden, solange die Schleife aktiv ist. So übt man eine Passage: Lass die Begleitung im Kreis laufen und probe darüber auf dem Keyboard.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="paleta"><span class="tr">Die Instrumentenpalette: alle auf einen Blick</span></h3>
+      <p><span class="tr">Das native <code>&lt;select&gt;</code> kann keine Spalten — dieses Dropdown zeichnet das Betriebssystem —, deshalb öffnet ein Klick auf das Instrumentenfeld stattdessen eine <b>Spaltenpalette</b>: jede Familie auf einen Blick sichtbar, jede in ihrer eigenen Spalte, mit einem <b>Namensfilter</b> oben. Instrumente, die die Bank hat, die aktive Map aber nicht, werden <i>abgeblendet</i> statt verborgen angezeigt: Du siehst, dass es sie gibt und dass sie heute nicht geladen sind. Die <b>Pinnadel</b> hält die Palette offen, damit du mehrere nacheinander ausprobieren und nach Gehör vergleichen kannst; ohne Pinnadel schließt sie sich, sobald du eines wählst. Die Auswahl kehrt über den üblichen Weg zurück, am Mix ändert sich also nichts. Es ist dieselbe Palette in allen vier Apps — Score, Keyboard, Console und Register —, bereitgestellt von <code>mm-presets.js</code>.</span></p>
+      <p><span class="tr">Und sie <b>merkt sich, wo du sie gelassen hast</b>: Schieb sie zur Seite, damit sie das Kanalpanel nicht verdeckt, und beim nächsten Mal öffnet sie sich dort — Kanal für Kanal, und auch in der nächsten App. Größe und Position reisen zusammen, so dass sie den Platz nicht vergisst, wenn du ihre Größe änderst. Beim ersten Mal, noch ohne Erinnerung, erscheint sie <i>neben</i> dem Panel, das sie geöffnet hat, nicht darüber.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="score-navigator-mapa-y-regla"><span class="tr">Score Navigator: Karte und Lineal</span></h3>
+      <p><span class="tr">Die Leiste oben ist eine Karte des ganzen Werks: Takte, benannte Abschnitte, der Cursor und der Abspielkopf. Mit einem Rechtsklick kannst du in einen Abschnitt hineinzoomen — 16 Takte oder die A–B-Schleife —, und dort wechselt sie die Rolle: Sie wird zu einem <b>Lineal</b>, am Notensatz ausgerichtet, so dass jede Markierung genau auf ihren Taktstrich fällt, und sie folgt der Partitur beim Scrollen. „Whole work“ kehrt zur Karte und zu deinem vorherigen Zoom zurück.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="secuencias"><span class="tr">Sequenzen: der Zustand eines Takts, wiederholt</span></h3>
+      <p><span class="tr">Ein Takt kann sich über einen Abschnitt wiederholen — der typische Fall ist das Pedal: Du schreibst, wie EIN Takt pedalisiert wird, und sagst „und so weiter bis 61“. Das ist eine <b>Sequenz</b>, und sie hat jetzt ihr eigenes Fenster: <b>Open sequence…</b>, aus dem SELECT-Panel oder über den Rechtsklick. Es listet die Sequenzen des Werks mit ihrem Abschnitt und dem Inhalt des Mustertakts auf, und ein Klick auf eine Zeile bringt die Ansicht dorthin.</span></p>
+      <p><span class="tr">Es gibt zwei Wege, eine anzulegen, und sie klingen gleich, sehen aber verschieden aus. Die <b>RULE (⟳)</b> schreibt nichts: Die Engine prägt das Muster bei jeder Wiedergabe auf, und kein einziges neues Zeichen erscheint auf der Seite. <b>WRITE (⧉)</b> setzt echte Zeichen, einen Satz pro Takt, einzeln bearbeitbar. Und ein Schalter <b>◉ SHOW / ◌ HIDE</b> entscheidet, ob diese Zeichen auf der Seite erscheinen: Ausgeblendete klingen trotzdem, denn Tinte und Füße sind zwei Ebenen.</span></p>
+      <p><span class="tr">Jede Zeile trägt außerdem ein ◉/◌, das ihre <b>Bereichslinie</b> über der obersten Notenzeile einschaltet, um ihre Reichweite auf einen Blick zu sehen. Standardmäßig aus und nicht in der Datei gespeichert: eine Arbeitshilfe, keine Notation.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="pedal-abierto"><span class="tr">Offen gebliebenes Pedal</span></h3>
+      <p><span class="tr">Ein <b>✻ mit Tiefe</b> — Halbpedal, Viertelpedal — hebt den Fuß nicht: Es sagt „mach mit weniger Pedal weiter“. Das ist eine echte Technik, hat aber eine unsichtbare Folge: Wenn die ganze Sequenz partielle ✻ verwendet, schließt nie ein Aufheben, und das Pedal bleibt bis zum nächsten geschriebenen Zeichen getreten, selbst dreißig Takte später. Der <b>Coach warnt jetzt</b>, wenn ein Bereich länger als vier Takte offen bleibt, mit beiden Takten und der Anzahl. Er korrigiert nichts von selbst: Er sagt dir nur, was du geschrieben hast.</span></p>
+      <p><span class="tr">Um eine Pedalsequenz zu schließen, muss das letzte ✻ ein <b>trockenes</b> sein. Und wenn die Sequenz eine Regel mit einem „bis Takt“ ist, schließt die Engine sie an der Grenze: Das Muster gilt bis zu diesem Takt und keinen Takt weiter.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-navegador-sigue-al-zoom"><span class="tr">Der Navigator folgt dem Zoom</span></h3>
+      <p><span class="tr">Die Leiste oben konnte schon beides sein — eine Karte des ganzen Werks und ein Lineal über einem Abschnitt —, aber sie wechselte die Rolle nur über ihr eigenes Menü. Wenn du die Partitur über die Werkzeugleiste zoomtest, blieb sie eine Karte von Hunderten Takten über einer Notenzeile, die sechs zeigte, und die Markierungen fielen an die falsche Stelle. Jetzt <b>nimmt der Zoom sie mit</b>: Die ±-Buttons, das Dropdown, Strg+Mausrad und die Lupe sagen es ihr, sie misst, welche Takte auf dem Bildschirm sind, und wird zu einem Lineal darüber, jede Markierung auf ihrem eigenen Taktstrich. Passt das ganze Werk auf den Bildschirm, wird sie von selbst wieder zur Karte.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="editar-desde-el-panel-de-canales"><span class="tr">Bearbeiten im Kanalpanel</span></h3>
+      <p><span class="tr">Das Kanalpanel war zum Anschauen da: Die Rechtsklick-Editoren lebten alle auf der Hauptpartitur, und um etwas zu korrigieren, das du dort sahst, musstest du zur Hauptfläche zurück. Jetzt <b>funktioniert der Rechtsklick auch im Panel</b>, mit genau denselben Editoren — Note, Bogen, Dynamik, Geste, N-tole, Tempo —, wobei jede Zeile ihren wahren Kanal auflöst und sich das Popup unter dem Zeiger öffnet, genau dort, wo du hinschaust.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="reescritura-enarmonica"><span class="tr">His ist nicht C</span></h3>
+      <p><span class="tr">Auf einer gleichstufig <a href="https://musicmotionsuite.com/faq.html?lang=de#temperado" title="Häufige Fragen">temperierten</a> Tastatur sind His und C dieselbe Taste. In der <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Das Buch — zum Vertiefen">pythagoreischen Stimmung</a> sind sie es nicht: Zwischen ihnen liegt ein Komma, und dieses Komma lässt einen Leitton nach oben ziehen. Deshalb hat der Score keinen Button, der eine Schreibweise gegen eine andere austauscht — einige Tage im September gab es einen, und er wurde zurückgezogen: Er behandelte zwei verschiedene Klänge als einen und beschädigte außerdem die Note. Eine Note wird mit ihrem eigenen Buchstaben geschrieben: für ein His der Ton <b>H</b> und das <b>♯</b> aus den Acc-Buttons. Jede Schreibweise hat in der pythagoreischen Tabelle ihr eigenes Verhältnis, so dass dieses His auch wie ein His <b>klingt</b>: ein Komma über dem C, dort, wo das Gehör es hinsetzt. Und wenn das Stück aus einer <a href="https://musicmotionsuite.com/faq.html?lang=de#midi" title="Häufige Fragen">MIDI</a>-Datei kommt, leitet der <b>Player</b> die Schreibweisen beim Umwandeln aus der Vorzeichnung ab.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-marca-donde-se-dibuja"><span class="tr">Das Zeichen dort, wo man die Note sieht</span></h3>
+      <p><span class="tr">Ein Kontrabass klingt eine Oktave tiefer als notiert, ein Horn in F eine <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="Das Buch — zum Vertiefen">Quinte</a> tiefer. In der notierten Ansicht zeigt die Partitur, was der Spieler liest — aber die Tremoli des Kontrabasses landeten eine Oktave von ihrer Note entfernt, und der Klick zum Auswählen verfehlte sie um denselben Abstand. Bratschen und Violoncelli waren in Ordnung, weil sie nicht transponieren. Jetzt <b>wird jedes Zeichen an der Tonhöhe platziert, die du siehst</b>, nicht an der, die du hörst, und der Klick trifft die Note. Das gilt für jeden transponierenden Kanal: Klarinetten, Hörner, Trompeten, Kontrabässe.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="abrir-un-mxl"><span class="tr">Eine .mxl öffnen, ohne sie zu entpacken</span></h3>
+      <p><span class="tr">Eine <b>.mxl</b> ist komprimiertes MusicXML: Das exportieren <b>Finale, MuseScore und Sibelius</b>. Der Score öffnet sie jetzt direkt, mit demselben Button, den du für eine .xml verwendet hast, ohne Entpacken von Hand. Er schaut auf den Inhalt der Datei, nicht auf ihren Namen, so dass auch eine .musicxml oder .xml, die in Wirklichkeit komprimiert ist, genauso geöffnet wird. Ein Hinweis für Musiker, der nicht den Score betrifft: <b>Finale v27.4 öffnet eine .mxl nur über File → Import → MusicXML</b>; sein File → Open lehnt sie mit „Invalid file type“ ab, selbst .mxl-Dateien, die Finale selbst exportiert hat.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="corchetes-y-llaves-que-viajan"><span class="tr">Klammern und Akkoladen reisen mit der Partitur</span></h3>
+      <p><span class="tr">Beim Import kommen die Instrumentengruppen der Datei gezeichnet an — <b>eckige Klammer</b>, <b>Unterklammer</b> und <b>geschweifte Klammer</b> —, mit durchgezogenem oder unterbrochenem Taktstrich, wie es die Datei sagt; eine Gruppe, die in einer anderen verschachtelt ist, wird zur Unterklammer, egal in welcher Reihenfolge das exportierende Programm sie geschrieben hat. Und beim Export werden sie wieder hinausgeschrieben: Der Hin- und Rückweg ist getestet. Was noch nicht übernommen wird: Titel, Untertitel und Copyright der Seite, Ausdrucksworte, die nicht zu einem Tempo gehören (pizz., arco, grazioso, unis., colla parte…), der Kurzname des Instruments und der Gruppenname.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="copiar-un-canal-entero"><span class="tr">Beim Kopieren eines Kanals reisen seine Zeichen mit</span></h3>
+      <p><span class="tr">Ein Rechtsklick auf einen Kanal bietet <b>Copy channel</b> und <b>Paste channel</b>. Bisher reisten nur die Noten: Artikulationen, Dynamik, Ausdrücke, Agogik, Texte und Schlüsselwechsel blieben im Quellkanal zurück, auf Musik, die nicht mehr da war. Jetzt <b>reist der ganze Kanal</b>, mit allem, was darauf geschrieben ist, und der Zielkanal wird vollständig ersetzt — Noten und Zeichen —, so dass sich nie zwei Schichten vermischen. Das Einzige, was nicht reist, ist das, was zu <b>mehreren Notenzeilen gleichzeitig</b> gehört (ein über JOIN geteiltes Zeichen): Es zu kopieren würde es vervielfachen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="repetir-tambien-el-gesto"><span class="tr">Einen Takt wiederholen, und auch seine Gestaltung</span></h3>
+      <p><span class="tr">Eine Sequenz wiederholt den Zustand eines Takts über einen Abschnitt. Bisher wiederholte sie die <b>Zeichen</b>; jetzt kann sie auch <b>die Velocity-Gestaltung</b> wiederholen — den Akzent, den du von Hand gesetzt hast, das Ende eines <i>poco dim</i>. Das ist ein eigener Schalter im Sequenzenfenster, <b>◌ VEL</b>, <b>standardmäßig aus</b>: Ein Zeichen zu wiederholen und eine Interpretation zu wiederholen ist nicht dasselbe, und das muss man ausdrücklich verlangen. Er begrenzt sich selbst — er greift nur in Kanälen, in denen du in diesem Takt tatsächlich eine Velocity von Hand gesetzt hast, und er <b>überschreibt nie einen Takt, der schon seine eigene hat</b>. Eine Note, die du nicht angerührt hast, folgt weiterhin der Dynamik, wie immer.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="lo-que-escribis-a-mano-manda"><span class="tr">Eine von Hand gesetzte Velocity hat Vorrang</span></h3>
+      <p><span class="tr">Innerhalb einer gebalkten Gruppe verteilt die Engine das Gewicht selbst — die erste Note wiegt mehr als die inneren —, aber nur <b>dort, wo niemand etwas anderes gesagt hat</b>. Ein Fall fehlte: die Velocity, die der Interpret auf <b>eine bestimmte Note</b> setzt. Ein mit 55 geschriebener Akzent kam bei der Engine als 41 an, und eine 40 am Ende eines <i>poco dim</i> als 4. Diese Note bleibt jetzt unangetastet — einschließlich Vibrato, da es derselben Leiter folgt —, und die automatische Verteilung wirkt um sie herum.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="las-cuerdas-en-escala"><span class="tr">Die Streicher, im Maßstab des Orchesters</span></h3>
+      <p><span class="tr">Drei Beschwerden, die nichts miteinander zu tun zu haben schienen — die Bratschen waren nicht zu hören, die <i>piano</i> geschriebenen ersten Violinen deckten alle zu, und der Gesamtpegel übersteuerte nach ein paar Takten —, erwiesen sich als eine einzige: Instrument für Instrument bei gleicher Velocity gemessen, lebte das ganze Orchester in einem Band von 10 dB, und <b>die Violinengruppe lag 40 dB darüber</b>. Korrigiert nach Register statt in einem Zug, weil der Überschuss auch mit steigender Tonhöhe zunahm. Die Bratsche hat dabei <b>ihre Höhe geöffnet</b>: Der singende Ton kommt nicht mehr unter dem Pedal darunter herein. Klangfarbe unberührt. <b>Zweite Hälfte dieser Geschichte (16.09.)</b>: Gemessen auf dem Weg, den der Score wirklich benutzt — und nicht auf dem, den der Test benutzte —, <b>fiel die Violinengruppe von unten nach oben noch um 21,5 dB ab</b>, so dass die Melodie der ersten Violinen, die dort oben lebt, unter allem hereinkam. Noch einmal nach Register korrigiert, liegt die Ungleichmäßigkeit jetzt bei 0,6 dB; und dann wurde, nach Gehör, die ganze Kurve um <b>18 dB</b> angehoben, ohne ihre Form zu ändern: Im Werk sind die ersten Violinen nicht mehr zugedeckt, sondern liegen 4 dB über dem Pizzicato der zweiten Violinen und 11 über den Bratschen. Violoncelli und Kontrabässe sind weiterhin der nächste Schritt — auf dem echten Weg gemessen, liegt der Kontrabass deutlich über dem, was sein eigenes Datenblatt angibt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-matiz-es-el-techo-del-grupo"><span class="tr">Die geschriebene Dynamik ist die Obergrenze der gebalkten Gruppe</span></h3>
+      <p><span class="tr"><b>Intelligent Beams</b> stiegen früher Sprossen der Dynamikleiter hinab, und diese Leiter ist nicht proportional: Dieselbe Stufe war aus einem <i>ppp</i> heraus ×0,33 wert und aus einem <i>f</i> heraus ×0,85 — sechs Gesten unter einem Namen. Jetzt ist die Dynamik, die du geschrieben hast, die <b>Obergrenze</b>: Die erste Note behält sie ganz, und jede folgende ist ein festes Verhältnis der vorherigen — <b>Stufe 1 ×0,75 · 2 ×0,60 · 3 ×0,45 · 4 ×0,30 · 0 keine</b>. Dieselbe Stufe ist dieselbe Geste aus einem <i>p</i> wie aus einem <i>ff</i>. Es gibt eine neue <b>Stufe 4</b>, und die Stufe existiert jetzt auch in einer Zweiergruppe — das Achtelpaar pro Zählzeit, der häufigste Fall der ganzen Notation, klang früher bei 1, 2 und 3 identisch.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="cada-voz-conserva-su-techo"><span class="tr">Jede Stimme behält ihre Dynamik, und die Gruppe ist die Folge, die die Seite zeichnet</span></h3>
+      <p><span class="tr">Auf einer geteilten Notenzeile gehört die Grenze der Gruppe weiterhin der Notenzeile — die zuerst einsetzende Stimme öffnet sie —, aber die <b>Obergrenze gehört jeder Stimme</b>: Die erste Note, die jede Stimme in die Gruppe bringt, behält ihre geschriebene Dynamik. Vorher stahl der Bass, der den Schlag markiert, der danach einsetzenden Begleitung die Obergrenze, und du musstest ein <i>ff</i> schreiben, um ein <i>mp</i> zu hören; jetzt wird ein Pedal als das geschrieben, was es ist, mit seiner eigenen Dynamik. Und wenn der Balken die Gruppierung bestimmt, ist die Gruppe <b>genau die Folge, die die Seite zeichnet</b>, von 2 bis N Noten: Im 6/8 zeichnete die Seite 3+3, während die Engine 2+2+2 spielte. Eine Pause behält ihren Platz innerhalb der Gruppe und teilt sie nicht — in einer Balkengruppe trennt sie dagegen, weil ein Balken keine Pause überquert.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="popup-int-beams-general"><span class="tr">Das Int·Beams-Popup: General, der Bereich M → M und eine Fußzeile, die den Zustand anzeigt</span></h3>
+      <p><span class="tr">Ein Rechtsklick auf <b>3·2</b> öffnet das Popup Intelligent Beams. Der Regler für das ganze Stück heißt <b>General</b> (früher Global) und reicht von <b>0 bis 4</b>. Das <b>◉</b> der Bereichszeile ist weg — es verschob den Bereich hinter deinem Rücken und änderte, was die Felder bedeuteten —, daher ist der Bereich immer das, was <b>M → M</b> sagen. Die Zeile <b>GROUP</b> liest sich so, wie man einen Balken liest: <b>Balken · Notenwert (1/8, 1/16, 1/32, 1/64) · Notes, mit − und +, von 1 bis 16</b>, statt einer Anzahl von Vierteln — 3 Achtel ist das alte 3+3. <b>SPLIT gibt es nicht mehr.</b> Und das Popup hat eine <b>Fußzeile, die den Zustand anzeigt</b>: welchen Bereich und welche Kanäle es genommen hat, wie viele Noten, welche Gruppierungsregeln und welche Stufe, mit wie vielen Noten auf jedem Wert; wenn etwas gemischt ist, sieht es gemischt aus. Die General-Stufe wird mit <b>Strg+Z</b> rückgängig gemacht wie jede Bearbeitung, und ein offenes Popup zeigt die zurückgeholte Stufe.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-escalera-empieza-en-16"><span class="tr">Die acht Dynamikstufen, neu gesetzt: Die Leiter beginnt bei 16</span></h3>
+      <p><span class="tr">Die acht Dynamikstufen werden zu <b>ppp 16 · pp 20 · p 26 · mp 33 · mf 42 · f 53 · ff 68 · fff 86</b> (von 127). Die Leiter begann früher bei 6, und unter 16 <b>kann die Engine einen Stufenwechsel nicht auflösen</b>: Gemessen bringt eine Stufe 3 aus 9 heraus +0,2 dB und aus 16 heraus +7,0 dB — ein <i>ppp</i> konnte nie artikulieren. Es bleibt die leiseste der acht Stufen, und jetzt ist es auch hörbar. Offen gesagt: Die Leiter ist eine einzige Quelle, daher <b>klingt ein gespeichertes Werk, dessen Zeichen keine eigene Velocity tragen, in dieser Version anders</b>, präsenter in den leisen Dynamiken. Es gibt nichts nachzuholen: Es ist dieselbe Datei, besser gehört.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="snap-to-grid-reescrito"><span class="tr">Snap to grid: Es rückt ins Raster, was außerhalb liegt</span></h3>
+      <p><span class="tr"><b>Snap to grid</b> (SELECT-Panel) war kein Einrasten: Es ordnete nach Dauern neu — jede Note landete auf der Summe der vorherigen Dauern, ohne auf ein Raster zu schauen —, deshalb nahm es Akkorde auseinander, und ein Takt, dessen Dauern nicht die Taktlänge ergaben, schob alles dahinter weiter. Jetzt rastet es wirklich ein: Jeder <b>Einsatz</b> geht zum nächstgelegenen Vielfachen des Rasters, und <b>Noten mit gemeinsamem Einsatz reisen zusammen</b>, so dass ein Akkord ein Akkord bleibt. Das Raster ist das des Editors (SUBDIV in der Werkzeugleiste); N-tolen gehen zu ihrem eigenen ternären Raster. Die Dauern bleiben unberührt, was schon an seinem Platz war, bewegt sich nicht, Zeichen reisen mit ihrer Note, und ein einziges Strg+Z bringt alles zurück. Es funktioniert mit Dateien von Hunderten Noten.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="sound-fx-por-canal-y-area"><span class="tr">Sound FX nach Kanal und Bereich: Hall, Echo, Porta und Vibrato</span></h3>
+      <p><span class="tr">Auf dem Etikett jedes Kanals öffnet <b>Sound FX…</b> ein Popup mit sechs Reglern — <b>Reverb · Echo wet · Echo fb · Echo time · Porta · Vibrato</b> —, geschrieben als <b>Region</b>: Der Effekt ist bei der Wiedergabe zu hören, nicht live. Der Bereich wird mit den hauseigenen Optionsfeldern gewählt — <b>This channel · This place · Selection</b> —, bevorzugt kurze Bereiche, idealerweise eine einzige Note: Dort geben Echo und Hall einer melodischen Linie ihren harmonischen Charakter und Porta das Legato des Hineingleitens in die Note. FX ist bei <b>Strg+Z</b> dabei, und <b>Clean</b> löscht den aktiven Bereich — oder den ganzen Kanal, wenn der Bereich keine FX hat, der Kanal aber schon. Das Popup des Score wirkt nur auf die Wiedergabe (Engine B) und das des Keyboard nur auf das Live-Spiel (Engine A): Sie vermischen sich nicht.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-signo-de-ayuda"><span class="tr">Jedes Popup führt dich zu seiner Seite im Handbuch</span></h3>
+      <p><span class="tr">Jedes Popup im Score — die der Werkzeugleiste, die Editoren auf der Arbeitsfläche und die Rechtsklick-Menüs — trägt jetzt ein petrolfarbenes <b>?</b> neben seinem Titel. Ein Klick öffnet in einem neuen Tab den Abschnitt des <a href="../../UserGuide.html">Benutzerhandbuchs</a>, der dieses Popup behandelt: 68 Markierungen, eine pro Popup, jede mit ihrem eingetragenen Abschnitt. Immer an derselben Stelle, so dass man nicht raten muss, welches Popup Hilfe hat und welches nicht.<br> Und wo ein Link nicht genügte, sagt es dir das <b>?</b> direkt dort, ohne dich aus dem herauszuholen, was du gerade tust: die Notengeste, die Bogengeste, Touch und State eines Ausdrucksworts, und die Phrasenagogik. Dort antwortet der Coach in zwei Zeilen und lässt ein <b>more ⟶</b> für die lange Version.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-palabra-en-tu-idioma"><span class="tr">Schreib den Ausdruck in deiner eigenen Sprache</span></h3>
+      <p><span class="tr">Das Textfeld im Popup <b>EXPR</b> hat nie etwas gefiltert: Du schreibst das Wort in der Sprache, die du willst — das ist die Regel des Papiers. Neu ist, dass du jetzt <b>siehst, was es bewirkt, bevor du es einfügst</b> — das <b>?</b> auf der blauen Zeile sagt dir, zu welchem Begriff es aufgelöst wird, zu welcher Gruppe es gehört und ob es klingt —, und dass du das Wort, wenn es unbekannt ist, verknüpfen kannst: <b>behaves like…</b>, und du wählst den Begriff, dem es ähnelt. Die Tinte bleibt, wie du sie geschrieben hast. Die Verknüpfung reist in der <b>.mmf</b> mit, so dass dein Stück auf dem Rechner eines anderen genauso klingt, und ein Kästchen bewahrt sie auch für deine übrigen Stücke. Ausführlich erklärt im <a href="../../UserGuide.html#palabra-en-otro-idioma">Benutzerhandbuch</a>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-lista-en-tu-idioma"><span class="tr">Die Instrumentenliste spricht deine Sprache</span></h3>
+      <p><span class="tr">Die Instrumentenliste kam früher gemischt heraus — manche Namen auf Englisch, andere auf Spanisch, und die Familientitel immer auf Englisch. Jetzt spricht die ganze Liste die Sprache, die du gewählt hast, einschließlich der Familientitel, sowohl im Feld <b>Instrument</b> der Kanalkarte als auch im kleinen Auswahlfeld jeder Zeile des Popups <b>CHANNELS</b> und in der Spaltenpalette. <b>Was du siehst, ändert sich; was die Datei speichert, nicht</b>: Der interne Name jedes Instruments wird nie übersetzt, so dass eine <code>.mmf</code> auf jedem Rechner gleich klingt. Im selben Durchgang folgen mehrere Texte und Tooltips, die auf Spanisch geblieben waren, jetzt deiner Sprache: „The game count“, der Button <b>Unfold ⇥</b>, die Tooltips für den letzten Takt und die px-Größe, der auf den <b>Ex.</b>-Chips und der auf dem Pin von <b>BARLINES</b>. Ausführlich erklärt im <a href="../../UserGuide.html#lista-en-tu-idioma">Benutzerhandbuch</a>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="doble-clic-selecciona-el-compas"><span class="tr">Doppelklick auf die Notenzeile: Der Takt wird ausgewählt</span></h3>
+      <p><span class="tr"><b>Doppelklick auf die Notenzeile</b>, wo kein Notenkopf ist, und der ganze Takt wird ausgewählt, in diesem Kanal. Vorher muss nichts eingeschaltet werden: Der Doppelklick <b>wechselt von selbst in den SELECT-Modus</b> und lässt die Auswahl <b>geschlossen</b>, bereit für das Aktionen-Popup oder für <b>Note spacing</b>. Von dort aus erweitert <b>Shift + Klick</b> auf einen anderen Takt desselben Kanals die Auswahl bis dorthin, und das lässt sich verketten. Da nicht gezogen wird, kann man nicht versehentlich eine Note verschieben — genau das passierte, wenn man über die Notenköpfe ziehen musste, um einen Takt zu markieren. Und darauf hatte <b>Note spacing</b> gewartet: Sein Dropdown in den Score Options wirkt auf die <b>Region</b>, solange es eine geschlossene Auswahl gibt — das Etikett daneben sagt, woran es arbeitet, „region 3–6“ — und auf das ganze Stück, wenn es keine gibt; fährt man mit der Maus hinein, synchronisiert es sich neu und zeigt den Faktor dieser Region. Die beiden anderen Gesten auf derselben Notenzeile bleiben unverändert: Ein Doppelklick <i>auf einen Notenkopf</i> ist weiterhin der für den <b>Akkord</b>, und ein Klick <i>innerhalb</i> einer bereits geschlossenen Auswahl greift sie, um sie zu verschieben. Ausführlich erklärt im <a href="../../UserGuide.html#sc-select-dobleclic">Benutzerhandbuch</a>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="las-notitas-entran-en-el-compas"><span class="tr">Vorschlagsnoten passen sich dem Takt an, nicht umgekehrt</span></h3>
+      <p><span class="tr">Eine Vorschlagsnote reservierte früher <b>34 px</b> Breite — mehr, als eine ganze Sechzehntelspalte einnimmt —, und da diese Tinte sich mit <b>Note spacing</b> weder dehnt noch staucht, fiel sie ganz in ihre Spalte und verzerrte den Takt. Gemessen an einer Passage mit <b>denselben Notenwerten in jedem Takt</b>: Die Takte mit Vorschlagsnote kamen auf 161 und 238 px, der einzige ohne auf 127. Der Rhythmus war regelmäßig; was ihn durcheinanderbrachte, war die Reservierung. Jetzt reserviert eine Vorschlagsnote <b>18 px</b>, also einen Notenkopf und seinen Freiraum, und der Platz wächst weiterhin, wenn es mehrere sind. Und wenn die Vorschlagsnote <b>mit der Note auf Zählzeit 1 kollidiert</b> — die Reservierung, durch die der Takt weiter innen beginnt —, ist dieser Platz keine feste Zahl mehr: Er hat eine <b>Obergrenze von 12 % der Taktbreite</b>, so dass man es in einem breiten Takt nicht bemerkt und er einen schmalen nicht mehr verformt. Es ist die Notensatzentscheidung, dass sich die Vorschlagsnote in den Takt einfügt, statt dass der Takt für sie wächst.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-punto-de-la-cuerda-es-una-arcada"><span class="tr">Der Staccatopunkt ist bei Streichinstrumenten ein Bogenstrich</span></h3>
+      <p><span class="tr">Der Punkt auf einer Note eines <b>gestrichenen Saiteninstruments</b> ist nicht mehr „der halbe Wert“: Er ist ein <b>kurzer Bogenstrich</b>, und ein Bogenstrich dauert ungefähr gleich lang, wie lang der Notenwert auch sein mag. Zwei Noten mit Punkt und unterschiedlichem Wert kommen in <b>derselben Länge</b> heraus, mit einer relativen Obergrenze, damit der Punkt auch bei sehr kurzen Noten noch etwas bewirkt. Vorher fraß der Punkt in einer schnellen Gruppe die Note auf — eine Sechzehntel mit Punkt kam auf 84 ms und klang nie richtig —, während eine Achtel mit Punkt in derselben Passage richtig klang; jetzt dauern beide 145 ms. Die <b>Klangfarbe</b> kommt mit der Länge: dunkler, schneller Einsatz, doppeltes Bogengeräusch. Nur bei gestrichenen Saiten: Beim <b>Pizzicato</b> ändert sich nichts, denn ein Zupfen ist kein Bogenstrich. Und <b>was du schreibst, gilt</b>: Wenn du eine andere Strichart geschrieben hast — <i>sautillé</i>, <i>punta d'arco</i> — oder ein Technikzeichen, hat das Geschriebene Vorrang. Der Regler <b>ART</b> der Console steht weiterhin über all dem. Nebenbei bewirkt das Wort <b>spiccato</b> endlich etwas: Im Ausdrucksbereich geschrieben — zusammen mit <b>spicc.</b>, <b>picchettato</b> und <b>picado</b> — liest die Engine es und spielt diesen Bereich mit dem kurzen Strich. Bis heute war es nur Tinte.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-acento-es-una-llegada"><span class="tr">Ein Akzent ist ein Ankommen, kein Schlag</span></h3>
+      <p><span class="tr">Ein <b>Akzent</b>, ohne eigene Zahl geschrieben, wog zu viel: In einer schnellen Gruppe brachte er <b>13,6 dB</b> über seinen Nachbarn und wurde als Schlag gehört statt als der Ruhepunkt, zu dem die Gruppe hinführt. Und was herausstach, war nicht das Gewicht, sondern die <b>Helligkeit</b>: Gemessen brachte das Zeichen allein 3,7 dB, und 2,4 davon waren die Kante des Ansatzes. Jetzt bringt ein Akzent ohne Zahl etwa <b>2 dB</b> über seiner Gruppe — eine Stufe, kein Sprung — und das Zeichen allein 1,3. Es gibt weiterhin einen Akzent, er setzt schneller und heller ein, deckt aber die Noten mit Punkt um ihn herum nicht mehr zu. Was sich nicht ändert und gut zu wissen ist: Ein Akzent, der <b>schon seine eigene Zahl trägt</b> (das <b>Weight</b> in seinem Popup), schaut nicht auf den neuen Wert und klingt so, wie du ihn gelassen hast; wenn ein altes Stück zu starke Akzente hat, werden sie Zeichen für Zeichen in ihrem Popup korrigiert. <b>Marcato</b> und <b>Stress</b> bleiben, wie sie waren.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-arcada-escrita-rige-el-tramo"><span class="tr">Eine geschriebene Strichbezeichnung gilt bis zur nächsten</span></h3>
+      <p><span class="tr">Ein <b>⊓</b> oder ein <b>V</b> zu schreiben korrigiert nicht mehr nur eine einzelne Note: Es <b>eröffnet einen Bogenstrich</b>, der bis zum nächsten Zeichen auf diesem Kanal gilt, und jede Note dieses Abschnitts wird in derselben Richtung gespielt. Eine <b>geschriebene Pause unterbricht ihn</b>, denn eine Pause überquert man nicht mit dem Bogen auf der Saite. Ist gar kein Zeichen geschrieben, ändert sich nichts: Die Engine wechselt weiterhin Note für Note, wobei der Legatobogen und die Kette der Haltebögen als <b>ein</b> Strich zählen. Wozu das dient: <b>Die Phrase, die sich wiederholt, wird gleich gespielt</b>. Wenn du ⊓ an den Anfang der Phrase schreibst und ⊓ an den Anfang ihrer Wiederholung, klingen beide mit derselben Strichart, statt dort zu landen, wo die Zählung sie hinbringt. Vorher zählte die Engine <b>einen Strich pro Note</b>, so dass sie in einer Gruppe, die man in einem einzigen Strich spielt, drei verbrauchte, und ein paar Takte später war die Richtung umgekehrt. Die Strichart entscheidet der Spieler, nicht die Notenwerte: Sie automatisch abzuleiten wurde versucht und verworfen — in ein und derselben Passage gibt es Gruppen mit Vorschlagsnote und ohne Akzent, und jede automatische Regel trifft manches richtig und manches falsch.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="save-as-wav"><span class="tr">🔊 SAVE AS WAV — das Stück oder die gewählten Takte als Audiodatei</span></h3>
+      <p><span class="tr">Im Menü <b>File</b>, unter PRINT / PDF. Der Score hat keinen Klang — die Engine ist das <b>Cosmic Keyboard</b> —, also <i>dirigiert</i> der Score: Er bittet das Keyboard aufzunehmen, spielt das ganze Stück oder die Takte der <b>SELECT</b>-Region ab, wartet am Ende den Nachhall ab und lädt eine <b>24-Bit-Stereo-WAV</b> herunter, benannt nach dem Stück (<span class="mono">Titel.wav</span> · <span class="mono">Titel - M2-M3.wav</span>). Es ist eine <b>Live-Aufnahme</b>, keine Konvertierung: Der Export dauert so lange wie die Musik. Währenddessen zeigt eine Karte das Logo, das sich mit fortschreitendem Stück petrolfarben füllt — es atmet mit dem Puls —, wie viel noch übrig ist, welcher Takt gerade spielt und am Ende Name, Dauer und Größe der Datei; <b>CANCEL</b> oder Esc verwerfen, ohne herunterzuladen. Da <i>was klingt</i> genau das ist, was aufgenommen wird, landet alles, was du während des Exports in der <b>Console</b> bewegst — Fader, Panorama, Mute, Master, Hall —, in der Datei: Es ist eine Live-Mischung. Was du auf dem Keyboard spielst, kommt auch hinein. Ist das Keyboard nicht geöffnet, sagt es dir die Karte, und es wird nichts Leeres aufgenommen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="cada-perilla-manda-sobre-su-motor"><span class="tr">Jeder Lautstärkeregler regelt das Seine</span></h3>
+      <p><span class="tr">Bisher waren das <b>Vol</b> des Score, das <b>VOL</b> des Keyboard und das <b>MASTER</b> der Console drei Griffe am selben Regler: Drehte man einen herunter, wurde alles leiser. Jetzt regelt jeder das Seine: das <b>Score Vol</b> das, was der Score zum Spielen schickt, das <b>Keyboard VOL</b> das, was du auf den Tasten spielst, und das <b>Console MASTER</b> das Ganze — also das, was ⬤ wav und SAVE AS WAV aufnehmen. Wozu: Bei laufendem Score eine Melodie darüber üben, mit leise gestelltem Score und deinem Keyboard voll aufgedreht; oder ausprobieren, was du im Kopf hast, bevor du es schreibst, mit der Partitur auf halber Lautstärke. Die Regler auf ihren üblichen 40 % klingen genau wie vorher: Die Aufteilung ändert sich, nicht der Pegel.</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="index.html" class="foot-brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="../../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite in pythagoreischer Stimmung · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle Rechte vorbehalten</span></span>
+</footer>
+
+<script src="../../mm-theme.js"></script>
+<script src="../../site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','de');</script>
+</body>
+</html>

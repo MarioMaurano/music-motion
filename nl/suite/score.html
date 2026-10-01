@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl" data-lang="nl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Score Editor — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../mm-theme.css">
+<link rel="stylesheet" href="../../site.css">
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/score.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/score.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/score.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/score.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/score.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/score.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}</style></head>
+<body>
+
+<header>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="../../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="tr">Home</span></a>
+    <a href="index.html#apps"><span class="tr">De apps</span></a>
+    <a href="index.html#howto"><span class="tr">Hoe je begint</span></a>
+    <a href="../../instruments.html"><span class="tr">Instrumenten</span></a>
+    <a href="index.html#aula"><span class="tr">Klas van de Coach</span></a>
+    <a href="../../UserGuide.html"><span class="tr">Gebruikshandleiding</span></a>
+    <a href="../../score-shortcuts.html"><span class="tr">Sneltoetsen</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><a href="../../suite/score.html?lang=es">ES</a><a href="../../suite/score.html?lang=en">EN</a><a href="../../fr/suite/score.html">FR</a><a class="on" href="score.html">NL</a><a href="../../de/suite/score.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--gold)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="index.html#apps">← <span class="tr">Terug naar de suite</span></a>
+  <div class="app-eyebrow">⊞ Score Editor</div>
+  <h1>
+    
+    <span class="tr">De partituur.</span>
+  </h1>
+  <p class="lead">
+    
+    <span class="tr">Je schrijft muziek per kanaal. Met het mini-keyboard in de TODAL-modus speel je op de toontrappen van de toonaard (in F groot klinkt trap IV automatisch als bes). Zelf maakt het geen klank — die komt van het Keyboard, live gesynchroniseerd.</span>
+  </p>
+
+  <div class="launch">
+    <a class="btn-launch" href="../../../apps/mmk-scorekeyboard.html">▶ <span class="tr">Open het Cosmic Keyboard</span></a>
+    <a class="btn-launch" href="../../score-shortcuts.html">⌨ <span class="tr">Sneltoetsen en interacties (afdrukbaar)</span></a>
+  </div>
+  <div class="note">
+    
+    <span class="tr">De Score maakt op zichzelf geen klank: hij stuurt zijn noten naar het Keyboard via <b>mm-sync</b>, en dat vraagt een gedeelde oorsprong. Serveer alles vanaf één en dezelfde <span class="mono">localhost</span>.</span>
+  </div>
+
+  <div class="specs">
+
+    <div class="spec">
+      <h3 id="escritura-por-canales"><span class="tr">Schrijven per kanaal</span></h3>
+      <p><span class="tr">Je componeert per kanaal —tot 32—, elk met een eigen instrument. CH10 is vast voorbehouden aan slagwerk. Per kanaal kun je het geluid uitzetten (mute) en de partij tonen of verbergen, om je op één stem tegelijk te concentreren.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-mini-keyboard-modo-todal"><span class="tr">Het mini-keyboard (TODAL-modus)</span></h3>
+      <p><span class="tr">De strook onderaan, in drie zones: links hoe je speelt, in het midden de toetsen, rechts het kanaal waarin je schrijft. <b>WRITE</b> schrijft op de cursor en <b>LISTEN</b> laat alleen horen, zonder aan de partituur te raken. De WRITE-knop wisselt af tussen ✏ WRITE → TODAL PLAY → TODAL WRITE: in <strong>TODAL</strong> dragen de toetsen het opschrift van hun trap in de actieve toonaard, en dezelfde trap geeft altijd de juiste noot — daarom kan iemand zonder muzikale opleiding correct schrijven in elke toonaard, en kan een musicus componeren zonder piano te kunnen spelen. Daaronder de stemming: <b>System</b> (zuiver pythagorese Axiom · Tonal met posities), <b>Mode</b> (groot, of klein: natuurlijk, harmonisch en melodisch) en <b>Sens</b>, hoeveel de leidtoon verhoogd wordt. En in de rechterzone de kaart van het actieve kanaal met zijn volume en het raster van de 32, om met één klik van kanaal te wisselen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-panel-dos-sistemas-a-la-vista"><span class="tr">Het Panel: twee systemen in beeld</span></h3>
+      <p><span class="tr">De knop <b>▭ PANEL</b> opent een tweede weergave onder de partituur, om twee dingen tegelijk te volgen: de solist en de bas, de stem die je overschrijft en de stem die je schrijft. De <b>CH chips</b> in de kop kiezen welke kanalen het Panel weerspiegelt —elk in zijn eigen kleur—, en als je schrijft in een kanaal dat er nog niet bij was, voegt het Panel het zelf toe. Het heeft een eigen zoom (Ctrl + scrollwiel) en wordt groter als je aan zijn balk trekt. <b>🎧 SOLO</b> vraagt de Console om die kanalen te isoleren en geeft de mengtafel terug zoals ze was wanneer je het uitzet; <b>🖨 PRINT VIEW</b> opent ze in de afdrukweergave. En het is niet alleen om naar te kijken: de rechtsklik werkt er ook in, met dezelfde editors als op het grote blad. Het Panel en het klavier wisselen elkaar af: het ene openen verbergt het andere.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="armadura-automatica"><span class="tr">Automatische voortekening</span></h3>
+      <p><span class="tr">Kies de grondtoon en de voortekening stelt zich vanzelf in. De spelling wordt diatonisch bepaald door de voortekening, met de trapaanduidingen in goud: je ziet de functie van elke noot, niet alleen haar naam.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="duraciones-y-silencios"><span class="tr">Duurwaarden en rusten</span></h3>
+      <p><span class="tr">Je bepaalt de duur van elke noot (van hele noot tot 64ste noot). Een tweede klik op dezelfde waarde maakt er een rust van, zodat je ritme en pauzes met hetzelfde gebaar schrijft. En met het <strong>numerieke toetsenblok</strong> kies je ze met één hand —van 1 (de kortste) tot 7 (de hele noot), het punt op de punttoets— volgens de gewoonte van notatieprogramma's.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-banda-flotante"><span class="tr">De zwevende strook</span></h3>
+      <p><span class="tr">De nootwaarden reizen met je mee: een zwevende strook met de duurwaarden, het punt, voorslagen en tuplets, die je meesleept naar waar je aan het schrijven bent. Trek ze uit tot een lijn of vouw ze op tot een blok — ze onthoudt waar je ze liet. Zo kun je componeren met het mini-keyboard gesloten, met de partituur over de volle pagina. Ze is ook een <strong>bewerkingstafel</strong>: op de geselecteerde noot breng je articulaties (staccato, accent, tenuto, marcato, fermate…) en dynamiek aan, zonder andere panelen te openen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="notas-que-se-arrastran"><span class="tr">Noten naar de notenbalk slepen</span></h3>
+      <p><span class="tr">Pak een waarde uit de strook en laat ze los op de notenbalk: een spooknoot toont precies waar ze zal landen — lijn of tussenruimte volgens de sleutel van het kanaal, en de juiste tel van de maat — terwijl je ze op elke hoogte zacht hoort klinken. Kom je te laat in de maat binnen, dan vult de Score het gat met de juiste rusten, en de Coach (als hij wakker is) vertelt je waarom. Ook wat al geschreven staat, kan bewegen: één klik pakt de noot op, ze reist klinkend met de muis mee, en een tweede klik zet ze neer.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="agogica-nota"><span class="tr">Agogiek</span></h3>
+      <p><span class="tr">Expressieaccenten per noot: <strong>+1</strong> subtiel en <strong>+2</strong> expressief, met een directe (π) of omgekeerde (INV) curve. Kleine timingnuances die de lijn tot leven brengen zonder het raster te verlaten.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="asym-agog"><span class="tr">Frase-agogiek: de solist speelt, het raster blijft staan</span></h3>
+      <p><span class="tr">De agogiek hierboven buigt <i>één</i> noot; deze geeft vorm aan een <b>heel traject</b> van één kanaal. In de SELECT-modus sluit je een selectie over een kanaal, rechtsklik, <b>⌘ ASYM AGOG</b>: de regio wordt over dat traject getekend. Daarbinnen speelt de solist met de frase terwijl de begeleiding op haar raster blijft: <b>aan het tempo wordt nooit geraakt</b>. Het is rubato in de oude betekenis: de harp die onverbiddelijk doorgaat en de bas die meespeelt. De regio <b>verschuift</b> alleen — het traject duurt wat er geschreven staat en de frase haakt vanzelf weer aan, dus het werkt ook terwijl het orkest speelt.<br><br>De <b>AXIS</b> zegt wat de curve doseert, en dat zijn drie verschillende dingen aan één noot: <b>Tempo</b>, wanneer ze inzet; <b>Pres</b>, waarmee ze inzet —de aanwezigheid van de aanzet, opstreek of afstreek, aangeblazen of aangestoten—; en <b>ART</b>, hoe lang ze duurt en met hoeveel gewicht, als schaal op wat de geschreven articulatie al zegt. Elke as bewaart <i>haar</i> eigen curve over hetzelfde traject, en de kleur van de strook zegt naar welke je kijkt: limoen, teal, lavendel.<br><br>De <b>fasen</b> zijn de vorm van de curve: <b>Inhale</b> neemt adem bij het binnenkomen en keert terug, <b>Move</b> duwt door het midden en betaalt aan het eind terug, <b>Arrive</b> neemt van het midden en verbreedt het doel, <b>Exhale</b> ontspant na het hoogtepunt. <b>Flat</b> is geen curve: het is het raster — de lijn staat op nul en je hoort alleen wat je met de hand verschuift, en zo schrijf je een wals. <b>π⁻¹</b> spiegelt de curve. Met elk van de eerste vier verlaat de frase het raster en keert ze erop terug: ze begint en eindigt op nul. <b>INT</b> zegt hoeveel, in de eenheid van de as, en het getal onder de tekening zegt het duidelijk: milliseconden, trappen van aanwezigheid of procent.<br><br>De tekening is geen versiering: <b>elk punt is een noot</b> van het traject. Sleep er een en je past alleen die noot aan, met de fase intact — de lijn blijft de vorm, en een punt dat ervan afwijkt, is jouw correctie. De pijltjes lopen van noot naar noot en de +/− stellen fijn bij. Op de ART-as zijn de <i>holle</i> punten noten zonder geschreven articulatie: daar valt niets te schalen.<br><br>De <b>kanaalchips</b> zeggen wie ze bereikt: een frase die beide violen spelen, is <i>één</i> regio die beide bereikt, geen twee regio's. En zodra je ze een <b>naam</b> geeft, wordt de regio een patroon: je kunt het naar een ander traject brengen —<i>Take · van M tot M</i>, dat het herhaalt om de zoveel maten als het lang is— en alle regio's met die naam in één keer verbergen of wissen. Het patroon verankert zich metrisch: „de tweede van de maat” is één tel na het begin, niet de tweede noot die toevallig opduikt. Het <b>?</b> in de pop-up vertelt het hele verhaal, in de taal die je hebt ingesteld.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-calderon-sostiene-la-nota"><span class="tr">De fermate houdt de noot aan</span></h3>
+      <p><span class="tr">De fermate hield de klok stil, maar de noot eindigde toch op haar geschreven waarde en het wachten klonk als stilte. Nu wordt dat wachten <b>toegevoegd aan alles wat op dat punt nog klinkt</b>: de noot die de fermate draagt en wat er in andere kanalen onder wordt aangehouden, zoals in een orkest wanneer de dirigent het akkoord laat doorklinken. Het ademteken (komma) en de dubbele maatstreep veranderen niet — dat is echt stilte, en de vorige noot wordt niet verlengd.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-dinamica-va-con-su-nota"><span class="tr">Een dynamiekteken hoort bij zijn noot</span></h3>
+      <p><span class="tr">Een dynamiekteken dat een haar vóór of na zijn noot stond, was niet alleen een tekenprobleem: de noot bereikte het niet en klonk zonder. Een <i>ppp</i> die een achtste tel te laat stond, liet de hele maat rauw klinken, en de aanduiding kwam pas in de volgende maat binnen. Nu <b>klikt het dynamiekteken vast aan de noot</b> wanneer je het schrijft, en blijft het erbij wanneer je het verplaatst. En aan oud werk hoef je niets over te doen: bij het openen van een bestand zoekt de Score de noot waar elk teken bij hoort, zet het daar en meldt het je — dezelfde zorg die hij al had voor de legatobogen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-obra-respira-antes-de-empezar"><span class="tr">Het werk ademt voordat het begint</span></h3>
+      <p><span class="tr">Vroeger begon de muziek op hetzelfde moment als de klik: je drukte op play en de eerste noot kwam uit het niets. Nu, wanneer je <b>vanaf het begin</b> start, is er een kort moment stilte vóór de eerste klank — de adem die een dirigent neemt voordat hij de opmaat geeft. In het bestand verandert niets: de adem wordt aan de <b>klok</b> gegeven, niet aan de muziek, dus geen enkele noot verschuift en de maatindeling blijft intact. Vanuit het midden start play nog altijd onmiddellijk: dat is een sprong, geen inzet.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="guardar-directo"><span class="tr">Rechtstreeks opslaan</span></h3>
+      <p><span class="tr">De knop <strong>💾 SAVE</strong> in de werkbalk (of <strong>Ctrl/Cmd+S</strong>) schrijft terug naar hetzelfde bestand. De eerste keer kies je het <strong>.mmf</strong>-bestand; daarna overschrijft elke opslag het met één klik, zonder dialoogvenster — ideaal om op te slaan terwijl je schrijft. <strong>MENU FILES → EXPORT MMF</strong> blijft beschikbaar om een nieuwe kopie te exporteren.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="sincronia-con-la-suite"><span class="tr">Gesynchroniseerd met de suite</span></h3>
+      <p><span class="tr">Wat je op het Keyboard speelt, wordt hier geschreven, en de kanalen worden gedeeld met de Console om te mixen. Eén stuk, drie vensters die in realtime met elkaar praten.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="modo-pagina-editar-sobre-la-hoja"><span class="tr">Paginamodus: bewerken op het blad</span></h3>
+      <p><span class="tr">Dezelfde partituur, opgemaakt als het blad dat je gaat afdrukken — en daar meteen bewerkbaar. De instellingen staan in de werkbalk: maten per systeem, grootte van de notenbalk en ruimte tussen de systemen in echte millimeters. Met <b>Pages</b> geef je aan hoeveel pagina's je wilt en het blad schikt zich vanzelf, zonder je notenbalk stilletjes te verkleinen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="imprimir-y-sacar-las-partes"><span class="tr">Afdrukken, en de partijen uitschrijven</span></h3>
+      <p><span class="tr">De Score wil geen notengraveerprogramma zijn —daarvoor zijn Dorico en zijn soortgenoten er— maar het stuk komt wel op papier. In het Panel kies je met de chips de kanalen die je wilt en de knop <b>🖨 PRINT VIEW</b> opent ze in de afdrukweergave, alleen-lezen en opgemaakt als het blad; van daaruit drukt het dialoogvenster van de browser af op papier of bewaart het een <b>PDF</b>. Zo komen de <b>partijen per instrument</b> tot stand —één kanaal, of de kanalen die een notenbalk delen— zonder aan de volledige partituur te raken, en met de inkt van het blad: wat hulp van de editor is, komt nooit op de pagina.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-hoja-con-manos-agarra-y-movete"><span class="tr">Een blad met handen: vastpakken en verplaatsen</span></h3>
+      <p><span class="tr">In de afdrukweergave kun je vastpakken wat je ziet: beweeg de muis over de titel, de ondertitel, de componist of een systeem en de transparante container ervan verschijnt — klikken, slepen, klaar. De velden in de werkbalk lichten op om te tonen wat je verplaatst, elk systeem verschuift op zichzelf (zonder de rest van de pagina te verstoren), en het blad lijnt zichzelf uit: geen enkel deel eindigt op een systeem van één maat, het laatste systeem reikt tot de rechtermarge, en de overgebleven ruimte wordt verdeeld zodat geen enkele pagina onderaan een gat heeft.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="armadura-por-tramo"><span class="tr">Toonaardwisselingen per traject</span></h3>
+      <p><span class="tr">Het stuk kan van toonaard veranderen waar het nodig is: de nieuwe voortekening begint in de maat die je kiest, en herinneringstekens verschijnen vanzelf waar de gravure erom vraagt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-signo-de-octava-8va-8vb-15ma"><span class="tr">Het octaafteken (8va · 8vb · 15ma)</span></h3>
+      <p><span class="tr">Een <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Het boek — om verder te gaan">octaaf</a>teken over een traject, met zijn stippellijn, om de muziek uit de hulplijnen te halen. Het is inkt: je tekent het, rekt het uit, en het reist mee met het bestand.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="voces-que-comparten-pentagrama"><span class="tr">Stemmen die één notenbalk delen</span></h3>
+      <p><span class="tr">Een kanaal kan op de notenbalk van een ander kanaal getekend worden en toch een apart kanaal blijven: de gegevens blijven intact en alleen de projectie verandert. Zo delen twee stemmen één lijn, of splitst de linkerhand van een piano zich in twee lagen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="tresillos"><span class="tr">Tuplets</span></h3>
+      <p><span class="tr">Ze worden gegroepeerd geschreven, met de haak rustend op de waardestreep wanneer dat past, en ze hebben een eigen editor: getal, hoek, lengte en positie. Ze klinken als echte tuplets, niet als een benadering.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-leccion-bloques-y-la-fila-ex"><span class="tr">De les: blokken en de Ex.-rij</span></h3>
+      <p><span class="tr">Wanneer je een oefening van de Coach opent, schikken de 32 kanalen zich in acht blokken van vier stemmen en verschijnt boven de partituur een rij chips <b>Ex.1-8</b>: één klik en dat blok staat alleen, klinkend en gecentreerd, met de rest gedempt. Het is de weergave om aan één stem tegelijk te werken. <a href="coach.html">Het compositiespel →</a></span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="gesto"><span class="tr">Het gebaar van de noot</span></h3>
+      <p><span class="tr">In een gebalkte groep beslissen de Intelligent Beams zelf welke noot gewicht draagt. Op een losse noot —een aangehouden noot, een hele noot— deed niemand dat, en daarvoor dient het <b>gebaar</b>: de rij <b>Gesture</b> van de noteneditor biedt <b>&lt;</b> openbloeien, <b>&gt;</b> wegsterven, <b>&lt;&gt;</b> messa di voce, <b>&gt;º&lt;</b> omgekeerd —zakt in het midden en groeit terug, prachtig bij het koper— of <b>—</b> sostenuto, en de <b>º</b> brengt dat uiteinde tot niets. Rechtsklik op het teken om zijn editor te openen: wissel van gebaar zonder terug te gaan, spiegel het, verplaats het, zet het onder de notenbalk en bepaal hoeveel het stijgt en daalt — in stappen <i>relatief tot de dynamiek die daar geldt</i>, niet in absolute getallen. De motor schaalt het naar de werkelijke duur: op een achtste noot wordt het nauwelijks aangeduid, op een hele noot ontvouwt het zich helemaal. Niet te verwarren met <b>Pres</b>, dat de aanzet verschuift; het gebaar bepaalt wat er daarna gebeurt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="tinta-que-no-llega-al-papel"><span class="tr">Inkt die nooit op het papier komt</span></h3>
+      <p><span class="tr">Het gebaar kan verborgen worden, zoals dat al kon met tempoaanduidingen en expressies: <b>Hide</b> bewaart het in het bestand, toont het gedimd zolang <b>SHOW HIDDEN</b> aanstaat —zodat je het nog kunt bewerken— en drukt het nooit af. Voor wat je wilt horen maar niet zien.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="ligados-que-cruzan-pentagramas"><span class="tr">Bogen over notenbalken heen</span></h3>
+      <p><span class="tr">Een harp, een piano: de frase begint in de linkerhand en sterft uit in de rechter. De boog gaat nu over de notenbalken heen — sleep van een noot op de onderste notenbalk naar een noot op de bovenste en de boog wordt ertussen getekend, met elk uiteinde in zijn eigen sleutel en op zijn eigen hoogte. Hij wordt geselecteerd, bewerkt en gespiegeld zoals elke andere boog, en het verticale bereik van de editor is groot genoeg gemaakt om de afstand tussen de twee notenbalken te overbruggen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="handles-del-ligado"><span class="tr">Handgrepen van de boog: de boog met de hand bijsturen</span></h3>
+      <figure class="shot">
+        <img src="../../media/score-slur-handles.webp" alt="Un ligado corto con sus tres handles: inicio, fin y panza" loading="lazy">
+        <img src="../../media/score-slur-arrastre.webp" alt="La fila Arrastre del Slur editor, con Start, End y Panza en espacios" loading="lazy">
+        <figcaption><span class="tr">Boven: de drie punten op de boog. Onder: de rij „Arrastre” van de editor: wat je verschoven hebt, in tussenruimten van de notenbalk.</span></figcaption>
+      </figure>
+      <p><span class="tr"><b>Rechtsklik op de boog</b> en er verschijnen drie punten: <b>begin</b>, <b>einde</b> en <b>buik</b>. Sleep ze met de muis; ze klikken vast op <b>een kwart tussenruimte</b> — een halve met Shift — zodat de boog terechtkomt waar je hem bedoelde, zonder pixels te tellen. Wat je sleept, wordt <b>apart</b> bewaard van de knopverschuivingen van de editor: een ouder bestand wordt precies zo getekend als vroeger, en „↺ Arrastre” maakt alleen dat ongedaan. De editor toont de verschuiving in tussenruimten („+¾ · +½”), en ook Undo kent ze.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-arco-largo-se-ata-a-la-plica"><span class="tr">Lange bogen hechten aan de stok</span></h3>
+      <figure class="shot">
+        <img src="../../media/score-slur-anclaje-antes.webp" alt="Antes: el arco de nueve compases nace en la cabeza del Si3 de la anacrusa y pasa por debajo del Si4 del compás 1" loading="lazy">
+        <img src="../../media/score-slur-anclaje-despues.webp" alt="Ahora: el mismo arco nace sobre el beam del Si3 y pasa por encima del Si4" loading="lazy">
+        <figcaption><span class="tr">Chopin, Prelude nr. 4, de boog van de opmaat. Vroeger: vanaf de kop van de B3, onder de B4 door. Nu: vanaf de waardestreep, erboven.</span></figcaption>
+      </figure>
+      <p><span class="tr">Een boog van <b>drie maten of meer</b> hecht elk uiteinde vast volgens de kant van <i>die</i> noot waar de boog terechtkwam: aan de kant van de nootkop, aan de kop; aan de kant van de stok, aan het <b>uiteinde van de stok</b> of aan de <b>waardestreep</b>. Het is de gravureregel zoals die altijd al gold, dezelfde die Dorico en MuseScore volgen. Vroeger begon de boog van negen maten in de Prelude aan de kop van de B3 in de opmaat en dook hij onder de B4 van maat 1; nu begint hij boven de waardestreep en eindigt hij aan de stok van de A4. Korte bogen en met de hand omgedraaide bogen verschuiven geen pixel — de controle meet het na.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="pulse-el-pulso-que-se-ve"><span class="tr">PULSE: de tel die je kunt zien</span></h3>
+      <p><span class="tr">Een metronoom in de transportbalk, tussen PITCH en LOOP. Hij kiest het tempo niet: hij <b>leest het uit het werk</b>, uit het deel waar de cursor staat, dus als de partituur van tempo verandert, verandert het licht mee. En hij slaat volgens <b>SUBDIV</b>: op 1 markeert hij de kwartnoot, op 2 de achtste, op 4 de zestiende, met de eerste van elke groep feller, zodat je de tel binnen de onderverdeling kunt lezen. Een echte hulp bij hemiolen en samengestelde maatsoorten, en makkelijk te volgen voor een beginner.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="loop-ab"><span class="tr">A–B-loop</span></h3>
+      <p><span class="tr">Op de maatstrook markeer je <b>A</b> en <b>B</b> met een rechtsklik, en dat traject herhaalt zich eindeloos tot je het uitzet. Elk uiteinde laat een verticale lijn in zijn kleur zakken — teal voor A, blauw voor B — zodat je het in één oogopslag ziet, en de driehoekjes kun je verslepen. De knop <b>LOOP</b> blijft goud verlicht zolang hij actief is. Zo werk je aan een passage: laat de begeleiding rondgaan en repeteer erover op het Keyboard.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="paleta"><span class="tr">Het instrumentenpalet: allemaal in één oogopslag</span></h3>
+      <p><span class="tr">De standaard <code>&lt;select&gt;</code> kan geen kolommen — die keuzelijst tekent het besturingssysteem — dus wanneer je op het instrumentveld klikt, gaat in plaats daarvan een <b>kolommenpalet</b> open: alle families in één oogopslag, elk in een eigen kolom, met bovenaan een <b>filter op naam</b>. Instrumenten die de bank wel heeft maar de actieve map niet, worden <i>gedimd</i> getoond in plaats van verborgen: je ziet dat ze bestaan en dat ze vandaag niet geladen zijn. Met de <b>pin</b> blijft het open, zodat je er verschillende na elkaar kunt proberen en op het gehoor vergelijken; zonder pin sluit het zodra je er een kiest. De keuze gaat terug langs de gewone weg, dus aan de mix verandert niets. Het is hetzelfde palet in alle vier de apps — Score, Keyboard, Console en Register —, geleverd door <code>mm-presets.js</code>.</span></p>
+      <p><span class="tr">En het <b>onthoudt waar je het liet</b>: schuif het opzij zodat het het kanaalpaneel niet bedekt, en de volgende keer opent het daar — kanaal na kanaal, en ook in de volgende app. Grootte en plaats reizen samen, dus als je het groter maakt, vergeet het de plek niet. De eerste keer, nog zonder geheugen, verschijnt het <i>naast</i> het paneel dat het opende, niet erbovenop.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="score-navigator-mapa-y-regla"><span class="tr">Score Navigator: kaart en liniaal</span></h3>
+      <p><span class="tr">De strook bovenaan is een kaart van het hele werk: maten, secties met een naam, de cursor en de afspeelkop. Met een rechtsklik kun je inzoomen op een traject — 16 maten, of de A–B-loop — en dan verandert ze van functie: ze wordt een <b>liniaal</b> die gelijnd is met de gravure, zodat elke markering precies op haar maatstreep valt, en ze volgt de partituur wanneer je scrolt. „Whole work” brengt je terug naar de kaart en naar de zoom die je had.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="secuencias"><span class="tr">Sequenties: de toestand van één maat, herhaald</span></h3>
+      <p><span class="tr">Eén maat kan zich herhalen over een traject — het typische geval is het pedaalgebruik: je schrijft hoe ÉÉN maat gepedaleerd wordt en zegt «en zo verder tot en met 61». Dat is een <b>sequentie</b>, en die heeft nu een eigen venster: <b>Open sequence…</b>, vanuit het SELECT-paneel of via de rechtsklik. Het toont de sequenties in het werk met hun traject en de inhoud van de patroonmaat, en een klik op een rij brengt de weergave daarheen.</span></p>
+      <p><span class="tr">Er zijn twee manieren om er een te maken; ze klinken hetzelfde, maar ze zien er anders uit. De <b>RULE (⟳)</b> schrijft niets: de motor drukt het patroon bij elke afspeelbeurt af en er verschijnt geen enkele nieuwe markering op de pagina. <b>WRITE (⧉)</b> plaatst echte markeringen, één reeks per maat, één voor één bewerkbaar. En een schakelaar <b>◉ SHOW / ◌ HIDE</b> bepaalt of die markeringen op de pagina verschijnen: verborgen markeringen klinken nog steeds, want inkt en voeten zijn twee lagen.</span></p>
+      <p><span class="tr">Elke rij heeft ook een ◉/◌ die de <b>trajectlijn</b> boven de bovenste notenbalk aanzet, om in één oogopslag te zien hoever ze reikt. Standaard uit, en niet in het bestand bewaard: een werkhulp, geen notatie.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="pedal-abierto"><span class="tr">Pedaal dat open blijft</span></h3>
+      <p><span class="tr">Een <b>✻ met een diepte</b> — halfpedaal, kwartpedaal — laat de voet niet los: het zegt «ga door met minder pedaal». Het is een echte techniek, maar ze heeft een onzichtbaar gevolg: als de hele sequentie gedeeltelijke ✻ gebruikt, sluit geen enkele loslating af, en het pedaal blijft ingedrukt tot het volgende geschreven teken, zelfs dertig maten verder. De <b>Coach waarschuwt nu</b> wanneer een regio langer dan vier maten open blijft, met beide maten en het aantal. Hij corrigeert niets op eigen houtje: hij vertelt je alleen wat je geschreven hebt.</span></p>
+      <p><span class="tr">Om een pedaalsequentie af te sluiten, moet de laatste ✻ een <b>droge</b> zijn. En als de sequentie een regel is met een «tot en met maat», sluit de motor haar af aan de grens: het patroon geldt tot en met die maat en geen maat verder.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-navegador-sigue-al-zoom"><span class="tr">De navigator volgt de zoom</span></h3>
+      <p><span class="tr">De strook bovenaan kon al allebei zijn — een kaart van het hele werk en een liniaal over één traject — maar ze veranderde alleen van functie via haar eigen menu. Als je de partituur vanuit de werkbalk inzoomde, bleef ze een kaart van honderden maten boven een notenbalk die er zes toonde, en de markeringen vielen op de verkeerde plaats. Nu <b>neemt de zoom haar mee</b>: de ±-knoppen, het uitklapmenu, Ctrl+scrollwiel en het vergrootglas laten het haar allemaal weten, ze meet welke maten op het scherm staan en wordt een liniaal over die maten, elke markering op haar eigen maatstreep. Past het hele werk op het scherm, dan wordt ze vanzelf weer een kaart.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="editar-desde-el-panel-de-canales"><span class="tr">Bewerken vanuit het kanaalpaneel</span></h3>
+      <p><span class="tr">Het kanaalpaneel was om naar te kijken: de rechtsklik-editors zaten allemaal op de hoofdpartituur, en om iets te verbeteren dat je daar zag, moest je terug naar het hoofdcanvas. Nu <b>werkt de rechtsklik ook in het paneel</b>, met precies dezelfde editors — noot, boog, dynamiek, gebaar, tuplet, tempo —, waarbij elke rij haar echte kanaal herkent en de pop-up onder de aanwijzer opent, precies waar je kijkt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="reescritura-enarmonica"><span class="tr">Bis is geen c</span></h3>
+      <p><span class="tr">Op een gelijkzwevend <a href="https://musicmotionsuite.com/faq.html?lang=nl#temperado" title="Veelgestelde vragen">getempereerd</a> klavier zijn bis en c dezelfde toets. In <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Het boek — om verder te gaan">pythagorese stemming</a> niet: er ligt een komma tussen, en die komma zorgt ervoor dat een leidtoon naar boven trekt. Daarom heeft de Score geen knop die de ene schrijfwijze door de andere vervangt — er was er een gedurende enkele dagen in september en die is ingetrokken: hij behandelde twee verschillende klanken als één, en hij beschadigde bovendien de noot. Een noot schrijf je met haar eigen letter: voor een bis de noot <b>B</b> en de <b>♯</b> van de Acc-knoppen. Elke schrijfwijze heeft haar eigen verhouding in de pythagorese tabel, zodat die bis ook <b>klinkt</b> als een bis: een komma boven de c, waar het oor hem plaatst. En wanneer het stuk uit een <a href="https://musicmotionsuite.com/faq.html?lang=nl#midi" title="Veelgestelde vragen">MIDI</a>-bestand komt, leidt de <b>Player</b> bij het omzetten de schrijfwijzen af uit de voortekening.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-marca-donde-se-dibuja"><span class="tr">De markering staat waar je de noot ziet</span></h3>
+      <p><span class="tr">Een contrabas klinkt een octaaf lager dan genoteerd; een hoorn in F wordt een <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="Het boek — om verder te gaan">kwint</a> hoger genoteerd dan hij klinkt. In de genoteerde weergave toont de partituur wat de musicus leest — maar de tremolo's van de contrabas kwamen een octaaf van hun noot terecht, en de klik om de noot te selecteren miste met dezelfde afstand. Bij altviolen en cello's was er niets aan de hand, omdat die niet transponeren. Nu <b>wordt elke markering geplaatst ten opzichte van de toonhoogte die je ziet</b>, niet die je hoort, en de klik valt op de noot. Dat geldt voor elk transponerend kanaal: klarinetten, hoorns, trompetten, contrabassen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="abrir-un-mxl"><span class="tr">Een .mxl openen zonder hem uit te pakken</span></h3>
+      <p><span class="tr">Een <b>.mxl</b> is gecomprimeerde MusicXML: dat is wat <b>Finale, MuseScore en Sibelius</b> exporteren. De Score opent hem nu rechtstreeks, met dezelfde knop waarmee je een .xml opende, zonder hem met de hand uit te pakken. Hij kijkt naar de inhoud van het bestand, niet naar de naam, dus een .musicxml of .xml die in werkelijkheid gecomprimeerd is, komt er net zo goed in. Een weetje voor de musicus, niet over de Score: <b>Finale v27.4 opent een .mxl alleen via File → Import → MusicXML</b>; zijn File → Open weigert hem met „Invalid file type”, zelfs .mxl-bestanden die Finale zelf heeft geëxporteerd.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="corchetes-y-llaves-que-viajan"><span class="tr">Haken en accolades reizen mee met de partituur</span></h3>
+      <p><span class="tr">Bij het importeren komen de familiegroepen van het bestand getekend binnen —<b>haak</b>, <b>subhaak</b> en <b>accolade</b>—, met de maatstreep doorgetrokken of onderbroken zoals het bestand aangeeft; een groep die in een andere genest is, wordt een subhaak, in welke volgorde het exporterende programma hem ook schreef. En bij het exporteren worden ze weer uitgeschreven: de heen- en terugweg is getest. Wat nog niet binnenkomt: de titel, de ondertitel en het copyright van de pagina, expressiewoorden die niet bij een tempo horen (pizz., arco, grazioso, unis., colla parte…), de korte naam van het instrument en de groepsnaam.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="copiar-un-canal-entero"><span class="tr">Een kanaal kopiëren neemt zijn markeringen mee</span></h3>
+      <p><span class="tr">Een rechtsklik op een kanaal biedt <b>Copy channel</b> en <b>Paste channel</b>. Tot nu toe reisden alleen de noten mee: articulaties, dynamiek, expressies, agogiek, teksten en sleutelwisselingen bleven achter in het bronkanaal, op muziek die er niet meer was. Nu <b>reist het hele kanaal mee</b>, met alles wat erop geschreven staat, en het doelkanaal wordt volledig vervangen — noten en markeringen — zodat er nooit twee lagen door elkaar komen. Het enige wat niet meereist, is wat bij <b>meerdere notenbalken tegelijk</b> hoort (een markering die via JOIN gedeeld wordt): die kopiëren zou haar vermenigvuldigen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="repetir-tambien-el-gesto"><span class="tr">Een maat herhalen, en ook haar vormgeving</span></h3>
+      <p><span class="tr">Een sequentie herhaalt de toestand van één maat over een traject. Tot nu toe herhaalde ze de <b>markeringen</b>; nu kan ze ook <b>het velocityverloop</b> herhalen — het accent dat je met de hand zette, het staartje van een <i>poco dim</i>. Het is een eigen schakelaar in het sequentievenster, <b>◌ VEL</b>, <b>standaard uit</b>: een markering herhalen en een interpretatie herhalen is niet hetzelfde, en je moet erom vragen. Ze begrenst zichzelf — ze komt alleen in kanalen waar je in die maat echt met de hand een velocity hebt gezet, en ze <b>overschrijft nooit een maat die al een eigen velocity heeft</b>. Een noot die je niet aanraakte, blijft de dynamiek volgen, zoals altijd.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="lo-que-escribis-a-mano-manda"><span class="tr">Een velocity die je met de hand zet, wint</span></h3>
+      <p><span class="tr">Binnen een gebalkte groep verdeelt de motor zelf het gewicht — de eerste noot weegt meer dan de binnenste — maar alleen <b>waar niemand iets anders zei</b>. Eén geval ontbrak: de velocity die de uitvoerder op <b>één bepaalde noot</b> zet. Een accent geschreven op 55 kwam bij de motor aan als 41, en een 40 aan het eind van een <i>poco dim</i> als 4. Die noot blijft nu onaangeroerd — ook het vibrato, dat dezelfde ladder volgt — en de automatische verdeling wordt eromheen toegepast.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="las-cuerdas-en-escala"><span class="tr">De strijkers op de schaal van het orkest</span></h3>
+      <p><span class="tr">Drie klachten die los van elkaar leken te staan — de altviolen waren niet te horen, de eerste violen die <i>piano</i> genoteerd stonden, bedekten iedereen, en het totale niveau raakte na een paar maten overstuurd — bleken er één te zijn: instrument per instrument gemeten bij dezelfde velocity, leefde het hele orkest binnen een band van 10 dB en <b>zat de vioolsectie 40 dB daarboven</b>. Gecorrigeerd per register en niet in één keer, omdat het verschil bovendien groeide naarmate de noot steeg. De altviool kreeg intussen <b>een open hoogte</b>: de zingende noot komt niet langer onder de liggende toon eronder binnen. Klankkleur onaangeroerd. <b>Tweede helft van dat verhaal (16-09)</b>: gemeten langs de weg die de Score echt gebruikt —en niet langs die van de test— <b>zakte de vioolsectie nog 21,5 dB van laag naar hoog</b>, zodat de melodie van de eerste violen, die daarboven leeft, onder alles binnenkwam. Opnieuw per register gecorrigeerd, is het niveauverschil teruggebracht tot 0,6 dB; en daarna is, op het gehoor, de hele curve <b>18 dB</b> verhoogd zonder van vorm te veranderen: in het werk gaan de eerste violen van bedekt naar 4 dB boven het pizz van de tweede violen en 11 dB boven de altviolen. Cello's en contrabassen zijn de volgende stap — gemeten langs de echte weg zit de contrabas een flink stuk hoger dan wat zijn eigen gegevensblad beweert.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-matiz-es-el-techo-del-grupo"><span class="tr">De geschreven dynamiek is het plafond van de gebalkte groep</span></h3>
+      <p><span class="tr">De <b>Intelligent Beams</b> daalden vroeger sporten af van de dynamiekladder, en die ladder is niet evenredig: hetzelfde niveau was ×0,33 waard vanuit een <i>ppp</i> en ×0,85 vanuit een <i>f</i> — zes gebaren onder één naam. Nu is de dynamiek die je schreef het <b>plafond</b>: de eerste noot houdt ze volledig en elke volgende is een vaste verhouding van de vorige — <b>niveau 1 ×0,75 · 2 ×0,60 · 3 ×0,45 · 4 ×0,30 · 0 geen</b>. Hetzelfde niveau is hetzelfde gebaar, of het nu uit een <i>p</i> of een <i>ff</i> komt. Er is een nieuw <b>niveau 4</b>, en het niveau bestaat nu ook in een groep van twee — het paar achtsten per tel, het meest voorkomende geval in de hele notatie, klonk vroeger identiek op 1, 2 en 3.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="cada-voz-conserva-su-techo"><span class="tr">Elke stem houdt haar dynamiek, en de groep is de reeks die de pagina tekent</span></h3>
+      <p><span class="tr">Op een gedeelde notenbalk hoort de grens van de groep nog altijd bij de notenbalk —de stem die als eerste inzet, opent ze— maar het <b>plafond hoort bij elke stem</b>: de eerste noot die elke stem in de groep zet, houdt haar geschreven dynamiek. Vroeger stal de bas die de tel aangeeft het plafond van de begeleiding die na hem inzet, en moest je een <i>ff</i> schrijven om een <i>mp</i> te horen; nu wordt een liggende toon geschreven als wat hij is, met zijn eigen dynamiek. En wanneer de waardestreep de groepering bepaalt, is de groep <b>precies de reeks die de pagina tekent</b>, van 2 tot N noten: in 6/8 tekende de pagina 3+3 terwijl de motor 2+2+2 speelde. Een rust houdt haar plaats binnen de groep en splitst hem niet — in een groep per waardestreep onderbreekt ze hem wel, omdat een waardestreep niet over een rust loopt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="popup-int-beams-general"><span class="tr">De Int·Beams-pop-up: General, het bereik M → M en een voettekst die de toestand weergeeft</span></h3>
+      <p><span class="tr">Een rechtsklik op <b>3·2</b> opent de pop-up van Intelligent Beams. De knop voor het hele stuk heet <b>General</b> (vroeger Global) en gaat van <b>0 tot 4</b>. De <b>◉</b> van de bereikrij is weg —die verschoof het bereik achter je rug om en veranderde wat de vakjes betekenden—, dus het bereik is altijd wat <b>M → M</b> aangeven. De rij <b>GROUP</b> leest zoals een waardestreep leest: <b>waardestreep · figuur (1/8, 1/16, 1/32, 1/64) · Notes, met − en +, van 1 tot 16</b>, in plaats van een aantal kwartnoten — 3 achtsten is de oude 3+3. <b>SPLIT is verdwenen.</b> En de pop-up heeft een <b>voettekst die de toestand weergeeft</b>: welk bereik en welke kanalen hij nam, hoeveel noten, welke groeperingsregels en welk niveau gelden, met hoeveel noten op elke waarde; als iets gemengd is, ziet het er ook gemengd uit. Het General-niveau maak je ongedaan met <b>Ctrl+Z</b> zoals elke bewerking, en een open pop-up toont het niveau dat terugkwam.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-escalera-empieza-en-16"><span class="tr">De acht dynamieken, opnieuw ingesteld: de ladder begint bij 16</span></h3>
+      <p><span class="tr">De acht dynamieken worden <b>ppp 16 · pp 20 · p 26 · mp 33 · mf 42 · f 53 · ff 68 · fff 86</b> (op 127). Vroeger begon de ladder bij 6, en onder 16 <b>kan de motor een niveauverandering niet weergeven</b>: gemeten levert een niveau 3 +0,2 dB op vanuit 9 en +7,0 dB vanuit 16 — een <i>ppp</i> kwam nooit tot articuleren. Het blijft de zachtste van de acht, en nu is het ook hoorbaar. Het is goed om het ronduit te zeggen: de ladder is één enkele bron, dus <b>een bewaard werk waarvan de markeringen geen eigen velocity hebben, klinkt anders in deze versie</b>, aanweziger in de zachte dynamieken. Er valt niets over te doen: het is hetzelfde bestand, beter gehoord.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="snap-to-grid-reescrito"><span class="tr">Snap to grid: duwt wat buiten het raster valt erin</span></h3>
+      <p><span class="tr"><b>Snap to grid</b> (SELECT-paneel) was geen snap: het herschikte volgens duur — elke noot belandde op de som van de vorige duurwaarden, zonder naar een raster te kijken — dus haalde het akkoorden uit elkaar, en een maat waarvan de duurwaarden niet optelden tot de maat, duwde alles erachter op. Nu snapt het echt: elke <b>aanzet</b> gaat naar het dichtstbijzijnde veelvoud van het raster en <b>noten met dezelfde aanzet reizen samen</b>, zodat een akkoord een akkoord blijft. Het raster is dat van de editor (de SUBDIV in de werkbalk); tuplets gaan naar hun eigen ternaire raster. Duurwaarden blijven onaangeroerd, wat al op zijn plaats stond, beweegt niet, markeringen reizen mee met hun noot en één Ctrl+Z zet alles terug. Het werkt op bestanden van honderden noten.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="sound-fx-por-canal-y-area"><span class="tr">Sound FX per kanaal en gebied: reverb, echo, porta en vibrato</span></h3>
+      <p><span class="tr">Op het label van elk kanaal opent <b>Sound FX…</b> een pop-up met zes knoppen —<b>Reverb · Echo wet · Echo fb · Echo time · Porta · Vibrato</b>— die als een <b>regio</b> worden geschreven: het effect is te horen bij het afspelen, niet live. Het bereik kies je met de vertrouwde keuzerondjes —<b>This channel · This place · Selection</b>—, bij voorkeur korte gebieden, idealiter één enkele noot: daar geven echo en reverb een melodische lijn haar harmonische karakter, en porta het legato van het naar de noot glijden. FX doet mee met <b>Ctrl+Z</b>, en <b>Clean</b> wist het actieve gebied —of het hele kanaal als het gebied geen FX heeft maar het kanaal wel—. De pop-up van de Score beïnvloedt alleen het afspelen (motor B) en die van het Keyboard alleen het live spelen (motor A): ze vermengen zich niet.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-signo-de-ayuda"><span class="tr">Elke pop-up brengt je naar zijn pagina in de handleiding</span></h3>
+      <p><span class="tr">Elke pop-up in de Score —die van de werkbalk, de editors op het canvas en de rechtsklikmenu's— heeft nu een teal <b>?</b> naast de titel. Eén klik opent, in een nieuw tabblad, het deel van de <a href="../../UserGuide.html">gebruikshandleiding</a> over die pop-up: 68 markeringen, één per pop-up, elk met een eigen uitgeschreven deel. Altijd op dezelfde plek, dus je hoeft niet te raden welke pop-up hulp heeft en welke niet.<br> En waar een link niet volstond, vertelt het <b>?</b> het je ter plekke zonder je weg te halen uit wat je aan het doen was: het gebaar van de noot, het gebaar van de boog, de Touch en de State van een expressiewoord, en de frase-agogiek. Daar antwoordt de Coach in twee regels en laat hij een <b>more ⟶</b> achter voor de lange versie.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-palabra-en-tu-idioma"><span class="tr">Schrijf de expressie in je eigen taal</span></h3>
+      <p><span class="tr">Het tekstveld in de pop-up <b>EXPR</b> filterde nooit iets: je schrijft het woord in welke taal je maar wilt, en dat is de regel van het papier. Wat verandert, is dat je nu <b>ziet wat het doet voordat je het invoegt</b> — het <b>?</b> op de blauwe regel zegt je naar welke term het verwijst, tot welke groep het behoort en of het klinkt — en dat je het, als de Score het woord niet kent, kunt koppelen: <b>behaves like…</b> en je kiest de term waarop het lijkt. De inkt blijft zoals je hem schreef. De koppeling reist mee in het <b>.mmf</b>-bestand, zodat je stuk op de computer van een ander hetzelfde klinkt, en met een vinkje bewaar je haar ook voor de rest van je stukken. Uitgebreid uitgelegd in <a href="../../UserGuide.html#palabra-en-otro-idioma">de gebruikshandleiding</a>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-lista-en-tu-idioma"><span class="tr">De instrumentenlijst spreekt jouw taal</span></h3>
+      <p><span class="tr">De instrumentenlijst kwam vroeger gemengd tevoorschijn —sommige namen in het Engels, andere in het Spaans, en de familietitels altijd in het Engels—. Nu spreekt de hele lijst de taal die je koos, familietitels inbegrepen, zowel in het veld <b>Instrument</b> van de kanaalkaart als in de kleine keuzelijst op elke rij van de pop-up <b>CHANNELS</b>, en in het kolompalet. <b>Wat je ziet, verandert; wat het bestand bewaart, niet</b>: de interne naam van een instrument wordt nooit vertaald, zodat een <code>.mmf</code> op elke computer hetzelfde klinkt. In dezelfde ronde volgen ook enkele teksten en tooltips die in het Spaans waren blijven staan nu jouw taal: «The game count», de knop <b>Unfold ⇥</b>, de tooltips voor laatste maat en px-grootte, die op de <b>Ex.</b>-chips en die op de <b>BARLINES</b>-pin. Uitgebreid uitgelegd in <a href="../../UserGuide.html#lista-en-tu-idioma">de gebruikshandleiding</a>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="doble-clic-selecciona-el-compas"><span class="tr">Dubbelklik op de notenbalk: de maat is geselecteerd</span></h3>
+      <p><span class="tr"><b>Dubbelklik op de notenbalk</b>, waar geen nootkop staat, en die hele maat wordt geselecteerd, in dat kanaal. Je hoeft vooraf niets aan te zetten: de dubbelklik <b>schakelt zelf naar de SELECT-modus</b> en laat de selectie <b>gesloten</b> achter, klaar voor de actiepop-up of voor <b>Note spacing</b>. Van daaruit rekt <b>Shift + klik</b> op een andere maat van hetzelfde kanaal de selectie tot daar uit, en dat kun je herhalen. Omdat er niet gesleept wordt, kun je niet per ongeluk een noot verschuiven — en dat is precies wat er gebeurde toen je over de nootkoppen moest slepen om een maat te markeren. En hierop wachtte <b>Note spacing</b>: het uitklapmenu, in Score Options, geldt voor de <b>regio</b> zolang er een gesloten selectie is —het label ernaast zegt waarop het werkt, «region 3–6»— en voor het hele stuk als er geen is; als je er met de muis in komt, synchroniseert het opnieuw en toont het de factor van die regio. De twee andere gebaren op dezelfde notenbalk veranderen niet: een dubbelklik <i>op een nootkop</i> blijft die van het <b>akkoord</b>, en een klik <i>binnen</i> een al gesloten selectie pakt ze op om ze te verplaatsen. Uitgebreid uitgelegd in <a href="../../UserGuide.html#sc-select-dobleclic">de gebruikshandleiding</a>.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="las-notitas-entran-en-el-compas"><span class="tr">Voorslagen passen in de maat, niet andersom</span></h3>
+      <p><span class="tr">Een voorslag reserveerde vroeger <b>34 px</b> breedte — meer dan een hele kolom van een zestiende noot inneemt — en omdat die inkt niet meerekt of krimpt met <b>Note spacing</b>, viel hij in zijn geheel in zijn kolom en vertrok hij de maat. Gemeten op een passage met <b>dezelfde nootwaarden in elke maat</b>: de maten met een voorslag kwamen uit op 161 en 238 px en de enige zonder, op 127. Het ritme was regelmatig; wat het in de war bracht, was de reservering. Nu reserveert één voorslag <b>18 px</b>, een nootkop en zijn lucht, en dat groeit nog als er meerdere zijn. En wanneer de voorslag <b>botst met de noot op tel 1</b> —de reservering waardoor de maat verder naar binnen begint— is die ruimte geen vast getal meer: ze krijgt een <b>plafond van 12 % van de maatbreedte</b>, zodat je het in een brede maat niet merkt en ze een smalle maat niet langer vervormt. Het is de gravurebeslissing dat de voorslag in de maat past, in plaats van dat de maat voor hem groeit.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-punto-de-la-cuerda-es-una-arcada"><span class="tr">Het staccatopunt is bij strijkers een streek</span></h3>
+      <p><span class="tr">Het staccatopunt op een noot van een <b>strijkinstrument</b> is niet langer „de helft van de waarde”: het is een <b>korte streek</b>, en een streek duurt ongeveer even lang, hoe lang de nootwaarde ook is. Twee noten met een staccatopunt maar met verschillende waarden komen uit op <b>dezelfde lengte</b>, met een relatieve bovengrens zodat het punt bij heel korte noten nog iets doet. Vroeger at het punt in een snelle groep de noot op —een zestiende met staccatopunt kwam uit op 84 ms en klonk nooit echt— terwijl een achtste met staccatopunt in dezelfde passage goed klonk; nu duren beide 145 ms. De <b>kleur</b> komt met de lengte mee: donkerder, snelle inzet, dubbel zoveel strijkgeruis. Alleen bij gestreken snaren: bij <b>pizzicato</b> verandert er niets, want een tokkel is geen streek. En <b>wat je schrijft, beslist</b>: als je een andere streek schreef —<i>sautillé</i>, <i>punta d'arco</i>— of een techniekaanduiding, wint wat er staat. De knop <b>ART</b> van de Console blijft hierover beslissen. Intussen doet het woord <b>spiccato</b> eindelijk iets: geschreven in het expressietraject —samen met <b>spicc.</b>, <b>picchettato</b> en <b>picado</b>— leest de motor het en speelt hij dat traject met de korte streek. Tot vandaag was het alleen inkt.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="el-acento-es-una-llegada"><span class="tr">Een accent is een aankomst, geen klap</span></h3>
+      <p><span class="tr">Een <b>accent</b> zonder eigen getal woog te zwaar: in een snelle groep kreeg het <b>13,6 dB</b> meer dan zijn buren en klonk het als een klap in plaats van als het rustpunt waar de groep naartoe gaat. En wat opviel, was niet het gewicht maar de <b>helderheid</b>: gemeten leverde het teken alleen 3,7 dB op, en 2,4 daarvan was de scherpte van de aanzet. Nu krijgt een accent zonder getal ongeveer <b>2 dB</b> meer dan zijn groep — een trede, geen sprong — en het teken alleen 1,3. Er is nog altijd een accent, het zet sneller en helderder in, maar het bedekt de noten met staccatopunt eromheen niet meer. Wat niet verandert, en goed is om te weten: een accent dat <b>al een eigen getal heeft</b> (de <b>Weight</b> in zijn pop-up) kijkt niet naar de nieuwe waarde en klinkt zoals je het liet; als een oud stuk te sterke accenten heeft, verbeter je ze teken per teken in hun pop-up. <b>Marcato</b> en <b>stress</b> blijven zoals ze waren.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-arcada-escrita-rige-el-tramo"><span class="tr">Een geschreven streekteken geldt tot het volgende</span></h3>
+      <p><span class="tr">Een <b>⊓</b> of een <b>V</b> schrijven corrigeert niet langer één enkele noot: het <b>opent een streek</b> die duurt tot het volgende teken in dat kanaal, en elke noot van dat traject wordt in dezelfde richting gespeeld. Een <b>geschreven rust onderbreekt die</b>, want over een rust ga je niet met de stok op de snaar. Zonder enig geschreven teken verandert er niets: de motor wisselt nog altijd per noot af, waarbij de legatoboog en de keten van overbindingen als <b>één</b> streek tellen. Waarvoor het dient: <b>de frase die terugkomt, wordt hetzelfde gespeeld</b>. Als je ⊓ schrijft aan het begin van de frase en ⊓ aan het begin van de herhaling, klinken beide met dezelfde streek, in plaats van te landen waar de telling ze toevallig brengt. Vroeger telde de motor <b>één streek per noot</b>, dus in een groep die je in één streek speelt, gebruikte hij er drie, en een paar maten verder was de richting omgekeerd. De streken bepaalt de speler, niet de nootwaarden: ze automatisch afleiden is geprobeerd en verworpen — in één en dezelfde passage staan groepen met een voorslag en zonder accent, en elke automatische regel heeft het bij sommige goed en bij andere fout.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="save-as-wav"><span class="tr">🔊 SAVE AS WAV — het stuk, of de gekozen maten, als audiobestand</span></h3>
+      <p><span class="tr">In het menu <b>File</b>, onder PRINT / PDF. De Score heeft geen klank —de motor is het <b>Cosmic Keyboard</b>—, dus de Score <i>dirigeert</i>: hij vraagt het Keyboard om op te nemen, speelt het hele stuk of de maten van de <b>SELECT</b>-regio, en aan het eind wacht hij op de nagalm van de reverb en downloadt hij een <b>24-bit stereo-WAV</b> met de naam van het stuk (<span class="mono">Titel.wav</span> · <span class="mono">Titel - M2-M3.wav</span>). Het is een <b>live-opname</b>, geen conversie: exporteren duurt zo lang als de muziek. Ondertussen toont een kaart het logo dat zich met teal vult naarmate het stuk vordert —het ademt op de puls—, hoeveel er nog rest, welke maat er speelt en, aan het eind, de naam, de duur en de grootte van het bestand; <b>CANCEL</b> of Esc annuleren zonder te downloaden. Omdat <i>wat klinkt</i> wordt opgenomen, komt alles wat je tijdens het exporteren in de <b>Console</b> verschuift —faders, pan, mute, master, reverb— in het bestand terecht: het is een live mix. Wat je op het Keyboard speelt, komt er ook in. Is het Keyboard niet open, dan zegt de kaart het je en wordt er geen stilte opgenomen.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="cada-perilla-manda-sobre-su-motor"><span class="tr">Elke volumeknop regelt zijn eigen deel</span></h3>
+      <p><span class="tr">Tot nu toe waren de <b>Vol</b> van de Score, de <b>VOL</b> van het Keyboard en de <b>MASTER</b> van de Console drie hendels aan dezelfde knop: zette je er één lager, dan ging alles omlaag. Nu regelt elk zijn eigen deel: de <b>Score Vol</b> wat de Score laat spelen, de <b>Keyboard VOL</b> wat jij op de toetsen speelt, en de <b>Console MASTER</b> het geheel — en dat is wat ⬤ wav en SAVE AS WAV opnemen. Waarvoor: terwijl de Score speelt, repeteer je er een melodie over met de Score zachter en je klavier voluit; of je probeert wat je in je hoofd hebt voordat je het opschrijft, met de partituur op halve kracht. De knoppen op hun gebruikelijke 40 % klinken precies zoals vroeger: de verdeling verandert, niet het niveau.</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="index.html" class="foot-brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="../../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="tr">Suite voor pythagorese stemming · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle rechten voorbehouden</span></span>
+</footer>
+
+<script src="../../mm-theme.js"></script>
+<script src="../../site.js"></script>
+
+<script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','nl');</script>
+</body>
+</html>
