@@ -38,6 +38,11 @@
   text-transform:uppercase;color:var(--textd);margin:0}
 @keyframes mm-respira{from{opacity:.45;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){#mm-cargando img{animation:none}}
+.tranquilo{margin:16px 0 0;font-size:var(--fs-sm);color:var(--textm);max-width:60ch}
+.puertas .app h3{font-size:1.2rem}
+.puertas .app p{font-size:var(--fs-sm)}
+.puertas{grid-template-columns:repeat(2,1fr)}
+@media(max-width:640px){.puertas{grid-template-columns:1fr}}
 </style>
 <link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
 <body>
@@ -72,33 +77,72 @@
 <main>
 
 <!-- ───────────── INICIO ───────────── -->
+<!-- 2026-10-07 (Mario: «como hacer sentir desde la primera pagina que no necesitas ser un experto»):
+     primero lo que se puede hacer, despues la teoria. La explicacion pitagorica baja a #por-que. -->
 <section id="inicio">
   <img class="hero-logo logo-ondark" src="../mm-logo.svg" alt="m Δ° m — Music Motion">
   <img class="hero-logo logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m — Music Motion">
-  <div class="eyebrow"><span class="tr">Pythagorese stemming op het gehoor</span></div>
+  <div class="eyebrow"><span class="tr">Voor muzikanten, studenten en nieuwsgierigen</span></div>
   <h1>
     
-    <span class="tr">Muziek die je stemt <span class="hl">op het gehoor</span>, niet met formules.</span>
+    <span class="tr">Wat het <span class="hl">oor</span> zingt, schrijft de&nbsp;<span class="hl">formule</span> op.</span>
   </h1>
   <p class="lead">
     
-    <span class="tr">Music Motion is een familie van tools met één gemeenschappelijke basis: de zuivere <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Het boek — om verder te gaan">pythagorese stemming</a> — verhoudingen van 2 en 3, dus zuivere <a href="../faq.html?lang=nl#octava-quinta" title="Veelgestelde vragen">octaven en kwinten</a>, zonder de afrondingen van de <a href="../faq.html?lang=nl#temperado" title="Veelgestelde vragen">gelijkzwevende stemming</a> — en het gehoor als rechter. Ze werken in de browser, <b>overal waar je internet hebt</b>, en op elk toestel.</span>
+    <span class="tr">Open, speel en luister. Het werkt in de browser van je computer, tablet of telefoon: <b>niets te installeren en niets om eerst te leren</b>.</span>
   </p>
+  <div class="hero-links">
+    <a class="btn-main" id="btn-demo" href="../apps/mmk-demo.html" data-local="../_BASE/mmk-scorekeyboard.html"><span class="tr">▶ Nu beluisteren — gratis</span></a>
+    <a class="btn-launch" href="#empezar" style="--c:var(--teal)"><span class="tr">Wat wil je doen? ↓</span></a>
+  </div>
+  <p class="tranquilo"><span class="tr">Kun je noten lezen, dan kun je het al gebruiken. Het toetsenbord van je computer is het instrument.</span></p>
+</section>
+
+<!-- ───────────── QUE QUIERES HACER ───────────── -->
+<section id="empezar">
+  <div class="eyebrow"><span class="tr">Beginnen</span></div>
+  <h2><span class="tr">Wat wil je doen?</span></h2>
+  <p><span class="tr">Kies een deur. Elke deur opent meteen wat je nodig hebt; de rest ontdek je later, in je eigen tempo.</span></p>
+  <div class="apps puertas">
+    <div class="app prod" style="--c:var(--teal)">
+      <div class="tag"><span class="tr">Stemmen</span></div>
+      <h3><span class="tr">Mijn instrument stemmen</span></h3>
+      <p><span class="tr">Het stemapparaat toont elke noot met haar echte naam: cis is geen des. Het gebruikt de microfoon, op de computer of op de telefoon.</span></p>
+      <div class="launch"><a class="btn-launch" href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener"><span class="tr">▶ Het stemapparaat openen</span></a></div>
+    </div>
+    <div class="app prod" style="--c:var(--gold)">
+      <div class="tag"><span class="tr">Spelen</span></div>
+      <h3><span class="tr">Spelen en luisteren</span></h3>
+      <p><span class="tr">Je toetsenbord wordt een instrument dat op het gehoor gestemd is, met meer dan zestig klanken: van piano tot viool, van orgel tot stem.</span></p>
+      <div class="launch"><a class="btn-launch" href="../apps/mmk-demo.html" data-local="../_BASE/mmk-scorekeyboard.html"><span class="tr">▶ Nu spelen</span></a></div>
+    </div>
+    <div class="app prod" style="--c:var(--violet)">
+      <div class="tag"><span class="tr">Oefenen</span></div>
+      <h3><span class="tr">Oefenen met begeleiding</span></h3>
+      <p><span class="tr">Zing of speel je partij terwijl de piano meespeelt. Verander de toonsoort of het instrument en neem jezelf op om terug te luisteren. Voor zangers en instrumentalisten.</span></p>
+      <div class="launch"><a class="btn-launch" href="../suite/ejercicios/" data-local="../website/ejercicios/index.html"><span class="tr">▶ Oefening: het Ave Maria</span></a></div>
+    </div>
+    <div class="app prod" style="--c:var(--blue)">
+      <div class="tag"><span class="tr">Lesgeven</span></div>
+      <h3><span class="tr">Lesgeven</span></h3>
+      <p><span class="tr">Schrijf je oefeningen in een partituur die klinkt en deel ze met je leerlingen. Voor academies en scholen: € 1 per leerling per 30 dagen.</span></p>
+      <div class="launch"><a class="btn-launch" href="colegios.html"><span class="tr">▶ Voor scholen</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── POR QUE DE OIDO ───────────── -->
+<section id="por-que">
+  <div class="eyebrow"><span class="tr">Waarom op het gehoor</span></div>
+  <h2><span class="tr">Een kruis is geen mol</span></h2>
   <p class="lead">
     
-    <span class="tr">Ze zijn gemaakt voor een <b>geleidelijke onderdompeling</b>: elk aspect van muziek — stemmen, schrijven, interpreteren, begeleiden, orkestreren — kun je stap voor stap en op verschillende niveaus aanpakken, in je eigen tempo als je zelfstandig leert, of in dat van je klas als je lesgeeft.</span>
+    <span class="tr">Dis en es zijn <a href="../faq.html?lang=nl#midi-mmf" title="Veelgestelde vragen">twee verschillende toonhoogtes</a>, en hier klinken ze ook verschillend: in het stemapparaat, op het klavier en in de partituur. Heel Music Motion rust op de <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Het boek — om verder te gaan">pythagorese stemming</a>: zuivere <a href="../faq.html?lang=nl#octava-quinta" title="Veelgestelde vragen">octaven en kwinten</a>, zonder de afrondingen van de <a href="../faq.html?lang=nl#temperado" title="Veelgestelde vragen">gelijkzwevende stemming</a>, en het oor als rechter.</span>
   </p>
-  <div class="note">
-    
-    <span class="tr"><b>Een kruis is geen mol.</b> Dis en es zijn <a href="../faq.html?lang=nl#midi-mmf" title="Veelgestelde vragen">twee verschillende toonhoogtes</a>, en hier klinken ze ook verschillend: in het stemapparaat, op het klavier en in de partituur.</span>
-  </div>
+  <p><span class="tr">Je leert door <b>geleidelijke onderdompeling</b>: stemmen, schrijven, interpreteren, begeleiden en orkestreren, stap voor stap, in het tempo van wie leert of van wie lesgeeft.</span></p>
   <div class="hero-links">
-    <a class="btn-main" href="#productos"><span class="tr">Bekijk de producten</span></a>
     <a class="btn-launch" href="music-motion.html" style="--c:var(--violet)"><span class="tr">Wat Music Motion is →</span></a>
-    <!-- 2026-09-14: va a la landing, no al demo suelto. Alli el visitante encuentra el
-         instrumento embebido y ademas el relato del teclado fisico. Cuando exista
-         mmk.musicmotionsuite.com, cambiar solo esta direccion. -->
-    <a class="btn-launch" id="btn-demo" href="https://mmk.musicmotionsuite.com/" style="--c:var(--gold)"><span class="tr">▶ Nu uitproberen — gratis</span></a>
+    <a class="btn-launch" href="#productos" style="--c:var(--gold)"><span class="tr">Bekijk de producten ↓</span></a>
   </div>
 </section>
 
@@ -130,7 +174,7 @@
     <div class="app prod" style="--c:var(--gold)">
       <div class="tag">⊞ ScoreSuite</div>
       <h3><span class="tr">De suite</span></h3>
-      <div class="status"><b>●</b> <span class="tr">v.2 · online, in opbouw</span></div>
+      <div class="status"><b>●</b> <span class="tr">v.2 · online · groeit met nieuwe lessen</span></div>
       <p><span class="tr">Zes browserapps die in realtime met elkaar praten: een pythagorese klankmotor, een partituureditor die per trap speelt, een mengpaneel, een klankbank, een <a href="https://musicmotionsuite.com/faq.html?lang=nl#midi" title="Veelgestelde vragen">MIDI</a>-kopiist en een coach die compositie leert zonder voorkennis van theorie.</span></p>
       <div class="apps-list">
         <span>Cosmic Keyboard</span><span>Score Editor</span><span>Console</span><span>Register Response</span><span>Player</span><span>Coach</span>

@@ -38,6 +38,11 @@
   text-transform:uppercase;color:var(--textd);margin:0}
 @keyframes mm-respira{from{opacity:.45;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){#mm-cargando img{animation:none}}
+.tranquilo{margin:16px 0 0;font-size:var(--fs-sm);color:var(--textm);max-width:60ch}
+.puertas .app h3{font-size:1.2rem}
+.puertas .app p{font-size:var(--fs-sm)}
+.puertas{grid-template-columns:repeat(2,1fr)}
+@media(max-width:640px){.puertas{grid-template-columns:1fr}}
 </style>
 <link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
 <body>
@@ -72,33 +77,72 @@
 <main>
 
 <!-- ───────────── INICIO ───────────── -->
+<!-- 2026-10-07 (Mario: «como hacer sentir desde la primera pagina que no necesitas ser un experto»):
+     primero lo que se puede hacer, despues la teoria. La explicacion pitagorica baja a #por-que. -->
 <section id="inicio">
   <img class="hero-logo logo-ondark" src="../mm-logo.svg" alt="m Δ° m — Music Motion">
   <img class="hero-logo logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m — Music Motion">
-  <div class="eyebrow"><span class="tr">Accord pythagoricien à l’oreille</span></div>
+  <div class="eyebrow"><span class="tr">Pour les musiciens, les étudiants et les curieux</span></div>
   <h1>
     
-    <span class="tr">Une musique qui s’accorde <span class="hl">à l’oreille</span>, pas avec des formules.</span>
+    <span class="tr">Ce que l’<span class="hl">oreille</span> chante, la&nbsp;<span class="hl">formule</span> l’écrit.</span>
   </h1>
   <p class="lead">
     
-    <span class="tr">Music Motion est une famille d’outils qui partagent une même base : l’<a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">accord pythagoricien</a> pur — des rapports de 2 et de 3, c’est-à-dire des <a href="../faq.html?lang=fr#octava-quinta" title="Questions fréquentes">octaves et des quintes</a> pures, sans les arrondis du <a href="../faq.html?lang=fr#temperado" title="Questions fréquentes">tempérament égal</a> — et l’oreille comme juge. Ils fonctionnent dans le navigateur, <b>partout où il y a une connexion internet</b>, et sur tout appareil.</span>
+    <span class="tr">Ouvrez, jouez et écoutez. Cela fonctionne dans le navigateur de votre ordinateur, de votre tablette ou de votre téléphone : <b>rien à installer, rien à apprendre d’abord</b>.</span>
   </p>
+  <div class="hero-links">
+    <a class="btn-main" id="btn-demo" href="../apps/mmk-demo.html" data-local="../_BASE/mmk-scorekeyboard.html"><span class="tr">▶ L’écouter maintenant — gratuit</span></a>
+    <a class="btn-launch" href="#empezar" style="--c:var(--teal)"><span class="tr">Que souhaitez-vous faire ? ↓</span></a>
+  </div>
+  <p class="tranquilo"><span class="tr">Si vous savez lire la musique, vous savez déjà l’utiliser. Le clavier de votre ordinateur est l’instrument.</span></p>
+</section>
+
+<!-- ───────────── QUE QUIERES HACER ───────────── -->
+<section id="empezar">
+  <div class="eyebrow"><span class="tr">Commencer</span></div>
+  <h2><span class="tr">Que souhaitez-vous faire ?</span></h2>
+  <p><span class="tr">Choisissez une porte. Chacune ouvre directement ce dont vous avez besoin ; le reste, vous le découvrirez ensuite, à votre rythme.</span></p>
+  <div class="apps puertas">
+    <div class="app prod" style="--c:var(--teal)">
+      <div class="tag"><span class="tr">Accorder</span></div>
+      <h3><span class="tr">Accorder mon instrument</span></h3>
+      <p><span class="tr">L’accordeur affiche chaque note avec son vrai nom : Do♯ n’est pas Ré♭. Il utilise le microphone, sur l’ordinateur ou sur le téléphone.</span></p>
+      <div class="launch"><a class="btn-launch" href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener"><span class="tr">▶ Ouvrir l’accordeur</span></a></div>
+    </div>
+    <div class="app prod" style="--c:var(--gold)">
+      <div class="tag"><span class="tr">Jouer</span></div>
+      <h3><span class="tr">Jouer et écouter</span></h3>
+      <p><span class="tr">Votre clavier devient un instrument accordé à l’oreille, avec plus de soixante sons : du piano au violon, de l’orgue à la voix.</span></p>
+      <div class="launch"><a class="btn-launch" href="../apps/mmk-demo.html" data-local="../_BASE/mmk-scorekeyboard.html"><span class="tr">▶ Jouer maintenant</span></a></div>
+    </div>
+    <div class="app prod" style="--c:var(--violet)">
+      <div class="tag"><span class="tr">S’exercer</span></div>
+      <h3><span class="tr">S’exercer avec accompagnement</span></h3>
+      <p><span class="tr">Chantez ou jouez votre partie avec le piano qui sonne. Changez la tonalité ou l’instrument, et enregistrez-vous pour vous réécouter. Pour les chanteurs et les instrumentistes.</span></p>
+      <div class="launch"><a class="btn-launch" href="../suite/ejercicios/" data-local="../website/ejercicios/index.html"><span class="tr">▶ Exercice : l’Ave Maria</span></a></div>
+    </div>
+    <div class="app prod" style="--c:var(--blue)">
+      <div class="tag"><span class="tr">Enseigner</span></div>
+      <h3><span class="tr">Enseigner</span></h3>
+      <p><span class="tr">Écrivez vos exercices dans une partition qui sonne et partagez-les avec vos élèves. Pour les académies et les écoles : 1 € par élève tous les 30 jours.</span></p>
+      <div class="launch"><a class="btn-launch" href="colegios.html"><span class="tr">▶ Pour les écoles</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── POR QUE DE OIDO ───────────── -->
+<section id="por-que">
+  <div class="eyebrow"><span class="tr">Pourquoi à l’oreille</span></div>
+  <h2><span class="tr">Un dièse n’est pas un bémol</span></h2>
   <p class="lead">
     
-    <span class="tr">Ils sont conçus pour une <b>immersion progressive</b> : chaque aspect de la musique — l’accord, l’écriture, l’interprétation, l’accompagnement, l’orchestration — peut être abordé pas à pas et à différents niveaux, au rythme de celui qui apprend seul ou de celui qui enseigne.</span>
+    <span class="tr">Ré♯ et Mi♭ sont <a href="../faq.html?lang=fr#midi-mmf" title="Questions fréquentes">deux hauteurs différentes</a>, et ici elles sonnent différemment : dans l’accordeur, sur le clavier et dans la partition. Tout Music Motion repose sur l’<a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">accord pythagoricien</a> : des <a href="../faq.html?lang=fr#octava-quinta" title="Questions fréquentes">octaves et des quintes</a> pures, sans les arrondis du <a href="../faq.html?lang=fr#temperado" title="Questions fréquentes">tempérament</a>, et l’oreille comme juge.</span>
   </p>
-  <div class="note">
-    
-    <span class="tr"><b>Un dièse n’est pas un bémol.</b> Ré♯ et Mi♭ sont <a href="../faq.html?lang=fr#midi-mmf" title="Questions fréquentes">deux hauteurs différentes</a>, et ici elles sonnent différemment : dans l’accordeur, sur le clavier et dans la partition.</span>
-  </div>
+  <p><span class="tr">On apprend par <b>immersion progressive</b> : l’accord, l’écriture, l’interprétation, l’accompagnement et l’orchestration, pas à pas, au rythme de celui qui apprend ou de celui qui enseigne.</span></p>
   <div class="hero-links">
-    <a class="btn-main" href="#productos"><span class="tr">Voir les produits</span></a>
     <a class="btn-launch" href="music-motion.html" style="--c:var(--violet)"><span class="tr">Ce qu’est Music Motion →</span></a>
-    <!-- 2026-09-14: va a la landing, no al demo suelto. Alli el visitante encuentra el
-         instrumento embebido y ademas el relato del teclado fisico. Cuando exista
-         mmk.musicmotionsuite.com, cambiar solo esta direccion. -->
-    <a class="btn-launch" id="btn-demo" href="https://mmk.musicmotionsuite.com/" style="--c:var(--gold)"><span class="tr">▶ L’essayer maintenant — gratuit</span></a>
+    <a class="btn-launch" href="#productos" style="--c:var(--gold)"><span class="tr">Voir les produits ↓</span></a>
   </div>
 </section>
 
@@ -130,7 +174,7 @@
     <div class="app prod" style="--c:var(--gold)">
       <div class="tag">⊞ ScoreSuite</div>
       <h3><span class="tr">La suite</span></h3>
-      <div class="status"><b>●</b> <span class="tr">v.2 · en ligne, en construction</span></div>
+      <div class="status"><b>●</b> <span class="tr">v.2 · en ligne · s’enrichit de nouvelles leçons</span></div>
       <p><span class="tr">Six applications de navigateur qui dialoguent en temps réel : un moteur sonore pythagoricien, un éditeur de partitions qui joue par degrés, une console de mixage, un banc de timbres, un copiste <a href="https://musicmotionsuite.com/faq.html?lang=fr#midi" title="Questions fréquentes">MIDI</a> et un coach qui enseigne la composition sans théorie préalable.</span></p>
       <div class="apps-list">
         <span>Cosmic Keyboard</span><span>Score Editor</span><span>Console</span><span>Register Response</span><span>Player</span><span>Coach</span>
