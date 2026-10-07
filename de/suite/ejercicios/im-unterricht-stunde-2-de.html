@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Unsere Melodie · Im Unterricht · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+
+  .leg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+  .fig{border:1px solid #cfdae1;border-top:4px solid var(--amber);border-radius:4px;padding:10px 12px;text-align:center;break-inside:avoid}
+  .fig .n{font-weight:bold;color:var(--navy);font-size:16px;margin-top:4px}
+  .fig .d{font-size:13.5px;color:#444} .fig .say{font-family:Georgia,serif;font-style:italic;font-size:20px;color:#24485a;margin:4px 0}
+  .fig .ex{margin-top:6px;font-size:13px;color:#555}
+  .cellx{display:inline-block;vertical-align:middle;width:56px;height:40px;border:1px solid #999;position:relative;margin-left:4px;background:#fff;font-weight:bold;font-family:Consolas,monospace;font-size:16px;color:var(--navy)}
+  table.ritmo{border-collapse:collapse;width:100%;table-layout:fixed;margin-top:6px}
+  table.ritmo th{background:var(--navy);color:#fff;font-size:14px;padding:7px 4px}
+  table.ritmo td{border:1px solid #999;height:54px;text-align:center;position:relative;font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  table.ritmo td.m{font-family:Calibri,Arial;font-size:16px;border:2px solid var(--navy);width:12%}
+  table.ritmo td.split{background:linear-gradient(to top right,transparent calc(50% - 1px),#2a6db5 calc(50% - 1px),#2a6db5 calc(50% + 1px),transparent calc(50% + 1px));background-color:#f3f8fc}
+  table.ritmo td.split .a{position:absolute;left:14px;top:5px;font-size:19px} table.ritmo td.split .b{position:absolute;right:14px;bottom:5px;font-size:19px}
+  table.ritmo td.hold{background:#fffaf0;color:#b07a10}
+  table.ritmo tr.sil td{height:22px;border:none;font-family:Georgia,serif;font-style:italic;font-weight:normal;font-size:15px;color:#24485a}
+  table.ritmo tr{break-inside:avoid}
+  h2.section{break-after:avoid}
+  .fig .ex{white-space:nowrap}
+  .hoja{break-before:page}
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px}
+  .tecla{width:62px;border:1px solid #b9cdd8;border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .tecla.on{border-color:var(--navy);background:#fff6df}
+  .tecla.off{opacity:.45}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">Im Unterricht — Unsere Melodie</div>
+  </header>
+  <main>
+    <h1 class="title">Unsere Melodie</h1>
+    <h2 class="exercise">Stunde 2 · erfinden, spielen und vorstellen</h2>
+    <p class="rights">Leitfaden für Lehrkräfte. © 2026 Music Motion.</p>
+    <div class="intro"><p><b>Für:</b> Kinder von 9 bis 14 Jahren, in Gruppen zu 4 oder 5. <b>Dauer:</b> 50 Minuten.</p>
+<p><b>Was sie lernen:</b> eine kurze Melodie erfinden, sie zum Puls spielen, ein Instrument dafür wählen und sie vorstellen.</p>
+<p><b>Was du brauchst:</b> den Computer im Klassenzimmer, am besten einen pro Gruppe, und für jede Gruppe ein Blatt mit dem Raster aus 16 Feldern. Es hilft, wenn ihr vorher Stunde 1 gemacht habt.</p>
+<p><b>Der Trick, mit dem alles gut klingt:</b> Verwende nur fünf Tasten, <kbd>Z</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>B</kbd> <kbd>N</kbd> (C, D, E, G, A). Mit diesen fünf Tönen klingt jede Kombination musikalisch: Niemand kann „etwas falsch machen“.</p>
+<p><b>Neu in dieser Stunde:</b> der Rhythmus. Neben einem Ton pro Schlag („ta“) entdecken die Kinder, dass zwei Töne in einen Schlag passen („ti-ti“) und dass ein Ton zwei Schläge dauern kann („ta-a“).</p></div>
+    <h2 class="section">Die Stunde Schritt für Schritt</h2>
+    <ol class="pasos"><li><span class="min">5 Min.</span><h3>Ausprobieren</h3><p>Öffne <a class="link" href="https://musicmotionsuite.com/apps/mmk-demo.html" target="_blank" rel="noopener">das Cosmic Keyboard</a>. Spiele die fünf Tasten und ein paar zufällige Kombinationen. Die Klasse prüft, ob alles gut klingt.</p></li><li><span class="min">8 Min.</span><h3>Rhythmus mit Wörtern</h3><p>Schalte das Metronom ein (<b>pulse</b>, <b>tap</b>, langsam). Klatsche vier Schläge und sprich dazu „ta, ta, ta, ta“; die Klasse wiederholt. Dann „ta, ta, ti-ti, ta“: Die zwei Klatscher von „ti-ti“ sind schnell, innerhalb eines einzigen Schlags. Dann „ta, ta, ta-a“: Das „a“ wird um einen Schlag verlängert.</p><p>Mit Wörtern: „Haus, Haus, An-na, Haus“. <i>Haus</i> ist ein Schlag; <i>An-na</i> sind zwei Töne in einem Schlag.</p><p>Zum Schluss eine einzige Taste (<kbd>Z</kbd>), in diesem Rhythmus gespielt. Sieh dir weiter unten die drei Notenwerte an.</p></li><li><span class="min">15 Min.</span><h3>Erfinden</h3><p>Jede Gruppe erfindet eine Melodie aus 4 Takten mit je 4 Schlägen und schreibt sie in das Raster. Zuerst nur mit Viertelnoten (ein Buchstabe pro Feld). Dann dürfen sie <b>bis zu zwei Felder</b> in Achtelnoten verwandeln: das Feld mit einem schrägen Strich teilen und auf jede Seite einen Buchstaben schreiben. Am Ende kann der letzte Ton eine halbe Note sein: <kbd>Z</kbd> und ein Strich im nächsten Feld, damit die Melodie „zu Hause ankommt“.</p></li><li><span class="min">10 Min.</span><h3>Zum Puls spielen</h3><p>Bei langsamem Metronom spricht die Klasse zuerst die Silben der Melodie laut. Dann spielt ein Kind aus jeder Gruppe die Melodie; die anderen klatschen den Puls.</p></li><li><span class="min">4 Min.</span><h3>Ein Kleid für die Melodie</h3><p>Jede Gruppe wählt ein Instrument aus der Liste des Keyboards —Geige, Flöte, Stimme, Marimba …— und hört, wie sich ihre Melodie verändert.</p></li><li><span class="min">8 Min.</span><h3>Vorstellen</h3><p>Jede Gruppe spielt der Klasse ihre Melodie vor und nimmt sie mit der Taste <b>● wav</b> des Keyboards auf.</p><p class="dice">„Was hat euch gefallen? Welches Gefühl weckt sie in euch?“</p></li></ol>
+    <div class="check"><b>Woran du merkst, dass es geklappt hat:</b> Jede Gruppe hat ihr Raster ausgefüllt, mit mindestens einem Feld mit Achtelnoten, spricht ihre Silben zum Puls, spielt die Melodie bis zum Ende durch und speichert ihre Aufnahme.</div>
+    <h2 class="section">Die drei Notenwerte</h2>
+<div class="leg">
+<div class="fig"><svg width="22" height="40" viewBox="0 0 22 40"><ellipse cx="8" cy="32" rx="7" ry="5" transform="rotate(-20 8 32)" fill="#0e2934"/><line x1="14.3" y1="31" x2="14.3" y2="3" stroke="#0e2934" stroke-width="2"/></svg><div class="n">Viertelnote</div><div class="say">«ta»</div><div class="d">1 Ton in 1 Schlag.<br>Drücke die Taste mit dem Klick.</div><div class="ex">Im Raster: <span class="cellx" style="line-height:40px">C</span></div></div>
+<div class="fig"><svg width="40" height="40" viewBox="0 0 40 40"><ellipse cx="8" cy="32" rx="7" ry="5" transform="rotate(-20 8 32)" fill="#0e2934"/><ellipse cx="29" cy="32" rx="7" ry="5" transform="rotate(-20 29 32)" fill="#0e2934"/><line x1="14.3" y1="31" x2="14.3" y2="4" stroke="#0e2934" stroke-width="2"/><line x1="35.3" y1="31" x2="35.3" y2="4" stroke="#0e2934" stroke-width="2"/><rect x="14.3" y="3" width="21" height="5" fill="#0e2934"/></svg><div class="n">Zwei Achtelnoten</div><div class="say">«ti-ti»</div><div class="d">2 Töne in 1 Schlag.<br>Einer mit dem Klick, der andere genau in der Mitte dazwischen.</div><div class="ex">Im Raster: <span class="cellx" style="background:linear-gradient(to top right,transparent calc(50% - 1px),#2a6db5 calc(50% - 1px),#2a6db5 calc(50% + 1px),transparent calc(50% + 1px)),#f3f8fc"><span style="position:absolute;left:8px;top:2px">C</span><span style="position:absolute;right:8px;bottom:2px">B</span></span></div></div>
+<div class="fig"><svg width="22" height="40" viewBox="0 0 22 40"><ellipse cx="8" cy="32" rx="6.5" ry="4.5" transform="rotate(-20 8 32)" fill="none" stroke="#0e2934" stroke-width="2"/><line x1="14.3" y1="31" x2="14.3" y2="3" stroke="#0e2934" stroke-width="2"/></svg><div class="n">Halbe Note</div><div class="say">«ta-a»</div><div class="d">1 Ton, der 2 Schläge dauert.<br>Drücken und einen Klick länger halten.</div><div class="ex">Im Raster: <span class="cellx" style="line-height:40px">Z</span><span class="cellx" style="line-height:40px;background:#fffaf0;color:#b07a10">—</span></div></div>
+</div>
+
+<h2 class="section">Die Tasten und ihre Töne</h2>
+<div class="teclas"><div class="tecla on"><div class="k">Z</div><div class="nt" data-i="0"></div></div><div class="tecla on"><div class="k">X</div><div class="nt" data-i="1"></div></div><div class="tecla on"><div class="k">C</div><div class="nt" data-i="2"></div></div><div class="tecla off"><div class="k">V</div><div class="nt" data-i="3"></div></div><div class="tecla on"><div class="k">B</div><div class="nt" data-i="4"></div></div><div class="tecla on"><div class="k">N</div><div class="nt" data-i="5"></div></div><div class="tecla off"><div class="k">M</div><div class="nt" data-i="6"></div></div></div>
+<p class="caption">Diese Stunde verwendet die fünf markierten Tasten: Z X C B N (C, D, E, G, A). V (F) und M (H) heben wir uns für später auf. Auf einer deutschen QWERTZ-Tastatur beginnt die untere Reihe mit Y statt Z: Es zählt die Stelle der Taste, nicht der Buchstabe.</p>
+<h2 class="section">Ein Beispiel</h2>
+<table class="ritmo"><thead><tr><th>Takt</th><th>Schlag 1</th><th>Schlag 2</th><th>Schlag 3</th><th>Schlag 4</th></tr></thead><tbody><tr><td class="m">1</td><td><span class="one">C</span></td><td><span class="one">X</span></td><td><span class="one">Z</span></td><td><span class="one">X</span></td></tr><tr class="sil"><td></td><td>ta</td><td>ta</td><td>ta</td><td>ta</td></tr><tr><td class="m">2</td><td><span class="one">C</span></td><td class="split"><span class="a">C</span><span class="b">B</span></td><td><span class="one">N</span></td><td><span class="one">B</span></td></tr><tr class="sil"><td></td><td>ta</td><td>ti-ti</td><td>ta</td><td>ta</td></tr><tr><td class="m">3</td><td><span class="one">N</span></td><td class="split"><span class="a">B</span><span class="b">C</span></td><td><span class="one">X</span></td><td><span class="one">C</span></td></tr><tr class="sil"><td></td><td>ta</td><td>ti-ti</td><td>ta</td><td>ta</td></tr><tr><td class="m">4</td><td class="split"><span class="a">X</span><span class="b">C</span></td><td><span class="one">X</span></td><td><span class="one">Z</span></td><td class="hold"><span>—</span></td></tr><tr class="sil"><td></td><td>ti-ti</td><td>ta</td><td>ta-</td><td>-a</td></tr></tbody></table>
+<div class="leerbox"><b>So liest du es:</b> Jedes Feld ist ein Klick des Metronoms. Ein einzelner Buchstabe = „ta“. Ein durch den schrägen Strich geteiltes Feld = „ti-ti“: zuerst der obere Buchstabe, dann der untere, beide im selben Klick. Der Strich = der vorige Ton klingt weiter („ta-a“). <br><b>Vor dem Spielen:</b> Die Klasse spricht die Silben laut zum Metronom — „ta ta ta ta · ta ti-ti ta ta · ta ti-ti ta ta · ti-ti ta ta-a“ — und spielt sie dann auf den Tasten <kbd>Z</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>B</kbd> <kbd>N</kbd>.</div>
+<p><b>Für alle, die weitermachen wollen:</b> Wer möchte, kann seine Melodie mit dem Score auf das Notensystem schreiben, nach <a class="link" href="https://musicmotionsuite.com/de/suite/ejercicios/schreiben-uebung-1-de.html" target="_blank" rel="noopener">Teil 2 der Übung Nr. 1</a>.</p>
+<div class="intro ampliar"><p><b>Diese Stunden sind ein Ausgangspunkt.</b> Jede Lehrkraft kann die Beispiele passend für ihre eigene Klasse gestalten. Wir unsererseits werden weitere Themen für Stunden hinzufügen, je nach den Wünschen, die uns über das <a class="link" href="https://musicmotionsuite.com/de/contacto.html" target="_blank" rel="noopener">Kontaktformular</a> erreichen.</p></div>
+<div class="hoja"><h2 class="section">Das Raster der Gruppe</h2>
+<table class="ritmo"><thead><tr><th>Takt</th><th>Schlag 1</th><th>Schlag 2</th><th>Schlag 3</th><th>Schlag 4</th></tr></thead><tbody><tr><td class="m">1</td><td></td><td></td><td></td><td></td></tr><tr class="sil"><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="m">2</td><td></td><td></td><td></td><td></td></tr><tr class="sil"><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="m">3</td><td></td><td></td><td></td><td></td></tr><tr class="sil"><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="m">4</td><td></td><td></td><td></td><td></td></tr><tr class="sil"><td></td><td></td><td></td><td></td><td></td></tr></tbody></table><p class="caption">Ein Buchstabe pro Feld (Z X C B N) · geteiltes Feld = „ti-ti“ · Strich = „ta-a“. Schreibt die Silben darunter.</p></div>
+
+    <div class="tarjeta">
+      <div class="tij">✂ ausschneiden und mit nach Hause nehmen</div>
+      <h2>Hören Sie sich die Melodie Ihres Kindes an</h2>
+<p class="sub">Für Eltern · 10 Minuten · keine Musikkenntnisse nötig</p>
+<p>Heute hat Ihr Kind im Unterricht mit seiner Gruppe eine Melodie erfunden. Bitten Sie es, sie Ihnen vorzuspielen:</p>
+<ol>
+<li>Öffnen Sie das Keyboard auf dem Computer: <b>musicmotionsuite.com/apps/mmk-demo.html</b></li>
+<li>Ihr Kind spielt die Melodie von seinem Raster und bringt Ihnen die Silben bei: „ta“ ist ein Ton in einem Schlag, „ti-ti“ sind zwei schnelle Töne in einem Schlag, „ta-a“ ist ein langer Ton. Sprechen Sie die Silben gemeinsam. Welches Gefühl weckt die Melodie in Ihnen?</li>
+<li>Wählen Sie zusammen ein anderes Instrument aus der Liste und hören Sie die Melodie noch einmal an.</li>
+<li>Wenn Sie möchten, nehmen Sie sie mit der Taste <b>● wav</b> auf und schicken Sie sie an die Lehrkraft.</li>
+</ol>
+<p class="priv">Keine Anmeldung und keine Installation nötig. Die Aufnahme bleibt auf Ihrem Computer, bis Sie sich entscheiden, sie zu verschicken.</p>
+    </div>
+  </main>
+  <footer class="doc-footer"><span>musicmotionsuite.com</span> <span>© 2026 Music Motion</span></footer>
+</div>
+<script>/* nombres de las notas segun el idioma de la pagina (2026-10-07): el armado de idiomas no traduce
+   palabras de menos de tres letras, y en aleman la nota «B» es otra (Si = H) */
+(function(){var N={es:['Do','Re','Mi','Fa','Sol','La','Si'],en:['C','D','E','F','G','A','B'],fr:['Do','Ré','Mi','Fa','Sol','La','Si'],nl:['C','D','E','F','G','A','B'],de:['C','D','E','F','G','A','H']};
+var l=(document.documentElement.lang||'es').slice(0,2),n=N[l]||N.es;
+[].forEach.call(document.querySelectorAll('.nt[data-i]'),function(e){e.textContent=n[+e.getAttribute('data-i')];});})();</script>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+</body>
+</html>
