@@ -245,7 +245,7 @@ a.es,a.en{display:inline-block}[data-lang="es"] a.en,[data-lang="en"] a.es{displ
   <script>
   function mmCopiarCorreo(b){
     var t='contacto@musicmotionsuite.com';
-    var ok=function(){ var s=b.innerHTML; b.textContent=({en:'copied',fr:'copié',nl:'gekopieerd',de:'kopiert'})[document.documentElement.getAttribute('data-lang')]||'copiado'; setTimeout(function(){ b.innerHTML=s; },1600); };
+    var ok=function(){ var s=b.innerHTML; b.textContent=({en:'copied',fr:'copié',nl:'gekopieerd',de:'kopiert'})[(document.documentElement.getAttribute('lang')||'').slice(0,2)]||'copiado'; setTimeout(function(){ b.innerHTML=s; },1600); };
     if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(ok,function(){}); return; }
     var i=document.createElement('input'); i.value=t; document.body.appendChild(i); i.select();
     try{ document.execCommand('copy'); ok(); }catch(e){}
@@ -285,8 +285,8 @@ a.es,a.en{display:inline-block}[data-lang="es"] a.en,[data-lang="en"] a.es{displ
 // En _RELEASE\sitio\ y publicado, el enlace canonico suite/index.html ya resuelve solo.
 if(location.protocol==='file:'&&/\/portal\//i.test(location.pathname)){document.querySelectorAll('a[data-local]').forEach(function(a){a.href=a.getAttribute('data-local');});}
 </script>
-<script>/* 2026-10-07: el borrador de Gmail en el idioma de la pagina (antes salia en espanol en EN/FR/NL/DE). armar-idiomas no traduce los href: por eso va aca, por data-lang. */
-(function(){var U={"es": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20lista%20de%20espera&body=", "en": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20waiting%20list&body=", "fr": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20liste%20d%27attente&body=", "nl": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20wachtlijst&body=", "de": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20Warteliste&body="};function put(){var a=document.getElementById('mm-gmail');if(!a)return;var l=document.documentElement.getAttribute('data-lang');a.href=U[l]||U.es;}put();new MutationObserver(put).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});})();</script>
+<script>/* 2026-10-07: el borrador de Gmail en el idioma de la pagina (antes salia en espanol en EN/FR/NL/DE). Se lee 'lang' y no 'data-lang': en /fr/ /nl/ /de/ site.js deja data-lang en es|en y armar-idiomas repone solo lang. armar-idiomas no traduce los href: por eso va aca, por data-lang. */
+(function(){var U={"es": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20lista%20de%20espera&body=", "en": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20waiting%20list&body=", "fr": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20liste%20d%27attente&body=", "nl": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20wachtlijst&body=", "de": "https://mail.google.com/mail/?view=cm&fs=1&to=contacto@musicmotionsuite.com&su=ScoreSuite%20%E2%80%94%20Warteliste&body="};function put(){var a=document.getElementById('mm-gmail');if(!a)return;var l=(document.documentElement.getAttribute('lang')||'').slice(0,2);a.href=U[l]||U.es;}put();new MutationObserver(put).observe(document.documentElement,{attributes:true,attributeFilter:['lang','data-lang']});})();</script>
 <script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','nl');</script>
 </body>
 </html>
