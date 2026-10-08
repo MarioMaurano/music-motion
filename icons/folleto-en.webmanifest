@@ -1,10 +1,10 @@
 {
-  "id": "/brochure/",
+  "id": "/brochure/index.html",
   "name": "mm Brochure",
   "short_name": "mm Brochure",
   "lang": "en",
-  "start_url": "/brochure/",
-  "scope": "/brochure/",
+  "start_url": "/brochure/index.html",
+  "scope": "/brochure/index.html",
   "display": "standalone",
   "background_color": "#07070e",
   "theme_color": "#07070e",

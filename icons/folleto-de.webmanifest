@@ -4,7 +4,7 @@
   "short_name": "mm Broschüre",
   "lang": "de",
   "start_url": "/brochure/de/",
-  "scope": "/brochure/",
+  "scope": "/brochure/de/",
   "display": "standalone",
   "background_color": "#07070e",
   "theme_color": "#07070e",

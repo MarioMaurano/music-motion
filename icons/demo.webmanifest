@@ -4,7 +4,7 @@
   "short_name": "mm Demo",
   "lang": "en",
   "start_url": "/apps/mmk-demo.html",
-  "scope": "/apps/",
+  "scope": "/apps/mmk-demo.html",
   "display": "standalone",
   "background_color": "#07070e",
   "theme_color": "#07070e",

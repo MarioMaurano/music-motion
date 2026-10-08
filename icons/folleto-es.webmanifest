@@ -4,7 +4,7 @@
   "short_name": "mm Folleto",
   "lang": "es",
   "start_url": "/brochure/es/",
-  "scope": "/brochure/",
+  "scope": "/brochure/es/",
   "display": "standalone",
   "background_color": "#07070e",
   "theme_color": "#07070e",

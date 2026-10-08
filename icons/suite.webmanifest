@@ -4,7 +4,7 @@
   "short_name": "mm Suite v2",
   "lang": "en",
   "start_url": "/apps/mmk-scorekeyboard.html",
-  "scope": "/apps/",
+  "scope": "/apps/mmk-scorekeyboard.html",
   "display": "standalone",
   "background_color": "#07070e",
   "theme_color": "#07070e",
