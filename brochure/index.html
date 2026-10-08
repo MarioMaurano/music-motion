@@ -28,7 +28,19 @@ a{color:#cdac52}a:hover{color:#e3c46a}
 </style>
 
 <style>body{display:flex;justify-content:center}@page{size:1080px auto;margin:0} html,body{background:#07070e} *{-webkit-print-color-adjust:exact;print-color-adjust:exact}</style>
+
+<style id="mm-langtog-css">
+/* 2026-10-08 · selector de idiomas con el mismo aspecto que en el sitio (.langtog) */
+.langtog{position:fixed;top:22px;right:22px;z-index:200;display:flex;border:1px solid #33335a;border-radius:8px;overflow:hidden;background:rgba(14,14,26,.92)}
+.langtog a{display:inline-block;color:#9a9ac0;font-family:'DM Mono',monospace;font-size:18px;letter-spacing:1px;padding:9px 15px;text-decoration:none;transition:all .15s}
+.langtog a:hover{color:#cdac52}
+.langtog a.on{background:#cdac52;color:#0a0a10;font-weight:500}
+@media print{.langtog{display:none!important}}
+</style>
 </head><body>
+<!-- 2026-10-08 · selector de idiomas (como en el sitio) -->
+<nav class="langtog" aria-label="Language"><a href="es/" hreflang="es" lang="es">ES</a><a href="./" hreflang="en" lang="en" class="on" aria-current="page">EN</a><a href="fr/" hreflang="fr" lang="fr">FR</a><a href="nl/" hreflang="nl" lang="nl">NL</a><a href="de/" hreflang="de" lang="de">DE</a></nav>
+
 <div style="width: 1080px; box-sizing: border-box; background: #07070e; color: #dcdcef; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column">
 
   <!-- ── 1 · COVER ── -->
