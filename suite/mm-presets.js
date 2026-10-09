@@ -1,3 +1,10 @@
+// 2026-10-08 (Mario) — EL ACORDEÓN SE LLAMA POR EL INSTRUMENTO, NO POR EL ESTILO: «vallenato es un estilo regional».
+//   accordion_vallenato se muestra «Acordeón diatónico» / «Diatonic accordion» (y FR · NL · DE). La clave interna no
+//   cambia: los archivos guardados suenan igual. El sonido no se tocó.
+//
+// 2026-10-08 — LA LISTA EN FR · NL · DE: MM_instLabel y MM_instSection pasan el nombre inglés por mmT() (el
+//   diccionario es mm-i18n.js); en ES y EN no cambia nada.
+//
 // 2026-09-15 (checkpoint · Score V2.7.109 · Cosmic V2.3.37 · Register V2.1.14) — LA LISTA HABLA TU IDIOMA.
 //   Reporte de Mario con captura: la lista de instrumentos salía mezclada. De las 81 fichas, 73 traían
 //   class.label en inglés y 8 en castellano (Órgano de Tubos · Acordeón · las cuatro Sección de… ·
@@ -8518,7 +8525,7 @@ window.MM_PRESETS_DEFAULT = {
   },
   "accordion_vallenato": {
     "name": "accordion_vallenato",
-    "class": { "family": "vientos", "instrument": "accordion_vallenato", "label": "Acordeón vallenato", "regime": "sostenido", "articulations": ["legato","staccato","bellows_shake"] },
+    "class": { "family": "vientos", "instrument": "accordion_vallenato", "label": "Diatonic accordion", "regime": "sostenido", "articulations": ["legato","staccato","bellows_shake"] },
     "lo": "F3", "hi": "A6",
     "resp": { "gain": [0.035,0.041,0.040,0.037], "air": [0.05,0.04,0.04,0.05], "tilt": [0.72,0.8,0.88,0.92], "atk": [2.0,1.7,1.2,0.8], "vib": [0.10,0.12,0.14,0.14], "vibRate": [5.2,5.4,5.6,5.6], "oddEven": [0.5,0.52,0.54,0.55] },
     "src": { "tilt": -6.0, "inharm": 0.0, "mode": "harm", "nb": [2500,1.0] },
@@ -8700,17 +8707,21 @@ window.MM_INSTRUMENT_NAMES = {
   cosmic_whistle:{es:'Silbido cósmico'}, glass_bells:{es:'Campanas de cristal'},
   recorder_soprano:{es:'Flauta dulce (soprano)'}, recorder_alto:{es:'Flauta dulce (contralto)'},
   banjo:{es:'Banjo'}, mandolin:{es:'Mandolina'},
-  electric_bass:{es:'Bajo eléctrico'}, accordion_vallenato:{en:'Vallenato Accordion'},
+  electric_bass:{es:'Bajo eléctrico'}, accordion_vallenato:{es:'Acordeón diatónico'},
   rhodes:{es:'Rhodes (piano eléctrico)'}, congas:{es:'Congas'}, bongos:{es:'Bongós'},
   timbales:{es:'Timbales (latinos)'}, claves:{es:'Claves'}, cowbell:{es:'Cencerro'},
   maracas:{es:'Maracas'}, cajon:{en:'Cajón'}
 };
 window.MM_instLabel = function(p, k){
   var n = window.MM_INSTRUMENT_NAMES[k], base = (p && p.class && p.class.label) || k;
-  if (!n) return base;
-  return (window.MM_instEs() ? n.es : n.en) || base;
+  // 2026-10-08 (paso 2): en FR/NL/DE el nombre de pantalla es el INGLÉS traducido (mmT, mm-theme.js + mm-i18n.js);
+  // en ES y EN, igual que antes. Sin mm-i18n.js, mmT devuelve el inglés.
+  var T = function(s){ return window.mmT ? window.mmT(s) : s; };
+  if (!n) return window.MM_instEs() ? base : T(base);
+  if (window.MM_instEs()) return n.es || base;
+  return T(n.en || base);
 };
-window.MM_instSection = function(sec){ return (window.MM_instEs() && sec.es) || sec.section; };
+window.MM_instSection = function(sec){ return (window.MM_instEs() && sec.es) || (window.mmT ? window.mmT(sec.section) : sec.section); };
 // Devuelve el HTML de <optgroup>/<option> (value=clave, texto=etiqueta) en orden canonico.
 //   map: mapa de presets para resolver etiqueta y presencia (default: banco). selected: clave activa.
 //   opts.includeNone: antepone la opcion "—" (sin instrumento). opts.onlyKeys: subconjunto plano (p.ej. percusion CH10).
