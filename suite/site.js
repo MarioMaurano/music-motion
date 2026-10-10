@@ -26,7 +26,8 @@ document.querySelectorAll('.sizetog button').forEach(function(b){
   b.addEventListener('click', function(){ setSize(parseInt(b.getAttribute('data-sz'),10)); });
 });
 // el tema lo restaura mm-theme.js
-try{ var sl=localStorage.getItem('mmSiteLang'); setLang(sl||'en');   // default EN para visitantes nuevos; la elección guardada se respeta
+// 2026-10-09: ?lang=es|en (lo pone el «?» de las apps con el idioma de la suite) manda sobre lo guardado, y se guarda
+try{ var ql=(/[?&]lang=(es|en)(?:&|$)/.exec(location.search)||[])[1]; var sl=ql||localStorage.getItem('mmSiteLang'); setLang(sl||'en');   // default EN para visitantes nuevos; la elección guardada se respeta
      var sz=localStorage.getItem('mmSiteSize'); if(sz) setSize(parseInt(sz,10)); }catch(e){}
 
 // ── Menu: marcar en oro donde estamos (2026-09-20, Mario) ───────────────────────────────
