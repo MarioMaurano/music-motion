@@ -185,6 +185,7 @@ footer.foot-bar .foot-links{display:flex;gap:14px;flex-wrap:wrap;margin:0}
 footer.foot-bar .foot-links a{font-family:var(--ff-mono);font-size:.64rem;letter-spacing:1px;
   text-transform:uppercase;color:var(--textm)}
 footer.foot-bar .foot-links a:hover{color:var(--gold)}
+footer.foot-bar .foot-legal{flex:1 1 100%;font-family:var(--ff-mono);font-size:.58rem;letter-spacing:1px;color:var(--textd)} /* 2026-10-10 (Mario): datos legales KBO/IVA, renglon propio, mismo tamano que el (c) */
 footer.foot-bar .foot-rights{font-family:var(--ff-mono);font-size:.58rem;letter-spacing:1px;color:var(--textd)}
 @media (max-width:640px){footer.foot-bar{padding:10px 18px}}
 
