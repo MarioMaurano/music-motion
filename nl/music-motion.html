@@ -172,7 +172,7 @@
     function go(n){i=(n+s.length)%s.length;s.forEach(function(e,k){e.classList.toggle('on',k===i);});}
     function porIdioma(){var h=document.documentElement,l=/^(fr|nl|de)$/.test(h.lang)?h.lang:(h.getAttribute('data-lang')||'en');for(var k=0;k<s.length;k++)if(s[k].getAttribute('data-l')===l){go(k);return;}go(0);}
     r.querySelectorAll('.bk-nav').forEach(function(b){b.addEventListener('click',function(){go(i+ +b.getAttribute('data-d'));});});
-    porIdioma();new MutationObserver(porIdioma).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});})();</script>
+    porIdioma();new MutationObserver(porIdioma).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang','lang']});window.addEventListener('load',porIdioma);})();</script>
     <div style="flex:1;min-width:240px">
       <h3 style="margin:0 0 6px"><i>When Sound Becomes Music</i> · <i>Cuando Sonido se vuelve música</i> · <i>Quand le son devient musique</i> · <i>Wanneer klank muziek wordt</i></h3>
       <p><span class="tr"><i>Toward a Shared Musical Language Across Time</i>, van <b>Mario Maurano</b>. Het waarom achter Music Motion: de geometrie van de klank, de <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Het boek — om verder te gaan">pythagorese intervallen</a> en de oude melodieën — van het octaaf, de kwint en de kwart tot het grafschrift van Seikilos —, waar theorie ervaring wordt.</span></p>
