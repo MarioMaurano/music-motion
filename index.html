@@ -43,6 +43,10 @@
 .puertas .app p{font-size:var(--fs-sm)}
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
+.caminos{grid-template-columns:repeat(3,1fr)}
+.caminos .app h3{font-size:1.12rem}
+.caminos .app p,.caminos .app li{font-size:var(--fs-sm)}
+@media(max-width:900px){.caminos{grid-template-columns:1fr}}
 </style>
 
 <!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
@@ -133,7 +137,55 @@
       <div class="tag"><span class="es">Enseñar</span><span class="en">Teach</span></div>
       <h3><span class="es">Enseñar</span><span class="en">Teach</span></h3>
       <p><span class="es">Escribe tus ejercicios en una partitura que suena y compártelos con tus alumnos. Para academias y colegios: 1 € por alumno cada 30 días.</span><span class="en">Write your exercises in a score that sounds and share them with your students. For academies and schools: €1 per student every 30 days.</span></p>
-      <div class="launch"><a class="btn-launch" href="colegios.html"><span class="es">▶ Para colegios</span><span class="en">▶ For schools</span></a></div>
+      <div class="launch"><a class="btn-launch" href="#aprender"><span class="es">▶ Cómo enseñar con Music Motion ↓</span><span class="en">▶ How to teach with Music Motion ↓</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── TRES CAMINOS ───────────── -->
+<!-- 2026-10-14, Mario: tres niveles bien demarcados, para que desde la entrada se vea dónde buscar:
+     1) el maestro de primaria sin formación musical · 2) descubrir las apps paso a paso · 3) músicos (Coach). -->
+<section id="aprender">
+  <div class="eyebrow"><span class="es">Aprender y enseñar</span><span class="en">Learn and teach</span></div>
+  <h2><span class="es">Tres caminos para aprender con Music Motion</span><span class="en">Three ways to learn with Music Motion</span></h2>
+  <p><span class="es">Elige el tuyo: cada camino tiene sus materiales y su punto de partida.</span><span class="en">Pick yours: each path has its own materials and its own starting point.</span></p>
+  <div class="apps caminos">
+    <div class="app prod" style="--c:var(--teal)">
+      <div class="tag"><span class="es">Escuela primaria</span><span class="en">Primary school</span></div>
+      <h3><span class="es">En la escuela: el maestro que no es músico</span><span class="en">At school: the teacher who is not a musician</span></h3>
+      <p><span class="es">En primaria un solo maestro da todas las materias. Con Music Motion puede dar también la clase de música sin formación musical: clases de 50 minutos listas para usar, con la guía paso a paso y una hoja para que los padres jueguen en casa con sus hijos.</span><span class="en">In primary school one teacher teaches every subject. With Music Motion they can teach music too, with no musical training: ready-to-use 50-minute lessons, with a step-by-step guide and a sheet so parents can play along at home with their children.</span></p>
+      <ul>
+        <li><span class="es">Basta un portátil o una tableta y unos parlantes: el gasto es mínimo</span><span class="en">A laptop or a tablet and a pair of speakers are enough: the cost is minimal</span></li>
+        <li><span class="es">Una propuesta también para la pedagogía musical: tesis, prácticas o proyectos en escuelas</span><span class="en">Also a proposal for music education studies: theses, teaching practice or school projects</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="suite/ejercicios/#aula" data-local="../website/ejercicios/index.html#aula"><span class="es">▶ Ver las clases</span><span class="en">▶ See the lessons</span></a>
+        <a class="btn-launch" href="colegios.html" style="--c:var(--gold)"><span class="es">Programa para colegios →</span><span class="en">Schools programme →</span></a>
+      </div>
+    </div>
+    <div class="app prod" style="--c:var(--gold)">
+      <div class="tag"><span class="es">Para todos</span><span class="en">For everyone</span></div>
+      <h3><span class="es">Paso a paso: descubrir las aplicaciones</span><span class="en">Step by step: discovering the apps</span></h3>
+      <p><span class="es">Ejercicios guiados para conocer el teclado, la partitura, la consola y el acompañamiento, uno detrás de otro y a tu ritmo. No hace falta saber nada antes.</span><span class="en">Guided exercises to get to know the keyboard, the score, the console and accompaniment, one after another and at your own pace. Nothing to know beforehand.</span></p>
+      <ul>
+        <li><span class="es">Cada ejercicio en página y en PDF, en cinco idiomas</span><span class="en">Each exercise as a page and as a PDF, in five languages</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="suite/ejercicios/#suite" data-local="../website/ejercicios/index.html#suite"><span class="es">▶ Empezar por el ejercicio 1</span><span class="en">▶ Start with exercise 1</span></a>
+      </div>
+    </div>
+    <div class="app prod" style="--c:var(--violet)">
+      <div class="tag"><span class="es">Escuela de música</span><span class="en">Music school</span></div>
+      <h3><span class="es">Para músicos: armonía, contrapunto, orquestación y composición</span><span class="en">For musicians: harmony, counterpoint, orchestration and composition</span></h3>
+      <p><span class="es">Para estudiantes de escuelas de música y conservatorios, y para sus profesores. El Coach acompaña la escritura por etapas —melodías, dúos, tríos y cuartetos— con las reglas del contrapunto: avisa sin bloquear y guarda el registro de tu progreso.</span><span class="en">For students at music schools and conservatoires, and for their teachers. The Coach guides your writing stage by stage — melodies, duos, trios and quartets — with the rules of counterpoint: it warns without blocking and keeps a record of your progress.</span></p>
+      <ul>
+        <li><span class="es">El cofre de orquestación: registro, carácter y dinámica de cada instrumento</span><span class="en">The orchestration chest: range, character and dynamics of each instrument</span></li>
+        <li><span class="es">Niveles que crecen con el estudiante</span><span class="en">Levels that grow with the student</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="suite/coach.html" data-local="../website/coach.html"><span class="es">▶ Conocer el Coach</span><span class="en">▶ Meet the Coach</span></a>
+        <a class="btn-launch" href="apps/mm-coach.html" data-local="../_BASE/mm-coach.html" style="--c:var(--blue)"><span class="es">Abrir el Coach →</span><span class="en">Open the Coach →</span></a>
+      </div>
     </div>
   </div>
 </section>

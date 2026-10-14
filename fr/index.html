@@ -43,6 +43,10 @@
 .puertas .app p{font-size:var(--fs-sm)}
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
+.caminos{grid-template-columns:repeat(3,1fr)}
+.caminos .app h3{font-size:1.12rem}
+.caminos .app p,.caminos .app li{font-size:var(--fs-sm)}
+@media(max-width:900px){.caminos{grid-template-columns:1fr}}
 </style>
 
 <!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
@@ -133,7 +137,55 @@
       <div class="tag"><span class="tr">Enseigner</span></div>
       <h3><span class="tr">Enseigner</span></h3>
       <p><span class="tr">Écrivez vos exercices dans une partition qui sonne et partagez-les avec vos élèves. Pour les académies et les écoles : 1 € par élève tous les 30 jours.</span></p>
-      <div class="launch"><a class="btn-launch" href="colegios.html"><span class="tr">▶ Pour les écoles</span></a></div>
+      <div class="launch"><a class="btn-launch" href="#aprender"><span class="tr">▶ Enseigner avec Music Motion ↓</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── TRES CAMINOS ───────────── -->
+<!-- 2026-10-14, Mario: tres niveles bien demarcados, para que desde la entrada se vea dónde buscar:
+     1) el maestro de primaria sin formación musical · 2) descubrir las apps paso a paso · 3) músicos (Coach). -->
+<section id="aprender">
+  <div class="eyebrow"><span class="tr">Apprendre et enseigner</span></div>
+  <h2><span class="tr">Trois chemins pour apprendre avec Music Motion</span></h2>
+  <p><span class="tr">Choisissez le vôtre : chaque chemin a ses supports et son point de départ.</span></p>
+  <div class="apps caminos">
+    <div class="app prod" style="--c:var(--teal)">
+      <div class="tag"><span class="tr">École primaire</span></div>
+      <h3><span class="tr">À l’école : l’enseignant qui n’est pas musicien</span></h3>
+      <p><span class="tr">À l’école primaire, un seul enseignant donne toutes les matières. Avec Music Motion, il peut aussi donner le cours de musique sans formation musicale : des leçons de 50 minutes prêtes à l’emploi, avec le guide pas à pas et une fiche pour que les parents jouent à la maison avec leurs enfants.</span></p>
+      <ul>
+        <li><span class="tr">Un ordinateur portable ou une tablette et deux haut-parleurs suffisent : le coût est minime</span></li>
+        <li><span class="tr">Une proposition aussi pour la pédagogie musicale : mémoires, stages ou projets dans les écoles</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="../suite/ejercicios/#aula" data-local="../website/ejercicios/index.html#aula"><span class="tr">▶ Voir les leçons</span></a>
+        <a class="btn-launch" href="colegios.html" style="--c:var(--gold)"><span class="tr">Programme pour les écoles →</span></a>
+      </div>
+    </div>
+    <div class="app prod" style="--c:var(--gold)">
+      <div class="tag"><span class="tr">Pour tous</span></div>
+      <h3><span class="tr">Pas à pas : découvrir les applications</span></h3>
+      <p><span class="tr">Des exercices guidés pour découvrir le clavier, la partition, la console et l’accompagnement, l’un après l’autre et à votre rythme. Rien à savoir au préalable.</span></p>
+      <ul>
+        <li><span class="tr">Chaque exercice en page web et en PDF, en cinq langues</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="../suite/ejercicios/#suite" data-local="../website/ejercicios/index.html#suite"><span class="tr">▶ Commencer par l’exercice 1</span></a>
+      </div>
+    </div>
+    <div class="app prod" style="--c:var(--violet)">
+      <div class="tag"><span class="tr">École de musique</span></div>
+      <h3><span class="tr">Pour les musiciens : harmonie, contrepoint, orchestration et composition</span></h3>
+      <p><span class="tr">Pour les élèves des écoles de musique et des conservatoires, et pour leurs professeurs. Le Coach accompagne l’écriture étape par étape — mélodies, duos, trios et quatuors — avec les règles du contrepoint : il avertit sans bloquer et garde la trace de vos progrès.</span></p>
+      <ul>
+        <li><span class="tr">Le coffre d’orchestration : tessiture, caractère et dynamique de chaque instrument</span></li>
+        <li><span class="tr">Des niveaux qui grandissent avec l’élève</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="suite/coach.html" data-local="../website/coach.html"><span class="tr">▶ Découvrir le Coach</span></a>
+        <a class="btn-launch" href="../apps/mm-coach.html" data-local="../_BASE/mm-coach.html" style="--c:var(--blue)"><span class="tr">Ouvrir le Coach →</span></a>
+      </div>
     </div>
   </div>
 </section>

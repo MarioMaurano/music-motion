@@ -43,6 +43,10 @@
 .puertas .app p{font-size:var(--fs-sm)}
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
+.caminos{grid-template-columns:repeat(3,1fr)}
+.caminos .app h3{font-size:1.12rem}
+.caminos .app p,.caminos .app li{font-size:var(--fs-sm)}
+@media(max-width:900px){.caminos{grid-template-columns:1fr}}
 </style>
 
 <!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
@@ -133,7 +137,55 @@
       <div class="tag"><span class="tr">Lesgeven</span></div>
       <h3><span class="tr">Lesgeven</span></h3>
       <p><span class="tr">Schrijf je oefeningen in een partituur die klinkt en deel ze met je leerlingen. Voor academies en scholen: € 1 per leerling per 30 dagen.</span></p>
-      <div class="launch"><a class="btn-launch" href="colegios.html"><span class="tr">▶ Voor scholen</span></a></div>
+      <div class="launch"><a class="btn-launch" href="#aprender"><span class="tr">▶ Lesgeven met Music Motion ↓</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── TRES CAMINOS ───────────── -->
+<!-- 2026-10-14, Mario: tres niveles bien demarcados, para que desde la entrada se vea dónde buscar:
+     1) el maestro de primaria sin formación musical · 2) descubrir las apps paso a paso · 3) músicos (Coach). -->
+<section id="aprender">
+  <div class="eyebrow"><span class="tr">Leren en lesgeven</span></div>
+  <h2><span class="tr">Drie wegen om te leren met Music Motion</span></h2>
+  <p><span class="tr">Kies de jouwe: elke weg heeft zijn eigen materiaal en zijn eigen vertrekpunt.</span></p>
+  <div class="apps caminos">
+    <div class="app prod" style="--c:var(--teal)">
+      <div class="tag"><span class="tr">Basisschool</span></div>
+      <h3><span class="tr">Op school: de leerkracht die geen muzikant is</span></h3>
+      <p><span class="tr">In de basisschool geeft één leerkracht alle vakken. Met Music Motion kan die ook de muziekles geven, zonder muzikale opleiding: kant-en-klare lessen van 50 minuten, met een stap-voor-staphandleiding en een blad waarmee ouders thuis met hun kinderen kunnen meespelen.</span></p>
+      <ul>
+        <li><span class="tr">Een laptop of een tablet en een paar luidsprekers volstaan: de kosten zijn minimaal</span></li>
+        <li><span class="tr">Ook een voorstel voor muziekpedagogiek: scripties, stages of schoolprojecten</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="../suite/ejercicios/#aula" data-local="../website/ejercicios/index.html#aula"><span class="tr">▶ De lessen bekijken</span></a>
+        <a class="btn-launch" href="colegios.html" style="--c:var(--gold)"><span class="tr">Programma voor scholen →</span></a>
+      </div>
+    </div>
+    <div class="app prod" style="--c:var(--gold)">
+      <div class="tag"><span class="tr">Voor iedereen</span></div>
+      <h3><span class="tr">Stap voor stap: de apps ontdekken</span></h3>
+      <p><span class="tr">Begeleide oefeningen om het klavier, de partituur, de console en de begeleiding te leren kennen, de ene na de andere en in je eigen tempo. Je hoeft vooraf niets te weten.</span></p>
+      <ul>
+        <li><span class="tr">Elke oefening als webpagina en als pdf, in vijf talen</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="../suite/ejercicios/#suite" data-local="../website/ejercicios/index.html#suite"><span class="tr">▶ Begin met oefening 1</span></a>
+      </div>
+    </div>
+    <div class="app prod" style="--c:var(--violet)">
+      <div class="tag"><span class="tr">Muziekschool</span></div>
+      <h3><span class="tr">Voor muzikanten: harmonie, contrapunt, orkestratie en compositie</span></h3>
+      <p><span class="tr">Voor leerlingen van muziekscholen en conservatoria, en voor hun leraren. De Coach begeleidt het schrijven stap voor stap — melodieën, duo’s, trio’s en kwartetten — met de regels van het contrapunt: hij waarschuwt zonder te blokkeren en houdt je vooruitgang bij.</span></p>
+      <ul>
+        <li><span class="tr">De orkestratiekist: register, karakter en dynamiek van elk instrument</span></li>
+        <li><span class="tr">Niveaus die meegroeien met de leerling</span></li>
+      </ul>
+      <div class="launch">
+        <a class="btn-launch" href="suite/coach.html" data-local="../website/coach.html"><span class="tr">▶ Maak kennis met de Coach</span></a>
+        <a class="btn-launch" href="../apps/mm-coach.html" data-local="../_BASE/mm-coach.html" style="--c:var(--blue)"><span class="tr">De Coach openen →</span></a>
+      </div>
     </div>
   </div>
 </section>
