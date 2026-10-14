@@ -237,14 +237,21 @@
   <div class="eyebrow"><span class="tr">Verder lezen</span></div>
   <h2><span class="tr">Het boek</span></h2>
   <div class="lesson" style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
-    <a href="https://www.amazon.com/dp/B0GQ6NCFRZ" target="_blank" rel="noopener" style="flex:0 0 auto">
-      <img src="../../suite/media/book-cover.webp" alt="When Sound Becomes Music" loading="lazy" onerror="this.style.display='none'" style="width:140px;height:auto;border:1px solid var(--border);border-radius:var(--rad);display:block">
-    </a>
+    <!-- 2026-10-14, Mario: un carrusel EN · ES · FR · NL · DE — cada idioma abre con su tapa; con las flechas los cuadritos giran -->
+    <div class="bk-car" data-bkcar>
+      <button class="bk-nav" type="button" data-d="-1" aria-label="‹">‹</button>
+      <div class="bk-stage"><figure class="bk-slide" data-l="en"><a href="https://www.amazon.com/dp/B0GQQ9PRKB" target="_blank" rel="noopener" lang="en" title="When Sound Becomes Music"><img src="../../suite/media/book-en.webp" alt="When Sound Becomes Music" width="150" height="240"></a><figcaption><a href="https://www.amazon.com/dp/B0GQQ9PRKB" target="_blank" rel="noopener" lang="en">English · Amazon →</a></figcaption></figure><figure class="bk-slide" data-l="es"><a href="https://www.amazon.es/dp/B0GS32R3DP" target="_blank" rel="noopener" lang="es" title="Cuando Sonido se vuelve música"><img src="../../suite/media/book-es.webp" alt="Cuando Sonido se vuelve música" width="150" height="240"></a><figcaption><a href="https://www.amazon.es/dp/B0GS32R3DP" target="_blank" rel="noopener" lang="es">Español · Amazon →</a></figcaption></figure><figure class="bk-slide" data-l="fr"><a href="https://www.amazon.fr/dp/B0HMS52FDY" target="_blank" rel="noopener" lang="fr" title="Quand le son devient musique"><img src="../../suite/media/book-fr.webp" alt="Quand le son devient musique" width="150" height="240"></a><figcaption><a href="https://www.amazon.fr/dp/B0HMS52FDY" target="_blank" rel="noopener" lang="fr">Français · Amazon →</a></figcaption></figure><figure class="bk-slide" data-l="nl"><a href="https://www.amazon.nl/dp/B0HMS1GSTH" target="_blank" rel="noopener" lang="nl" title="Wanneer klank muziek wordt"><img src="../../suite/media/book-nl.webp" alt="Wanneer klank muziek wordt" width="150" height="240"></a><figcaption><a href="https://www.amazon.nl/dp/B0HMS1GSTH" target="_blank" rel="noopener" lang="nl">Nederlands · Amazon →</a></figcaption></figure><figure class="bk-slide pronto" data-l="de"><img src="../../suite/media/book-de.webp" alt="Wenn Klang zu Musik wird" width="150" height="240"><figcaption lang="de">Deutsch · <span class="tr">binnenkort</span></figcaption></figure></div>
+      <button class="bk-nav" type="button" data-d="1" aria-label="›">›</button>
+    </div>
+    <script>(function(){var r=document.querySelector('[data-bkcar]');if(!r)return;var s=[].slice.call(r.querySelectorAll('.bk-slide')),i=0;
+    function go(n){i=(n+s.length)%s.length;s.forEach(function(e,k){e.classList.toggle('on',k===i);});}
+    function porIdioma(){var l=document.documentElement.getAttribute('data-lang')||document.documentElement.lang||'en';for(var k=0;k<s.length;k++)if(s[k].getAttribute('data-l')===l){go(k);return;}go(0);}
+    r.querySelectorAll('.bk-nav').forEach(function(b){b.addEventListener('click',function(){go(i+ +b.getAttribute('data-d'));});});
+    porIdioma();new MutationObserver(porIdioma).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});})();</script>
     <div style="flex:1;min-width:240px">
-      <h3 style="margin-top:0"><i>When Sound Becomes Music</i> · <i>Cuando el sonido se vuelve música</i></h3>
+      <h3 style="margin-top:0"><i>When Sound Becomes Music</i> · <i>Cuando Sonido se vuelve música</i> · <i>Quand le son devient musique</i> · <i>Wanneer klank muziek wordt</i></h3>
       <p><span class="tr"><i>Toward a Shared Musical Language Across Time</i>, van <b>Mario Maurano</b>. Het waarom achter de suite: de geometrie van de klank, de <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/pythagorean-intervals" target="_blank" rel="noopener" title="Het boek — om verder te gaan">pythagorese intervallen</a> en de oude melodieën — van het octaaf, de kwint en de kwart tot het grafschrift van Seikilos —, waar theorie ervaring wordt.</span></p>
       <p class="small"><span class="tr">Met een <b>begeleidende website</b> met interactieve tools: een intervalcalculator, frequentietabellen en oefeningen om te downloaden.</span></p>
-      <a class="card-link" href="https://www.amazon.com/dp/B0GQ6NCFRZ" target="_blank" rel="noopener"><span class="tr">Het boek (Amazon · EN/ES) →</span></a>
       <a class="card-link" href="https://sites.google.com/view/when-sound-becomes-music/the-book-companion" target="_blank" rel="noopener"><span class="tr">Begeleidende website →</span></a>
     </div>
   </div>
