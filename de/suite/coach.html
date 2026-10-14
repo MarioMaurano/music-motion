@@ -245,7 +245,7 @@
     </div>
     <script>(function(){var r=document.querySelector('[data-bkcar]');if(!r)return;var s=[].slice.call(r.querySelectorAll('.bk-slide')),i=0;
     function go(n){i=(n+s.length)%s.length;s.forEach(function(e,k){e.classList.toggle('on',k===i);});}
-    function porIdioma(){var l=document.documentElement.getAttribute('data-lang')||document.documentElement.lang||'en';for(var k=0;k<s.length;k++)if(s[k].getAttribute('data-l')===l){go(k);return;}go(0);}
+    function porIdioma(){var h=document.documentElement,l=/^(fr|nl|de)$/.test(h.lang)?h.lang:(h.getAttribute('data-lang')||'en');for(var k=0;k<s.length;k++)if(s[k].getAttribute('data-l')===l){go(k);return;}go(0);}
     r.querySelectorAll('.bk-nav').forEach(function(b){b.addEventListener('click',function(){go(i+ +b.getAttribute('data-d'));});});
     porIdioma();new MutationObserver(porIdioma).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});})();</script>
     <div style="flex:1;min-width:240px">
