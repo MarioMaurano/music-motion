@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Écoles — Music Motion</title>
-<meta name="description" content="Music Motion pour les écoles : la suite est gratuite, le son se paie par journée d’utilisation. Un seul compte par école, sans inscription des élèves.">
+<meta name="description" content="Music Motion pour les écoles : 1 € par élève tous les 30 jours, en classe ou à la maison. Un seul compte par école, sans inscription des élèves.">
 <link rel="canonical" href="https://musicmotionsuite.com/fr/colegios.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Music Motion">
 <meta property="og:title" content="Écoles — Music Motion">
-<meta property="og:description" content="Music Motion pour les écoles : la suite est gratuite, le son se paie par journée d’utilisation. Un seul compte par école, sans inscription des élèves.">
+<meta property="og:description" content="Music Motion pour les écoles : 1 € par élève tous les 30 jours, en classe ou à la maison. Un seul compte par école, sans inscription des élèves.">
 <meta property="og:url" content="https://musicmotionsuite.com/fr/colegios.html">
 <meta property="og:image" content="https://musicmotionsuite.com/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -42,6 +42,7 @@
     <a href="music-motion.html"><span class="tr">Ce qu’est Music Motion</span></a>
     <a href="colegios.html" class="nav-hi"><span class="tr">Écoles</span></a>
     <a href="descargas.html"><span class="tr">Téléchargements</span></a>
+    <a href="../faq.html?lang=fr"><span class="tr">FAQ</span></a>
     <a href="contacto.html"><span class="tr">Contact</span></a>
   </nav>
   <div class="tools">
@@ -63,35 +64,95 @@
 <main>
 
 <section id="colegios">
+  <!-- 2026-10-16 (Mario: «la encuentro muy compacta… es el rector que las lee»; «La suite es gratuita es misleading»):
+       la página se rearma en partes cortas con título: entrada con el precio, aula (3 tarjetas), lo que cuesta (3 cifras),
+       la cuenta, cómo se pide (3 pasos), para el profesor y probarlo. El contenido es el mismo, ordenado. -->
+  <style>
+    .cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:20px}
+    .cifra{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);padding:16px 18px}
+    .cifra b{display:block;font-family:var(--ff-display);font-size:2rem;line-height:1.1;color:var(--gold);margin-bottom:6px}
+    .cifra span{font-size:var(--fs-sm);color:var(--textm)}
+    #colegios h3.sec{font-family:var(--ff-display);font-size:1.35rem;margin:46px 0 4px}
+    #colegios .ideas .idea .tag{color:var(--teal)}
+  </style>
   <div class="eyebrow"><span class="tr">Pour les institutions</span></div>
   <h2><span class="tr">Écoles et conservatoires</span></h2>
-  <p><span class="tr">La suite est gratuite et le restera : écrire, lire et voir la partition ne coûte rien. Ce qui se paie, c’est le <b>son</b>, et il se paie par journée d’utilisation.</span></p>
+  <p class="lead"><span class="tr"><b>La musique en classe, à 1 € par élève tous les 30 jours.</b></span></p>
+  <p><span class="tr">Écrire, lire et voir la partition ne coûte rien ; ce qui se paie, c’est le <b>son</b>, par journée d’utilisation.</span></p>
+  <p><span class="tr">Chaque élève et chaque enseignant y accède <b>où qu’il soit</b> — l’ordinateur de la classe, un téléphone, une tablette ou l’ordinateur de la maison — <b>sans frais supplémentaires</b> : tout est compris dans le compte de l’école.</span></p>
+  <p><span class="tr">Rien à installer et pas de comptes pour les élèves.</span></p>
 
-  <div class="note" id="aula" style="border-left-color:var(--teal)">
-    <span class="tr"><b>En classe : deux niveaux de leçons hebdomadaires, sans connaissances musicales.</b> Le Niveau 1 (8–12 ans) et le Niveau 2 (9–14 ans) comptent une dizaine de leçons chacun, à ajouter au programme de musique que l’école a déjà. Les premières sont prêtes, « L’escalier qui chante » et « Notre mélodie » : 50 minutes chacune, avec un ordinateur, des haut-parleurs et le Cosmic Keyboard gratuit. Chaque leçon s’accompagne d’un guide pas à pas pour l’enseignant et d’une feuille pour que les parents puissent jouer à la maison avec leurs enfants. Le programme complet des niveaux choisis — guides, feuilles pour la maison et mélodies d’exemple, dans la langue souhaitée — est remis à l’école lors de son inscription. Chaque enseignant peut concevoir les exemples selon sa propre classe, et nous continuerons à ajouter des thèmes selon les demandes reçues par le <a href="contacto.html">formulaire de contact</a>.</span>
-    <div class="launch" style="margin-top:12px">
-      <a class="btn-launch" style="--c:var(--teal)" href="suite/ejercicios/index.html#aula" data-local="../website/ejercicios/index.html#aula"><span class="tr">Voir les leçons</span></a>
+  <h3 class="sec" id="aula"><span class="tr">En classe</span></h3>
+  <p><span class="tr">Deux niveaux de leçons hebdomadaires à ajouter au programme de musique que l’école a déjà. Inutile d’être musicien pour les donner.</span></p>
+  <div class="ideas">
+    <div class="idea">
+      <div class="tag"><span class="tr">Niveau 1</span></div>
+      <h3><span class="tr">8 à 12 ans</span></h3>
+      <p><span class="tr">Neuf leçons de 50 minutes pour écouter, lire et compter : de « L’escalier qui chante » à la première partition.</span></p>
+    </div>
+    <div class="idea">
+      <div class="tag"><span class="tr">Niveau 2</span></div>
+      <h3><span class="tr">9 à 14 ans</span></h3>
+      <p><span class="tr">Onze leçons et une facultative pour écrire et composer : un petit opéra de la classe et « La ligne perdue », sur la plus ancienne chanson du monde.</span></p>
+    </div>
+    <div class="idea">
+      <div class="tag"><span class="tr">Ce que reçoit l’école</span></div>
+      <h3><span class="tr">Tout, à l’inscription</span></h3>
+      <p><span class="tr">Le guide pas à pas pour l’enseignant, une fiche pour que les parents jouent à la maison avec leurs enfants et les mélodies d’exemple, dans la langue de votre choix.</span></p>
     </div>
   </div>
+  <p style="margin-top:14px"><span class="tr">Chaque enseignant peut adapter les exemples à sa classe, et nous ajoutons des thèmes selon les demandes que nous recevons.</span></p>
+  <p><span class="tr">Et une chose qu’aucun autre programme à notre connaissance n’offre : Music Motion travaille avec <b>35 sons par octave</b>, ordonnés par les quintes pythagoriciennes. Ré♯ et Mi♭ sont des notes différentes, et les élèves les entendent différentes : la classe entend ce que les manuels expliquent et que le piano ne laisse pas entendre.</span></p>
+  <div class="launch">
+    <a class="btn-launch" style="--c:var(--teal)" href="suite/ejercicios/index.html#aula" data-local="../website/ejercicios/index.html#aula"><span class="tr">Voir les leçons</span></a>
+    <a class="btn-launch" style="--c:var(--gold)" href="suite/seikilos-ninos.html" data-local="../website/seikilos-ninos.html"><span class="tr">Exemple : Seikilos pour les enfants</span></a>
+  </div>
 
-  <h3><span class="tr">Comment fonctionne un compte d’école</span></h3>
+  <h3 class="sec"><span class="tr">Ce que cela coûte</span></h3>
+  <div class="cifras">
+    <div class="cifra"><b>1 €</b><span><span class="tr">30 jours d’accès complet pour un élève, en classe et à la maison</span></span></div>
+    <div class="cifra"><b>150 €</b><span><span class="tr">une classe de 15 élèves pendant toute l’année scolaire (10 mois)</span></span></div>
+    <div class="cifra"><b>10 €</b><span><span class="tr">par élève et par an, dans une école de 350 élèves (3 500 €)</span></span></div>
+  </div>
+  <p style="margin-top:14px"><span class="tr">C’est <b>plus de 65 % de moins</b> que le prix pour les particuliers. Ce tarif s’obtient <b>par contact direct</b> avec Music Motion : il n’est pas dans la boutique en ligne.</span></p>
+  <p><span class="tr">Le solde n’expire pas avec l’année scolaire : ce qui reste est conservé. Quand il est épuisé, le clavier cesse de sonner jusqu’à la recharge ; rien n’est effacé.</span></p>
+  <p><span class="tr">Écrivez-nous avec le nombre d’élèves et nous vous enverrons un devis.</span></p>
+
+  <h3 class="sec"><span class="tr">Comment fonctionne le compte</span></h3>
   <ul class="plain">
-    <li><span class="tr">L’école a <b>un seul compte</b> : une adresse e-mail, saisie une fois sur chaque poste de la classe et plus jamais demandée.</span></li>
-    <li><span class="tr">Les élèves <b>ne s’inscrivent pas</b>. Pas de mots de passe, pas de compte par enfant, et nous ne conservons aucune donnée sur des mineurs.</span></li>
-    <li><span class="tr">Chaque élève utilise <b>un crédit par journée d’utilisation</b>, en classe ou à la maison, pris sur le solde commun de l’école. Ouvrir et fermer la suite dix fois dans la même journée coûte autant que l’ouvrir une seule fois.</span></li>
-    <li><span class="tr">Il n’y a rien à installer : cela fonctionne dans le navigateur que vous avez déjà.</span></li>
+    <li><span class="tr">L’école a <b>un seul compte</b> : une adresse e-mail, saisie une fois sur chaque appareil et plus jamais demandée.</span></li>
+    <li><span class="tr">Les élèves <b>ne s’inscrivent pas</b> : pas de mots de passe, pas de comptes par élève, et nous ne gardons aucune donnée sur les mineurs.</span></li>
+    <li><span class="tr">Chaque élève utilise <b>un crédit par jour d’utilisation</b>, en classe ou à la maison, sur le solde commun de l’école. Ouvrir la suite dix fois dans la journée coûte autant que l’ouvrir une fois.</span></li>
+    <li><span class="tr">Cela fonctionne dans le navigateur que vous avez déjà : rien à installer.</span></li>
   </ul>
 
-  <h3><span class="tr">Ce que cela coûte</span></h3>
-  <p><span class="tr"><b>1 € = 30 jours d’accès complet pour un élève, en classe et à la maison.</b> C’est un tiers du prix pour les particuliers. Une classe de 15 élèves pendant toute l’année scolaire (10 mois) coûte 150 € ; une école de 350 élèves, 3 500 €, soit 10 € par élève et par an. Écrivez-nous avec le nombre d’élèves et nous vous enverrons un devis.</span></p>
-  <p><span class="tr">Le solde n’expire pas avec l’année scolaire : ce qui reste est conservé. Et quand il est épuisé, le clavier cesse de sonner jusqu’à la recharge — rien n’est effacé, aucun travail n’est perdu.</span></p>
+  <h3 class="sec"><span class="tr">Comment commander</span></h3>
+  <div class="steps">
+    <div class="step"><div class="n"></div><div>
+      <h3><span class="tr">Le formulaire</span></h3>
+      <p><span class="tr">L’école remplit le formulaire et indique <b>l’e-mail de son compte</b> : c’est l’adresse avec laquelle les élèves accèdent.</span></p>
+    </div></div>
+    <div class="step"><div class="n"></div><div>
+      <h3><span class="tr">La commande et le paiement</span></h3>
+      <p><span class="tr">Music Motion répond avec la commande et les modes de paiement : carte, Bancontact, Google Pay, Apple Pay, PayPal ou virement sur facture.</span></p>
+    </div></div>
+    <div class="step"><div class="n"></div><div>
+      <h3><span class="tr">Le compte, actif</span></h3>
+      <p><span class="tr">Dès la confirmation de la commande, le compte est activé avec ses crédits.</span></p>
+    </div></div>
+  </div>
+  <div class="launch">
+    <a class="btn-launch mm-form" href="https://docs.google.com/forms/d/15fMlCeq7spPq_xjUL2G9yruYXRRh9AgTXIvW1IdlOho/viewform" target="_blank" rel="noopener"><span class="tr">Ouvrir le formulaire</span></a>
+  </div>
 
-  <p><span class="tr"><b>Comment commander :</b> sur demande, avec <a class="mm-form" href="https://docs.google.com/forms/d/15fMlCeq7spPq_xjUL2G9yruYXRRh9AgTXIvW1IdlOho/viewform" target="_blank" rel="noopener">le formulaire</a>. L’école ou l’institution y indique <b>l’adresse e-mail de son compte</b> : avec cette adresse, les élèves ouvrent le programme en ligne, sans rien télécharger. Music Motion répond avec la commande et le mode de paiement (carte, Bancontact, Google Pay, Apple Pay ou PayPal, ou virement bancaire sur facture) et, <b>une fois la commande confirmée, active le compte</b> avec ses crédits.</span></p>
-
-  <h3><span class="tr">Pour l’enseignant</span></h3>
+  <h3 class="sec"><span class="tr">Pour l’enseignant</span></h3>
   <p><span class="tr">Le programme n’est pas seulement un instrument pour l’élève : l’enseignant <b>écrit ses propres exercices</b> — une basse chiffrée, un cantus firmus, une mélodie à harmoniser —, les enregistre en <b>.mmf</b> et les distribue par e-mail ou depuis la page de l’école. Chaque élève travaille sur sa copie et s’entend <b>juste</b> : les <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">quintes</a>, les tierces et les sensibles sonnent là où elles doivent sonner. La façon de faire est expliquée sur <a href="suite/coach.html#para-profesores" data-local="../website/coach.html#para-profesores">la page du Coach</a>.</span></p>
+  <p><span class="tr">Et aussi les paroles d’une chanson, liées à leurs notes, avec la traduction en dessous, comme dans l’<i>Épitaphe de Seikilos</i>.</span></p>
+  <div class="launch">
+    <a class="btn-launch" style="--c:var(--gold)" href="suite/seikilos.html" data-local="../website/seikilos.html"><span class="tr">Voir le Seikilos</span></a>
+  </div>
 
-  <h3><span class="tr">L’essayer d’abord</span></h3>
+  <h3 class="sec"><span class="tr">L’essayer d’abord</span></h3>
   <p><span class="tr">Il n’y a aucune autorisation à demander ni aucun formulaire à remplir : la suite est en ligne et s’ouvre depuis le navigateur. Tout enseignant peut y entrer, écrire un exercice et l’entendre avant de parler à qui que ce soit. Les trois premiers crédits de chaque adresse sont offerts.</span></p>
   <div class="launch">
     <a class="btn-launch" href="suite/index.html" data-local="../website/index.html"><span class="tr">Ouvrir la suite</span></a>

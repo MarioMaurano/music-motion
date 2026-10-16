@@ -29,7 +29,10 @@ footer .foot-links a:hover{color:var(--gold)}
 .prod .status b{color:var(--teal);font-weight:500}
 .prod .status b.soon{color:var(--violet)}
 .prod .apps-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.prod .apps-list span{font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.5px;padding:3px 8px;border:1px solid var(--border);border-radius:20px;color:var(--textm)}
+.prod .apps-list span,.prod .apps-list a{font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.5px;padding:3px 8px;border:1px solid var(--border);border-radius:20px;color:var(--textm)}
+/* 2026-10-16 (Mario): los nombres de las apps llevan a la página de cada una */
+.prod .apps-list a{text-decoration:none;transition:color .15s,border-color .15s,background .15s}
+.prod .apps-list a:hover,.prod .apps-list a:focus-visible{color:var(--c,var(--gold));border-color:var(--c,var(--gold));outline:none}
 .prod .launch{margin-top:auto;padding-top:16px}
 
 /* bloques de idea (presentación) */
