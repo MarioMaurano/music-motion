@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Epitafio de Seikilos — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mm-theme.css">
+<link rel="stylesheet" href="site.css">
+
+<!-- 2026-10-16 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+<link rel="icon" type="image/svg+xml" href="/icons/mm-web-tab.svg">
+<link rel="apple-touch-icon" href="/icons/mm-web-180.png">
+<link rel="manifest" href="/icons/web.webmanifest">
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+
+<!-- 2026-10-16 (Mario, sobre el reel de Rubí): la presentación del Epitafio de Seikilos con su pequeña historia,
+     en el estilo del sitio. La obra suena en la demo del Score, dentro de la página. -->
+<style>
+.sk-frame{margin-top:26px;border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);overflow:hidden;background:var(--panel)}
+.sk-frame iframe{display:block;width:100%;height:min(760px,80vh);border:0;background:#fff}
+.sk-frame .sk-cap{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:10px 16px;font-size:var(--fs-sm);color:var(--textm);border-top:1px solid var(--border)}
+.sk-frame .sk-cap a{white-space:nowrap}
+
+.sk-time{list-style:none;margin-top:26px;border-left:2px solid var(--border);max-width:72ch}
+.sk-time li{position:relative;padding:0 0 26px 26px}
+.sk-time li:last-child{padding-bottom:0}
+.sk-time li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--gold)}
+.sk-time .yr{font-family:var(--ff-mono);font-size:.82rem;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase}
+.sk-time h3{margin:2px 0 4px}
+.sk-time p{color:var(--textm)}
+
+.sk-poem{margin-top:26px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:4px 34px;max-width:880px}
+.sk-poem .gr{font-size:1.45rem;line-height:1.5;color:var(--text);font-weight:500;letter-spacing:.2px}
+.sk-poem .tr{font-size:1.05rem;line-height:1.5;color:var(--textm);font-style:italic;align-self:center}
+.sk-poem .gap{grid-column:1/-1;height:8px}
+.sk-stone{margin-top:30px;max-width:68ch;color:var(--textm)}
+.sk-stone .gr{color:var(--text)}
+
+.sk-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px 34px;margin-top:22px}
+.sk-cols p{color:var(--textm)}
+.sk-fig{margin-top:26px;border:1px solid var(--border);border-radius:var(--rad);overflow:hidden;max-width:880px}
+.sk-fig img{display:block;width:100%;height:auto}
+.sk-fig figcaption{padding:9px 14px;font-size:var(--fs-sm);color:var(--textd);background:var(--panel)}
+
+@media (max-width:640px){
+  .sk-poem{grid-template-columns:1fr;gap:0}
+  .sk-poem .tr{margin-bottom:10px}
+  .sk-poem .gap{display:none}
+}
+</style>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/seikilos.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/seikilos.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/seikilos.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/seikilos.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/seikilos.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/seikilos.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<body>
+
+<header>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="es">Inicio</span><span class="en">Home</span></a>
+    <a href="index.html#apps"><span class="es">Las apps</span><span class="en">The apps</span></a>
+    <a href="index.html#howto"><span class="es">Cómo empezar</span><span class="en">How to start</span></a>
+    <a href="instruments.html"><span class="es">Instrumentos</span><span class="en">Instruments</span></a>
+    <a href="index.html#aula"><span class="es">Aula del Coach</span><span class="en">Coach Classroom</span></a>
+    <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
+    <a href="score-shortcuts.html"><span class="es">Atajos</span><span class="en">Shortcuts</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog"><button id="b-es" onclick="setLang('es')">ES</button><button id="b-en" onclick="setLang('en')">EN</button><a href="../fr/suite/seikilos.html">FR</a><a href="../nl/suite/seikilos.html">NL</a><a href="../de/suite/seikilos.html">DE</a></div>
+  </div>
+</header>
+
+<main style="--c:var(--gold)">
+
+<section style="border-bottom:none">
+  <a class="backlink" href="score.html">← <span class="es">Volver al Score</span><span class="en">Back to the Score</span></a>
+  <div class="app-eyebrow">◈ <span class="es">Obra de demostración</span><span class="en">Demo work</span></div>
+  <h1>
+    <span class="es">El Epitafio de Seikilos.</span>
+    <span class="en">The Epitaph of Seikilos.</span>
+  </h1>
+  <p class="lead">
+    <span class="es">Una columna de mármol de hace casi dos mil años guarda la canción completa más antigua que conocemos: el texto, la melodía y el ritmo. Aquí suena en la demo del Score, con su letra en griego atada a cada nota y la traducción debajo.</span>
+    <span class="en">A marble column almost two thousand years old holds the oldest complete song we know: the words, the melody and the rhythm. Here it plays in the Score demo, with its Greek lyrics tied to each note and the translation below.</span>
+  </p>
+
+  <div class="sk-frame">
+    <iframe src="../apps/mm-score-page.html?demo&amp;file=../suite/demos/seikilos.mmf&amp;page" title="Epitafio de Seikilos — Score demo" allow="autoplay" loading="lazy"></iframe>
+    <div class="sk-cap">
+      <span><span class="es">▶ Play para escuchar · <b>PAGE / SCROLL</b> cambia la vista · <b>PRINT</b> imprime la hoja.</span><span class="en">▶ Play to listen · <b>PAGE / SCROLL</b> switches the view · <b>PRINT</b> prints the sheet.</span></span>
+      <span>
+        <a href="../apps/mm-score-page.html?demo&amp;file=../suite/demos/seikilos.mmf&amp;page" target="_blank" rel="noopener"><span class="es">Abrir a pantalla completa ↗</span><span class="en">Open full screen ↗</span></a>
+        &nbsp;·&nbsp;
+        <a href="demos/seikilos.mmf" download>⭳ seikilos.mmf</a>
+      </span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="es">La piedra</span><span class="en">The stone</span></div>
+  <h2><span class="es">Una canción que sobrevivió a una maceta.</span><span class="en">A song that survived a flowerpot.</span></h2>
+
+  <ol class="sk-time">
+    <li>
+      <div class="yr"><span class="es">Siglo I o II d.C.</span><span class="en">1st or 2nd century AD</span></div>
+      <h3><span class="es">Seikilos la manda grabar</span><span class="en">Seikilos has it carved</span></h3>
+      <p><span class="es">En Tralles, en Asia Menor (hoy Aydın, Turquía), un hombre llamado Seikilos hace grabar en una pequeña columna un poema, una canción con sus signos musicales y una dedicatoria a Euterpe. Puede ser su esposa; puede ser la musa de la música. No lo sabemos.</span><span class="en">In Tralles, in Asia Minor (today Aydın, Turkey), a man named Seikilos has a poem, a song with its musical signs and a dedication to Euterpe carved on a small column. She may be his wife; she may be the muse of music. We do not know.</span></p>
+    </li>
+    <li>
+      <div class="yr">1883</div>
+      <h3><span class="es">El ferrocarril y la maceta</span><span class="en">The railway and the flowerpot</span></h3>
+      <p><span class="es">La encuentran durante la construcción del ferrocarril. Edward Purser, ingeniero, se la lleva a casa y le hace serrar la base para que sirva de pie a una maceta de su esposa. Con el corte se pierde la última línea, que hoy solo se conoce por un calco anterior.</span><span class="en">It is found while the railway is being built. Edward Purser, an engineer, takes it home and has its base sawn flat so it can hold one of his wife's flowerpots. The cut destroys the last line, known today only from an earlier rubbing.</span></p>
+    </li>
+    <li>
+      <div class="yr">1922</div>
+      <h3><span class="es">El incendio de Esmirna</span><span class="en">The burning of Smyrna</span></h3>
+      <p><span class="es">Durante el incendio de Esmirna, el cónsul de los Países Bajos la saca de la ciudad. Viaja por Estambul y Estocolmo hasta La Haya, donde pasa más de cuarenta años mientras se la da por perdida.</span><span class="en">During the burning of Smyrna, the Dutch consul takes it out of the city. It travels through Istanbul and Stockholm to The Hague, where it spends more than forty years while it is thought lost.</span></p>
+    </li>
+    <li>
+      <div class="yr"><span class="es">1966 — hoy</span><span class="en">1966 — today</span></div>
+      <h3><span class="es">Copenhague</span><span class="en">Copenhagen</span></h3>
+      <p><span class="es">La adquiere el Museo Nacional de Dinamarca, en Copenhague, donde se puede ver hoy.</span><span class="en">The National Museum of Denmark, in Copenhagen, acquires it, and it is on display there today.</span></p>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="es">La canción</span><span class="en">The song</span></div>
+  <h2><span class="es">Mientras vivas, brilla.</span><span class="en">While you live, shine.</span></h2>
+
+  <div class="sk-poem" lang="grc">
+    <div class="gr">Ὅσον ζῇς, φαίνου,</div>
+    <div class="tr"><span class="es">Mientras vivas, brilla;</span><span class="en">While you live, shine;</span></div>
+    <div class="gr">μηδὲν ὅλως σὺ λυποῦ·</div>
+    <div class="tr"><span class="es">no te aflijas por nada:</span><span class="en">have no grief at all;</span></div>
+    <div class="gap"></div>
+    <div class="gr">πρὸς ὀλίγον ἐστὶ τὸ ζῆν,</div>
+    <div class="tr"><span class="es">la vida dura poco,</span><span class="en">life is short,</span></div>
+    <div class="gr">τὸ τέλος ὁ χρόνος ἀπαιτεῖ.</div>
+    <div class="tr"><span class="es">el tiempo exige su final.</span><span class="en">and time demands its due.</span></div>
+  </div>
+
+  <p class="sk-stone">
+    <span class="es">Encima de la canción, la piedra habla de sí misma: <i>«Soy una imagen de piedra. Seikilos me puso aquí, señal duradera de un recuerdo que no muere.»</i> Sobre cada sílaba del texto van las letras de la notación vocal griega, que dicen la altura de la nota, y unos signos que dicen cuánto dura.</span>
+    <span class="en">Above the song, the stone speaks of itself: <i>“I am an image of stone. Seikilos placed me here, a lasting sign of a memory that does not die.”</i> Above each syllable of the text stand the letters of Greek vocal notation, which give the pitch, and signs that give how long it lasts.</span>
+  </p>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="es">Esta versión</span><span class="en">This version</span></div>
+  <h2><span class="es">De la piedra a la partitura.</span><span class="en">From the stone to the score.</span></h2>
+  <span class="pill" style="margin-top:4px">arr. M. Maurano · Claude</span>
+
+  <div class="sk-cols">
+    <div>
+      <h3><span class="es">El modo y la afinación</span><span class="en">Mode and tuning</span></h3>
+      <p><span class="es">Muchas transcripciones la escriben con dos sostenidos. Aquí baja un tono y queda en el modo frigio griego sobre Re, sin alteraciones. Suena en afinación pitagórica, la de los teóricos griegos: quintas puras, como las calcula el Keyboard.</span><span class="en">Many transcriptions write it with two sharps. Here it goes down a tone and sits in the Greek Phrygian mode on D, with no accidentals. It sounds in Pythagorean tuning, the tuning of the Greek theorists: pure fifths, as the Keyboard computes them.</span></p>
+    </div>
+    <div>
+      <h3><span class="es">El ritmo y la forma</span><span class="en">Rhythm and form</span></h3>
+      <p><span class="es">En 6/8 a 72, con repetición. Al final de la vuelta, la última negra se parte en dos corcheas para que cada sílaba tenga su nota, y un último compás ligado cierra la pieza. Dos voces: la melodía, como un aulós, y un bordón, como una cítara.</span><span class="en">In 6/8 at 72, with a repeat. At the end of the pass the last quarter note splits into two eighths so every syllable has its note, and a final tied bar closes the piece. Two voices: the melody, like an aulos, and a drone, like a kithara.</span></p>
+    </div>
+    <div>
+      <h3><span class="es">La letra en la nota</span><span class="en">Lyrics on the note</span></h3>
+      <p><span class="es">Cada sílaba griega está atada a su nota: se mueve con ella, se ilumina con ella y no se pierde en la repetición. La traducción va en dos líneas debajo del sistema. Así puedes escribir la letra de tus propias obras.</span><span class="en">Each Greek syllable is tied to its note: it moves with it, lights up with it and is not lost in the repeat. The translation runs in two lines below the system. This is how you can write the lyrics of your own works.</span></p>
+      <p style="margin-top:8px"><a href="UserGuide.html#pop-lyrics"><span class="es">Cómo se escribe la letra →</span><span class="en">How to write lyrics →</span></a></p>
+    </div>
+  </div>
+
+  <figure class="sk-fig">
+    <img src="ug-lyrics-seikilos.webp" alt="Epitafio de Seikilos en el Score, con la letra bajo las notas">
+    <figcaption><span class="es">El Seikilos en el Score: la sílaba bajo su nota, el guion entre sílabas y la línea de prolongación en los melismas.</span><span class="en">The Seikilos in the Score: each syllable under its note, the hyphen between syllables and the extender line in melismas.</span></figcaption>
+  </figure>
+
+  <div class="launch" style="margin-top:30px">
+    <a class="btn-launch" href="seikilos-ninos.html">✦ <span class="es">Versión para niños (8 a 14 años)</span><span class="en">Version for children (ages 8 to 14)</span></a>
+  </div>
+  <p style="margin-top:10px;max-width:68ch;color:var(--textm)"><span class="es">La misma historia contada en láminas de colores —el tren, la maceta, el viaje— y al final la canción: suena y las sílabas se encienden sobre la columna. Para mostrar en clase o mandar a los alumnos.</span><span class="en">The same story told in colourful pictures —the train, the flowerpot, the journey— and at the end the song: it plays and the syllables light up on the column. To show in class or send to students.</span></p>
+
+  <div class="note">
+    <span class="es">La demo es gratuita y no pide créditos: solo deja escuchar, cambiar de vista e imprimir. Para editar la obra, descarga <a href="demos/seikilos.mmf" download>seikilos.mmf</a> y ábrela en el Score.</span>
+    <span class="en">The demo is free and asks for no credits: it only lets you listen, switch views and print. To edit the work, download <a href="demos/seikilos.mmf" download>seikilos.mmf</a> and open it in the Score.</span>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot-bar">
+  <a href="index.html" class="foot-brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="es">Suite de afinación pitagórica · v.2</span><span class="en">Pythagorean tuning suite · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="es">todos los derechos reservados</span><span class="en">all rights reserved</span></span>
+</footer>
+
+<script src="mm-theme.js"></script>
+<script src="site.js"></script>
+
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
+</body>
+</html>
