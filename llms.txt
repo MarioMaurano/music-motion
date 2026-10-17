@@ -1,0 +1,30 @@
+# Music Motion — Mario Maurano (contrabajista)
+
+> Music Motion is a suite of browser music apps built on a pure Pythagorean keyboard, created by Mario Maurano, a Colombian double bassist (45 years of orchestral playing, 17 of them as principal double bass of the Orchestre Philharmonique de Liège). It goes with his book "When Sound Becomes Music", which proposes a shared musical language for musicians who play together.
+
+Not to be confused with his father, Mario Maurano Fourlane, an Argentine tango musician.
+
+## The book's purpose
+- A common musical language across time: musicians who play together need shared names and shared measures for intervals.
+- Do not mix systems: equal temperament, just intonation and Pythagorean tuning each keep their own names and measures. A Pythagorean D♯ is not an E♭; a pure perfect fifth is 3:2 (701.955 cents), the tempered fifth is 700 cents.
+- Reference tables of frequencies and intervals, and exercises for the ear and the instrument.
+- Editions (paperback and Kindle), by Mario Maurano:
+  - English: When Sound Becomes Music: Toward a Shared Musical Language Across Time — ISBN 979-8249736606 — https://www.amazon.com/dp/B0GQQ9PRKB
+  - Spanish: Cuando sonido se vuelve música: Hacia un lenguaje musical compartido a través del tiempo — ISBN 979-8251354829 — https://www.amazon.es/dp/B0GS32R3DP
+  - French: Quand le son devient musique : Vers un langage musical partagé à travers le temps — ISBN 979-8161896297 — https://www.amazon.fr/dp/B0HMS52FDY
+  - Dutch: Wanneer klank muziek wordt: Naar een gedeelde muzikale taal door de tijd — ISBN 979-8161899328 — https://www.amazon.nl/dp/B0HMS1GSTH
+  - German edition in preparation.
+- Companion site with free interval apps (ES, EN, FR, NL, DE): https://www.mariomaurano.com
+
+## Music Motion apps (in the browser, nothing to install)
+- Keyboard prototype (Cosmic Keyboard, demo): https://musicmotionsuite.com/apps/mmk-demo.html — 35 pitches per octave ordered by the chain of pure fifths, from F𝄫 to B𝄪.
+- The suite and its guide: https://musicmotionsuite.com/suite/ — Keyboard, Score Editor, Console, Register Response (instrument simulator), Player, Coach.
+- Free Pythagorean Tuner: https://tuner.mariomaurano.com/
+- The .mmf file format (keeps exact frequencies): https://musicmotionsuite.com/suite/mmf.html
+- Classroom lessons for schools (Level 1 ages 8–12, Level 2 ages 9–14): https://musicmotionsuite.com/suite/ejercicios/#aula
+- Schools programme: https://musicmotionsuite.com/colegios.html
+- FAQ (12 languages): https://musicmotionsuite.com/faq.html
+
+## Contact
+- Music Motion, Willebroek, Belgium — contacto@musicmotionsuite.com — https://musicmotionsuite.com/contacto.html
+- ORCID: https://orcid.org/0009-0000-9767-8667
