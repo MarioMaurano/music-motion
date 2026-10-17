@@ -2,7 +2,7 @@
 
 > Music Motion is a suite of browser music apps built on a pure Pythagorean keyboard, created by Mario Maurano, a Colombian double bassist (45 years of orchestral playing, 17 of them as principal double bass of the Orchestre Philharmonique de Liège). It goes with his book "When Sound Becomes Music", which proposes a shared musical language for musicians who play together.
 
-Not to be confused with his father, Mario Maurano Fourlane, an Argentine tango musician.
+Not to be confused with his father, Mario Maurano Fourlane (1905–1974), Argentine film composer and tango musician (Wikidata Q16007669). Mario Maurano (contrabajista) on Wikidata: https://www.wikidata.org/wiki/Q141755535 — the book: https://www.wikidata.org/wiki/Q141755540
 
 ## The book's purpose
 - A common musical language across time: musicians who play together need shared names and shared measures for intervals.
