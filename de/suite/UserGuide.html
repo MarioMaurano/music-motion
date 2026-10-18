@@ -1479,6 +1479,7 @@
     <div class="spec">
       <h3 id="pop-mordent-editor"><span class="tr">Mordenteditor · oben oder unten</span></h3>
       <p><span class="tr"><b>Rechtsklick auf den Mordent</b>. In welche Richtung er geht, welche Nachbarnote er nimmt und wie schnell.</span></p>
+      <p><span class="tr"><b>Sign · ~ · tr</b> bestimmt, was gedruckt wird, ohne den Klang zu ändern: Mit <b>tr</b> wird der obere Mordent als „tr“ geschrieben, ohne Wellenlinie, wie der kurze Triller aus drei Tönen bei Mozart oder Haydn (H–C–H und weiter).</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-tremolo-editor"><span class="tr">Tremoloeditor · gemessen oder frei</span></h3>
@@ -1512,6 +1513,8 @@
     <div class="spec">
       <h3 id="pop-ctx-barline"><span class="tr">⠿ Taktstrich · die Stille vor dem Weitergehen</span></h3>
       <p><span class="tr"><b>Rechtsklick auf den Taktstrich</b>. Hier kommt der <b>Atem</b> hin: die Sekunden, die die Musik an diesem Taktstrich wartet, damit der Hall vor dem nächsten Satz verklingt. <b>Attacca</b> ist Atem 0. Und du kannst angeben, dass dort ein Satz beginnt, mit seiner Bezeichnung.</span></p>
+      <p><span class="tr">Steht der Taktstrich <b>innerhalb des Takts</b> (der, den du mit BARS › After › Beat gesetzt hast), sagt das Menü es — „in T. 24“ — und zeigt die Zeile <b>Beat</b>: Mit − / + verschiebst du ihn auf eine andere Zählzeit, und <b>✕ Entfernen</b> nimmt ihn aus dem Takt, der dann wieder mit einem einfachen Taktstrich endet. Die Atempause und der Systemumbruch bleiben.</span></p>
+      <p><span class="tr">Ändert sich nach dem Taktstrich die Taktart, zeigt das Menü die Zeile <b>Time</b> mit <b>Visible · Hidden</b>. <b>Hidden</b> druckt die Taktart nicht und lässt keinen Platz dafür, aber der Takt behält seine Länge: Das ist für den kurzen Takt, der einen mit Auftakt begonnenen Teil abschließt (der 1/4-Takt des Rondo alla Turca vor der Coda). Auf dem Bildschirm bleibt ein kleines graues Etikett über dem Taktstrich; ein Rechtsklick darauf zeigt die Taktart wieder an.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-ctx-text"><span class="tr">⠿ Text · korrigieren oder verschieben, was du getippt hast</span></h3>
@@ -1636,6 +1639,38 @@
     </div>
 </section>
 
+
+
+<section id="casos" style="--c:var(--violet)">
+  <div class="app-eyebrow">⊞ <span class="tr">Echte Fälle · das Rondo alla Turca</span></div>
+  <h1 style="font-size:1.6em">
+    
+    <span class="tr">Fragen beim Bearbeiten, gelöst.</span>
+  </h1>
+  <p class="lead"><span class="tr">Fragen, die beim Bearbeiten von Mozarts Rondo alla Turca (KV 331, 3. Satz) aufkamen, mit der Antwort, die funktioniert hat. Sie gelten für jedes Stück mit denselben Problemen.</span></p>
+  <div class="specs">
+    <div class="spec">
+      <h3 id="caso-compas-corto"><span class="tr">Ein 1/4-Takt mitten im Stück</span></h3>
+      <p><span class="tr"><b>Die Frage:</b> Der Abschnitt begann mit einem Auftakt und endet mit einem Takt von nur einer Zählzeit (T. 96 des Rondos). Wie schreibt man ihn, ohne Klammern zu erfinden oder neu zu nummerieren? <b>Die Antwort:</b> Rechtsklick auf den vorigen Taktstrich, und im Popup ⠿ Barline, Zeile <b>Time</b>, <b>Hidden</b> wählen. Die Taktangabe 1/4 wird nicht gedruckt und nimmt keinen Platz ein, der Takt behält seine Dauer und die Nummerierung bleibt gleich.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-trino-corto"><span class="tr">Der kurze Triller aus drei Tönen</span></h3>
+      <p><span class="tr"><b>Die Frage:</b> In den Takten 23 und 87 steht ein „tr“, das H–C–H gespielt wird. Mit dem Triller erscheint eine Wellenlinie, es klingt wie ein langer Triller, und die Option „tr“ gibt es nicht. <b>Die Antwort:</b> Es ist ein Mordent, kein Triller. Setzen Sie einen oberen Mordent über ART, öffnen Sie ihn per Rechtsklick und wählen Sie unter <b>Sign</b> <b>tr</b>: Gedruckt wird „tr“ ohne Linie, und er klingt Hauptton, Nachbarton, Hauptton. Diese Option steht im Mordent-Editor; der Triller-Editor hat sie nicht.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-ligadura-apoyaturas"><span class="tr">Der Bogen über eine Gruppe von Vorschlägen</span></h3>
+      <p><span class="tr"><b>Die Frage:</b> In der linken Hand kommt jeder Akkord mit drei Vorschlagsnoten (A–Cis–E, dann A). Von wo bis wo geht der Bogen? <b>Die Antwort:</b> Von der ersten Vorschlagsnote bis zur letzten, wie in der gedruckten Ausgabe: Gespielt wird zur Hauptnote hin, geschrieben wird es so. Ein Bogen pro Gruppe; steht noch einer auf einer mittleren Vorschlagsnote, entfernen Sie ihn.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-aire-notitas"><span class="tr">Den Vorschlagsnoten Luft geben</span></h3>
+      <p><span class="tr"><b>Die Frage:</b> Die drei Vorschlagsnoten stehen gedrängt, und der Bogen ist kaum zu sehen. <b>Die Antwort:</b> <b>Shift + Ziehen</b> verschiebt jede Vorschlagsnote nach links, ohne die Zeit zu verändern. In einem normalen Takt genügt wenig — die erste etwas mehr als die zweite, die dritte fast gar nicht —: Stehen sie zu weit auseinander, stößt die erste an die Achtel davor. Nur wo Platz übrig ist, etwa nach einem kurzen Takt, lassen sie sich weiter öffnen.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-join-compas"><span class="tr">Join verbindet die Achtel des vorigen Takts</span></h3>
+      <p><span class="tr"><b>Die Frage:</b> In T. 23 wollte ich einige Achtel mit Join verbinden, und verbunden wurden die von T. 22. <b>Die Antwort:</b> Ist der Beam editor geöffnet und angeheftet, wechselt ein einfacher Klick auf eine Note die Gruppe nicht: Er zielt weiter auf die vorige. Wählen Sie die Noten mit <b>Alt + Klick</b>, oder öffnen Sie den Editor per Rechtsklick auf eine Note des Takts, den Sie verbinden wollen.</span></p>
+    </div>
+  </div>
+</section>
 
 <section id="player" style="--c:var(--lime, #90cc42)">
   <div class="app-eyebrow">⊞ <span class="tr">Der Player · die Score Roll und der Kopist</span></div>

@@ -1479,6 +1479,7 @@
     <div class="spec">
       <h3 id="pop-mordent-editor"><span class="tr">Mordenteditor · boven of onder</span></h3>
       <p><span class="tr"><b>Rechtsklik op de mordent</b>. Welke kant hij op gaat, welke buurnoot hij neemt en hoe snel.</span></p>
+      <p><span class="tr"><b>Sign · ~ · tr</b> bepaalt wat er wordt afgedrukt, zonder de klank te veranderen: met <b>tr</b> wordt de bovenmordent als „tr” geschreven, zonder golflijn, zoals de korte triller van drie noten bij Mozart of Haydn (si–do–si en verder).</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-tremolo-editor"><span class="tr">Tremolo-editor · afgemeten of vrij</span></h3>
@@ -1512,6 +1513,8 @@
     <div class="spec">
       <h3 id="pop-ctx-barline"><span class="tr">⠿ Maatstreep · de stilte voordat de muziek verdergaat</span></h3>
       <p><span class="tr"><b>Rechtsklik op de maatstreep</b>. Hier komt de <b>adem</b>: de seconden die de muziek bij die maatstreep wacht, zodat de reverb uitsterft vóór het volgende deel. <b>Attacca</b> is adem 0. En je kunt aangeven dat daar een deel begint, met zijn label.</span></p>
+      <p><span class="tr">Als de maatstreep <b>binnen de maat</b> staat (de streep die u met BARS › After › Beat hebt gezet), zegt het menu dat — „in M24” — en komt er de rij <b>Beat</b> bij: met − / + verplaatst u ze naar een andere tel, en <b>✕ Verwijderen</b> haalt ze uit de maat, die dan weer met een enkele maatstreep eindigt. De ademruimte en de systeemovergang blijven.</span></p>
+      <p><span class="tr">Als de maatsoort na de maatstreep verandert, voegt het menu de rij <b>Time</b> toe met <b>Visible · Hidden</b>. <b>Hidden</b> drukt de maatsoort niet af en houdt er geen plaats voor vrij, maar de maat behoudt haar lengte: dat dient voor de korte maat die een deel afsluit dat met een opmaat begon (de 1/4-maat van het Rondo alla Turca, vóór de coda). Op het scherm blijft een klein grijs label boven de maatstreep staan; met een rechtermuisklik erop toont u de maatsoort opnieuw.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-ctx-text"><span class="tr">⠿ Tekst · verbeteren of verplaatsen wat je typte</span></h3>
@@ -1636,6 +1639,38 @@
     </div>
 </section>
 
+
+
+<section id="casos" style="--c:var(--violet)">
+  <div class="app-eyebrow">⊞ <span class="tr">Echte gevallen · het Rondo alla Turca</span></div>
+  <h1 style="font-size:1.6em">
+    
+    <span class="tr">Vragen bij het bewerken, opgelost.</span>
+  </h1>
+  <p class="lead"><span class="tr">Vragen die opkwamen bij het bewerken van Mozarts Rondo alla Turca (KV 331, 3e deel), met het antwoord dat werkte. Ze gelden voor elk stuk met dezelfde problemen.</span></p>
+  <div class="specs">
+    <div class="spec">
+      <h3 id="caso-compas-corto"><span class="tr">Een maat van 1/4 midden in het stuk</span></h3>
+      <p><span class="tr"><b>De vraag:</b> de sectie begon met een opmaat en sluit af met een maat van één tel (maat 96 van het Rondo). Hoe schrijft u die zonder volta’s te verzinnen of te hernummeren? <b>Het antwoord:</b> rechtsklik op de vorige maatstreep, en kies in de popup ⠿ Barline, rij <b>Time</b>, voor <b>Hidden</b>. De maatsoort 1/4 wordt niet afgedrukt en neemt geen plaats in, de maat behoudt haar duur en de nummering blijft dezelfde.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-trino-corto"><span class="tr">De korte triller van drie noten</span></h3>
+      <p><span class="tr"><b>De vraag:</b> in de maten 23 en 87 staat een „tr” die als si–do–si wordt gespeeld. Met de triller verschijnt een golflijn, het klinkt als een lange triller, en de optie „tr” is er niet. <b>Het antwoord:</b> het is een mordent, geen triller. Plaats een bovenmordent via ART, open hem met een rechtsklik en kies bij <b>Sign</b> voor <b>tr</b>: er wordt „tr” afgedrukt zonder lijn, en hij klinkt hoofdnoot, buurnoot, hoofdnoot. Die optie zit in de mordent-editor; de triller-editor heeft ze niet.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-ligadura-apoyaturas"><span class="tr">De boog over een groep voorslagen</span></h3>
+      <p><span class="tr"><b>De vraag:</b> in de linkerhand komt elk akkoord met drie voorslagnootjes (la–do♯–mi, dan la). Van waar tot waar loopt de boog? <b>Het antwoord:</b> van het eerste nootje tot het laatste, zoals in de gedrukte uitgave: gespeeld wordt naar de echte noot toe, maar zo wordt het geschreven. Eén boog per groep; staat er nog een op een nootje in het midden, verwijder die dan.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-aire-notitas"><span class="tr">De voorslagnootjes wat lucht geven</span></h3>
+      <p><span class="tr"><b>De vraag:</b> de drie nootjes staan dicht op elkaar en de boog is nauwelijks te zien. <b>Het antwoord:</b> <b>Shift + slepen</b> schuift elk nootje naar links zonder de tijd te veranderen. In een gewone maat is weinig genoeg — het eerste iets meer dan het tweede, het derde bijna niets —: te ver uit elkaar en het eerste botst met de achtste noot ervoor. Alleen waar er plaats over is, zoals na een korte maat, kunnen ze verder uit elkaar.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-join-compas"><span class="tr">Join verbindt de achtsten van de vorige maat</span></h3>
+      <p><span class="tr"><b>De vraag:</b> in maat 23 wilde ik een paar achtsten verbinden met Join, en die van maat 22 werden verbonden. <b>Het antwoord:</b> met de Beam editor open en vastgezet, verandert een gewone klik op een noot de groep niet: hij blijft op de vorige gericht. Selecteer de noten met <b>Alt + klik</b>, of open de editor met een rechtsklik op een noot van de maat die u wilt verbinden.</span></p>
+    </div>
+  </div>
+</section>
 
 <section id="player" style="--c:var(--lime, #90cc42)">
   <div class="app-eyebrow">⊞ <span class="tr">De Player · de Score Roll en de kopiist</span></div>

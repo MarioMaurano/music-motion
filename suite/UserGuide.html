@@ -1489,6 +1489,7 @@
     <div class="spec">
       <h3 id="pop-mordent-editor"><span class="es">Editor de mordente · hacia arriba o hacia abajo</span><span class="en">Mordent editor · upper or lower</span></h3>
       <p><span class="es"><b>Clic derecho sobre el mordente</b>. Para qué lado va, qué nota vecina toma y a qué velocidad.</span><span class="en"><b>Right-click on the mordent</b>. Which way it goes, which neighbour note it takes and how fast.</span></p>
+      <p><span class="es"><b>Signo · ~ · tr</b> decide lo que se imprime, sin cambiar el sonido: con <b>tr</b> el mordente hacia arriba se escribe «tr», sin línea ondulada, como el trino corto de tres notas de Mozart o Haydn (Si–Do–Si y sigue).</span><span class="en"><b>Sign · ~ · tr</b> decides what is printed, without changing the sound: with <b>tr</b> the upper mordent is written “tr”, with no wavy line, like the short three-note trill in Mozart or Haydn (B–C–B and on).</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-tremolo-editor"><span class="es">Editor de trémolo · medido o libre</span><span class="en">Tremolo editor · measured or free</span></h3>
@@ -1522,6 +1523,8 @@
     <div class="spec">
       <h3 id="pop-ctx-barline"><span class="es">⠿ Barra de compás · el silencio antes de seguir</span><span class="en">⠿ Barline · the silence before going on</span></h3>
       <p><span class="es"><b>Clic derecho sobre la barra</b>. Acá se pone el <b>respiro</b>: los segundos que la música espera en esa barra, para que el reverb muera antes del movimiento siguiente. <b>Attacca</b> es respiro 0. Y puedes declarar que ahí empieza un movimiento, con su rótulo.</span><span class="en"><b>Right-click on the barline</b>. This is where the <b>breath</b> goes: the seconds the music waits at that barline, so the reverb dies before the next movement. <b>Attacca</b> is breath 0. And you can declare that a movement starts there, with its label.</span></p>
+      <p><span class="es">Si la barra está <b>dentro del compás</b> (la que pusiste con BARS › After › Beat), el menú lo dice —«dentro de M24»— y trae la fila <b>Beat</b>: con − / + la mueves a otro tiempo, y <b>✕ Quitar</b> la saca del compás, que vuelve a terminar con barra simple. El respiro y el salto de sistema se quedan.</span><span class="en">If the barline is <b>inside the bar</b> (the one you set with BARS › After › Beat), the menu says so — “inside M24” — and adds the <b>Beat</b> row: − / + moves it to another beat, and <b>✕ Remove</b> takes it out of the bar, which ends with a single barline again. The breath and the system break stay.</span></p>
+      <p><span class="es">Si después de la barra cambia la cifra, el menú trae la fila <b>Time</b> con <b>Visible · Hidden</b>. <b>Hidden</b> no imprime la cifra ni le guarda lugar, pero el compás sigue midiendo lo mismo: sirve para el compás corto que cierra una sección que empezó con anacrusa (el 1/4 del Rondo alla Turca, antes de la coda). En pantalla queda un rótulo gris chico arriba de la barra; con clic derecho ahí la vuelves a mostrar.</span><span class="en">If the time signature changes after the barline, the menu adds the <b>Time</b> row with <b>Visible · Hidden</b>. <b>Hidden</b> does not print the time signature and leaves no room for it, but the bar keeps its length: it is for the short bar that closes a section that began with an upbeat (the 1/4 bar of the Rondo alla Turca, before the coda). On screen a small grey label stays above the barline; right-click it to show the time signature again.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-ctx-text"><span class="es">⠿ Texto · corregir o mover lo que escribiste</span><span class="en">⠿ Text · fixing or moving what you typed</span></h3>
@@ -1646,6 +1649,38 @@
     </div>
 </section>
 
+
+
+<section id="casos" style="--c:var(--violet)">
+  <div class="app-eyebrow">⊞ <span class="es">Casos reales · el Rondo alla Turca</span><span class="en">Real cases · the Rondo alla Turca</span></div>
+  <h1 style="font-size:1.6em">
+    <span class="es">Dudas de la edición, resueltas.</span>
+    <span class="en">Editing questions, answered.</span>
+  </h1>
+  <p class="lead"><span class="es">Preguntas que surgieron al editar el Rondo alla Turca de Mozart (KV 331, 3.er movimiento), con la respuesta que funcionó. Sirven para cualquier obra que traiga los mismos problemas.</span><span class="en">Questions that came up while editing Mozart’s Rondo alla Turca (K. 331, 3rd movement), with the answer that worked. They apply to any piece with the same problems.</span></p>
+  <div class="specs">
+    <div class="spec">
+      <h3 id="caso-compas-corto"><span class="es">Un compás de 1/4 en medio de la obra</span><span class="en">A 1/4 bar in the middle of the piece</span></h3>
+      <p><span class="es"><b>La duda:</b> la sección empezó con anacrusa y cierra con un compás de un solo tiempo (el M96 del Rondo). ¿Cómo se escribe sin inventar casillas ni renumerar? <b>La respuesta:</b> clic derecho sobre la barra anterior, y en el popup ⠿ Barline, fila <b>Time</b>, elige <b>Hidden</b>. La cifra 1/4 no se imprime ni ocupa lugar, el compás conserva su duración y la numeración sigue igual.</span><span class="en"><b>The question:</b> the section began with an upbeat and closes with a one-beat bar (bar 96 of the Rondo). How do you write it without inventing endings or renumbering? <b>The answer:</b> right-click the barline before it, and in the ⠿ Barline popup, <b>Time</b> row, choose <b>Hidden</b>. The 1/4 time signature is not printed and takes no room, the bar keeps its length and the numbering stays the same.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-trino-corto"><span class="es">El trino corto de tres notas</span><span class="en">The short three-note trill</span></h3>
+      <p><span class="es"><b>La duda:</b> en los compases 23 y 87 hay un «tr» que se toca Si-Do-Si. Con el trino sale una línea ondulada, suena como un trino largo, y la opción «tr» no aparece. <b>La respuesta:</b> es un mordente, no un trino. Pon un mordente hacia arriba desde ART, ábrelo con clic derecho y en <b>Signo</b> elige <b>tr</b>: se imprime «tr» sin línea y suena principal, vecina, principal. Esa opción vive en el editor del mordente; el editor del trino no la tiene.</span><span class="en"><b>The question:</b> in bars 23 and 87 there is a “tr” played B–C–B. With the trill you get a wavy line, it sounds like a long trill, and the “tr” option does not appear. <b>The answer:</b> it is a mordent, not a trill. Place an upper mordent from ART, open it with a right-click and under <b>Sign</b> choose <b>tr</b>: it prints “tr” with no line and sounds main, neighbour, main. That option lives in the mordent editor; the trill editor does not have it.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-ligadura-apoyaturas"><span class="es">La ligadura de una corrida de apoyaturas</span><span class="en">The slur over a run of grace notes</span></h3>
+      <p><span class="es"><b>La duda:</b> en la mano izquierda cada acorde llega con tres notitas (La-Do♯-Mi y luego La). ¿De dónde a dónde va la ligadura? <b>La respuesta:</b> de la primera notita a la última, como en la edición impresa: se toca hacia la nota real, pero se escribe así. Una sola ligadura por grupo; si quedó alguna en una notita del medio, quítala.</span><span class="en"><b>The question:</b> in the left hand each chord arrives with three grace notes (A–C♯–E, then A). Where does the slur go from and to? <b>The answer:</b> from the first grace note to the last, as in the printed edition: it is played towards the real note, but it is written this way. One slur per group; if one is left on a grace note in the middle, remove it.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-aire-notitas"><span class="es">Dar aire a las notitas</span><span class="en">Giving the grace notes some air</span></h3>
+      <p><span class="es"><b>La duda:</b> las tres notitas salen apretadas y la ligadura casi no se ve. <b>La respuesta:</b> <b>Shift + arrastre</b> corre cada notita hacia la izquierda sin tocar el tiempo. En un compás normal hace falta poco —la primera un poco más que la segunda, y la tercera casi nada—: si se abren demasiado, la primera choca con la corchea anterior. Solo donde sobra lugar, como después de un compás corto, se pueden abrir más.</span><span class="en"><b>The question:</b> the three grace notes come out cramped and the slur can hardly be seen. <b>The answer:</b> <b>Shift + drag</b> moves each grace note to the left without touching the time. In a normal bar a little is enough —the first a bit more than the second, the third hardly at all—: spread them too far and the first one collides with the eighth note before it. Only where there is room to spare, as after a short bar, can they open further.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-join-compas"><span class="es">Join junta las corcheas del compás anterior</span><span class="en">Join joins the eighths of the previous bar</span></h3>
+      <p><span class="es"><b>La duda:</b> en el M23 quise unir unas corcheas con Join y se unieron las del M22. <b>La respuesta:</b> con el Beam editor abierto y fijado, un clic simple sobre una nota no lo cambia de grupo: sigue apuntando al de antes. Selecciona las notas con <b>Alt + clic</b>, o abre el editor con clic derecho sobre una nota del compás que quieres unir.</span><span class="en"><b>The question:</b> in bar 23 I wanted to join some eighths with Join, and the ones in bar 22 were joined instead. <b>The answer:</b> with the Beam editor open and pinned, a single click on a note does not move it to another group: it keeps pointing at the previous one. Select the notes with <b>Alt + click</b>, or open the editor with a right-click on a note of the bar you want to join.</span></p>
+    </div>
+  </div>
+</section>
 
 <section id="player" style="--c:var(--lime, #90cc42)">
   <div class="app-eyebrow">⊞ <span class="es">El Player · el Score Roll y el copista</span><span class="en">The Player · the Score Roll and the copyist</span></div>

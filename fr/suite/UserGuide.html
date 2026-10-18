@@ -1479,6 +1479,7 @@
     <div class="spec">
       <h3 id="pop-mordent-editor"><span class="tr">Éditeur de mordant · supérieur ou inférieur</span></h3>
       <p><span class="tr"><b>Clic droit sur le mordant</b>. Dans quel sens il va, quelle note voisine il prend et à quelle vitesse.</span></p>
+      <p><span class="tr"><b>Sign · ~ · tr</b> décide ce qui est imprimé, sans changer le son : avec <b>tr</b>, le mordant supérieur s’écrit « tr », sans ligne ondulée, comme le trille court de trois notes chez Mozart ou Haydn (si–do–si, puis la suite).</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-tremolo-editor"><span class="tr">Éditeur de trémolo · mesuré ou libre</span></h3>
@@ -1512,6 +1513,8 @@
     <div class="spec">
       <h3 id="pop-ctx-barline"><span class="tr">⠿ Barre de mesure · le silence avant de continuer</span></h3>
       <p><span class="tr"><b>Clic droit sur la barre de mesure</b>. C’est ici que se place la <b>respiration</b> : les secondes pendant lesquelles la musique attend à cette barre de mesure, pour que la réverbération s’éteigne avant le mouvement suivant. <b>Attacca</b>, c’est une respiration de 0. Et vous pouvez déclarer qu’un mouvement commence là, avec son étiquette.</span></p>
+      <p><span class="tr">Si la barre est <b>à l’intérieur de la mesure</b> (celle que vous avez placée avec BARS › After › Beat), le menu l’indique — « dans M24 » — et ajoute la ligne <b>Beat</b> : − / + la déplace sur un autre temps, et <b>✕ Retirer</b> la sort de la mesure, qui se termine de nouveau par une barre simple. La respiration et le saut de système restent.</span></p>
+      <p><span class="tr">Si le chiffre de mesure change après la barre, le menu ajoute la ligne <b>Time</b> avec <b>Visible · Hidden</b>. <b>Hidden</b> n’imprime pas la chiffre et ne lui réserve pas de place, mais la mesure garde sa durée : c’est pour la mesure courte qui ferme une section commencée par une anacrouse (la mesure à 1/4 du Rondo alla Turca, avant la coda). À l’écran, une petite étiquette grise reste au-dessus de la barre ; un clic droit dessus fait réapparaître la chiffre.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-ctx-text"><span class="tr">⠿ Texte · corriger ou déplacer ce que vous avez saisi</span></h3>
@@ -1636,6 +1639,38 @@
     </div>
 </section>
 
+
+
+<section id="casos" style="--c:var(--violet)">
+  <div class="app-eyebrow">⊞ <span class="tr">Cas réels · le Rondo alla Turca</span></div>
+  <h1 style="font-size:1.6em">
+    
+    <span class="tr">Questions d’édition, résolues.</span>
+  </h1>
+  <p class="lead"><span class="tr">Des questions apparues en éditant le Rondo alla Turca de Mozart (KV 331, 3e mouvement), avec la réponse qui a fonctionné. Elles valent pour toute œuvre qui pose les mêmes problèmes.</span></p>
+  <div class="specs">
+    <div class="spec">
+      <h3 id="caso-compas-corto"><span class="tr">Une mesure de 1/4 au milieu de l’œuvre</span></h3>
+      <p><span class="tr"><b>La question :</b> la section a commencé par une anacrouse et se termine par une mesure d’un seul temps (la M96 du Rondo). Comment l’écrire sans inventer de cases ni renuméroter ? <b>La réponse :</b> clic droit sur la barre précédente, et dans le popup ⠿ Barline, ligne <b>Time</b>, choisissez <b>Hidden</b>. Le chiffre 1/4 n’est pas imprimé et ne prend pas de place, la mesure garde sa durée et la numérotation reste la même.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-trino-corto"><span class="tr">Le trille court de trois notes</span></h3>
+      <p><span class="tr"><b>La question :</b> aux mesures 23 et 87 il y a un « tr » qui se joue si–do–si. Avec le trille, une ligne ondulée apparaît, cela sonne comme un trille long, et l’option « tr » n’apparaît pas. <b>La réponse :</b> c’est un mordant, pas un trille. Placez un mordant supérieur depuis ART, ouvrez-le par un clic droit et sous <b>Sign</b> choisissez <b>tr</b> : il s’imprime « tr » sans ligne et sonne note principale, voisine, principale. Cette option se trouve dans l’éditeur du mordant ; l’éditeur du trille ne l’a pas.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-ligadura-apoyaturas"><span class="tr">La liaison d’un groupe d’appoggiatures</span></h3>
+      <p><span class="tr"><b>La question :</b> à la main gauche, chaque accord arrive avec trois petites notes (la–do♯–mi, puis la). D’où à où va la liaison ? <b>La réponse :</b> de la première petite note à la dernière, comme dans l’édition imprimée : on la joue vers la note réelle, mais on l’écrit ainsi. Une seule liaison par groupe ; s’il en reste une sur une petite note du milieu, retirez-la.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-aire-notitas"><span class="tr">Donner de l’air aux petites notes</span></h3>
+      <p><span class="tr"><b>La question :</b> les trois petites notes sont serrées et la liaison se voit à peine. <b>La réponse :</b> <b>Shift + glisser</b> déplace chaque petite note vers la gauche sans toucher au temps. Dans une mesure normale, il en faut peu — la première un peu plus que la deuxième, la troisième presque rien — : trop écartées, la première heurte la croche qui précède. Ce n’est que là où il reste de la place, comme après une mesure courte, qu’on peut les écarter davantage.</span></p>
+    </div>
+    <div class="spec">
+      <h3 id="caso-join-compas"><span class="tr">Join relie les croches de la mesure précédente</span></h3>
+      <p><span class="tr"><b>La question :</b> à la M23, j’ai voulu relier des croches avec Join, et ce sont celles de la M22 qui ont été reliées. <b>La réponse :</b> avec le Beam editor ouvert et épinglé, un simple clic sur une note ne le fait pas changer de groupe : il continue de viser le précédent. Sélectionnez les notes avec <b>Alt + clic</b>, ou ouvrez l’éditeur par un clic droit sur une note de la mesure que vous voulez relier.</span></p>
+    </div>
+  </div>
+</section>
 
 <section id="player" style="--c:var(--lime, #90cc42)">
   <div class="app-eyebrow">⊞ <span class="tr">Le Player · le Score Roll et le copiste</span></div>
