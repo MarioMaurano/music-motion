@@ -1,0 +1,18 @@
+{
+  "id": "/suite/tragamonedas.html",
+  "name": "mm Tragamonedas",
+  "short_name": "Tragamonedas",
+  "description": "La tragamonedas de compases: cuatro rodillos, cuatro compases, una melodía nueva. Music Motion.",
+  "lang": "es",
+  "start_url": "/suite/tragamonedas.html",
+  "scope": "/suite/tragamonedas.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b0b16",
+  "theme_color": "#0b0b16",
+  "icons": [
+    { "src": "/icons/mm-traga-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/mm-traga-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/mm-traga-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

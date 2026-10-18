@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mm Tragamonedas</title>
+<link rel="manifest" href="/icons/tragamonedas.webmanifest">
+<link rel="icon" href="/icons/mm-traga-tab.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/mm-traga-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tragamonedas">
+<meta name="theme-color" content="#0b0b16">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@400;700&display=swap">
+<style>
+/* Un gabinete de casino con cuatro rodillos de papel pautado: cada rodillo es un compás. Luces que corren mientras giran, una palanca, y premios. */
+:root{
+  --night:#0b0b16; --cab:#14142a; --cab2:#1f1f40; --gold:#d6b450; --gold-d:#5a4a18; --wine:#7a1f2e; --wine-l:#b0324a;
+  --paper:#f7f2e4; --ink:#0e2934; --teal:#38c0a6; --text:#ecebf6; --textm:#a2a0bc; --pink:#ff6f91; --sky:#5ec8ff;
+  --display:'Bebas Neue',Impact,'Arial Narrow',sans-serif; --body:'Lato',Calibri,Arial,sans-serif; --mono:'DM Mono',Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:radial-gradient(ellipse at 50% -10%,#2a2a58 0%,var(--night) 55%);color:var(--text);font-family:var(--body);min-height:100vh;
+  padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));padding-top:max(10px,env(safe-area-inset-top,0px));padding-bottom:max(24px,env(safe-area-inset-bottom,0px));overflow-x:hidden}
+.top{max-width:1080px;margin:0 auto 8px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:var(--mono);font-size:12px}
+.top a{color:var(--gold);text-decoration:none}.top a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.cab{position:relative;background:linear-gradient(180deg,var(--cab2),var(--cab));border:2px solid var(--gold-d);border-top:5px solid var(--wine);border-radius:22px;
+  padding:16px clamp(10px,2.6vw,24px) 20px;box-shadow:0 20px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.07)}
+.marquee{text-align:center}
+.marquee h1{font-family:var(--display);font-weight:400;letter-spacing:.06em;color:var(--gold);font-size:clamp(30px,7vw,58px);line-height:.95;margin:0;text-shadow:0 0 22px rgba(214,180,80,.45)}
+.sub{font-size:14px;color:var(--textm);text-align:center;margin:6px 0 0}
+.lights{display:flex;justify-content:space-between;margin:12px 4px 14px}
+.lights i{width:clamp(6px,1.3vw,10px);height:clamp(6px,1.3vw,10px);border-radius:50%;background:var(--gold-d);flex:none}
+.lights.run i{animation:bulb .66s steps(1) infinite}
+.lights i:nth-child(3n+2){animation-delay:-.22s}.lights i:nth-child(3n){animation-delay:-.44s}
+@keyframes bulb{0%,33%{background:var(--gold);box-shadow:0 0 10px var(--gold)}34%,100%{background:var(--gold-d);box-shadow:none}}
+.lights.party i{animation:party .3s steps(1) infinite}
+.lights.party i:nth-child(odd){animation-delay:-.15s}
+@keyframes party{0%,49%{background:var(--pink);box-shadow:0 0 12px var(--pink)}50%,100%{background:var(--sky);box-shadow:0 0 12px var(--sky)}}
+.stage{display:flex;gap:12px;align-items:stretch}
+.reels{flex:1;min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.reels{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.reel{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--textm);text-align:center;text-transform:uppercase}
+.frame{position:relative;padding:9px;border-radius:14px;background:#0d0d1e;border:2px solid var(--gold-d)}
+.bulbs{position:absolute;inset:0;pointer-events:none}
+.bulbs i{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold-d);transform:translate(-50%,-50%)}
+.frame.spinning .bulbs i{animation:bulb .5s steps(1) infinite;animation-delay:calc(var(--k) * -0.06s)}
+.frame.held{border-color:var(--teal);box-shadow:0 0 16px rgba(56,192,166,.45)}
+.frame.held .bulbs i{background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.frame.win-flash .bulbs i{animation:party .3s steps(1) infinite}
+.win{background:var(--paper);border-radius:8px;height:clamp(118px,19vw,156px);overflow:hidden;position:relative;
+  box-shadow:inset 0 12px 14px -8px rgba(0,0,0,.5),inset 0 -12px 14px -8px rgba(0,0,0,.5)}
+.strip{position:absolute;left:0;right:0;top:0;will-change:transform}
+.strip svg{display:block;width:100%;height:clamp(118px,19vw,156px)}
+.strip.blur{filter:blur(1.2px)}
+.lbl{font-family:var(--mono);font-size:12.5px;color:var(--text);text-align:center;min-height:2.7em;line-height:1.35}
+.lbl b{color:var(--gold);font-weight:500;letter-spacing:.06em}
+.btn{font-family:var(--mono);font-size:13px;letter-spacing:.1em;padding:9px 14px;border:1px solid var(--gold-d);border-radius:8px;background:rgba(255,255,255,.02);color:var(--text);cursor:pointer;min-height:40px;touch-action:manipulation}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn:focus-visible,.spin:focus-visible,.lever:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.btn.on{background:var(--teal);border-color:var(--teal);color:#06231d}
+.hold{width:100%;font-size:14px}
+/* la palanca */
+.leverbox{width:52px;flex:none;display:flex;justify-content:center;padding-top:20px}
+.lever{position:relative;width:52px;height:230px;border:0;background:none;padding:0;cursor:grab;touch-action:none}
+.lever .base{position:absolute;left:50%;bottom:0;width:30px;height:46px;transform:translateX(-50%);background:linear-gradient(180deg,#3a3a5e,#1a1a30);border:2px solid var(--gold-d);border-radius:10px}
+.lever .arm{position:absolute;left:50%;bottom:30px;width:10px;height:170px;margin-left:-5px;transform-origin:50% 100%;background:linear-gradient(90deg,#9a9ab0,#e2e2ee,#8a8aa0);border-radius:5px}
+.lever .ball{position:absolute;left:50%;bottom:180px;width:40px;height:40px;margin-left:-20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8aa0,var(--wine-l) 55%,var(--wine) 100%);box-shadow:0 4px 10px rgba(0,0,0,.5)}
+.lever.back .arm,.lever.back .ball{transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+@media (max-width:520px){.leverbox{width:40px}.lever{width:40px;height:190px}.lever .arm{height:140px}.lever .ball{width:34px;height:34px;margin-left:-17px;bottom:152px}}
+.row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:center;margin-top:16px}
+.grp{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center}
+.grp .cl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--textm);text-transform:uppercase}
+.grp .btn{padding:7px 10px;min-width:38px}
+.spin{font-family:var(--display);font-size:34px;letter-spacing:.12em;color:#fff;background:radial-gradient(circle at 35% 30%,var(--wine-l),var(--wine) 70%);
+  border:3px solid var(--gold);border-radius:999px;padding:10px 44px;cursor:pointer;box-shadow:0 7px 0 #3d0d16,0 12px 26px rgba(0,0,0,.5);touch-action:manipulation}
+.spin:active{transform:translateY(5px);box-shadow:0 2px 0 #3d0d16}
+.spin:disabled{opacity:.6;cursor:wait}
+input[type=range]{accent-color:var(--gold);width:130px}
+.banner{font-family:var(--display);letter-spacing:.08em;font-size:clamp(26px,5vw,36px);color:var(--gold);text-align:center;min-height:40px;margin-top:6px}
+.banner.flash{animation:fl .45s steps(2) 6}
+@keyframes fl{50%{color:#fff;text-shadow:0 0 18px var(--pink)}}
+.out{background:rgba(0,0,0,.28);border:1px solid var(--gold-d);border-radius:12px;padding:12px 14px;display:grid;gap:6px;font-size:14px}
+.out .k{font-family:var(--mono);color:var(--gold);word-break:break-word;font-size:15px}
+.out .d{font-family:var(--mono);color:var(--textm);font-size:12px}
+.how{color:var(--textm);font-size:14px;line-height:1.6;max-width:70ch;margin:0 auto}
+.how b{color:var(--text)}
+/* la lluvia de notas y Canelo */
+.rain{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20}
+.rain span{position:absolute;top:-40px;font-size:28px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(var(--r))}}
+.dog{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:-170px;width:150px;z-index:21;pointer-events:none;transition:bottom .55s cubic-bezier(.3,1.5,.5,1)}
+.dog.in{bottom:max(10px,env(safe-area-inset-bottom,0px))}
+.dog .tail{transform-origin:22px 70px;animation:wag .18s ease-in-out infinite alternate}
+@keyframes wag{from{transform:rotate(-18deg)}to{transform:rotate(22deg)}}
+.dog .bub{font-family:var(--display);font-size:22px;fill:var(--ink)}
+@media (prefers-reduced-motion:reduce){.lights.run i,.lights.party i,.frame.spinning .bulbs i,.banner.flash,.dog .tail{animation:none}.rain{display:none}}
+</style>
+</head>
+<body>
+<div class="top"><a href="index.html">musicmotionsuite.com</a><a href="ejercicios/index.html#nivel-2">Música en el aula · Nivel 2</a></div>
+<div class="wrap">
+<div class="cab">
+  <div class="marquee"><h1>La tragamonedas de compases</h1></div>
+  <p class="sub">Tira de la palanca: cuatro rodillos, cuatro compases, una melodía nueva.</p>
+  <div class="lights" id="lights" aria-hidden="true"></div>
+  <div class="stage">
+    <div class="reels" id="reels"></div>
+    <div class="leverbox"><button class="lever" id="lever" aria-label="Palanca: tira hacia abajo para girar"><span class="base"></span><span class="arm" id="arm"></span><span class="ball" id="ball"></span></button></div>
+  </div>
+  <div class="banner" id="banner" aria-live="polite"></div>
+  <div class="row">
+    <button class="spin" id="spin">SPIN</button>
+    <button class="btn" id="play">▶ PLAY</button>
+    <button class="btn on" id="chords" aria-pressed="true">CHORDS</button>
+    <button class="btn" id="save">⬇ SAVE .mmf</button>
+  </div>
+  <div class="row">
+    <div class="grp"><span class="cl">Key</span><span id="keys" class="grp"></span></div>
+    <div class="grp"><span class="cl">Alteration</span><span id="alts" class="grp"></span></div>
+    <div class="grp"><span class="cl">Mode</span><span id="modes" class="grp"></span></div>
+    <div class="grp"><span class="cl">Tempo</span><input type="range" id="tempo" min="60" max="132" step="4" value="88" aria-label="Tempo"><span id="bpm" class="fn">♩ = 88</span></div>
+  </div>
+</div>
+<div class="out" id="out" aria-live="polite"></div>
+<p class="how"><b>Cómo se juega.</b> Tira de la palanca o pulsa SPIN: los rodillos giran y se detienen uno por uno en un compás nuevo, con otras notas y otros valores. El primero va sobre el acorde de I, el segundo sobre IV, el tercero sobre V y el cuarto vuelve a casa, siempre a la tónica. HOLD deja quieto el rodillo que te gustó. Con KEY y MODE la misma melodía suena en otra tonalidad, en mayor o en menor, en afinación pitagórica. Abajo están las teclas para tocarla en el Cosmic Keyboard (Tonal, fila del medio: A es la tónica). Si sale una melodía famosa, hay premio. <b>SAVE .mmf</b> guarda la melodía con su acorde en cada compás para abrirla en el Score con File › Open.</p>
+</div>
+<div class="rain" id="rain" aria-hidden="true"></div>
+<svg class="dog" id="dog" viewBox="0 0 160 170" aria-hidden="true">
+  <g transform="translate(6,52)">
+    <path class="tail" d="M22 70 C 2 60, -2 40, 10 30" fill="none" stroke="#c98a4a" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="62" cy="82" rx="46" ry="28" fill="#d99a58"/>
+    <rect x="28" y="94" width="13" height="24" rx="6" fill="#c98a4a"/><rect x="80" y="94" width="13" height="24" rx="6" fill="#c98a4a"/>
+    <circle cx="104" cy="52" r="27" fill="#d99a58"/>
+    <path d="M86 32 C 76 14, 92 10, 98 30 Z" fill="#8a5a2c"/><path d="M116 30 C 124 10, 138 18, 124 36 Z" fill="#8a5a2c"/>
+    <ellipse cx="118" cy="62" rx="14" ry="10" fill="#f1d3a8"/><circle cx="126" cy="58" r="4.5" fill="#2b1a0e"/>
+    <circle cx="98" cy="48" r="4" fill="#2b1a0e"/><circle cx="99.4" cy="46.6" r="1.3" fill="#fff"/>
+    <path d="M112 70 Q 120 77 128 70" fill="none" stroke="#2b1a0e" stroke-width="2.4" stroke-linecap="round"/>
+    <rect x="70" y="76" width="30" height="7" rx="3.5" fill="#b0324a"/>
+  </g>
+  <g transform="translate(70,4)"><rect x="0" y="0" width="84" height="40" rx="14" fill="#f7f2e4"/><path d="M18 38 L 10 52 L 32 38 Z" fill="#f7f2e4"/><text class="bub" x="42" y="28" text-anchor="middle">¡GUAU!</text></g>
+</svg>
+<script>
+const GL={"gClef": "M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z", "black": "M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z", "half": "M97 -125C262 -125 295 9 295 42C295 93 254 125 196 125C47 125 0 10 0 -42C0 -95 42 -125 97 -125ZM75 -87C54 -87 42 -76 35 -64C32 -58 29 -51 29 -44C29 5 174 84 221 84C240 84 251 75 258 63C261 57 264 51 264 44C264 1 123 -87 75 -87Z", "whole": "M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z", "flagUp": "M238 -790C238 -790 264 -695 264 -617C264 -492 212 -374 149 -274C98 -195 56 -109 40 -13C37 3 29 9 19 9C8 9 0 6 0 -6V-245C66 -257 161 -393 197 -478C212 -512 221 -569 221 -628C221 -673 214 -720 197 -765C195 -771 194 -776 194 -780C194 -796 204 -805 210 -809C216 -813 233 -807 238 -790Z", "flagDown": "M240 760C254 718 261 668 261 623C261 564 236 480 221 446C184 362 134 281 0 236V1C0 -9 8 -14 16 -14C25 -14 38 -8 40 8C57 103 131 190 182 269C245 368 306 487 306 612C306 690 286 761 278 793C275 804 269 808 262 808C247 808 230 789 240 760Z", "dot": "M100 0C100 28 78 50 50 50C22 50 0 28 0 0C0 -28 22 -50 50 -50C78 -50 100 -28 100 0Z", "sharp": "M237 118C244 121 249 129 249 135V206C249 211 246 214 242 214C240 214 239 214 237 213C237 213 217 205 212 204C205 204 198 209 198 217V339C198 345 192 350 184 350C174 350 168 345 168 339V209C167 199 164 186 155 180C143 173 109 159 92 155C83 155 80 167 80 175V295C80 301 73 306 66 306C56 306 50 301 50 295V160C50 146 44 136 38 133C32 130 12 122 12 122C5 120 0 112 0 106V35C0 29 3 26 9 26L11 27C12 27 27 33 35 37L36 38C44 38 50 28 50 20V-79C50 -90 45 -99 39 -102C33 -104 12 -113 12 -113C5 -115 0 -123 0 -129V-200C0 -206 3 -209 9 -209L11 -208C12 -208 26 -202 35 -199C36 -198 37 -198 38 -198C45 -198 50 -209 50 -214V-337C50 -343 56 -348 63 -348C73 -348 80 -343 80 -337V-198C80 -185 85 -178 90 -176L151 -151C151 -151 152 -151 152 -151L154 -150C163 -150 168 -162 168 -168V-293C168 -299 174 -304 181 -304C192 -304 198 -299 198 -293V-151C198 -143 202 -131 209 -128C216 -125 237 -117 237 -117C244 -114 249 -106 249 -100V-29C249 -24 246 -21 242 -21C240 -21 239 -21 237 -22L211 -32C205 -32 198 -26 198 -14V79C198 86 203 105 211 108ZM168 -45C162 -65 115 -85 92 -85C86 -85 81 -83 80 -80C78 -76 77 -54 77 -30C77 1 78 36 80 44C82 61 128 82 153 82C160 82 166 80 168 76C170 71 172 46 172 19C172 -8 170 -36 168 -45Z", "flat": "M12 -170C15 -174 18 -175 21 -175C24 -175 27 -173 27 -173C57 -156 81 -129 106 -112C195 -50 226 11 226 57C226 114 182 150 136 153C119 153 95 145 81 136C75 131 64 122 59 122C57 122 56 122 54 123C47 126 43 133 43 140C44 162 50 402 50 422C50 433 41 439 31 439C17 439 1 429 0 411C0 411 4 -160 12 -170ZM47 -81C47 -81 44 -21 44 19C44 35 45 47 46 51C53 71 93 100 116 100C145 100 157 67 157 42C157 -12 111 -66 68 -93C64 -95 61 -96 58 -96C49 -96 47 -86 47 -81Z"};
+const S=10, K=S/250;
+const LET=['C','D','E','F','G','A','B'], NAMES={C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'};
+const SEMI={C:0,D:2,E:4,F:5,G:7,A:9,B:11}, FIF={F:-1,C:0,G:1,D:2,A:3,E:4,B:5};
+const ROM=['I','II','III','IV','V','VI','VII','VIII'], KEYC=['A','S','D','F','G','H','J','K'];
+const FUN=[{n:'acorde de I',ch:[0,2,4,7]},{n:'acorde de IV',ch:[3,5,7,0]},{n:'acorde de V',ch:[4,6,1]},{n:'I · final',ch:[0,2,4,7]}];
+const RH=[[2,2,2,2],[4,2,2],[2,2,4],[3,1,2,2],[1,1,2,2,2],[2,1,1,2,2],[2,2,1,1,2],[6,2],[3,1,4],[1,1,1,1,2,2],[2,2,2,1,1],[4,4]];
+const RHF=[[2,2,4],[4,4],[8],[3,1,4],[2,6],[1,1,2,4],[6,2]];
+const FAMOUS=[{n:'¡La Oda a la alegría!',d:[2,2,3,4],r:[2,2,2,2],reel:0},{n:'¡La Estrellita!',d:[0,0,4,4],r:[2,2,2,2],reel:0},{n:'¡La Estrellita!',d:[5,5,4],r:[2,2,4],reel:1},{n:'¡El final de la Estrellita!',d:[1,1,0],r:[2,2,4],reel:3}];
+let state={key:'C',alt:'n',mode:0,bpm:88,chords:true,held:[false,false,false,false],bars:[],spinning:false};
+const rnd=n=>Math.floor(Math.random()*n), pick=a=>a[rnd(a.length)];
+function nearest(set,from){let best=set[0];for(const c of set){if(Math.abs(c-from)<Math.abs(best-from)||(Math.abs(c-from)===Math.abs(best-from)&&Math.random()<.5))best=c;}return best;}
+function makeBar(i,prevEnd){
+  const f=FUN[i]; const rh=(i===3?pick(RHF):pick(RH)).slice();
+  if(Math.random()<.12){ const fm=FAMOUS.filter(x=>x.reel===i); if(fm.length){const x=pick(fm);return {deg:x.d.slice(),rh:x.r.slice()};} }
+  const deg=[]; let pos=0;
+  let cand=f.ch.filter(c=>prevEnd==null||Math.abs(c-prevEnd)<=4); if(!cand.length)cand=f.ch;
+  let cur=prevEnd==null?pick([0,2,4]):pick(cand);
+  for(let k=0;k<rh.length;k++){
+    if(k>0){ if(pos%4===0){const near=f.ch.filter(c=>Math.abs(c-cur)<=2&&c!==cur);cur=near.length?pick(near):nearest(f.ch,cur);}
+      else{let st=pick([-1,1,1,-1,-1,2,-2]); if(cur+st<0||cur+st>7) st=-st; cur=Math.max(0,Math.min(7,cur+st));} }
+    deg.push(cur); pos+=rh[k];
+  }
+  if(i===2){const last=deg.length-1; if(rh[last]<=2&&Math.random()<.6) deg[last]=pick([6,1,4]);}
+  if(i===3){const last=deg.length-1; deg[last]=deg[last-1]!=null&&deg[last-1]>=5?7:0;
+    if(last>0&&Math.abs(deg[last-1]-deg[last])>2) deg[last-1]=deg[last]===7?pick([6,4]):pick([1,2]);}
+  return {deg,rh};
+}
+function keyInfo(){ const t=state.key, a={b:-1,n:0,'#':1}[state.alt]; let fifths=FIF[t]+7*a; if(state.mode===1) fifths-=3; return {fifths,ok:Math.abs(fifths)<=7,tonicIdx:LET.indexOf(t)}; }
+function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F']; if(fifths>0) return sh.slice(0,fifths).includes(letter)?1:0; if(fifths<0) return fl.slice(0,-fifths).includes(letter)?-1:0; return 0; }
+function spell(deg){ const ki=keyInfo(); const li=ki.tonicIdx+deg; const letter=LET[li%7]; const oct=4+Math.floor(li/7); const acc=sigAcc(letter,ki.fifths);
+  const e3=FIF[letter]+7*acc; const semis=SEMI[letter]+acc+12*(oct-4); const e2=Math.round(semis/12-e3*Math.log2(3));
+  return {letter,oct,acc,freq:260.7407407407407*Math.pow(3,e3)*Math.pow(2,e2)}; }
+const nm=s=>NAMES[s.letter]+(s.acc>0?'♯':s.acc<0?'♭':'');
+// ── el dibujo de cada compás ──
+const g=(n,x,y,fill)=>`<path fill="${fill||'#0e2934'}" transform="translate(${x.toFixed(2)},${y.toFixed(2)}) scale(${K.toFixed(4)},${(-K).toFixed(4)})" d="${GL[n]}"/>`;
+const TPOS={C:0,D:1,E:2,F:3,G:4,A:5,B:6};
+function posOf(sp){return (sp.oct-4)*7+TPOS[sp.letter]-2;}
+function barSVG(bar,hi){
+  const y0=46, W=260, H=150; const ki=keyInfo(); let x=8; let m='';
+  for(let i=0;i<5;i++) m+=`<rect x="4" y="${(y0+i*S-.6).toFixed(1)}" width="${W-8}" height="1.2" fill="#0e2934"/>`;
+  m+=g('gClef',x,y0+3*S); x+=34;
+  if(ki.ok&&ki.fifths){const n=Math.abs(ki.fifths);const ps=ki.fifths>0?[8,5,9,6,3,7,4]:[4,7,3,6,2,5,1];
+    for(let i=0;i<n;i++){m+=g(ki.fifths>0?'sharp':'flat',x,y0+4*S-ps[i]*S/2);x+=10;}x+=4;}
+  const total=8, span=W-x-22; const heads=[]; let pos=0;
+  bar.deg.forEach((d,k)=>{ const sp=spell(d), p=posOf(sp), du=bar.rh[k]; const hx=x+span*pos/total+4; const hy=y0+4*S-p*S/2; const col=hi===k?'#b0324a':'#0e2934';
+    for(let lp=-2;lp>=p;lp-=2) m+=`<rect x="${hx-4}" y="${(y0+4*S-lp*S/2-.7).toFixed(1)}" width="20" height="1.4" fill="#0e2934"/>`;
+    for(let lp=10;lp<=p;lp+=2) m+=`<rect x="${hx-4}" y="${(y0+4*S-lp*S/2-.7).toFixed(1)}" width="20" height="1.4" fill="#0e2934"/>`;
+    m+=g(du>=8?'whole':du>=4?'half':'black',hx,hy,col); if(du===3||du===6) m+=g('dot',hx+16,p%2?hy:hy-S/2,col);
+    heads.push({hx,hy,p,du,col,pos}); m+=`<text x="${hx+6}" y="${y0+4*S+30}" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#24485a">${ROM[d]}</text>`; pos+=du; });
+  for(let k=0;k<heads.length;k++){const h=heads[k]; if(h.du>=8) continue; const up=h.p<4;
+    if(h.du===1&&heads[k+1]&&heads[k+1].du===1&&h.pos%2===0){ const b=heads[k+1]; const upb=(h.p+b.p)/2<4;
+      if(upb){const top=Math.min(h.hy,b.hy)-35; for(const q of[h,b]) m+=`<rect x="${q.hx+11.2}" y="${top}" width="1.6" height="${q.hy-top}" fill="${q.col}"/>`; m+=`<rect x="${h.hx+11.2}" y="${top}" width="${b.hx-h.hx+1.6}" height="5" fill="#0e2934"/>`;}
+      else{const bot=Math.max(h.hy,b.hy)+35; for(const q of[h,b]) m+=`<rect x="${q.hx}" y="${q.hy}" width="1.6" height="${bot-q.hy}" fill="${q.col}"/>`; m+=`<rect x="${h.hx}" y="${bot-5}" width="${b.hx-h.hx+1.6}" height="5" fill="#0e2934"/>`;}
+      k++; continue;}
+    if(up){const sx=h.hx+11.2; m+=`<rect x="${sx}" y="${h.hy-35}" width="1.6" height="34" fill="${h.col}"/>`; if(h.du===1) m+=g('flagUp',sx,h.hy-35,h.col);}
+    else{m+=`<rect x="${h.hx}" y="${h.hy+1}" width="1.6" height="34" fill="${h.col}"/>`; if(h.du===1) m+=g('flagDown',h.hx,h.hy+35,h.col);} }
+  m+=`<rect x="${W-8}" y="${y0}" width="1.6" height="${4*S}" fill="#0e2934"/>`;
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="compás">${m}</svg>`;
+}
+// ── la máquina ──
+const reelsEl=document.getElementById('reels');
+reelsEl.innerHTML=FUN.map((f,i)=>`<div class="reel"><div class="fn">Compás ${i+1} · ${f.n}</div><div class="frame" id="f${i}"><div class="bulbs">${Array.from({length:14},(_,k)=>{const t=k/14;let x,y;if(t<.32){x=t/.32*100;y=0}else if(t<.5){x=100;y=(t-.32)/.18*100}else if(t<.82){x=100-(t-.5)/.32*100;y=100}else{x=0;y=100-(t-.82)/.18*100}return `<i style="left:${x}%;top:${y}%;--k:${k}"></i>`}).join('')}</div><div class="win"><div class="strip" id="s${i}"></div></div></div><div class="lbl" id="l${i}"></div><button class="btn hold" id="h${i}" aria-pressed="false">HOLD</button></div>`).join('');
+const lights=document.getElementById('lights'); lights.innerHTML='<i></i>'.repeat(30);
+function stripH(){return document.querySelector('.win').getBoundingClientRect().height;}
+function render(hi){
+  state.bars.forEach((b,i)=>{ const st=document.getElementById('s'+i); st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.remove('blur'); st.innerHTML=barSVG(b,hi&&hi[0]===i?hi[1]:-1);
+    document.getElementById('l'+i).innerHTML=`<b>${b.deg.map(d=>KEYC[d]).join(' ')}</b><br>${b.deg.map(d=>nm(spell(d))).join(' ')}`; });
+  const ki=keyInfo(); const tn=NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt]); const out=document.getElementById('out');
+  if(!ki.ok){out.innerHTML=`<div>Esa tonalidad tiene más de siete alteraciones. Prueba con su vecina: ${state.alt==='#'?'con ♭':'con ♯'}.</div>`;return;}
+  out.innerHTML=`<div class="d">Tu melodía en ${tn} ${state.mode?'menor':'mayor'} · Cosmic Keyboard: Tonal, KEY ${state.key}${state.alt==='n'?'':state.alt==='#'?' ♯':' ♭'}, MODE ${state.mode?'m':'M'}, fila del medio</div>
+  <div class="k">${state.bars.map(b=>b.deg.map(d=>KEYC[d]).join(' ')).join('  |  ')}</div>
+  <div>${state.bars.map(b=>b.deg.map(d=>nm(spell(d))).join(' ')).join('  |  ')}</div>
+  <div class="d">${state.bars.map(b=>b.deg.map(d=>ROM[d]).join(' ')).join('  |  ')}</div>`;
+}
+function famous(){ for(const b of state.bars) for(const f of FAMOUS) if(f.d.join()===b.deg.join()&&f.r.join()===b.rh.join()) return f.n;
+  const r=state.bars.map(b=>b.rh.join()); if(r[0]===r[1]&&r[1]===r[2]) return 'JACKPOT · tres ritmos iguales'; return ''; }
+function newBars(){let prev=null; const out=[]; for(let i=0;i<4;i++){ out.push(state.held[i]&&state.bars[i]?state.bars[i]:makeBar(i,prev)); const d=out[i].deg; prev=d[d.length-1]; } return out;}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let tickT=null;
+async function spin(){
+  if(state.spinning) return; state.spinning=true; stopPlay();
+  const btn=document.getElementById('spin'); btn.disabled=true; const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash');
+  lights.classList.remove('party'); lights.classList.add('run'); [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));
+  const fin=newBars(); const h=stripH(); let left=fin.filter((b,i)=>!state.held[i]).length;
+  if(!reduce&&left) tickT=setInterval(()=>tick(),75);
+  const jobs=fin.map((b,i)=>new Promise(res=>{
+    const fr=document.getElementById('f'+i);
+    if(state.held[i]||reduce){res();return;}
+    fr.classList.add('spinning');
+    const strip=document.getElementById('s'+i); const n=10+i*5; let html=barSVG(state.bars[i]||b,-1);
+    for(let k=0;k<n;k++) html+=barSVG(makeBar(i,null),-1); html+=barSVG(b,-1);
+    strip.innerHTML=html; strip.style.transition='none'; strip.style.transform='translateY(0)'; strip.classList.add('blur');
+    const dur=1.1+i*0.45;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ strip.style.transition=`transform ${dur}s cubic-bezier(.12,.62,.3,1.06)`; strip.style.transform=`translateY(-${(n+1)*h}px)`; }));
+    setTimeout(()=>strip.classList.remove('blur'),dur*1000-260);
+    setTimeout(()=>{ fr.classList.remove('spinning'); clack(); if(--left<=0){clearInterval(tickT);} res(); },dur*1000+40);
+  }));
+  await Promise.all(jobs); clearInterval(tickT); state.bars=fin; render(); lights.classList.remove('run'); btn.disabled=false; state.spinning=false;
+  const f=famous(); if(f) jackpot(f);
+}
+function jackpot(txt){
+  const ban=document.getElementById('banner'); ban.textContent=txt; ban.classList.add('flash'); lights.classList.add('party');
+  [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.add('win-flash'));
+  try{ navigator.vibrate&&navigator.vibrate([80,50,80,50,180]); }catch(e){}
+  fanfare();
+  if(!reduce){ const rain=document.getElementById('rain'); const sy=['♪','♫','♩','♬'], cols=['#d6b450','#ff6f91','#5ec8ff','#38c0a6','#ffffff'];
+    for(let k=0;k<46;k++){ const s=document.createElement('span'); s.textContent=pick(sy); s.style.left=(Math.random()*100)+'vw'; s.style.color=pick(cols); s.style.fontSize=(20+rnd(22))+'px';
+      s.style.setProperty('--r',(rnd(720)-360)+'deg'); s.style.animationDuration=(1.8+Math.random()*1.8)+'s'; s.style.animationDelay=(Math.random()*.8)+'s'; rain.appendChild(s); setTimeout(()=>s.remove(),4600); }
+    const dog=document.getElementById('dog'); dog.classList.add('in'); setTimeout(()=>dog.classList.remove('in'),3400); }
+  setTimeout(()=>{lights.classList.remove('party');[0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));},3400);
+}
+// ── la palanca ──
+const lever=document.getElementById('lever'), arm=document.getElementById('arm'), ball=document.getElementById('ball');
+let pull=null;
+function setArm(a){ const H=arm.getBoundingClientRect().height/(parseFloat(arm.dataset.k||1)); const k=1-a/100; arm.dataset.k=k; arm.style.transform=`scaleY(${k})`; ball.style.transform=`translateY(${(arm.offsetHeight*(1-k)).toFixed(1)}px)`; }
+lever.addEventListener('pointerdown',e=>{ if(state.spinning) return; pull={y:e.clientY,a:0}; lever.classList.remove('back'); lever.setPointerCapture(e.pointerId); });
+lever.addEventListener('pointermove',e=>{ if(!pull) return; pull.a=Math.max(0,Math.min(70,(e.clientY-pull.y)*0.6)); setArm(pull.a); });
+function release(){ if(!pull) return; const go=pull.a>38; pull=null; lever.classList.add('back'); setArm(0); if(go) spin(); }
+lever.addEventListener('pointerup',release); lever.addEventListener('pointercancel',release);
+lever.addEventListener('keydown',e=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); lever.classList.add('back'); setArm(60); setTimeout(()=>{setArm(0);spin();},160);} });
+// ── el sonido ──
+// En el sitio, el Cosmic Keyboard viaja escondido en la página (iframe ?motor=demo, como la demo del Score) y la
+// melodía suena con sus instrumentos; la máquina le manda la frecuencia de cada nota. Si no responde, suena el sonido propio.
+let motor=null, motorOk=false;
+window.addEventListener('load',()=>{ if(!/^https?:$/.test(location.protocol)) return;
+  const f=document.createElement('iframe'); f.id='motor'; f.src='../apps/mmk-scorekeyboard.html?motor=demo'; f.setAttribute('allow','autoplay'); f.setAttribute('aria-hidden','true'); f.tabIndex=-1;
+  f.style.cssText='position:fixed;left:-20px;top:-20px;width:1px;height:1px;border:0;opacity:0;pointer-events:none;';
+  f.onload=()=>{ const t0=Date.now(); const chk=setInterval(()=>{ try{ if(typeof f.contentWindow.getCtx==='function'&&typeof f.contentWindow.scoreNoteOn==='function'){motorOk=true;clearInterval(chk);} }catch(e){clearInterval(chk);} if(Date.now()-t0>8000) clearInterval(chk); },200); };
+  document.body.appendChild(f); motor=f; });
+function msg(m){ try{ motor.contentWindow.postMessage(m,'*'); }catch(e){} }
+let AC=null, wave=null, playing=[], playTimer=[], sched=null, sounding=[];
+function ctx(){ if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)(); const re=new Float32Array([0,1,.42,.22,.12,.06,.03]); wave=AC.createPeriodicWave(re,new Float32Array(re.length));} if(AC.state==='suspended') AC.resume(); return AC;}
+function tone(f,t0,dur,vol,fx){const a=ctx(); const o=a.createOscillator(); const v=a.createGain(); o.setPeriodicWave(wave); o.frequency.value=f;
+  v.gain.setValueAtTime(0,t0); v.gain.linearRampToValueAtTime(vol,t0+.015); v.gain.setTargetAtTime(vol*.55,t0+.04,.18); v.gain.setTargetAtTime(0,t0+Math.max(.04,dur-.05),.05);
+  o.connect(v).connect(a.destination); o.start(t0); o.stop(t0+dur+.4); if(!fx) playing.push(o);}
+function tick(){try{const a=ctx(); tone(1500+rnd(300),a.currentTime,.025,.025,true);}catch(e){}}
+function clack(){try{const a=ctx(); const t=a.currentTime; tone(150,t,.09,.14,true); tone(900,t,.03,.05,true);}catch(e){}}
+function fanfare(){try{const a=ctx(); const t=a.currentTime+.05; [0,2,4,7].forEach((d,k)=>{tone(spell(d).freq,t+k*.11,.22,.12,true);}); tone(spell(7).freq,t+.44,.5,.12,true); tone(spell(4).freq,t+.44,.5,.08,true);}catch(e){}}
+const pid=s=>s.letter+s.oct+(s.acc>0?'S':s.acc<0?'B':'N');
+function stopPlay(){playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; playTimer.forEach(clearTimeout); playTimer=[]; clearInterval(sched); sched=null;
+  sounding.forEach(m=>msg({cmd:'NOTE_OFF',id:m.id,chId:m.chId,source:'minikeyboard'})); sounding=[];
+  document.getElementById('play').textContent='▶ PLAY'; if(state.bars.length&&!state.spinning) render();}
+function play(){
+  if(!keyInfo().ok||state.spinning) return; if(playing.length||sched){stopPlay();return;}
+  const e8=60/state.bpm/2; const ev=[]; let t=0.25;
+  state.bars.forEach((b,i)=>{
+    if(state.chords){ for(const d of [FUN[i].ch[0]%7,(FUN[i].ch[0]+2)%7,(FUN[i].ch[0]+4)%7]){const s=spell(d); ev.push({t,dur:8*e8,s:{...s,oct:s.oct-1,freq:s.freq/2},ch:1,vel:.32,instr:'harp'});} }
+    b.deg.forEach((d,k)=>{const s=spell(d); const du=b.rh[k]*e8; ev.push({t,dur:du*.95,s,ch:0,vel:.6,instr:'flute',hi:[i,k]}); t+=du;});
+  });
+  document.getElementById('play').textContent='■ STOP';
+  if(motorOk){
+    try{ const c=motor.contentWindow.getCtx(); if(c.state==='suspended') c.resume(); }catch(e){}
+    const base=performance.timeOrigin+performance.now(); let n=0;
+    sched=setInterval(()=>{ const now=performance.timeOrigin+performance.now();
+      while(n<ev.length && base+ev[n].t*1000 < now+400){ const e=ev[n++]; const id=pid(e.s);
+        msg({cmd:'NOTE_ON',id,freq:e.s.freq,vel:e.vel,dur:Math.round(e.dur*1000),chId:e.ch,instr:e.instr,at:base+e.t*1000,source:'minikeyboard'});
+        msg({cmd:'NOTE_OFF',id,chId:e.ch,at:base+(e.t+e.dur)*1000,source:'minikeyboard'}); sounding.push({id,chId:e.ch}); }
+      if(n>=ev.length){ clearInterval(sched); sched=null; } },50);
+  } else { const a=ctx(); const t0=a.currentTime; ev.forEach(e=>tone(e.s.freq,t0+e.t,e.dur,e.ch?0.05:0.16)); }
+  ev.forEach(e=>{ if(e.hi) playTimer.push(setTimeout(()=>render(e.hi),e.t*1000)); });
+  playTimer.push(setTimeout(()=>{playing=[];sounding=[];document.getElementById('play').textContent='▶ PLAY';render();},t*1000+400));
+}
+// ── guardar la combinación para el Score (.mmf) ──
+const PLANTILLA={"format": "mmf", "type": "score", "version": "1.1", "app": "V2.7.123", "intelligentBeams": 1, "created": "2026-10-16T13:23:30.720Z", "system": "Tonal", "keySignature": "C", "keyChanges": [], "timeChanges": [], "octaveLines": [], "spacing": {"h": 1, "v": 1, "byM": {}}, "view": {"zoom": 100, "barNums": "continuous", "listenOct": {"fit": "auto", "start": 2}, "page": {"fit": "3", "staff": "3", "sysGap": "4", "pages": "1", "mode": "ancho", "paper": "A4", "footer": true, "pageNum": true}}, "alteration": "b", "a4": 440, "tempo": 88, "timeSignature": {"num": 4, "den": 4}, "subDiv": 1, "totalMeasures": 4, "barlines": {"4": {"id": "final"}}, "repeatMarks": [], "repeatSections": [], "_sectionSeq": 1, "showRepeatSections": true, "anacrusis": null, "groups": [{"showBarLines": true, "id": 1792149263557, "type": "bracket", "channels": [0, 1]}], "scoreInfo": {"title": "Nuestra escena", "subtitle": "Compuesta con la tragamonedas de compases", "composer": "", "author": "Music Motion · Para el aula", "copyright": "© 2026 Music Motion", "file": "nuestra-escena", "print": {"hdrOff": {"subtitle": {"x": 0, "y": 6.9}, "title": {"x": -0.5, "y": 2.9}, "composer": {"x": -1.5, "y": 19.3}}, "cpyScope": "first", "sysDy": {"1": 8.5, "4": 14.5, "7": 18.5}, "composerSize": 28, "subtitleSize": 16, "titleSize": 36}, "orchestra": "modern"}, "tempoMarkings": [{"measure": 1, "beatPos": 0, "term": "Moderato", "noteValue": "quarter", "bpm": 88, "visible": true, "yOffset": -1, "fontSize": 18, "xOffset": 28}], "exprMarkings": [], "dynMarkings": [], "artMarkings": [], "textAnnotations": [], "coachRules": null, "coachLog": null, "agogMarkings": [], "agogMode": "hybrid", "showAgogMarks": true, "asymRegions": [], "exprSyn": {}, "fxRegions": [], "channels": [{"id": 0, "name": "Melodía", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": true, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": false, "agogAutoLevel": 0, "lyricSize": 18, "color": null, "perc": false, "mix": {"instrument": "flute"}, "notes": []}, {"id": 1, "name": "Acordes", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": -2, "visible": true, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": false, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "harp"}, "notes": []}, {"id": 2, "name": "Guitar · div", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "piano_steinway"}, "notes": []}, {"id": 3, "name": "Guitar · div", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "piano_steinway"}, "notes": []}, {"id": 4, "name": "Channel 5", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "horn"}, "notes": []}, {"id": 5, "name": "Channel 6", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "timpani"}, "notes": []}, {"id": 6, "name": "Channel 7", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "harp"}, "notes": []}, {"id": 7, "name": "Channel 8", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "harp"}, "notes": []}, {"id": 8, "name": "Channel 9", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 9, "name": "Channel 10", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 10, "name": "Channel 11", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "voice_alto"}, "notes": []}, {"id": 11, "name": "Channel 12", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 12, "name": "Channel 13", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 13, "name": "Channel 14", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "flute"}, "notes": []}, {"id": 14, "name": "Channel 15", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "harp"}, "notes": []}, {"id": 15, "name": "Channel 16", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 16, "name": "Channel 17", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 17, "name": "Channel 18", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 18, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 18, "name": "Channel 19", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 19, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 19, "name": "Channel 20", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 20, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 20, "name": "Channel 21", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 21, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 21, "name": "Channel 22", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 22, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 22, "name": "Channel 23", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 23, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 23, "name": "Channel 24", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 24, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 24, "name": "Channel 25", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 25, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 25, "name": "Channel 26", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 26, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 26, "name": "Channel 27", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 27, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 27, "name": "Channel 28", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 28, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 28, "name": "Channel 29", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 29, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 29, "name": "Channel 30", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 30, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 30, "name": "Channel 31", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 31, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 31, "name": "Channel 32", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 32, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}]};
+const DURN={1:['eighth',false],2:['quarter',false],3:['quarter',true],4:['half',false],6:['half',true],8:['whole',false]};
+const KEYSIG={'0':'C','1':'G','2':'D','3':'A','4':'E','5':'B','6':'F#','7':'C#','-1':'F','-2':'Bb','-3':'Eb','-4':'Ab','-5':'Db','-6':'Gb','-7':'Cb'};
+function note(s,m,bp,du,lyr){ const e3=FIF[s.letter]+7*s.acc; const semis=SEMI[s.letter]+s.acc+12*(s.oct-4); const e2=Math.round(semis/12-e3*Math.log2(3)); const [n,dot]=DURN[du];
+  return {duration:n,dotted:dot,grace:null,measure:m,beat:Math.floor(bp)+1,beatPos:bp,isRest:false,pitch:s.letter+(s.acc>0?'S':s.acc<0?'B':'N'),octave:s.oct,accidental:null,velocity:80,freq:s.freq,e3,e2,lyric:lyr}; }
+function save(){
+  const ki=keyInfo(); if(!ki.ok||state.spinning) return; const d=JSON.parse(JSON.stringify(PLANTILLA));
+  d.keySignature=KEYSIG[String(ki.fifths)]; d.tempo=state.bpm; d.tempoMarkings[0].bpm=state.bpm; d.created=new Date().toISOString();
+  d.scoreInfo.subtitle='Compuesta con la tragamonedas de compases · '+NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt])+' '+(state.mode?'menor':'mayor');
+  const mel=[], ac=[];
+  state.bars.forEach((b,i)=>{ let p=0; b.deg.forEach((gd,k)=>{ mel.push(note(spell(gd),i+1,p/2,b.rh[k],ROM[gd])); p+=b.rh[k]; });
+    for(const gd of [FUN[i].ch[0]%7,(FUN[i].ch[0]+2)%7,(FUN[i].ch[0]+4)%7]){ const s=spell(gd); const n=note({...s,oct:s.oct-1,freq:s.freq/2},i+1,0,8,''); delete n.lyric; n.velocity=62; ac.push(n);} });
+  d.channels[0].notes=mel; d.channels[1].notes=ac;
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'}));
+  a.download='nuestra-escena-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':'')+'.mmf'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
+}
+document.getElementById('save').onclick=save;
+// ── los mandos ──
+function seg(id,items,cur,fn){const el=document.getElementById(id); el.innerHTML=items.map(([v,t])=>`<button class="btn${v===cur?' on':''}" data-v="${v}" aria-pressed="${v===cur}">${t}</button>`).join('');
+  el.onclick=e=>{const b=e.target.closest('button'); if(!b||state.spinning) return; fn(b.dataset.v); [...el.children].forEach(c=>{c.classList.toggle('on',c===b);c.setAttribute('aria-pressed',c===b);}); stopPlay(); render();};}
+seg('keys',[['F','F'],['C','C'],['G','G'],['D','D'],['A','A'],['E','E'],['B','B']],'C',v=>state.key=v);
+seg('alts',[['b','♭'],['n','♮'],['#','♯']],'n',v=>state.alt=v);
+seg('modes',[['0','M'],['1','m']],'0',v=>state.mode=+v);
+document.getElementById('tempo').oninput=e=>{state.bpm=+e.target.value; document.getElementById('bpm').textContent='♩ = '+state.bpm;};
+document.getElementById('chords').onclick=e=>{state.chords=!state.chords; e.currentTarget.classList.toggle('on',state.chords); e.currentTarget.setAttribute('aria-pressed',state.chords);};
+for(let i=0;i<4;i++) document.getElementById('h'+i).onclick=e=>{ if(state.spinning) return; state.held[i]=!state.held[i]; const b=e.currentTarget; b.classList.toggle('on',state.held[i]); b.setAttribute('aria-pressed',state.held[i]); b.textContent=state.held[i]?'HELD':'HOLD'; document.getElementById('f'+i).classList.toggle('held',state.held[i]); };
+document.getElementById('spin').onclick=spin;
+document.getElementById('play').onclick=play;
+document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){e.preventDefault();spin();} });
+state.bars=[{deg:[2,2,3,4],rh:[2,2,2,2]},{deg:[5,5,4],rh:[2,2,4]},{deg:[4,3,2,1],rh:[3,1,2,2]},{deg:[2,1,0],rh:[2,2,4]}];
+render();
+</script>
+
+</body>
+</html>
