@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Guía del programa · Para el aula · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+  .tecla{width:62px;border:1px solid var(--navy);border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff6df;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .teclas.mini .tecla{width:48px;padding:5px 0 4px}
+  .teclas.mini .tecla .k{font-size:17px} .teclas.mini .tecla .nt{font-size:13px}
+  /* 2026-10-14 · el teclado de tres filas, como en el Coach (QWERTY · AZERTY · QWERTZ) */
+  .kbd3{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;break-inside:avoid}
+  .kbd3 .lay{display:flex;gap:6px;justify-content:center;margin-bottom:4px}
+  .kbd3 .lay button{font:bold 12px Consolas,monospace;padding:4px 9px;border:1px solid var(--navy);border-radius:5px;background:#fff;color:var(--navy);cursor:pointer}
+  .kbd3 .lay button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .kbd3 .kname{display:block;text-align:center;font-size:12.5px;color:#5b6876;margin-top:6px}
+  .kbd3 .teclas{margin:4px 0 4px}
+  @media print{.kbd3 .lay button:not([aria-pressed="true"]){display:none}}
+  h2.section{break-after:avoid}
+  .pulsobox{border:1px solid var(--navy);border-left:5px solid var(--amber);background:#f8fbfd;border-radius:4px;padding:14px 18px;margin:18px 0}
+  .pulsobox h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:0 0 8px}
+  .pulsobox ol{margin:6px 0 0 0}
+  img.shot2{display:block;width:100%;border-radius:6px;margin:10px 0 6px;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+  /* Nivel 1 · Clase 2 (2026-10-15): el dibujo del sonido */
+  .dibujo{border:1px solid #c9d6de;border-radius:8px;padding:12px 14px 6px;margin:12px 0 8px;background:#fff;break-inside:avoid}
+  @media print{.pulsobox{break-inside:avoid}}
+  .dibujo svg{display:block;width:100%;height:auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media screen and (max-width:640px){.dos{grid-template-columns:1fr}}
+  /* Guía del programa (2026-10-15) */
+  table.prog{border-collapse:collapse;width:100%;margin:10px 0 6px;font-size:14px;line-height:1.4}
+  table.prog th{background:var(--navy);color:#fff;text-align:left;padding:7px 9px;font-size:13px;font-weight:bold}
+  table.prog td{border-bottom:1px solid #d7e0e6;padding:7px 9px;vertical-align:top}
+  table.prog td.n{width:34px;text-align:center;font-weight:bold;color:var(--navy)}
+  table.prog td.t{width:31%;font-family:Georgia,serif;font-weight:bold;color:var(--navy)}
+  table.prog td.h{width:92px;color:var(--gray);font-size:12.5px;white-space:nowrap}
+  table.prog tr{break-inside:avoid}
+  table.prog tr.opt td{background:#fbf7ec}
+  .disp{display:inline-block;font-size:10.5px;letter-spacing:.5px;border:1px solid #4d8b3f;color:#2f5c26;border-radius:10px;padding:0 6px;margin-left:4px;font-family:Calibri,Arial,sans-serif;font-weight:normal}
+  .nivelhead{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--amber);margin:30px 0 4px;padding-bottom:4px;break-after:avoid}
+  .nivelhead h3{font-family:Georgia,serif;color:var(--navy);font-size:20px;margin:0}
+  .nivelhead span{color:var(--gray);font-size:13.5px}
+  ul.lista{margin:6px 0 0;padding-left:20px}
+  ul.lista li{margin:4px 0}
+</style>
+
+<!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+
+
+
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+<style>.mm-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:#0e2934;font:600 14px/1.2 Lato,Calibri,Arial,sans-serif}.mm-nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid #33586a;white-space:nowrap}.mm-nav a:hover,.mm-nav a:focus-visible{background:#f0b03c;color:#0e2934;border-color:#f0b03c;outline:none}.mm-nav span{display:flex;gap:8px}.mm-nav a.off{visibility:hidden}@media print{.mm-nav{display:none}}</style></head>
+<body><nav class="mm-nav" aria-label="Programa"><a href="../ejercicios/index.html#nivel-1">&#9776; Programa</a><span><a class="off" href="#">&larr; Anterior</a><a href="aula-clase-1-es.html">Siguiente &rarr;</a></span></nav>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">Para el aula &mdash; Guía del programa</div>
+  </header>
+  <main>
+    <h1 class="title">Música en el aula</h1>
+    <h2 class="exercise">Guía del programa · Nivel 1 y Nivel 2</h2>
+    <p class="rights">Para el maestro y la dirección del colegio. &copy; 2026 Music Motion.</p>
+    <div class="intro">
+<p><b>Qué es:</b> dos niveles de clases semanales que se suman al programa de música que el colegio ya tiene. Cada nivel tiene unas diez clases de 50 minutos.</p>
+<p><b>Para quién:</b> el Nivel 1, de 8 a 12 años; el Nivel 2, de 9 a 14 años. Están pensadas para el maestro que no es músico: el teclado, el afinador y el Score hacen el trabajo; el maestro guía.</p>
+<p><b>Qué hace falta:</b> lo mínimo es <b>una laptop con un parlante adicional</b>, para que toda la clase oiga bien, y la pizarra. Si el aula tiene pizarra digital, pantalla interactiva o proyector, mejor; si no, las clases funcionan igual. En el Nivel 2 conviene una computadora por grupo de 4 o 5 alumnos. El <b>Cosmic Keyboard</b> es gratuito; el <b>Score</b> y el resto de la suite se usan con la cuenta del colegio.</p>
+</div>
+
+    <h2 class="section">Por qué: una alfabetización musical</h2>
+<div class="pulsobox">
+<h3>Una paradoja</h3>
+<p>Ninguna sociedad discute que todos los niños deben aprender a leer y a escribir: la alfabetización de la palabra es un derecho y la base de todo lo demás. Con la música ocurre una paradoja. Todos la escuchamos desde la cuna, la cantamos, la bailamos y la usamos para celebrar, recordar y despedir; pero leerla y escribirla se deja en manos de una minoría especializada. Tratamos la música como una lengua que casi todos hablan y casi nadie aprende a leer ni a escribir.</p>
+<p>«La música es un derecho humano de nacimiento», dice el comienzo de <i>Elementos de música</i>, la guía de Mario Maurano en la que se basa este programa. Si es un derecho, también lo es entenderla.</p>
+</div>
+<div class="pulsobox">
+<h3>Una gramatiquilla musical</h3>
+<p>El programa propone una pequeña gramática de la música —una «gramatiquilla»— para alfabetizar los sonidos en el aula, como se alfabetiza la palabra. Sus propósitos:</p>
+<ul>
+<li><b>Leer.</b> Reconocer en el pentagrama la altura de las notas, su duración, el compás y el tempo, como se reconocen las letras y las palabras.</li>
+<li><b>Escribir.</b> Anotar un ritmo y una melodía, y componer un compás propio. En el Nivel 1 cada alumno escribe uno; en el Nivel 2, la clase entera compone una pequeña ópera.</li>
+<li><b>Escuchar comprendiendo.</b> Que cualquier género —la música de la familia, la de la radio, la de una orquesta— se escuche entendiendo cómo está hecha. La música es nuestra historia, y saber leerla es poder entrar en ella.</li>
+<li><b>Pensar.</b> La música es un lugar donde los números se oyen: las figuras son fracciones de una tableta de chocolate, el compás es una suma y el tempo es una cantidad de pulsos por minuto.</li>
+<li><b>Para todos.</b> Sin talento previo ni instrumento propio: el teclado de la computadora hace de instrumento y el maestro no necesita ser músico.</li>
+</ul>
+<p>Alfabetizar no es formar músicos profesionales, del mismo modo que enseñar a leer no es formar escritores: es darles a todos la llave de una lengua común. Las guías lo dicen a los padres en cada hoja para la casa, con juegos de diez minutos que no piden saber música.</p>
+</div>
+
+    <h2 class="section">Cómo es cada clase</h2>
+<ol class="pasos">
+<li><h3>Empieza repasando</h3><p>Los primeros 5 a 10 minutos vuelven sobre la clase anterior. Los temas reaparecen en espiral: lo que se presenta una semana se usa en las siguientes.</p></li>
+<li><h3>Avanza paso a paso</h3><p>La guía del maestro divide la clase en cinco o seis momentos, cada uno con sus minutos, lo que se hace, lo que se toca y las preguntas para la clase.</p></li>
+<li><h3>Termina en el teclado</h3><p>Cada clase cierra con un momento en el teclado de la computadora. En el Nivel 2 se suma el Score: los alumnos ven en el pentagrama lo que tocan y lo oyen nota por nota.</p></li>
+<li><h3>Sigue en casa</h3><p>Una hoja para recortar invita a los padres a jugar 10 minutos por semana con sus hijos, sin saber música.</p></li>
+</ol>
+<div class="check"><b>Cómo saber que funcionó:</b> cada guía cierra con una señal sencilla que el maestro puede observar en la clase, sin examen.</div>
+
+    <div class="nivelhead"><h3>Nivel 1 · escuchar, leer y contar</h3><span>8 a 12 años · 9 clases</span></div>
+<p>Del pulso y la altura al pentagrama, las figuras y el compás. La aritmética aparece sin volverse clase de matemáticas: la redonda es una tableta de chocolate que se parte en blancas, negras y corcheas, y el número del compás se cuenta con el cuerpo antes de escribirse.</p>
+<table class="prog"><thead><tr><th></th><th>Clase</th><th>Qué aprenden</th><th>Con</th></tr></thead><tbody>
+<tr><td class="n">1</td><td class="t">La escalera que canta <span class="disp">disponible</span></td><td>Escuchar las alturas, cantar una nota y sentir el pulso.</td><td class="h">Keyboard</td></tr>
+<tr><td class="n">2</td><td class="t">Alto y bajo, largo y corto</td><td>Agudo y grave, largo y corto; dibujar el sonido antes de escribirlo.</td><td class="h">Keyboard</td></tr>
+<tr><td class="n">3</td><td class="t">La casa de las notas</td><td>El pentagrama: cinco líneas y cuatro espacios donde la escalera sube y baja.</td><td class="h">Keyboard</td></tr>
+<tr><td class="n">4</td><td class="t">La clave de sol</td><td>Dónde vive el Sol y cómo se llaman las demás notas; leer y tocar la escalera escrita.</td><td class="h">Keyboard</td></tr>
+<tr><td class="n">5</td><td class="t">Cuánto dura un sonido</td><td>Redonda, blanca y negra, con la tableta de chocolate; tocarlas al pulso.</td><td class="h">Keyboard</td></tr>
+<tr><td class="n">6</td><td class="t">Corcheas y silencios</td><td>El «ti-ti» y el silencio, que también se cuenta.</td><td class="h">Keyboard</td></tr>
+<tr><td class="n">7</td><td class="t">El compás</td><td>Los pulsos en grupos de 2, 3 y 4 (marcha, vals, canción), sentidos con el cuerpo; los dos números del compás y la C, leídos en la partitura de «Estrellita».</td><td class="h">Keyboard · Score (demo)</td></tr>
+<tr><td class="n">8</td><td class="t">Los números de la música</td><td>Las figuras como fracciones de la tableta, el compás como una suma (el rompecabezas del compás), contar los pulsos de una canción multiplicando y el tempo como número.</td><td class="h">Keyboard · Score (demo)</td></tr>
+<tr><td class="n">9</td><td class="t">Nuestra melodía</td><td>Cada alumno compone un compás; en grupos se ordenan 8 compases como un rompecabezas, se tocan en relevo y la clase vota cuál suena mejor. El cierre del nivel.</td><td class="h">Keyboard · Score (demo)</td></tr>
+</tbody></table>
+
+    <div class="nivelhead"><h3>Nivel 2 · leer, escribir y componer</h3><span>9 a 14 años · 10 clases + 1 opcional</span></div>
+<p>Del Score y los intervalos a las dos claves del piano y los acordes. El nivel termina con el estreno de una pequeña ópera de la clase: cada grupo compone en 4 compases la música de una escena del cuento, triste con un acorde menor o alegre con uno mayor.</p>
+<table class="prog"><thead><tr><th></th><th>Clase</th><th>Qué aprenden</th><th>Con</th></tr></thead><tbody>
+<tr><td class="n">1</td><td class="t">Repaso del Nivel 1 y el camino de una obra</td><td>Repaso del Nivel 1; con «Alla Turca» de Mozart (época clásica), la anacrusa, las repeticiones, la doble barra y la Coda.</td><td class="h">Keyboard · Score (demo)</td></tr>
+<tr><td class="n">2</td><td class="t">Un pedazo y medio</td><td>Las semicorcheas (la tableta en dieciséis) y el puntillo; con el «Ave Maria» de Schubert (época romántica).</td><td class="h">Keyboard · Score (demo)</td></tr>
+<tr><td class="n">3</td><td class="t">Las notas en el Score</td><td>Pasar la melodía al pentagrama y oírla nota por nota.</td><td class="h">Score</td></tr>
+<tr><td class="n">4</td><td class="t">Tono y semitono</td><td>Por qué entre Mi y Fa, y entre Si y Do, no hay tecla negra.</td><td class="h">Keyboard · Score</td></tr>
+<tr><td class="n">5</td><td class="t">Lo que cabe entre dos notas</td><td>Dentro de un tono: el semitono cromático, el diatónico y la coma, la diferencia que separa a los dos.</td><td class="h">Keyboard · Score</td></tr>
+<tr><td class="n">6</td><td class="t">Los intervalos en su contexto</td><td>De la segunda a la octava, reconocidos en el comienzo de melodías conocidas.</td><td class="h">Keyboard · Score</td></tr>
+<tr><td class="n">7</td><td class="t">Las dos claves del piano</td><td>La clave de fa y el gran pentagrama; la mano izquierda toca el bajo.</td><td class="h">Score</td></tr>
+<tr><td class="n">8</td><td class="t">Los acordes</td><td>Do-Mi-Sol, mayor y menor; acompañar la melodía con un acorde.</td><td class="h">Score</td></tr>
+<tr><td class="n">9</td><td class="t">Componer en 4 compases</td><td>Cada grupo escribe en el Score la melodía y el acorde de su escena.</td><td class="h">Score</td></tr>
+<tr><td class="n">10</td><td class="t">Estreno: «Se me perdió mi bocadillo»</td><td>La ópera de la clase: el maestro narra, cada grupo toca su escena y se graba la obra entera.</td><td class="h">Score</td></tr>
+<tr class="opt"><td class="n">11</td><td class="t">Los números del sonido</td><td>Opcional, de 12 a 14 años. La octava es el doble y la quinta 3/2; la coma, con la calculadora; los 12 pasos iguales del temperado.</td><td class="h">Keyboard · calculadora</td></tr>
+</tbody></table>
+
+    <h2 class="section">Cómo encaja con el programa del colegio</h2>
+<ul class="lista">
+<li><b>Una clase por semana</b>, dentro de la hora de música o como taller. Un nivel ocupa un trimestre largo o un semestre.</li>
+<li><b>El orden se puede adaptar:</b> el maestro puede repetir una clase, dividirla en dos o saltar una que su curso ya conoce.</li>
+<li><b>Los ejemplos son un punto de partida:</b> cada maestro puede cambiarlos por canciones de su región o de su curso.</li>
+<li><b>Se puede empezar por cualquiera de los dos niveles:</b> el Nivel 2 abre con un repaso de todo el Nivel 1.</li>
+</ul>
+
+    <h2 class="section">Requisitos técnicos</h2>
+<div class="pulsobox">
+<h3>Para la dirección y el encargado de informática</h3>
+<ul class="lista">
+<li><b>Lo mínimo:</b> una laptop con teclado y un parlante adicional. Todo se abre en el navegador (Chrome, Edge, Safari o Firefox), en Windows, Mac o Chromebook, sin instalar nada. El sonido lo genera la propia computadora.</li>
+<li><b>Con pizarra digital o pantalla interactiva:</b> la laptop se conecta a la pantalla, y toda la clase ve el teclado, el metrónomo y, en el Nivel 2, el pentagrama del Score mientras suena. Los dibujos del sonido se pueden hacer directamente en la pantalla.</li>
+<li><b>Sin pantalla ni proyector:</b> basta la laptop con su parlante. El maestro toca, la clase escucha y responde con el cuerpo, y los dibujos se hacen en la pizarra común. Ninguna clase depende de que los alumnos vean la pantalla.</li>
+<li><b>La guía en el teléfono:</b> el maestro puede seguir la guía de cada clase en su teléfono mientras la computadora toca; las páginas se adaptan a la pantalla pequeña. También puede imprimirla en PDF.</li>
+<li><b>El teclado físico:</b> las clases usan las teclas de la computadora (Z, X, C…). Una tableta sola, sin teclado, no sirve igual.</li>
+<li><b>El filtro de internet:</b> si la página no carga, hay que autorizar <b>musicmotionsuite.com</b> y, para el afinador, <b>tuner.mariomaurano.com</b>. Es un pedido de una sola vez.</li>
+<li><b>El micrófono:</b> lo usa el afinador; el navegador pide permiso la primera vez. En las Chromebooks administradas por la escuela, el encargado puede tener que habilitarlo.</li>
+<li><b>Sin buena conexión:</b> Music Motion puede entregar una versión que se abre desde una carpeta en la laptop, sin internet.</li>
+</ul>
+</div>
+
+    <h2 class="section">Lo que recibe el colegio</h2>
+<p>Al confirmarse la orden y activarse la cuenta del colegio, Music Motion envía el programa de los niveles elegidos:</p>
+<ul class="lista">
+<li>las <b>guías del maestro</b> de cada clase, para abrir en el navegador y en PDF para imprimir;</li>
+<li>las <b>hojas para la casa</b>, una por clase;</li>
+<li>las <b>melodías de ejemplo</b> de cada nivel, listas para abrir en el Score;</li>
+<li>el <b>libreto</b> de la ópera «Se me perdió mi bocadillo», con el narrador y las escenas.</li>
+</ul>
+<div class="pulsobox">
+<h3>Las modalidades: el colegio elige</h3>
+<ol>
+<li><b>Los niveles:</b> el Nivel 1, el Nivel 2 o los dos.</li>
+<li><b>El idioma del material:</b> español, inglés, francés, neerlandés o alemán; uno o varios.</li>
+<li><b>El formato:</b> digital, o digital y un juego impreso.</li>
+<li><b>Una sesión de presentación para los maestros</b> (opcional), en línea o en el colegio.</li>
+<li><b>Melodías de ejemplo propias</b> (opcional), por ejemplo canciones de la región, preparadas por encargo. Precio a consultar.</li>
+</ol>
+</div>
+
+    <h2 class="section">Pruébalas antes</h2>
+<p>Dos clases están abiertas en el sitio, una de cada nivel, con su guía y su hoja para la casa: «La escalera que canta» (Nivel 1 · Clase 1) y «Nuestra melodía» (Nivel 2 · Clase 2).</p>
+<p style="text-align:center"><a class="link" href="https://musicmotionsuite.com/suite/ejercicios/#aula" target="_blank" rel="noopener">musicmotionsuite.com/suite/ejercicios/#aula</a></p>
+<p>Para pedir la cuenta del colegio y el programa: <a class="link" href="https://musicmotionsuite.com/colegios.html" target="_blank" rel="noopener">musicmotionsuite.com/colegios.html</a> · contacto@musicmotionsuite.com</p>
+  </main>
+  <footer class="doc-footer">
+    <span>musicmotionsuite.com</span>
+    <span>&copy; 2026 Music Motion</span>
+  </footer>
+</div>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+</body>
+</html>

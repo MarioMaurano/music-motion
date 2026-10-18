@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Alto y bajo, largo y corto · Para el aula · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+  .tecla{width:62px;border:1px solid var(--navy);border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff6df;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .teclas.mini .tecla{width:48px;padding:5px 0 4px}
+  .teclas.mini .tecla .k{font-size:17px} .teclas.mini .tecla .nt{font-size:13px}
+  /* 2026-10-14 · el teclado de tres filas, como en el Coach (QWERTY · AZERTY · QWERTZ) */
+  .kbd3{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;break-inside:avoid}
+  .kbd3 .lay{display:flex;gap:6px;justify-content:center;margin-bottom:4px}
+  .kbd3 .lay button{font:bold 12px Consolas,monospace;padding:4px 9px;border:1px solid var(--navy);border-radius:5px;background:#fff;color:var(--navy);cursor:pointer}
+  .kbd3 .lay button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .kbd3 .kname{display:block;text-align:center;font-size:12.5px;color:#5b6876;margin-top:6px}
+  .kbd3 .teclas{margin:4px 0 4px}
+  @media print{.kbd3 .lay button:not([aria-pressed="true"]){display:none}}
+  h2.section{break-after:avoid}
+  .pulsobox{border:1px solid var(--navy);border-left:5px solid var(--amber);background:#f8fbfd;border-radius:4px;padding:14px 18px;margin:18px 0}
+  .pulsobox h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:0 0 8px}
+  .pulsobox ol{margin:6px 0 0 0}
+  img.shot2{display:block;width:100%;border-radius:6px;margin:10px 0 6px;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+  /* Nivel 1 · Clase 2 (2026-10-15): el dibujo del sonido */
+  .dibujo{border:1px solid #c9d6de;border-radius:8px;padding:12px 14px 6px;margin:12px 0 8px;background:#fff;break-inside:avoid}
+  @media print{.pulsobox{break-inside:avoid}}
+  .dibujo svg{display:block;width:100%;height:auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media screen and (max-width:640px){.dos{grid-template-columns:1fr}}
+</style>
+
+<!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+
+
+
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+<style>.mm-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:#0e2934;font:600 14px/1.2 Lato,Calibri,Arial,sans-serif}.mm-nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid #33586a;white-space:nowrap}.mm-nav a:hover,.mm-nav a:focus-visible{background:#f0b03c;color:#0e2934;border-color:#f0b03c;outline:none}.mm-nav span{display:flex;gap:8px}.mm-nav a.off{visibility:hidden}@media print{.mm-nav{display:none}}</style></head>
+<body><nav class="mm-nav" aria-label="Programa"><a href="../ejercicios/index.html#nivel-1">&#9776; Programa</a><span><a href="aula-clase-1-es.html">&larr; Anterior</a><a href="aula-n1-clase-3-es.html">Siguiente &rarr;</a></span></nav>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">Para el aula &mdash; Alto y bajo, largo y corto</div>
+  </header>
+  <main>
+    <h1 class="title">Alto y bajo, largo y corto</h1>
+    <h2 class="exercise">Nivel 1 · Clase 2 · agudo y grave, largo y corto</h2>
+    <p class="rights">Guía para el maestro. &copy; 2026 Music Motion.</p>
+    <div class="intro"><p><b>Para:</b> de 8 a 12 años, toda la clase. <b>Duración:</b> 50 minutos.</p>
+<p><b>Objetivo principal:</b> al final de la clase, cada pareja lee en la pizarra un dibujo de tres o cuatro rayas (arriba o abajo, cortas o largas) y lo toca en el teclado; la clase confirma con el pulgar si sonó igual al dibujo.</p>
+<p><b>Objetivos secundarios:</b> (1) mostrar con el cuerpo si un sonido es agudo o grave; (2) contar con el pulso cuántos clics dura un sonido largo.</p>
+<p><b>Qué necesitas:</b> una computadora con parlantes, la pizarra y, si hay, un proyector. Viene bien haber hecho la Clase 1. <b>No hace falta saber música:</b> el teclado hace el trabajo; tú guías.</p>
+<p><b>Antes de la clase (10 minutos, en casa): ensaya el teclado.</b> En clase tu atención tiene que estar en los niños, no en los botones. Repite estos pasos hasta hacerlos sin mirar la guía:</p>
+<ul style="margin:4px 0 6px"><li>Abre <a class="link" href="https://musicmotionsuite.com/apps/mmk-demo.html" target="_blank" rel="noopener">el Cosmic Keyboard</a>. Pulsa <kbd>Z</kbd> y después <kbd>U</kbd>: la primera es grave y la segunda aguda.</li><li>Toca <kbd>Z</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>V</kbd> <kbd>B</kbd> <kbd>N</kbd> <kbd>M</kbd>, pulsa <kbd>←</kbd> dos veces y vuelve a tocarla: toda la escalera baja. Pulsa <kbd>→</kbd> dos veces para volver al medio.</li><li>Abre el metrónomo con <b>pulse</b>, fija unos 60 BPM con <b>tap</b>, pulsa <b>start</b> y activa <b>click</b>, como en la Clase 1.</li><li>Con el metrónomo en marcha, toca <kbd>Z</kbd> y suéltala enseguida (un clic); después déjala apretada durante cuatro clics. El sonido dura mientras la tecla está abajo.</li></ul></div>
+
+    <h2 class="section">Antes de empezar: dos palabras de la música</h2>
+<div class="pulsobox">
+<h3>Agudo y grave</h3>
+<p>En la vida diaria, «alto» y «bajo» se usan para el volumen: «baja la música». En música no: <b>alto y bajo hablan de la altura del sonido</b>. Un sonido <b>agudo</b> (alto) es fino y claro, como el canto de un pájaro o un silbato. Un sonido <b>grave</b> (bajo) es grueso y profundo, como un trueno, un tambor grande o el contrabajo de una orquesta.</p>
+<p>El volumen es otra cosa: un sonido puede ser agudo y suave, o grave y fuerte. En esta clase no cambiamos el volumen.</p>
+</div>
+<div class="pulsobox">
+<h3>Largo y corto</h3>
+<p>Un sonido también puede durar poco o mucho. Para medir cuánto dura usamos el <b>pulso</b> de la Clase 1: un sonido <b>corto</b> dura un clic del metrónomo («ta»); un sonido <b>largo</b> dura varios clics («taaaa»). En el teclado, el sonido dura mientras la tecla está apretada.</p>
+<p>Para el metrónomo: <b>pulse</b>, un tempo lento con <b>tap</b> (unos 60 BPM), <b>start</b> y <b>click</b>, como en la Clase 1.</p>
+</div>
+
+<h2 class="section">La clase, paso a paso</h2>
+    <p style="font-size:14.5px">La clase sigue cinco etapas: la meta, lo que ya saben, lo nuevo, la aplicación y el repaso de la meta. <b>En cada actividad, tú lo haces primero y la clase te sigue.</b></p>
+    <ol class="pasos"><li><span class="min">3 min</span><h3>La meta</h3><p>Di a la clase, con estas palabras o parecidas:</p><p class="dice">«Hoy vamos a aprender a dibujar un sonido y a tocar un dibujo. Al final, cada pareja va a tocar en el teclado lo que dibujemos en la pizarra.»</p><p>Escribe la meta en la pizarra: <b>Puedo dibujar un sonido y tocar un dibujo.</b></p></li><li><span class="min">5 min</span><h3>Lo que ya saben: la escalera y el pulso</h3><p>Con el metrónomo lento, toca <kbd>Z</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>V</kbd> <kbd>B</kbd> <kbd>N</kbd> <kbd>M</kbd>, una tecla por clic. La clase canta cada nota con una «a» y marca el pulso con los pies, como en la Clase 1.</p><p class="dice">«¿La escalera sube o baja? ¿Dónde empieza la nota más grave?»</p></li><li><span class="min">17 min</span><h3>Lo nuevo: agudo y grave, largo y corto</h3><ol style="margin:4px 0 8px;padding-left:22px"><li><b>El ascensor</b> (7 min). Toca una nota grave (<kbd>Z</kbd>) y después una aguda (<kbd>U</kbd>, en la fila de arriba). Muéstralo tú primero: <b>agachado</b> para el grave, <b>de pie con los brazos arriba</b> para el agudo. Después, notas sueltas al azar: la clase sube o baja según lo que oye. Más difícil: toca <b>dos notas seguidas</b>; ¿la segunda sube o baja? La clase lo muestra con la mano.</li><li><b>La misma canción, arriba y abajo</b> (3 min). Toca la escalera en la fila de abajo. Pulsa <kbd>←</kbd> dos veces y tócala otra vez: suena mucho más grave. Pulsa <kbd>→</kbd> cuatro veces (dos para volver al medio y dos más) y vuelve a tocarla: ahora es muy aguda. Es la misma melodía, en otra altura.</li><li><b>Largo y corto</b> (7 min). Con el metrónomo lento, toca <kbd>Z</kbd> y suéltala enseguida: es un sonido <b>corto</b>, un clic. La clase da una palmada. Después deja <kbd>Z</kbd> apretada durante <b>cuatro clics</b>: es un sonido <b>largo</b>. La clase abre los brazos despacio mientras suena y los cierra cuando se apaga. Alterna cortos y largos sin avisar; la clase cuenta en voz alta cuántos clics dura cada sonido largo: dos, tres o cuatro.</li></ol><p class="dice">«¿Qué animal sería este sonido? ¿Un ratón o un elefante? ¿Cuál parece un gigante y cuál un hada?»</p></li><li><span class="min">20 min</span><h3>Aplicación: dibujar el sonido y tocar el dibujo</h3><p><b>Dibujar el sonido</b> (10 min). En la pizarra, dibuja una línea a media altura: es el «piso del medio». Un sonido <b>agudo</b> se dibuja arriba de la línea, uno <b>grave</b> abajo. Un sonido <b>corto</b> es una raya corta; uno <b>largo</b>, una raya larga.</p><div class="dibujo"><svg viewBox="0 0 760 250" role="img" aria-label="Cuatro sonidos dibujados: corto y agudo, largo y agudo, corto y grave, largo y grave">
+<rect x="1" y="1" width="758" height="248" rx="10" fill="#f8fbfd" stroke="#cfdae1"/>
+<line x1="40" y1="125" x2="720" y2="125" stroke="#cfdae1" stroke-dasharray="6 6"/>
+<text x="24" y="58" font-family="Georgia,serif" font-size="20" fill="#f0b03c" font-weight="bold">agudo ↑</text>
+<text x="24" y="226" font-family="Georgia,serif" font-size="20" fill="#f0b03c" font-weight="bold">grave ↓</text>
+<rect x="130" y="63" width="30" height="14" rx="7" fill="#0e2934"/><text x="145.0" y="100" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">corto · agudo</text>
+<rect x="260" y="63" width="150" height="14" rx="7" fill="#0e2934"/><text x="335.0" y="100" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">largo · agudo</text>
+<rect x="470" y="173" width="30" height="14" rx="7" fill="#0e2934"/><text x="485.0" y="210" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">corto · grave</text>
+<rect x="560" y="173" width="150" height="14" rx="7" fill="#0e2934"/><text x="635.0" y="210" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">largo · grave</text>
+</svg></div><p>Primero tú tocas tres o cuatro sonidos y un alumno dibuja en la pizarra lo que oye; la clase dice si el dibujo está bien. Repite con otros alumnos.</p><p><b>Tocar el dibujo</b> (10 min). Ahora al revés. Muéstralo tú primero con este ejemplo, con el metrónomo en marcha: tres sonidos cortos que suben y uno largo abajo.</p><div class="dibujo"><svg viewBox="0 0 760 170" role="img" aria-label="Ejemplo para tocar: tres sonidos cortos que suben y uno largo abajo">
+<rect x="1" y="1" width="758" height="168" rx="10" fill="#f8fbfd" stroke="#cfdae1"/>
+<line x1="40" y1="85" x2="720" y2="85" stroke="#cfdae1" stroke-dasharray="6 6"/>
+<rect x="90" y="118" width="34" height="14" rx="7" fill="#0e2934"/>
+<rect x="190" y="93" width="34" height="14" rx="7" fill="#0e2934"/>
+<rect x="290" y="68" width="34" height="14" rx="7" fill="#0e2934"/>
+<rect x="400" y="123" width="260" height="14" rx="7" fill="#0e2934"/>
+<text x="107" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="bold" fill="#24485a">Z</text>
+<text x="207" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="bold" fill="#24485a">C</text>
+<text x="307" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="bold" fill="#24485a">B</text>
+<text x="530" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="bold" fill="#24485a">Z · 4 clics</text>
+<text x="380" y="30" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">ta · ta · ta · taaaa</text>
+</svg></div><ol style="margin:4px 0 8px;padding-left:22px"><li>Un alumno dibuja tres o cuatro rayas en la pizarra.</li><li>Una pareja pasa a la computadora: uno señala cada raya y el otro la toca (fila de abajo para lo grave, fila de arriba para lo agudo; corto un clic, largo varios clics).</li><li>La clase levanta el pulgar si sonó igual al dibujo. Si no, la pareja lo intenta otra vez.</li><li>Las parejas pasan por turnos. Mientras una toca, el resto muestra con el cuerpo lo que oye: arriba o abajo, brazos cerrados o abiertos.</li></ol><p>Este dibujo es el abuelo de la partitura: en la próxima clase, las rayas se convierten en notas sobre cinco líneas.</p></li><li><span class="min">5 min</span><h3>El repaso de la meta</h3><p>Vuelve a la frase de la pizarra. Haz un último dibujo de cuatro rayas; las parejas que aún no pasaron lo tocan, y la clase levanta el pulgar si coincide.</p><p class="dice">«¿Cómo supieron si una raya iba arriba o abajo? ¿Y si era larga o corta?»</p><p>Escucha las respuestas: escuchar si el sonido es fino o grueso, mirar la fila del teclado, contar los clics del metrónomo.</p></li></ol>
+<div class="ojo"><b>Si les cuesta:</b><ul style="margin:6px 0 0;padding-left:20px"><li><b>Confunden alto con fuerte:</b> canta tú la misma nota suave y después fuerte: es la misma altura. Después toca <kbd>Z</kbd> y <kbd>U</kbd>: eso sí es grave y agudo. Recuérdales: «alto y bajo es fino o grueso, no más o menos ruido».</li><li><b>No distinguen dos notas cercanas:</b> usa notas lejanas, <kbd>Z</kbd> y <kbd>U</kbd>, y acércalas poco a poco. Que cierren los ojos para escuchar.</li><li><b>Sueltan la tecla antes de tiempo:</b> cuenta los clics en voz alta con ellos («uno, dos, tres, cuatro») y suelta tú la mano al final.</li><li><b>El dibujo no coincide con lo que tocan:</b> toquen raya por raya, despacio; la clase dice después de cada sonido si fue arriba o abajo, corto o largo.</li></ul></div>
+
+    <h2 class="section">Las teclas y sus notas</h2>
+<div class="kbd3"><div class="lay"><button type="button" data-lay="QWERTY">QWERTY</button><button type="button" data-lay="AZERTY">AZERTY</button><button type="button" data-lay="QWERTZ">QWERTZ</button></div><span class="kname">Arriba · notas agudas</span><div class="teclas"><div class="tecla"><div class="k" data-r="top" data-j="0">Q</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="top" data-j="1">W</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="top" data-j="2">E</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="top" data-j="3">R</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="top" data-j="4">T</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="top" data-j="5">Y</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="top" data-j="6">U</div><div class="nt" data-i="6"></div></div></div><span class="kname">En medio</span><div class="teclas"><div class="tecla"><div class="k" data-r="mid" data-j="0">A</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="1">S</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="2">D</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="3">F</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="4">G</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="5">H</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="6">J</div><div class="nt" data-i="6"></div></div></div><span class="kname">Abajo · notas graves</span><div class="teclas"><div class="tecla"><div class="k" data-r="low" data-j="0">Z</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="low" data-j="1">X</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="low" data-j="2">C</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="low" data-j="3">V</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="low" data-j="4">B</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="low" data-j="5">N</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="low" data-j="6">M</div><div class="nt" data-i="6"></div></div></div></div>
+<p class="caption">La fila de abajo es la más grave y la de arriba la más aguda; las tres tienen la misma escalera, de Do a Si. Las flechas <kbd>←</kbd> y <kbd>→</kbd> cambian la octava: toda la escalera baja o sube.</p>
+<p class="caption"><b>Nombres de las notas:</b> Do = C · Re = D · Mi = E · Fa = F · Sol = G · La = A · Si = B. Algunos materiales usan las letras: las dos formas nombran la misma nota.</p>
+<div class="check"><b>Cómo saber que funcionó:</b> al menos tres de cada cuatro parejas tocan el dibujo de la pizarra con la altura y la duración correctas, y la clase lo confirma con el pulgar. Además, la mayoría muestra con el cuerpo si un sonido es agudo o grave y cuenta bien los clics de un sonido largo.</div>
+
+    <div class="intro ampliar"><p><b>Estas clases son un punto de partida.</b> Los ejemplos pueden ser diseñados por cada profesor según la conveniencia de su curso. Por nuestra parte, iremos ampliando los temas de las clases según los pedidos que nos lleguen por el <a class="link" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">formulario de contacto</a>.</p></div>
+<div class="tarjeta">
+      <div class="tij">&#9986; &nbsp; recortar y llevar a casa</div>
+      <h2>Arriba y abajo, largo y corto en casa</h2>
+<p class="sub">Para los padres · 10 minutos por semana · no hace falta saber música</p>
+<p>Hoy en clase aprendimos que un sonido puede ser agudo o grave, y largo o corto. Esta semana, jueguen juntos:</p>
+<ol>
+<li>Abran el teclado en la computadora: <b>musicmotionsuite.com/apps/mmk-demo.html</b></li>
+<li><b>El ascensor:</b> uno toca una tecla de la fila de abajo (grave) o de la fila de arriba (aguda); el otro se agacha o se estira. Después cambian.</li>
+<li><b>Largo o corto:</b> uno deja una tecla apretada un rato o la suelta enseguida; el otro abre los brazos mientras dura el sonido.</li>
+<li><b>Cazadores de sonidos:</b> busquen en la casa un sonido agudo (un timbre, un pájaro), uno grave (la lavadora, un camión que pasa), uno largo y uno corto. Dibújenlos como en clase: arriba o abajo, raya corta o larga.</li>
+</ol>
+    </div>
+  </main>
+  <footer class="doc-footer">
+    <span>musicmotionsuite.com</span>
+    <span>&copy; 2026 Music Motion</span>
+  </footer>
+</div>
+<script>/* nombres de las notas segun el idioma de la pagina (2026-10-07): el armado de idiomas no traduce
+   palabras de menos de tres letras, y en aleman la nota «B» es otra (Si = H) */
+(function(){var N={es:['Do','Re','Mi','Fa','Sol','La','Si'],en:['C','D','E','F','G','A','B'],fr:['Do','Ré','Mi','Fa','Sol','La','Si'],nl:['C','D','E','F','G','A','B'],de:['C','D','E','F','G','A','H']};
+var l=(document.documentElement.lang||'es').slice(0,2),n=N[l]||N.es;
+[].forEach.call(document.querySelectorAll('.nt[data-i]'),function(e){e.textContent=n[+e.getAttribute('data-i')];});})();</script>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+<script>/* 2026-10-14 · teclado de tres filas: las letras siguen al tipo de teclado; cada idioma abre con el suyo */
+(function(){var L={QWERTY:{top:'QWERTYU',mid:'ASDFGHJ',low:'ZXCVBNM'},AZERTY:{top:'AZERTYU',mid:'QSDFGHJ',low:'WXCVBN,'},QWERTZ:{top:'QWERTZU',mid:'ASDFGHJ',low:'YXCVBNM'}};
+var lg=(document.documentElement.lang||'es').slice(0,2),cur=lg==='fr'||lg==='nl'?'AZERTY':lg==='de'?'QWERTZ':'QWERTY';
+function pon(k){cur=k;[].forEach.call(document.querySelectorAll('.k[data-r]'),function(e){e.textContent=L[k][e.getAttribute('data-r')][+e.getAttribute('data-j')];});
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.textContent=b.getAttribute('data-lay');b.setAttribute('aria-pressed',b.getAttribute('data-lay')===k);});}
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.addEventListener('click',function(){pon(b.getAttribute('data-lay'));});});pon(cur);})();</script>
+<!-- 2026-10-18 (Mario): desde la Clase 2, las lecciones son para cuentas que compraron créditos; la entrada es la misma de la suite (un crédito = un día). -->
+<script src="../../apps/mm-puerta.js" data-pagado="si"></script>
+</body>
+</html>
