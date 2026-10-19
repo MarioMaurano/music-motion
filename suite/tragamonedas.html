@@ -184,12 +184,12 @@ function makeBar(i,prevEnd){
     if(last>0&&Math.abs(deg[last-1]-deg[last])>2) deg[last-1]=deg[last]===7?pick([6,4]):pick([1,2]);}
   return {deg,rh};
 }
-function keyInfo(){ const t=state.key, a={b:-1,n:0,'#':1}[state.alt]; let fifths=FIF[t]+7*a; if(state.mode===1) fifths-=3; return {fifths,ok:Math.abs(fifths)<=7,tonicIdx:LET.indexOf(t)}; }
-function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F']; if(fifths>0) return sh.slice(0,fifths).includes(letter)?1:0; if(fifths<0) return fl.slice(0,-fifths).includes(letter)?-1:0; return 0; }
+function keyInfo(){ const t=state.key, a={b:-1,n:0,'#':1}[state.alt]; let fifths=FIF[t]+7*a; if(state.mode===1) fifths-=3; return {fifths,ok:Math.abs(fifths)<=14,std:Math.abs(fifths)<=7,tonicIdx:LET.indexOf(t)}; }
+function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F']; if(fifths>0) return (sh.slice(0,fifths).includes(letter)?1:0)+(sh.slice(0,fifths-7).includes(letter)?1:0); if(fifths<0) return -(fl.slice(0,-fifths).includes(letter)?1:0)-(fl.slice(0,-fifths-7).includes(letter)?1:0); return 0; }
 function spell(deg){ const ki=keyInfo(); const li=ki.tonicIdx+deg; const letter=LET[li%7]; const oct=4+Math.floor(li/7); const acc=sigAcc(letter,ki.fifths);
   const e3=FIF[letter]+7*acc; const semis=SEMI[letter]+acc+12*(oct-4); const e2=Math.round(semis/12-e3*Math.log2(3));
   return {letter,oct,acc,freq:260.7407407407407*Math.pow(3,e3)*Math.pow(2,e2)}; }
-const nm=s=>NAMES[s.letter]+(s.acc>0?'♯':s.acc<0?'♭':'');
+const nm=s=>NAMES[s.letter]+({2:'𝄪',1:'♯',0:'','-1':'♭','-2':'𝄫'}[s.acc]);
 // ── el dibujo de cada compás ──
 const g=(n,x,y,fill)=>`<path fill="${fill||'#0e2934'}" transform="translate(${x.toFixed(2)},${y.toFixed(2)}) scale(${K.toFixed(4)},${(-K).toFixed(4)})" d="${GL[n]}"/>`;
 const TPOS={C:0,D:1,E:2,F:3,G:4,A:5,B:6};
@@ -198,8 +198,11 @@ function barSVG(bar,hi){
   const y0=46, W=260, H=150; const ki=keyInfo(); let x=8; let m='';
   for(let i=0;i<5;i++) m+=`<rect x="4" y="${(y0+i*S-.6).toFixed(1)}" width="${W-8}" height="1.2" fill="#0e2934"/>`;
   m+=g('gClef',x,y0+3*S); x+=34;
-  if(ki.ok&&ki.fifths){const n=Math.abs(ki.fifths);const ps=ki.fifths>0?[8,5,9,6,3,7,4]:[4,7,3,6,2,5,1];
-    for(let i=0;i<n;i++){m+=g(ki.fifths>0?'sharp':'flat',x,y0+4*S-ps[i]*S/2);x+=10;}x+=4;}
+  if(ki.ok&&ki.fifths){const n=Math.min(7,Math.abs(ki.fifths)), dbl=Math.abs(ki.fifths)-7;const ps=ki.fifths>0?[8,5,9,6,3,7,4]:[4,7,3,6,2,5,1];
+    for(let i=0;i<n;i++){const y=y0+4*S-ps[i]*S/2;
+      if(i<dbl&&ki.fifths>0){m+=`<path d="M${x+1} ${y-4}L${x+8} ${y+3}M${x+8} ${y-4}L${x+1} ${y+3}" stroke="#0e2934" stroke-width="1.5"/><rect x="${x}" y="${y-5}" width="2.6" height="2.6" fill="#0e2934"/><rect x="${x+6.6}" y="${y-5}" width="2.6" height="2.6" fill="#0e2934"/><rect x="${x}" y="${y+1.6}" width="2.6" height="2.6" fill="#0e2934"/><rect x="${x+6.6}" y="${y+1.6}" width="2.6" height="2.6" fill="#0e2934"/>`;x+=11;}
+      else if(i<dbl){m+=g('flat',x,y)+g('flat',x+7,y);x+=17;}
+      else{m+=g(ki.fifths>0?'sharp':'flat',x,y);x+=10;}}x+=4;}
   const total=8, span=W-x-22; const heads=[]; let pos=0;
   bar.deg.forEach((d,k)=>{ const sp=spell(d), p=posOf(sp), du=bar.rh[k]; const hx=x+span*pos/total+4; const hy=y0+4*S-p*S/2; const col=hi===k?'#b0324a':'#0e2934';
     for(let lp=-2;lp>=p;lp-=2) m+=`<rect x="${hx-4}" y="${(y0+4*S-lp*S/2-.7).toFixed(1)}" width="20" height="1.4" fill="#0e2934"/>`;
@@ -229,7 +232,7 @@ function render(hi){
   out.innerHTML=`<div class="d">Tu melodía en ${tn} ${state.mode?'menor':'mayor'} · Cosmic Keyboard: Tonal, KEY ${state.key}${state.alt==='n'?'':state.alt==='#'?' ♯':' ♭'}, MODE ${state.mode?'m':'M'}, fila del medio</div>
   <div class="k">${state.bars.map(b=>b.deg.map(d=>KEYC[d]).join(' ')).join('  |  ')}</div>
   <div>${state.bars.map(b=>b.deg.map(d=>nm(spell(d))).join(' ')).join('  |  ')}</div>
-  <div class="d">${state.bars.map(b=>b.deg.map(d=>ROM[d]).join(' ')).join('  |  ')}</div>`;
+  <div class="d">${state.bars.map(b=>b.deg.map(d=>ROM[d]).join(' ')).join('  |  ')}</div>${ki.std?'':'<div class="d">SAVE .mmf: el Score escribe hasta siete alteraciones en la armadura; para guardar, usa su vecina enarmónica.</div>'}`;
 }
 function grand(){ for(const s of SONGS) if(state.bars.every((b,i)=>same(b,s.bars[i]))) return s; return null; }
 function onTheWay(){ let best=null; for(const s of SONGS){ const k=state.bars.filter((b,i)=>same(b,s.bars[i])).length; if(k>=2&&(!best||k>best.k)) best={s,k}; } return best; }
@@ -311,7 +314,7 @@ function tone(f,t0,dur,vol,fx){const a=ctx(); const o=a.createOscillator(); cons
 function tick(){try{const a=ctx(); tone(1500+rnd(300),a.currentTime,.025,.025,true);}catch(e){}}
 function clack(){try{const a=ctx(); const t=a.currentTime; tone(150,t,.09,.14,true); tone(900,t,.03,.05,true);}catch(e){}}
 function fanfare(){try{const a=ctx(); const t=a.currentTime+.05; [0,2,4,7].forEach((d,k)=>{tone(spell(d).freq,t+k*.11,.22,.12,true);}); tone(spell(7).freq,t+.44,.5,.12,true); tone(spell(4).freq,t+.44,.5,.08,true);}catch(e){}}
-const pid=s=>s.letter+s.oct+(s.acc>0?'S':s.acc<0?'B':'N');
+const pid=s=>s.letter+s.oct+({2:'SS',1:'S',0:'N','-1':'B','-2':'BB'}[s.acc]);
 function stopPlay(){playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; playTimer.forEach(clearTimeout); playTimer=[]; clearInterval(sched); sched=null;
   sounding.forEach(m=>msg({cmd:'NOTE_OFF',id:m.id,chId:m.chId,source:'minikeyboard'})); sounding=[];
   document.getElementById('play').textContent='▶ PLAY'; if(state.bars.length&&!state.spinning) render();}
@@ -322,6 +325,7 @@ function play(){
     if(state.chords){ let ct=t; for(const [r,len] of chordsOf(b,i)){ for(const d of [r%7,(r+2)%7,(r+4)%7]){const s=spell(d); ev.push({t:ct,dur:len*e8,s:{...s,oct:s.oct-1,freq:s.freq/2},ch:1,vel:.32,instr:'harp'});} ct+=len*e8; } }
     b.deg.forEach((d,k)=>{const s=spell(d); const du=b.rh[k]*e8; ev.push({t,dur:du*.95,s,ch:0,vel:.6,instr:'flute',hi:[i,k]}); t+=du;});
   });
+  ev.sort((x,y)=>x.t-y.t);
   document.getElementById('play').textContent='■ STOP';
   if(motorOk){
     try{ const c=motor.contentWindow.getCtx(); if(c.state==='suspended') c.resume(); }catch(e){}
@@ -340,9 +344,9 @@ const PLANTILLA={"format": "mmf", "type": "score", "version": "1.1", "app": "V2.
 const DURN={1:['eighth',false],2:['quarter',false],3:['quarter',true],4:['half',false],6:['half',true],8:['whole',false]};
 const KEYSIG={'0':'C','1':'G','2':'D','3':'A','4':'E','5':'B','6':'F#','7':'C#','-1':'F','-2':'Bb','-3':'Eb','-4':'Ab','-5':'Db','-6':'Gb','-7':'Cb'};
 function note(s,m,bp,du,lyr){ const e3=FIF[s.letter]+7*s.acc; const semis=SEMI[s.letter]+s.acc+12*(s.oct-4); const e2=Math.round(semis/12-e3*Math.log2(3)); const [n,dot]=DURN[du];
-  return {duration:n,dotted:dot,grace:null,measure:m,beat:Math.floor(bp)+1,beatPos:bp,isRest:false,pitch:s.letter+(s.acc>0?'S':s.acc<0?'B':'N'),octave:s.oct,accidental:null,velocity:80,freq:s.freq,e3,e2,lyric:lyr}; }
+  return {duration:n,dotted:dot,grace:null,measure:m,beat:Math.floor(bp)+1,beatPos:bp,isRest:false,pitch:s.letter+({2:'SS',1:'S',0:'N','-1':'B','-2':'BB'}[s.acc]),octave:s.oct,accidental:null,velocity:80,freq:s.freq,e3,e2,lyric:lyr}; }
 function save(){
-  const ki=keyInfo(); if(!ki.ok||state.spinning) return; const d=JSON.parse(JSON.stringify(PLANTILLA));
+  const ki=keyInfo(); if(!ki.std||state.spinning) return; const d=JSON.parse(JSON.stringify(PLANTILLA));
   d.keySignature=KEYSIG[String(ki.fifths)]; d.tempo=state.bpm; d.tempoMarkings[0].bpm=state.bpm; d.created=new Date().toISOString();
   d.scoreInfo.subtitle='Compuesta con la tragamonedas de compases · '+NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt])+' '+(state.mode?'menor':'mayor');
   const mel=[], ac=[];
