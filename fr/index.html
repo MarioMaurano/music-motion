@@ -43,6 +43,9 @@
 .puertas .app p{font-size:var(--fs-sm)}
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
+.puertas .app.ninos{grid-column:1/-1;background:linear-gradient(120deg,rgba(255,111,145,.14),rgba(94,200,255,.12));display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center}
+.puertas .app.ninos img{grid-row:1/span 4;width:96px;height:96px;border-radius:22px}
+@media(max-width:640px){.puertas .app.ninos{grid-template-columns:1fr}.puertas .app.ninos img{grid-row:auto;width:72px;height:72px}}
 .caminos{grid-template-columns:repeat(3,1fr)}
 .caminos .app h3{font-size:1.12rem}
 .caminos .app p,.caminos .app li{font-size:var(--fs-sm)}
@@ -118,6 +121,14 @@
   <h2><span class="tr">Que souhaitez-vous faire ?</span></h2>
   <p><span class="tr">Choisissez une porte. Chacune ouvre directement ce dont vous avez besoin ; le reste, vous le découvrirez ensuite, à votre rythme.</span></p>
   <div class="apps puertas">
+    <!-- 2026-10-19 (Mario: «no encuentro el tragamonedas… debería encontrarlo fácilmente un niño»): la puerta de los niños, primera y a lo ancho -->
+    <div class="app prod ninos" style="--c:#ff6f91">
+      <img src="../icons/mm-traga-192.png" alt="">
+      <div class="tag"><span class="tr">Pour les enfants</span></div>
+      <h3><span class="tr">La machine à sous des mesures</span></h3>
+      <p><span class="tr">Tire le levier et la machine te donne une nouvelle mélodie, à écouter et à jouer au clavier. Avec des prix, des lumières et un chien qui s’appelle Canelo. Elle s’installe sur le téléphone comme une application.</span></p>
+      <div class="launch"><a class="btn-launch" href="../suite/tragamonedas.html" data-local="../website/tragamonedas.html"><span class="tr">▶ Tirer le levier</span></a></div>
+    </div>
     <div class="app prod" style="--c:var(--teal)">
       <div class="tag"><span class="tr">Accorder</span></div>
       <h3><span class="tr">Accorder mon instrument</span></h3>

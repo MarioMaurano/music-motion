@@ -43,6 +43,9 @@
 .puertas .app p{font-size:var(--fs-sm)}
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
+.puertas .app.ninos{grid-column:1/-1;background:linear-gradient(120deg,rgba(255,111,145,.14),rgba(94,200,255,.12));display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center}
+.puertas .app.ninos img{grid-row:1/span 4;width:96px;height:96px;border-radius:22px}
+@media(max-width:640px){.puertas .app.ninos{grid-template-columns:1fr}.puertas .app.ninos img{grid-row:auto;width:72px;height:72px}}
 .caminos{grid-template-columns:repeat(3,1fr)}
 .caminos .app h3{font-size:1.12rem}
 .caminos .app p,.caminos .app li{font-size:var(--fs-sm)}
@@ -118,6 +121,14 @@
   <h2><span class="tr">Wat wil je doen?</span></h2>
   <p><span class="tr">Kies een deur. Elke deur opent meteen wat je nodig hebt; de rest ontdek je later, in je eigen tempo.</span></p>
   <div class="apps puertas">
+    <!-- 2026-10-19 (Mario: «no encuentro el tragamonedas… debería encontrarlo fácilmente un niño»): la puerta de los niños, primera y a lo ancho -->
+    <div class="app prod ninos" style="--c:#ff6f91">
+      <img src="../icons/mm-traga-192.png" alt="">
+      <div class="tag"><span class="tr">Voor kinderen</span></div>
+      <h3><span class="tr">De maten-gokautomaat</span></h3>
+      <p><span class="tr">Trek aan de hendel en de machine geeft je een nieuwe melodie om te beluisteren en op het toetsenbord te spelen. Met prijzen, lichtjes en een hond die Canelo heet. Je installeert hem op je telefoon zoals een app.</span></p>
+      <div class="launch"><a class="btn-launch" href="../suite/tragamonedas.html" data-local="../website/tragamonedas.html"><span class="tr">▶ Trek aan de hendel</span></a></div>
+    </div>
     <div class="app prod" style="--c:var(--teal)">
       <div class="tag"><span class="tr">Stemmen</span></div>
       <h3><span class="tr">Mijn instrument stemmen</span></h3>

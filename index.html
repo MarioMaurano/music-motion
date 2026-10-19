@@ -43,6 +43,9 @@
 .puertas .app p{font-size:var(--fs-sm)}
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
+.puertas .app.ninos{grid-column:1/-1;background:linear-gradient(120deg,rgba(255,111,145,.14),rgba(94,200,255,.12));display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center}
+.puertas .app.ninos img{grid-row:1/span 4;width:96px;height:96px;border-radius:22px}
+@media(max-width:640px){.puertas .app.ninos{grid-template-columns:1fr}.puertas .app.ninos img{grid-row:auto;width:72px;height:72px}}
 .caminos{grid-template-columns:repeat(3,1fr)}
 .caminos .app h3{font-size:1.12rem}
 .caminos .app p,.caminos .app li{font-size:var(--fs-sm)}
@@ -118,6 +121,14 @@
   <h2><span class="es">¿Qué quieres hacer?</span><span class="en">What would you like to do?</span></h2>
   <p><span class="es">Elige una puerta. Cada una abre directamente lo que necesitas; el resto lo descubres después, a tu ritmo.</span><span class="en">Pick a door. Each one opens exactly what you need; the rest you discover later, at your own pace.</span></p>
   <div class="apps puertas">
+    <!-- 2026-10-19 (Mario: «no encuentro el tragamonedas… debería encontrarlo fácilmente un niño»): la puerta de los niños, primera y a lo ancho -->
+    <div class="app prod ninos" style="--c:#ff6f91">
+      <img src="icons/mm-traga-192.png" alt="">
+      <div class="tag"><span class="es">Para los niños</span><span class="en">For children</span></div>
+      <h3><span class="es">La tragamonedas de compases</span><span class="en">The bar slot machine</span></h3>
+      <p><span class="es">Tira de la palanca y la máquina te da una melodía nueva, para escucharla y tocarla en el teclado. Con premios, luces y un perro que se llama Canelo. Se instala en el teléfono como una aplicación.</span><span class="en">Pull the lever and the machine gives you a new melody to hear and play on the keyboard. With prizes, lights and a dog called Canelo. It installs on your phone like an app.</span></p>
+      <div class="launch"><a class="btn-launch" href="suite/tragamonedas.html" data-local="../website/tragamonedas.html"><span class="es">▶ Tirar de la palanca</span><span class="en">▶ Pull the lever</span></a></div>
+    </div>
     <div class="app prod" style="--c:var(--teal)">
       <div class="tag"><span class="es">Afinar</span><span class="en">Tune</span></div>
       <h3><span class="es">Afinar mi instrumento</span><span class="en">Tune my instrument</span></h3>
