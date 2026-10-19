@@ -32,6 +32,8 @@ body{background:radial-gradient(ellipse at 50% -10%,#2a2a58 0%,var(--night) 55%)
   padding:16px clamp(10px,2.6vw,24px) 20px;box-shadow:0 20px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.07)}
 .marquee{text-align:center}
 .marquee h1{font-family:var(--display);font-weight:400;letter-spacing:.06em;color:var(--gold);font-size:clamp(30px,7vw,58px);line-height:.95;margin:0;text-shadow:0 0 22px rgba(214,180,80,.45)}
+.kicker{font-family:var(--display);font-size:clamp(15px,2.4vw,20px);letter-spacing:.22em;text-transform:uppercase;color:var(--sky);text-align:center;margin:2px 0 0}
+@media (max-width:480px){.kicker{font-size:13px;letter-spacing:.12em}}
 .sub{font-size:14px;color:var(--textm);text-align:center;margin:6px 0 0}
 .lights{display:flex;justify-content:space-between;margin:12px 4px 14px}
 .lights i{width:clamp(6px,1.3vw,10px);height:clamp(6px,1.3vw,10px);border-radius:50%;background:var(--gold-d);flex:none}
@@ -84,6 +86,8 @@ body{background:radial-gradient(ellipse at 50% -10%,#2a2a58 0%,var(--night) 55%)
 input[type=range]{accent-color:var(--gold);width:130px}
 .banner{font-family:var(--display);letter-spacing:.08em;font-size:clamp(26px,5vw,36px);color:var(--gold);text-align:center;min-height:40px;margin-top:6px}
 .banner.flash{animation:fl .45s steps(2) 6}
+.banner.grand small{display:block;font-size:.5em;letter-spacing:.06em;color:var(--gold);text-shadow:none}
+.banner.grand{font-size:clamp(30px,6.4vw,52px);line-height:1.1;color:#ffd93d;text-shadow:0 0 18px rgba(255,111,145,.85),0 0 4px #fff}
 @keyframes fl{50%{color:#fff;text-shadow:0 0 18px var(--pink)}}
 .out{background:rgba(0,0,0,.28);border:1px solid var(--gold-d);border-radius:12px;padding:12px 14px;display:grid;gap:6px;font-size:14px}
 .out .k{font-family:var(--mono);color:var(--gold);word-break:break-word;font-size:15px}
@@ -106,7 +110,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
 <div class="top"><a href="index.html">musicmotionsuite.com</a><a href="ejercicios/index.html#nivel-2">Música en el aula · Nivel 2</a></div>
 <div class="wrap">
 <div class="cab">
-  <div class="marquee"><h1>La tragamonedas de compases</h1></div>
+  <div class="marquee"><h1>La tragamonedas de compases</h1><p class="kicker">Juego de composición musical</p></div>
   <p class="sub">Tira de la palanca: cuatro rodillos, cuatro compases, una melodía nueva.</p>
   <div class="lights" id="lights" aria-hidden="true"></div>
   <div class="stage">
@@ -128,7 +132,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
   </div>
 </div>
 <div class="out" id="out" aria-live="polite"></div>
-<p class="how"><b>Cómo se juega.</b> Tira de la palanca o pulsa SPIN: los rodillos giran y se detienen uno por uno en un compás nuevo, con otras notas y otros valores. El primero va sobre el acorde de I, el segundo sobre IV, el tercero sobre V y el cuarto vuelve a casa, siempre a la tónica. HOLD deja quieto el rodillo que te gustó. Con KEY y MODE la misma melodía suena en otra tonalidad, en mayor o en menor, en afinación pitagórica. Abajo están las teclas para tocarla en el Cosmic Keyboard (Tonal, fila del medio: A es la tónica). Si sale una melodía famosa, hay premio. <b>SAVE .mmf</b> guarda la melodía con su acorde en cada compás para abrirla en el Score con File › Open.</p>
+<p class="how"><b>Cómo se juega.</b> Tira de la palanca o pulsa SPIN: los rodillos giran y se detienen uno por uno en un compás nuevo, con otras notas y otros valores. El primero va sobre el acorde de I, el segundo sobre IV, el tercero sobre V y el cuarto vuelve a casa, siempre a la tónica. HOLD deja quieto el rodillo que te gustó. Con KEY y MODE la misma melodía suena en otra tonalidad, en mayor o en menor, en afinación pitagórica. Abajo están las teclas para tocarla en el Cosmic Keyboard (Tonal, fila del medio: A es la tónica). Si sale una melodía famosa, hay premio. Y si los cuatro rodillos forman la Estrellita o la Oda a la alegría completas, ¡GRAN PREMIO!: guarda con HOLD los trozos que vayan saliendo y sigue tirando. <b>SAVE .mmf</b> guarda la melodía con su acorde en cada compás para abrirla en el Score con File › Open.</p>
 </div>
 <div class="rain" id="rain" aria-hidden="true"></div>
 <svg class="dog" id="dog" viewBox="0 0 160 170" aria-hidden="true">
@@ -155,12 +159,18 @@ const FUN=[{n:'acorde de I',ch:[0,2,4,7]},{n:'acorde de IV',ch:[3,5,7,0]},{n:'ac
 const RH=[[2,2,2,2],[4,2,2],[2,2,4],[3,1,2,2],[1,1,2,2,2],[2,1,1,2,2],[2,2,1,1,2],[6,2],[3,1,4],[1,1,1,1,2,2],[2,2,2,1,1],[4,4]];
 const RHF=[[2,2,4],[4,4],[8],[3,1,4],[2,6],[1,1,2,4],[6,2]];
 const FAMOUS=[{n:'¡La Oda a la alegría!',d:[2,2,3,4],r:[2,2,2,2],reel:0},{n:'¡La Estrellita!',d:[0,0,4,4],r:[2,2,2,2],reel:0},{n:'¡La Estrellita!',d:[5,5,4],r:[2,2,4],reel:1},{n:'¡El final de la Estrellita!',d:[1,1,0],r:[2,2,4],reel:3}];
+// las dos canciones completas: un trozo por rodillo, con sus propios acordes ([grado, octavos])
+const SONGS=[{n:'la Estrellita',bars:[{d:[0,0,4,4],r:[2,2,2,2],ch:[[0,8]]},{d:[5,5,4],r:[2,2,4],ch:[[3,4],[0,4]]},{d:[3,3,2,2],r:[2,2,2,2],ch:[[3,4],[0,4]]},{d:[1,1,0],r:[2,2,4],ch:[[4,4],[0,4]]}]},
+  {n:'la Oda a la alegría',bars:[{d:[2,2,3,4],r:[2,2,2,2],ch:[[0,8]]},{d:[4,3,2,1],r:[2,2,2,2],ch:[[0,4],[4,4]]},{d:[0,0,1,2],r:[2,2,2,2],ch:[[0,8]]},{d:[1,0,0],r:[3,1,4],ch:[[4,4],[0,4]]}]}];
+const same=(b,x)=>b.deg.join()===x.d.join()&&b.rh.join()===x.r.join();
+function songOf(b,i){ for(const s of SONGS) if(same(b,s.bars[i])) return s; return null; }
+function chordsOf(b,i){ const s=songOf(b,i); return s?s.bars[i].ch:[[FUN[i].ch[0],8]]; }
 let state={key:'C',alt:'n',mode:0,bpm:88,chords:true,held:[false,false,false,false],bars:[],spinning:false};
 const rnd=n=>Math.floor(Math.random()*n), pick=a=>a[rnd(a.length)];
 function nearest(set,from){let best=set[0];for(const c of set){if(Math.abs(c-from)<Math.abs(best-from)||(Math.abs(c-from)===Math.abs(best-from)&&Math.random()<.5))best=c;}return best;}
 function makeBar(i,prevEnd){
   const f=FUN[i]; const rh=(i===3?pick(RHF):pick(RH)).slice();
-  if(Math.random()<.12){ const fm=FAMOUS.filter(x=>x.reel===i); if(fm.length){const x=pick(fm);return {deg:x.d.slice(),rh:x.r.slice()};} }
+  if(Math.random()<.16){ const x=pick(SONGS).bars[i]; return {deg:x.d.slice(),rh:x.r.slice()}; }
   const deg=[]; let pos=0;
   let cand=f.ch.filter(c=>prevEnd==null||Math.abs(c-prevEnd)<=4); if(!cand.length)cand=f.ch;
   let cur=prevEnd==null?pick([0,2,4]):pick(cand);
@@ -221,7 +231,10 @@ function render(hi){
   <div>${state.bars.map(b=>b.deg.map(d=>nm(spell(d))).join(' ')).join('  |  ')}</div>
   <div class="d">${state.bars.map(b=>b.deg.map(d=>ROM[d]).join(' ')).join('  |  ')}</div>`;
 }
-function famous(){ for(const b of state.bars) for(const f of FAMOUS) if(f.d.join()===b.deg.join()&&f.r.join()===b.rh.join()) return f.n;
+function grand(){ for(const s of SONGS) if(state.bars.every((b,i)=>same(b,s.bars[i]))) return s; return null; }
+function onTheWay(){ let best=null; for(const s of SONGS){ const k=state.bars.filter((b,i)=>same(b,s.bars[i])).length; if(k>=2&&(!best||k>best.k)) best={s,k}; } return best; }
+function famous(){ const w=onTheWay(); if(w) return `¡Vas por ${w.s.n}! ${w.k} de 4 · HOLD y a tirar`;
+  for(const b of state.bars) for(const f of FAMOUS) if(f.d.join()===b.deg.join()&&f.r.join()===b.rh.join()) return f.n;
   const r=state.bars.map(b=>b.rh.join()); if(r[0]===r[1]&&r[1]===r[2]) return 'JACKPOT · tres ritmos iguales'; return ''; }
 function newBars(){let prev=null; const out=[]; for(let i=0;i<4;i++){ out.push(state.held[i]&&state.bars[i]?state.bars[i]:makeBar(i,prev)); const d=out[i].deg; prev=d[d.length-1]; } return out;}
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -245,6 +258,7 @@ async function spin(){
     setTimeout(()=>{ fr.classList.remove('spinning'); clack(); if(--left<=0){clearInterval(tickT);} res(); },dur*1000+40);
   }));
   await Promise.all(jobs); clearInterval(tickT); state.bars=fin; render(); lights.classList.remove('run'); btn.disabled=false; state.spinning=false;
+  const G=grand(); if(G){ granPremio(G); return; }
   const f=famous(); if(f) jackpot(f);
 }
 function jackpot(txt){
@@ -257,6 +271,18 @@ function jackpot(txt){
       s.style.setProperty('--r',(rnd(720)-360)+'deg'); s.style.animationDuration=(1.8+Math.random()*1.8)+'s'; s.style.animationDelay=(Math.random()*.8)+'s'; rain.appendChild(s); setTimeout(()=>s.remove(),4600); }
     const dog=document.getElementById('dog'); dog.classList.add('in'); setTimeout(()=>dog.classList.remove('in'),3400); }
   setTimeout(()=>{lights.classList.remove('party');[0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));},3400);
+}
+function granPremio(song){
+  const ban=document.getElementById('banner'); ban.innerHTML=`¡GRAN PREMIO!<small>${song.n} completa</small>`; ban.classList.add('flash','grand'); lights.classList.add('party');
+  [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.add('win-flash'));
+  try{ navigator.vibrate&&navigator.vibrate([120,60,120,60,120,60,400]); }catch(e){}
+  fanfare(); setTimeout(fanfare,700);
+  if(!reduce){ const rain=document.getElementById('rain'); const sy=['♪','♫','♩','♬','★'], cols=['#d6b450','#ff6f91','#5ec8ff','#38c0a6','#ffffff','#ffd93d'];
+    for(let k=0;k<140;k++){ const s=document.createElement('span'); s.textContent=pick(sy); s.style.left=(Math.random()*100)+'vw'; s.style.color=pick(cols); s.style.fontSize=(22+rnd(30))+'px';
+      s.style.setProperty('--r',(rnd(1080)-540)+'deg'); s.style.animationDuration=(2+Math.random()*2.4)+'s'; s.style.animationDelay=(Math.random()*2.6)+'s'; rain.appendChild(s); setTimeout(()=>s.remove(),7600); }
+    const dog=document.getElementById('dog'); dog.classList.add('in'); setTimeout(()=>dog.classList.remove('in'),6000); }
+  setTimeout(()=>{ if(!state.spinning&&!playing.length&&!sched) play(); },1700);
+  setTimeout(()=>{lights.classList.remove('party');ban.classList.remove('grand');[0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));},7000);
 }
 // ── la palanca ──
 const lever=document.getElementById('lever'), arm=document.getElementById('arm'), ball=document.getElementById('ball');
@@ -293,7 +319,7 @@ function play(){
   if(!keyInfo().ok||state.spinning) return; if(playing.length||sched){stopPlay();return;}
   const e8=60/state.bpm/2; const ev=[]; let t=0.25;
   state.bars.forEach((b,i)=>{
-    if(state.chords){ for(const d of [FUN[i].ch[0]%7,(FUN[i].ch[0]+2)%7,(FUN[i].ch[0]+4)%7]){const s=spell(d); ev.push({t,dur:8*e8,s:{...s,oct:s.oct-1,freq:s.freq/2},ch:1,vel:.32,instr:'harp'});} }
+    if(state.chords){ let ct=t; for(const [r,len] of chordsOf(b,i)){ for(const d of [r%7,(r+2)%7,(r+4)%7]){const s=spell(d); ev.push({t:ct,dur:len*e8,s:{...s,oct:s.oct-1,freq:s.freq/2},ch:1,vel:.32,instr:'harp'});} ct+=len*e8; } }
     b.deg.forEach((d,k)=>{const s=spell(d); const du=b.rh[k]*e8; ev.push({t,dur:du*.95,s,ch:0,vel:.6,instr:'flute',hi:[i,k]}); t+=du;});
   });
   document.getElementById('play').textContent='■ STOP';
@@ -321,7 +347,7 @@ function save(){
   d.scoreInfo.subtitle='Compuesta con la tragamonedas de compases · '+NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt])+' '+(state.mode?'menor':'mayor');
   const mel=[], ac=[];
   state.bars.forEach((b,i)=>{ let p=0; b.deg.forEach((gd,k)=>{ mel.push(note(spell(gd),i+1,p/2,b.rh[k],ROM[gd])); p+=b.rh[k]; });
-    for(const gd of [FUN[i].ch[0]%7,(FUN[i].ch[0]+2)%7,(FUN[i].ch[0]+4)%7]){ const s=spell(gd); const n=note({...s,oct:s.oct-1,freq:s.freq/2},i+1,0,8,''); delete n.lyric; n.velocity=62; ac.push(n);} });
+    let cp=0; for(const [r,len] of chordsOf(b,i)){ for(const gd of [r%7,(r+2)%7,(r+4)%7]){ const s=spell(gd); const n=note({...s,oct:s.oct-1,freq:s.freq/2},i+1,cp/2,len,''); delete n.lyric; n.velocity=62; ac.push(n);} cp+=len; } });
   d.channels[0].notes=mel; d.channels[1].notes=ac;
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'}));
   a.download='nuestra-escena-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':'')+'.mmf'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
