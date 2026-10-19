@@ -4,7 +4,7 @@
   "short_name": "mm Guía",
   "lang": "es",
   "start_url": "/suite/UserGuide.html",
-  "scope": "/suite/",
+  "scope": "/suite/UserGuide.html",
   "display": "minimal-ui",
   "background_color": "#07070e",
   "theme_color": "#07070e",
