@@ -19,6 +19,16 @@
   var PUB = (typeof window.MM_SALIERI_PUB === 'string') ? window.MM_SALIERI_PUB : '';   // ← la clave pública (spki, base64) de generar-claves-salieri.html
   var GAS = 'https://script.google.com/macros/s/AKfycbxBbtMDqXziUUpWcntf6tDuNSnAMOhxLHGTXZTPRSrUg2VGvyR4zQw44ZAqFnKhnbSkPg/exec';
   var KEY = 'ZA3Qkfo9LtuxFAmz6_qBJh7UmNFCYkkN';   // la misma key pública de la puerta
+  // MODO PRUEBA (2026-10-22, con Mario): ?salieri=prueba deja este aparato hablando con el servidor de PRUEBA
+  // (mm-credits-backend PRUEBA v18) y su clave pública; ?salieri=real lo devuelve al servidor de verdad. No abre
+  // nada por sí solo: igual hace falta una licencia firmada por ese servidor para este aparato.
+  var PRUEBA = { gas: 'https://script.google.com/macros/s/AKfycbzImoOnPl2X9DThmudDmZuWlErW7YmdNVewmuP_Q1LjCNKPmTqoFqzHcwYGbWodXlOw/exec',
+                 pub: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4UP/jCrOvY2sjAHGmGnEtYm4R/xGEOpz9dVVfLTtJz9/yw167Y0nS13r7EftcXtY0JkWbbwJcsIQiAgw75tftiXZrxrUJELJGEhEXe9qYRuDjcy3BZFpsqI9+psax7CE1zG/P7HgKNSiyrgZTF1THAo+8pYktmTqMkleeV+LmXXW7wx+HedOqmGbgLpOzPwgvDro8RQTQUwpc+mNZImM1wlozmYJ4Pwl6+FJpOho4BXuYlUTGKnyy4VamKLl4bHHWB0mPFGcY51MBaQJfMv6BDgWWGv5oi4pOC8MHK+BLwBWmHVRvubXWQs2JtVPRzmm2WVmdGZfNn/MMvcgw676SwIDAQAB' };
+  try{
+    if(/[?&]salieri=prueba(&|$)/.test(location.search)){ localStorage.setItem('mmSalieriPrueba','1'); localStorage.removeItem('mmPaseSalieri'); }
+    if(/[?&]salieri=real(&|$)/.test(location.search)){ localStorage.removeItem('mmSalieriPrueba'); localStorage.removeItem('mmPaseSalieri'); }
+    if(localStorage.getItem('mmSalieriPrueba')==='1' && typeof window.MM_SALIERI_PUB !== 'string'){ GAS = PRUEBA.gas; PUB = PRUEBA.pub; }
+  }catch(e){}
   var LS = 'mmPaseSalieri', _ok = false, _prom = null;
   function _local(){
     try{
