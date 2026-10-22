@@ -24,6 +24,14 @@
 .inst:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.28)}
 .inst.on{box-shadow:0 0 0 1px var(--c,var(--violet)) inset}
 .inst-name{font-family:'DM Mono',monospace;font-size:12px;color:var(--text);letter-spacing:.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* 2026-10-22 (Mario): la S de Salieri, al otro lado del nombre — dorada con el pase (abre el mezclador de Rimsky-Korsakov), apagada sin él */
+.inst{position:relative}
+.inst.has-s .inst-name{padding-right:18px}
+.sal-s{position:absolute;right:7px;top:5px;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;font-size:16px;line-height:1;
+  color:var(--textd);opacity:.45;background:none;border:none;padding:0 2px;cursor:pointer;transition:color .15s,opacity .15s,transform .15s}
+.sal-s.on{color:var(--gold);opacity:1;text-shadow:0 0 6px rgba(205,172,82,.35)}
+.sal-s:hover{opacity:1;transform:scale(1.15)}
+.sal-s:focus-visible{outline:1px solid var(--gold);outline-offset:2px}
 .inst-meta{display:flex;gap:8px;margin-top:5px;font-family:'DM Mono',monospace;font-size:9px;color:var(--textd);letter-spacing:.5px;align-items:center}
 .inst-rng{color:var(--violet)}
 .inst-reg{text-transform:uppercase;opacity:.8}
@@ -136,6 +144,11 @@
     var root=document.getElementById('lib'); if(!root) return;
     var P=window.MM_PRESETS_DEFAULT||{};
     var keys=Object.keys(P);
+    // 2026-10-22: ejemplos de Rimsky-Korsakov por instrumento (los del mezclador rk-mezclador.html; las secciones de
+    // cuerda usan los del instrumento). Sale de _Scripts/indice-rk.js; si se rehace el índice, se rehace esta lista.
+    var SAL_RK={"cello":267,"viola":265,"violin":257,"bassoon":245,"contrabass":243,"flute":230,"horn":223,"oboe":219,"clarinet":163,"clarinet_a":114,"trombone":113,"trumpet":111,"voice_soprano":99,"timpani":92,"piccolo":88,"english_horn":86,"harp":84,"tuba":82,"voice_bass":61,"contrabassoon":59,"bass_clarinet":53,"voice_tenor":52,"voice_alto":35,"trumpet_f":22,"tubular_bells":12,"celesta":8,"alto_flute_g":8,"piano":6,"glockenspiel":2,"xylophone":1,"pipe_organ":1};
+    var SAL_ALIAS={violins_section:'violin',violas_section:'viola',cellos_section:'cello',contrabasses_section:'contrabass',piano_steinway:'piano',piano_grand_tonal:'piano'};
+    var SAL_ON=!!(window.mmSalieriAbierto&&mmSalieriAbierto());
     var cn=document.getElementById('libCount'); if(cn) cn.textContent=keys.length;
     if(!keys.length){ root.innerHTML='<div style="color:var(--textd);font-size:13px">—</div>'; return; }
     var SECS=window.MM_INSTRUMENT_SECTIONS||[];
@@ -145,7 +158,9 @@
       var lbl=c.label||p.name||k;
       var rng=(p.lo!=null&&p.hi!=null)?(esc(p.lo)+'–'+esc(p.hi)):'—';
       var reg=c.regime||'';
-      html+='<div class="inst" data-k="'+esc(k)+'" data-fam="'+FAM+'" style="--c:'+col+'"><div class="inst-name">'+esc(lbl)+'</div>'+
+      var rkK=SAL_ALIAS[k]||k, rkN=SAL_RK[rkK]||0;
+      var sBtn=rkN?'<button type="button" class="sal-s'+(SAL_ON?' on':'')+'" data-rk="'+esc(rkK)+'" title="Salieri · '+rkN+' '+(document.documentElement.getAttribute('data-lang')==='en'?'Rimsky-Korsakov examples':'ejemplos de Rimsky-Korsakov')+'" aria-label="Salieri">S</button>':'';
+      html+='<div class="inst'+(rkN?' has-s':'')+'" data-k="'+esc(k)+'" data-fam="'+FAM+'" style="--c:'+col+'">'+sBtn+'<div class="inst-name">'+esc(lbl)+'</div>'+
             '<div class="inst-meta"><span class="inst-rng">'+rng+'</span>'+(reg?'<span class="inst-reg">'+biMap(REGIMEN,reg)+'</span>':'')+'</div></div>';
     }
     SECS.forEach(function(sec){
@@ -195,7 +210,13 @@
       if(!rk&&!tc) h+='<div class="ficha-row"><div class="ficha-v" style="color:var(--textd)">'+bi('Todavía sin ficha: este instrumento no tiene tabla de Rimsky ni notas de técnica.','No card yet: this instrument has neither a Rimsky table nor technique notes.')+'</div></div>';
       return h;
     }
+    document.addEventListener('mm-salieri', function(){ root.querySelectorAll('.sal-s').forEach(function(b){ b.classList.add('on'); }); });   // la licencia firmada abrió
     root.addEventListener('click', function(e){
+      var sb=e.target.closest?e.target.closest('.sal-s'):null;
+      if(sb){ e.stopPropagation();   // la S no abre la ficha: con pase abre el mezclador, sin pase la ventana del pase
+        if(window.mmSalieriAbierto&&mmSalieriAbierto()) window.open('rk-mezclador.html?inst='+encodeURIComponent(sb.getAttribute('data-rk'))+(/[?&]salieri=test(&|$)/.test(location.search)?'&salieri=test':''),'mm-rk-mezclador');   // la prueba de la presentación viaja al mezclador
+        else if(window.mmSalieriPuerta) mmSalieriPuerta();
+        return; }
       var t=e.target.closest?e.target.closest('.inst'):null; if(!t) return;
       var box=document.getElementById('ficha-'+t.getAttribute('data-fam')); if(!box) return;
       var k=t.getAttribute('data-k'), abierta=box.classList.contains('open')&&box.getAttribute('data-k')===k;
@@ -209,6 +230,7 @@
 })();
 </script>
 
+<script src="mm-salieri.js"></script>
 <script src="mm-theme.js"></script>
 <script src="site.js"></script>
 
