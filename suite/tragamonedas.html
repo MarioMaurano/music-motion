@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>mm Tragamonedas</title>
+<title>mm Máquina de melodías</title>
 <link rel="manifest" href="/icons/tragamonedas.webmanifest">
 <link rel="icon" href="/icons/mm-traga-tab.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icons/mm-traga-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Tragamonedas">
+<meta name="apple-mobile-web-app-title" content="Máquina de melodías">
 <meta name="theme-color" content="#0b0b16">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@400;700&display=swap">
@@ -107,10 +107,10 @@ input[type=range]{accent-color:var(--gold);width:130px}
 </style>
 </head>
 <body>
-<div class="top"><a href="index.html">musicmotionsuite.com</a><a href="ejercicios/index.html#nivel-2">Música en el aula · Nivel 2</a></div>
+<div class="top"><a href="index.html">musicmotionsuite.com</a><a href="ejercicios/index.html#aula">Música en el aula</a></div>
 <div class="wrap">
 <div class="cab">
-  <div class="marquee"><h1>La tragamonedas de compases</h1><p class="kicker">Juego de composición musical</p></div>
+  <div class="marquee"><h1>La máquina de melodías</h1><p class="kicker">Juego de composición musical</p></div>
   <p class="sub">Tira de la palanca: cuatro rodillos, cuatro compases, una melodía nueva.</p>
   <div class="lights" id="lights" aria-hidden="true"></div>
   <div class="stage">
@@ -348,7 +348,7 @@ function note(s,m,bp,du,lyr){ const e3=FIF[s.letter]+7*s.acc; const semis=SEMI[s
 function save(){
   const ki=keyInfo(); if(!ki.std||state.spinning) return; const d=JSON.parse(JSON.stringify(PLANTILLA));
   d.keySignature=KEYSIG[String(ki.fifths)]; d.tempo=state.bpm; d.tempoMarkings[0].bpm=state.bpm; d.created=new Date().toISOString();
-  d.scoreInfo.subtitle='Compuesta con la tragamonedas de compases · '+NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt])+' '+(state.mode?'menor':'mayor');
+  d.scoreInfo.subtitle='Compuesta con la máquina de melodías · '+NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt])+' '+(state.mode?'menor':'mayor');
   const mel=[], ac=[];
   state.bars.forEach((b,i)=>{ let p=0; b.deg.forEach((gd,k)=>{ mel.push(note(spell(gd),i+1,p/2,b.rh[k],ROM[gd])); p+=b.rh[k]; });
     let cp=0; for(const [r,len] of chordsOf(b,i)){ for(const gd of [r%7,(r+2)%7,(r+4)%7]){ const s=spell(gd); const n=note({...s,oct:s.oct-1,freq:s.freq/2},i+1,cp/2,len,''); delete n.lyric; n.velocity=62; ac.push(n);} cp+=len; } });
