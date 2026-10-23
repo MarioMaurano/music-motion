@@ -185,7 +185,14 @@ function makeBar(i,prevEnd){
     if(last>0&&Math.abs(deg[last-1]-deg[last])>2) deg[last-1]=deg[last]===7?pick([6,5]):deg[last]===0?pick([1,2]):pick([deg[last]-1,deg[last]+1]);}
   return {deg,rh};
 }
-function keyInfo(){ const t=state.key, a={b:-1,n:0,'#':1}[state.alt]; let fifths=FIF[t]+7*a; if(state.mode===1) fifths-=3; return {fifths,ok:Math.abs(fifths)<=14,std:Math.abs(fifths)<=7,tonicIdx:LET.indexOf(t)}; }
+// 2026-10-23 (Mario): ninguna armadura con dobles alteraciones — las tonalidades teóricas no se admiten en la escritura
+// (las de más de siete alteraciones, y Do♭ mayor y menor por indicación suya); la máquina ofrece su vecina enarmónica.
+function keyInfo(){ const t=state.key, a={b:-1,n:0,'#':1}[state.alt]; let fifths=FIF[t]+7*a; if(state.mode===1) fifths-=3;
+  const ok=Math.abs(fifths)<=7&&!(t==='C'&&state.alt==='b'); return {fifths,ok,std:ok,tonicIdx:LET.indexOf(t)}; }
+function vecina(){ const a={b:-1,n:0,'#':1}[state.alt], pc=(SEMI[state.key]+a+12)%12;
+  for(const L of LET) for(const [x,al] of [[0,'n'],[1,'#'],[-1,'b']]){ if((SEMI[L]+x+12)%12!==pc||(L===state.key&&al===state.alt)) continue;
+    const f=FIF[L]+7*x-(state.mode===1?3:0); if(Math.abs(f)<=7&&!(L==='C'&&al==='b')) return NAMES[L]+({b:'♭',n:'','#':'♯'}[al])+(state.mode?' menor':' mayor'); }
+  return ''; }
 function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F']; if(fifths>0) return (sh.slice(0,fifths).includes(letter)?1:0)+(sh.slice(0,Math.max(0,fifths-7)).includes(letter)?1:0); if(fifths<0) return -(fl.slice(0,-fifths).includes(letter)?1:0)-(fl.slice(0,Math.max(0,-fifths-7)).includes(letter)?1:0); return 0; }
 function spell(deg){ const ki=keyInfo(); const li=ki.tonicIdx+deg; const letter=LET[li%7]; const oct=4+Math.floor(li/7); const acc=sigAcc(letter,ki.fifths);
   const e3=FIF[letter]+7*acc; const semis=SEMI[letter]+acc+12*(oct-4); const e2=Math.round(semis/12-e3*Math.log2(3));
@@ -229,7 +236,10 @@ function render(hi){
   state.bars.forEach((b,i)=>{ const st=document.getElementById('s'+i); st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.remove('blur'); st.innerHTML=barSVG(b,hi&&hi[0]===i?hi[1]:-1);
     document.getElementById('l'+i).innerHTML=`<b>${b.deg.map(d=>KEYC[d]).join(' ')}</b><br>${b.deg.map(d=>nm(spell(d))).join(' ')}`; });
   const ki=keyInfo(); const tn=NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt]); const out=document.getElementById('out');
-  if(!ki.ok){out.innerHTML=`<div>Esa tonalidad tiene más de siete alteraciones. Prueba con su vecina: ${state.alt==='#'?'con ♭':'con ♯'}.</div>`;return;}
+  if(!ki.ok){ state.bars.forEach((b,i)=>{ document.getElementById('s'+i).innerHTML=''; document.getElementById('l'+i).innerHTML=''; });
+    out.innerHTML=state.key==='C'&&state.alt==='b'
+      ? `<div>Do♭ ${state.mode?'menor':'mayor'} se escribe como su vecina: <b>${vecina()}</b>.</div>`
+      : `<div>${tn} ${state.mode?'menor':'mayor'} es una tonalidad teórica: su armadura llevaría dobles alteraciones. Prueba con su vecina: <b>${vecina()}</b>.</div>`; return;}
   out.innerHTML=`<div class="d">Tu melodía en ${tn} ${state.mode?'menor':'mayor'} · Cosmic Keyboard: Tonal, KEY ${state.key}${state.alt==='n'?'':state.alt==='#'?' ♯':' ♭'}, MODE ${state.mode?'m':'M'}, fila del medio</div>
   <div class="k">${state.bars.map(b=>b.deg.map(d=>KEYC[d]).join(' ')).join('  |  ')}</div>
   <div>${state.bars.map(b=>b.deg.map(d=>nm(spell(d))).join(' ')).join('  |  ')}</div>
@@ -255,7 +265,7 @@ function newBars(){let prev=null; const out=[]; for(let i=0;i<4;i++){
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let tickT=null;
 async function spin(){
-  if(state.spinning) return; state.spinning=true; stopPlay();
+  if(state.spinning) return; if(!keyInfo().ok){ render(); return; } state.spinning=true; stopPlay();
   const btn=document.getElementById('spin'); btn.disabled=true; const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash');
   lights.classList.remove('party'); lights.classList.add('run'); [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));
   const fin=newBars(); const h=stripH(); let left=fin.filter((b,i)=>!state.held[i]).length;
@@ -331,6 +341,7 @@ function stopPlay(){playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; 
   sounding.forEach(m=>msg({cmd:'NOTE_OFF',id:m.id,chId:m.chId,source:'minikeyboard'})); sounding=[];
   document.getElementById('play').textContent='▶ PLAY'; if(state.bars.length&&!state.spinning) render();}
 function play(){
+  if(!keyInfo().ok) return;   // tonalidad teórica: no hay melodía que tocar
   if(!keyInfo().ok||state.spinning) return; if(playing.length||sched){stopPlay();return;}
   const e8=60/state.bpm/2; const ev=[]; let t=0.25;
   state.bars.forEach((b,i)=>{
