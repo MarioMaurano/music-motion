@@ -62,7 +62,8 @@ body{background:radial-gradient(ellipse at 50% -10%,#2a2a58 0%,var(--night) 55%)
 .clue .big{font-size:34px;color:#b0324a;line-height:1}.clue:not(.open) .big{color:#c9bfa6}
 .clue .sig{font-size:26px;letter-spacing:2px;color:#0e2934}.clue .blink{color:#b0324a;animation:blk 1s steps(2) infinite}
 @keyframes blk{50%{opacity:.25}}
-.clue.pick{cursor:pointer}.clue.pick:hover{background:#fff7dc}.clue .mini-dog{width:62px;height:66px}
+.clue.pick{cursor:pointer}.clue.pick:hover{background:#fff7dc}.clue .mini-dog{width:62px;height:66px}.clue .mini-dog.jump{animation:salto .9s ease-out 2}
+@keyframes salto{0%,100%{transform:translateY(0)}30%{transform:translateY(-22px) rotate(-8deg)}55%{transform:translateY(0)}70%{transform:translateY(-9px) rotate(5deg)}}
 .strip svg{display:block;width:100%;height:clamp(118px,19vw,156px)}
 .strip.blur{filter:blur(1.2px)}
 .lbl{font-family:var(--mono);font-size:12.5px;color:var(--text);text-align:center;min-height:2.7em;line-height:1.35}
@@ -264,7 +265,10 @@ function drawRiddle(){ const r=riddle, h=stripH(), nm=keyName(r.k,r.a,r.m), f=fi
     document.getElementById('l'+i).innerHTML=''; }
   // 2026-10-23 (Mario): la vecina hace oír la coma y los cuadros se quedan, con el perrito; solo la palanca los quita.
   const c1=document.querySelector('#s1 .clue'); if(c1) c1.onclick=()=>{ if(!state.spinning) comma(r,{k:v.k,a:v.a}); };
-  const c2=document.querySelector('#s2 .clue'); if(c2) c2.onclick=()=>{ if(state.spinning) return; ponKey(rel.k,rel.a,rel.m); render(); setTimeout(()=>{ if(!state.spinning) spin(); },300); };
+  // La relativa: la carta muestra la armadura que comparte con la vecina, con la luna (o el sol) encima, y el perrito salta.
+  const c2=document.querySelector('#s2 .clue'); if(c2) c2.onclick=()=>{ if(state.spinning) return; const vf=fifthsOf(v.k,v.a,r.m), vn=Math.abs(vf), vs=vf>0?'♯':'♭';
+    c2.innerHTML=`<div class="big">${rel.m?'🌙':'☀️'}</div><div class="sig">${vn?vs.repeat(vn):'♮'}</div><div><b>${keyName(rel.k,rel.a,rel.m)}</b> tiene la misma armadura que <b>${keyName(v.k,v.a,r.m)}</b>: ${vn?vn+' '+vs:'sin alteraciones'}.</div>`;
+    const d=document.querySelector('#s3 .mini-dog'); if(d){ d.classList.remove('jump'); void d.getBoundingClientRect(); d.classList.add('jump'); } };
   document.getElementById('out').innerHTML=`<div><b>¿Quién es tu vecina?</b> ${nm} es una tonalidad teórica. Toca su vecina o su relativa, o tira de la palanca para volver a Do mayor.</div>`; }
 // Las dos tónicas, una tras otra y juntas: en el piano son la misma tecla; en la afinación pitagórica las separa una coma.
 function comma(r,v){ const f1=tonicFreq(r.k,r.a), f2=tonicFreq(v.k,v.a), n1=NAMES[r.k]+ALTS[r.a], n2=NAMES[v.k]+ALTS[v.a];
