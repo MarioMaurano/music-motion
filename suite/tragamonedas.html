@@ -164,6 +164,8 @@ input[type=range]{accent-color:var(--gold);width:130px}
 @media (prefers-reduced-motion:reduce){.lights.run i,.lights.party i,.frame.spinning .bulbs i,.banner.flash,.dog .tail{animation:none}.rain:not(.suave){display:none}}
 @media (max-width:900px){.quintas{overflow:visible;gap:2px}.quintas span{flex:1 1 0;min-width:0;height:12px;padding:0;font-size:0;border-radius:4px}.quintas span.on{height:14px}}   /* teléfono: chips sin nombre, los 35 caben (Mario) */
 @media (max-height:520px) and (orientation:landscape){.marquee h1{font-size:30px}.flecha{width:30px;height:30px;font-size:20px}.marquee .kicker{font-size:11px;margin:0}.sub{display:none}.lights{margin:6px 4px 8px}.torre{min-height:0;padding:2px 0;justify-content:center}.lever{height:150px}.torre .blo{padding:2px 10px;font-size:12px}.torre .perro-torre{width:44px;height:46px}}   /* teléfono horizontal: más compacto */
+.top{flex-wrap:wrap}.top a{white-space:nowrap}.top .langs{display:flex;gap:2px}.top .langs button{background:none;border:1px solid transparent;color:var(--textm);font-family:var(--mono);font-size:11px;letter-spacing:1px;padding:3px 6px;border-radius:4px;cursor:pointer}
+.top .langs button:hover{color:var(--gold)}.top .langs button.on{background:var(--gold);color:#0a0a10;font-weight:500}
 </style>
 </head>
 <body>
@@ -215,18 +217,207 @@ input[type=range]{accent-color:var(--gold);width:130px}
   <g transform="translate(70,4)"><rect x="0" y="0" width="84" height="40" rx="14" fill="#f7f2e4"/><path d="M18 38 L 10 52 L 32 38 Z" fill="#f7f2e4"/><text class="bub" x="42" y="28" text-anchor="middle">¡GUAU!</text></g>
 </svg>
 <script>
+// ── los cinco idiomas (2026-10-23, Mario: «genial para los niños de cada idioma») ──
+// El idioma: ?lang=xx (se guarda) → el que eligió aquí antes → si llega desde /fr/ /nl/ /de/ → el del navegador (fr nl de)
+// → el del sitio (es/en) → español si el navegador es español, si no inglés. Cada idioma con los nombres de nota de su
+// escuela: es/fr Do Re (Ré) Mi, en/nl C D E, de con H (= Si) y B (= Si♭), Fis, Es… Para corregir una traducción, cambia la
+// frase de ese idioma aquí abajo; {x} es lo que la máquina pone (una nota, un número).
+const LANGS=['es','en','fr','nl','de'];
+const LANG=(()=>{ const q=(/[?&]lang=(es|en|fr|nl|de)\b/.exec(location.search)||[])[1];
+  if(q){ try{ localStorage.setItem('mmMelLang',q); if(q==='es'||q==='en') localStorage.setItem('mmSiteLang',q); }catch(e){} return q; }
+  try{ const s=localStorage.getItem('mmMelLang'); if(LANGS.includes(s)) return s; }catch(e){}
+  const r=(/^https?:\/\/[^/]+\/(fr|nl|de)\//.exec(document.referrer||'')||[])[1]; if(r) return r;
+  const nav=(navigator.language||'').slice(0,2).toLowerCase(); if(['fr','nl','de'].includes(nav)) return nav;
+  try{ const s=localStorage.getItem('mmSiteLang'); if(s==='es'||s==='en') return s; }catch(e){}
+  return nav==='es'?'es':'en'; })();
+const I18N={
+es:{ short:'Máquina de melodías', aula:'Música en el aula', prev:'Juego anterior', next:'Juego siguiente', quintasAria:'La línea de quintas: de {a} a {b}',
+  lever:'Palanca: tira hacia abajo para girar', ecoTitle:'La máquina toca, tú repites', bub:'¡GUAU!', barAria:'compás', bar:'Compás',
+  chordOf:'acorde de {r}', final:'I · final', start:'EMPEZAR', step:'PASO', fifth:'QUINTA', echo:'ECO',
+  famOda:'¡La Oda a la alegría!', famEstr:'¡La Estrellita!', famFin:'¡El final de la Estrellita!', songEstr:'la Estrellita', songOda:'la Oda a la alegría',
+  onTheWay:'¡Vas por {s}! {k} de 4 · HOLD y a tirar', three:'JACKPOT · tres ritmos iguales', yours:'¡Tu melodía!<small>cuatro compases elegidos</small>',
+  grand:'¡GRAN PREMIO!<small>{s} completa</small>', outHead:'Tu melodía en {key} · Cosmic Keyboard: Tonal, KEY {k}, MODE {m}, fila del medio',
+  saveNote:'SAVE .mmf: el Score escribe hasta siete alteraciones en la armadura; para guardar, usa su vecina enarmónica.',
+  rid7:'{nm} necesita <b>{n} {sg}</b>. ¡En el pentagrama solo caben 7! Por eso casi nadie la escribe.', ridN:'{nm} lleva {n} {sg}: casi nadie la escribe.',
+  ridV:'Suena igual que <b>{v}</b>.<br>¡Tócala!', ridR:'O su {rel}: <b>{r}</b>.<br>¡Tócala!', relMin:'relativa menor', relMaj:'relativa mayor',
+  ridDog:'¿Empezamos de nuevo? <b>Tira de la palanca</b> → {c}.', ridSig:'<b>{r}</b> tiene la misma armadura que <b>{v}</b>: {sig}.', noSig:'sin alteraciones',
+  ridOut:'<b>¿Quién es tu vecina?</b> {nm} es una tonalidad teórica. Toca su vecina o su relativa, o tira de la palanca para volver a {c}.',
+  comma:'<b>{a} y {b}:</b> en el piano son la misma tecla; para el oído, no. En la afinación pitagórica de Music Motion las separa una coma — escúchalas: primero una, luego la otra, y después juntas.',
+  listenWhat:'Escucha… {w}', bar1:'el compás 1', whole:'la melodía entera', upTo:'los compases 1 a {n}', yourTurn:'¡Tu turno! Repite las notas',
+  ecoRound:'Ronda {r} de 4 · {n} notas', ecoPerfect:'¡Eco perfecto! La melodía entera', good:'¡Muy bien!', almost:'Casi… escucha otra vez',
+  up:'SUBE', down:'BAJA', again:'otra vez', subeRound:'Ronda {r} de 10 · aciertos: {ok}', listen:'Escucha…', upOrDown:'¿Sube o baja?',
+  upW:'Sube', downW:'Baja', wasDown:'Era baja — escucha:', wasUp:'Era sube — escucha:', score:'¡{ok} de 10!', ear:'¡Oído de músico!', tryAgain:'Prueba otra vez',
+  already:'{yo} ya está en la torre. Caben {up} (arriba) o {dn} (abajo)', noFit:'{yo} no cabe aquí: prueba {up} (arriba) o {dn} (abajo)',
+  chipTitle:'Empezar la torre en {n}', pickStart:'Elige la nota de partida con los botones (o con un chip)', base:'{n}: la base de la torre',
+  firstPick:'Primero elige la nota de partida con los botones (o con un chip)', lineEnd:'Se acabó la línea de quintas por ese lado: prueba hacia el otro',
+  scale:'¡La escala de {k}!', wobble:'¡Cuidado! La torre tambalea…', fell:'¡Se cayó! {a2} no es {a1}: la coma pitagórica',
+  fellOut:'<b>La torre de quintas:</b> {a1} y {a2} son la misma tecla del piano, pero doce quintas (3:2) no cierran: entre ellas queda la coma pitagórica (531441:524288). Escucha: {a1}, {a2}, y juntas. Tira otra vez para una torre nueva.',
+  stepFifth:'{a} → {b}: una quinta {d}', dirUp:'arriba (hacia los ♯)', dirDn:'abajo (hacia los ♭)',
+  count:'Escucha la cuenta…', now:'¡Ahora! Un paso en cada tiempo', oops:'¡Uy! Escucha el tiempo', steps:'{n} de 16 pasos',
+  danced:'¡{t}! El perrito llegó bailando', walkAgain:'{t}. ¡Otra vuelta!', saveSub:'Compuesta con la máquina de melodías · {key}',
+  g_maquina:['La máquina de melodías','Juego de composición musical','Tira de la palanca: cuatro rodillos, cuatro compases, una melodía nueva.'],
+  g_eco:['El eco','Juego de escucha','La máquina toca y tú repites con A S D F G H J K o con los botones. ¡Hasta la melodía entera!'],
+  g_torre:['La torre de quintas','Juego de construcción','Elige la nota de partida y apila quintas (3:2): ↑ encima, hacia los sostenidos; ↓ debajo, hacia los bemoles. Con 7 seguidas sale una escala; con 13… ¿aguanta la torre?'],
+  g_paseo:['El paseo del perrito','Juego del pulso','El perrito camina al pulso de la melodía. Toca TAP HERE (o la barra espaciadora) en cada paso, con la luz del pulso. ¡Que no tropiece!'],
+  g_sube:['¿Sube o baja?','Juego de escucha','Suenan dos notas: ¿la segunda sube o baja? Pulsa ⬆ o ⬇ (o las flechas del teclado). Diez rondas, cada vez más cerca.'],
+  how:'<b>Cómo se juega.</b> Tira de la palanca o pulsa SPIN: los rodillos giran y se detienen uno por uno en un compás nuevo, con otras notas y otros valores. El primero va sobre el acorde de I, el segundo sobre IV, el tercero sobre V y el cuarto vuelve a casa, siempre a la tónica. HOLD deja quieto el rodillo que te gustó. Con KEY y MODE la misma melodía suena en otra tonalidad, en mayor o en menor, en afinación pitagórica. Abajo están las teclas para tocarla en el Cosmic Keyboard (Tonal, fila del medio: A es la tónica). Si sale una melodía famosa, hay premio. Y si los cuatro rodillos forman la Estrellita o la Oda a la alegría completas, ¡GRAN PREMIO!: guarda con HOLD los trozos que vayan saliendo y sigue tirando. <b>SAVE .mmf</b> guarda la melodía con su acorde en cada compás para abrirla en el Score con File › Open.' },
+en:{ short:'Melody Machine', aula:'Music in the classroom', prev:'Previous game', next:'Next game', quintasAria:'The line of fifths: from {a} to {b}',
+  lever:'Lever: pull down to spin', ecoTitle:'The machine plays, you repeat', bub:'WOOF!', barAria:'bar', bar:'Bar',
+  chordOf:'{r} chord', final:'I · ending', start:'START', step:'STEP', fifth:'FIFTH', echo:'ECHO',
+  famOda:'Ode to Joy!', famEstr:'Twinkle, Twinkle!', famFin:'The end of Twinkle, Twinkle!', songEstr:'Twinkle, Twinkle', songOda:'Ode to Joy',
+  onTheWay:'On your way to {s}! {k} of 4 · HOLD and pull again', three:'JACKPOT · three matching rhythms', yours:'Your melody!<small>four bars you chose</small>',
+  grand:'GRAND PRIZE!<small>{s}, complete</small>', outHead:'Your melody in {key} · Cosmic Keyboard: Tonal, KEY {k}, MODE {m}, middle row',
+  saveNote:'SAVE .mmf: the Score writes up to seven sharps or flats in the key signature; to save, use its enharmonic neighbour.',
+  rid7:'{nm} needs <b>{n} {sg}</b>. Only 7 fit on the staff! That’s why almost nobody writes it.', ridN:'{nm} has {n} {sg}: almost nobody writes it.',
+  ridV:'Sounds just like <b>{v}</b>.<br>Play it!', ridR:'Or its {rel}: <b>{r}</b>.<br>Play it!', relMin:'relative minor', relMaj:'relative major',
+  ridDog:'Start again? <b>Pull the lever</b> → {c}.', ridSig:'<b>{r}</b> has the same key signature as <b>{v}</b>: {sig}.', noSig:'no sharps or flats',
+  ridOut:'<b>Who’s your neighbour?</b> {nm} is a theoretical key. Play its neighbour or its relative, or pull the lever to go back to {c}.',
+  comma:'<b>{a} and {b}:</b> on the piano they’re the same key; to the ear, they’re not. In Music Motion’s Pythagorean tuning a comma separates them — listen: first one, then the other, then both together.',
+  listenWhat:'Listen… {w}', bar1:'bar 1', whole:'the whole melody', upTo:'bars 1 to {n}', yourTurn:'Your turn! Repeat the notes',
+  ecoRound:'Round {r} of 4 · {n} notes', ecoPerfect:'Perfect echo! The whole melody', good:'Well done!', almost:'Almost… listen again',
+  up:'UP', down:'DOWN', again:'again', subeRound:'Round {r} of 10 · right: {ok}', listen:'Listen…', upOrDown:'Up or down?',
+  upW:'Up', downW:'Down', wasDown:'It went down — listen:', wasUp:'It went up — listen:', score:'{ok} out of 10!', ear:'A musician’s ear!', tryAgain:'Try again',
+  already:'{yo} is already in the tower. {up} (above) or {dn} (below) will fit', noFit:'{yo} doesn’t fit here: try {up} (above) or {dn} (below)',
+  chipTitle:'Start the tower on {n}', pickStart:'Pick the starting note with the buttons (or a chip)', base:'{n}: the base of the tower',
+  firstPick:'First pick the starting note with the buttons (or a chip)', lineEnd:'The line of fifths ends on that side: try the other way',
+  scale:'The {k} scale!', wobble:'Careful! The tower is wobbling…', fell:'It fell! {a2} isn’t {a1}: the Pythagorean comma',
+  fellOut:'<b>The tower of fifths:</b> {a1} and {a2} are the same piano key, but twelve fifths (3:2) don’t close the circle: between them lies the Pythagorean comma (531441:524288). Listen: {a1}, {a2}, and together. Pull again for a new tower.',
+  stepFifth:'{a} → {b}: a fifth {d}', dirUp:'up (towards the ♯)', dirDn:'down (towards the ♭)',
+  count:'Listen to the count…', now:'Now! One step on every beat', oops:'Oops! Listen to the beat', steps:'{n} of 16 steps',
+  danced:'{t}! The puppy danced all the way', walkAgain:'{t}. One more walk!', saveSub:'Composed with the Melody Machine · {key}',
+  g_maquina:['The Melody Machine','A music composition game','Pull the lever: four reels, four bars, a brand-new melody.'],
+  g_eco:['The Echo','A listening game','The machine plays and you repeat with A S D F G H J K or with the buttons. All the way to the whole melody!'],
+  g_torre:['The Tower of Fifths','A building game','Pick a starting note and stack fifths (3:2): ↑ on top, towards the sharps; ↓ underneath, towards the flats. Seven in a row make a scale; with 13… will the tower hold?'],
+  g_paseo:['The Puppy’s Walk','A beat game','The puppy walks to the beat of the melody. Press TAP HERE (or the space bar) on every step, with the pulse light. Don’t let it trip!'],
+  g_sube:['Up or Down?','A listening game','Two notes play: does the second one go up or down? Press ⬆ or ⬇ (or the arrow keys). Ten rounds, closer and closer.'],
+  how:'<b>How to play.</b> Pull the lever or press SPIN: the reels spin and stop one by one on a new bar, with new notes and new rhythms. The first sits on the I chord, the second on IV, the third on V, and the fourth comes home, always to the tonic. HOLD keeps the reel you liked still. With KEY and MODE the same melody plays in another key, major or minor, in Pythagorean tuning. Below are the keys to play it on the Cosmic Keyboard (Tonal, middle row: A is the tonic). If a famous melody comes up, you win a prize. And if the four reels make the whole of Twinkle, Twinkle or Ode to Joy, GRAND PRIZE!: keep the pieces with HOLD as they come up and keep pulling. <b>SAVE .mmf</b> saves the melody with its chord in each bar, to open in the Score with File › Open.' },
+fr:{ short:'Machine à mélodies', aula:'La musique en classe', prev:'Jeu précédent', next:'Jeu suivant', quintasAria:'La ligne des quintes : de {a} à {b}',
+  lever:'Levier : tire vers le bas pour lancer', ecoTitle:'La machine joue, tu répètes', bub:'OUAF !', barAria:'mesure', bar:'Mesure',
+  chordOf:'accord de {r}', final:'I · fin', start:'DÉPART', step:'PAS', fifth:'QUINTE', echo:'ÉCHO',
+  famOda:'L’Hymne à la joie !', famEstr:'Brille, brille, petite étoile !', famFin:'La fin de Brille, brille, petite étoile !', songEstr:'Brille, brille, petite étoile', songOda:'l’Hymne à la joie',
+  onTheWay:'En route : {s} ! {k} sur 4 · HOLD et tire encore', three:'JACKPOT · trois rythmes pareils', yours:'Ta mélodie !<small>quatre mesures choisies</small>',
+  grand:'GRAND PRIX !<small>{s} en entier</small>', outHead:'Ta mélodie en {key} · Cosmic Keyboard : Tonal, KEY {k}, MODE {m}, rangée du milieu',
+  saveNote:'SAVE .mmf : le Score écrit jusqu’à sept altérations à l’armure ; pour enregistrer, utilise sa voisine enharmonique.',
+  rid7:'{nm} a besoin de <b>{n} {sg}</b>. Il n’en tient que 7 sur la portée ! C’est pour ça que presque personne ne l’écrit.', ridN:'{nm} a {n} {sg} : presque personne ne l’écrit.',
+  ridV:'Sonne comme <b>{v}</b>.<br>Joue-la !', ridR:'Ou sa {rel} : <b>{r}</b>.<br>Joue-la !', relMin:'relative mineure', relMaj:'relative majeure',
+  ridDog:'On recommence ? <b>Tire le levier</b> → {c}.', ridSig:'<b>{r}</b> a la même armure que <b>{v}</b> : {sig}.', noSig:'sans altérations',
+  ridOut:'<b>Qui est ta voisine ?</b> {nm} est une tonalité théorique. Joue sa voisine ou sa relative, ou tire le levier pour revenir à {c}.',
+  comma:'<b>{a} et {b} :</b> au piano, c’est la même touche ; pour l’oreille, non. Dans l’accord pythagoricien de Music Motion, un comma les sépare — écoute : d’abord l’une, puis l’autre, puis les deux ensemble.',
+  listenWhat:'Écoute… {w}', bar1:'la mesure 1', whole:'toute la mélodie', upTo:'les mesures 1 à {n}', yourTurn:'À toi ! Répète les notes',
+  ecoRound:'Manche {r} sur 4 · {n} notes', ecoPerfect:'Écho parfait ! Toute la mélodie', good:'Très bien !', almost:'Presque… écoute encore',
+  up:'MONTE', down:'DESCEND', again:'encore', subeRound:'Manche {r} sur 10 · réussies : {ok}', listen:'Écoute…', upOrDown:'Ça monte ou ça descend ?',
+  upW:'Ça monte', downW:'Ça descend', wasDown:'Ça descendait — écoute :', wasUp:'Ça montait — écoute :', score:'{ok} sur 10 !', ear:'Une oreille de musicien !', tryAgain:'Essaie encore',
+  already:'{yo} est déjà dans la tour. {up} (en haut) ou {dn} (en bas) peuvent aller', noFit:'{yo} ne va pas ici : essaie {up} (en haut) ou {dn} (en bas)',
+  chipTitle:'Commencer la tour sur {n}', pickStart:'Choisis la note de départ avec les boutons (ou une pastille)', base:'{n} : la base de la tour',
+  firstPick:'Choisis d’abord la note de départ avec les boutons (ou une pastille)', lineEnd:'La ligne des quintes s’arrête de ce côté : essaie de l’autre',
+  scale:'La gamme de {k} !', wobble:'Attention ! La tour vacille…', fell:'Elle est tombée ! {a2} n’est pas {a1} : le comma pythagoricien',
+  fellOut:'<b>La tour des quintes :</b> {a1} et {a2} sont la même touche du piano, mais douze quintes (3:2) ne bouclent pas le cercle : entre elles reste le comma pythagoricien (531441:524288). Écoute : {a1}, {a2}, puis ensemble. Tire encore pour une nouvelle tour.',
+  stepFifth:'{a} → {b} : une quinte {d}', dirUp:'au-dessus (vers les ♯)', dirDn:'en dessous (vers les ♭)',
+  count:'Écoute le décompte…', now:'Maintenant ! Un pas sur chaque temps', oops:'Oups ! Écoute le temps', steps:'{n} pas sur 16',
+  danced:'{t} ! Le petit chien est arrivé en dansant', walkAgain:'{t}. Encore un tour !', saveSub:'Composée avec la machine à mélodies · {key}',
+  g_maquina:['La machine à mélodies','Jeu de composition musicale','Tire le levier : quatre rouleaux, quatre mesures, une nouvelle mélodie.'],
+  g_eco:['L’écho','Jeu d’écoute','La machine joue et tu répètes avec A S D F G H J K ou avec les boutons. Jusqu’à la mélodie entière !'],
+  g_torre:['La tour des quintes','Jeu de construction','Choisis la note de départ et empile des quintes (3:2) : ↑ au-dessus, vers les dièses ; ↓ en dessous, vers les bémols. Avec 7 à la suite, une gamme ; avec 13… la tour tiendra-t-elle ?'],
+  g_paseo:['La promenade du petit chien','Jeu de la pulsation','Le petit chien marche sur la pulsation de la mélodie. Touche TAP HERE (ou la barre d’espace) à chaque pas, avec la lumière de la pulsation. Qu’il ne trébuche pas !'],
+  g_sube:['Ça monte ou ça descend ?','Jeu d’écoute','Deux notes sonnent : la deuxième monte ou descend ? Appuie sur ⬆ ou ⬇ (ou les flèches du clavier). Dix manches, de plus en plus proches.'],
+  how:'<b>Comment jouer.</b> Tire le levier ou appuie sur SPIN : les rouleaux tournent et s’arrêtent un par un sur une nouvelle mesure, avec d’autres notes et d’autres rythmes. Le premier est sur l’accord de I, le deuxième sur IV, le troisième sur V et le quatrième rentre à la maison, toujours sur la tonique. HOLD garde immobile le rouleau qui te plaît. Avec KEY et MODE, la même mélodie sonne dans une autre tonalité, en majeur ou en mineur, en accord pythagoricien. En dessous, tu trouves les touches pour la jouer sur le Cosmic Keyboard (Tonal, rangée du milieu : A est la tonique). Si une mélodie célèbre sort, tu gagnes un prix. Et si les quatre rouleaux forment Brille, brille, petite étoile ou l’Hymne à la joie en entier, GRAND PRIX ! : garde avec HOLD les morceaux qui sortent et continue à tirer. <b>SAVE .mmf</b> enregistre la mélodie avec son accord dans chaque mesure, pour l’ouvrir dans le Score avec File › Open.' },
+nl:{ short:'Melodiemachine', aula:'Muziek in de klas', prev:'Vorig spel', next:'Volgend spel', quintasAria:'De kwintenreeks: van {a} tot {b}',
+  lever:'Hendel: trek omlaag om te draaien', ecoTitle:'De machine speelt, jij speelt na', bub:'WOEF!', barAria:'maat', bar:'Maat',
+  chordOf:'akkoord van {r}', final:'I · slot', start:'START', step:'STAP', fifth:'KWINT', echo:'ECHO',
+  famOda:'Ode aan de vreugde!', famEstr:'Altijd is Kortjakje ziek!', famFin:'Het einde van Kortjakje!', songEstr:'Altijd is Kortjakje ziek', songOda:'Ode aan de vreugde',
+  onTheWay:'Op weg naar {s}! {k} van 4 · HOLD en trek opnieuw', three:'JACKPOT · drie gelijke ritmes', yours:'Jouw melodie!<small>vier maten die jij koos</small>',
+  grand:'HOOFDPRIJS!<small>{s}, compleet</small>', outHead:'Jouw melodie in {key} · Cosmic Keyboard: Tonal, KEY {k}, MODE {m}, middelste rij',
+  saveNote:'SAVE .mmf: de Score schrijft tot zeven voortekens; gebruik om te bewaren de enharmonische buur.',
+  rid7:'{nm} heeft <b>{n} {sg}</b> nodig. Op de notenbalk passen er maar 7! Daarom schrijft bijna niemand hem op.', ridN:'{nm} heeft {n} {sg}: bijna niemand schrijft hem op.',
+  ridV:'Klinkt net als <b>{v}</b>.<br>Speel hem!', ridR:'Of de {rel}: <b>{r}</b>.<br>Speel hem!', relMin:'parallelle mineur', relMaj:'parallelle majeur',
+  ridDog:'Opnieuw beginnen? <b>Trek aan de hendel</b> → {c}.', ridSig:'<b>{r}</b> heeft dezelfde voortekening als <b>{v}</b>: {sig}.', noSig:'zonder voortekens',
+  ridOut:'<b>Wie is je buur?</b> {nm} is een theoretische toonsoort. Speel zijn buur of zijn parallelle toonsoort, of trek aan de hendel om terug te gaan naar {c}.',
+  comma:'<b>{a} en {b}:</b> op de piano is het dezelfde toets; voor het oor niet. In de pythagoreïsche stemming van Music Motion scheidt een komma ze — luister: eerst de ene, dan de andere, en dan samen.',
+  listenWhat:'Luister… {w}', bar1:'maat 1', whole:'de hele melodie', upTo:'maat 1 tot {n}', yourTurn:'Jouw beurt! Speel de noten na',
+  ecoRound:'Ronde {r} van 4 · {n} noten', ecoPerfect:'Perfecte echo! De hele melodie', good:'Heel goed!', almost:'Bijna… luister nog eens',
+  up:'OMHOOG', down:'OMLAAG', again:'nog eens', subeRound:'Ronde {r} van 10 · goed: {ok}', listen:'Luister…', upOrDown:'Omhoog of omlaag?',
+  upW:'Omhoog', downW:'Omlaag', wasDown:'Het ging omlaag — luister:', wasUp:'Het ging omhoog — luister:', score:'{ok} van de 10!', ear:'Muzikantenoren!', tryAgain:'Probeer het nog eens',
+  already:'{yo} staat al in de toren. {up} (boven) of {dn} (onder) passen', noFit:'{yo} past hier niet: probeer {up} (boven) of {dn} (onder)',
+  chipTitle:'De toren beginnen op {n}', pickStart:'Kies de beginnoot met de knoppen (of een fiche)', base:'{n}: de basis van de toren',
+  firstPick:'Kies eerst de beginnoot met de knoppen (of een fiche)', lineEnd:'De kwintenreeks houdt aan die kant op: probeer de andere kant',
+  scale:'De toonladder van {k}!', wobble:'Pas op! De toren wiebelt…', fell:'Hij is gevallen! {a2} is niet {a1}: de pythagoreïsche komma',
+  fellOut:'<b>De kwintentoren:</b> {a1} en {a2} zijn dezelfde pianotoets, maar twaalf kwinten (3:2) sluiten de cirkel niet: ertussen zit de pythagoreïsche komma (531441:524288). Luister: {a1}, {a2}, en samen. Trek opnieuw voor een nieuwe toren.',
+  stepFifth:'{a} → {b}: een kwint {d}', dirUp:'omhoog (naar de ♯)', dirDn:'omlaag (naar de ♭)',
+  count:'Luister naar het aftellen…', now:'Nu! Eén stap op elke tel', oops:'Oeps! Luister naar de tel', steps:'{n} van de 16 stappen',
+  danced:'{t}! Het hondje kwam dansend aan', walkAgain:'{t}. Nog een rondje!', saveSub:'Gecomponeerd met de melodiemachine · {key}',
+  g_maquina:['De melodiemachine','Muzikaal compositiespel','Trek aan de hendel: vier rollen, vier maten, een nieuwe melodie.'],
+  g_eco:['De echo','Luisterspel','De machine speelt en jij speelt na met A S D F G H J K of met de knoppen. Tot de hele melodie!'],
+  g_torre:['De kwintentoren','Bouwspel','Kies de beginnoot en stapel kwinten (3:2): ↑ erbovenop, naar de kruisen; ↓ eronder, naar de mollen. Met 7 op een rij krijg je een toonladder; met 13… blijft de toren staan?'],
+  g_paseo:['De wandeling van het hondje','Spel van de tel','Het hondje loopt op de tel van de melodie. Tik op TAP HERE (of de spatiebalk) bij elke stap, met het lampje van de tel. Laat hem niet struikelen!'],
+  g_sube:['Omhoog of omlaag?','Luisterspel','Er klinken twee noten: gaat de tweede omhoog of omlaag? Druk op ⬆ of ⬇ (of de pijltjestoetsen). Tien rondes, steeds dichter bij elkaar.'],
+  how:'<b>Zo speel je.</b> Trek aan de hendel of druk op SPIN: de rollen draaien en stoppen één voor één op een nieuwe maat, met andere noten en andere ritmes. De eerste staat op het akkoord van I, de tweede op IV, de derde op V en de vierde komt thuis, altijd op de grondtoon. Met HOLD blijft de rol die je mooi vindt staan. Met KEY en MODE klinkt dezelfde melodie in een andere toonsoort, in majeur of mineur, in pythagoreïsche stemming. Hieronder staan de toetsen om hem te spelen op het Cosmic Keyboard (Tonal, middelste rij: A is de grondtoon). Komt er een bekende melodie uit, dan win je een prijs. En als de vier rollen samen heel Altijd is Kortjakje ziek of de Ode aan de vreugde vormen: HOOFDPRIJS! Houd de stukjes die uitkomen vast met HOLD en blijf trekken. <b>SAVE .mmf</b> bewaart de melodie met het akkoord in elke maat, om hem te openen in de Score met File › Open.' },
+de:{ short:'Melodiemaschine', aula:'Musik im Unterricht', prev:'Vorheriges Spiel', next:'Nächstes Spiel', quintasAria:'Die Quintenreihe: von {a} bis {b}',
+  lever:'Hebel: nach unten ziehen zum Drehen', ecoTitle:'Die Maschine spielt, du spielst nach', bub:'WAU!', barAria:'Takt', bar:'Takt',
+  chordOf:'{r}-Akkord', final:'I · Schluss', start:'START', step:'SCHRITT', fifth:'QUINTE', echo:'ECHO',
+  famOda:'Ode an die Freude!', famEstr:'Funkel, funkel, kleiner Stern!', famFin:'Das Ende vom kleinen Stern!', songEstr:'Funkel, funkel, kleiner Stern', songOda:'Ode an die Freude',
+  onTheWay:'Auf dem Weg: {s}! {k} von 4 · HOLD und weiterziehen', three:'JACKPOT · drei gleiche Rhythmen', yours:'Deine Melodie!<small>vier Takte, von dir gewählt</small>',
+  grand:'HAUPTGEWINN!<small>{s}, komplett</small>', outHead:'Deine Melodie in {key} · Cosmic Keyboard: Tonal, KEY {k}, MODE {m}, mittlere Reihe',
+  saveNote:'SAVE .mmf: Der Score schreibt bis zu sieben Vorzeichen; zum Speichern nimm die enharmonische Nachbarin.',
+  rid7:'{nm} braucht <b>{n} {sg}</b>. Auf die Notenlinien passen nur 7! Darum schreibt sie fast niemand.', ridN:'{nm} hat {n} {sg}: Fast niemand schreibt sie.',
+  ridV:'Klingt genau wie <b>{v}</b>.<br>Spiel sie!', ridR:'Oder ihre {rel}: <b>{r}</b>.<br>Spiel sie!', relMin:'Moll-Parallele', relMaj:'Dur-Parallele',
+  ridDog:'Noch mal von vorn? <b>Zieh am Hebel</b> → {c}.', ridSig:'<b>{r}</b> hat dieselben Vorzeichen wie <b>{v}</b>: {sig}.', noSig:'ohne Vorzeichen',
+  ridOut:'<b>Wer ist deine Nachbarin?</b> {nm} ist eine theoretische Tonart. Spiel ihre Nachbarin oder ihre Parallele, oder zieh am Hebel, um zu {c} zurückzukehren.',
+  comma:'<b>{a} und {b}:</b> Auf dem Klavier ist es dieselbe Taste, für das Ohr nicht. In der pythagoreischen Stimmung von Music Motion trennt sie ein Komma — hör zu: erst der eine, dann der andere, dann beide zusammen.',
+  listenWhat:'Hör zu… {w}', bar1:'Takt 1', whole:'die ganze Melodie', upTo:'Takt 1 bis {n}', yourTurn:'Du bist dran! Spiel die Töne nach',
+  ecoRound:'Runde {r} von 4 · {n} Töne', ecoPerfect:'Perfektes Echo! Die ganze Melodie', good:'Sehr gut!', almost:'Fast… hör noch mal zu',
+  up:'HOCH', down:'RUNTER', again:'noch mal', subeRound:'Runde {r} von 10 · richtig: {ok}', listen:'Hör zu…', upOrDown:'Hoch oder runter?',
+  upW:'Hoch', downW:'Runter', wasDown:'Es ging runter — hör zu:', wasUp:'Es ging hoch — hör zu:', score:'{ok} von 10!', ear:'Musikerohren!', tryAgain:'Versuch es noch mal',
+  already:'{yo} ist schon im Turm. {up} (oben) oder {dn} (unten) passen', noFit:'{yo} passt hier nicht: Probier {up} (oben) oder {dn} (unten)',
+  chipTitle:'Den Turm mit {n} beginnen', pickStart:'Wähle den Startton mit den Tasten (oder einem Chip)', base:'{n}: der Sockel des Turms',
+  firstPick:'Wähle zuerst den Startton mit den Tasten (oder einem Chip)', lineEnd:'Die Quintenreihe endet auf dieser Seite: Probier die andere Richtung',
+  scale:'Die {k}-Tonleiter!', wobble:'Vorsicht! Der Turm wackelt…', fell:'Umgefallen! {a2} ist nicht {a1}: das pythagoreische Komma',
+  fellOut:'<b>Der Quintenturm:</b> {a1} und {a2} sind dieselbe Klaviertaste, aber zwölf Quinten (3:2) schließen den Kreis nicht: Zwischen ihnen bleibt das pythagoreische Komma (531441:524288). Hör zu: {a1}, {a2} und zusammen. Zieh noch einmal für einen neuen Turm.',
+  stepFifth:'{a} → {b}: eine Quinte {d}', dirUp:'nach oben (zu den ♯)', dirDn:'nach unten (zu den ♭)',
+  count:'Hör auf das Einzählen…', now:'Jetzt! Ein Schritt auf jeden Schlag', oops:'Hoppla! Hör auf den Schlag', steps:'{n} von 16 Schritten',
+  danced:'{t}! Das Hündchen kam tanzend an', walkAgain:'{t}. Noch eine Runde!', saveSub:'Komponiert mit der Melodiemaschine · {key}',
+  g_maquina:['Die Melodiemaschine','Kompositionsspiel','Zieh am Hebel: vier Walzen, vier Takte, eine neue Melodie.'],
+  g_eco:['Das Echo','Hörspiel','Die Maschine spielt und du spielst nach, mit A S D F G H J K oder mit den Tasten. Bis zur ganzen Melodie!'],
+  g_torre:['Der Quintenturm','Bauspiel','Wähle den Startton und staple Quinten (3:2): ↑ obendrauf, zu den Kreuzen; ↓ darunter, zu den Bs. Mit 7 hintereinander entsteht eine Tonleiter; mit 13… hält der Turm?'],
+  g_paseo:['Der Spaziergang des Hündchens','Pulsspiel','Das Hündchen läuft im Puls der Melodie. Drück TAP HERE (oder die Leertaste) bei jedem Schritt, mit dem Pulslicht. Lass es nicht stolpern!'],
+  g_sube:['Hoch oder runter?','Hörspiel','Zwei Töne erklingen: Geht der zweite hoch oder runter? Drück ⬆ oder ⬇ (oder die Pfeiltasten). Zehn Runden, immer enger.'],
+  how:'<b>So wird gespielt.</b> Zieh am Hebel oder drück SPIN: Die Walzen drehen sich und bleiben eine nach der anderen bei einem neuen Takt stehen, mit anderen Tönen und anderen Rhythmen. Die erste steht auf dem Akkord der I. Stufe, die zweite auf IV, die dritte auf V, und die vierte kommt nach Hause, immer zum Grundton. HOLD hält die Walze fest, die dir gefällt. Mit KEY und MODE klingt dieselbe Melodie in einer anderen Tonart, in Dur oder Moll, in pythagoreischer Stimmung. Unten stehen die Tasten, um sie auf dem Cosmic Keyboard zu spielen (Tonal, mittlere Reihe: A ist der Grundton). Kommt eine berühmte Melodie heraus, gibt es einen Preis. Und wenn die vier Walzen ganz „Funkel, funkel, kleiner Stern“ oder die Ode an die Freude ergeben: HAUPTGEWINN! Halte die Stücke, die herauskommen, mit HOLD fest und zieh weiter. <b>SAVE .mmf</b> speichert die Melodie mit ihrem Akkord in jedem Takt, zum Öffnen im Score mit File › Open.' } };
+function tr(k,v){ const d=I18N[LANG]||I18N.es; let s=d[k]!=null?d[k]:I18N.es[k]; if(typeof s!=='string') return s; return v?s.replace(/\{(\w+)\}/g,(m,x)=>v[x]!=null?v[x]:m):s; }
+// los nombres de las notas en la escuela de cada idioma
+const SOLF={es:{C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'},fr:{C:'Do',D:'Ré',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'}};
+const SYM={2:'𝄪',1:'♯',0:'','-1':'♭','-2':'𝄫'};
+function nomb(L,acc){ acc=acc||0;
+  if(LANG==='de'){ if(L==='B') return ['Heses','B','H','His','Hisis'][acc+2];
+    if(acc>=0) return L+'is'.repeat(acc); if(L==='E'||L==='A') return L+'s'+(acc<-1?L.toLowerCase()+'s':''); return L+'es'.repeat(-acc); }
+  return ((SOLF[LANG]||{})[L]||L)+SYM[acc]; }
+function keyNameAcc(L,acc,m){ const n=nomb(L,acc);
+  return LANG==='de'?(m?n.toLowerCase()+'-Moll':n+'-Dur'):LANG==='fr'?n+(m?' mineur':' majeur'):LANG==='nl'?n+(m?' mineur':' majeur'):LANG==='en'?n+(m?' minor':' major'):n+(m?' menor':' mayor'); }
+// lo que está escrito en la página
+document.documentElement.lang=LANG; document.title='mm '+tr('short');
+{ const q=(s,f)=>{ const e=document.querySelector(s); if(e) f(e); };
+  q('meta[name="apple-mobile-web-app-title"]',e=>e.content=tr('short'));
+  q('.top a[href*="aula"]',e=>e.textContent=tr('aula'));
+  q('#jPrev',e=>e.setAttribute('aria-label',tr('prev'))); q('#jNext',e=>e.setAttribute('aria-label',tr('next')));
+  q('#quintas',e=>e.setAttribute('aria-label',tr('quintasAria',{a:nomb('F',-2),b:nomb('B',2)})));
+  q('#lever',e=>e.setAttribute('aria-label',tr('lever'))); q('#ecoBtn',e=>e.title=tr('ecoTitle'));
+  q('.how',e=>e.innerHTML=tr('how')); q('#dog .bub',e=>e.textContent=tr('bub'));
+  q('.top',e=>{ const s=document.createElement('span'); s.className='langs'; s.id='langs';
+    s.innerHTML=LANGS.map(l=>`<button class="${l===LANG?'on':''}" data-l="${l}" aria-pressed="${l===LANG}">${l.toUpperCase()}</button>`).join('');
+    s.onclick=ev=>{ const b=ev.target.closest('button'); if(!b||b.dataset.l===LANG) return; const u=new URL(location.href); u.searchParams.set('lang',b.dataset.l); location.href=u.href; };
+    e.appendChild(s); }); }
+</script>
+<script>
 const GL={"gClef": "M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z", "black": "M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z", "half": "M97 -125C262 -125 295 9 295 42C295 93 254 125 196 125C47 125 0 10 0 -42C0 -95 42 -125 97 -125ZM75 -87C54 -87 42 -76 35 -64C32 -58 29 -51 29 -44C29 5 174 84 221 84C240 84 251 75 258 63C261 57 264 51 264 44C264 1 123 -87 75 -87Z", "whole": "M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z", "flagUp": "M238 -790C238 -790 264 -695 264 -617C264 -492 212 -374 149 -274C98 -195 56 -109 40 -13C37 3 29 9 19 9C8 9 0 6 0 -6V-245C66 -257 161 -393 197 -478C212 -512 221 -569 221 -628C221 -673 214 -720 197 -765C195 -771 194 -776 194 -780C194 -796 204 -805 210 -809C216 -813 233 -807 238 -790Z", "flagDown": "M240 760C254 718 261 668 261 623C261 564 236 480 221 446C184 362 134 281 0 236V1C0 -9 8 -14 16 -14C25 -14 38 -8 40 8C57 103 131 190 182 269C245 368 306 487 306 612C306 690 286 761 278 793C275 804 269 808 262 808C247 808 230 789 240 760Z", "dot": "M100 0C100 28 78 50 50 50C22 50 0 28 0 0C0 -28 22 -50 50 -50C78 -50 100 -28 100 0Z", "sharp": "M237 118C244 121 249 129 249 135V206C249 211 246 214 242 214C240 214 239 214 237 213C237 213 217 205 212 204C205 204 198 209 198 217V339C198 345 192 350 184 350C174 350 168 345 168 339V209C167 199 164 186 155 180C143 173 109 159 92 155C83 155 80 167 80 175V295C80 301 73 306 66 306C56 306 50 301 50 295V160C50 146 44 136 38 133C32 130 12 122 12 122C5 120 0 112 0 106V35C0 29 3 26 9 26L11 27C12 27 27 33 35 37L36 38C44 38 50 28 50 20V-79C50 -90 45 -99 39 -102C33 -104 12 -113 12 -113C5 -115 0 -123 0 -129V-200C0 -206 3 -209 9 -209L11 -208C12 -208 26 -202 35 -199C36 -198 37 -198 38 -198C45 -198 50 -209 50 -214V-337C50 -343 56 -348 63 -348C73 -348 80 -343 80 -337V-198C80 -185 85 -178 90 -176L151 -151C151 -151 152 -151 152 -151L154 -150C163 -150 168 -162 168 -168V-293C168 -299 174 -304 181 -304C192 -304 198 -299 198 -293V-151C198 -143 202 -131 209 -128C216 -125 237 -117 237 -117C244 -114 249 -106 249 -100V-29C249 -24 246 -21 242 -21C240 -21 239 -21 237 -22L211 -32C205 -32 198 -26 198 -14V79C198 86 203 105 211 108ZM168 -45C162 -65 115 -85 92 -85C86 -85 81 -83 80 -80C78 -76 77 -54 77 -30C77 1 78 36 80 44C82 61 128 82 153 82C160 82 166 80 168 76C170 71 172 46 172 19C172 -8 170 -36 168 -45Z", "flat": "M12 -170C15 -174 18 -175 21 -175C24 -175 27 -173 27 -173C57 -156 81 -129 106 -112C195 -50 226 11 226 57C226 114 182 150 136 153C119 153 95 145 81 136C75 131 64 122 59 122C57 122 56 122 54 123C47 126 43 133 43 140C44 162 50 402 50 422C50 433 41 439 31 439C17 439 1 429 0 411C0 411 4 -160 12 -170ZM47 -81C47 -81 44 -21 44 19C44 35 45 47 46 51C53 71 93 100 116 100C145 100 157 67 157 42C157 -12 111 -66 68 -93C64 -95 61 -96 58 -96C49 -96 47 -86 47 -81Z"};
 const S=10, K=S/250;
-const LET=['C','D','E','F','G','A','B'], NAMES={C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'};
+const LET=['C','D','E','F','G','A','B'], NAMES={C:nomb('C'),D:nomb('D'),E:nomb('E'),F:nomb('F'),G:nomb('G'),A:nomb('A'),B:nomb('B')};
 const SEMI={C:0,D:2,E:4,F:5,G:7,A:9,B:11}, FIF={F:-1,C:0,G:1,D:2,A:3,E:4,B:5};
 const ROM=['I','II','III','IV','V','VI','VII','VIII'], KEYC=['A','S','D','F','G','H','J','K'];
-const FUN=[{n:'acorde de I',ch:[0,2,4,7]},{n:'acorde de IV',ch:[3,5,7,0]},{n:'acorde de V',ch:[4,6,1]},{n:'I · final',ch:[0,2,4,7]}];
+const FUN=[{n:tr('chordOf',{r:'I'}),ch:[0,2,4,7]},{n:tr('chordOf',{r:'IV'}),ch:[3,5,7,0]},{n:tr('chordOf',{r:'V'}),ch:[4,6,1]},{n:tr('final'),ch:[0,2,4,7]}];
 const RH=[[2,2,2,2],[4,2,2],[2,2,4],[3,1,2,2],[1,1,2,2,2],[2,1,1,2,2],[2,2,1,1,2],[6,2],[3,1,4],[1,1,1,1,2,2],[2,2,2,1,1],[4,4]];
 const RHF=[[2,2,4],[4,4],[8],[3,1,4],[2,6],[1,1,2,4],[6,2]];
-const FAMOUS=[{n:'¡La Oda a la alegría!',d:[2,2,3,4],r:[2,2,2,2],reel:0},{n:'¡La Estrellita!',d:[0,0,4,4],r:[2,2,2,2],reel:0},{n:'¡La Estrellita!',d:[5,5,4],r:[2,2,4],reel:1},{n:'¡El final de la Estrellita!',d:[1,1,0],r:[2,2,4],reel:3}];
+const FAMOUS=[{n:tr('famOda'),d:[2,2,3,4],r:[2,2,2,2],reel:0},{n:tr('famEstr'),d:[0,0,4,4],r:[2,2,2,2],reel:0},{n:tr('famEstr'),d:[5,5,4],r:[2,2,4],reel:1},{n:tr('famFin'),d:[1,1,0],r:[2,2,4],reel:3}];
 // las dos canciones completas: un trozo por rodillo, con sus propios acordes ([grado, octavos])
-const SONGS=[{n:'la Estrellita',bars:[{d:[0,0,4,4],r:[2,2,2,2],ch:[[0,8]]},{d:[5,5,4],r:[2,2,4],ch:[[3,4],[0,4]]},{d:[3,3,2,2],r:[2,2,2,2],ch:[[3,4],[0,4]]},{d:[1,1,0],r:[2,2,4],ch:[[4,4],[0,4]]}]},
-  {n:'la Oda a la alegría',bars:[{d:[2,2,3,4],r:[2,2,2,2],ch:[[0,8]]},{d:[4,3,2,1],r:[2,2,2,2],ch:[[0,4],[4,4]]},{d:[0,0,1,2],r:[2,2,2,2],ch:[[0,8]]},{d:[1,0,0],r:[3,1,4],ch:[[4,4],[0,4]]}]}];
+const SONGS=[{n:tr('songEstr'),bars:[{d:[0,0,4,4],r:[2,2,2,2],ch:[[0,8]]},{d:[5,5,4],r:[2,2,4],ch:[[3,4],[0,4]]},{d:[3,3,2,2],r:[2,2,2,2],ch:[[3,4],[0,4]]},{d:[1,1,0],r:[2,2,4],ch:[[4,4],[0,4]]}]},
+  {n:tr('songOda'),bars:[{d:[2,2,3,4],r:[2,2,2,2],ch:[[0,8]]},{d:[4,3,2,1],r:[2,2,2,2],ch:[[0,4],[4,4]]},{d:[0,0,1,2],r:[2,2,2,2],ch:[[0,8]]},{d:[1,0,0],r:[3,1,4],ch:[[4,4],[0,4]]}]}];
 const same=(b,x)=>b.deg.join()===x.d.join()&&b.rh.join()===x.r.join();
 function songOf(b,i){ for(const s of SONGS) if(same(b,s.bars[i])) return s; return null; }
 function chordsOf(b,i){ const s=songOf(b,i); if(s) return s.bars[i].ch; if(i===3&&b.deg[b.deg.length-1]%7===1) return [[4,8]]; return [[FUN[i].ch[0],8]]; }   // termina en II → semicadencia sobre V
@@ -255,7 +446,7 @@ function makeBar(i,prevEnd){
 function keyInfo(){ const t=state.key, a={b:-1,n:0,'#':1}[state.alt]; let fifths=FIF[t]+7*a; if(state.mode===1) fifths-=3;
   const ok=Math.abs(fifths)<=7&&!(t==='C'&&state.alt==='b'); return {fifths,ok,std:ok,tonicIdx:LET.indexOf(t)}; }
 const ALT={b:-1,n:0,'#':1}, ALTS={b:'♭',n:'','#':'♯'};
-const keyName=(k,a,m)=>NAMES[k]+ALTS[a]+(m?' menor':' mayor');
+const keyName=(k,a,m)=>keyNameAcc(k,ALT[a],m);
 const fifthsOf=(k,a,m)=>FIF[k]+7*ALT[a]-(m===1?3:0);
 function vecinaDe(k,a,m){ const pc=(SEMI[k]+ALT[a]+12)%12;
   for(const L of LET) for(const al of ['n','#','b']){ if((SEMI[L]+ALT[al]+12)%12!==pc||(L===k&&al===a)) continue;
@@ -268,7 +459,7 @@ function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B',
 function spell(deg){ const ki=keyInfo(); const li=ki.tonicIdx+deg; const letter=LET[li%7]; const oct=4+Math.floor(li/7); const acc=sigAcc(letter,ki.fifths);
   const e3=FIF[letter]+7*acc; const semis=SEMI[letter]+acc+12*(oct-4); const e2=Math.round(semis/12-e3*Math.log2(3));
   return {letter,oct,acc,freq:260.7407407407407*Math.pow(3,e3)*Math.pow(2,e2)}; }
-const nm=s=>NAMES[s.letter]+({2:'𝄪',1:'♯',0:'','-1':'♭','-2':'𝄫'}[s.acc]);
+const nm=s=>nomb(s.letter,s.acc);
 // ── el dibujo de cada compás ──
 const g=(n,x,y,fill)=>`<path fill="${fill||'#0e2934'}" transform="translate(${x.toFixed(2)},${y.toFixed(2)}) scale(${K.toFixed(4)},${(-K).toFixed(4)})" d="${GL[n]}"/>`;
 const TPOS={C:0,D:1,E:2,F:3,G:4,A:5,B:6};
@@ -296,11 +487,11 @@ function barSVG(bar,hi){
     if(up){const sx=h.hx+11.2; m+=`<rect x="${sx}" y="${h.hy-35}" width="1.6" height="34" fill="${h.col}"/>`; if(h.du===1) m+=g('flagUp',sx,h.hy-35,h.col);}
     else{m+=`<rect x="${h.hx}" y="${h.hy+1}" width="1.6" height="34" fill="${h.col}"/>`; if(h.du===1) m+=g('flagDown',h.hx,h.hy+35,h.col);} }
   m+=`<rect x="${W-8}" y="${y0}" width="1.6" height="${4*S}" fill="#0e2934"/>`;
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="compás">${m}</svg>`;
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${tr('barAria')}">${m}</svg>`;
 }
 // ── la máquina ──
 const reelsEl=document.getElementById('reels');
-reelsEl.innerHTML=FUN.map((f,i)=>`<div class="reel"><div class="fn">Compás ${i+1} · ${f.n}</div><div class="frame" id="f${i}"><div class="bulbs">${Array.from({length:14},(_,k)=>{const t=k/14;let x,y;if(t<.32){x=t/.32*100;y=0}else if(t<.5){x=100;y=(t-.32)/.18*100}else if(t<.82){x=100-(t-.5)/.32*100;y=100}else{x=0;y=100-(t-.82)/.18*100}return `<i style="left:${x}%;top:${y}%;--k:${k}"></i>`}).join('')}</div><div class="win"><div class="strip" id="s${i}"></div></div></div><div class="lbl" id="l${i}"></div><button class="btn hold" id="h${i}" aria-pressed="false">HOLD</button></div>`).join('');
+reelsEl.innerHTML=FUN.map((f,i)=>`<div class="reel"><div class="fn">${tr('bar')} ${i+1} · ${f.n}</div><div class="frame" id="f${i}"><div class="bulbs">${Array.from({length:14},(_,k)=>{const t=k/14;let x,y;if(t<.32){x=t/.32*100;y=0}else if(t<.5){x=100;y=(t-.32)/.18*100}else if(t<.82){x=100-(t-.5)/.32*100;y=100}else{x=0;y=100-(t-.82)/.18*100}return `<i style="left:${x}%;top:${y}%;--k:${k}"></i>`}).join('')}</div><div class="win"><div class="strip" id="s${i}"></div></div></div><div class="lbl" id="l${i}"></div><button class="btn hold" id="h${i}" aria-pressed="false">HOLD</button></div>`).join('');
 const lights=document.getElementById('lights'); lights.innerHTML='<i></i>'.repeat(35);   // 35 luces, como los 35 chips de la línea de quintas (Mario, 2026-10-23)
 // ── «¿Quién es tu vecina?» (2026-10-23, Mario: «muy difícil para niños»): una tonalidad teórica muestra cuatro cuadros —
 // por qué no se escribe · su vecina · la relativa de la vecina · el perrito con la palanca (que vuelve a Do mayor y tira).
@@ -315,45 +506,45 @@ function drawRiddle(){ const r=riddle, h=stripH(), nm=keyName(r.k,r.a,r.m), f=fi
   const v=vecinaDe(r.k,r.a,r.m), rel=relativaDe(v.k,v.a,r.m);
   const marks=Array.from({length:Math.min(n,7)},(_,j)=>`<span class="${j<n-7?'blink':''}">${j<n-7?dbl:sg}</span>`).join('');
   const dog=(document.getElementById('dog')||{}).innerHTML||'';
-  const c=[ n>7?`<div class="sig">${marks}</div><div>${nm} necesita <b>${n} ${sg}</b>. ¡En el pentagrama solo caben 7! Por eso casi nadie la escribe.</div>`
-              :`<div class="sig">${marks}</div><div>${nm} lleva ${n} ${sg}: casi nadie la escribe.</div>`,
-    `<div class="big">🎹</div><div>Suena igual que <b>${keyName(v.k,v.a,r.m)}</b>.<br>¡Tócala!</div>`,
-    `<div class="big">${rel.m?'🌙':'☀️'}</div><div>O su ${rel.m?'relativa menor':'relativa mayor'}: <b>${keyName(rel.k,rel.a,rel.m)}</b>.<br>¡Tócala!</div>`,
-    `<svg class="mini-dog" viewBox="0 0 160 170">${dog}</svg><div>¿Empezamos de nuevo? <b>Tira de la palanca</b> → Do mayor.</div>` ];
+  const c=[ n>7?`<div class="sig">${marks}</div><div>${tr('rid7',{nm,n,sg})}</div>`
+              :`<div class="sig">${marks}</div><div>${tr('ridN',{nm,n,sg})}</div>`,
+    `<div class="big">🎹</div><div>${tr('ridV',{v:keyName(v.k,v.a,r.m)})}</div>`,
+    `<div class="big">${rel.m?'🌙':'☀️'}</div><div>${tr('ridR',{rel:tr(rel.m?'relMin':'relMaj'),r:keyName(rel.k,rel.a,rel.m)})}</div>`,
+    `<svg class="mini-dog" viewBox="0 0 160 170">${dog}</svg><div>${tr('ridDog',{c:keyName('C','n',0)})}</div>` ];
   for(let i=0;i<4;i++){ const st=document.getElementById('s'+i); st.innerHTML=`<div class="clue open${i===1||i===2?' pick':''}" style="height:${h}px">${c[i]}</div>`;
     document.getElementById('l'+i).innerHTML=''; }
   // 2026-10-23 (Mario): la vecina hace oír la coma y los cuadros se quedan, con el perrito; solo la palanca los quita.
   const c1=document.querySelector('#s1 .clue'); if(c1) c1.onclick=()=>{ if(!state.spinning) comma(r,{k:v.k,a:v.a}); };
   // La relativa: la carta muestra la armadura que comparte con la vecina, con la luna (o el sol) encima, y el perrito salta.
   const c2=document.querySelector('#s2 .clue'); if(c2) c2.onclick=()=>{ if(state.spinning) return; const vf=fifthsOf(v.k,v.a,r.m), vn=Math.abs(vf), vs=vf>0?'♯':'♭';
-    c2.innerHTML=`<div class="big">${rel.m?'🌙':'☀️'}</div><div class="sig">${vn?vs.repeat(vn):'♮'}</div><div><b>${keyName(rel.k,rel.a,rel.m)}</b> tiene la misma armadura que <b>${keyName(v.k,v.a,r.m)}</b>: ${vn?vn+' '+vs:'sin alteraciones'}.</div>`;
+    c2.innerHTML=`<div class="big">${rel.m?'🌙':'☀️'}</div><div class="sig">${vn?vs.repeat(vn):'♮'}</div><div>${tr('ridSig',{r:keyName(rel.k,rel.a,rel.m),v:keyName(v.k,v.a,r.m),sig:vn?vn+' '+vs:tr('noSig')})}</div>`;
     const d=document.querySelector('#s3 .mini-dog'); if(d){ d.classList.remove('jump'); void d.getBoundingClientRect(); d.classList.add('jump'); } };
-  document.getElementById('out').innerHTML=`<div><b>¿Quién es tu vecina?</b> ${nm} es una tonalidad teórica. Toca su vecina o su relativa, o tira de la palanca para volver a Do mayor.</div>`; }
+  document.getElementById('out').innerHTML=`<div>${tr('ridOut',{nm,c:keyName('C','n',0)})}</div>`; }
 // Las dos tónicas, una tras otra y juntas: en el piano son la misma tecla; en la afinación pitagórica las separa una coma.
-function comma(r,v){ const f1=tonicFreq(r.k,r.a), f2=tonicFreq(v.k,v.a), n1=NAMES[r.k]+ALTS[r.a], n2=NAMES[v.k]+ALTS[v.a];
+function comma(r,v){ const f1=tonicFreq(r.k,r.a), f2=tonicFreq(v.k,v.a), n1=nomb(r.k,ALT[r.a]), n2=nomb(v.k,ALT[v.a]);
   try{ const a=ctx(); const t=a.currentTime+.15; tone(f1,t,.9,.13,true); tone(f2,t+1.1,.9,.13,true); tone(f1,t+2.3,1.6,.1,true); tone(f2,t+2.3,1.6,.1,true); }catch(e){}
   const o=document.getElementById('out'); const prev=o.querySelector('.coma'); if(prev) prev.remove();
-  o.insertAdjacentHTML('afterbegin',`<div class="coma"><b>${n1} y ${n2}:</b> en el piano son la misma tecla; para el oído, no. En la afinación pitagórica de Music Motion las separa una coma — escúchalas: primero una, luego la otra, y después juntas.</div>`); }
+  o.insertAdjacentHTML('afterbegin',`<div class="coma">${tr('comma',{a:n1,b:n2})}</div>`); }
 function stripH(){return document.querySelector('.win').getBoundingClientRect().height;}
 function render(hi){
   if(window._juegoId==='torre') return;   // la torre dibuja lo suyo
   state.bars.forEach((b,i)=>{ const st=document.getElementById('s'+i); st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.remove('blur'); st.innerHTML=barSVG(b,hi&&hi[0]===i?hi[1]:-1);
     document.getElementById('l'+i).innerHTML=`<b>${b.deg.map(d=>KEYC[d]).join(' ')}</b><br>${b.deg.map(d=>nm(spell(d))).join(' ')}`; });
-  const ki=keyInfo(); const tn=NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt]); const out=document.getElementById('out');
+  const ki=keyInfo(); const tn=keyName(state.key,state.alt,state.mode); const out=document.getElementById('out');
   if(!ki.ok){ riddle={k:state.key,a:state.alt,m:state.mode}; drawRiddle(); return; }
   riddle=null;
-  out.innerHTML=`<div class="d">Tu melodía en ${tn} ${state.mode?'menor':'mayor'} · Cosmic Keyboard: Tonal, KEY ${state.key}${state.alt==='n'?'':state.alt==='#'?' ♯':' ♭'}, MODE ${state.mode?'m':'M'}, fila del medio</div>
+  out.innerHTML=`<div class="d">${tr('outHead',{key:tn,k:state.key+(state.alt==='n'?'':state.alt==='#'?' ♯':' ♭'),m:state.mode?'m':'M'})}</div>
   <div class="k">${state.bars.map(b=>b.deg.map(d=>KEYC[d]).join(' ')).join('  |  ')}</div>
   <div>${state.bars.map(b=>b.deg.map(d=>nm(spell(d))).join(' ')).join('  |  ')}</div>
-  <div class="d">${state.bars.map(b=>b.deg.map(d=>ROM[d]).join(' ')).join('  |  ')}</div>${ki.std?'':'<div class="d">SAVE .mmf: el Score escribe hasta siete alteraciones en la armadura; para guardar, usa su vecina enarmónica.</div>'}`;
+  <div class="d">${state.bars.map(b=>b.deg.map(d=>ROM[d]).join(' ')).join('  |  ')}</div>${ki.std?'':'<div class="d">'+tr('saveNote')+'</div>'}`;
 }
 function grand(){ for(const s of SONGS) if(state.bars.every((b,i)=>same(b,s.bars[i]))) return s; return null; }
 function onTheWay(){ let best=null; for(const s of SONGS){ const k=state.bars.filter((b,i)=>same(b,s.bars[i])).length; if(k>=2&&(!best||k>best.k)) best={s,k}; } return best; }
 // 2026-10-23 (Mario): el chime lo dan solo los compases NUEVOS (los que giraron); los que están en HELD ya avisaron.
 function famous(nuevo){ nuevo=nuevo||[true,true,true,true];
-  const w=onTheWay(); if(w&&state.bars.some((b,i)=>nuevo[i]&&same(b,w.s.bars[i]))) return `¡Vas por ${w.s.n}! ${w.k} de 4 · HOLD y a tirar`;
+  const w=onTheWay(); if(w&&state.bars.some((b,i)=>nuevo[i]&&same(b,w.s.bars[i]))) return tr('onTheWay',{s:w.s.n,k:w.k});
   for(let i=0;i<4;i++){ if(!nuevo[i]) continue; const b=state.bars[i]; for(const f of FAMOUS) if(f.d.join()===b.deg.join()&&f.r.join()===b.rh.join()) return f.n; }
-  const r=state.bars.map(b=>b.rh.join()); if(r[0]===r[1]&&r[1]===r[2]&&(nuevo[0]||nuevo[1]||nuevo[2])) return 'JACKPOT · tres ritmos iguales'; return ''; }
+  const r=state.bars.map(b=>b.rh.join()); if(r[0]===r[1]&&r[1]===r[2]&&(nuevo[0]||nuevo[1]||nuevo[2])) return tr('three'); return ''; }
 // 2026-10-23 (Mario): solo intervalos cantables — 2.ª, 3.ª, 4.ª y 5.ª justas, 6.ª y 7.ª mayores o menores, 8.ª;
 // nada aumentado ni disminuido (ni tritono, ni 2.ª aumentada, ni coma). Se mide sobre la nota escrita en la tonalidad.
 const IV_OK=new Set(['0:0','1:1','1:2','2:3','2:4','3:5','4:7','5:8','5:9','6:10','6:11','7:12']);
@@ -404,7 +595,7 @@ function jackpot(txt){
 }
 // Los cuatro compases en HELD: la melodía es suya — chime, cascada de notitas y la toca entera.
 function tuMelodia(){
-  const ban=document.getElementById('banner'); ban.innerHTML='¡Tu melodía!<small>cuatro compases elegidos</small>'; ban.classList.add('flash','grand'); lights.classList.add('party');
+  const ban=document.getElementById('banner'); ban.innerHTML=tr('yours'); ban.classList.add('flash','grand'); lights.classList.add('party');
   [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.add('win-flash'));
   try{ navigator.vibrate&&navigator.vibrate([80,50,80,50,240]); }catch(e){}
   fanfare();
@@ -415,7 +606,7 @@ function tuMelodia(){
   setTimeout(()=>{lights.classList.remove('party');ban.classList.remove('grand');[0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));},6000);
 }
 function granPremio(song){
-  const ban=document.getElementById('banner'); ban.innerHTML=`¡GRAN PREMIO!<small>${song.n} completa</small>`; ban.classList.add('flash','grand'); lights.classList.add('party');
+  const ban=document.getElementById('banner'); ban.innerHTML=tr('grand',{s:song.n}); ban.classList.add('flash','grand'); lights.classList.add('party');
   [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.add('win-flash'));
   try{ navigator.vibrate&&navigator.vibrate([120,60,120,60,120,60,400]); }catch(e){}
   fanfare(); setTimeout(fanfare,700);
@@ -495,24 +686,24 @@ function ecoPad(){ const pad=document.getElementById('ecoPad');
 function ecoRound(){ const e=eco; if(!e) return; e.pos=0; e.listening=false; e.target=[]; e.hi=[];
   for(let i=0;i<e.round;i++) state.bars[i].deg.forEach((d,k)=>{ e.target.push(d); e.hi.push([i,k,state.bars[i].rh[k]]); });
   if(document.getElementById('ecoPad').hidden) ecoPad();
-  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=`Escucha… ${e.round===1?'el compás 1':e.round===4?'la melodía entera':'los compases 1 a '+e.round}`;
+  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=tr('listenWhat',{w:e.round===1?tr('bar1'):e.round===4?tr('whole'):tr('upTo',{n:e.round})});
   document.getElementById('ecoTurno').textContent='';
   const e8=60/state.bpm/2; let t=0.15; const a=ctx(), t0=a.currentTime;
   e.hi.forEach((h,j)=>{ const du=h[2]*e8; tone(spell(e.target[j]).freq,t0+t,du*.95,.16,true); const tt=t; e.timers.push(setTimeout(()=>{ if(eco===e) render([h[0],h[1]]); },tt*1000)); t+=du; });
-  e.timers.push(setTimeout(()=>{ if(eco!==e) return; render(); e.listening=true; ban.textContent='¡Tu turno! Repite las notas';
-    document.getElementById('ecoTurno').textContent=`Ronda ${e.round} de 4 · ${e.target.length} notas`; }, t*1000+250)); }
+  e.timers.push(setTimeout(()=>{ if(eco!==e) return; render(); e.listening=true; ban.textContent=tr('yourTurn');
+    document.getElementById('ecoTurno').textContent=tr('ecoRound',{r:e.round,n:e.target.length}); }, t*1000+250)); }
 function ecoPress(d){ const e=eco; if(!e||!e.listening) return;
   try{ const a=ctx(); tone(spell(d).freq,a.currentTime,.35,.16,true); }catch(x){}
   const b=document.querySelector(`#ecoPad button[data-d="${d}"]`);
   if(d===e.target[e.pos]){ if(b){ b.classList.add('ok'); setTimeout(()=>b.classList.remove('ok'),250); } render([e.hi[e.pos][0],e.hi[e.pos][1]]); e.pos++;
     if(e.pos>=e.target.length){ e.listening=false;
-      if(e.round>=4){ jackpot('¡Eco perfecto! La melodía entera'); e.timers.push(setTimeout(()=>{ if(eco===e) ecoStop(); },3600)); return; }
-      const ban=document.getElementById('banner'); ban.textContent='¡Muy bien!'; ban.classList.add('flash');
+      if(e.round>=4){ jackpot(tr('ecoPerfect')); e.timers.push(setTimeout(()=>{ if(eco===e) ecoStop(); },3600)); return; }
+      const ban=document.getElementById('banner'); ban.textContent=tr('good'); ban.classList.add('flash');
       const dog=document.getElementById('dog'); if(dog&&!reduce){ dog.classList.add('in'); e.timers.push(setTimeout(()=>dog.classList.remove('in'),1500)); }
       try{ const a=ctx(), t=a.currentTime+.05; tone(spell(4).freq,t,.15,.1,true); tone(spell(7).freq,t+.14,.3,.1,true); }catch(x){}
       e.round++; e.timers.push(setTimeout(()=>ecoRound(),1700)); }
   } else { if(b){ b.classList.add('no'); setTimeout(()=>b.classList.remove('no'),400); } e.listening=false;
-    const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent='Casi… escucha otra vez';
+    const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=tr('almost');
     try{ const a=ctx(); tone(spell(0).freq/2,a.currentTime+.05,.25,.08,true); }catch(x){}
     e.timers.push(setTimeout(()=>ecoRound(),1300)); } }
 document.addEventListener('keydown',ev=>{ if(!eco||ev.ctrlKey||ev.metaKey||ev.altKey) return; const d=KEYC.indexOf(ev.key.toUpperCase()); if(d>=0){ ev.preventDefault(); ecoPress(d); } });
@@ -525,20 +716,20 @@ function subeStop(){ if(!sube) return; sube.timers.forEach(clearTimeout); sube=n
   const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash'); }
 function subeStart(){ if(sube){ subeStop(); return; } if(!keyInfo().ok||state.spinning) return; stopPlay(); if(eco) ecoStop();
   sube={r:0,ok:0,par:null,listening:false,timers:[]};
-  const pad=document.getElementById('ecoPad'); pad.innerHTML=`<div class="turno" id="subeTurno"></div><button class="grande" data-v="1">⬆<small>SUBE</small></button><button class="grande" data-v="-1">⬇<small>BAJA</small></button><button data-v="0">🔁<small>otra vez</small></button>`;
+  const pad=document.getElementById('ecoPad'); pad.innerHTML=`<div class="turno" id="subeTurno"></div><button class="grande" data-v="1">⬆<small>${tr('up')}</small></button><button class="grande" data-v="-1">⬇<small>${tr('down')}</small></button><button data-v="0">🔁<small>${tr('again')}</small></button>`;
   pad.hidden=false; pad.querySelectorAll('button').forEach(b=>b.onclick=()=>{ const v=+b.dataset.v; v?subeResp(v):subeOir(); }); subeRonda(); }
 function subeOir(){ const e=sube; if(!e||!e.par) return; const a=ctx(), t=a.currentTime+.1; tone(spell(e.par[0]).freq,t,.6,.16,true); tone(spell(e.par[1]).freq,t+.75,.6,.16,true);
   e.listening=false; e.timers.push(setTimeout(()=>{ if(sube===e) e.listening=true; },1450)); }
 function subeRonda(){ const e=sube; if(!e) return; e.par=subePar(e.r);
-  document.getElementById('subeTurno').textContent=`Ronda ${e.r+1} de 10 · aciertos: ${e.ok}`;
-  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent='Escucha…'; subeOir();
-  e.timers.push(setTimeout(()=>{ if(sube===e) ban.textContent='¿Sube o baja?'; },1450)); }
+  document.getElementById('subeTurno').textContent=tr('subeRound',{r:e.r+1,ok:e.ok});
+  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=tr('listen'); subeOir();
+  e.timers.push(setTimeout(()=>{ if(sube===e) ban.textContent=tr('upOrDown'); },1450)); }
 function subeResp(v){ const e=sube; if(!e||!e.listening) return; e.listening=false; const bien=Math.sign(e.par[1]-e.par[0])===v, ban=document.getElementById('banner');
-  if(bien){ e.ok++; ban.textContent='¡Muy bien! '+(v>0?'Sube':'Baja'); ban.classList.add('flash'); const dog=document.getElementById('dog');
+  if(bien){ e.ok++; ban.textContent=tr('good')+' '+tr(v>0?'upW':'downW'); ban.classList.add('flash'); const dog=document.getElementById('dog');
     if(dog&&!reduce){ dog.classList.add('in'); e.timers.push(setTimeout(()=>dog.classList.remove('in'),1200)); }
     try{ const a=ctx(), t=a.currentTime+.05; tone(spell(4).freq,t,.12,.08,true); tone(spell(7).freq,t+.12,.25,.08,true); }catch(x){} }
-  else { ban.classList.remove('flash'); ban.textContent='Era '+(v>0?'baja':'sube')+' — escucha:'; subeOir(); }
-  e.r++; e.timers.push(setTimeout(()=>{ if(sube!==e) return; if(e.r>=10){ const t=`¡${e.ok} de 10!`; subeStop(); if(e.ok>=8) jackpot(t+' ¡Oído de músico!'); else { ban.textContent=t+' Prueba otra vez'; ban.classList.add('flash'); } return; } subeRonda(); }, bien?1300:2400)); }
+  else { ban.classList.remove('flash'); ban.textContent=tr(v>0?'wasDown':'wasUp'); subeOir(); }
+  e.r++; e.timers.push(setTimeout(()=>{ if(sube!==e) return; if(e.r>=10){ const t=tr('score',{ok:e.ok}); subeStop(); if(e.ok>=8) jackpot(t+' '+tr('ear')); else { ban.textContent=t+' '+tr('tryAgain'); ban.classList.add('flash'); } return; } subeRonda(); }, bien?1300:2400)); }
 document.addEventListener('keydown',ev=>{ if(!sube) return; if(ev.key==='ArrowUp'){ ev.preventDefault(); subeResp(1); } else if(ev.key==='ArrowDown'){ ev.preventDefault(); subeResp(-1); } });
 // ── 🧱 LA TORRE DE QUINTAS (2026-10-23, Mario): se empieza en Do; «QUINTA ↑» apila una quinta 3:2 hacia los sostenidos
 // (Sol Re La…), «QUINTA ↓» una hacia los bemoles (Fa Si♭ Mi♭…); cada nota baja a su octava. El perrito va arriba.
@@ -546,7 +737,7 @@ document.addEventListener('keydown',ev=>{ if(!sube) return; if(ev.key==='ArrowUp
 // cae — los extremos son la misma tecla del piano (Fa♯ y Sol♭, Si y Do♭…) pero los separa la coma pitagórica.
 let torre=null;
 const TCOL=['#d6b450','#ff9f6b','#ff6f91','#c58cff','#5ec8ff','#38c0a6','#9be15d','#ffd93d','#f7a8c4','#a0d8ff','#b9f3e4','#ffe7a0','#ffffff'];
-function pNota(p){ const L='FCGDAEB'[((p+1)%7+7)%7], acc=Math.floor((p+1)/7); return {L,acc,n:NAMES[L]+(acc>0?'♯'.repeat(acc):acc<0?'♭'.repeat(-acc):'')}; }
+function pNota(p){ const L='FCGDAEB'[((p+1)%7+7)%7], acc=Math.floor((p+1)/7); return {L,acc,n:nomb(L,acc)}; }
 function pFreq(p){ const c=tonicFreq('C','n'), r=Math.pow(1.5,p); return c*r/Math.pow(2,Math.floor(Math.log2(r)+1e-9)); }
 function pFrac(p){ let n=1n, d=1n; const k=Math.abs(p); for(let i=0;i<k;i++){ if(p>0) n*=3n; else d*=3n; } while(n>=2n*d) d*=2n; while(n<d) n*=2n; return n+':'+d; }
 function torrePlay(){ if(!torre||!torre.orden.length) return; try{ const a=ctx(), t0=a.currentTime+.1; torre.orden.forEach((p,i)=>tone(pFreq(p),t0+i*.42,.4,.13,true)); }catch(e){}
@@ -558,15 +749,15 @@ function torreNota(L){ if(!torre) torreNueva(); if(torre.caida) torreNueva(torre
   if(!torre.orden.length){ torreNueva(p); return; }   // la primera nota que elige el niño es la base
   if(p===torre.hi+1) return torreAdd(1);
   if(p===torre.lo-1) return torreAdd(-1);
-  const up=pNota(torre.hi+1).n, dn=pNota(torre.lo-1).n, yo=NAMES[L]+ALTS[torreAlt];
-  ban.classList.remove('flash'); ban.textContent=torre.orden.includes(p)?`${yo} ya está en la torre. Caben ${up} (arriba) o ${dn} (abajo)`:`${yo} no cabe aquí: prueba ${up} (arriba) o ${dn} (abajo)`;
+  const up=pNota(torre.hi+1).n, dn=pNota(torre.lo-1).n, yo=nomb(L,ALT[torreAlt]);
+  ban.classList.remove('flash'); ban.textContent=tr(torre.orden.includes(p)?'already':'noFit',{yo,up,dn});
   try{ const a=ctx(); tone(spell(0).freq/2,a.currentTime+.05,.2,.06,true); }catch(e){} }
 // La línea de quintas completa (2026-10-23, Mario): 35 chips de Fa𝄫 a Si𝄪, con Re en el centro, de los colores de los
 // chips del PANEL; los de la torre se encienden al 100 %. Al encenderse el 13.º llueven notitas y la torre se cae.
 const QCOL=['#38b09a','#c8a84a','#c04468','#4868c0','#8870c8','#4aa8b0','#b09a38','#c06844','#6880c0','#70c888','#c88870','#88c870','#a848c0','#48c0a8','#c0a848','#8848c0','#d06890','#58b0d0','#b0c040','#9858b8','#40b070','#d09040','#6850b0','#d05858','#50b8a0','#c070b0','#80a850','#5070c8','#c89858','#70b0c0','#a8c068','#b85870'];
-function qNom(p){ const L='FCGDAEB'[((p+1)%7+7)%7], acc=Math.floor((p+1)/7); return NAMES[L]+({'-2':'𝄫','-1':'♭',0:'',1:'♯',2:'𝄪'}[acc]); }
+function qNom(p){ const L='FCGDAEB'[((p+1)%7+7)%7], acc=Math.floor((p+1)/7); return nomb(L,acc); }
 function quintasDibuja(nuevo){ const q=document.getElementById('quintas'); if(!q) return;
-  if(!q.children.length){ q.innerHTML=Array.from({length:35},(_,i)=>{ const p=i-15; return `<span data-p="${p}" class="${p===2?'re':''}" style="--c:${QCOL[i%QCOL.length]}" title="Empezar la torre en ${qNom(p)}">${qNom(p)}</span>`; }).join('');
+  if(!q.children.length){ q.innerHTML=Array.from({length:35},(_,i)=>{ const p=i-15; return `<span data-p="${p}" class="${p===2?'re':''}" style="--c:${QCOL[i%QCOL.length]}" title="${tr('chipTitle',{n:qNom(p)})}">${qNom(p)}</span>`; }).join('');
     q.onclick=e=>{ const c=e.target.closest('span'); if(c) torreNueva(+c.dataset.p); }; }   // un clic en un chip: torre nueva desde esa nota
   [...q.children].forEach(c=>{ const p=+c.dataset.p, on=!!torre&&torre.orden.length>0&&p>=torre.lo&&p<=torre.hi; c.classList.toggle('on',on); if(p===nuevo){ c.classList.remove('nuevo'); void c.offsetWidth; c.classList.add('nuevo'); } });
   // en el teléfono la fila no cabe: se desliza para que se vea la nota nueva (o Re, al empezar)
@@ -578,30 +769,30 @@ function lluvia(n){ const suave=reduce; if(suave) n=Math.min(n,30); const rain=d
 // 2026-10-23 (Mario): la referencia la pone el niño — la torre empieza vacía y la primera nota que elige (botones o chip)
 // es la base. Las quintas de arriba van encima de la base y las de abajo DEBAJO: la torre sigue la línea de quintas.
 function torreNueva(p0){ const b=document.getElementById('banner'); b.classList.remove('flash');
-  if(p0==null){ torre={lo:0,hi:-1,base:null,orden:[],caida:false}; torreDibuja(); b.textContent='Elige la nota de partida con los botones (o con un chip)'; return; }
-  torre={lo:p0,hi:p0,base:p0,orden:[p0],caida:false}; torreDibuja(); b.textContent=`${qNom(p0)}: la base de la torre`;
+  if(p0==null){ torre={lo:0,hi:-1,base:null,orden:[],caida:false}; torreDibuja(); b.textContent=tr('pickStart'); return; }
+  torre={lo:p0,hi:p0,base:p0,orden:[p0],caida:false}; torreDibuja(); b.textContent=tr('base',{n:qNom(p0)});
   try{ const a=ctx(); tone(pFreq(p0),a.currentTime+.05,.7,.13,true); }catch(e){} }
 function torreDibuja(){ const t=document.getElementById('torreBox'); t.classList.remove('tambalea','cae'); const ult=torre.orden[torre.orden.length-1]; quintasDibuja(ult);
   const dog=(document.getElementById('dog')||{}).innerHTML||''; let h='';
   for(let p=torre.lo;p<=torre.hi;p++) h+=`<div class="blo${p===ult?' ult':''}${p===torre.base?' base':''}" data-p="${p}" style="background:${QCOL[(p+15)%QCOL.length]}"><span>${p===torre.base?'★ ':''}${qNom(p)}</span><small>${pFrac(p-torre.base)}</small></div>`;
   t.innerHTML=h+`<svg class="perro-torre" viewBox="0 0 160 170">${dog}</svg>`; }
 function torreAdd(dir){ dir=dir||1; if(!torre) torreNueva(); if(torre.caida) torreNueva(torre.base);
-  if(!torre.orden.length){ const b=document.getElementById('banner'); b.classList.remove('flash'); b.textContent='Primero elige la nota de partida con los botones (o con un chip)'; return; }
-  if((dir>0&&torre.hi>=19)||(dir<0&&torre.lo<=-15)){ const b=document.getElementById('banner'); b.classList.remove('flash'); b.textContent='Se acabó la línea de quintas por ese lado: prueba hacia el otro'; return; }
+  if(!torre.orden.length){ const b=document.getElementById('banner'); b.classList.remove('flash'); b.textContent=tr('firstPick'); return; }
+  if((dir>0&&torre.hi>=19)||(dir<0&&torre.lo<=-15)){ const b=document.getElementById('banner'); b.classList.remove('flash'); b.textContent=tr('lineEnd'); return; }
   const p=dir>0?++torre.hi:--torre.lo; torre.orden.push(p); torreDibuja();
   const prev=dir>0?p-1:p+1, ban=document.getElementById('banner'), t=document.getElementById('torreBox'), n=torre.hi-torre.lo+1;
   ban.classList.remove('flash');
   try{ const a=ctx(), t0=a.currentTime+.05; tone(pFreq(prev),t0,.45,.13,true); tone(pFreq(p),t0+.45,.7,.13,true); }catch(e){}
   if(n===7){ const tonica=torre.lo+1, esc=[0,2,4,-1,1,3,5].map(x=>pFreq(tonica+x)); const base=esc[0];
-    const sub=esc.map(x=>x<base?x*2:x); sub.push(base*2); ban.textContent=`¡La escala de ${pNota(tonica).n} mayor!`; ban.classList.add('flash');
+    const sub=esc.map(x=>x<base?x*2:x); sub.push(base*2); ban.textContent=tr('scale',{k:keyNameAcc(pNota(tonica).L,pNota(tonica).acc,0)}); ban.classList.add('flash');
     try{ const a=ctx(), t0=a.currentTime+1.4; sub.forEach((x,i)=>tone(x,t0+i*.32,.3,.13,true)); }catch(e){} }
-  else if(n===12){ t.classList.add('tambalea'); ban.textContent='¡Cuidado! La torre tambalea…'; }
+  else if(n===12){ t.classList.add('tambalea'); ban.textContent=tr('wobble'); }
   else if(n>=13){ torre.caida=true; t.classList.add('cae'); lluvia(140); const yo=torre;
     setTimeout(()=>{ if(torre===yo&&window._juegoId==='torre') torreNueva(); },8500); /* la lluvia limpia la pantalla: vuelve al principio (Mario) */ const a1=pNota(torre.lo).n, a2=pNota(torre.hi).n, f1=pFreq(torre.lo), f2=pFreq(torre.hi);
-    ban.textContent=`¡Se cayó! ${a2} no es ${a1}: la coma pitagórica`; ban.classList.add('flash');
+    ban.textContent=tr('fell',{a1,a2}); ban.classList.add('flash');
     try{ const a=ctx(), t0=a.currentTime+1.4; tone(f1,t0,.9,.13,true); tone(f2,t0+1.1,.9,.13,true); tone(f1,t0+2.3,1.6,.1,true); tone(f2,t0+2.3,1.6,.1,true); }catch(e){}
-    document.getElementById('out').innerHTML=`<div><b>La torre de quintas:</b> ${a1} y ${a2} son la misma tecla del piano, pero doce quintas (3:2) no cierran: entre ellas queda la coma pitagórica (531441:524288). Escucha: ${a1}, ${a2}, y juntas. Tira otra vez para una torre nueva.</div>`; }
-  else ban.textContent=`${pNota(prev).n} → ${pNota(p).n}: una quinta ${dir>0?'arriba (hacia los ♯)':'abajo (hacia los ♭)'}`; }
+    document.getElementById('out').innerHTML=`<div>${tr('fellOut',{a1,a2})}</div>`; }
+  else ban.textContent=tr('stepFifth',{a:pNota(prev).n,b:pNota(p).n,d:tr(dir>0?'dirUp':'dirDn')}); }
 // ── 🐾 EL PASEO DEL PERRITO (2026-10-23, Mario): el pulso. Cuatro tiempos de cuenta, luego la melodía de los rodillos
 // (4 compases = 16 pasos) y el perrito camina un paso por tiempo. El niño pulsa la barra espaciadora, la palanca o 🐾 PASO
 // en cada paso: a tiempo (±90 ms) deja una huella verde; cerca (±180 ms) una amarilla; fuera, el perrito tropieza.
@@ -610,17 +801,17 @@ let paseo=null;
 function paseoDibuja(){ const b=document.getElementById('paseoBox'); const dog=(document.getElementById('dog')||{}).innerHTML||'';
   let m=''; for(let i=0;i<16;i++) m+=`<div class="marca${i%4===0?' f':''}" style="left:${4+92*(i+.5)/16}%"></div>`;
   b.innerHTML=`<div class="cuenta" id="paseoCuenta"></div><div class="pista"></div>${m}<svg class="perrito" id="paseoPerro" viewBox="0 0 160 170" style="left:4%">${dog}</svg>`; }
-function paseoStop(){ if(!paseo) return; paseo.timers.forEach(clearTimeout); paseo=null; document.getElementById('ecoBtn').textContent='🐾 EMPEZAR'; }
+function paseoStop(){ if(!paseo) return; paseo.timers.forEach(clearTimeout); paseo=null; document.getElementById('ecoBtn').textContent='🐾 '+tr('start'); }
 function paseoStart(){ if(paseo) paseoStop(); if(!keyInfo().ok||state.bars.length<4) return; stopPlay(); paseoDibuja();
   const beat=60/state.bpm*1000, lead=600, t0=performance.now()+lead;
-  paseo={on:true,beat,t0,hits:[],ok:0,timers:[]}; document.getElementById('ecoBtn').textContent='🐾 PASO';
-  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent='Escucha la cuenta…';
+  paseo={on:true,beat,t0,hits:[],ok:0,timers:[]}; document.getElementById('ecoBtn').textContent='🐾 '+tr('step');
+  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=tr('count');
   let a=null; try{ a=ctx(); }catch(e){}
   const at=ms=>a?a.currentTime+(ms-performance.now())/1000:0;
   for(let i=0;i<20;i++){ const t=t0+i*beat; try{ if(a) tone(i%4===0?1760:1320,at(t),.05,i<4?.12:.06,true); }catch(e){}   // la cuenta y el metrónomo
     paseo.timers.push(setTimeout(()=>{ if(!paseo) return; const c=document.getElementById('paseoCuenta');
       const luz=document.getElementById('pulsoLuz'); if(luz){ luz.classList.add('on'); luz.classList.toggle('f',i%4===0); setTimeout(()=>luz.classList.remove('on'),Math.min(140,beat/2)); }
-      if(i<4){ c.textContent=String(4-i); if(i===3) ban.textContent='¡Ahora! Un paso en cada tiempo'; }   // cuenta regresiva: 4 3 2 1
+      if(i<4){ c.textContent=String(4-i); if(i===3) ban.textContent=tr('now'); }   // cuenta regresiva: 4 3 2 1
       else { c.textContent=''; document.getElementById('paseoPerro').style.left=(4+92*(i-4+.5)/16)+'%'; } }, Math.max(0,t-performance.now()))); }
   // la melodía de los rodillos acompaña el paseo: un compás = 4 tiempos
   const e8=beat/2; let tt=t0+4*beat; state.bars.forEach(b=>b.deg.forEach((d,k)=>{ try{ if(a) tone(spell(d).freq,at(tt),b.rh[k]*e8/1000*.95,.11,true); }catch(e){} tt+=b.rh[k]*e8; }));
@@ -631,9 +822,9 @@ function paseoTap(){ const p=paseo; if(!p||!p.on) return; const now=performance.
   const b=document.getElementById('paseoBox'), x=4+92*(i-4+.5)/16, ban=document.getElementById('banner');
   if(err<=90){ p.ok++; b.insertAdjacentHTML('beforeend',`<div class="pata" style="left:${x}%;color:#38c0a6">🐾</div>`); }
   else if(err<=180){ p.ok++; b.insertAdjacentHTML('beforeend',`<div class="pata" style="left:${x}%;opacity:.6">🐾</div>`); }
-  else { const d=document.getElementById('paseoPerro'); d.classList.remove('uy'); void d.getBoundingClientRect(); d.classList.add('uy'); ban.textContent='¡Uy! Escucha el tiempo'; } }
-function paseoFin(){ const p=paseo; if(!p) return; p.on=false; const ban=document.getElementById('banner'); const t=`${p.ok} de 16 pasos`;
-  paseoStop(); if(p.ok>=13) jackpot(`¡${t}! El perrito llegó bailando`); else { ban.textContent=`${t}. ¡Otra vuelta!`; ban.classList.add('flash'); } }
+  else { const d=document.getElementById('paseoPerro'); d.classList.remove('uy'); void d.getBoundingClientRect(); d.classList.add('uy'); ban.textContent=tr('oops'); } }
+function paseoFin(){ const p=paseo; if(!p) return; p.on=false; const ban=document.getElementById('banner'); const t=tr('steps',{n:p.ok});
+  paseoStop(); if(p.ok>=13) jackpot(tr('danced',{t})); else { ban.textContent=tr('walkAgain',{t}); ban.classList.add('flash'); } }
 // ── guardar la combinación para el Score (.mmf) ──
 const PLANTILLA={"format": "mmf", "type": "score", "version": "1.1", "app": "V2.7.123", "intelligentBeams": 1, "created": "2026-10-16T13:23:30.720Z", "system": "Tonal", "keySignature": "C", "keyChanges": [], "timeChanges": [], "octaveLines": [], "spacing": {"h": 1, "v": 1, "byM": {}}, "view": {"zoom": 100, "barNums": "continuous", "listenOct": {"fit": "auto", "start": 2}, "page": {"fit": "3", "staff": "3", "sysGap": "4", "pages": "1", "mode": "ancho", "paper": "A4", "footer": true, "pageNum": true}}, "alteration": "b", "a4": 440, "tempo": 88, "timeSignature": {"num": 4, "den": 4}, "subDiv": 1, "totalMeasures": 4, "barlines": {"4": {"id": "final"}}, "repeatMarks": [], "repeatSections": [], "_sectionSeq": 1, "showRepeatSections": true, "anacrusis": null, "groups": [{"showBarLines": true, "id": 1792149263557, "type": "bracket", "channels": [0, 1]}], "scoreInfo": {"title": "Nuestra escena", "subtitle": "Compuesta con la tragamonedas de compases", "composer": "", "author": "Music Motion · Para el aula", "copyright": "© 2026 Music Motion", "file": "nuestra-escena", "print": {"hdrOff": {"subtitle": {"x": 0, "y": 6.9}, "title": {"x": -0.5, "y": 2.9}, "composer": {"x": -1.5, "y": 19.3}}, "cpyScope": "first", "sysDy": {"1": 8.5, "4": 14.5, "7": 18.5}, "composerSize": 28, "subtitleSize": 16, "titleSize": 36}, "orchestra": "modern"}, "tempoMarkings": [{"measure": 1, "beatPos": 0, "term": "Moderato", "noteValue": "quarter", "bpm": 88, "visible": true, "yOffset": -1, "fontSize": 18, "xOffset": 28}], "exprMarkings": [], "dynMarkings": [], "artMarkings": [], "textAnnotations": [], "coachRules": null, "coachLog": null, "agogMarkings": [], "agogMode": "hybrid", "showAgogMarks": true, "asymRegions": [], "exprSyn": {}, "fxRegions": [], "channels": [{"id": 0, "name": "Melodía", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": true, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": false, "agogAutoLevel": 0, "lyricSize": 18, "color": null, "perc": false, "mix": {"instrument": "flute"}, "notes": []}, {"id": 1, "name": "Acordes", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": -2, "visible": true, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": false, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "harp"}, "notes": []}, {"id": 2, "name": "Guitar · div", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "piano_steinway"}, "notes": []}, {"id": 3, "name": "Guitar · div", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "piano_steinway"}, "notes": []}, {"id": 4, "name": "Channel 5", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "horn"}, "notes": []}, {"id": 5, "name": "Channel 6", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "timpani"}, "notes": []}, {"id": 6, "name": "Channel 7", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "harp"}, "notes": []}, {"id": 7, "name": "Channel 8", "clef": "G", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "harp"}, "notes": []}, {"id": 8, "name": "Channel 9", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 9, "name": "Channel 10", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 10, "name": "Channel 11", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "voice_alto"}, "notes": []}, {"id": 11, "name": "Channel 12", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 12, "name": "Channel 13", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 13, "name": "Channel 14", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "flute"}, "notes": []}, {"id": 14, "name": "Channel 15", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "harp"}, "notes": []}, {"id": 15, "name": "Channel 16", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 16, "name": "Channel 17", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": "strings"}, "notes": []}, {"id": 17, "name": "Channel 18", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 18, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 18, "name": "Channel 19", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 19, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 19, "name": "Channel 20", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 20, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 20, "name": "Channel 21", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 21, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 21, "name": "Channel 22", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 22, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 22, "name": "Channel 23", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 23, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 23, "name": "Channel 24", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 24, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 24, "name": "Channel 25", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 25, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 25, "name": "Channel 26", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 26, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 26, "name": "Channel 27", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 27, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 27, "name": "Channel 28", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 28, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 28, "name": "Channel 29", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 29, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 29, "name": "Channel 30", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 30, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 30, "name": "Channel 31", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 31, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}, {"id": 31, "name": "Channel 32", "clef": "F", "clefChanges": [], "staffHost": null, "yOffset": 0, "visible": false, "nameHidden": false, "nameAbbr": false, "coachLocked": false, "coachUnlocked": false, "opaque": true, "muted": true, "agogAutoLevel": 0, "color": null, "perc": false, "mix": {"instrument": null, "midiChannel": 32, "volume": 100, "pan": 64, "solo": false, "program": null, "bankMSB": null, "bankLSB": null, "midiPort": null}, "notes": []}]};
 const DURN={1:['eighth',false],2:['quarter',false],3:['quarter',true],4:['half',false],6:['half',true],8:['whole',false]};
@@ -643,7 +834,7 @@ function note(s,m,bp,du,lyr){ const e3=FIF[s.letter]+7*s.acc; const semis=SEMI[s
 function save(){
   const ki=keyInfo(); if(!ki.std||state.spinning) return; const d=JSON.parse(JSON.stringify(PLANTILLA));
   d.keySignature=KEYSIG[String(ki.fifths)]; d.tempo=state.bpm; d.tempoMarkings[0].bpm=state.bpm; d.created=new Date().toISOString();
-  d.scoreInfo.subtitle='Compuesta con la máquina de melodías · '+NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt])+' '+(state.mode?'menor':'mayor');
+  d.scoreInfo.subtitle=tr('saveSub',{key:keyName(state.key,state.alt,state.mode)});
   const mel=[], ac=[];
   state.bars.forEach((b,i)=>{ let p=0; b.deg.forEach((gd,k)=>{ mel.push(note(spell(gd),i+1,p/2,b.rh[k],ROM[gd])); p+=b.rh[k]; });
     let cp=0; for(const [r,len] of chordsOf(b,i)){ for(const gd of [r%7,(r+2)%7,(r+4)%7]){ const s=spell(gd); const n=note({...s,oct:s.oct-1,freq:s.freq/2},i+1,cp/2,len,''); delete n.lyric; n.velocity=62; ac.push(n);} cp+=len; } });
@@ -653,24 +844,18 @@ function save(){
 }
 document.getElementById('save').onclick=save;
 document.getElementById('ecoBtn').onclick=()=>{ const id=JUEGOS[juego].id; id==='torre'?torreAdd(1):id==='paseo'?(paseo&&paseo.on?paseoTap():paseoStart()):id==='sube'?subeStart():ecoStart(); };
-document.getElementById('torreAbajo').onclick=()=>torreAdd(-1);
+document.getElementById('torreAbajo').onclick=()=>torreAdd(-1); document.getElementById('torreAbajo').textContent='🧱 '+tr('fifth')+' ↓ ♭';
 // ── los juegos (2026-10-23, Mario: «para cada juego el título cambia, con flechas a cada lado»): mismos rodillos, mismo
 // perrito, mismas tonalidades; cambia el juego. El enlace puede llevar directo a uno: /melodias#eco.
-const JUEGOS=[
-  {id:'maquina', t:'La máquina de melodías', k:'Juego de composición musical', s:'Tira de la palanca: cuatro rodillos, cuatro compases, una melodía nueva.'},
-  {id:'eco', t:'El eco', k:'Juego de escucha', s:'La máquina toca y tú repites con A S D F G H J K o con los botones. ¡Hasta la melodía entera!'},
-  {id:'torre', t:'La torre de quintas', k:'Juego de construcción', s:'Elige la nota de partida y apila quintas (3:2): ↑ encima, hacia los sostenidos; ↓ debajo, hacia los bemoles. Con 7 seguidas sale una escala; con 13… ¿aguanta la torre?'},
-  {id:'paseo', t:'El paseo del perrito', k:'Juego del pulso', s:'El perrito camina al pulso de la melodía. Toca TAP HERE (o la barra espaciadora) en cada paso, con la luz del pulso. ¡Que no tropiece!'},
-  {id:'sube', t:'¿Sube o baja?', k:'Juego de escucha', s:'Suenan dos notas: ¿la segunda sube o baja? Pulsa ⬆ o ⬇ (o las flechas del teclado). Diez rondas, cada vez más cerca.'},
-];
+const JUEGOS=['maquina','eco','torre','paseo','sube'].map(id=>{ const [t,k,x]=tr('g_'+id); return {id,t,k,s:x}; });
 let juego=0;
 function ponJuego(i){ juego=(i+JUEGOS.length)%JUEGOS.length; const J=JUEGOS[juego]; window._juegoId=J.id; if(eco) ecoStop();
   document.getElementById('jTit').textContent=J.t; document.getElementById('jKick').textContent=J.k; document.getElementById('jSub').textContent=J.s;
   JUEGOS.forEach(x=>document.body.classList.toggle('juego-'+x.id,x===J));
-  if(sube) subeStop(); document.getElementById('ecoBtn').textContent=J.id==='paseo'?'🐾 EMPEZAR':J.id==='torre'?'🧱 QUINTA':J.id==='sube'?'⬆⬇ EMPEZAR':J.id==='eco'?'🐶 EMPEZAR':'🐶 ECO';
+  if(sube) subeStop(); document.getElementById('ecoBtn').textContent=J.id==='paseo'?'🐾 '+tr('start'):J.id==='torre'?'🧱 '+tr('fifth'):J.id==='sube'?'⬆⬇ '+tr('start'):J.id==='eco'?'🐶 '+tr('start'):'🐶 '+tr('echo');
   document.getElementById('torreBox').hidden=J.id!=='torre'; if(J.id==='torre'){ torreAlt='n'; syncSeg('alts','n'); syncSeg('keys',''); torreNueva(); } else { syncSeg('keys',state.key); syncSeg('alts',state.alt); syncSeg('modes',state.mode); render(); }
   if(paseo) paseoStop(); document.getElementById('paseoBox').hidden=J.id!=='paseo'; if(J.id==='paseo') paseoDibuja();
-  document.getElementById('torreAbajo').hidden=J.id!=='torre'; if(J.id==='torre') document.getElementById('ecoBtn').textContent='🧱 QUINTA ↑ ♯';
+  document.getElementById('torreAbajo').hidden=J.id!=='torre'; if(J.id==='torre') document.getElementById('ecoBtn').textContent='🧱 '+tr('fifth')+' ↑ ♯';
   if(J.id==='eco'){ state.held=[false,false,false,false]; [0,1,2,3].forEach(i=>{ const b=document.getElementById('h'+i); b.classList.remove('on'); b.textContent='HOLD'; b.setAttribute('aria-pressed',false); document.getElementById('f'+i).classList.remove('held'); }); }
   try{ history.replaceState(null,'',J.id==='maquina'?location.pathname+location.search:'#'+J.id); }catch(e){} }
 document.getElementById('jPrev').onclick=()=>ponJuego(juego-1);
@@ -679,7 +864,7 @@ document.getElementById('jNext').onclick=()=>ponJuego(juego+1);
 // ── los mandos ──
 function seg(id,items,cur,fn){const el=document.getElementById(id); el.innerHTML=items.map(([v,t])=>`<button class="btn${v===cur?' on':''}" data-v="${v}" aria-pressed="${v===cur}">${t}</button>`).join('');
   el.onclick=e=>{const b=e.target.closest('button'); if(!b||state.spinning) return; fn(b.dataset.v); [...el.children].forEach(c=>{c.classList.toggle('on',c===b);c.setAttribute('aria-pressed',c===b);}); stopPlay(); render();};}
-seg('keys',[['F','F'],['C','C'],['G','G'],['D','D'],['A','A'],['E','E'],['B','B']],'C',v=>{ if(window._juegoId==='torre'){ torreNota(v); return; } state.key=v; });
+seg('keys',[['F','F'],['C','C'],['G','G'],['D','D'],['A','A'],['E','E'],['B',LANG==='de'?'H':'B']],'C',v=>{ if(window._juegoId==='torre'){ torreNota(v); return; } state.key=v; });
 seg('alts',[['b','♭'],['n','♮'],['#','♯']],'n',v=>{ if(window._juegoId==='torre'){ torreAlt=v; return; } state.alt=v; });
 seg('modes',[['0','M'],['1','m']],'0',v=>state.mode=+v);
 document.getElementById('tempo').oninput=e=>{state.bpm=+e.target.value; document.getElementById('bpm').textContent='♩ = '+state.bpm;};
