@@ -62,6 +62,7 @@ body{background:radial-gradient(ellipse at 50% -10%,#2a2a58 0%,var(--night) 55%)
 .clue .big{font-size:34px;color:#b0324a;line-height:1}.clue:not(.open) .big{color:#c9bfa6}
 .clue .sig{font-size:26px;letter-spacing:2px;color:#0e2934}.clue .blink{color:#b0324a;animation:blk 1s steps(2) infinite}
 @keyframes blk{50%{opacity:.25}}
+.clue.pick{cursor:pointer}.clue.pick:hover{background:#fff7dc}.clue .mini-dog{width:62px;height:66px}
 .strip svg{display:block;width:100%;height:clamp(118px,19vw,156px)}
 .strip.blur{filter:blur(1.2px)}
 .lbl{font-family:var(--mono);font-size:12.5px;color:var(--text);text-align:center;min-height:2.7em;line-height:1.35}
@@ -241,41 +242,40 @@ function barSVG(bar,hi){
 const reelsEl=document.getElementById('reels');
 reelsEl.innerHTML=FUN.map((f,i)=>`<div class="reel"><div class="fn">Compás ${i+1} · ${f.n}</div><div class="frame" id="f${i}"><div class="bulbs">${Array.from({length:14},(_,k)=>{const t=k/14;let x,y;if(t<.32){x=t/.32*100;y=0}else if(t<.5){x=100;y=(t-.32)/.18*100}else if(t<.82){x=100-(t-.5)/.32*100;y=100}else{x=0;y=100-(t-.82)/.18*100}return `<i style="left:${x}%;top:${y}%;--k:${k}"></i>`}).join('')}</div><div class="win"><div class="strip" id="s${i}"></div></div></div><div class="lbl" id="l${i}"></div><button class="btn hold" id="h${i}" aria-pressed="false">HOLD</button></div>`).join('');
 const lights=document.getElementById('lights'); lights.innerHTML='<i></i>'.repeat(30);
-// ── «¿Quién es tu vecina?» (2026-10-23, Mario): una tonalidad teórica abre un juego de cuatro pistas, como el ahorcado.
-// Cada tonalidad válida que se elige es un intento; las intermedias teóricas (B♯ camino a B♭) no cuentan.
+// ── «¿Quién es tu vecina?» (2026-10-23, Mario: «muy difícil para niños»): una tonalidad teórica muestra cuatro cuadros —
+// por qué no se escribe · su vecina · la relativa de la vecina · el perrito con la palanca (que vuelve a Do mayor y tira).
+// Un clic en la vecina o en la relativa la elige y tira; al elegir la vecina suenan las dos tónicas (la coma pitagórica).
 let riddle=null;
 function syncSeg(id,v){ [...document.getElementById(id).children].forEach(c=>{const on=c.dataset.v===String(v); c.classList.toggle('on',on); c.setAttribute('aria-pressed',on);}); }
-function clue(i){ const r=riddle, nm=keyName(r.k,r.a,r.m), f=fifthsOf(r.k,r.a,r.m), n=Math.abs(f), sg=f>0?'♯':'♭', dbl=f>0?'𝄪':'𝄫';
-  const v=vecinaDe(r.k,r.a,r.m), vf=fifthsOf(v.k,v.a,r.m);
-  if(i===0){ const marks=Array.from({length:Math.min(n,7)},(_,j)=>`<span class="${j<n-7?'blink':''}">${j<n-7?dbl:sg}</span>`).join('');
-    return n>7?`<div class="sig">${marks}</div><div>${nm} necesita <b>${n} ${sg}</b>. ¡En el pentagrama solo caben 7! Las que sobran se vuelven dobles.</div>`
-              :`<div class="sig">${marks}</div><div>${nm} lleva ${n} ${sg}: casi nadie la escribe. Su vecina es más sencilla.</div>`; }
-  if(i===1) return `<div class="big">🎹</div><div>Busca otra nota que caiga en <b>la misma tecla del piano</b> que ${NAMES[r.k]+ALTS[r.a]}.</div>`;
-  if(i===2) return `<div class="big">${vf>0?'♯':vf<0?'♭':'♮'}</div><div>Tu vecina ${vf===0?'no lleva alteraciones':`se escribe con <b>${Math.abs(vf)} ${vf>0?'♯':'♭'}</b>`}.</div>`;
-  return `<div class="big">!</div><div>Era <b>${keyName(v.k,v.a,r.m)}</b>.</div>`; }
-function drawRiddle(){ const r=riddle, h=stripH();
-  for(let i=0;i<4;i++){ document.getElementById('s'+i).innerHTML=`<div class="clue${i<=r.fails?' open':''}" style="height:${h}px">${i<=r.fails?clue(i):'<div class="big">?</div>'}</div>`;
-    document.getElementById('l'+i).innerHTML=i<=r.fails?`<b>Pista ${i+1}</b>`:''; }
-  document.getElementById('out').innerHTML=`<div><b>¿Quién es tu vecina?</b> ${keyName(r.k,r.a,r.m)} es una tonalidad teórica: casi nadie la escribe. Encuentra su vecina con KEY y ALTERATION. Tienes ${4-r.fails} ${4-r.fails===1?'intento':'intentos'}.</div>`; }
-function guessRiddle(){ const r=riddle, v=vecinaDe(r.k,r.a,r.m);
-  if(state.key===v.k&&state.alt===v.a&&state.mode===r.m){ r.done=true; render(); comma(r,v,true); return true; }
-  r.fails++;
-  if(r.fails>=4){ r.done=true; state.key=v.k; state.alt=v.a; state.mode=r.m; syncSeg('keys',v.k); syncSeg('alts',v.a); syncSeg('modes',r.m);
-    drawRiddle(); setTimeout(()=>{ render(); comma(r,v,false); },2600); return true; }
-  state.key=r.k; state.alt=r.a; state.mode=r.m; syncSeg('keys',r.k); syncSeg('alts',r.a); syncSeg('modes',r.m); drawRiddle(); return true; }
+function relativaDe(k,a,m){ const f=fifthsOf(k,a,m), m2=m?0:1;
+  for(const L of LET) for(const al of ['n','#','b']) if(fifthsOf(L,al,m2)===f&&!(L==='C'&&al==='b')) return {k:L,a:al,m:m2};
+  return null; }
+function ponKey(k,a,m){ state.key=k; state.alt=a; state.mode=m; syncSeg('keys',k); syncSeg('alts',a); syncSeg('modes',m); riddle=null; }
+function drawRiddle(){ const r=riddle, h=stripH(), nm=keyName(r.k,r.a,r.m), f=fifthsOf(r.k,r.a,r.m), n=Math.abs(f), sg=f>0?'♯':'♭', dbl=f>0?'𝄪':'𝄫';
+  const v=vecinaDe(r.k,r.a,r.m), rel=relativaDe(v.k,v.a,r.m);
+  const marks=Array.from({length:Math.min(n,7)},(_,j)=>`<span class="${j<n-7?'blink':''}">${j<n-7?dbl:sg}</span>`).join('');
+  const dog=(document.getElementById('dog')||{}).innerHTML||'';
+  const c=[ n>7?`<div class="sig">${marks}</div><div>${nm} necesita <b>${n} ${sg}</b>. ¡En el pentagrama solo caben 7! Por eso casi nadie la escribe.</div>`
+              :`<div class="sig">${marks}</div><div>${nm} lleva ${n} ${sg}: casi nadie la escribe.</div>`,
+    `<div class="big">🎹</div><div>Suena igual que <b>${keyName(v.k,v.a,r.m)}</b>.<br>¡Tócala!</div>`,
+    `<div class="big">${rel.m?'🌙':'☀️'}</div><div>O su ${rel.m?'relativa menor':'relativa mayor'}: <b>${keyName(rel.k,rel.a,rel.m)}</b>.<br>¡Tócala!</div>`,
+    `<svg class="mini-dog" viewBox="0 0 160 170">${dog}</svg><div>¿Empezamos de nuevo? <b>Tira de la palanca</b> → Do mayor.</div>` ];
+  for(let i=0;i<4;i++){ const st=document.getElementById('s'+i); st.innerHTML=`<div class="clue open${i===1||i===2?' pick':''}" style="height:${h}px">${c[i]}</div>`;
+    document.getElementById('l'+i).innerHTML=''; }
+  const pick=(i,t)=>{ const el=document.querySelector('#s'+i+' .clue'); if(el) el.onclick=()=>{ if(state.spinning) return; ponKey(t.k,t.a,t.m); render(); if(i===1) comma(r,t); setTimeout(()=>{ if(!state.spinning) spin(); }, i===1?4200:300); }; };
+  pick(1,{k:v.k,a:v.a,m:r.m}); pick(2,rel);
+  document.getElementById('out').innerHTML=`<div><b>¿Quién es tu vecina?</b> ${nm} es una tonalidad teórica. Toca su vecina o su relativa, o tira de la palanca para volver a Do mayor.</div>`; }
 // Las dos tónicas, una tras otra y juntas: en el piano son la misma tecla; en la afinación pitagórica las separa una coma.
-function comma(r,v,won){ const f1=tonicFreq(r.k,r.a), f2=tonicFreq(v.k,v.a), n1=NAMES[r.k]+ALTS[r.a], n2=NAMES[v.k]+ALTS[v.a];
+function comma(r,v){ const f1=tonicFreq(r.k,r.a), f2=tonicFreq(v.k,v.a), n1=NAMES[r.k]+ALTS[r.a], n2=NAMES[v.k]+ALTS[v.a];
   try{ const a=ctx(); const t=a.currentTime+.15; tone(f1,t,.9,.13,true); tone(f2,t+1.1,.9,.13,true); tone(f1,t+2.3,1.6,.1,true); tone(f2,t+2.3,1.6,.1,true); }catch(e){}
-  if(won) jackpot(`¡Era ${keyName(v.k,v.a,r.m)}!`);
-  const out=document.getElementById('out'); out.insertAdjacentHTML('afterbegin',`<div><b>${n1} y ${n2}:</b> en el piano son la misma tecla; para el oído, no. En la afinación pitagórica de Music Motion las separa una coma (531441:524288) — escúchalas: primero una, luego la otra, y después juntas. Por eso se escribe la vecina: más sencilla de leer, y cada nota con su nombre justo.</div>`);
-  if(won) setTimeout(()=>{ if(!state.spinning) spin(); },4200); }
+  document.getElementById('out').insertAdjacentHTML('afterbegin',`<div><b>${n1} y ${n2}:</b> en el piano son la misma tecla; para el oído, no. En la afinación pitagórica de Music Motion las separa una coma — escúchalas: primero una, luego la otra, y después juntas.</div>`); }
 function stripH(){return document.querySelector('.win').getBoundingClientRect().height;}
 function render(hi){
   state.bars.forEach((b,i)=>{ const st=document.getElementById('s'+i); st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.remove('blur'); st.innerHTML=barSVG(b,hi&&hi[0]===i?hi[1]:-1);
     document.getElementById('l'+i).innerHTML=`<b>${b.deg.map(d=>KEYC[d]).join(' ')}</b><br>${b.deg.map(d=>nm(spell(d))).join(' ')}`; });
   const ki=keyInfo(); const tn=NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt]); const out=document.getElementById('out');
-  if(!ki.ok){ if(!riddle||riddle.done) riddle={k:state.key,a:state.alt,m:state.mode,fails:0,done:false}; drawRiddle(); return; }
-  if(riddle&&!riddle.done&&guessRiddle()) return;
+  if(!ki.ok){ riddle={k:state.key,a:state.alt,m:state.mode}; drawRiddle(); return; }
+  riddle=null;
   out.innerHTML=`<div class="d">Tu melodía en ${tn} ${state.mode?'menor':'mayor'} · Cosmic Keyboard: Tonal, KEY ${state.key}${state.alt==='n'?'':state.alt==='#'?' ♯':' ♭'}, MODE ${state.mode?'m':'M'}, fila del medio</div>
   <div class="k">${state.bars.map(b=>b.deg.map(d=>KEYC[d]).join(' ')).join('  |  ')}</div>
   <div>${state.bars.map(b=>b.deg.map(d=>nm(spell(d))).join(' ')).join('  |  ')}</div>
@@ -303,7 +303,7 @@ function newBars(){let prev=null; const out=[]; for(let i=0;i<4;i++){
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let tickT=null;
 async function spin(){
-  if(state.spinning) return; if(!keyInfo().ok){ render(); return; } state.spinning=true; stopPlay();
+  if(state.spinning) return; if(!keyInfo().ok){ ponKey('C','n',0); render(); } state.spinning=true; stopPlay();   // la palanca en una tonalidad teórica: vuelve a Do mayor y tira
   const btn=document.getElementById('spin'); btn.disabled=true; const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash');
   lights.classList.remove('party'); lights.classList.add('run'); [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));
   const fin=newBars(); const nuevo=fin.map((b,i)=>!state.held[i]); const h=stripH(); let left=nuevo.filter(Boolean).length;
