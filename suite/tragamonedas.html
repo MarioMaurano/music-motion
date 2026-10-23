@@ -58,6 +58,10 @@ body{background:radial-gradient(ellipse at 50% -10%,#2a2a58 0%,var(--night) 55%)
 .win{background:var(--paper);border-radius:8px;height:clamp(118px,19vw,156px);overflow:hidden;position:relative;
   box-shadow:inset 0 12px 14px -8px rgba(0,0,0,.5),inset 0 -12px 14px -8px rgba(0,0,0,.5)}
 .strip{position:absolute;left:0;right:0;top:0;will-change:transform}
+.clue{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px 10px;text-align:center;color:#0e2934;font-size:13px;line-height:1.3;box-sizing:border-box}
+.clue .big{font-size:34px;color:#b0324a;line-height:1}.clue:not(.open) .big{color:#c9bfa6}
+.clue .sig{font-size:26px;letter-spacing:2px;color:#0e2934}.clue .blink{color:#b0324a;animation:blk 1s steps(2) infinite}
+@keyframes blk{50%{opacity:.25}}
 .strip svg{display:block;width:100%;height:clamp(118px,19vw,156px)}
 .strip.blur{filter:blur(1.2px)}
 .lbl{font-family:var(--mono);font-size:12.5px;color:var(--text);text-align:center;min-height:2.7em;line-height:1.35}
@@ -189,10 +193,16 @@ function makeBar(i,prevEnd){
 // (las de más de siete alteraciones, y Do♭ mayor y menor por indicación suya); la máquina ofrece su vecina enarmónica.
 function keyInfo(){ const t=state.key, a={b:-1,n:0,'#':1}[state.alt]; let fifths=FIF[t]+7*a; if(state.mode===1) fifths-=3;
   const ok=Math.abs(fifths)<=7&&!(t==='C'&&state.alt==='b'); return {fifths,ok,std:ok,tonicIdx:LET.indexOf(t)}; }
-function vecina(){ const a={b:-1,n:0,'#':1}[state.alt], pc=(SEMI[state.key]+a+12)%12;
-  for(const L of LET) for(const [x,al] of [[0,'n'],[1,'#'],[-1,'b']]){ if((SEMI[L]+x+12)%12!==pc||(L===state.key&&al===state.alt)) continue;
-    const f=FIF[L]+7*x-(state.mode===1?3:0); if(Math.abs(f)<=7&&!(L==='C'&&al==='b')) return NAMES[L]+({b:'♭',n:'','#':'♯'}[al])+(state.mode?' menor':' mayor'); }
-  return ''; }
+const ALT={b:-1,n:0,'#':1}, ALTS={b:'♭',n:'','#':'♯'};
+const keyName=(k,a,m)=>NAMES[k]+ALTS[a]+(m?' menor':' mayor');
+const fifthsOf=(k,a,m)=>FIF[k]+7*ALT[a]-(m===1?3:0);
+function vecinaDe(k,a,m){ const pc=(SEMI[k]+ALT[a]+12)%12;
+  for(const L of LET) for(const al of ['n','#','b']){ if((SEMI[L]+ALT[al]+12)%12!==pc||(L===k&&al===a)) continue;
+    const f=fifthsOf(L,al,m); if(Math.abs(f)<=7&&!(L==='C'&&al==='b')) return {k:L,a:al}; }
+  return null; }
+function vecina(){ const v=vecinaDe(state.key,state.alt,state.mode); return v?keyName(v.k,v.a,state.mode):''; }
+// la tónica en la afinación pitagórica de la suite (octava 4) — para oír la coma entre una tonalidad y su vecina
+function tonicFreq(k,a){ const acc=ALT[a], e3=FIF[k]+7*acc, semis=SEMI[k]+acc, e2=Math.round(semis/12-e3*Math.log2(3)); return 260.7407407407407*Math.pow(3,e3)*Math.pow(2,e2); }
 function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F']; if(fifths>0) return (sh.slice(0,fifths).includes(letter)?1:0)+(sh.slice(0,Math.max(0,fifths-7)).includes(letter)?1:0); if(fifths<0) return -(fl.slice(0,-fifths).includes(letter)?1:0)-(fl.slice(0,Math.max(0,-fifths-7)).includes(letter)?1:0); return 0; }
 function spell(deg){ const ki=keyInfo(); const li=ki.tonicIdx+deg; const letter=LET[li%7]; const oct=4+Math.floor(li/7); const acc=sigAcc(letter,ki.fifths);
   const e3=FIF[letter]+7*acc; const semis=SEMI[letter]+acc+12*(oct-4); const e2=Math.round(semis/12-e3*Math.log2(3));
@@ -231,15 +241,41 @@ function barSVG(bar,hi){
 const reelsEl=document.getElementById('reels');
 reelsEl.innerHTML=FUN.map((f,i)=>`<div class="reel"><div class="fn">Compás ${i+1} · ${f.n}</div><div class="frame" id="f${i}"><div class="bulbs">${Array.from({length:14},(_,k)=>{const t=k/14;let x,y;if(t<.32){x=t/.32*100;y=0}else if(t<.5){x=100;y=(t-.32)/.18*100}else if(t<.82){x=100-(t-.5)/.32*100;y=100}else{x=0;y=100-(t-.82)/.18*100}return `<i style="left:${x}%;top:${y}%;--k:${k}"></i>`}).join('')}</div><div class="win"><div class="strip" id="s${i}"></div></div></div><div class="lbl" id="l${i}"></div><button class="btn hold" id="h${i}" aria-pressed="false">HOLD</button></div>`).join('');
 const lights=document.getElementById('lights'); lights.innerHTML='<i></i>'.repeat(30);
+// ── «¿Quién es tu vecina?» (2026-10-23, Mario): una tonalidad teórica abre un juego de cuatro pistas, como el ahorcado.
+// Cada tonalidad válida que se elige es un intento; las intermedias teóricas (B♯ camino a B♭) no cuentan.
+let riddle=null;
+function syncSeg(id,v){ [...document.getElementById(id).children].forEach(c=>{const on=c.dataset.v===String(v); c.classList.toggle('on',on); c.setAttribute('aria-pressed',on);}); }
+function clue(i){ const r=riddle, nm=keyName(r.k,r.a,r.m), f=fifthsOf(r.k,r.a,r.m), n=Math.abs(f), sg=f>0?'♯':'♭', dbl=f>0?'𝄪':'𝄫';
+  const v=vecinaDe(r.k,r.a,r.m), vf=fifthsOf(v.k,v.a,r.m);
+  if(i===0){ const marks=Array.from({length:Math.min(n,7)},(_,j)=>`<span class="${j<n-7?'blink':''}">${j<n-7?dbl:sg}</span>`).join('');
+    return n>7?`<div class="sig">${marks}</div><div>${nm} necesita <b>${n} ${sg}</b>. ¡En el pentagrama solo caben 7! Las que sobran se vuelven dobles.</div>`
+              :`<div class="sig">${marks}</div><div>${nm} lleva ${n} ${sg}: casi nadie la escribe. Su vecina es más sencilla.</div>`; }
+  if(i===1) return `<div class="big">🎹</div><div>Busca otra nota que caiga en <b>la misma tecla del piano</b> que ${NAMES[r.k]+ALTS[r.a]}.</div>`;
+  if(i===2) return `<div class="big">${vf>0?'♯':vf<0?'♭':'♮'}</div><div>Tu vecina ${vf===0?'no lleva alteraciones':`se escribe con <b>${Math.abs(vf)} ${vf>0?'♯':'♭'}</b>`}.</div>`;
+  return `<div class="big">!</div><div>Era <b>${keyName(v.k,v.a,r.m)}</b>.</div>`; }
+function drawRiddle(){ const r=riddle, h=stripH();
+  for(let i=0;i<4;i++){ document.getElementById('s'+i).innerHTML=`<div class="clue${i<=r.fails?' open':''}" style="height:${h}px">${i<=r.fails?clue(i):'<div class="big">?</div>'}</div>`;
+    document.getElementById('l'+i).innerHTML=i<=r.fails?`<b>Pista ${i+1}</b>`:''; }
+  document.getElementById('out').innerHTML=`<div><b>¿Quién es tu vecina?</b> ${keyName(r.k,r.a,r.m)} es una tonalidad teórica: casi nadie la escribe. Encuentra su vecina con KEY y ALTERATION. Tienes ${4-r.fails} ${4-r.fails===1?'intento':'intentos'}.</div>`; }
+function guessRiddle(){ const r=riddle, v=vecinaDe(r.k,r.a,r.m);
+  if(state.key===v.k&&state.alt===v.a&&state.mode===r.m){ r.done=true; render(); comma(r,v,true); return true; }
+  r.fails++;
+  if(r.fails>=4){ r.done=true; state.key=v.k; state.alt=v.a; state.mode=r.m; syncSeg('keys',v.k); syncSeg('alts',v.a); syncSeg('modes',r.m);
+    drawRiddle(); setTimeout(()=>{ render(); comma(r,v,false); },2600); return true; }
+  state.key=r.k; state.alt=r.a; state.mode=r.m; syncSeg('keys',r.k); syncSeg('alts',r.a); syncSeg('modes',r.m); drawRiddle(); return true; }
+// Las dos tónicas, una tras otra y juntas: en el piano son la misma tecla; en la afinación pitagórica las separa una coma.
+function comma(r,v,won){ const f1=tonicFreq(r.k,r.a), f2=tonicFreq(v.k,v.a), n1=NAMES[r.k]+ALTS[r.a], n2=NAMES[v.k]+ALTS[v.a];
+  try{ const a=ctx(); const t=a.currentTime+.15; tone(f1,t,.9,.13,true); tone(f2,t+1.1,.9,.13,true); tone(f1,t+2.3,1.6,.1,true); tone(f2,t+2.3,1.6,.1,true); }catch(e){}
+  if(won) jackpot(`¡Era ${keyName(v.k,v.a,r.m)}!`);
+  const out=document.getElementById('out'); out.insertAdjacentHTML('afterbegin',`<div><b>${n1} y ${n2}:</b> en el piano son la misma tecla; para el oído, no. En la afinación pitagórica de Music Motion las separa una coma (531441:524288) — escúchalas: primero una, luego la otra, y después juntas. Por eso se escribe la vecina: más sencilla de leer, y cada nota con su nombre justo.</div>`);
+  if(won) setTimeout(()=>{ if(!state.spinning) spin(); },4200); }
 function stripH(){return document.querySelector('.win').getBoundingClientRect().height;}
 function render(hi){
   state.bars.forEach((b,i)=>{ const st=document.getElementById('s'+i); st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.remove('blur'); st.innerHTML=barSVG(b,hi&&hi[0]===i?hi[1]:-1);
     document.getElementById('l'+i).innerHTML=`<b>${b.deg.map(d=>KEYC[d]).join(' ')}</b><br>${b.deg.map(d=>nm(spell(d))).join(' ')}`; });
   const ki=keyInfo(); const tn=NAMES[state.key]+({b:'♭',n:'','#':'♯'}[state.alt]); const out=document.getElementById('out');
-  if(!ki.ok){ state.bars.forEach((b,i)=>{ document.getElementById('s'+i).innerHTML=''; document.getElementById('l'+i).innerHTML=''; });
-    out.innerHTML=state.key==='C'&&state.alt==='b'
-      ? `<div>Do♭ ${state.mode?'menor':'mayor'} se escribe como su vecina: <b>${vecina()}</b>.</div>`
-      : `<div>${tn} ${state.mode?'menor':'mayor'} es una tonalidad teórica: su armadura llevaría dobles alteraciones. Prueba con su vecina: <b>${vecina()}</b>.</div>`; return;}
+  if(!ki.ok){ if(!riddle||riddle.done) riddle={k:state.key,a:state.alt,m:state.mode,fails:0,done:false}; drawRiddle(); return; }
+  if(riddle&&!riddle.done&&guessRiddle()) return;
   out.innerHTML=`<div class="d">Tu melodía en ${tn} ${state.mode?'menor':'mayor'} · Cosmic Keyboard: Tonal, KEY ${state.key}${state.alt==='n'?'':state.alt==='#'?' ♯':' ♭'}, MODE ${state.mode?'m':'M'}, fila del medio</div>
   <div class="k">${state.bars.map(b=>b.deg.map(d=>KEYC[d]).join(' ')).join('  |  ')}</div>
   <div>${state.bars.map(b=>b.deg.map(d=>nm(spell(d))).join(' ')).join('  |  ')}</div>
@@ -247,9 +283,11 @@ function render(hi){
 }
 function grand(){ for(const s of SONGS) if(state.bars.every((b,i)=>same(b,s.bars[i]))) return s; return null; }
 function onTheWay(){ let best=null; for(const s of SONGS){ const k=state.bars.filter((b,i)=>same(b,s.bars[i])).length; if(k>=2&&(!best||k>best.k)) best={s,k}; } return best; }
-function famous(){ const w=onTheWay(); if(w) return `¡Vas por ${w.s.n}! ${w.k} de 4 · HOLD y a tirar`;
-  for(const b of state.bars) for(const f of FAMOUS) if(f.d.join()===b.deg.join()&&f.r.join()===b.rh.join()) return f.n;
-  const r=state.bars.map(b=>b.rh.join()); if(r[0]===r[1]&&r[1]===r[2]) return 'JACKPOT · tres ritmos iguales'; return ''; }
+// 2026-10-23 (Mario): el chime lo dan solo los compases NUEVOS (los que giraron); los que están en HELD ya avisaron.
+function famous(nuevo){ nuevo=nuevo||[true,true,true,true];
+  const w=onTheWay(); if(w&&state.bars.some((b,i)=>nuevo[i]&&same(b,w.s.bars[i]))) return `¡Vas por ${w.s.n}! ${w.k} de 4 · HOLD y a tirar`;
+  for(let i=0;i<4;i++){ if(!nuevo[i]) continue; const b=state.bars[i]; for(const f of FAMOUS) if(f.d.join()===b.deg.join()&&f.r.join()===b.rh.join()) return f.n; }
+  const r=state.bars.map(b=>b.rh.join()); if(r[0]===r[1]&&r[1]===r[2]&&(nuevo[0]||nuevo[1]||nuevo[2])) return 'JACKPOT · tres ritmos iguales'; return ''; }
 // 2026-10-23 (Mario): solo intervalos cantables — 2.ª, 3.ª, 4.ª y 5.ª justas, 6.ª y 7.ª mayores o menores, 8.ª;
 // nada aumentado ni disminuido (ni tritono, ni 2.ª aumentada, ni coma). Se mide sobre la nota escrita en la tonalidad.
 const IV_OK=new Set(['0:0','1:1','1:2','2:3','2:4','3:5','4:7','5:8','5:9','6:10','6:11','7:12']);
@@ -268,7 +306,7 @@ async function spin(){
   if(state.spinning) return; if(!keyInfo().ok){ render(); return; } state.spinning=true; stopPlay();
   const btn=document.getElementById('spin'); btn.disabled=true; const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash');
   lights.classList.remove('party'); lights.classList.add('run'); [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));
-  const fin=newBars(); const h=stripH(); let left=fin.filter((b,i)=>!state.held[i]).length;
+  const fin=newBars(); const nuevo=fin.map((b,i)=>!state.held[i]); const h=stripH(); let left=nuevo.filter(Boolean).length;
   if(!reduce&&left) tickT=setInterval(()=>tick(),75);
   const jobs=fin.map((b,i)=>new Promise(res=>{
     const fr=document.getElementById('f'+i);
@@ -283,8 +321,9 @@ async function spin(){
     setTimeout(()=>{ fr.classList.remove('spinning'); clack(); if(--left<=0){clearInterval(tickT);} res(); },dur*1000+40);
   }));
   await Promise.all(jobs); clearInterval(tickT); state.bars=fin; render(); lights.classList.remove('run'); btn.disabled=false; state.spinning=false;
+  if(!nuevo.some(Boolean)) return;
   const G=grand(); if(G){ granPremio(G); return; }
-  const f=famous(); if(f) jackpot(f);
+  const f=famous(nuevo); if(f) jackpot(f);
 }
 function jackpot(txt){
   const ban=document.getElementById('banner'); ban.textContent=txt; ban.classList.add('flash'); lights.classList.add('party');
@@ -296,6 +335,18 @@ function jackpot(txt){
       s.style.setProperty('--r',(rnd(720)-360)+'deg'); s.style.animationDuration=(1.8+Math.random()*1.8)+'s'; s.style.animationDelay=(Math.random()*.8)+'s'; rain.appendChild(s); setTimeout(()=>s.remove(),4600); }
     const dog=document.getElementById('dog'); dog.classList.add('in'); setTimeout(()=>dog.classList.remove('in'),3400); }
   setTimeout(()=>{lights.classList.remove('party');[0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));},3400);
+}
+// Los cuatro compases en HELD: la melodía es suya — chime, cascada de notitas y la toca entera.
+function tuMelodia(){
+  const ban=document.getElementById('banner'); ban.innerHTML='¡Tu melodía!<small>cuatro compases elegidos</small>'; ban.classList.add('flash','grand'); lights.classList.add('party');
+  [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.add('win-flash'));
+  try{ navigator.vibrate&&navigator.vibrate([80,50,80,50,240]); }catch(e){}
+  fanfare();
+  if(!reduce){ const rain=document.getElementById('rain'); const sy=['♪','♫','♩','♬','★'], cols=['#d6b450','#ff6f91','#5ec8ff','#38c0a6','#ffffff','#ffd93d','#b48cff'];
+    for(let k=0;k<110;k++){ const s=document.createElement('span'); s.textContent=pick(sy); s.style.left=(Math.random()*100)+'vw'; s.style.color=pick(cols); s.style.fontSize=(20+rnd(28))+'px';
+      s.style.setProperty('--r',(rnd(900)-450)+'deg'); s.style.animationDuration=(2+Math.random()*2.2)+'s'; s.style.animationDelay=(Math.random()*1.8)+'s'; rain.appendChild(s); setTimeout(()=>s.remove(),6500); } }
+  setTimeout(()=>{ if(!state.spinning&&!playing.length&&!sched) play(); },1500);
+  setTimeout(()=>{lights.classList.remove('party');ban.classList.remove('grand');[0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));},6000);
 }
 function granPremio(song){
   const ban=document.getElementById('banner'); ban.innerHTML=`¡GRAN PREMIO!<small>${song.n} completa</small>`; ban.classList.add('flash','grand'); lights.classList.add('party');
@@ -388,7 +439,7 @@ seg('alts',[['b','♭'],['n','♮'],['#','♯']],'n',v=>state.alt=v);
 seg('modes',[['0','M'],['1','m']],'0',v=>state.mode=+v);
 document.getElementById('tempo').oninput=e=>{state.bpm=+e.target.value; document.getElementById('bpm').textContent='♩ = '+state.bpm;};
 document.getElementById('chords').onclick=e=>{state.chords=!state.chords; e.currentTarget.classList.toggle('on',state.chords); e.currentTarget.setAttribute('aria-pressed',state.chords);};
-for(let i=0;i<4;i++) document.getElementById('h'+i).onclick=e=>{ if(state.spinning) return; state.held[i]=!state.held[i]; const b=e.currentTarget; b.classList.toggle('on',state.held[i]); b.setAttribute('aria-pressed',state.held[i]); b.textContent=state.held[i]?'HELD':'HOLD'; document.getElementById('f'+i).classList.toggle('held',state.held[i]); };
+for(let i=0;i<4;i++) document.getElementById('h'+i).onclick=e=>{ if(state.spinning) return; state.held[i]=!state.held[i]; const b=e.currentTarget; b.classList.toggle('on',state.held[i]); b.setAttribute('aria-pressed',state.held[i]); b.textContent=state.held[i]?'HELD':'HOLD'; document.getElementById('f'+i).classList.toggle('held',state.held[i]); if(state.held[i]&&state.held.every(Boolean)&&state.bars.length===4&&keyInfo().ok) tuMelodia(); };
 document.getElementById('spin').onclick=spin;
 document.getElementById('play').onclick=play;
 document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){e.preventDefault();spin();} });
