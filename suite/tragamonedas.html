@@ -143,7 +143,9 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .dog .tail{transform-origin:22px 70px;animation:wag .18s ease-in-out infinite alternate}
 @keyframes wag{from{transform:rotate(-18deg)}to{transform:rotate(22deg)}}
 .dog .bub{font-family:var(--display);font-size:22px;fill:var(--ink)}
-@media (prefers-reduced-motion:reduce){.lights.run i,.lights.party i,.frame.spinning .bulbs i,.banner.flash,.dog .tail{animation:none}.rain{display:none}}
+@media (prefers-reduced-motion:reduce){.lights.run i,.lights.party i,.frame.spinning .bulbs i,.banner.flash,.dog .tail{animation:none}.rain:not(.suave){display:none}}
+@media (max-width:900px){.quintas{overflow:visible;gap:2px}.quintas span{flex:1 1 0;min-width:0;height:12px;padding:0;font-size:0;border-radius:4px}.quintas span.on{height:14px}}   /* teléfono: chips sin nombre, los 35 caben (Mario) */
+@media (max-height:520px) and (orientation:landscape){.marquee h1{font-size:30px}.flecha{width:30px;height:30px;font-size:20px}.marquee .kicker{font-size:11px;margin:0}.sub{display:none}.lights{margin:6px 4px 8px}.torre{min-height:0;padding:2px 0;justify-content:center}.lever{height:150px}.torre .blo{padding:2px 10px;font-size:12px}.torre .perro-torre{width:44px;height:46px}}   /* teléfono horizontal: más compacto */
 </style>
 </head>
 <body>
@@ -155,7 +157,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
   <div class="lights" id="lights" aria-hidden="true"></div>
   <div class="quintas" id="quintas" aria-label="La línea de quintas: de Fa𝄫 a Si𝄪"></div>
   <div class="stage">
-    <div class="reels" id="reels"></div><div class="torre" id="torre" hidden></div>
+    <div class="reels" id="reels"></div><div class="torre" id="torreBox" hidden></div>
     <div class="leverbox"><button class="lever" id="lever" aria-label="Palanca: tira hacia abajo para girar"><span class="base"></span><span class="arm" id="arm"></span><span class="ball" id="ball"></span></button></div>
   </div>
   <div class="banner" id="banner" aria-live="polite"></div>
@@ -529,7 +531,7 @@ function pNota(p){ const L='FCGDAEB'[((p+1)%7+7)%7], acc=Math.floor((p+1)/7); re
 function pFreq(p){ const c=tonicFreq('C','n'), r=Math.pow(1.5,p); return c*r/Math.pow(2,Math.floor(Math.log2(r)+1e-9)); }
 function pFrac(p){ let n=1n, d=1n; const k=Math.abs(p); for(let i=0;i<k;i++){ if(p>0) n*=3n; else d*=3n; } while(n>=2n*d) d*=2n; while(n<d) n*=2n; return n+':'+d; }
 function torrePlay(){ if(!torre||!torre.orden.length) return; try{ const a=ctx(), t0=a.currentTime+.1; torre.orden.forEach((p,i)=>tone(pFreq(p),t0+i*.42,.4,.13,true)); }catch(e){}
-  torre.orden.forEach((p,i)=>setTimeout(()=>{ const b=document.querySelector(`#torre .blo[data-p="${p}"]`); if(b){ b.classList.add('ult'); setTimeout(()=>b.classList.remove('ult'),380); } },100+i*420)); }
+  torre.orden.forEach((p,i)=>setTimeout(()=>{ const b=document.querySelector(`#torreBox .blo[data-p="${p}"]`); if(b){ b.classList.add('ult'); setTimeout(()=>b.classList.remove('ult'),380); } },100+i*420)); }
 // También con los botones de las notas, una a una (2026-10-23, Mario): la nota entra si es la quinta siguiente por
 // arriba o por abajo; si no, la máquina dice cuáles caben. La alteración (♭ ♮ ♯) se elige antes de la letra.
 let torreAlt='n';
@@ -547,17 +549,20 @@ function qNom(p){ const L='FCGDAEB'[((p+1)%7+7)%7], acc=Math.floor((p+1)/7); ret
 function quintasDibuja(nuevo){ const q=document.getElementById('quintas'); if(!q) return;
   if(!q.children.length){ q.innerHTML=Array.from({length:35},(_,i)=>{ const p=i-15; return `<span data-p="${p}" class="${p===2?'re':''}" style="--c:${QCOL[i%QCOL.length]}" title="Empezar la torre en ${qNom(p)}">${qNom(p)}</span>`; }).join('');
     q.onclick=e=>{ const c=e.target.closest('span'); if(c) torreNueva(+c.dataset.p); }; }   // un clic en un chip: torre nueva desde esa nota
-  [...q.children].forEach(c=>{ const p=+c.dataset.p, on=!!torre&&torre.orden.length>0&&p>=torre.lo&&p<=torre.hi; c.classList.toggle('on',on); if(p===nuevo){ c.classList.remove('nuevo'); void c.offsetWidth; c.classList.add('nuevo'); } }); }
-function lluvia(n){ if(reduce) return; const rain=document.getElementById('rain'); const sy=['♪','♫','♩','♬','★'], cols=QCOL;
+  [...q.children].forEach(c=>{ const p=+c.dataset.p, on=!!torre&&torre.orden.length>0&&p>=torre.lo&&p<=torre.hi; c.classList.toggle('on',on); if(p===nuevo){ c.classList.remove('nuevo'); void c.offsetWidth; c.classList.add('nuevo'); } });
+  // en el teléfono la fila no cabe: se desliza para que se vea la nota nueva (o Re, al empezar)
+  if(q.scrollWidth>q.clientWidth){ const c=q.querySelector(`span[data-p="${nuevo==null?2:nuevo}"]`); if(c) q.scrollLeft=c.offsetLeft-q.offsetLeft-q.clientWidth/2+c.offsetWidth/2; } }
+// Con «reducir movimiento» activado en el aparato: lluvia suave — pocas notitas, lentas y sin girar (Mario, 2026-10-23).
+function lluvia(n){ const suave=reduce; if(suave) n=Math.min(n,30); const rain=document.getElementById('rain'); rain.classList.toggle('suave',suave); const sy=['♪','♫','♩','♬','★'], cols=QCOL;
   for(let k=0;k<n;k++){ const sp=document.createElement('span'); sp.textContent=pick(sy); sp.style.left=(Math.random()*100)+'vw'; sp.style.color=pick(cols); sp.style.fontSize=(20+rnd(26))+'px';
-    sp.style.setProperty('--r',(rnd(900)-450)+'deg'); sp.style.animationDuration=(5+Math.random()*3)+'s'; sp.style.animationDelay=(Math.random()*2.5)+'s'; rain.appendChild(sp); setTimeout(()=>sp.remove(),11000); } }   // lenta, para que se vea (Mario)
+    sp.style.setProperty('--r',suave?'0deg':(rnd(900)-450)+'deg'); sp.style.animationDuration=(suave?8+Math.random()*3:5+Math.random()*3)+'s'; sp.style.animationDelay=(Math.random()*2.5)+'s'; rain.appendChild(sp); setTimeout(()=>sp.remove(),11000); } }   // lenta, para que se vea (Mario)
 // 2026-10-23 (Mario): la referencia la pone el niño — la torre empieza vacía y la primera nota que elige (botones o chip)
 // es la base. Las quintas de arriba van encima de la base y las de abajo DEBAJO: la torre sigue la línea de quintas.
 function torreNueva(p0){ const b=document.getElementById('banner'); b.classList.remove('flash');
   if(p0==null){ torre={lo:0,hi:-1,base:null,orden:[],caida:false}; torreDibuja(); b.textContent='Elige la nota de partida con los botones (o con un chip)'; return; }
   torre={lo:p0,hi:p0,base:p0,orden:[p0],caida:false}; torreDibuja(); b.textContent=`${qNom(p0)}: la base de la torre`;
   try{ const a=ctx(); tone(pFreq(p0),a.currentTime+.05,.7,.13,true); }catch(e){} }
-function torreDibuja(){ const t=document.getElementById('torre'); t.classList.remove('tambalea','cae'); const ult=torre.orden[torre.orden.length-1]; quintasDibuja(ult);
+function torreDibuja(){ const t=document.getElementById('torreBox'); t.classList.remove('tambalea','cae'); const ult=torre.orden[torre.orden.length-1]; quintasDibuja(ult);
   const dog=(document.getElementById('dog')||{}).innerHTML||''; let h='';
   for(let p=torre.lo;p<=torre.hi;p++) h+=`<div class="blo${p===ult?' ult':''}${p===torre.base?' base':''}" data-p="${p}" style="background:${QCOL[(p+15)%QCOL.length]}"><span>${p===torre.base?'★ ':''}${qNom(p)}</span><small>${pFrac(p-torre.base)}</small></div>`;
   t.innerHTML=h+`<svg class="perro-torre" viewBox="0 0 160 170">${dog}</svg>`; }
@@ -565,7 +570,7 @@ function torreAdd(dir){ dir=dir||1; if(!torre) torreNueva(); if(torre.caida) tor
   if(!torre.orden.length){ const b=document.getElementById('banner'); b.classList.remove('flash'); b.textContent='Primero elige la nota de partida con los botones (o con un chip)'; return; }
   if((dir>0&&torre.hi>=19)||(dir<0&&torre.lo<=-15)){ const b=document.getElementById('banner'); b.classList.remove('flash'); b.textContent='Se acabó la línea de quintas por ese lado: prueba hacia el otro'; return; }
   const p=dir>0?++torre.hi:--torre.lo; torre.orden.push(p); torreDibuja();
-  const prev=dir>0?p-1:p+1, ban=document.getElementById('banner'), t=document.getElementById('torre'), n=torre.hi-torre.lo+1;
+  const prev=dir>0?p-1:p+1, ban=document.getElementById('banner'), t=document.getElementById('torreBox'), n=torre.hi-torre.lo+1;
   ban.classList.remove('flash');
   try{ const a=ctx(), t0=a.currentTime+.05; tone(pFreq(prev),t0,.45,.13,true); tone(pFreq(p),t0+.45,.7,.13,true); }catch(e){}
   if(n===7){ const tonica=torre.lo+1, esc=[0,2,4,-1,1,3,5].map(x=>pFreq(tonica+x)); const base=esc[0];
@@ -611,7 +616,7 @@ function ponJuego(i){ juego=(i+JUEGOS.length)%JUEGOS.length; const J=JUEGOS[jueg
   document.getElementById('jTit').textContent=J.t; document.getElementById('jKick').textContent=J.k; document.getElementById('jSub').textContent=J.s;
   JUEGOS.forEach(x=>document.body.classList.toggle('juego-'+x.id,x===J));
   if(sube) subeStop(); document.getElementById('ecoBtn').textContent=J.id==='torre'?'🧱 QUINTA':J.id==='sube'?'⬆⬇ EMPEZAR':J.id==='eco'?'🐶 EMPEZAR':'🐶 ECO';
-  document.getElementById('torre').hidden=J.id!=='torre'; if(J.id==='torre'){ torreAlt='n'; syncSeg('alts','n'); syncSeg('keys',''); torreNueva(); } else { syncSeg('keys',state.key); syncSeg('alts',state.alt); syncSeg('modes',state.mode); render(); }
+  document.getElementById('torreBox').hidden=J.id!=='torre'; if(J.id==='torre'){ torreAlt='n'; syncSeg('alts','n'); syncSeg('keys',''); torreNueva(); } else { syncSeg('keys',state.key); syncSeg('alts',state.alt); syncSeg('modes',state.mode); render(); }
   document.getElementById('torreAbajo').hidden=J.id!=='torre'; if(J.id==='torre') document.getElementById('ecoBtn').textContent='🧱 QUINTA ↑ ♯';
   if(J.id==='eco'){ state.held=[false,false,false,false]; [0,1,2,3].forEach(i=>{ const b=document.getElementById('h'+i); b.classList.remove('on'); b.textContent='HOLD'; b.setAttribute('aria-pressed',false); document.getElementById('f'+i).classList.remove('held'); }); }
   try{ history.replaceState(null,'',J.id==='maquina'?location.pathname+location.search:'#'+J.id); }catch(e){} }
