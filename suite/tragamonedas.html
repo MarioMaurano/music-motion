@@ -42,6 +42,13 @@ body:not(.juego-torre) .quintas{display:none}
 .quintas span.nuevo{animation:chipon .6s ease-out}
 .quintas span.re{outline:1px dashed rgba(255,255,255,.35);outline-offset:1px}
 @keyframes chipon{0%{transform:scale(1.6)}100%{transform:none}}
+body:not(.juego-paseo) .pulso{display:none}
+body.juego-paseo .grp:has(#keys),body.juego-paseo .grp:has(#alts),body.juego-paseo .grp:has(#modes){display:none}
+.pulso{display:flex;align-items:center;gap:12px}
+.pulso .luz{width:26px;height:26px;border-radius:50%;background:#2a2a3c;border:2px solid var(--gold-d);transition:background .06s,box-shadow .06s}
+.pulso .luz.on{background:#38c0a6;box-shadow:0 0 18px #38c0a6}.pulso .luz.on.f{background:var(--gold);box-shadow:0 0 22px var(--gold)}
+.pulso .tap{min-width:170px;min-height:58px;border-radius:16px;border:2px solid var(--gold);background:rgba(214,180,80,.12);color:var(--gold);font:400 24px/1 var(--display);letter-spacing:.08em;cursor:pointer;touch-action:manipulation;user-select:none}
+.pulso .tap:active{background:rgba(214,180,80,.35)}
 body.juego-paseo .reels,body.juego-paseo .hold,body.juego-paseo #save,body.juego-paseo #chords{display:none}
 .paseo{flex:1;min-width:0;min-height:220px;position:relative;align-self:center}
 .paseo[hidden]{display:none}
@@ -185,6 +192,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
     <div class="grp"><span class="cl">Key</span><span id="keys" class="grp"></span></div>
     <div class="grp"><span class="cl">Alteration</span><span id="alts" class="grp"></span></div>
     <div class="grp"><span class="cl">Mode</span><span id="modes" class="grp"></span></div>
+    <div class="pulso" id="paseoPulso"><span class="cl">Pulse</span><span class="luz" id="pulsoLuz"></span><button class="tap" id="pulsoTap">TAP HERE</button></div>
     <div class="grp"><span class="cl">Tempo</span><input type="range" id="tempo" min="60" max="132" step="4" value="88" aria-label="Tempo"><span id="bpm" class="fn">♩ = 88</span></div>
   </div>
 </div>
@@ -611,11 +619,13 @@ function paseoStart(){ if(paseo) paseoStop(); if(!keyInfo().ok||state.bars.lengt
   const at=ms=>a?a.currentTime+(ms-performance.now())/1000:0;
   for(let i=0;i<20;i++){ const t=t0+i*beat; try{ if(a) tone(i%4===0?1760:1320,at(t),.05,i<4?.12:.06,true); }catch(e){}   // la cuenta y el metrónomo
     paseo.timers.push(setTimeout(()=>{ if(!paseo) return; const c=document.getElementById('paseoCuenta');
-      if(i<4){ c.textContent=String(i+1); if(i===3) ban.textContent='¡Ahora! Un paso en cada tiempo'; }
+      const luz=document.getElementById('pulsoLuz'); if(luz){ luz.classList.add('on'); luz.classList.toggle('f',i%4===0); setTimeout(()=>luz.classList.remove('on'),Math.min(140,beat/2)); }
+      if(i<4){ c.textContent=String(4-i); if(i===3) ban.textContent='¡Ahora! Un paso en cada tiempo'; }   // cuenta regresiva: 4 3 2 1
       else { c.textContent=''; document.getElementById('paseoPerro').style.left=(4+92*(i-4+.5)/16)+'%'; } }, Math.max(0,t-performance.now()))); }
   // la melodía de los rodillos acompaña el paseo: un compás = 4 tiempos
   const e8=beat/2; let tt=t0+4*beat; state.bars.forEach(b=>b.deg.forEach((d,k)=>{ try{ if(a) tone(spell(d).freq,at(tt),b.rh[k]*e8/1000*.95,.11,true); }catch(e){} tt+=b.rh[k]*e8; }));
   paseo.timers.push(setTimeout(paseoFin, t0+20*beat+250-performance.now())); }
+document.getElementById('pulsoTap').addEventListener('pointerdown',e=>{ e.preventDefault(); if(paseo&&paseo.on) paseoTap(); else paseoStart(); });   // TAP HERE: el toque cuenta al bajar el dedo
 function paseoTap(){ const p=paseo; if(!p||!p.on) return; const now=performance.now(), i=Math.round((now-p.t0)/p.beat);
   if(i<4||i>19||p.hits.includes(i)) return; const err=Math.abs(now-(p.t0+i*p.beat)); p.hits.push(i);
   const b=document.getElementById('paseoBox'), x=4+92*(i-4+.5)/16, ban=document.getElementById('banner');
@@ -650,7 +660,7 @@ const JUEGOS=[
   {id:'maquina', t:'La máquina de melodías', k:'Juego de composición musical', s:'Tira de la palanca: cuatro rodillos, cuatro compases, una melodía nueva.'},
   {id:'eco', t:'El eco', k:'Juego de escucha', s:'La máquina toca y tú repites con A S D F G H J K o con los botones. ¡Hasta la melodía entera!'},
   {id:'torre', t:'La torre de quintas', k:'Juego de construcción', s:'Elige la nota de partida y apila quintas (3:2): ↑ encima, hacia los sostenidos; ↓ debajo, hacia los bemoles. Con 7 seguidas sale una escala; con 13… ¿aguanta la torre?'},
-  {id:'paseo', t:'El paseo del perrito', k:'Juego del pulso', s:'El perrito camina al pulso de la melodía. Pulsa la barra espaciadora (o 🐾 PASO) en cada paso. ¡Que no tropiece!'},
+  {id:'paseo', t:'El paseo del perrito', k:'Juego del pulso', s:'El perrito camina al pulso de la melodía. Toca TAP HERE (o la barra espaciadora) en cada paso, con la luz del pulso. ¡Que no tropiece!'},
   {id:'sube', t:'¿Sube o baja?', k:'Juego de escucha', s:'Suenan dos notas: ¿la segunda sube o baja? Pulsa ⬆ o ⬇ (o las flechas del teclado). Diez rondas, cada vez más cerca.'},
 ];
 let juego=0;
