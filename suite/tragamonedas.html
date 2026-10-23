@@ -262,13 +262,15 @@ function drawRiddle(){ const r=riddle, h=stripH(), nm=keyName(r.k,r.a,r.m), f=fi
     `<svg class="mini-dog" viewBox="0 0 160 170">${dog}</svg><div>¿Empezamos de nuevo? <b>Tira de la palanca</b> → Do mayor.</div>` ];
   for(let i=0;i<4;i++){ const st=document.getElementById('s'+i); st.innerHTML=`<div class="clue open${i===1||i===2?' pick':''}" style="height:${h}px">${c[i]}</div>`;
     document.getElementById('l'+i).innerHTML=''; }
-  const pick=(i,t)=>{ const el=document.querySelector('#s'+i+' .clue'); if(el) el.onclick=()=>{ if(state.spinning) return; ponKey(t.k,t.a,t.m); render(); if(i===1) comma(r,t); setTimeout(()=>{ if(!state.spinning) spin(); }, i===1?4200:300); }; };
-  pick(1,{k:v.k,a:v.a,m:r.m}); pick(2,rel);
+  // 2026-10-23 (Mario): la vecina hace oír la coma y los cuadros se quedan, con el perrito; solo la palanca los quita.
+  const c1=document.querySelector('#s1 .clue'); if(c1) c1.onclick=()=>{ if(!state.spinning) comma(r,{k:v.k,a:v.a}); };
+  const c2=document.querySelector('#s2 .clue'); if(c2) c2.onclick=()=>{ if(state.spinning) return; ponKey(rel.k,rel.a,rel.m); render(); setTimeout(()=>{ if(!state.spinning) spin(); },300); };
   document.getElementById('out').innerHTML=`<div><b>¿Quién es tu vecina?</b> ${nm} es una tonalidad teórica. Toca su vecina o su relativa, o tira de la palanca para volver a Do mayor.</div>`; }
 // Las dos tónicas, una tras otra y juntas: en el piano son la misma tecla; en la afinación pitagórica las separa una coma.
 function comma(r,v){ const f1=tonicFreq(r.k,r.a), f2=tonicFreq(v.k,v.a), n1=NAMES[r.k]+ALTS[r.a], n2=NAMES[v.k]+ALTS[v.a];
   try{ const a=ctx(); const t=a.currentTime+.15; tone(f1,t,.9,.13,true); tone(f2,t+1.1,.9,.13,true); tone(f1,t+2.3,1.6,.1,true); tone(f2,t+2.3,1.6,.1,true); }catch(e){}
-  document.getElementById('out').insertAdjacentHTML('afterbegin',`<div><b>${n1} y ${n2}:</b> en el piano son la misma tecla; para el oído, no. En la afinación pitagórica de Music Motion las separa una coma — escúchalas: primero una, luego la otra, y después juntas.</div>`); }
+  const o=document.getElementById('out'); const prev=o.querySelector('.coma'); if(prev) prev.remove();
+  o.insertAdjacentHTML('afterbegin',`<div class="coma"><b>${n1} y ${n2}:</b> en el piano son la misma tecla; para el oído, no. En la afinación pitagórica de Music Motion las separa una coma — escúchalas: primero una, luego la otra, y después juntas.</div>`); }
 function stripH(){return document.querySelector('.win').getBoundingClientRect().height;}
 function render(hi){
   state.bars.forEach((b,i)=>{ const st=document.getElementById('s'+i); st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.remove('blur'); st.innerHTML=barSVG(b,hi&&hi[0]===i?hi[1]:-1);
