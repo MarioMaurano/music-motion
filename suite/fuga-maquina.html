@@ -85,6 +85,8 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .grid td.ped{background:#c98a3a;color:#0e1016}
 .grid td.seq{background:#8a7bd8;color:#0e1016}
 .cmb{font-size:11px;padding:5px 8px;min-height:30px;letter-spacing:.06em;opacity:.9}.cmb[disabled]{opacity:.35}
+.mailbox{margin:10px auto 0;max-width:640px;border:1.5px dashed var(--gold-d);border-radius:12px;padding:9px 14px;text-align:center;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;color:var(--textm);cursor:pointer}
+.mailbox:hover,.mailbox.over{border-color:var(--gold);color:var(--gold);background:rgba(214,180,80,.06)}
 .tabs .btn{font-size:14px;padding:8px 22px}.tabs .btn.on{background:var(--gold);border-color:var(--gold);color:#0a0a10}
 body.win-canon .fx,body.win-fuga .cx,body.win-inv .fx,body.win-inv .cx,body.win-inv .vx,body.win-sinf .fx,body.win-sinf .cx,body.win-sinf .vx,body.win-ped .fx,body.win-ped .cx,body.win-ped .vx,body:not(.win-ped) .px,body.win-acomp .fx,body.win-acomp .cx,body.win-acomp .vx,body:not(.win-acomp) .ax,body:not(.win-acomp):not(.win-ped) .mx{display:none}
 .stepv{display:inline-block;min-width:2.2em;text-align:center;font-family:var(--mono);font-size:15px;color:var(--gold)}
@@ -105,6 +107,7 @@ body.win-canon .fx,body.win-fuga .cx,body.win-inv .fx,body.win-inv .cx,body.win-
   <div class="row tabs" id="tabs"></div>
   <div class="lights" id="lights" aria-hidden="true"></div>
   <div class="reels" id="reels"></div>
+  <div class="mailbox" id="mailbox" role="button" tabindex="0"><span id="mbtxt"></span><input type="file" id="mbfile" accept=".mmf,application/json" hidden></div>
   <div class="banner" id="banner" aria-live="polite"></div>
   <div class="row">
     <button class="spin" id="spin">SPIN</button>
@@ -182,6 +185,9 @@ const I18N={
   aMelA:'Melodía', aAccC:'Acordes largos', aAccP:'Acordes sobre el pedal', aAccA:'Arpegio', aBass:'Bajo', lMelA:'Melodía', lAcc:'Acompañamiento', lBass:'Bajo / pedal',
   asv:'La máquina de la melodía acompañada · Salieri · {ty}', noAcc:'No salió una melodía que se deje acompañar limpia: vuelve a tirar.', noMov:'La bordadura (MOVE) no cupo en algunas tarjetas: quedaron en STAY.', noRe:'Esta melodía no admite otra armonización limpia con estas tarjetas y este final: cambia alguna tarjeta, el final o suelta un HOLD.',
   ahow:'<b>Cómo se juega.</b> Pulsa SPIN: los rodillos proponen una melodía y la máquina le busca los acordes, uno por compás, entre los de la tonalidad (en mayor I, ii, IV, V, vi; en menor i, III, iv, V, VI). Cada nota de tiempo fuerte tiene que pertenecer a su acorde; las demás pueden ser notas de paso. La progresión sigue el camino natural de la armonía: empieza en la tónica, la dominante va a la tónica (nunca a la subdominante) y el final cierra con una cadencia. La melodía se arma como pregunta y respuesta: la primera mitad cierra en la dominante, como una pregunta, y la segunda empieza repitiendo el comienzo y cierra en la tónica. Lo que se mueve se reparte: si el acompañamiento se mueve, la melodía va con notas largas, y en los compases donde la melodía descansa los acordes se quiebran. La melodía la toca un viento (flauta, oboe, clarinete o flauta dulce) y el acompañamiento, los instrumentos de siempre. Elige el acompañamiento: acordes largos sobre su bajo, acordes sobre un pedal de tónica (el puente desde el capítulo del pedal: los acordes que no tienen la tónica chocan con el bajo y el oído los acepta), o arpegio, como el Preludio en Do de Bach que acompaña el Ave María. Y AIR, al estilo del Air de la Suite n.º 3: la melodía con notas largas y escalas en semicorcheas (ritmos tomados del Air), la armonía cambiando cada medio compás con séptimas, inversiones y la dominante de la dominante, retardos que resuelven bajando, dos voces interiores (violín II y viola) y el bajo caminando en corcheas con saltos de octava; desde 4 compases, la primera mitad cierra en la dominante, y el tema puede llegar a 16 compases. La armonía se elige entre los caminos buenos, no siempre el mismo. Ending decide cómo termina la frase: CLOSED (V–I), OPEN (queda en la dominante) o DECEPTIVE (V–vi, la cadencia rota). Bass: ROOT (la fundamental), INVERSIONS (también la tercera, para que el bajo cante) o WALK (el bajo camina por grados hacia el acorde siguiente). Cada tarjeta tiene su botón de acorde: CHANGE (otro acorde), STAY (el mismo, ligado) o MOVE (el bajo se queda y arriba pasa la bordadura 6/4, como I–IV6/4–I). Al cambiar de acorde, la nota común se queda ligada en su voz. Con todos los compases en HOLD, SPIN no cambia la melodía: le busca otra armonización. El esqueleto muestra los acordes con sus números romanos: es la puerta al capítulo de armonía. <b>OPEN IN SCORE</b> abre la melodía con su acompañamiento y los números romanos encima.',
+  mbHint:'📬 MAILBOX · suelta aquí un .mmf (1 a 4 compases: CH1 la melodía, CH2 el bajo que quieres) o haz clic para elegirlo',
+  mbOk:'Recibido: {n} compás(es) en {met}, {key}{bass}. La melodía queda en HOLD.', mbBass:', con bajo dado en {k} lugar(es)', mbMeter:'El buzón acepta 4/4, 3/4 y 3/8; este archivo está en {m}.', mbEmpty:'El archivo no trae notas.',
+  mbBad:'No pude leer el archivo: {e}', mbRest:'silencios internos alargados en el compás {b}', mbCrom:'nota cromática aproximada en el compás {b}', mbCut:'solo se usan los primeros {n} compases', mbBassX:'el bajo del compás {b} no encaja con la melodía: quedó libre', mbRules:'el tema rompe alguna regla del filtro (salto, ámbito o final): se muestra igual',
   noCan:'Con estos ajustes no salió un canon limpio: vuelve a tirar, suelta algún HOLD o prueba otra distancia.',
   ctit:'La máquina de canones', ckick:'Salieri Atelier · el canon', csub:'Los rodillos proponen el dux; la máquina lo arma para que el comes lo pueda seguir sin chocar.',
   cres:'Canon a {n} voces en <b>{key}</b> · {met} · dux de {t} compases · comes <b>{iv}</b>, a {d} compás(es) · {mov} · {fin}<br>Total: <b>{tot} compases</b>',
@@ -227,6 +233,9 @@ const I18N={
   aMelA:'Melody', aAccC:'Long chords', aAccP:'Chords over the pedal', aAccA:'Arpeggio', aBass:'Bass', lMelA:'Melody', lAcc:'Accompaniment', lBass:'Bass / pedal',
   asv:'The Accompanied Melody Machine · Salieri · {ty}', noAcc:'No melody came out that can be accompanied cleanly: spin again.', noMov:'The neighbour chord (MOVE) did not fit on some cards: they were set to STAY.', noRe:'This melody admits no other clean harmonization with these cards and this ending: change a card, the ending or release a HOLD.',
   ahow:'<b>How to play.</b> Press SPIN: the reels propose a melody and the machine finds its chords, one per bar, among those of the key (in major I, ii, IV, V, vi; in minor i, III, iv, V, VI). Every strong-beat note must belong to its chord; the others may be passing notes. The progression follows the natural path of harmony: it starts on the tonic, the dominant goes to the tonic (never to the subdominant) and the end closes with a cadence. The melody is built as question and answer: the first half closes on the dominant, like a question, and the second begins by repeating the opening and closes on the tonic. Movement is shared: when the accompaniment moves, the melody goes in long notes, and in the bars where the melody rests the chords are broken. A wind instrument plays the melody (flute, oboe, clarinet or recorder) and the usual instruments the accompaniment. Choose the accompaniment: long chords over their bass, chords over a tonic pedal (the bridge from the pedal chapter: the chords without the tonic clash with the bass and the ear accepts them), or an arpeggio, like Bach’s Prelude in C that accompanies the Ave Maria. And AIR, in the style of the Air from Suite No. 3: the melody with long notes and sixteenth-note runs (rhythms taken from the Air), the harmony changing every half bar with sevenths, inversions and the dominant of the dominant, suspensions resolving downwards, two inner voices (violin II and viola) and the bass walking in eighths with octave leaps; from 4 bars on, the first half closes on the dominant, and the theme can reach 16 bars. The harmony is chosen among the good paths, not always the same one. Ending decides how the phrase ends: CLOSED (V–I), OPEN (it stays on the dominant) or DECEPTIVE (V–vi). Bass: ROOT, INVERSIONS (also the third, so that the bass sings) or WALK (the bass walks by step towards the next chord). Every card has its chord button: CHANGE (a new chord), STAY (the same, tied) or MOVE (the bass stays and the 6/4 neighbour passes above, as in I–IV6/4–I). When the chord changes, the common tone stays tied in its voice. With every bar on HOLD, SPIN keeps the melody and looks for another harmonization. The skeleton shows the chords with their Roman numerals: the door to the harmony chapter. <b>OPEN IN SCORE</b> opens the melody with its accompaniment and the Roman numerals above.',
+  mbHint:'📬 MAILBOX · drop a .mmf here (1 to 4 bars: CH1 the melody, CH2 the bass you want) or click to choose it',
+  mbOk:'Received: {n} bar(s) in {met}, {key}{bass}. The melody is on HOLD.', mbBass:', with a given bass in {k} place(s)', mbMeter:'The mailbox accepts 4/4, 3/4 and 3/8; this file is in {m}.', mbEmpty:'The file has no notes.',
+  mbBad:'I could not read the file: {e}', mbRest:'inner rests lengthened in bar {b}', mbCrom:'chromatic note approximated in bar {b}', mbCut:'only the first {n} bars are used', mbBassX:'the bass of bar {b} does not fit the melody: left free', mbRules:'the theme breaks a filter rule (leap, range or ending): shown anyway',
   noCan:'No clean canon came out with these settings: spin again, release a HOLD or try another distance.',
   ctit:'The Canon Machine', ckick:'Salieri Atelier · the canon', csub:'The reels propose the dux; the machine builds it so that the comes can follow without clashing.',
   cres:'Canon for {n} voices in <b>{key}</b> · {met} · {t}-bar dux · comes <b>{iv}</b>, {d} bar(s) later · {mov} · {fin}<br>Total: <b>{tot} bars</b>',
@@ -255,7 +264,7 @@ function P(li,f){ const letter=LET[mod(li,7)], acc=Math.round((f-FIF[letter])/7)
 const up5=p=>P(p.li+4,p.f+1), up4=p=>P(p.li+3,p.f-1), oct=(p,k)=>P(p.li+7*k,p.f);
 function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F'];
   if(fifths>0) return sh.slice(0,fifths).includes(letter)?1:0; if(fifths<0) return fl.slice(0,-fifths).includes(letter)?-1:0; return 0; }
-let state={aend:'closed',bmode:'root',cm:[],prog:null,mins:'flute',atype:'chords',ptype:'T',pn:1,win:(()=>{ try{ const w=new URLSearchParams(location.search).get('win'); return ['canon','inv','sinf','ped','acomp'].includes(w)?w:'fuga'; }catch(e){ return 'fuga'; } })(),civ:'8',cdis:1,cmov:'dir',cfin:'coda',key:'D',alt:'n',mode:1,meter:'4/4',T:4,resp:'V',esp:'simple',n:3,tam:'escuela',bpm:72,held:[],bars:[],spinning:false};
+let state={bassReq:{},fine:false,aend:'closed',bmode:'root',cm:[],prog:null,mins:'flute',atype:'chords',ptype:'T',pn:1,win:(()=>{ try{ const w=new URLSearchParams(location.search).get('win'); return ['canon','inv','sinf','ped','acomp'].includes(w)?w:'fuga'; }catch(e){ return 'fuga'; } })(),civ:'8',cdis:1,cmov:'dir',cfin:'coda',key:'D',alt:'n',mode:1,meter:'4/4',T:4,resp:'V',esp:'simple',n:3,tam:'escuela',bpm:72,held:[],bars:[],spinning:false};
 const fifthsOf=(k,a,m)=>FIF[k]+7*ALT[a]-(m?3:0);
 function vecinaDe(k,a,m){ const pc=mod(SEMI[k]+ALT[a],12);
   for(const L of LET) for(const al of ['n','#','b']){ if(mod(SEMI[L]+ALT[al],12)!==pc||(L===k&&al===a)) continue;
@@ -281,7 +290,7 @@ RH['4/4air']={U:16,uq:.25,Q:4,
   MEDIO:[[[9,1,1,1,1,1,1,1],2],[[2,1,1,1,1,1,1,4,1,3],1],[[6,1,1,1,1,1,2,1,1,1],1],[[1,1,1,3,1,1,8],1],[[5,1,1,1,6,2],1],[[1,1,1,1,1,1,1,1,8],1],[[6,1,1,6,1,1],1],[[1,1,3,1,3,1,4,2],1],[[1,2,1,2,1,1,8],1],[[5,1,1,3,4,2],1]],
   FINAL:[[[16],1],[[6,1,1,8],1],[[1,1,1,3,1,1,8],1],[[1,1,1,1,1,1,1,1,8],1],[[1,2,1,2,1,1,8],1],[[5,1,1,1,6,2],1]]};
 const AIR=()=>state.win==='acomp'&&state.atype==='air';
-const MT=()=>AIR()&&state.meter==='4/4'?RH['4/4air']:RH[state.meter];
+const MT=()=>state.meter==='4/4'?(AIR()?RH['4/4air']:state.fine?RH['4/4f']:RH['4/4']):RH[state.meter];
 let LOOSE=false;   // en el Air: retardos (nota tenida que choca y resuelve bajando por grado) y notas de paso en cualquier voz
 // 3/4 y 3/8 (en semicorcheas): compases de las fugas ternarias de El clave bien temperado
 // (I/6, I/10, I/21, II/16, II/21 en 3/4 · I/11, II/15, II/24 en 3/8), contados voz por voz con sus veces
@@ -291,6 +300,7 @@ const INICIO=[[[4,4],212],[[6,2],123],[[2,2,4],113],[[3,1,4],112],[[4,3,1],106],
 const MEDIO=[[[2,2,2,2],359],[[1,1,1,1,1,1,1,1],120],[[3,1,3,1],164],[[1,1,1,1,2,2],52],[[2,1,1,2,2],42],[[2,2,1,1,2],36],[[3,1,2,2],26],[[1,1,2,2,2],22],[[4,2,2],83],[[6,1,1],54]];
 const FINAL=[[[2,2,4],113],[[3,1,4],112],[[4,4],212],[[1,1,1,1,4],66],[[2,1,1,4],27],[[6,2],123]];
 Object.assign(RH['4/4'],{INICIO,MEDIO,FINAL});
+RH['4/4f']={U:16,uq:.25,Q:4,INICIO:INICIO.map(([c,w])=>[c.map(x=>x*2),w]),MEDIO:MEDIO.map(([c,w])=>[c.map(x=>x*2),w]),FINAL:FINAL.map(([c,w])=>[c.map(x=>x*2),w])};
 const wpick=L=>{ let s=L.reduce((a,x)=>a+x[1],0)*Math.random(); for(const [v,w] of L){ s-=w; if(s<=0) return v.slice(); } return L[0][0].slice(); };
 const rnd=n=>Math.floor(Math.random()*n), pick=a=>a[rnd(a.length)];
 function roleOf(i){ return i===0?'head':(i===state.T-1?'fin':'cont'); }
@@ -348,12 +358,13 @@ function strettoClean(lines){ const mt=MT(), strong=state.meter==='4/4'?[0,mt.U/
     for(let a=0;a<snd.length;a++) for(let b=a+1;b<snd.length;b++){ const x=snd[a], y=snd[b]; if(!x||!y) continue;
       if(x.t!==t&&y.t!==t) continue;                        // nada nuevo entre estas dos voces
       const lo=Math.min(x.m,y.m), iv=Math.abs(x.m-y.m)%12, ok=CONS.has(iv)||(iv===5&&(lo>bass||(LOOSE&&!isStrong)||x.s4||y.s4));   // en el Air, la 4.ª contra el bajo que arpegia, en tiempo débil, pasa
+      if(!ok&&!isStrong&&(x.given||y.given)) continue;   // lo que vino dado (HOLD o buzón) se respeta en los tiempos débiles
       if(!ok){ const held=[x,y].filter(z=>z.t<t), susp=held.some(z=>z.next&&z.next.li===z.li-1&&z.du>=Math.round(1/mt.uq));
         const orn=z=>z.du<=Math.round(.5/mt.uq)&&((z.prev&&Math.abs(z.li-z.prev.li)===1)||(z.next&&Math.abs(z.next.li-z.li)===1));   // bordadura, escapada, apoyatura breve
         if(LOOSE){ if(isStrong?!susp:!(susp||[x,y].some(pass)||[x,y].some(orn))) return false; }
         else { if(isStrong) return false; const nw=[x,y].filter(z=>z.t===t); if(!nw.some(pass)) return false; } }
       if(last&&x.t===t&&y.t===t&&x.prev&&y.prev&&last[a]===x.prev&&last[b]===y.prev){ const iv0=Math.abs(x.prev.m-y.prev.m)%12;
-        if((iv===0||iv===7)&&iv0===iv&&Math.sign(x.m-x.prev.m)===Math.sign(y.m-y.prev.m)&&x.m!==x.prev.m) return false; } }
+        if((iv===0||iv===7)&&iv0===iv&&Math.sign(x.m-x.prev.m)===Math.sign(y.m-y.prev.m)&&x.m!==x.prev.m&&!(x.given&&y.given)) return false; } }
     last=snd; }
   return true; }
 const withBars=(bars,f)=>{ const keep=state.bars; state.bars=bars; try{ const S=subject(); return f(S,answer(S)); } finally{ state.bars=keep; } };
@@ -440,7 +451,10 @@ const ENDS={closed:[0,2,4],open:[4,6,1],dec:[5,0,2]};
 const triad=r=>[r,r+2,r+4], nb64=r=>[r,r+3,r+5];   // I–IV6/4–I: el acorde una 4.ª arriba, sobre el mismo bajo
 const degP=d=>deg2P(d,state.mode&&mod(d,7)===6?1:0);
 function barSegs(b,r){ const U=MT().U, sp=SPLIT(); return CM(b)==='mov'&&sp?[{pos:0,du:sp,t:triad(r),r},{pos:sp,du:U-sp,t:nb64(r),r,six4:true}]:[{pos:0,du:U,t:triad(r),r}]; }
-function fitBar(S,b,r){ const U=MT().U, st=state.meter==='4/4'?[0,U/2]:[0], segs=barSegs(b,r); let sc=0;
+function bassAsk(b,pos){ const q=state.bassReq&&state.bassReq[b+':'+(pos||0)]; return q==null?null:q; }
+function fitBar(S,b,r){ const bq=state.win==='acomp'?bassAsk(b,0):null; if(bq!=null&&![0,2].includes(mod(bq-r,7))) return -1000;   // el bajo dado: fundamental o 3.ª del acorde
+  return fitBar0(S,b,r); }
+function fitBar0(S,b,r){ const U=MT().U, st=state.meter==='4/4'?[0,U/2]:[0], segs=barSegs(b,r); let sc=0;
   for(const x of S.filter(x=>x.bar===b)){ const g=segs.find(g=>x.pos>=g.pos&&x.pos<g.pos+g.du)||segs[0], inC=g.t.some(d=>mod(x.d-d,7)===0);
     if(st.includes(x.pos)||x.pos===g.pos) sc+=inC?3:-100; else sc+=inC?1:0; } return sc; }
 // la armonía como camino: se calculan los puntajes de todos los caminos y se ELIGE entre los buenos (no siempre el mejor)
@@ -453,7 +467,7 @@ function harmLayers(S,final,TF){ const T=TF||Math.max(1,...S.map(x=>x.bar+1)), C
     return (GOOD[q]||[]).includes(r)?2:q===r?-1:0; };
   const L=[{}]; C.forEach(r=>L[0][r]=fitBar(S,0,r)+(r===0?4:-30)+(T===1&&final&&r!==endR?NEG:0));   // la frase empieza en la tónica
   for(let b=1;b<T;b++){ L[b]={}; C.forEach(r=>{ let best=-1e9; C.forEach(q=>{ const v=L[b-1][q]+trans(q,r,b); if(v>best) best=v; });
-    L[b][r]=best+fitBar(S,b,r)+([1,3,5].includes(r)?1.5:0)+(state.T>=4&&b===H2-1?(r===4?6:NEG):0); }); }
+    L[b][r]=best+fitBar(S,b,r)+([1,3,5].includes(r)?1.5:0)+(state.T>=4&&b===H2-1?(r===4?6:state.held[b]?0:NEG):0); }); }   // la semicadencia cede si ese compás vino dado (HOLD o buzón)
   return {L,T,C,trans}; }
 function harmonize(S,final,tau,TF){ const {L,T,C,trans}=harmLayers(S,final,TF);
   const pick=items=>{ const mx=Math.max(...items.map(x=>x[1])); if(mx<-5e4) return null; if(!tau) return items.find(x=>x[1]===mx)[0];
@@ -467,6 +481,7 @@ function acompParts(S,prog){ const mt=MT(), U=mt.U, T=prog.length, parts=[], mel
   // el bajo: fundamental, con inversiones, o caminando; sobre STAY y MOVE se queda
   const bm=state.bmode||'root', bp=[]; let pb=null;
   prog.forEach((r,b)=>{ const keep=CM(b)!=='chg'&&pb; let p;
+    const bq=bassAsk(b,0); if(bq!=null&&!keep){ const k=mod(bq-r,7)===2?1:0; p=fitOct([{p:degP(bq)}],[36,52])[0].p; bp[b]={inv:k}; bp[b]=Object.assign(bp[b],{p}); pb=p; return; }
     if(keep) p=pb; else { const cand=[r,r+2].map((d,k)=>({k,p:fitOct([{p:degP(d)}],[38,52])[0].p})); const fin=b>=T-2||b===Math.floor(state.T/2)-1;
       const use=bm==='follow'&&!fin?cand:[cand[0]]; let best=use[0],bs=1e9; for(const c of use){ const sc=(pb?Math.abs(c.p.midi-pb.midi):0)+(c.k?2:0); if(sc<bs){bs=sc;best=c;} } p=best.p; bp[b]={inv:best.k}; }
     bp[b]=Object.assign(bp[b]||{inv:(bp[b-1]||{}).inv||0},{p}); pb=p; });
@@ -494,10 +509,10 @@ function acompParts(S,prog){ const mt=MT(), U=mt.U, T=prog.length, parts=[], mel
       for(let k=0;k<n;k++){ let pk; if(k===0) pk=a; else if(dir&&Math.abs(nx.li-li)>1){ li+=dir; pk=degP(li-(KI().li0)); pk=fitOct([{p:pk}],[36,55])[0].p; } else pk=a;
         bass.push({p:pk,d:0,bar:b,pos:k*q,du:q}); } }); }
   else prog.forEach((r,b)=>{ const tie=bp[b+1]&&CM(b+1)!=='chg'&&bp[b+1].p.midi===bp[b].p.midi; bass.push({p:bp[b].p,d:0,bar:b,pos:0,du:U,tie}); });
-  if(state.atype==='arp'){ const pat=state.meter==='4/4'?[[0,1],[1,1],[2,1],[1,1],[0,1],[1,1],[2,1],[1,1]]:state.meter==='3/4'?[[0,2],[1,2],[2,2],[1,2],[2,2],[1,2]]:[[0,1],[1,1],[2,1],[1,1],[2,1],[1,1]];
+  if(state.atype==='arp'){ const e=state.meter==='4/4'?U/8:U/6, pat=(state.meter==='4/4'?[0,1,2,1,0,1,2,1]:[0,1,2,1,2,1]).map(k=>[k,e]);   // corcheas (semicorcheas en 3/8), en la grilla que toque
     const arp=[]; prog.forEach((_,b)=>{ let pos=0; pat.forEach(([k,du])=>{ const g=segs.find(g=>g.bar===b&&pos>=g.pos&&pos<g.pos+g.du), ps=g.vo, rot=mod(ps[0].midi-bp[b].p.midi,12)===0?1:0; arp.push({p:ps[(k+rot)%3],d:0,bar:b,pos,du}); pos+=du; }); });
     parts.push({role:'acc',ins:'piano_grand_tonal',name:['Arpegio','Arpeggio'],clef:'G',notes:arp}); }
-  else { const ch=[], pat=state.meter==='4/4'?[[0,2],[1,2],[2,2],[1,2]]:state.meter==='3/4'?[[0,4],[1,4],[2,4]]:[[0,2],[1,2],[2,2]];
+  else { const ch=[], pat=(state.meter==='4/4'?[0,1,2,1]:[0,1,2]).map(k=>[k,state.meter==='4/4'?U/4:U/3]);
     segs.forEach((g,gi)=>{ const quieta=g.pos===0&&g.du===U&&mel.filter(x=>x.bar===g.bar).length<=2;   // la melodía descansa → el acompañamiento se mueve
       if(quieta){ let pos=0; pat.forEach(([k,du])=>{ ch.push({p:g.vo[k],d:0,bar:g.bar,pos,du}); pos+=du; }); }
       else { const nx=segs[gi+1]; g.vo.forEach((p,i)=>ch.push({p,d:0,bar:g.bar,pos:g.pos,du:g.du,chord:true,tn:!!(nx&&nx.vo[i]&&nx.vo[i].midi===p.midi&&!(nx.pos===0&&nx.du===U&&mel.filter(x=>x.bar===nx.bar).length<=2))})); } });
@@ -509,10 +524,10 @@ function acompClean(bars,final,prog){ if(AIR()) return airClean(bars,final); ret
   for(let b=0;b<bars.length;b++) if(fitBar(S,b,prog[b])<-50) return false;
   const {parts,segs}=acompParts(S,prog.slice(0,bars.length)), U=MT().U;
   const mk=arr=>{ arr.forEach((y,i)=>{ y.prev=arr[i-1]; y.next=arr[i+1]; }); return arr; }, L=x=>mk(x.map(n=>({t:n.bar*U+n.pos,du:n.du,m:n.p.midi,li:n.p.li})));
-  const lines=[L(parts[0].notes)];
+  const lines=[L(parts[0].notes)]; lines[0].forEach((n,i)=>{ const src=parts[0].notes[i]; if(state.held[src.bar]) n.given=true; });
   // el bajo: el que suena; sobre el pedal, el que el oído supone (la fundamental) — el pedal mismo queda exento
   if(state.atype==='pedal') lines.push(mk(prog.slice(0,bars.length).map((r,b)=>{ const q=fitOct([{p:degP(r)}],[38,52])[0].p; return {t:b*U,du:U,m:q.midi,li:q.li}; })));
-  else lines.push(L(parts.find(x=>x.role==='bass').notes));
+  else { const bn=parts.find(x=>x.role==='bass').notes; lines.push(L(bn)); lines[1].forEach((n,i)=>{ if(bassAsk(bn[i].bar,bn[i].pos)!=null) n.given=true; }); }
   if(state.atype==='arp') lines.push(L(parts.find(x=>x.role==='acc').notes));
   else for(let i=0;i<3;i++) lines.push(mk(segs.map(g=>({t:g.bar*U+g.pos,du:g.du,m:g.vo[i].midi,li:g.vo[i].li,s4:!!g.six4}))));
   // en el 6/4 de bordadura la 4.ª contra el bajo es parte del acorde
@@ -536,7 +551,7 @@ function airPlanSample(){ const C=airChords(), SN=state.meter==='4/4'?2:1, NS=st
       const E=state.aend||'closed', VI=C.find(c=>c.r===5);
       if(s===NS-1) cand=E==='open'?[V]:E==='dec'?[VI]:[I]; else if(s===NS-2) cand=E==='closed'?C.filter(c=>c.r===4||c.r===3):E==='dec'?C.filter(c=>c.r===4):cand=C.filter(c=>okTo(a,c)); else if(s===half) cand=[V];
       else cand=C.filter(c=>okTo(a,c)&&!(c===a&&Math.random()<.6));
-      cand=cand.filter(c=>okTo(a,c)); if(!cand.length){ ok=false; break; }
+      cand=cand.filter(c=>okTo(a,c)); { const bq=bassAsk(Math.floor(s/SN),(s%SN)*(MT().U/SN)); if(bq!=null) cand=cand.filter(c=>[0,1].includes(c.t.findIndex(o=>mod(bq-c.r-o,7)===0))); } if(!cand.length){ ok=false; break; }
       const w=cand.map(c=>(GOOD[a.r]||[]).includes(c.r)?3:1+(mod(a.r-c.r,7)===4?2:0)); let x=Math.random()*w.reduce((p,q)=>p+q,0), k=0; while((x-=w[k])>0) k++; out.push(cand[Math.min(k,cand.length-1)]); }
     if(ok){ if(state.T>=4){ const h=Math.floor(state.T/2)*SN, c=(state.T>=8?2:1)*SN; if(state.T>=8) for(let k=0;k<c&&h+k<NS-2;k++) out[h+k]=out[k]; } return out; } }
   return null; }
@@ -606,6 +621,7 @@ function airChords(){ const M=!state.mode;
   return L; }
 function chordP(c,k){ const d=c.r+c.t[k], a=(c.alt&&c.alt[mod(d,7)])||(state.mode&&mod(d,7)===6&&c.r===4?1:0); return deg2P(d,a); }
 function airFits(S,prog){ const mt=MT(), SN=state.meter==='4/4'?2:1, W=mt.U/SN;
+  for(let s2=0;s2<prog.length;s2++){ const bq=bassAsk(Math.floor(s2/SN),(s2%SN)*W); if(bq!=null&&![0,1].includes(prog[s2].t.findIndex(o=>mod(bq-prog[s2].r-o,7)===0))) return false; }
   return S.every(x=>{ if(x.pos%W) return true; const c=prog[x.bar*SN+x.pos/W]; const k=c.t.findIndex(o=>mod(x.d-c.r-o,7)===0); return k>=0&&mod(chordP(c,k).midi-x.p.midi,12)===0; }); }
 function harmAir(S,final){ const C=airChords(), mt=MT(), U=mt.U, SN=state.meter==='4/4'?2:1, W=U/SN, T=Math.max(1,...S.map(x=>x.bar+1)), NS=T*SN;
   const inC=(c,x)=>{ const k=c.t.findIndex(o=>mod(x.d-c.r-o,7)===0); if(k<0) return false; const p=chordP(c,k); return mod(p.midi-x.p.midi,12)===0; };
@@ -621,7 +637,8 @@ function harmAir(S,final){ const C=airChords(), mt=MT(), U=mt.U, SN=state.meter=
   const best=D.reduce((a,c)=>c.sc>a.sc?c:a); if(best.sc<-50) return null; return best.path; }
 function airParts(S,prog){ const mt=MT(), U=mt.U, SN=state.meter==='4/4'?2:1, W=U/SN, e8=Math.round(.5/mt.uq), mel=fitOct(S,MELR[state.mins]||[62,86]);
   // el bajo: fundamental o primera inversión, lo que camine mejor; posición fundamental en las cadencias
-  let pb=null; const bassN=prog.map((c,s)=>{ const cand=[0,1].map(k=>({k,p:fitOct([{p:chordP(c,k)}],[38,50])[0].p}));
+  let pb=null; const bassN=prog.map((c,s)=>{ const bq=bassAsk(Math.floor(s/SN),(s%SN)*W); if(bq!=null){ const k=c.t.findIndex(o=>mod(bq-c.r-o,7)===0); if(k===0||k===1){ const p=fitOct([{p:chordP(c,k)}],[36,50])[0].p; pb=p; return {k,p}; } }
+    const cand=[0,1].map(k=>({k,p:fitOct([{p:chordP(c,k)}],[38,50])[0].p}));
     const last=s===prog.length-1||s===prog.length-2; let best=cand[0],bs=1e9; for(const x of cand){ if(last&&x.k) continue; const sc=(pb?Math.abs(x.p.midi-pb.midi):0)+(x.k?2:0); if(sc<bs){bs=sc;best=x;} } pb=best.p; return best; });
   const bass=[]; prog.forEach((c,s)=>{ const b=Math.floor(s/SN), st=(s%SN)*W, bn=bassN[s].p, others=c.t.map((_,k)=>k).filter(k=>k!==bassN[s].k).map(k=>fitOct([{p:chordP(c,k)}],[45,58])[0].p);
     const seq=[bn,oct(bn,1),others[0],others[1]||others[0],oct(bn,1),others[0]]; for(let i=0;i<W/e8;i++) bass.push({p:seq[i%seq.length],d:0,bar:b,pos:st+i*e8,du:e8}); });
@@ -985,6 +1002,50 @@ function openScore(){ if(!PLAN||state.spinning) return; const d=mmf(); const u=U
   if(!w){ ban.textContent=tr('noOpen'); return; }
   try{ if(!(window.mmSalieriAbierto&&mmSalieriAbierto())) ban.textContent=tr('open'); else ban.textContent=''; }catch(e){} }
 
+// ── el buzón: un .mmf de 1 a 4 compases entra en los rodillos, en HOLD, y la máquina arma el resto ──
+function importMMF(d){ const ban=document.getElementById('banner'), warn=[];
+  const ts=d.timeSignature||{num:4,den:4}, met=ts.num+'/'+ts.den; if(!['4/4','3/4','3/8'].includes(met)){ ban.textContent=tr('mbMeter',{m:met}); return; }
+  const fifths=+(Object.keys(KEYSIG).find(k=>KEYSIG[k]===d.keySignature)||0);
+  const chans=(d.channels||[]).filter(c=>(c.notes||[]).some(n=>!n.isRest)); if(!chans.length){ ban.textContent=tr('mbEmpty'); return; }
+  const Q={whole:4,half:2,quarter:1,eighth:.5,sixteenth:.25,thirtysecond:.125}, qd=n=>(Q[n.duration]||1)*(n.dotted?1.5:1);
+  const ACC={N:0,S:1,B:-1,SS:2,BB:-2}, acc=n=>ACC[(n.pitch||'CN').slice(1)]||0, li=n=>LET.indexOf((n.pitch||'C')[0])+7*(n.octave||4);
+  const avg=c=>{ const ns=c.notes.filter(n=>!n.isRest); return ns.reduce((a,n)=>a+li(n),0)/ns.length; };
+  const mel=chans[0], bassCh=chans.length>1?chans.slice(1).reduce((a,c)=>avg(c)<avg(a)?c:a):null;
+  const mn=mel.notes.filter(n=>!n.isRest).sort((a,b)=>(a.measure-b.measure)||(a.beatPos-b.beatPos));
+  // el modo: si termina en la tónica de la relativa menor, menor
+  const majPC=mod(7*fifths,12), lastPC=mod(SEMI[mn[mn.length-1].pitch[0]]+acc(mn[mn.length-1]),12), minor=lastPC===mod(majPC+9,12);
+  state.meter=met; state.mode=minor?1:0;
+  for(const L of LET) for(const al of ['n','#','b']) if(fifthsOf(L,al,state.mode)===fifths&&keyOk(L,al,state.mode)){ state.key=L; state.alt=al; }
+  const m0=Math.min(...mn.map(n=>n.measure)), mMax=Math.max(...mn.map(n=>n.measure)), nb=Math.min(4,mMax-m0+1); if(mMax-m0+1>4) warn.push(tr('mbCut',{n:4}));
+  state.fine=met==='4/4'&&mn.some(n=>Math.abs(n.beatPos*2-Math.round(n.beatPos*2))>1e-6||Math.abs(qd(n)*2-Math.round(qd(n)*2))>1e-6);
+  const mt=MT(), U=mt.U, li0=LET.indexOf(state.key)+28, bars=[];
+  for(let b=0;b<nb;b++){ const ns=mn.filter(n=>n.measure===m0+b); if(!ns.length){ bars.push({deg:[0],rh:[U]}); continue; }
+    const st=ns.map(n=>Math.round(n.beatPos/mt.uq)), deg=[], rh=[]; let rest=st[0]>0?st[0]:0;
+    ns.forEach((n,i)=>{ const end=i<ns.length-1?st[i+1]:U, du=Math.max(1,end-st[i]); if(i<ns.length-1&&Math.round(qd(n)/mt.uq)<du-0) { if(Math.round(qd(n)/mt.uq)<du) warn.push(tr('mbRest',{b:b+1})); }
+      const dg=li(n)-li0, pc=mod(SEMI[n.pitch[0]]+acc(n),12), exp=deg2P(dg,0); if(mod(exp.midi,12)!==pc&&!(state.mode&&mod(dg,7)===6&&mod(exp.midi+1,12)===pc)) warn.push(tr('mbCrom',{b:b+1}));
+      deg.push(dg); rh.push(du); });
+    bars.push(rest?{deg,rh,rest}:{deg,rh}); }
+  // el bajo dado
+  state.bassReq={}; let nbq=0;
+  if(bassCh){ bassCh.notes.filter(n=>!n.isRest&&n.measure>=m0&&n.measure<m0+nb).forEach(n=>{ const b=n.measure-m0, pos=Math.round(n.beatPos/mt.uq); if(pos===0||(met==='4/4'&&pos===U/2)){ state.bassReq[b+':'+pos]=li(n)-li0; nbq++; } }); }
+  // el largo del tema según la pestaña
+  if(state.win==='inv'||state.win==='sinf'){ state.T=Math.min(2,nb); if(nb>2) warn.push(tr('mbCut',{n:2})); } else if(state.win==='acomp') state.T=Math.max(nb,Math.min(16,state.T)); else state.T=nb;
+  state.bars=bars.slice(0,state.T); state.held=state.bars.map(()=>true); state.prog=null; state.airPlan=null; state.cm=[];
+  if(!subjectOk(state.bars,state.bars.length<state.T)) warn.push(tr('mbRules'));
+  // en la melodía acompañada: si un bajo dado no encaja con ninguna armonía de su compás, queda libre
+  if(state.win==='acomp'&&!AIR()) withBars(state.bars,S=>{ Object.keys(state.bassReq).forEach(k=>{ const b=+k.split(':')[0]; if(!CHM[state.mode].some(r=>fitBar(S,b,r)>-50)){ delete state.bassReq[k]; nbq--; warn.push(tr('mbBassX',{b:b+1})); } }); });
+  syncSeg('metros',met); syncSeg('keys',state.key); syncSeg('alts',state.alt); syncSeg('modes',String(state.mode)); document.getElementById('tv').textContent=state.T;
+  lights.classList.add('run'); buildReels();
+  setTimeout(()=>{ if(state.bars.length<state.T||!(state.win==='acomp'?acompClean(state.bars,true):true)){ const nb2=newBars(); if(nb2&&nb2.length===state.T) state.bars=nb2; }
+    render(); lights.classList.remove('run');
+    const msg=tr('mbOk',{n:nb,met,key:keyNameAcc(state.key,ALT[state.alt],state.mode),bass:nbq>0?tr('mbBass',{k:nbq}):''});
+    ban.textContent=msg+([...new Set(warn)].length?' — '+[...new Set(warn)].join(' · '):''); },80); }
+{ const mb=document.getElementById('mailbox'), fi=document.getElementById('mbfile'); document.getElementById('mbtxt').textContent=tr('mbHint');
+  const take=f=>{ if(!f) return; const rd=new FileReader(); rd.onload=()=>{ try{ importMMF(JSON.parse(rd.result)); }catch(e){ document.getElementById('banner').textContent=tr('mbBad',{e:e.message}); } }; rd.readAsText(f); };
+  mb.onclick=()=>fi.click(); mb.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fi.click(); } }; fi.onchange=()=>{ take(fi.files[0]); fi.value=''; };
+  ['dragenter','dragover'].forEach(ev=>document.addEventListener(ev,e=>{ e.preventDefault(); mb.classList.add('over'); }));
+  ['dragleave','drop'].forEach(ev=>document.addEventListener(ev,e=>{ e.preventDefault(); if(ev==='drop'||!e.relatedTarget) mb.classList.remove('over'); }));
+  document.addEventListener('drop',e=>{ const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) take(f); }); }
 // ── los mandos ──
 function seg(id,items,cur,fn,rebuild){ const el=document.getElementById(id);
   el.innerHTML=items.map(([v,t])=>`<button class="btn${String(v)===String(cur)?' on':''}" data-v="${v}" aria-pressed="${String(v)===String(cur)}">${t}</button>`).join('');
@@ -1002,7 +1063,7 @@ function setT(T){ T=Math.max(1,Math.min(state.win==='inv'||state.win==='sinf'?2:
 { const el=document.getElementById('temas');
   el.innerHTML='<button class="btn" data-d="-1" aria-label="−1">◀</button><span class="stepv" id="tv">'+state.T+'</span><button class="btn" data-d="1" aria-label="+1">▶</button>';
   el.onclick=e=>{ const b=e.target.closest('button'); if(!b||state.spinning) return; stopPlay(); setT(state.T+(+b.dataset.d)); document.getElementById('tv').textContent=state.T; buildReels(); render(); }; }
-seg('metros',[['4/4','4/4'],['3/4','3/4'],['3/8','3/8']],state.meter,v=>{ if(v===state.meter) return; state.meter=v; state.held=[]; state.bars=[]; state.bars=newBars(); },()=>buildReels());
+seg('metros',[['4/4','4/4'],['3/4','3/4'],['3/8','3/8']],state.meter,v=>{ if(v===state.meter) return; state.meter=v; state.fine=false; state.bassReq={}; state.held=[]; state.bars=[]; state.bars=newBars(); },()=>buildReels());
 seg('resps',[['V','DOMINANT'],['IV','SUBDOMINANT'],['inv','INVERSION']],state.resp,v=>state.resp=v);
 seg('especies',[['simple','SIMPLE'],['stretto','STRETTO']],state.esp,v=>state.esp=v);
 function segVoces(){ if(state.win==='canon'&&state.cfin==='perp') state.n=2; seg('voces',(state.win==='canon'?(state.cfin==='perp'?[2]:[2,3]):[2,3,4]).map(x=>[String(x),String(x)]),state.n,v=>state.n=+v); }
