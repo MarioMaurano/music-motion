@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contrapunto con Salieri — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mm-theme.css">
+<link rel="stylesheet" href="site.css">
+<script src="mm-salieri.js"></script>
+
+<!-- 2026-10-16 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+<link rel="icon" type="image/svg+xml" href="/icons/mm-web-tab.svg">
+<link rel="apple-touch-icon" href="/icons/mm-web-180.png">
+<link rel="manifest" href="/icons/web.webmanifest">
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+
+<style>
+.cp-list{display:grid;gap:26px;margin-top:26px;max-width:880px}
+.cp-card{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);padding:20px 22px}
+.cp-num{font-family:var(--ff-mono);font-size:.82rem;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase}
+.cp-card h2{margin:4px 0 10px}
+.cp-cita{margin:0 0 14px;padding-left:14px;border-left:2px solid var(--border);color:var(--textm);font-style:italic}
+.cp-cita span{font-style:normal;color:var(--textd);white-space:nowrap}
+.cp-btns{display:flex;flex-wrap:wrap;gap:10px}
+.cp-ej{margin-top:10px;font-size:var(--fs-sm);color:var(--textd)}
+.cp-texto{margin-top:14px}
+.cp-texto summary{cursor:pointer;color:var(--gold)}
+.cp-texto table{border-collapse:collapse;margin:10px 0;font-size:var(--fs-sm)}
+.cp-texto th,.cp-texto td{border:1px solid var(--border);padding:4px 8px;text-align:left}
+.cp-texto pre{overflow-x:auto;background:var(--bg);padding:10px;border:1px solid var(--border);font-size:.85rem}
+.cp-texto blockquote{padding-left:14px;border-left:2px solid var(--border);color:var(--textm);font-style:italic}
+.lock{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--wine);padding:18px;display:grid;gap:10px;max-width:880px;margin-top:26px}
+.lock[hidden],.cp-list[hidden]{display:none}
+.lock p{margin:0;color:var(--textm)}
+.lock button{justify-self:start;font-family:var(--f-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:7px 12px;background:none;border:1px solid var(--violet);color:var(--violet);cursor:pointer}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <nav>
+    <a href="index.html#inicio"><span class="es">Inicio</span><span class="en">Home</span></a>
+    <a href="index.html#apps"><span class="es">Las apps</span><span class="en">The apps</span></a>
+    <a href="index.html#howto"><span class="es">Cómo empezar</span><span class="en">How to start</span></a>
+    <a href="instruments.html"><span class="es">Instrumentos</span><span class="en">Instruments</span></a>
+    <a href="coach.html"><span class="es">Coach</span><span class="en">Coach</span></a>
+    <a href="index.html#aula"><span class="es">Aula del Coach</span><span class="en">Coach Classroom</span></a>
+    <a href="UserGuide.html"><span class="es">Guía de uso</span><span class="en">User Guide</span></a>
+    <a href="score-shortcuts.html"><span class="es">Atajos</span><span class="en">Shortcuts</span></a>
+  </nav>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+    <div class="langtog">
+      <button id="b-es" class="on" onclick="setLang('es')">ES</button>
+      <button id="b-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main style="--c:var(--gold)">
+<section style="border-bottom:none">
+  <a class="backlink" href="coach.html">← <span class="es">Volver al Coach</span><span class="en">Back to the Coach</span></a>
+  <div class="app-eyebrow">◈ Salieri · <span class="es">Contrapunto</span><span class="en">Counterpoint</span></div>
+  <h1><span class="es">Contrapunto con Salieri.</span><span class="en">Counterpoint with Salieri.</span></h1>
+  <p class="lead"><span class="es">Las especies de Fux, una por una, sobre su cantus firmus. Cada lección trae el ejemplo para escuchar en la demo del Score y el ejercicio para escribir con Salieri al lado, en afinación pitagórica: aquí las consonancias se oyen como lo que son, proporciones.</span><span class="en">Fux's species, one by one, over his cantus firmus. Each lesson brings the example to hear in the Score demo and the exercise to write with Salieri at your side, in Pythagorean tuning: here consonances sound as what they are, proportions.</span></p>
+  <div class="cp-list">
+<article class="cp-card cp-libre" id="leccion-0">
+  <div class="cp-num">Lección 0</div>
+  <h2>La consonancia, en proporciones</h2>
+  <blockquote class="cp-cita">«Antes de escribir una sola nota contra otra, aprenda por qué unas se abrazan y otras se rechazan. No es gusto: es número.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="contrapunto/00-consonancia-en-proporciones.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="lo-que-se-aprende">Lo que se aprende</h2>
+<ul>
+<li>Qué es una consonancia <strong>perfecta</strong>, una <strong>imperfecta</strong> y una <strong>disonancia</strong>, y de dónde sale esa clasificación.</li>
+<li>Por qué, en la afinación pitagórica de Music Motion, las terceras suenan más vivas y menos quietas que la quinta.</li>
+<li>Por qué la cuarta es consonante sola y disonante contra el bajo.</li>
+</ul>
+<h2 id="los-intervalos-son-proporciones">1 · Los intervalos son proporciones</h2>
+<p>Dos cuerdas, una el doble de larga que la otra, suenan a la octava: <strong>2:1</strong>. Si una mide tres partes y la otra dos, suenan a la quinta: <strong>3:2</strong>. Cuatro contra tres: la cuarta, <strong>4:3</strong>. Pitágoras y los griegos llamaron consonancias a las relaciones que caben en los números 1, 2, 3 y 4 (la <em>tetraktys</em>), y la Edad Media las heredó como <strong>consonancias perfectas</strong>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Intervalo</th>
+<th>Proporción pitagórica</th>
+<th>Clase en el contrapunto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Unísono</td>
+<td>1:1</td>
+<td>perfecta</td>
+</tr>
+<tr class="even">
+<td>Octava</td>
+<td>2:1</td>
+<td>perfecta</td>
+</tr>
+<tr class="odd">
+<td>Quinta</td>
+<td>3:2</td>
+<td>perfecta</td>
+</tr>
+<tr class="even">
+<td>Cuarta</td>
+<td>4:3</td>
+<td>perfecta sola · <strong>disonante contra el bajo</strong> a dos voces</td>
+</tr>
+<tr class="odd">
+<td>Tercera mayor</td>
+<td>81:64 (dos tonos 9:8 × 9:8)</td>
+<td>imperfecta</td>
+</tr>
+<tr class="even">
+<td>Tercera menor</td>
+<td>32:27</td>
+<td>imperfecta</td>
+</tr>
+<tr class="odd">
+<td>Sexta mayor</td>
+<td>27:16</td>
+<td>imperfecta</td>
+</tr>
+<tr class="even">
+<td>Sexta menor</td>
+<td>128:81</td>
+<td>imperfecta</td>
+</tr>
+<tr class="odd">
+<td>Segunda mayor · menor</td>
+<td>9:8 · 256:243</td>
+<td>disonancia</td>
+</tr>
+<tr class="even">
+<td>Séptima menor · mayor</td>
+<td>16:9 · 243:128</td>
+<td>disonancia</td>
+</tr>
+<tr class="odd">
+<td>Tritono</td>
+<td>729:512</td>
+<td>disonancia</td>
+</tr>
+</tbody>
+</table>
+<p>La afinación pitagórica se construye solo con quintas puras (3:2). Las terceras que salen de ahí no son 5:4 sino <strong>81:64</strong>: un poco más anchas, brillantes, con un batido que no se aquieta. Por eso la tradición las llamó <strong>imperfectas</strong>: se pueden usar libremente, pero no cierran. La quinta y la octava, en cambio, se funden: dan reposo.</p>
+<h2 id="escuchar-antes-de-escribir-cosmic-keyboard">2 · Escuchar antes de escribir (Cosmic Keyboard)</h2>
+<ol type="1">
+<li>Toque <strong>Re</strong> y <strong>La</strong> a la vez (quinta, 3:2). Escuche cómo las dos notas casi se vuelven una.</li>
+<li><strong>Re</strong> y el <strong>Re</strong> de arriba (octava, 2:1): una sola nota más rica.</li>
+<li><strong>Re</strong> y <strong>Fa♯</strong> (tercera mayor, 81:64): dos notas que se oyen las dos, con un brillo inquieto.</li>
+<li><strong>Re</strong> y <strong>Sol</strong> (cuarta, 4:3), primero solas; luego agregue un <strong>Re</strong> grave debajo: la cuarta, apoyada en el bajo, pide moverse.</li>
+<li><strong>Re</strong> y <strong>Mi</strong> (segunda), <strong>Re</strong> y <strong>Do</strong> (séptima), <strong>Re</strong> y <strong>Sol♯</strong> (tritono): choque. Son las disonancias.</li>
+</ol>
+<blockquote>
+<p>«Su oído ya sabe todo esto. Mi oficio es que también lo sepa su lápiz.» — Salieri</p>
+</blockquote>
+<h2 id="las-tres-familias-para-el-resto-del-curso">3 · Las tres familias, para el resto del curso</h2>
+<ul>
+<li><strong>Perfectas:</strong> unísono, quinta, octava (y sus compuestas: 12.ª, 15.ª). Reposo. Abren y cierran. <strong>Nunca dos seguidas del mismo tipo por movimiento paralelo.</strong></li>
+<li><strong>Imperfectas:</strong> terceras y sextas (mayores y menores). Movimiento, color. Son el cuerpo del contrapunto.</li>
+<li><strong>Disonancias:</strong> segundas, cuartas (contra el bajo), séptimas, tritono. En la primera especie, prohibidas; desde la segunda, permitidas solo de paso, con reglas.</li>
+</ul>
+<h2 id="los-cuatro-movimientos">4 · Los cuatro movimientos</h2>
+<p>Entre dos acordes de dos voces, las voces pueden ir en movimiento:</p>
+<ul>
+<li><strong>contrario</strong> (una sube, la otra baja) — el más libre y el más elegante;</li>
+<li><strong>oblicuo</strong> (una se queda, la otra se mueve);</li>
+<li><strong>directo</strong> (las dos en la misma dirección);</li>
+<li><strong>paralelo</strong> (directo, conservando el mismo intervalo).</li>
+</ul>
+<blockquote>
+<p><strong>La regla madre:</strong> a una consonancia perfecta se llega por movimiento contrario u oblicuo, nunca por movimiento directo. — Fux, <em>Gradus ad Parnassum</em> (1725)</p>
+</blockquote>
+<h2 id="ejercicio">Ejercicio</h2>
+<p>En el Score, con dos pentagramas: escriba una nota en el de abajo y busque arriba, una por una, las ocho consonancias (unísono, 3.ª m/M, 5.ª, 6.ª m/M, 8.ª) y tres disonancias. Ponga a cada una su nombre con TEXT. Escúchelas con ▶ y clasifíquelas: ¿reposo, color o choque?</p>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (Viena, 1725), dominio público. Proporciones pitagóricas: las del motor de Music Motion.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+  </div>
+  <div class="lock" id="cpLock" hidden><p><span class="es">Las lecciones 1 a 8 son parte del pase Salieri: el catálogo de orquestación, las clases de armonía y contrapunto, y el maestro exigente de la suite.</span><span class="en">Lessons 1 to 8 are part of the Salieri pass: the orchestration catalogue, the harmony and counterpoint classes, and the suite's demanding master.</span></p><button type="button" id="cpLockBtn"><span class="es">Ver el pase Salieri</span><span class="en">See the Salieri pass</span></button></div>
+  <div class="cp-list" id="cpPase">
+<article class="cp-card cp-pase" id="leccion-1">
+  <div class="cp-num">Lección 1</div>
+  <h2>Primera especie: nota contra nota</h2>
+  <blockquote class="cp-cita">«Una nota contra una nota. Parece poco. Es todo: quien domina esto, domina la arquitectura; lo demás es ornamento.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-01-ejemplo.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">▶ Ver y escuchar el ejemplo</span><span class="en">▶ See and hear the example</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-01-ejercicio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">✎ Hacer el ejercicio con Salieri</span><span class="en">✎ Do the exercise with Salieri</span></a><a class="btn" href="contrapunto/01-primera-especie.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  <p class="cp-ej"><span class="es">El ejercicio se abre en el Score con Salieri elegido: le acompaña y le corrige mientras escribe. Guárdelo con su nombre (FILE › Save).</span><span class="en">The exercise opens in the Score with Salieri chosen: he guides and corrects you as you write. Save it under your name (FILE › Save).</span></p>
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="la-situación">La situación</h2>
+<p>Le doy un <strong>cantus firmus</strong>: una melodía lenta, en redondas, que no se toca. Usted escribe encima (o debajo) una segunda voz, también en redondas, <strong>una nota por cada nota</strong> del cantus. Solo consonancias.</p>
+<h2 id="las-reglas-fux-1725-cherubini-1835">Las reglas (Fux, 1725; Cherubini, 1835)</h2>
+<ol type="1">
+<li><strong>Solo consonancias:</strong> unísono, 3.ª, 5.ª, 6.ª, 8.ª (y sus compuestas). Ninguna disonancia; la cuarta tampoco.</li>
+<li><strong>Comienzo:</strong> consonancia perfecta (8.ª o 5.ª si el contrapunto va arriba; 8.ª o unísono si va abajo — la 5.ª abajo pondría la obra en otro tono).</li>
+<li><strong>Final:</strong> unísono u octava. La penúltima es una 6.ª mayor que abre a la 8.ª (contrapunto arriba) o una 3.ª menor que cierra al unísono (abajo). En modo dórico, mixolidio o eólico, eso pide la <strong>sensible alterada</strong>: Do♯ en Re.</li>
+<li><strong>Prohibido:</strong> 5.ªs u 8.ªs paralelas; llegar a una perfecta por movimiento directo (5.ª u 8.ª «ocultas»).</li>
+<li><strong>Unísono:</strong> solo al principio y al final.</li>
+<li><strong>Prefiera</strong> el movimiento contrario; las imperfectas (3.ªs y 6.ªs) deben ser mayoría. No más de tres o cuatro 3.ªs o 6.ªs paralelas seguidas.</li>
+<li><strong>Melodía propia:</strong> el contrapunto se mueve sobre todo por grados. Saltos permitidos: 3.ª, 4.ª, 5.ª, 6.ª menor ascendente, 8.ª. Nunca tritono, 7.ª ni intervalos aumentados. Tras un salto grande, vuelva por grado en dirección contraria.</li>
+<li><strong>Ámbito:</strong> las dos voces no deben separarse más de una 10.ª ni cruzarse.</li>
+</ol>
+<blockquote>
+<p>«Las reglas no son una cárcel. Son la memoria de lo que ha sonado mal durante cuatro siglos.» — Salieri</p>
+</blockquote>
+<h2 id="ejemplo-cantus-firmus-de-fux-en-re-dórico-contrapunto-arriba">Ejemplo — cantus firmus de Fux en Re (dórico), contrapunto arriba</h2>
+<pre><code>Contrapunto:  La   La   Sol  La   Si   Do   Do   Si   Re   Do♯  Re
+Cantus:       Re   Fa   Mi   Re   Sol  Fa   La   Sol  Fa   Mi   Re
+Intervalo:    5    3    3    5    3    5    3    3    6    6M   8
+Movimiento:      obl. dir. cont. dir. cont. obl. par. cont. par. cont.</code></pre>
+<p>Escuche lo que pasa:</p>
+<ul>
+<li>Abre con una 5.ª: reposo, el tono queda dicho.</li>
+<li>La mayoría son 3.ªs y 6.ªs: el pasaje respira.</li>
+<li>Las 5.ªs (compases 4 y 6) se alcanzan por movimiento contrario: el cantus baja, el contrapunto sube.</li>
+<li>El <strong>Do♯</strong> de la penúltima es la sensible: con la afinación pitagórica de Music Motion queda a un semitono estrecho del Re, el limma (256:243), más pequeño que el semitono temperado; por eso empuja hacia el Re con más fuerza que en el piano. Así se oye una cadencia.</li>
+<li>Cierra en 8.ª por movimiento contrario.</li>
+</ul>
+<h2 id="errores-típicos-y-cómo-suenan">Errores típicos (y cómo suenan)</h2>
+<ul>
+<li><strong>5.ªs paralelas</strong> (Re–La → Mi–Si): las dos voces se funden en una sola; se pierde la independencia. Es la falta capital.</li>
+<li><strong>8.ª oculta</strong> (Fa–La → Sol–Sol subiendo las dos): el oído oye llegar la 8.ª «por detrás».</li>
+<li><strong>Sin sensible</strong> (Do natural en la penúltima): la cadencia queda floja, modal, sin dirección.</li>
+<li><strong>Saltos seguidos en la misma dirección</strong> que forman una 7.ª: la melodía se rompe.</li>
+</ul>
+<h2 id="ejercicio">Ejercicio</h2>
+<ol type="1">
+<li>Abra el cantus firmus en el Score (Re dórico, 11 redondas: <strong>Re Fa Mi Re Sol Fa La Sol Fa Mi Re</strong>).</li>
+<li>Escriba su propio contrapunto <strong>arriba</strong>, distinto del ejemplo. Escúchelo con ▶.</li>
+<li>Luego escriba uno <strong>abajo</strong>: comience en Re grave (8.ª); en la penúltima ponga Do♯ bajo el Mi del cantus (3.ª menor), que cierra en Re a la 8.ª por movimiento contrario.</li>
+<li>Salieri revisará su trabajo: marcará en rojo cada paralela, cada disonancia y cada salto prohibido. <em>(Requiere las nuevas reglas del Score — pendiente.)</em></li>
+</ol>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (1725); L. Cherubini, Cours de contrepoint et de fugue (1835). Ambas de dominio público.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+<article class="cp-card cp-pase" id="leccion-2">
+  <div class="cp-num">Lección 2</div>
+  <h2>Segunda especie: dos notas contra una</h2>
+  <blockquote class="cp-cita">«Ahora su voz camina el doble de rápido que el cantus. Con el paso nace la primera libertad: la disonancia. Pero una libertad con condiciones.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-02-ejemplo.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">▶ Ver y escuchar el ejemplo</span><span class="en">▶ See and hear the example</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-02-ejercicio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">✎ Hacer el ejercicio con Salieri</span><span class="en">✎ Do the exercise with Salieri</span></a><a class="btn" href="contrapunto/02-segunda-especie.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  <p class="cp-ej"><span class="es">El ejercicio se abre en el Score con Salieri elegido: le acompaña y le corrige mientras escribe. Guárdelo con su nombre (FILE › Save).</span><span class="en">The exercise opens in the Score with Salieri chosen: he guides and corrects you as you write. Save it under your name (FILE › Save).</span></p>
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="la-situación">La situación</h2>
+<p>El mismo cantus firmus en redondas. Usted escribe <strong>dos blancas por cada redonda</strong>: la primera en el tiempo <strong>fuerte</strong>, la segunda en el <strong>débil</strong>. El último compás es una redonda.</p>
+<h2 id="lo-que-se-conserva-de-la-primera-especie">Lo que se conserva de la primera especie</h2>
+<ul>
+<li>En el tiempo <strong>fuerte</strong>, solo consonancias (unísono, 3.ª, 5.ª, 6.ª, 8.ª).</li>
+<li>Comienzo y final perfectos; ni 5.ªs ni 8.ªs paralelas entre notas vecinas; a la perfecta, por movimiento contrario u oblicuo.</li>
+<li>Melodía por grados, saltos permitidos como antes.</li>
+</ul>
+<h2 id="lo-nuevo">Lo nuevo</h2>
+<ol type="1">
+<li><strong>La nota de paso.</strong> En el tiempo <strong>débil</strong> se permite una disonancia si es <strong>de paso</strong>: llega por grado y sigue por grado, en el <strong>mismo sentido</strong>. Re–Mi–Fa sobre un Do: el Mi pasa, no se detiene.</li>
+<li><strong>Los tiempos fuertes se escuchan entre sí.</strong> Dos 5.ªs u 8.ªs en dos tiempos fuertes seguidos siguen siendo paralelas: la blanca débil del medio no las salva.</li>
+<li><strong>El unísono</strong> se permite en el tiempo débil.</li>
+<li><strong>La cadencia.</strong> En el penúltimo compás, la blanca débil es la 6.ª mayor (con la sensible) que abre a la 8.ª final.</li>
+</ol>
+<blockquote>
+<p>«La disonancia es una visita: entra por la puerta, saluda y sale por la otra. La que se queda, molesta.» — Salieri</p>
+</blockquote>
+<h2 id="ejemplo-el-cantus-de-fux-en-re-contrapunto-arriba">Ejemplo — el cantus de Fux en Re, contrapunto arriba</h2>
+<pre><code>Contrapunto:  La Si | La Do | Sol La | Si La | Si Do | Re Do | Fa Mi | Si Do | Re La | Si Do♯ | Re
+Cantus:       Re    | Fa    | Mi     | Re    | Sol   | Fa    | La    | Sol   | Fa    | Mi     | Re
+Intervalos:   5  6  | 3  5  | 3  4p  | 6  5  | 3  4p | 6  5  | 6  5  | 3  4p | 6  3  | 5  6M  | 8</code></pre>
+<ul>
+<li>Las tres <strong>4.ªs</strong> (compases 3, 5 y 8) son disonancias, pero de paso: Sol–La–Si, Si–Do–Re, Si–Do–Re.</li>
+<li>Los tiempos fuertes nunca forman dos perfectas iguales seguidas.</li>
+<li>En el penúltimo compás, Si (5.ª) y <strong>Do♯</strong> (6.ª mayor, la sensible a un limma del Re) abren a la 8.ª final.</li>
+</ul>
+<h2 id="ejercicio">Ejercicio</h2>
+<ol type="1">
+<li>Abra <code>CP-02-ejercicio.mmf</code>: el mismo cantus, su pentagrama vacío arriba.</li>
+<li>Elija la <strong>blanca</strong> y escriba dos notas por compás; el último, una redonda.</li>
+<li>Con Salieri despierto, cada nota que no sea legal se pondrá roja y él le dirá por qué. Corrija con ↑/↓ hasta que no quede ninguna roja.</li>
+</ol>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (1725); L. Cherubini, Cours de contrepoint et de fugue (1835). Dominio público.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+<article class="cp-card cp-pase" id="leccion-3">
+  <div class="cp-num">Lección 3</div>
+  <h2>Tercera especie: cuatro notas contra una</h2>
+  <blockquote class="cp-cita">«Cuatro negras contra una redonda: su voz ya canta. Ahora aprenderá a adornar sin perder el rumbo.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-03-ejemplo.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">▶ Ver y escuchar el ejemplo</span><span class="en">▶ See and hear the example</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-03-ejercicio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">✎ Hacer el ejercicio con Salieri</span><span class="en">✎ Do the exercise with Salieri</span></a><a class="btn" href="contrapunto/03-tercera-especie.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  <p class="cp-ej"><span class="es">El ejercicio se abre en el Score con Salieri elegido: le acompaña y le corrige mientras escribe. Guárdelo con su nombre (FILE › Save).</span><span class="en">The exercise opens in the Score with Salieri chosen: he guides and corrects you as you write. Save it under your name (FILE › Save).</span></p>
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="la-situación">La situación</h2>
+<p>El mismo cantus firmus. Usted escribe <strong>cuatro negras por cada redonda</strong>; el último compás, una redonda.</p>
+<h2 id="las-reglas">Las reglas</h2>
+<ol type="1">
+<li>El <strong>primer tiempo</strong> de cada compás: siempre consonancia.</li>
+<li>Los otros tres tiempos pueden llevar disonancia si es:
+<ul>
+<li><strong>de paso</strong> — entra y sale por grado, en el mismo sentido (Do–Re–Mi);</li>
+<li><strong>bordadura</strong> — sale por grado y vuelve a la misma nota (Si–Do–Si);</li>
+<li><strong>la cambiata de Fux</strong> — en el 2.º tiempo, llega bajando por grado y sale saltando una 3.ª hacia abajo (Re–Do–La), para volver luego por grado.</li>
+</ul></li>
+<li>Dos primeros tiempos seguidos no forman 5.ªs ni 8.ªs paralelas; entre negras vecinas, tampoco.</li>
+<li>El unísono vale fuera del primer tiempo.</li>
+<li><strong>La cadencia:</strong> la última negra del penúltimo compás es la 6.ª mayor con la sensible.</li>
+</ol>
+<blockquote>
+<p>«El adorno que no sabe volver a casa no es adorno: es extravío.» — Salieri</p>
+</blockquote>
+<h2 id="ejemplo-el-cantus-de-fux-en-re-contrapunto-arriba">Ejemplo — el cantus de Fux en Re, contrapunto arriba</h2>
+<pre><code>Re Mi Fa Mi | Re Do Si La | Sol La Si Do | Si Do Si La | Si Do Re Do | Re Do La Si | Do Re Mi Fa | Mi Re Do Si | La Si Do La | Si La Si Do♯ | Re
+Re          | Fa          | Mi           | Re          | Sol         | Fa          | La          | Sol         | Fa          | Mi           | Re</code></pre>
+<ul>
+<li>Disonancias de paso: Mi (c. 1), Si (c. 2), La (c. 3), Do (c. 5), Si (c. 6), Re (c. 7), Do (c. 8), Si (c. 9).</li>
+<li>Bordaduras: Do en Si–Do–Si (c. 4), Do en Re–Do–Re (c. 5–6), La en Si–La–Si (c. 10).</li>
+<li>Los primeros tiempos: 8.ª, 6.ª, 3.ª, 6.ª, 3.ª, 6.ª, 3.ª, 6.ª, 3.ª, 5.ª, 8.ª — nunca dos perfectas iguales seguidas.</li>
+</ul>
+<h2 id="ejercicio">Ejercicio</h2>
+<ol type="1">
+<li>Abra <code>CP-03-ejercicio.mmf</code>, elija la <strong>negra</strong> y escriba cuatro notas por compás.</li>
+<li>Con Salieri despierto, lo que no sea legal se pondrá rojo; corrija con ↑/↓.</li>
+<li>Pruebe al menos una cambiata: Salieri la reconoce.</li>
+</ol>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (1725); L. Cherubini, Cours de contrepoint et de fugue (1835). Dominio público.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+<article class="cp-card cp-pase" id="leccion-4">
+  <div class="cp-num">Lección 4</div>
+  <h2>Cuarta especie: la síncopa y el retardo</h2>
+  <blockquote class="cp-cita">«Hasta ahora la disonancia pasaba de puntillas por el tiempo débil. Ahora se sienta en el tiempo fuerte, con todo el peso del compás. Por eso hay que invitarla antes y despedirla con cortesía.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-04-ejemplo.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">▶ Ver y escuchar el ejemplo</span><span class="en">▶ See and hear the example</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-04-ejercicio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">✎ Hacer el ejercicio con Salieri</span><span class="en">✎ Do the exercise with Salieri</span></a><a class="btn" href="contrapunto/04-cuarta-especie.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  <p class="cp-ej"><span class="es">El ejercicio se abre en el Score con Salieri elegido: le acompaña y le corrige mientras escribe. Guárdelo con su nombre (FILE › Save).</span><span class="en">The exercise opens in the Score with Salieri chosen: he guides and corrects you as you write. Save it under your name (FILE › Save).</span></p>
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="la-situación">La situación</h2>
+<p>El mismo cantus firmus. Usted escribe <strong>dos blancas por compás</strong>, pero desplazadas: la blanca del tiempo débil <strong>se liga</strong> a la del tiempo fuerte del compás siguiente. El primer compás empieza con un silencio de blanca; el último es una redonda.</p>
+<p>Así nace la <strong>síncopa</strong>: su voz llega siempre un poco tarde, y el cantus se mueve debajo de una nota que sigue sonando.</p>
+<h2 id="las-reglas-fux-1725-cherubini-1835">Las reglas (Fux, 1725; Cherubini, 1835)</h2>
+<ol type="1">
+<li><strong>La blanca débil es siempre consonante.</strong> Es la nota que usted elige: prepara lo que viene.</li>
+<li><strong>La blanca fuerte es la misma nota, ligada.</strong> Contra el cantus nuevo puede quedar consonante o volverse disonante.</li>
+<li><strong>Si queda disonante, es un retardo</strong>, y tiene tres tiempos:
+<ul>
+<li><strong>preparación</strong> — llega como consonancia en el tiempo débil anterior;</li>
+<li><strong>disonancia</strong> — se mantiene ligada mientras el cantus cambia;</li>
+<li><strong>resolución</strong> — <strong>baja por grado</strong> a una consonancia en el tiempo débil.</li>
+</ul></li>
+<li><strong>Los retardos buenos.</strong> Con su voz arriba: <strong>7-6</strong> y <strong>4-3</strong> (el 9-8, con mesura). Con su voz abajo: <strong>2-3</strong> (y el 4-5, con cuidado). Un retardo nunca resuelve subiendo.</li>
+<li><strong>Las paralelas</strong> se miran entre las blancas débiles seguidas, que son las consonancias: dos 5.ªs u 8.ªs seguidas ahí siguen siendo paralelas, aunque la síncopa las disimule. Una cadena de 9-8 esconde octavas: evítela.</li>
+<li><strong>La cadencia:</strong> el retardo 7-6 sobre la penúltima nota del cantus — la 7.ª ligada baja a la <strong>6.ª mayor con la sensible</strong> (Do♯ en Re), y de ahí a la octava.</li>
+<li>Si una ligadura se vuelve imposible, puede romperla una vez (dos blancas sueltas, como en la segunda especie). Que sea la excepción.</li>
+</ol>
+<blockquote>
+<p>«La disonancia preparada no es un accidente: es una tensión que usted eligió, y por eso tiene derecho al tiempo fuerte.» — Salieri</p>
+</blockquote>
+<h2 id="ejemplo-el-cantus-de-fux-en-re-dórico-contrapunto-arriba">Ejemplo — el cantus de Fux en Re (dórico), contrapunto arriba</h2>
+<pre><code>Contrapunto:  –  La ⁀ La  Re ⁀ Re  Do ⁀ Do  Si ⁀ Si  Re ⁀ Re  La ⁀ La  Fa ⁀ Fa  Mi ⁀ Mi  Re ⁀ Re  Do♯  Re
+Cantus:          Re       Fa       Mi       Re       Sol      Fa       La       Sol      Fa       Mi       Re
+Fuerte/débil:    –  5     3  6     7  6     7  6     3  5     6  3     8  6     7  6     7  6     7  6M    8</code></pre>
+<p>(⁀ marca la ligadura: la nota débil sigue sonando en el tiempo fuerte siguiente.)</p>
+<p>Escuche lo que pasa:</p>
+<ul>
+<li>Los compases 3 y 4 son <strong>7-6</strong>: el cantus baja, su nota se queda, choca, y cae un grado a la 6.ª.</li>
+<li>En los compases 8, 9 y 10 hay una <strong>cadena de 7-6</strong> hasta la cadencia: cada resolución es la preparación del retardo siguiente.</li>
+<li>En el compás 10 el retardo <strong>7-6M</strong> resuelve en el <strong>Do♯</strong>, la sensible, y el Re final cierra en octava.</li>
+<li>Entre retardo y retardo, compases consonantes (2, 5, 6 y 7) dejan respirar la línea.</li>
+<li>En afinación pitagórica, la 7.ª del retardo y su 6.ª de resolución se oyen con toda claridad: la tensión es de número, no de temperamento.</li>
+</ul>
+<h2 id="errores-típicos-y-cómo-suenan">Errores típicos (y cómo suenan)</h2>
+<ul>
+<li><strong>Disonancia sin preparar</strong> (llega al tiempo fuerte por salto): el oído no la esperaba; suena a error, no a retardo.</li>
+<li><strong>Retardo que sube</strong> (7 → 8): la tensión se escapa por arriba; el oído se queda esperando la resolución.</li>
+<li><strong>Disonancia en la blanca débil</strong>: en esta especie la débil prepara; si es disonante, no hay nada que retardar.</li>
+<li><strong>Cadena de 9-8</strong>: octavas paralelas disfrazadas.</li>
+</ul>
+<h2 id="ejercicio">Ejercicio</h2>
+<ol type="1">
+<li>Abra <code>CP-04-ejercicio.mmf</code> y elija la <strong>blanca</strong>. Deje un silencio de blanca en el primer compás y escriba la primera nota en el tiempo débil.</li>
+<li>Escriba la blanca fuerte del compás siguiente con <strong>la misma nota</strong>, y líguelas (Note editor › <em>Tie → next</em>).</li>
+<li>Con Salieri despierto, lo que no sea legal se pondrá rojo: la débil disonante, el retardo sin preparar, el retardo que no baja por grado, las paralelas entre débiles.</li>
+<li>Cierre con el retardo 7-6 sobre el Mi del cantus, el Do♯ y el Re en redonda.</li>
+</ol>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (1725); L. Cherubini, Cours de contrepoint et de fugue (1835). Dominio público.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+<article class="cp-card cp-pase" id="leccion-5">
+  <div class="cp-num">Lección 5</div>
+  <h2>Quinta especie: el contrapunto florido</h2>
+  <blockquote class="cp-cita">«Hasta aquí aprendió cinco pasos por separado. Ahora baile. El florido no es una regla nueva: es la libertad de quien ya sabe todas las anteriores.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-05-ejemplo.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">▶ Ver y escuchar el ejemplo</span><span class="en">▶ See and hear the example</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-05-ejercicio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">✎ Hacer el ejercicio con Salieri</span><span class="en">✎ Do the exercise with Salieri</span></a><a class="btn" href="contrapunto/05-quinta-especie.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  <p class="cp-ej"><span class="es">El ejercicio se abre en el Score con Salieri elegido: le acompaña y le corrige mientras escribe. Guárdelo con su nombre (FILE › Save).</span><span class="en">The exercise opens in the Score with Salieri chosen: he guides and corrects you as you write. Save it under your name (FILE › Save).</span></p>
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="la-situación">La situación</h2>
+<p>El mismo cantus firmus. Su voz mezcla todo lo aprendido: <strong>blancas, negras, ligaduras y alguna pareja de corcheas</strong>, compás a compás. Cada nota se juzga por el lugar que ocupa y por la figura que usted le dio.</p>
+<h2 id="las-reglas-fux-1725-cherubini-1835">Las reglas (Fux, 1725; Cherubini, 1835)</h2>
+<ol type="1">
+<li><strong>Cada nota obedece a su especie.</strong> La nota del tiempo fuerte es consonante (como en la segunda y la tercera), salvo que sea un <strong>retardo</strong>: preparado, ligado y resuelto bajando por grado (como en la cuarta).</li>
+<li><strong>La disonancia del tiempo débil</strong> es nota de paso, bordadura o cambiata (como en la tercera).</li>
+<li><strong>Las corcheas</strong>, de a dos, en la parte débil del tiempo (en la 2.ª o la 4.ª negra), y por grado. Nunca en el tiempo fuerte.</li>
+<li><strong>El ritmo</strong> se varía: no repita el mismo dibujo compás tras compás. Lo natural es que las figuras se aceleren dentro del compás (blanca, luego negras); una blanca después de negras suena mejor si se liga al compás siguiente.</li>
+<li><strong>Las paralelas</strong> se miran entre tiempos fuertes seguidos, como en la segunda y la tercera especie.</li>
+<li><strong>El retardo puede adornarse</strong> al resolver (una negra o dos corcheas antes de la nota de resolución); Salieri, por ahora, le pide la resolución directa.</li>
+<li><strong>La cadencia:</strong> el retardo 7-6 sobre la penúltima nota del cantus, la <strong>6.ª mayor con la sensible</strong> (Do♯ en Re) y la octava final en redonda.</li>
+</ol>
+<blockquote>
+<p>«La variedad no es desorden. Cada figura que usted elige tiene que decir por qué está ahí.» — Salieri</p>
+</blockquote>
+<h2 id="ejemplo-el-cantus-de-fux-en-re-dórico-contrapunto-arriba">Ejemplo — el cantus de Fux en Re (dórico), contrapunto arriba</h2>
+<pre><code>Compás:       1        2           3            4           5              6            7       8           9        10       11
+Contrapunto:  – La⁀ | La Si Do  | Mi Re Do⁀  | Do Si La  | Si Do·Re Mi  | Re Do Re⁀  | Re Do | Si Do Re  | La Re⁀ | Re Do♯ | Re
+Figuras:      b b    | b n n     | n n b      | b n n     | b cc n       | n n b      | b b   | n n b     | b b    | b b    | r
+Cantus:       Re       Fa          Mi           Re          Sol            Fa           La      Sol         Fa       Mi       Re</code></pre>
+<p>(⁀ marca la ligadura; Do·Re son dos corcheas. Figuras: r = redonda, b = blanca, n = negra, cc = dos corcheas.)</p>
+<p>Escuche lo que pasa:</p>
+<ul>
+<li><strong>Compás 2:</strong> el Si es nota de paso (La–Si–Do) contra el Fa del cantus: un tritono que pasa sin detenerse.</li>
+<li><strong>Compás 3:</strong> abre en octava por movimiento contrario; el Re, de paso, baja al Do que se liga.</li>
+<li><strong>Compás 4:</strong> retardo <strong>7-6</strong> — el Do ligado choca con el Re del cantus y cae al Si.</li>
+<li><strong>Compás 5:</strong> las dos corcheas (Do·Re) en la parte débil, por grado, como piden las reglas.</li>
+<li><strong>Compás 7:</strong> retardo <strong>4-3</strong> — el Re ligado contra el La del cantus resuelve al Do.</li>
+<li><strong>Compases 9 y 10:</strong> la cadencia — el Re ligado se vuelve 7.ª contra el Mi, baja a <strong>Do♯</strong> (6.ª mayor, sensible) y cierra en octava.</li>
+<li>Ningún compás repite el dibujo del anterior: así respira una melodía.</li>
+</ul>
+<h2 id="errores-típicos-y-cómo-suenan">Errores típicos (y cómo suenan)</h2>
+<ul>
+<li><strong>Corcheas en el tiempo fuerte</strong>, o saltando: suenan a adorno sin apoyo.</li>
+<li><strong>El mismo ritmo en todos los compases</strong>: el florido se vuelve una especie disfrazada.</li>
+<li><strong>Retardo que sube</strong>, o <strong>disonancia fuerte sin preparar</strong>: los errores de la cuarta especie siguen valiendo.</li>
+<li><strong>Disonancia débil que sale saltando</strong> (sin ser cambiata): los de la tercera, también.</li>
+</ul>
+<h2 id="ejercicio">Ejercicio</h2>
+<ol type="1">
+<li>Abra <code>CP-05-ejercicio.mmf</code>. Elija la figura de cada nota (blanca, negra, corchea) y ligue con <em>Tie → next</em> cuando prepare un retardo.</li>
+<li>Con Salieri despierto, lo que no sea legal se pondrá rojo: la débil disonante que no pasa, el retardo sin preparar o que no baja, las paralelas entre tiempos fuertes, la penúltima sin 6.ª mayor.</li>
+<li>Escriba al menos un retardo 7-6 o 4-3 antes de la cadencia, y una pareja de corcheas.</li>
+</ol>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (1725); L. Cherubini, Cours de contrepoint et de fugue (1835). Dominio público.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+<article class="cp-card cp-pase" id="leccion-6">
+  <div class="cp-num">Lección 6</div>
+  <h2>Imitación y canon</h2>
+  <blockquote class="cp-cita">«Hasta ahora usted escribía una voz contra otra que ya existía. En el canon, la voz que usted escribe se convierte, un compás después, en la que tiene enfrente. Es contrapunto contra uno mismo.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-06-ejemplo.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">▶ Ver y escuchar el ejemplo</span><span class="en">▶ See and hear the example</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-06-ejercicio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">✎ Hacer el ejercicio con Salieri</span><span class="en">✎ Do the exercise with Salieri</span></a><a class="btn" href="contrapunto/06-imitacion-y-canon.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  <p class="cp-ej"><span class="es">El ejercicio se abre en el Score con Salieri elegido: le acompaña y le corrige mientras escribe. Guárdelo con su nombre (FILE › Save).</span><span class="en">The exercise opens in the Score with Salieri chosen: he guides and corrects you as you write. Save it under your name (FILE › Save).</span></p>
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="la-situación">La situación</h2>
+<p>La <strong>imitación</strong> es una voz que repite lo que otra acaba de decir. Cuando la repite entera, nota por nota, de principio a fin, es un <strong>canon</strong>.</p>
+<ul>
+<li>La primera voz se llama <strong>dux</strong> (la que guía).</li>
+<li>La segunda, <strong>comes</strong> (la que acompaña): entra después, a una <strong>distancia</strong> (un compás, medio compás…) y a un <strong>intervalo</strong> (al unísono, a la octava, a la quinta…).</li>
+</ul>
+<p>En esta lección: <strong>canon a la octava baja, a un compás de distancia</strong>, en blancas, en Re dórico.</p>
+<h2 id="las-reglas">Las reglas</h2>
+<ol type="1">
+<li><strong>El comes copia al dux</strong>: la misma nota una octava abajo, un compás después. Sin excepción hasta el compás de la coda.</li>
+<li><strong>Cada ataque es consonante</strong> entre las dos voces: 3.ª, 5.ª, 6.ª, 8.ª (y sus compuestas). Es primera especie, en blancas.</li>
+<li><strong>Nada de 5.ªs ni 8.ªs paralelas</strong> entre ataques seguidos.</li>
+<li><strong>El dux lo escribe usted dos veces a la vez</strong>: cada nota nueva del dux tiene que sonar bien con lo que el comes está diciendo (lo que usted escribió un compás antes) y, un compás después, con lo que el dux diga entonces. Piense siempre dos compases.</li>
+<li><strong>La coda es libre</strong>: cuando el canon termina, las voces se sueltan para cerrar — la 6.ª mayor con la sensible (Do♯) y la octava.</li>
+</ol>
+<h3 id="el-truco-del-oficio">El truco del oficio</h3>
+<p>En un canon a la octava a un compás de distancia, la nota que usted pone en el dux suena contra la nota que puso <strong>un compás antes</strong>. Por eso el intervalo que <strong>la melodía</strong> recorre en un compás decide la armonía: si el dux sube una 3.ª de un compás al siguiente, las voces quedan en 3.ª (o 10.ª); si baja una 3.ª, en 6.ª. En cambio, si el dux se mueve una 2.ª, sube una 4.ª o baja una 5.ª de un compás al siguiente, las voces quedan en disonancia (9.ª, 7.ª u 11.ª).</p>
+<h3 id="otros-cánones">Otros cánones</h3>
+<ul>
+<li><strong>A la quinta</strong>: el comes repite una 5.ª arriba (o abajo). Algunas notas cambian para quedar en la tonalidad — es el germen de la <strong>respuesta tonal</strong> de la fuga (lección 7).</li>
+<li><strong>Por movimiento contrario</strong>: el comes repite el dibujo al revés (lo que sube, baja).</li>
+<li><strong>Por aumentación</strong>: el comes repite con las figuras al doble.</li>
+<li><strong>Perpetuo</strong> («rueda»): al llegar al final, se vuelve al principio — <em>Frère Jacques</em>, <em>Martinillo</em>.</li>
+</ul>
+<blockquote>
+<p>«Un buen canon no se nota: se oye como dos voces que conversan, y solo al final uno descubre que una repetía a la otra.» — Salieri</p>
+</blockquote>
+<h2 id="ejemplo-canon-a-la-octava-a-un-compás">Ejemplo — canon a la octava, a un compás</h2>
+<pre><code>Compás:   1        2        3        4        5        6        7         8
+Dux:      Re Mi  | Fa Sol | La Mi  | Fa Sol | La Sol | Fa Mi  | Re Do♯  | Re
+Comes:    –      | Re Mi  | Fa Sol | La Mi  | Fa Sol | La Sol | Fa Mi   | Re
+                                                               (coda libre)</code></pre>
+<p>(El comes, una octava abajo. Compases 2–6: canon estricto; 7–8: coda.)</p>
+<p>Escuche lo que pasa:</p>
+<ul>
+<li><strong>Compás 2:</strong> el dux sube una 3.ª respecto del compás 1 → las voces quedan en 10.ª. Dos décimas seguidas: imperfectas, no hay paralelas prohibidas.</li>
+<li><strong>Compás 3:</strong> el dux sube a La y baja a Mi → contra el Fa y el Sol del comes, una 10.ª y una 6.ª.</li>
+<li><strong>Compás 5:</strong> la octava (Sol contra Sol) llega por movimiento contrario: el dux baja, el comes sube.</li>
+<li><strong>Compás 7:</strong> la coda — el dux deja de dictar y cierra con Re–Do♯ contra el Fa–Mi del comes: 6.ª y <strong>6.ª mayor con la sensible</strong>, y la octava final.</li>
+</ul>
+<h2 id="errores-típicos-y-cómo-suenan">Errores típicos (y cómo suenan)</h2>
+<ul>
+<li><strong>El comes que se aparta</strong>: deja de ser canon; el oído pierde el juego de la imitación.</li>
+<li><strong>El dux que, de un compás al siguiente, se mueve una 2.ª, sube una 4.ª o baja una 5.ª</strong>: ese movimiento se vuelve disonancia entre las voces.</li>
+<li><strong>El dux que repite la misma nota en dos compases seguidos</strong>: las voces quedan en octava; si vuelve a pasar, octavas paralelas.</li>
+</ul>
+<h2 id="ejercicio">Ejercicio</h2>
+<ol type="1">
+<li>Abra <code>CP-06-ejercicio.mmf</code>: el dux trae su primer compás (Re Mi) y el comes, el silencio.</li>
+<li>Escriba el compás 2 del dux; luego el compás 2 del comes (la copia del compás 1, una octava abajo). Siga así, compás a compás, hasta el 6.</li>
+<li>Compases 7 y 8: la coda libre hacia la cadencia.</li>
+<li>Con Salieri elegido, se pondrá rojo el comes que se aparte del dux, el ataque disonante y las paralelas.</li>
+</ol>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (1725); L. Cherubini, Cours de contrepoint et de fugue (1835). Dominio público.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+<article class="cp-card cp-pase" id="leccion-7">
+  <div class="cp-num">Lección 7</div>
+  <h2>La exposición de la fuga</h2>
+  <blockquote class="cp-cita">«El canon repite todo; la fuga repite solo lo que importa. Una voz presenta una idea, la otra le responde en otra tonalidad, y la primera, en vez de callarse, sigue hablando: eso es el contrasujeto.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-07-ejemplo.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">▶ Ver y escuchar el ejemplo</span><span class="en">▶ See and hear the example</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-07-ejercicio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">✎ Hacer el ejercicio con Salieri</span><span class="en">✎ Do the exercise with Salieri</span></a><a class="btn" href="contrapunto/07-exposicion-de-la-fuga.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  <p class="cp-ej"><span class="es">El ejercicio se abre en el Score con Salieri elegido: le acompaña y le corrige mientras escribe. Guárdelo con su nombre (FILE › Save).</span><span class="en">The exercise opens in the Score with Salieri chosen: he guides and corrects you as you write. Save it under your name (FILE › Save).</span></p>
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="la-situación">La situación</h2>
+<p>La <strong>fuga</strong> nace del canon, pero no imita de principio a fin: imita un <strong>sujeto</strong>, una idea breve y reconocible. Su comienzo, la <strong>exposición</strong>, tiene tres piezas:</p>
+<ul>
+<li>El <strong>sujeto</strong>: lo presenta una voz sola, en la tónica.</li>
+<li>La <strong>respuesta</strong>: la segunda voz repite el sujeto <strong>a la 5.ª</strong> (una 5.ª arriba o una 4.ª abajo), es decir, en la dominante.</li>
+<li>El <strong>contrasujeto</strong>: lo que dice la primera voz mientras la segunda responde. Es contrapunto contra la respuesta, y debe poder volver a sonar con el sujeto más adelante.</li>
+</ul>
+<p>En esta lección: <strong>exposición a dos voces</strong>, en Re menor, sujeto de dos compases.</p>
+<h2 id="respuesta-real-y-respuesta-tonal">Respuesta real y respuesta tonal</h2>
+<p>Si la respuesta copia el sujeto exacto a la 5.ª, es una <strong>respuesta real</strong>. Pero cuando el sujeto empieza tocando la <strong>dominante</strong> (aquí, Re–La), la respuesta real diría La–Mi y se iría de la tonalidad antes de llegar.</p>
+<p>Por eso se usa la <strong>respuesta tonal</strong>: la dominante del sujeto se contesta con la <strong>tónica</strong>. Re–La se responde La–Re. El salto cambia (una 5.ª se vuelve 4.ª), y desde ahí la respuesta sigue a la 5.ª, nota por nota.</p>
+<p>La regla corta: <strong>tónica y dominante se intercambian</strong>; todo lo demás se transporta.</p>
+<h2 id="las-reglas">Las reglas</h2>
+<ol type="1">
+<li><strong>La respuesta copia al sujeto a la 5.ª</strong> (aquí, una 4.ª abajo), dos compases después. La única excepción es la mutación tonal: la dominante del sujeto (La) se responde con la tónica (Re).</li>
+<li><strong>Cada ataque es consonante</strong> entre las dos voces: 3.ª, 5.ª, 6.ª, 8.ª. Es una exposición de escuela: más adelante el contrasujeto podrá llevar notas de paso.</li>
+<li><strong>Nada de 5.ªs ni 8.ªs paralelas</strong> entre ataques seguidos.</li>
+<li><strong>El contrasujeto tiene otro ritmo</strong>: cuando la respuesta va en blancas, el contrasujeto se mueve en negras, y al revés. Así las dos ideas se distinguen al oído.</li>
+<li><strong>La codetta es libre</strong>: después de la respuesta, las voces cierran en Re, con la sensible (Do♯) en la cadencia.</li>
+</ol>
+<blockquote>
+<p>«Cuide la nota común entre la respuesta, que piensa en La menor (Do natural), y la cadencia, que vuelve a Re (Do sostenido): déjelas separadas por un compás, para que el oído no las oiga chocar.» — Salieri</p>
+</blockquote>
+<h2 id="ejemplo-exposición-a-dos-voces">Ejemplo — exposición a dos voces</h2>
+<pre><code>Compás:   1        2              3              4              5        6         7
+Voz 1:    Re La  | Si♭ La Sol Fa | Fa Mi Fa Si♭ | Do Fa Mi     | Re Sol | Mi Do♯  | Re
+          (sujeto)               (contrasujeto)                 (codetta)
+Voz 2:    –      | –             | La Re        | Fa Mi Re Do  | Si♭ Sol| La       | Re
+                                 (respuesta tonal)</code></pre>
+<p>(Voz 1, flauta; voz 2, oboe. La respuesta va una 4.ª abajo.)</p>
+<p>Escuche lo que pasa:</p>
+<ul>
+<li><strong>Compás 3:</strong> la respuesta empieza en La y salta a <strong>Re</strong>, no a Mi: es la mutación tonal. Contra ella, el contrasujeto en negras: 6.ª, 5.ª, 3.ª, 6.ª.</li>
+<li><strong>Compás 4:</strong> la respuesta baja en negras (Fa Mi Re Do, la copia de Si♭ La Sol Fa una 4.ª abajo) y el contrasujeto se queda en una blanca y dos negras: 5.ª, 6.ª, 3.ª, 3.ª.</li>
+<li><strong>Compases 5 a 7:</strong> la codetta vuelve a Re: 3.ª, 8.ª por movimiento contrario, 5.ª, la 3.ª mayor con la sensible y la octava final.</li>
+</ul>
+<h2 id="errores-típicos-y-cómo-suenan">Errores típicos (y cómo suenan)</h2>
+<ul>
+<li><strong>La respuesta real donde hacía falta la tonal</strong> (La–Mi en vez de La–Re): la exposición se va a la dominante de la dominante y el oído pierde la tónica.</li>
+<li><strong>La respuesta que cambia el dibujo del sujeto</strong>: deja de reconocerse; el sujeto es la firma de la fuga.</li>
+<li><strong>El contrasujeto con el mismo ritmo que la respuesta</strong>: las dos voces se funden y el sujeto se pierde.</li>
+<li><strong>El contrasujeto que choca con la respuesta</strong> en un ataque.</li>
+</ul>
+<h2 id="ejercicio">Ejercicio</h2>
+<ol type="1">
+<li>Abra <code>CP-07-ejercicio.mmf</code>: la voz 1 trae el sujeto (compases 1–2) y la voz 2, los silencios.</li>
+<li>Escriba la respuesta tonal en la voz 2 (compases 3–4): una 4.ª abajo, con la dominante contestada por la tónica.</li>
+<li>Escriba el contrasujeto en la voz 1 contra la respuesta, con el ritmo contrario.</li>
+<li>Compases 5 a 7: la codetta libre hacia la cadencia en Re.</li>
+<li>Con Salieri elegido, se pondrá roja la respuesta que se aparte del sujeto, el ataque disonante y las paralelas.</li>
+</ol>
+<p>En la lección 8 vendrá la fuga completa: episodios, entradas en otras tonalidades y stretto.</p>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (1725); L. Cherubini, Cours de contrepoint et de fugue (1835); A. Gedalge, Traité de la fugue (1901). Dominio público.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+<article class="cp-card cp-pase" id="leccion-8">
+  <div class="cp-num">Lección 8</div>
+  <h2>La fuga completa</h2>
+  <blockquote class="cp-cita">«La exposición presenta a los personajes; la fuga es la obra entera. Entre una entrada y otra, el sujeto se esconde, se fragmenta, viaja a otras tonalidades — y al final vuelve a casa, tan apurado que una voz no espera a que la otra termine.» <span>— Salieri</span></blockquote>
+  <div class="cp-btns"><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-08-ejemplo.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">▶ Ver y escuchar el ejemplo</span><span class="en">▶ See and hear the example</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-08-ejercicio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">✎ Hacer el ejercicio con Salieri</span><span class="en">✎ Do the exercise with Salieri</span></a><a class="btn" href="../apps/mm-score-page.html?demo&amp;file=../suite/contrapunto/CP-08-bach-suite5-fuga.mmf&amp;panel" target="_blank" rel="noopener"><span class="es">🎻 Bach: la fuga de la Suite n.º 5</span><span class="en">🎻 Bach: the fugue of Suite No. 5</span></a><a class="btn" href="../apps/mm-score-page.html?file=../suite/contrapunto/CP-08-desafio.mmf&amp;coach=salieri" target="_blank" rel="noopener"><span class="es">⚑ El desafío: una fuga sobre el sujeto de Bach</span><span class="en">⚑ The challenge: a fugue on Bach's subject</span></a><a class="btn" href="contrapunto/08-la-fuga-completa.pdf" target="_blank" rel="noopener"><span class="es">📄 PDF para imprimir</span><span class="en">📄 PDF to print</span></a></div>
+  <p class="cp-ej"><span class="es">El ejercicio se abre en el Score con Salieri elegido: le acompaña y le corrige mientras escribe. Guárdelo con su nombre (FILE › Save).</span><span class="en">The exercise opens in the Score with Salieri chosen: he guides and corrects you as you write. Save it under your name (FILE › Save).</span></p>
+  <details class="cp-texto"><summary><span class="es">Leer la lección</span><span class="en">Read the lesson</span></summary>
+    <div class="es"><h2 id="la-situación">La situación</h2>
+<p>Después de la exposición (lección 7), la fuga alterna dos clases de pasajes:</p>
+<ul>
+<li><strong>Entradas</strong>: el sujeto completo, reconocible, en una voz. Primero en la tónica y la dominante; en el centro de la fuga, en <strong>otras tonalidades</strong> (la relativa mayor, la subdominante…).</li>
+<li><strong>Episodios</strong>: pasajes sin el sujeto completo, hechos con <strong>fragmentos</strong> de él o del contrasujeto, casi siempre en <strong>progresión</strong> (el mismo dibujo, un grado más abajo o más arriba). Sirven para <strong>modular</strong>: llevan de la tonalidad de una entrada a la de la siguiente.</li>
+</ul>
+<p>Y al final, el <strong>stretto</strong>: las entradas se superponen. La segunda voz empieza el sujeto antes de que la primera lo termine.</p>
+<h2 id="el-plano-de-la-fuga-del-ejemplo-15-compases-re-menor">El plano de la fuga del ejemplo (15 compases, Re menor)</h2>
+<pre><code>Compás    Voz 1 (flauta)            Voz 2 (oboe)              Qué pasa
+1–2       sujeto                    –                         exposición
+3–4       contrasujeto              respuesta tonal           exposición
+5–6       episodio                  episodio                  de Re menor hacia Sol menor
+7–8       contrasujeto libre        sujeto en Sol menor       entrada intermedia
+9–10      episodio                  episodio                  de vuelta a Re (dominante, La)
+11–12     contrapunto               sujeto en Re menor        stretto: la voz 2 empieza...
+12–13     sujeto en Sol menor       contrapunto               ...y la voz 1 entra un compás después, una 11.ª arriba
+14–15     cadencia                  cadencia                  Re menor, con la sensible</code></pre>
+<h2 id="las-reglas">Las reglas</h2>
+<ol type="1">
+<li><strong>Cada entrada repite el sujeto entero</strong>, nota por nota, transportado a su tonalidad. Salieri las vigila todas: la respuesta (3–4), la entrada en Sol menor (7–8) y las dos del stretto (11–13).</li>
+<li><strong>Ahora la disonancia tiene su lugar</strong>: en el tiempo fuerte (1 y 3 del compás), consonancia; en el débil, la disonancia vale como <strong>nota de paso</strong>, llegando por grado (y saliendo por grado: eso lo vigila usted, con el oído).</li>
+<li><strong>Nada de 5.ªs ni 8.ªs paralelas</strong> entre ataques seguidos.</li>
+<li><strong>El episodio modula</strong>: piense de dónde sale y adónde tiene que llegar la entrada siguiente.</li>
+<li><strong>El stretto se prepara</strong>: no todas las distancias funcionan. En este sujeto, a un compás de distancia, la que funciona es la 11.ª (la 4.ª más la octava) — a la octava, el Sol de la primera voz chocaría con el La de la segunda en tiempo fuerte.</li>
+</ol>
+<blockquote>
+<p>«Antes de escribir un stretto, pruébelo: superponga el sujeto consigo mismo, a cada distancia y a cada intervalo, y quédese con el que suena. Bach lo hacía; usted también puede.» — Salieri</p>
+</blockquote>
+<h2 id="ejemplo-fuga-a-dos-voces">Ejemplo — fuga a dos voces</h2>
+<p>Escuche:</p>
+<ul>
+<li><strong>Compases 5–6, el episodio:</strong> la flauta camina en negras (Fa Sol Fa Mi, Fa♯ Sol La) y el oboe baja Si♭ La, Re Do: el Fa♯ anuncia Sol menor.</li>
+<li><strong>Compases 7–8, la entrada intermedia:</strong> el oboe dice el sujeto en Sol menor (Sol Re | Mi♭ Re Do Si♭). Las notas de paso de la flauta (La contra Sol, en el tiempo 2) duran una negra y se resuelven por grado.</li>
+<li><strong>Compases 9–10, el segundo episodio:</strong> el bajo baja Sol, Mi, La: la dominante de Re, con el Do♯ en la flauta.</li>
+<li><strong>Compases 11–13, el stretto:</strong> el oboe empieza el sujeto en Re (Re La | Si♭ La Sol Fa) y, a mitad de camino, la flauta lo retoma una 11.ª arriba (Sol Re | Mi♭ Re Do Si♭).</li>
+<li><strong>Compases 14–15, la cadencia:</strong> Sol Mi Do♯ sobre Si♭ La, y la octava final.</li>
+</ul>
+<h2 id="el-maestro-bach-suite-n.º-5-para-violonchelo">El maestro: Bach, Suite n.º 5 para violonchelo</h2>
+<p>El Preludio de la Suite n.º 5 en Do menor (BWV 1011; Bach la arregló también para laúd, BWV 995) es una obertura a la francesa: una introducción lenta y, después, una <strong>fuga en 3/8</strong>. Para un solo violonchelo: las voces no suenan juntas, se <strong>sugieren</strong> — el oído las sigue por el registro.</p>
+<ul>
+<li><strong>El sujeto</strong> (compás 1 de la fuga, 27 del Preludio): Sol | La♭ Do Re | Mi♭ Sol Fa Sol Mi♭ | Fa La Si | Do… — empieza en la dominante.</li>
+<li><strong>La respuesta</strong> (compás 9, 35 del Preludio): en Sol menor, a la 5.ª, <strong>real</strong> — Re | Mi♭ Sol La | Si♭ Re Do Re Si♭ | Do Mi Fa♯ | Sol… Entra en la última semicorchea del compás, mientras el sujeto termina.</li>
+<li><strong>Entradas siguientes</strong> del sujeto en Do menor en los compases 21, 123, 149 y 172 de la fuga, y la respuesta de nuevo en el 75. En el 21 y en el 75 el comienzo está cambiado: arrancan en Si♭. Entre ellas, largos episodios hechos con las semicorcheas del sujeto.</li>
+</ul>
+<p>Ábralo, escúchelo varias veces y busque usted mismo dónde vuelve el sujeto. Escuche también el compás 171: la cabeza del sujeto aparece en Do, justo antes de la entrada del 172. ¿Es una entrada o solo un eco?</p>
+<h2 id="ejercicio">Ejercicio</h2>
+<ol type="1">
+<li>Abra <code>CP-08-ejercicio.mmf</code>: trae la exposición de la lección 7 (compases 1–4).</li>
+<li>Siga el plano: episodio (5–6), sujeto en Sol menor en la voz 2 (7–8), episodio (9–10), stretto (11–13), cadencia (14–15).</li>
+<li>Con Salieri elegido, se pondrá roja la entrada que se aparte del sujeto, la disonancia en tiempo fuerte o que llegue por salto, y las paralelas.</li>
+</ol>
+<h2 id="el-desafío">El desafío</h2>
+<p>Abra <code>CP-08-desafio.mmf</code>: el violonchelo trae el <strong>sujeto de Bach</strong> (compases 1–9, en 3/8). Usted escribe la fuga a dos voces:</p>
+<ol type="1">
+<li>La <strong>respuesta</strong> en la viola, a la 5.ª arriba (real, como la de Bach), desde la última semicorchea del compás 9. Salieri la vigila hasta el compás 13.</li>
+<li>El <strong>contrasujeto</strong> en el violonchelo, contra la respuesta. En 3/8, el tiempo fuerte es el primero del compás: ahí, consonancia; en el resto, notas de paso por grado.</li>
+<li>Lo que siga es suyo: episodios, una entrada en otra tonalidad, y — si se atreve — un stretto. Puede agregar una tercera voz.</li>
+</ol>
+<blockquote>
+<p>«Bach escribió esta fuga para un instrumento que toca una sola nota a la vez, y aun así usted oye dos voces. Ahora déles un cuerpo a cada una.» — Salieri</p>
+</blockquote>
+<p><em>Fuentes: J. J. Fux, Gradus ad Parnassum (1725); L. Cherubini, Cours de contrepoint et de fugue (1835); A. Gedalge, Traité de la fugue (1901); J. S. Bach, Suite n.º 5 BWV 1011, edición del Mutopia Project (W. Icking, H. Dezelski). Dominio público.</em></p>
+</div>
+    <div class="en"><p>The English version of this lesson is in preparation. Meanwhile, the Spanish text is available in the PDF.</p></div>
+  </details>
+</article>
+
+
+
+  </div>
+</section>
+</main>
+
+<footer class="foot-bar">
+  <a href="index.html" class="foot-brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
+  <span class="foot-id"><span class="es">Suite de afinación pitagórica · v.2</span><span class="en">Pythagorean tuning suite · v.2</span></span>
+  <span class="foot-rights">© 2001–2026 Music Motion · <span class="es">todos los derechos reservados</span><span class="en">all rights reserved</span></span>
+</footer>
+
+<script src="mm-theme.js"></script>
+<script src="site.js"></script>
+<script>
+// Las lecciones 1–5 van con el pase Salieri; la 0 queda abierta como muestra.
+(function(){var ok=!!(window.mmSalieriAbierto&&mmSalieriAbierto());if(ok)return;
+ document.getElementById('cpPase').hidden=true;var lk=document.getElementById('cpLock');lk.hidden=false;
+ document.getElementById('cpLockBtn').addEventListener('click',function(){if(window.mmSalieriPuerta)mmSalieriPuerta();});})();
+</script>
+
+</body>
+</html>
