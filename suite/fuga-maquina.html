@@ -80,9 +80,10 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .grid td.suj{background:var(--gold)}.grid td.resp{background:var(--teal)}.grid td.ent{background:var(--sky)}
 .grid td.fin{background:var(--pink)}.grid td.cs{background:#3a3a62;color:var(--textm)}.grid td.epi{background:#2c2c4a;color:var(--textm)}
 .grid td.cad{background:var(--wine-l);color:#fff}
+.grid td.ped{background:#c98a3a;color:#0e1016}
 .grid td.seq{background:#8a7bd8;color:#0e1016}
 .tabs .btn{font-size:14px;padding:8px 22px}.tabs .btn.on{background:var(--gold);border-color:var(--gold);color:#0a0a10}
-body.win-canon .fx,body.win-fuga .cx,body.win-inv .fx,body.win-inv .cx,body.win-inv .vx{display:none}
+body.win-canon .fx,body.win-fuga .cx,body.win-inv .fx,body.win-inv .cx,body.win-inv .vx,body.win-sinf .fx,body.win-sinf .cx,body.win-sinf .vx{display:none}
 .stepv{display:inline-block;min-width:2.2em;text-align:center;font-family:var(--mono);font-size:15px;color:var(--gold)}
 .leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:11px;color:var(--textm)}
 .leyenda i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-3px;margin-right:5px}
@@ -154,6 +155,11 @@ const I18N={
   lMot:'Motivo', lImit:'Imitación', lCm:'Contramotivo (libre)', lCadI:'Cadencia',
   isv:'La máquina de invenciones · Salieri · 2 voces, motivo de {t} compás(es)',
   ihow:'<b>Cómo se juega.</b> Pulsa SPIN: el rodillo propone un motivo corto, de 1 o 2 compases, con ritmos de Bach (puede empezar con silencio, como el de la Invención n.º 1). La máquina escribe el plan de una invención a dos voces en tres partes. Primero, el motivo, su imitación a la octava en la otra voz, una secuencia descendente con el motivo invertido y la cadencia a la primera tonalidad vecina (la dominante en mayor, la relativa en menor). Después, las voces cambian de lugar: el motivo empieza abajo en la tonalidad nueva, otra secuencia y la cadencia a la segunda tonalidad vecina (la relativa en mayor, la dominante en menor). Por último, el motivo vuelve a la tónica, una última secuencia y la cadencia final. El motivo, las imitaciones y las secuencias quedan escritos; el contramotivo y las cadencias los escribes tú. Como las voces cambian de lugar, el contramotivo tiene que sonar bien arriba y abajo: es contrapunto invertible a la octava. <b>OPEN IN SCORE</b> abre la invención en el Score con Salieri vigilando las imitaciones.',
+  stit:'La máquina de sinfonías', skick:'Salieri Atelier · la sinfonía a tres voces', ssub:'Los rodillos proponen un motivo; la máquina arma el plan de la sinfonía: entradas en las tres voces, secuencias, cadencias y el pedal final.',
+  sres:'Sinfonía a 3 voces en <b>{key}</b> · {met} · motivo de {t} compás(es) · tonalidades: {k0} → <b>{k1}</b> → <b>{k2}</b> → {k0}<br>Total: <b>{tot} compases</b>',
+  aResp5:'Respuesta a la quinta', aMotB:'Motivo en el bajo', aPed:'Pedal de tónica', lPed:'Pedal',
+  ssv:'La máquina de sinfonías · Salieri · 3 voces, motivo de {t} compás(es)',
+  show:'<b>Cómo se juega.</b> Pulsa SPIN: el rodillo propone un motivo corto, de 1 o 2 compases, con ritmos de Bach. La máquina escribe el plan de una sinfonía a tres voces, como las de Bach, en tres partes. Primero, las tres entradas: el motivo en el soprano, la respuesta a la quinta en el alto y el motivo en el bajo; después una secuencia descendente con el motivo invertido y la cadencia a la primera tonalidad vecina (la dominante en mayor, la relativa en menor). Luego las entradas empiezan desde abajo, en la tonalidad nueva, con otra secuencia y la cadencia a la segunda vecina. Por último, el motivo vuelve a la tónica, una secuencia corta, y la obra cierra sobre un pedal de tónica en el bajo, como tantas fugas: la puerta al capítulo del pedal. El motivo, las entradas, las secuencias y el pedal quedan escritos; las voces libres y las cadencias las escribes tú. <b>OPEN IN SCORE</b> abre la sinfonía en el Score con Salieri vigilando las entradas.',
   noCan:'Con estos ajustes no salió un canon limpio: vuelve a tirar, suelta algún HOLD o prueba otra distancia.',
   ctit:'La máquina de canones', ckick:'Salieri Atelier · el canon', csub:'Los rodillos proponen el dux; la máquina lo arma para que el comes lo pueda seguir sin chocar.',
   cres:'Canon a {n} voces en <b>{key}</b> · {met} · dux de {t} compases · comes <b>{iv}</b>, a {d} compás(es) · {mov} · {fin}<br>Total: <b>{tot} compases</b>',
@@ -181,6 +187,11 @@ const I18N={
   lMot:'Motive', lImit:'Imitation', lCm:'Counter-motive (free)', lCadI:'Cadence',
   isv:'The Invention Machine · Salieri · 2 voices, {t}-bar motive',
   ihow:'<b>How to play.</b> Press SPIN: the reel proposes a short motive, 1 or 2 bars, with Bach’s rhythms (it may start with a rest, like the one of Invention No. 1). The machine writes the plan of a two-part invention in three sections. First, the motive, its imitation at the octave in the other voice, a descending sequence on the inverted motive and the cadence to the first neighbouring key (the dominant in major, the relative in minor). Then the voices swap places: the motive starts in the lower voice in the new key, another sequence and the cadence to the second neighbouring key (the relative in major, the dominant in minor). Finally the motive returns to the tonic, one last sequence and the final cadence. The motive, the imitations and the sequences are written; you write the counter-motive and the cadences. Since the voices swap places, the counter-motive must sound right above and below: it is invertible counterpoint at the octave. <b>OPEN IN SCORE</b> opens the invention in the Score with Salieri watching the imitations.',
+  stit:'The Sinfonia Machine', skick:'Salieri Atelier · the three-part sinfonia', ssub:'The reel proposes a motive; the machine builds the plan of the sinfonia: entries in the three voices, sequences, cadences and the final pedal.',
+  sres:'Three-part sinfonia in <b>{key}</b> · {met} · {t}-bar motive · keys: {k0} → <b>{k1}</b> → <b>{k2}</b> → {k0}<br>Total: <b>{tot} bars</b>',
+  aResp5:'Answer at the fifth', aMotB:'Motive in the bass', aPed:'Tonic pedal', lPed:'Pedal',
+  ssv:'The Sinfonia Machine · Salieri · 3 voices, {t}-bar motive',
+  show:'<b>How to play.</b> Press SPIN: the reel proposes a short motive, 1 or 2 bars, with Bach’s rhythms. The machine writes the plan of a three-part sinfonia, like Bach’s, in three sections. First, the three entries: the motive in the soprano, the answer at the fifth in the alto and the motive in the bass; then a descending sequence on the inverted motive and the cadence to the first neighbouring key (the dominant in major, the relative in minor). Then the entries start from the bass, in the new key, with another sequence and the cadence to the second neighbouring key. Finally the motive returns to the tonic, a short sequence, and the piece closes over a tonic pedal in the bass, as so many fugues do: the door to the pedal chapter. The motive, the entries, the sequences and the pedal are written; you write the free voices and the cadences. <b>OPEN IN SCORE</b> opens the sinfonia in the Score with Salieri watching the entries.',
   noCan:'No clean canon came out with these settings: spin again, release a HOLD or try another distance.',
   ctit:'The Canon Machine', ckick:'Salieri Atelier · the canon', csub:'The reels propose the dux; the machine builds it so that the comes can follow without clashing.',
   cres:'Canon for {n} voices in <b>{key}</b> · {met} · {t}-bar dux · comes <b>{iv}</b>, {d} bar(s) later · {mov} · {fin}<br>Total: <b>{tot} bars</b>',
@@ -194,7 +205,7 @@ const SOLF={C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'}, SYM={2:'𝄪',1:
 const nomb=(L,acc)=>(LANG==='es'?SOLF[L]:L)+SYM[acc||0];
 const keyNameAcc=(L,acc,m)=>nomb(L,acc)+(LANG==='es'?(m?' menor':' mayor'):(m?' minor':' major'));
 document.documentElement.lang=LANG; document.title='mm '+tr('tit');
-function winTexts(){ const pre={canon:'c',inv:'i',fuga:''}[state.win]; ['tit','kick','sub'].forEach(id=>document.getElementById(id).textContent=tr(pre+id)); document.getElementById('how').innerHTML=tr(pre+'how'); document.title='mm '+tr(pre+'tit'); document.body.className='win-'+state.win; }
+function winTexts(){ const pre={canon:'c',inv:'i',sinf:'s',fuga:''}[state.win]; ['tit','kick','sub'].forEach(id=>document.getElementById(id).textContent=tr(pre+id)); document.getElementById('how').innerHTML=tr(pre+'how'); document.title='mm '+tr(pre+'tit'); document.body.className='win-'+state.win; }
 { const s=document.createElement('span'); s.className='langs'; s.innerHTML=LANGS.map(l=>`<button class="${l===LANG?'on':''}" data-l="${l}">${l.toUpperCase()}</button>`).join('');
   s.onclick=e=>{ const b=e.target.closest('button'); if(!b||b.dataset.l===LANG) return; const u=new URL(location.href); u.searchParams.set('lang',b.dataset.l); location.href=u.href; };
   document.querySelector('.top').appendChild(s); }
@@ -209,7 +220,7 @@ function P(li,f){ const letter=LET[mod(li,7)], acc=Math.round((f-FIF[letter])/7)
 const up5=p=>P(p.li+4,p.f+1), up4=p=>P(p.li+3,p.f-1), oct=(p,k)=>P(p.li+7*k,p.f);
 function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F'];
   if(fifths>0) return sh.slice(0,fifths).includes(letter)?1:0; if(fifths<0) return fl.slice(0,-fifths).includes(letter)?-1:0; return 0; }
-let state={win:(()=>{ try{ const w=new URLSearchParams(location.search).get('win'); return w==='canon'||w==='inv'?w:'fuga'; }catch(e){ return 'fuga'; } })(),civ:'8',cdis:1,cmov:'dir',cfin:'coda',key:'D',alt:'n',mode:1,meter:'4/4',T:4,resp:'V',esp:'simple',n:3,tam:'escuela',bpm:72,held:[],bars:[],spinning:false};
+let state={win:(()=>{ try{ const w=new URLSearchParams(location.search).get('win'); return ['canon','inv','sinf'].includes(w)?w:'fuga'; }catch(e){ return 'fuga'; } })(),civ:'8',cdis:1,cmov:'dir',cfin:'coda',key:'D',alt:'n',mode:1,meter:'4/4',T:4,resp:'V',esp:'simple',n:3,tam:'escuela',bpm:72,held:[],bars:[],spinning:false};
 const fifthsOf=(k,a,m)=>FIF[k]+7*ALT[a]-(m?3:0);
 function vecinaDe(k,a,m){ const pc=mod(SEMI[k]+ALT[a],12);
   for(const L of LET) for(const al of ['n','#','b']){ if(mod(SEMI[L]+ALT[al],12)!==pc||(L===k&&al===a)) continue;
@@ -244,13 +255,13 @@ const rnd=n=>Math.floor(Math.random()*n), pick=a=>a[rnd(a.length)];
 function roleOf(i){ return i===0?'head':(i===state.T-1?'fin':'cont'); }
 // el sujeto puede empezar después de un silencio (como tantos de Bach): la primera nota cae fuera del tiempo fuerte
 const RESTS={'4/4':[1,2],'3/4':[2,4],'3/8':[2,1]}, QOK=new Set([.25,.5,.75,1,1.5,2,3,4]);
-function headRest(mt){ for(let t=0;t<30;t++){ const r=pick(RESTS[state.meter]); let rh=wpick(Math.random()<.5&&state.win!=='inv'?mt.INICIO:mt.MEDIO), cut=r;
+function headRest(mt){ for(let t=0;t<30;t++){ const r=pick(RESTS[state.meter]); let rh=wpick(Math.random()<.5&&state.win!=='inv'&&state.win!=='sinf'?mt.INICIO:mt.MEDIO), cut=r;
     while(cut>0&&rh.length){ if(rh[0]>cut){ rh[0]-=cut; cut=0; } else { cut-=rh.shift(); } }
     if(cut===0&&rh.length&&rh.every(x=>QOK.has(x*mt.uq))&&QOK.has(r*mt.uq)) return {rest:r,rh}; }
   return null; }
 function makeBar(i,prev){
   // en la invención el motivo es corto y activo: ritmos de continuación (semicorcheas, corcheas), por grado
-  const inv=state.win==='inv', mt=MT(), role=inv?(i===state.T-1&&state.T>1?'fin':'cont'):roleOf(i), hr=((inv?i===0:role==='head')&&(state.T>1||inv)&&Math.random()<.4)?headRest(mt):null;
+  const inv=state.win==='inv'||state.win==='sinf', mt=MT(), role=inv?(i===state.T-1&&state.T>1?'fin':'cont'):roleOf(i), hr=((inv?i===0:role==='head')&&(state.T>1||inv)&&Math.random()<.4)?headRest(mt):null;
   const ACT=L=>L.filter(x=>x[0].length>=4);   // la invención pide motivos con movimiento: al menos 4 notas por compás
   const rh=hr?hr.rh:wpick(inv?(role==='fin'?mt.FINAL:ACT(mt.MEDIO)):role==='head'?mt.INICIO:role==='fin'?mt.FINAL:mt.MEDIO), deg=[];
   let cur=prev;
@@ -374,6 +385,8 @@ function planInv(){ const T=state.T, n=2, V=VOCES[2], S=subject(), ki=KI(), majo
   const K1=major?[4,1,0]:[2,-3,0], K2=major?[-2,3,1]:[4,1,1];          // [Δdiatónico, Δquintas, modo]: V y vi en mayor · III y v en menor
   const kname=k=>{ const q=P(ki.li0+k[0],ki.f0+k[1]); return keyNameAcc(q.letter,q.acc,k[2]); }, k0=keyNameAcc(state.key,ALT[state.alt],state.mode);
   const real=(k)=>S.map(x=>({...x,p:P(x.p.li+k[0],x.p.f+k[1])}));
+  // a una tonalidad del mismo modo, transporte real; a la relativa (otro modo), transporte diatónico, con las notas de la armadura
+  const toKey=k=>k[2]===state.mode?real(k):S.map(x=>({...x,d:x.d+k[0],p:deg2P(x.d+k[0],0)}));
   const a0=S.length?S[0].d:0;
   const seqN=(reps,inv,shift)=>{ const out=[]; for(let r=0;r<reps;r++){ const dd=S.map(x=>(inv?2*a0-x.d:x.d)+shift-r), rr=raises(dd); S.forEach((x,i)=>out.push({...x,d:dd[i],p:deg2P(dd[i],rr[i]),bar:x.bar+r*T})); } return out; };
   const N=17*T+1, cells=V.map(()=>Array(N).fill('cs')), entries=[], labels=[], pairs=[];
@@ -385,14 +398,45 @@ function planInv(){ const T=state.T, n=2, V=VOCES[2], S=subject(), ki=KI(), majo
     put(vA,b0+2*T,seqN(3,seqInv,seqShift),'seq',3*T,'seq',tr(seqInv?'aSeqInv':'aSeqDir'));
     cad(b0+5*T,T,cadLab); };
   sec(1,0,1,S,k0,true,0,tr('aCadTo',{key:kname(K1)}));
-  sec(1+5*T+T,1,0,real(K1),kname(K1),false,K1[0],tr('aCadTo',{key:kname(K2)}));
+  sec(1+5*T+T,1,0,toKey(K1),kname(K1),false,K1[0],tr('aCadTo',{key:kname(K2)}));
   // la vuelta: motivo en la tónica, imitación, una secuencia corta y la cadencia final
   const b3=1+12*T; { const m1=put(0,b3,S,'mot',T,'suj',tr('aMot',{key:k0})), m2=put(1,b3+T,S,'imit',T,'resp',tr('aImit')); pairs.push({dux:0,comes:1,a:m1,b:m2,from:b3+T});
     put(0,b3+2*T,seqN(2,true,0),'seq',2*T,'seq',tr('aSeqInv')); cad(b3+4*T,N-(b3+4*T)+1,tr('aCadFin')); }
   const canonRules=pairs.map(pr=>{ const ivs=pr.b.map((x,i)=>x.p.midi-pr.a[i].p.midi), cnt={}; ivs.forEach(x=>cnt[x]=(cnt[x]||0)+1); const base=+Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];
     return {kind:'canon',dux:pr.dux,comes:pr.comes,interval:base,delay:T,from:pr.from,until:pr.from+T-1,passing:true,strong:state.meter==='4/4'?[0,2]:[0]}; });
   return {n,T,V,S,A:{notes:[],kind:'V'},d:T,G:[T],E:2*T,N,k:0,cells,entries,labels,inv:true,canonRules,k0,k1:kname(K1),k2:kname(K2)}; }
-function plan(){ if(state.win==='inv') return planInv(); if(state.win==='canon') return planCanon();
+// ── la sinfonía a tres voces: entradas en las tres voces, secuencias, cadencias y el pedal de tónica final ──
+function planSinf(){ const T=state.T, n=3, V=VOCES[3], S=subject(), ki=KI(), major=!state.mode;
+  const K1=major?[4,1,0]:[2,-3,0], K2=major?[-2,3,1]:[4,1,1], K5=[4,1];
+  const kname=k=>{ const q=P(ki.li0+k[0],ki.f0+k[1]); return keyNameAcc(q.letter,q.acc,k[2]); }, k0=keyNameAcc(state.key,ALT[state.alt],state.mode);
+  const real=(k,src)=>(src||S).map(x=>({...x,p:P(x.p.li+k[0],x.p.f+k[1])}));
+  const toKey=k=>k[2]===state.mode?real(k):S.map(x=>({...x,d:x.d+k[0],p:deg2P(x.d+k[0],0)}));
+  const a0=S.length?S[0].d:0;
+  const seqN=(reps,inv,shift)=>{ const out=[]; for(let r=0;r<reps;r++){ const dd=S.map(x=>(inv?2*a0-x.d:x.d)+shift-r), rr=raises(dd); S.forEach((x,i)=>out.push({...x,d:dd[i],p:deg2P(dd[i],rr[i]),bar:x.bar+r*T})); } return out; };
+  const N=20*T+1, cells=V.map(()=>Array(N).fill('cs')), entries=[], labels=[], pairs=[];
+  const put=(v,bar,notes,kind,len,cls,lab)=>{ const L=fitOct(notes,V[v][3]); entries.push({v,bar,notes:L,kind,len}); for(let b=0;b<len;b++) cells[v][bar-1+b]=cls; if(lab) labels.push({v,bar,text:lab}); return L; };
+  const cad=(bar,len,lab,vs)=>{ for(let b=0;b<len;b++) (vs||[0,1,2]).forEach(v=>cells[v][bar-1+b]='cad'); labels.push({v:0,bar,text:lab}); };
+  // primera parte: soprano (tónica), alto (respuesta a la quinta), bajo (tónica)
+  let m0=put(0,1,S,'mot',T,'suj',tr('aMot',{key:k0}));
+  let m1=put(1,1+T,toKey([4,1,state.mode]),'imit',T,'resp',tr('aResp5')); pairs.push({dux:0,comes:1,a:m0,b:m1,from:1+T,delay:T});
+  let m2=put(2,1+2*T,S,'imit',T,'resp',tr('aMotB')); pairs.push({dux:0,comes:2,a:m0,b:m2,from:1+2*T,delay:2*T});
+  put(0,1+3*T,seqN(3,true,0),'seq',3*T,'seq',tr('aSeqInv')); cad(1+6*T,T,tr('aCadTo',{key:kname(K1)}));
+  // segunda parte: desde el bajo, en la tonalidad nueva
+  const b2=1+7*T, M1=toKey(K1);
+  m2=put(2,b2,M1,'mot',T,'suj',tr('aMot',{key:kname(K1)}));
+  m1=put(1,b2+T,M1,'imit',T,'resp',tr('aImit')); pairs.push({dux:2,comes:1,a:m2,b:m1,from:b2+T,delay:T});
+  m0=put(0,b2+2*T,M1,'imit',T,'resp',tr('aImit')); pairs.push({dux:2,comes:0,a:m2,b:m0,from:b2+2*T,delay:2*T});
+  put(1,b2+3*T,seqN(3,false,K1[0]),'seq',3*T,'seq',tr('aSeqDir')); cad(b2+6*T,T,tr('aCadTo',{key:kname(K2)}));
+  // la vuelta: motivo en la tónica, imitación en el bajo, secuencia corta y pedal de tónica
+  const b3=1+14*T; m0=put(0,b3,S,'mot',T,'suj',tr('aMot',{key:k0})); m2=put(2,b3+T,S,'imit',T,'resp',tr('aImit')); pairs.push({dux:0,comes:2,a:m0,b:m2,from:b3+T,delay:T});
+  put(0,b3+2*T,seqN(2,true,0),'seq',2*T,'seq',tr('aSeqInv'));
+  const pb=b3+4*T, plen=N-pb+1, U=MT().U, ton=fitOct([{p:deg2P(0,0)}],[V[2][3][0],V[2][3][0]+14])[0].p;
+  put(2,pb,Array.from({length:plen},(_,b)=>({p:ton,d:0,bar:b,pos:0,du:U,tie:b<plen-1})),'pedal',plen,'ped',tr('aPed'));
+  cad(pb,plen,tr('aCadFin'),[0,1]);
+  const canonRules=pairs.map(pr=>{ const ivs=pr.b.map((x,i)=>x.p.midi-pr.a[i].p.midi), cnt={}; ivs.forEach(x=>cnt[x]=(cnt[x]||0)+1); const base=+Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];
+    return {kind:'canon',dux:pr.dux,comes:pr.comes,interval:base,delay:pr.delay,from:pr.from,until:pr.from+T-1,passing:true,strong:state.meter==='4/4'?[0,2]:[0]}; });
+  return {n,T,V,S,A:{notes:[],kind:'V'},d:T,G:[T],E:3*T,N,k:0,cells,entries,labels,inv:true,sinf:true,canonRules,k0,k1:kname(K1),k2:kname(K2)}; }
+function plan(){ if(state.win==='sinf') return planSinf(); if(state.win==='inv') return planInv(); if(state.win==='canon') return planCanon();
   const n=state.n, T=state.T, V=VOCES[n], ord=ORDEN[n];
   const S=subject(), A=answer(S);
   const G=state.esp==='stretto'?(strettoG(state.bars)||Array(n-1).fill(Math.max(1,Math.ceil(T/2)))):Array(n-1).fill(T);
@@ -496,15 +540,15 @@ function drawPlan(p){
   const resp=p.A.kind==='IV'?tr('rIV'):p.A.kind==='inv'?tr('rInv'):p.A.tonal?tr('tonal'):tr('real'), mut=p.A.tonal?tr('mut',{a:p.head,b:p.headA}):'';
   const vn=v=>LANG==='es'?p.V[v][0]:VOZ_EN[p.V[v][0]];
   const head='<tr><th></th>'+Array.from({length:p.N},(_,i)=>`<th>${i+1}</th>`).join('')+'</tr>';
-  const rows=p.V.map((_,v)=>`<tr><th>${vn(v)}</th>`+p.cells[v].map(c=>`<td class="${c}">${c==='suj'?(p.inv?'M':p.canon?'D':'S'):c==='resp'?(p.inv?'I':p.canon?'C':'R'):c==='ent'?'E':c==='fin'?'F':c==='cad'?'C':c==='seq'?'↘':''}</td>`).join('')+'</tr>').join('');
-  const L=p.inv?[['suj','lMot'],['resp','lImit'],['seq','lSeq'],['cs','lCm'],['cad','lCadI']]:p.canon?[['suj','lDux'],['resp','lComes'],['cs','lLibre']]:[['suj','lSuj'],['resp','lResp'],['cs','lCs'],['epi','lEpi'],['seq','lSeq'],['ent','lEnt'],['fin','lFin'],['cad','lCad']];
-  const sum=p.inv?tr('ires',{key:p.k0,met:state.meter,t:p.T,k0:p.k0,k1:p.k1,k2:p.k2,tot:p.N}):p.canon?tr('cres',{n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),met:state.meter,t:p.T,iv:p.ivn,d:p.d,mov:tr(state.cmov==='inv'?'mInv':'mDir'),fin:tr(state.cfin==='perp'?'fPerp':'fCoda'),tot:p.N}):null;
+  const rows=p.V.map((_,v)=>`<tr><th>${vn(v)}</th>`+p.cells[v].map(c=>`<td class="${c}">${c==='suj'?(p.inv?'M':p.canon?'D':'S'):c==='resp'?(p.inv?'I':p.canon?'C':'R'):c==='ent'?'E':c==='fin'?'F':c==='cad'?'C':c==='seq'?'↘':c==='ped'?'P':''}</td>`).join('')+'</tr>').join('');
+  const L=p.sinf?[['suj','lMot'],['resp','lImit'],['seq','lSeq'],['cs','lCm'],['cad','lCadI'],['ped','lPed']]:p.inv?[['suj','lMot'],['resp','lImit'],['seq','lSeq'],['cs','lCm'],['cad','lCadI']]:p.canon?[['suj','lDux'],['resp','lComes'],['cs','lLibre']]:[['suj','lSuj'],['resp','lResp'],['cs','lCs'],['epi','lEpi'],['seq','lSeq'],['ent','lEnt'],['fin','lFin'],['cad','lCad']];
+  const sum=p.inv?tr(p.sinf?'sres':'ires',{key:p.k0,met:state.meter,t:p.T,k0:p.k0,k1:p.k1,k2:p.k2,tot:p.N}):p.canon?tr('cres',{n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),met:state.meter,t:p.T,iv:p.ivn,d:p.d,mov:tr(state.cmov==='inv'?'mInv':'mDir'),fin:tr(state.cfin==='perp'?'fPerp':'fCoda'),tot:p.N}):null;
   document.getElementById('plan').innerHTML=`<h2>${tr('plan')}</h2>
    <div class="res">${sum||tr('res',{esp:tr(state.esp),sd:state.esp==='stretto'?tr('strD',{d:p.G.join(' · ')}):'',met:state.meter,n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),t:p.T,resp,mut,e:p.E,tot:p.N,k:String(p.k).replace('.',LANG==='es'?',':'.')})}</div>
    <div class="grid"><table><thead>${head}</thead><tbody>${rows}</tbody></table></div>
    <div class="leyenda">${L.map(([c,k])=>`<span><i style="background:var(--lg-${c})"></i>${tr(k)}</span>`).join('')}</div>`;
 }
-document.documentElement.style.cssText+=';--lg-suj:var(--gold);--lg-resp:var(--teal);--lg-ent:var(--sky);--lg-fin:var(--pink);--lg-cs:#3a3a62;--lg-epi:#2c2c4a;--lg-cad:var(--wine-l);--lg-seq:#8a7bd8';
+document.documentElement.style.cssText+=';--lg-suj:var(--gold);--lg-resp:var(--teal);--lg-ent:var(--sky);--lg-fin:var(--pink);--lg-cs:#3a3a62;--lg-epi:#2c2c4a;--lg-cad:var(--wine-l);--lg-seq:#8a7bd8;--lg-ped:#c98a3a';
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 async function spin(){
   if(state.spinning) return; state.spinning=true; stopPlay(); const btn=document.getElementById('spin'); btn.disabled=true; lights.classList.add('run');
@@ -527,7 +571,8 @@ function tone(f,t0,dur,vol){ const a=ctx(), o=a.createOscillator(), v=a.createGa
 function stopPlay(){ playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; clearTimeout(playT); document.getElementById('play').textContent='▶ PLAY'; }
 function play(){ if(playing.length){ stopPlay(); return; } if(!PLAN) return;
   const a=ctx(), mt=MT(), e8=60/state.bpm*mt.uq, t0=a.currentTime+.15; let end=0;
-  PLAN.entries.forEach(en=>en.notes.forEach(nt=>{ const t=t0+((en.bar-1+nt.bar)*mt.U+nt.pos)*e8; tone(nt.p.freq,t,nt.du*e8*.95,.11); end=Math.max(end,t+nt.du*e8); }));
+  PLAN.entries.forEach(en=>{ if(en.kind==='pedal'){ const t=t0+(en.bar-1)*mt.U*e8, du=en.len*mt.U*e8; tone(en.notes[0].p.freq,t,du*.98,.09); end=Math.max(end,t+du); return; }
+    en.notes.forEach(nt=>{ const t=t0+((en.bar-1+nt.bar)*mt.U+nt.pos)*e8; tone(nt.p.freq,t,nt.du*e8*.95,.11); end=Math.max(end,t+nt.du*e8); }); });
   document.getElementById('play').textContent='■ STOP'; playT=setTimeout(stopPlay,(end-a.currentTime)*1000+400); }
 
 // ── el .mmf para el Score, con Salieri ──
@@ -540,14 +585,15 @@ function mmf(){
   p.V.forEach(([nm,clef,ins],v)=>Object.assign(chans[v],{name:LANG==='es'?nm:VOZ_EN[nm],clef,visible:true,mix:{instrument:ins}}));
   const mt=MT(), [num,den]=state.meter.split('/').map(Number), bu=4/den, [rd,rdot]=DURQ[mt.U*mt.uq];
   const rest=(ch,m)=>({measure:m,beat:1,beatPos:0,channel:ch,accidental:null,dotted:rdot,velocity:80,duration:rd,isRest:true,pitch:'BN',octave:4});
-  for(let v=0;v<p.n;v++){ const notes=[];
+  for(let v=0;v<p.n;v++){ const notes=[]; let pend=null;
     for(let m=1;m<=p.N;m++){ const en=p.entries.find(e=>e.v===v&&m>=e.bar&&m<e.bar+(e.len||p.T));
       if(!en){ notes.push(rest(v,m)); continue; }
       const bn=en.notes.filter(nt=>nt.bar===m-en.bar); if(bn.length&&bn[0].pos>0){ const [rdn,rdt]=DURQ[bn[0].pos*mt.uq]||['quarter',false];
         notes.push({measure:m,beat:1,beatPos:0,channel:v,accidental:null,dotted:rdt,velocity:80,duration:rdn,isRest:true,pitch:'BN',octave:4}); }
       bn.forEach(nt=>{ const [dn,dot]=DURQ[nt.du*mt.uq], bp=nt.pos*mt.uq;
         notes.push({measure:m,beat:Math.floor(bp/bu)+1,beatPos:bp,channel:v,accidental:null,dotted:dot,velocity:80,duration:dn,isRest:false,
-          pitch:PITCH(nt.p),octave:nt.p.oct,e3:nt.p.e3,e2:nt.p.e2,freq:nt.p.freq}); }); }
+          pitch:PITCH(nt.p),octave:nt.p.oct,e3:nt.p.e3,e2:nt.p.e2,freq:nt.p.freq});
+        if(pend!=null){ notes[pend].tieTo={chId:v,noteIdx:notes.length-1}; pend=null; } if(nt.tie) pend=notes.length-1; }); }
     chans[v].notes=notes; }
   // Salieri vigila que cada entrada de la exposición copie al sujeto (con la mutación de la respuesta tonal)
   const ex=p.entries.filter(e=>e.kind==='suj'||e.kind==='resp'), e0=ex[0], canon=ex.slice(1).map(en=>{ const ivs=en.notes.map((nt,i)=>nt.p.midi-e0.notes[i].p.midi);
@@ -559,13 +605,13 @@ function mmf(){
   const ann=p.labels.map((l,i)=>({text:l.text,measure:l.bar,beat:1,channel:l.v,scope:'channel',id:1792900000000+i,fontSize:13,offsetX:12,offsetY:-18}));
   // cada sistema empieza en una sección (sujeto, respuesta, episodio, entrada): las etiquetas no se cortan al final del renglón
   const bl={[p.N]:{id:'final'}}; let last=1; [...new Set(p.labels.filter(l=>l.text!==tr('aCad')).map(l=>l.bar))].sort((x,y)=>x-y).forEach(b=>{ if(b>1&&b-last>=4&&b<=p.N){ bl[b-1]=Object.assign(bl[b-1]||{},{sysBreak:true}); last=b; } });
-  const sv=p.inv?tr('isv',{t:p.T}):p.canon?tr('csv',{n:p.n,iv:p.ivn,d:p.d,mov:tr(state.cmov==='inv'?'mInv':'mDir')}):tr('sv',{esp:tr(state.esp),n:p.n,t:p.T,met:state.meter});
+  const sv=p.sinf?tr('ssv',{t:p.T}):p.inv?tr('isv',{t:p.T}):p.canon?tr('csv',{n:p.n,iv:p.ivn,d:p.d,mov:tr(state.cmov==='inv'?'mInv':'mDir')}):tr('sv',{esp:tr(state.esp),n:p.n,t:p.T,met:state.meter});
   return {format:'mmf',type:'score',version:'1.1',app:'V2.7.127',intelligentBeams:1,created:new Date().toISOString(),system:'Tonal',
     keySignature:KEYSIG[String(ki.fifths)],keyChanges:[],timeChanges:[],octaveLines:[],spacing:{h:1,v:1,byM:{}},
     view:{zoom:90,barNums:'continuous',listenOct:{fit:'auto',start:2},page:{fit:'auto',staff:'6',sysGap:'4',pages:'0',mode:'ancho',paper:'A4',footer:true,pageNum:true}},
     alteration:'n',a4:440,tempo:state.bpm,timeSignature:{num,den},subDiv:1,totalMeasures:p.N,barlines:bl,repeatMarks:[],repeatSections:[],_sectionSeq:0,
     showRepeatSections:true,anacrusis:null,groups:[{showBarLines:true,id:1792900000001,type:'bracket',channels:p.V.map((_,v)=>v)}],
-    scoreInfo:{title:(p.inv?(LANG==='es'?'Invención en ':'Invention in '):p.canon?(LANG==='es'?'Canon en ':'Canon in '):(LANG==='es'?'Fuga en ':'Fugue in '))+name,subtitle:sv,composer:'',author:'',copyright:'',file:(p.inv?'invencion-':p.canon?'canon-':'fuga-')+state.meter.replace('/','-')+'-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':''),print:{partShow:false},orchestra:'modern'},printNames:true,
+    scoreInfo:{title:(p.sinf?(LANG==='es'?'Sinfonía en ':'Sinfonia in '):p.inv?(LANG==='es'?'Invención en ':'Invention in '):p.canon?(LANG==='es'?'Canon en ':'Canon in '):(LANG==='es'?'Fuga en ':'Fugue in '))+name,subtitle:sv,composer:'',author:'',copyright:'',file:(p.sinf?'sinfonia-':p.inv?'invencion-':p.canon?'canon-':'fuga-')+state.meter.replace('/','-')+'-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':''),print:{partShow:false},orchestra:'modern'},printNames:true,
     tempoMarkings:[{measure:1,beatPos:0,term:'',noteValue:state.meter==='3/8'?'eighth':'quarter',bpm:state.meter==='3/8'?state.bpm*2:state.bpm,visible:false,yOffset:-4,fontSize:18,xOffset:0}],
     exprMarkings:[],dynMarkings:[],artMarkings:[],textAnnotations:ann,
     coachRules:{enabled:true,canon,appliesTo:p.V.map((_,v)=>v),forbidSeventh:false},coachLog:null,
@@ -590,7 +636,7 @@ function syncSeg(id,v){ [...document.getElementById(id).children].forEach(c=>{ c
 seg('keys',[['F','F'],['C','C'],['G','G'],['D','D'],['A','A'],['E','E'],['B','B']],state.key,v=>state.key=v);
 seg('alts',[['b','♭'],['n','♮'],['#','♯']],state.alt,v=>state.alt=v);
 seg('modes',[['0','M'],['1','m']],state.mode,v=>state.mode=+v);
-function setT(T){ T=Math.max(1,Math.min(state.win==='inv'?2:8,T)); if(T===state.T) return; const old=state.bars; state.T=T; state.held=[];
+function setT(T){ T=Math.max(1,Math.min(state.win==='inv'||state.win==='sinf'?2:8,T)); if(T===state.T) return; const old=state.bars; state.T=T; state.held=[];
   const nb=[old[0]]; for(let i=1;i<T-1;i++){ const pv=nb[i-1].deg[nb[i-1].deg.length-1]; nb.push(old[i]&&i<old.length-1&&!isSeq(i)?old[i]:isSeq(i)?seqBar(nb[i-H()],pv):makeBar(i,pv)); } if(T>1) nb.push(old[old.length-1]);
   state.bars=nb; if(!subjectOk(state.bars)) state.bars=newBars(); }
 { const el=document.getElementById('temas');
@@ -606,10 +652,10 @@ seg('cdis',[['1','1 BAR'],['2','2 BARS']],state.cdis,v=>state.cdis=+v);
 seg('cmov',[['dir','DIRECT'],['inv','INVERSION']],state.cmov,v=>state.cmov=v);
 seg('cfin',[['coda','CODA'],['perp','PERPETUAL']],state.cfin,v=>{ state.cfin=v; segVoces(); });
 { const el=document.getElementById('tabs');
-  el.innerHTML=[['canon','CANON'],['inv','INVENTION'],['fuga','FUGUE']].map(([v,t])=>`<button class="btn${v===state.win?' on':''}" data-v="${v}" aria-pressed="${v===state.win}">${t}</button>`).join('');
+  el.innerHTML=[['canon','CANON'],['inv','INVENTION'],['sinf','SINFONIA'],['fuga','FUGUE']].map(([v,t])=>`<button class="btn${v===state.win?' on':''}" data-v="${v}" aria-pressed="${v===state.win}">${t}</button>`).join('');
   el.onclick=e=>{ const b=e.target.closest('button'); if(!b||state.spinning||b.dataset.v===state.win) return; stopPlay(); state.win=b.dataset.v;
     [...el.children].forEach(c=>{ c.classList.toggle('on',c===b); c.setAttribute('aria-pressed',c===b); });
-    if(state.win==='canon'&&state.n>3) state.n=3; if(state.win==='inv'){ state.n=2; if(state.T>2) setT(1); document.getElementById('tv').textContent=state.T; } segVoces(); winTexts(); state.held=[]; buildReels(); render();
+    if(state.win==='canon'&&state.n>3) state.n=3; if(state.win==='inv'||state.win==='sinf'){ state.n=state.win==='inv'?2:3; if(state.T>2) setT(1); document.getElementById('tv').textContent=state.T; } segVoces(); winTexts(); state.held=[]; buildReels(); render();
     try{ const u=new URL(location.href); if(state.win!=='fuga') u.searchParams.set('win',state.win); else u.searchParams.delete('win'); history.replaceState(null,'',u.href); }catch(e){} }; }
 seg('tams',[['escuela','SCHOOL'],['bach','BACH']],state.tam,v=>state.tam=v);
 document.getElementById('tempo').oninput=e=>{ state.bpm=+e.target.value; document.getElementById('bpm').textContent='♩ = '+state.bpm; };
@@ -618,7 +664,7 @@ document.getElementById('save').onclick=save; document.getElementById('open').on
 document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){ e.preventDefault(); spin(); } });
 // el sujeto de partida: el del Contrapunctus I (Re La | Fa Re | Do♯ Re Mi | Fa · Sol Fa Mi Re)
 state.bars=[{deg:[0,4],rh:[4,4]},{deg:[2,0],rh:[4,4]},{deg:[-1,0,1],rh:[4,2,2]},{deg:[2,3,2,1,0],rh:[3,1,1,1,2]}];
-if(state.win==='canon'&&state.n>3) state.n=3; if(state.win==='inv'){ state.n=2; setT(1); document.getElementById('tv').textContent=state.T; } winTexts(); buildReels(); render();
+if(state.win==='canon'&&state.n>3) state.n=3; if(state.win==='inv'||state.win==='sinf'){ state.n=state.win==='inv'?2:3; setT(1); document.getElementById('tv').textContent=state.T; } winTexts(); buildReels(); render();
 </script>
 </body>
 </html>
