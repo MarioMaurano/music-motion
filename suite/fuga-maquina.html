@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mm Máquina de fugas</title>
+<link rel="icon" href="/icons/mm-traga-tab.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b0b16">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@400;700&display=swap">
+<script src="mm-salieri.js"></script>
+<style>
+/* La máquina de fugas (2026-10-24, Mario: «armar este esqueleto con otro tema propuesto por la máquina, donde puedes cambiar
+   la tonalidad como en el juego de melodías»). Mismo gabinete que la máquina de melodías: los rodillos proponen un SUJETO;
+   la máquina calcula la respuesta, las entradas y el largo (modelo medido en El arte de la fuga) y lo abre en el Score con Salieri. */
+:root{
+  --night:#0b0b16; --cab:#14142a; --cab2:#1f1f40; --gold:#d6b450; --gold-d:#5a4a18; --wine:#7a1f2e; --wine-l:#b0324a;
+  --paper:#f7f2e4; --ink:#0e2934; --teal:#38c0a6; --text:#ecebf6; --textm:#a2a0bc; --pink:#ff6f91; --sky:#5ec8ff;
+  --display:'Bebas Neue',Impact,'Arial Narrow',sans-serif; --body:'Lato',Calibri,Arial,sans-serif; --mono:'DM Mono',Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:radial-gradient(ellipse at 50% -10%,#2a2a58 0%,var(--night) 55%);color:var(--text);font-family:var(--body);min-height:100vh;
+  padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));padding-top:max(10px,env(safe-area-inset-top,0px));padding-bottom:max(24px,env(safe-area-inset-bottom,0px));overflow-x:hidden}
+.top{max-width:1080px;margin:0 auto 8px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;font-family:var(--mono);font-size:12px}
+.top a{color:var(--gold);text-decoration:none;white-space:nowrap}.top a:hover{text-decoration:underline}
+.top .langs{display:flex;gap:2px}.top .langs button{background:none;border:1px solid transparent;color:var(--textm);font-family:var(--mono);font-size:11px;letter-spacing:1px;padding:3px 6px;border-radius:4px;cursor:pointer}
+.top .langs button:hover{color:var(--gold)}.top .langs button.on{background:var(--gold);color:#0a0a10;font-weight:500}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.cab{position:relative;background:linear-gradient(180deg,var(--cab2),var(--cab));border:2px solid var(--gold-d);border-top:5px solid var(--wine);border-radius:22px;
+  padding:16px clamp(10px,2.6vw,24px) 20px;box-shadow:0 20px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.07)}
+.marquee{text-align:center}
+h1{font-family:var(--display);font-weight:400;letter-spacing:.06em;color:var(--gold);font-size:clamp(30px,7vw,58px);line-height:.95;margin:0;text-shadow:0 0 22px rgba(214,180,80,.45)}
+.kicker{font-family:var(--display);font-size:clamp(15px,2.4vw,20px);letter-spacing:.22em;text-transform:uppercase;color:var(--sky);text-align:center;margin:2px 0 0}
+.sub{font-size:14px;color:var(--textm);text-align:center;margin:6px 0 0}
+.lights{display:flex;justify-content:space-between;margin:12px 4px 14px}
+.lights i{width:clamp(6px,1.3vw,10px);height:clamp(6px,1.3vw,10px);border-radius:50%;background:var(--gold-d);flex:none}
+.lights.run i{animation:bulb .66s steps(1) infinite}
+.lights i:nth-child(3n+2){animation-delay:-.22s}.lights i:nth-child(3n){animation-delay:-.44s}
+@keyframes bulb{0%,33%{background:var(--gold);box-shadow:0 0 10px var(--gold)}34%,100%{background:var(--gold-d);box-shadow:none}}
+.reels{display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:10px}
+@media (max-width:760px){.reels{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.reel{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--textm);text-align:center;text-transform:uppercase}
+.frame{position:relative;padding:9px;border-radius:14px;background:#0d0d1e;border:2px solid var(--gold-d)}
+.frame.held{border-color:var(--teal);box-shadow:0 0 16px rgba(56,192,166,.45)}
+.frame.spinning{border-color:var(--gold)}
+.win{background:var(--paper);border-radius:8px;height:clamp(118px,19vw,156px);overflow:hidden;position:relative;
+  box-shadow:inset 0 12px 14px -8px rgba(0,0,0,.5),inset 0 -12px 14px -8px rgba(0,0,0,.5)}
+.strip{position:absolute;left:0;right:0;top:0;will-change:transform}
+.strip svg{display:block;width:100%;height:clamp(118px,19vw,156px)}
+.strip.blur{filter:blur(1.2px)}
+.lbl{font-family:var(--mono);font-size:12.5px;color:var(--text);text-align:center;min-height:1.4em;line-height:1.35}
+.btn{font-family:var(--mono);font-size:13px;letter-spacing:.1em;padding:9px 14px;border:1px solid var(--gold-d);border-radius:8px;background:rgba(255,255,255,.02);color:var(--text);cursor:pointer;min-height:40px;touch-action:manipulation}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn:focus-visible,.spin:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.btn.on{background:var(--teal);border-color:var(--teal);color:#06231d}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.hold{width:100%;font-size:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:center;margin-top:16px}
+.grp{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center}
+.grp .cl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--textm);text-transform:uppercase}
+.grp .btn{padding:7px 10px;min-width:38px}
+.spin{font-family:var(--display);font-size:34px;letter-spacing:.12em;color:#fff;background:radial-gradient(circle at 35% 30%,var(--wine-l),var(--wine) 70%);
+  border:3px solid var(--gold);border-radius:999px;padding:10px 44px;cursor:pointer;box-shadow:0 7px 0 #3d0d16,0 12px 26px rgba(0,0,0,.5);touch-action:manipulation}
+.spin:active{transform:translateY(5px);box-shadow:0 2px 0 #3d0d16}
+.spin:disabled{opacity:.6;cursor:wait}
+input[type=range]{accent-color:var(--gold);width:130px}
+.banner{font-family:var(--display);letter-spacing:.08em;font-size:clamp(22px,4vw,30px);color:var(--gold);text-align:center;min-height:36px;margin-top:6px}
+.plan{background:rgba(0,0,0,.28);border:1px solid var(--gold-d);border-radius:12px;padding:12px 14px;display:grid;gap:10px}
+.plan h2{font-family:var(--display);font-weight:400;letter-spacing:.08em;color:var(--gold);font-size:26px;margin:0}
+.plan .res{font-family:var(--mono);font-size:13px;color:var(--text);line-height:1.6}
+.plan .res b{color:var(--gold);font-weight:500}
+.grid{overflow-x:auto;padding-bottom:4px}
+.grid table{border-collapse:separate;border-spacing:2px;font-family:var(--mono);font-size:10px}
+.grid th{color:var(--textm);font-weight:400;text-align:right;padding-right:6px;white-space:nowrap}
+.grid thead th{text-align:center;padding:0;min-width:22px}
+.grid td{height:26px;min-width:22px;border-radius:4px;background:#1a1a30;text-align:center;color:#0e1016;font-weight:500}
+.grid td.suj{background:var(--gold)}.grid td.resp{background:var(--teal)}.grid td.ent{background:var(--sky)}
+.grid td.fin{background:var(--pink)}.grid td.cs{background:#3a3a62;color:var(--textm)}.grid td.epi{background:#2c2c4a;color:var(--textm)}
+.grid td.cad{background:var(--wine-l);color:#fff}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:11px;color:var(--textm)}
+.leyenda i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-3px;margin-right:5px}
+.how{color:var(--textm);font-size:14px;line-height:1.6;max-width:72ch;margin:0 auto}
+.how b{color:var(--text)}
+.nota{font-family:var(--mono);font-size:12px;color:var(--textm)}
+@media (prefers-reduced-motion:reduce){.lights.run i{animation:none}}
+</style>
+</head>
+<body>
+<div class="top"><a href="index.html">musicmotionsuite.com</a><a href="contrapunto.html" id="lnkAtelier">🎩 Salieri Atelier · Contrapunto</a></div>
+<div class="wrap">
+<div class="cab">
+  <div class="marquee"><h1 id="tit">La máquina de fugas</h1><p class="kicker" id="kick">Salieri Atelier · el esqueleto de la fuga</p></div>
+  <p class="sub" id="sub">Los rodillos proponen un sujeto; la máquina arma la respuesta, las entradas y el largo de su fuga.</p>
+  <div class="lights" id="lights" aria-hidden="true"></div>
+  <div class="reels" id="reels"></div>
+  <div class="banner" id="banner" aria-live="polite"></div>
+  <div class="row">
+    <button class="spin" id="spin">SPIN</button>
+    <button class="btn" id="play">▶ PLAY</button>
+    <button class="btn" id="save">⬇ SAVE .mmf</button>
+    <button class="btn" id="open">🎩 OPEN IN SCORE</button>
+  </div>
+  <div class="row">
+    <div class="grp"><span class="cl">Key</span><span id="keys" class="grp"></span></div>
+    <div class="grp"><span class="cl">Alteration</span><span id="alts" class="grp"></span></div>
+    <div class="grp"><span class="cl">Mode</span><span id="modes" class="grp"></span></div>
+    <div class="grp"><span class="cl">Theme</span><span id="temas" class="grp"></span></div>
+  </div>
+  <div class="row">
+    <div class="grp"><span class="cl">Species</span><span id="especies" class="grp"></span></div>
+    <div class="grp"><span class="cl">Voices</span><span id="voces" class="grp"></span></div>
+    <div class="grp"><span class="cl">Size</span><span id="tams" class="grp"></span></div>
+    <div class="grp"><span class="cl">Tempo</span><input type="range" id="tempo" min="48" max="112" step="4" value="72" aria-label="Tempo"><span id="bpm" class="fn">♩ = 72</span></div>
+  </div>
+</div>
+<div class="plan" id="plan" aria-live="polite"></div>
+<p class="how" id="how"></p>
+</div>
+<script>
+const GL={"gClef":"M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z","black":"M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z","half":"M97 -125C262 -125 295 9 295 42C295 93 254 125 196 125C47 125 0 10 0 -42C0 -95 42 -125 97 -125ZM75 -87C54 -87 42 -76 35 -64C32 -58 29 -51 29 -44C29 5 174 84 221 84C240 84 251 75 258 63C261 57 264 51 264 44C264 1 123 -87 75 -87Z","whole":"M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z","flagUp":"M238 -790C238 -790 264 -695 264 -617C264 -492 212 -374 149 -274C98 -195 56 -109 40 -13C37 3 29 9 19 9C8 9 0 6 0 -6V-245C66 -257 161 -393 197 -478C212 -512 221 -569 221 -628C221 -673 214 -720 197 -765C195 -771 194 -776 194 -780C194 -796 204 -805 210 -809C216 -813 233 -807 238 -790Z","flagDown":"M240 760C254 718 261 668 261 623C261 564 236 480 221 446C184 362 134 281 0 236V1C0 -9 8 -14 16 -14C25 -14 38 -8 40 8C57 103 131 190 182 269C245 368 306 487 306 612C306 690 286 761 278 793C275 804 269 808 262 808C247 808 230 789 240 760Z","dot":"M100 0C100 28 78 50 50 50C22 50 0 28 0 0C0 -28 22 -50 50 -50C78 -50 100 -28 100 0Z","sharp":"M237 118C244 121 249 129 249 135V206C249 211 246 214 242 214C240 214 239 214 237 213C237 213 217 205 212 204C205 204 198 209 198 217V339C198 345 192 350 184 350C174 350 168 345 168 339V209C167 199 164 186 155 180C143 173 109 159 92 155C83 155 80 167 80 175V295C80 301 73 306 66 306C56 306 50 301 50 295V160C50 146 44 136 38 133C32 130 12 122 12 122C5 120 0 112 0 106V35C0 29 3 26 9 26L11 27C12 27 27 33 35 37L36 38C44 38 50 28 50 20V-79C50 -90 45 -99 39 -102C33 -104 12 -113 12 -113C5 -115 0 -123 0 -129V-200C0 -206 3 -209 9 -209L11 -208C12 -208 26 -202 35 -199C36 -198 37 -198 38 -198C45 -198 50 -209 50 -214V-337C50 -343 56 -348 63 -348C73 -348 80 -343 80 -337V-198C80 -185 85 -178 90 -176L151 -151C151 -151 152 -151 152 -151L154 -150C163 -150 168 -162 168 -168V-293C168 -299 174 -304 181 -304C192 -304 198 -299 198 -293V-151C198 -143 202 -131 209 -128C216 -125 237 -117 237 -117C244 -114 249 -106 249 -100V-29C249 -24 246 -21 242 -21C240 -21 239 -21 237 -22L211 -32C205 -32 198 -26 198 -14V79C198 86 203 105 211 108ZM168 -45C162 -65 115 -85 92 -85C86 -85 81 -83 80 -80C78 -76 77 -54 77 -30C77 1 78 36 80 44C82 61 128 82 153 82C160 82 166 80 168 76C170 71 172 46 172 19C172 -8 170 -36 168 -45Z","flat":"M12 -170C15 -174 18 -175 21 -175C24 -175 27 -173 27 -173C57 -156 81 -129 106 -112C195 -50 226 11 226 57C226 114 182 150 136 153C119 153 95 145 81 136C75 131 64 122 59 122C57 122 56 122 54 123C47 126 43 133 43 140C44 162 50 402 50 422C50 433 41 439 31 439C17 439 1 429 0 411C0 411 4 -160 12 -170ZM47 -81C47 -81 44 -21 44 19C44 35 45 47 46 51C53 71 93 100 116 100C145 100 157 67 157 42C157 -12 111 -66 68 -93C64 -95 61 -96 58 -96C49 -96 47 -86 47 -81Z"};
+const LANGS=['es','en'];
+const LANG=(()=>{ try{ const q=new URLSearchParams(location.search).get('lang'); if(LANGS.includes(q)) return q; }catch(e){} return (navigator.language||'es').slice(0,2)==='en'?'en':'es'; })();
+const I18N={
+ es:{tit:'La máquina de fugas', kick:'Salieri Atelier · el esqueleto de la fuga', sub:'Los rodillos proponen un sujeto; la máquina arma la respuesta, las entradas y el largo de su fuga.',
+  bar:'Compás', head:'Cabeza', cont:'Continuación', fin:'Final', plan:'El esqueleto', simple:'simple', stretto:'en stretto',
+  res:'Fuga {esp} a {n} voces en <b>{key}</b> · tema de {t} compases · respuesta <b>{resp}</b>{mut}<br>Exposición: compases 1–{e} · total ≈ <b>{tot} compases</b> (k ≈ {k})',
+  tonal:'tonal', real:'real', mut:' ({a} → {b})',
+  lSuj:'Sujeto', lResp:'Respuesta', lCs:'Contrapunto libre', lEnt:'Entrada en otra tonalidad', lEpi:'Episodio', lFin:'Entrada final', lCad:'Cadencia',
+  aSuj:'Sujeto', aResp:'Respuesta', aRespT:'Respuesta (tonal)', aEnt:'Entrada · {key}', aEpi:'Episodio', aFin:'Entrada final · {key}', aStr:'Stretto', aCad:'Cadencia',
+  rel:'relativa', sub2:'subdominante', dom:'dominante', ii:'supertónica',
+  vecina:'{a} es una tonalidad teórica: la máquina usa su vecina, {b}.',
+  sv:'La máquina de fugas · Salieri · {esp}, {n} voces, tema de {t} compases',
+  how:'<b>Cómo se juega.</b> Pulsa SPIN: los rodillos proponen un sujeto de fuga, con ritmos tomados de El arte de la fuga de Bach. Retén con HOLD el compás que te guste y vuelve a tirar. Elige la tonalidad, el largo del tema, la especie (simple o en stretto), las voces y el tamaño: escuela (k ≈ 4) o Bach (k ≈ 5). La máquina escribe la respuesta —real o tonal—, decide dónde entra cada voz y cuántos compases tendrá la fuga. <b>OPEN IN SCORE</b> abre la exposición escrita en el Score, con Salieri elegido, y el resto de los compases vacío con sus etiquetas: episodios, entradas en otras tonalidades y la cadencia. El resto lo escribe usted.',
+  open:'Para abrir en el Score con Salieri hace falta el pase Salieri; sin él, el Score abre igual con el Coach.', noOpen:'El navegador bloqueó la ventana nueva: permite las ventanas emergentes de este sitio.'},
+ en:{tit:'The Fugue Machine', kick:'Salieri Atelier · the skeleton of a fugue', sub:'The reels propose a subject; the machine builds the answer, the entries and the length of your fugue.',
+  bar:'Bar', head:'Head', cont:'Continuation', fin:'End', plan:'The skeleton', simple:'simple', stretto:'stretto',
+  res:'{esp} fugue for {n} voices in <b>{key}</b> · {t}-bar subject · <b>{resp}</b> answer{mut}<br>Exposition: bars 1–{e} · total ≈ <b>{tot} bars</b> (k ≈ {k})',
+  tonal:'tonal', real:'real', mut:' ({a} → {b})',
+  lSuj:'Subject', lResp:'Answer', lCs:'Free counterpoint', lEnt:'Entry in another key', lEpi:'Episode', lFin:'Final entry', lCad:'Cadence',
+  aSuj:'Subject', aResp:'Answer', aRespT:'Answer (tonal)', aEnt:'Entry · {key}', aEpi:'Episode', aFin:'Final entry · {key}', aStr:'Stretto', aCad:'Cadence',
+  rel:'relative', sub2:'subdominant', dom:'dominant', ii:'supertonic',
+  vecina:'{a} is a theoretical key: the machine uses its neighbour, {b}.',
+  sv:'The Fugue Machine · Salieri · {esp}, {n} voices, {t}-bar subject',
+  how:'<b>How to play.</b> Press SPIN: the reels propose a fugue subject, with rhythms taken from Bach’s Art of Fugue. HOLD the bar you like and spin again. Choose the key, the length of the subject, the species (simple or stretto), the voices and the size: school (k ≈ 4) or Bach (k ≈ 5). The machine writes the answer —real or tonal—, decides where each voice enters and how many bars the fugue will have. <b>OPEN IN SCORE</b> opens the written exposition in the Score with Salieri chosen, and the remaining bars empty with their labels: episodes, entries in other keys and the cadence. The rest is yours to write.',
+  open:'Opening the Score with Salieri needs the Salieri pass; without it, the Score opens with the Coach.', noOpen:'The browser blocked the new window: allow pop-ups for this site.'}};
+function tr(k,v){ const d=I18N[LANG]||I18N.es; let s=d[k]!=null?d[k]:I18N.es[k]; return v?s.replace(/\{(\w+)\}/g,(m,x)=>v[x]!=null?v[x]:m):s; }
+const SOLF={C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'}, SYM={2:'𝄪',1:'♯',0:'','-1':'♭','-2':'𝄫'};
+const nomb=(L,acc)=>(LANG==='es'?SOLF[L]:L)+SYM[acc||0];
+const keyNameAcc=(L,acc,m)=>nomb(L,acc)+(LANG==='es'?(m?' menor':' mayor'):(m?' minor':' major'));
+document.documentElement.lang=LANG; document.title='mm '+tr('tit');
+['tit','kick','sub'].forEach(id=>document.getElementById(id).textContent=tr(id)); document.getElementById('how').innerHTML=tr('how');
+{ const s=document.createElement('span'); s.className='langs'; s.innerHTML=LANGS.map(l=>`<button class="${l===LANG?'on':''}" data-l="${l}">${l.toUpperCase()}</button>`).join('');
+  s.onclick=e=>{ const b=e.target.closest('button'); if(!b||b.dataset.l===LANG) return; const u=new URL(location.href); u.searchParams.set('lang',b.dataset.l); location.href=u.href; };
+  document.querySelector('.top').appendChild(s); }
+
+// ── la teoría: notas como (li = índice diatónico absoluto, f = posición en la línea de quintas) ──
+const LET=['C','D','E','F','G','A','B'], SEMI={C:0,D:2,E:4,F:5,G:7,A:9,B:11}, FIF={F:-1,C:0,G:1,D:2,A:3,E:4,B:5};
+const ALT={b:-1,n:0,'#':1};
+const mod=(a,n)=>((a%n)+n)%n;
+function P(li,f){ const letter=LET[mod(li,7)], acc=Math.round((f-FIF[letter])/7), oct=Math.floor(li/7);
+  const semis=SEMI[letter]+acc+12*(oct-4), e2=Math.round(semis/12-f*Math.log2(3));
+  return {li,f,letter,acc,oct,midi:60+semis,e3:f,e2,freq:260.7407407407407*Math.pow(3,f)*Math.pow(2,e2)}; }
+const up5=p=>P(p.li+4,p.f+1), up4=p=>P(p.li+3,p.f-1), oct=(p,k)=>P(p.li+7*k,p.f);
+function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F'];
+  if(fifths>0) return sh.slice(0,fifths).includes(letter)?1:0; if(fifths<0) return fl.slice(0,-fifths).includes(letter)?-1:0; return 0; }
+let state={key:'D',alt:'n',mode:1,T:2,esp:'simple',n:3,tam:'escuela',bpm:72,held:[],bars:[],spinning:false};
+const fifthsOf=(k,a,m)=>FIF[k]+7*ALT[a]-(m?3:0);
+function vecinaDe(k,a,m){ const pc=mod(SEMI[k]+ALT[a],12);
+  for(const L of LET) for(const al of ['n','#','b']){ if(mod(SEMI[L]+ALT[al],12)!==pc||(L===k&&al===a)) continue;
+    const f=fifthsOf(L,al,m); if(Math.abs(f)<=7&&!(L==='C'&&al==='b')) return {k:L,a:al}; } return null; }
+function keyOk(k,a,m){ return Math.abs(fifthsOf(k,a,m))<=7&&!(k==='C'&&a==='b'); }
+function KI(){ return {fifths:fifthsOf(state.key,state.alt,state.mode), li0:LET.indexOf(state.key)+28, f0:FIF[state.key]+7*ALT[state.alt]}; }
+// grado (0 = tónica, puede ser negativo) → nota; raise = +1 en la sensible del menor
+function deg2P(d,raise){ const ki=KI(); const li=ki.li0+d, letter=LET[mod(li,7)], acc=sigAcc(letter,ki.fifths)+(raise||0); return P(li,FIF[letter]+7*acc); }
+function raises(degs){ if(!state.mode) return degs.map(()=>0);
+  const r=degs.map(()=>0);
+  for(let i=0;i<degs.length;i++){ const d=degs[i], nx=degs[i+1];
+    if(mod(d,7)===6&&nx===d+1) r[i]=1;   // la sensible sube a la tónica
+  }
+  return r; }   // solo la sensible: la 6.ª queda natural, y la 2.ª aumentada que resulte la descarta ivOk
+// solo intervalos cantables: nada aumentado ni disminuido (la regla de la máquina de melodías)
+const IV_OK=new Set(['0:0','1:1','1:2','2:3','2:4','3:5','4:7','5:8','5:9','6:10','6:11','7:12']);
+function ivOk(a,b){ const st=b.li-a.li, se=b.midi-a.midi; return IV_OK.has(Math.abs(st)+':'+(st<0?-se:se)); }
+
+// ── los ritmos: compases de El arte de la fuga (en corcheas), con sus veces en toda la obra ──
+const INICIO=[[[4,4],212],[[6,2],123],[[2,2,4],113],[[3,1,4],112],[[4,3,1],106],[[4,2,2],83],[[2,4,2],64]];
+const MEDIO=[[[2,2,2,2],359],[[1,1,1,1,1,1,1,1],120],[[3,1,3,1],164],[[1,1,1,1,2,2],52],[[2,1,1,2,2],42],[[2,2,1,1,2],36],[[3,1,2,2],26],[[1,1,2,2,2],22],[[4,2,2],83],[[6,1,1],54]];
+const FINAL=[[[2,2,4],113],[[3,1,4],112],[[4,4],212],[[1,1,1,1,4],66],[[2,1,1,4],27],[[6,2],123]];
+const wpick=L=>{ let s=L.reduce((a,x)=>a+x[1],0)*Math.random(); for(const [v,w] of L){ s-=w; if(s<=0) return v.slice(); } return L[0][0].slice(); };
+const rnd=n=>Math.floor(Math.random()*n), pick=a=>a[rnd(a.length)];
+function roleOf(i){ return i===0?'head':(i===state.T-1?'fin':'cont'); }
+function makeBar(i,prev){
+  const role=roleOf(i), rh=wpick(role==='head'?INICIO:role==='fin'?FINAL:MEDIO), deg=[];
+  let cur=prev;
+  for(let k=0;k<rh.length;k++){
+    if(cur==null){ cur=Math.random()<.65?0:4; deg.push(cur); continue; }
+    if(role==='head'){ const tri=[0,2,4,7,-3,-1].filter(c=>c!==cur&&Math.abs(c-cur)<=5); cur=pick(tri.length?tri:[0]); }
+    else { let st=pick([-1,-1,1,1,-1,1,2,-2,-1,3,-3]); if(cur+st<-3||cur+st>8) st=-st; cur+=st; }
+    deg.push(cur);
+  }
+  if(role==='fin'){ const last=deg.length-1, before=last?deg[last-1]:prev;
+    const goals=[0,2,4,7].filter(g=>Math.abs(g-before)<=2); deg[last]=goals.length?pick(goals):nearest([0,2,4,7],before); }
+  return {deg,rh};
+}
+function nearest(set,x){ return set.reduce((b,c)=>Math.abs(c-x)<Math.abs(b-x)?c:b,set[0]); }
+function subjectOk(bars){ const degs=bars.flatMap(b=>b.deg), r=raises(degs), ps=degs.map((d,i)=>deg2P(d,r[i]));
+  if(Math.max(...degs)-Math.min(...degs)>9) return false;
+  for(let i=1;i<ps.length;i++){ if(!ivOk(ps[i-1],ps[i])) return false; if(i>1&&degs[i]===degs[i-1]&&degs[i-1]===degs[i-2]) return false; }
+  const end=mod(degs[degs.length-1],7); return [0,2,4].includes(end); }
+function newBars(){ for(let t=0;t<400;t++){ const out=[]; let prev=null;
+    for(let i=0;i<state.T;i++){ const b=(state.held[i]&&state.bars[i])?state.bars[i]:makeBar(i,prev); out.push(b); prev=b.deg[b.deg.length-1]; }
+    if(subjectOk(out)) return out; }
+  return state.bars.length===state.T?state.bars:[{deg:[0,4],rh:[4,4]},{deg:[2,1,2,0],rh:[2,2,2,2]},{deg:[1,2,3,4],rh:[2,2,2,2]},{deg:[3,2,1,2],rh:[2,2,2,2]}].slice(0,state.T); }
+
+// ── la fuga: sujeto, respuesta, entradas, plan ──
+const VOCES={2:[['Voz 1','G','violin',[55,86]],['Voz 2','F','cello',[36,64]]],
+  3:[['Soprano','G','violin',[60,84]],['Alto','C3','viola',[52,76]],['Bajo','F','cello',[38,64]]],
+  4:[['Soprano','G','violin',[60,84]],['Alto','G','violin',[55,77]],['Tenor','C3','viola',[48,70]],['Bajo','F','cello',[38,62]]]};
+const ORDEN={2:[0,1],3:[1,0,2],4:[1,0,3,2]};
+const VOZ_EN={'Voz 1':'Voice 1','Voz 2':'Voice 2','Soprano':'Soprano','Alto':'Alto','Tenor':'Tenor','Bajo':'Bass'};
+function subject(){ const degs=state.bars.flatMap(b=>b.deg), r=raises(degs); let k=0, t=0, out=[];
+  state.bars.forEach((b,bi)=>{ let pos=0; b.deg.forEach((d,j)=>{ out.push({p:deg2P(d,r[k]),d,bar:bi,pos,du:b.rh[j]}); pos+=b.rh[j]; k++; }); });
+  return out; }
+function answer(S){ let head=0; while(head<S.length&&[0,4].includes(mod(S[head].d,7))) head++;
+  const tonal=S.slice(0,head).some(n=>mod(n.d,7)===4);
+  return {tonal, notes:S.map((n,i)=>({...n,p:(tonal&&i<head&&mod(n.d,7)===4)?up4(n.p):up5(n.p)}))}; }
+function fitOct(notes,rng){ let best=0,bs=1e9; for(let k=-3;k<=3;k++){ const ms=notes.map(n=>n.p.midi+12*k);
+    const bad=ms.reduce((a,m)=>a+Math.max(0,rng[0]-m)+Math.max(0,m-rng[1]),0), mid=Math.abs((Math.min(...ms)+Math.max(...ms))/2-(rng[0]+rng[1])/2);
+    const sc=bad*10+mid; if(sc<bs){bs=sc;best=k;} } return notes.map(n=>({...n,p:oct(n.p,best)})); }
+const KS={simple:{escuela:4,bach:5},stretto:{escuela:3.75,bach:4.8}};
+function plan(){
+  const n=state.n, T=state.T, V=VOCES[n], ord=ORDEN[n];
+  const S=subject(), A=answer(S);
+  const d=state.esp==='stretto'?Math.max(1,Math.ceil(T/2)):T;
+  const E=(n-1)*d+T, k=KS[state.esp][state.tam], N=Math.max(E+2*T+2,Math.ceil(k*n*T));
+  const ki=KI(), tonic={li:ki.li0,f:ki.f0};
+  const kn=(dl,df,m)=>{ const p=P(tonic.li+dl,tonic.f+df); return keyNameAcc(p.letter,p.acc,m); };
+  const cells=V.map(()=>Array(N).fill(''));
+  const entries=[], labels=[];
+  ord.forEach((v,j)=>{ const bar=1+j*d, isA=j%2===1, notes=fitOct(isA?A.notes:S,V[v][3]);
+    entries.push({v,bar,notes,kind:isA?'resp':'suj'});
+    for(let b=0;b<T;b++) cells[v][bar-1+b]=isA?'resp':'suj';
+    for(let b=bar-1+T;b<E;b++) if(!cells[v][b]) cells[v][b]='cs';
+    labels.push({v,bar,text:isA?(A.tonal?tr('aRespT'):tr('aResp')):tr('aSuj')}); });
+  // entradas intermedias en las tonalidades vecinas, separadas por episodios
+  const M=state.mode?[[2,-3,0,'rel'],[3,-1,1,'sub2'],[4,1,1,'dom']]:[[5,3,1,'rel'],[4,1,0,'dom'],[3,-1,0,'sub2'],[1,2,1,'ii']];
+  const finBar=N-T, ep=T; let pos=E+1, mi=0;   // episodios tan largos como el tema
+  const strBar=state.esp==='stretto'?finBar-d:finBar;
+  while(pos+ep+T<=strBar){
+    for(let b=pos;b<pos+ep;b++) V.forEach((_,v)=>cells[v][b-1]=cells[v][b-1]||'epi'); labels.push({v:0,bar:pos,text:tr('aEpi'),all:true});
+    const [dl,df,m,nm]=M[mi%M.length], v=ord[(mi+1)%n], eb=pos+ep;
+    for(let b=0;b<T;b++) cells[v][eb-1+b]='ent'; labels.push({v,bar:eb,text:tr('aEnt',{key:kn(dl,df,m)+' ('+tr(nm)+')'})});
+    pos=eb+T; mi++; }
+  if(pos<strBar){ for(let b=pos;b<strBar;b++) V.forEach((_,v)=>cells[v][b-1]=cells[v][b-1]||'epi'); labels.push({v:0,bar:pos,text:tr('aEpi'),all:true}); }
+  const vfin=n>2?V.length-1:1;
+  if(state.esp==='stretto'){ const va=ord[0]; for(let b=0;b<T;b++) cells[va][strBar-1+b]='fin'; labels.push({v:va,bar:strBar,text:tr('aStr')}); }
+  for(let b=0;b<T;b++) cells[vfin][finBar-1+b]='fin';
+  labels.push({v:vfin,bar:finBar,text:tr('aFin',{key:keyNameAcc(state.key,ALT[state.alt],state.mode)})});
+  V.forEach((_,v)=>cells[v][N-1]='cad'); labels.push({v:0,bar:N,text:tr('aCad'),all:true});
+  for(let v=0;v<n;v++) for(let b=0;b<N;b++) if(!cells[v][b]&&b>=E) cells[v][b]='epi';
+  const head=S.filter((x,i)=>i<2).map(x=>nomb(x.p.letter,x.p.acc)).join('–'), headA=A.notes.slice(0,2).map(x=>nomb(x.p.letter,x.p.acc)).join('–');
+  return {n,T,V,ord,S,A,d,E,k,N,cells,entries,labels,head,headA};
+}
+
+// ── el dibujo de cada compás (como en la máquina de melodías) ──
+const SS=10, K=SS/250, TPOS={C:0,D:1,E:2,F:3,G:4,A:5,B:6};
+const g=(n,x,y,fill)=>`<path fill="${fill||'#0e2934'}" transform="translate(${x.toFixed(2)},${y.toFixed(2)}) scale(${K.toFixed(4)},${(-K).toFixed(4)})" d="${GL[n]}"/>`;
+const posOf=p=>(p.oct-4)*7+TPOS[p.letter]-2;
+function natural(x,y){ return `<path d="M${x+1} ${y-9}V${y+4}M${x+7} ${y-4}V${y+9}M${x+1} ${y-2}L${x+7} ${y-4}M${x+1} ${y+4}L${x+7} ${y+2}" stroke="#0e2934" stroke-width="1.4" fill="none"/><path d="M${x+1} ${y-2.5}L${x+7} ${y-4.5}L${x+7} ${y-1.5}L${x+1} ${y+.5}ZM${x+1} ${y+3.5}L${x+7} ${y+1.5}L${x+7} ${y+4.5}L${x+1} ${y+6.5}Z" fill="#0e2934"/>`; }
+function barSVG(bar,raise){
+  const y0=46, W=260, H=150, ki=KI(); let x=8, m='';
+  for(let i=0;i<5;i++) m+=`<rect x="4" y="${(y0+i*SS-.6).toFixed(1)}" width="${W-8}" height="1.2" fill="#0e2934"/>`;
+  m+=g('gClef',x,y0+3*SS); x+=34;
+  if(ki.fifths){ const n=Math.abs(ki.fifths), ps=ki.fifths>0?[8,5,9,6,3,7,4]:[4,7,3,6,2,5,1];
+    for(let i=0;i<n;i++){ m+=g(ki.fifths>0?'sharp':'flat',x,y0+4*SS-ps[i]*SS/2); x+=10; } x+=4; }
+  const span=W-x-22, heads=[]; let pos=0;
+  bar.deg.forEach((d,k)=>{ const p=deg2P(d,raise?raise[k]:0), ps=posOf(p), du=bar.rh[k]; const hx=x+span*pos/8+8, hy=y0+4*SS-ps*SS/2;
+    for(let lp=-2;lp>=ps;lp-=2) m+=`<rect x="${hx-4}" y="${(y0+4*SS-lp*SS/2-.7).toFixed(1)}" width="20" height="1.4" fill="#0e2934"/>`;
+    for(let lp=10;lp<=ps;lp+=2) m+=`<rect x="${hx-4}" y="${(y0+4*SS-lp*SS/2-.7).toFixed(1)}" width="20" height="1.4" fill="#0e2934"/>`;
+    if(raise&&raise[k]){ const sa=sigAcc(p.letter,ki.fifths); m+=p.acc===0&&sa<0?natural(hx-11,hy):g('sharp',hx-11,hy); }
+    m+=g(du>=8?'whole':du>=4?'half':'black',hx,hy); if(du===3||du===6) m+=g('dot',hx+16,ps%2?hy:hy-SS/2);
+    heads.push({hx,hy,p:ps,du,pos}); pos+=du; });
+  for(let k=0;k<heads.length;k++){ const h=heads[k]; if(h.du>=8) continue; const up=h.p<4;
+    if(h.du===1&&heads[k+1]&&heads[k+1].du===1&&h.pos%2===0){ const b=heads[k+1], upb=(h.p+b.p)/2<4;
+      if(upb){ const top=Math.min(h.hy,b.hy)-35; for(const q of[h,b]) m+=`<rect x="${q.hx+11.2}" y="${top}" width="1.6" height="${q.hy-top}" fill="#0e2934"/>`; m+=`<rect x="${h.hx+11.2}" y="${top}" width="${b.hx-h.hx+1.6}" height="5" fill="#0e2934"/>`; }
+      else{ const bot=Math.max(h.hy,b.hy)+35; for(const q of[h,b]) m+=`<rect x="${q.hx}" y="${q.hy}" width="1.6" height="${bot-q.hy}" fill="#0e2934"/>`; m+=`<rect x="${h.hx}" y="${bot-5}" width="${b.hx-h.hx+1.6}" height="5" fill="#0e2934"/>`; }
+      k++; continue; }
+    if(up){ const sx=h.hx+11.2; m+=`<rect x="${sx}" y="${h.hy-35}" width="1.6" height="34" fill="#0e2934"/>`; if(h.du===1) m+=g('flagUp',sx,h.hy-35); }
+    else{ m+=`<rect x="${h.hx}" y="${h.hy+1}" width="1.6" height="34" fill="#0e2934"/>`; if(h.du===1) m+=g('flagDown',h.hx,h.hy+35); } }
+  m+=`<rect x="${W-8}" y="${y0}" width="1.6" height="${4*SS}" fill="#0e2934"/>`;
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img">${m}</svg>`;
+}
+
+// ── la máquina ──
+const reelsEl=document.getElementById('reels'), lights=document.getElementById('lights'); lights.innerHTML='<i></i>'.repeat(35);
+function buildReels(){ reelsEl.style.setProperty('--n',state.T);
+  reelsEl.innerHTML=Array.from({length:state.T},(_,i)=>`<div class="reel"><div class="fn">${tr('bar')} ${i+1} · ${tr(roleOf(i))}</div><div class="frame${state.held[i]?' held':''}" id="f${i}"><div class="win"><div class="strip" id="s${i}"></div></div></div><div class="lbl" id="l${i}"></div><button class="btn hold${state.held[i]?' on':''}" id="h${i}" aria-pressed="${!!state.held[i]}">${state.held[i]?'HELD':'HOLD'}</button></div>`).join('');
+  for(let i=0;i<state.T;i++) document.getElementById('h'+i).onclick=e=>{ if(state.spinning) return; state.held[i]=!state.held[i]; const b=e.currentTarget;
+    b.classList.toggle('on',state.held[i]); b.setAttribute('aria-pressed',state.held[i]); b.textContent=state.held[i]?'HELD':'HOLD'; document.getElementById('f'+i).classList.toggle('held',state.held[i]); }; }
+let PLAN=null;
+function render(){
+  const degs=state.bars.flatMap(b=>b.deg), r=raises(degs); let k=0;
+  state.bars.forEach((b,i)=>{ const rr=b.deg.map(()=>r[k++]); const st=document.getElementById('s'+i); st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.remove('blur');
+    st.innerHTML=barSVG(b,rr); document.getElementById('l'+i).textContent=b.deg.map((d,j)=>{ const p=deg2P(d,rr[j]); return nomb(p.letter,p.acc); }).join(' '); });
+  PLAN=plan(); drawPlan(PLAN); }
+function drawPlan(p){
+  const resp=p.A.tonal?tr('tonal'):tr('real'), mut=p.A.tonal?tr('mut',{a:p.head,b:p.headA}):'';
+  const vn=v=>LANG==='es'?p.V[v][0]:VOZ_EN[p.V[v][0]];
+  const head='<tr><th></th>'+Array.from({length:p.N},(_,i)=>`<th>${i+1}</th>`).join('')+'</tr>';
+  const rows=p.V.map((_,v)=>`<tr><th>${vn(v)}</th>`+p.cells[v].map(c=>`<td class="${c}">${c==='suj'?'S':c==='resp'?'R':c==='ent'?'E':c==='fin'?'F':c==='cad'?'C':''}</td>`).join('')+'</tr>').join('');
+  const L=[['suj','lSuj'],['resp','lResp'],['cs','lCs'],['epi','lEpi'],['ent','lEnt'],['fin','lFin'],['cad','lCad']];
+  document.getElementById('plan').innerHTML=`<h2>${tr('plan')}</h2>
+   <div class="res">${tr('res',{esp:tr(state.esp),n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),t:p.T,resp,mut,e:p.E,tot:p.N,k:String(p.k).replace('.',LANG==='es'?',':'.')})}</div>
+   <div class="grid"><table><thead>${head}</thead><tbody>${rows}</tbody></table></div>
+   <div class="leyenda">${L.map(([c,k])=>`<span><i style="background:var(--lg-${c})"></i>${tr(k)}</span>`).join('')}</div>`;
+}
+document.documentElement.style.cssText+=';--lg-suj:var(--gold);--lg-resp:var(--teal);--lg-ent:var(--sky);--lg-fin:var(--pink);--lg-cs:#3a3a62;--lg-epi:#2c2c4a;--lg-cad:var(--wine-l)';
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+async function spin(){
+  if(state.spinning) return; state.spinning=true; stopPlay(); const btn=document.getElementById('spin'); btn.disabled=true; lights.classList.add('run');
+  const fin=newBars(), nuevo=fin.map((_,i)=>!state.held[i]);
+  const degs=fin.flatMap(b=>b.deg), r=raises(degs); let kk=0; const rr=fin.map(b=>b.deg.map(()=>r[kk++]));
+  await Promise.all(fin.map((b,i)=>new Promise(res=>{ if(!nuevo[i]||reduce){res();return;}
+    const fr=document.getElementById('f'+i), st=document.getElementById('s'+i), h=st.parentElement.getBoundingClientRect().height, n=8+i*4;
+    let html=st.innerHTML; for(let k=0;k<n;k++) html+=barSVG(makeBar(i,null)); html+=barSVG(b,rr[i]);
+    fr.classList.add('spinning'); st.innerHTML=html; st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.add('blur');
+    const dur=1+i*.4; requestAnimationFrame(()=>requestAnimationFrame(()=>{ st.style.transition=`transform ${dur}s cubic-bezier(.12,.62,.3,1.06)`; st.style.transform=`translateY(-${(n+1)*h}px)`; }));
+    setTimeout(()=>{ st.classList.remove('blur'); fr.classList.remove('spinning'); res(); },dur*1000+40); })));
+  state.bars=fin; render(); lights.classList.remove('run'); btn.disabled=false; state.spinning=false; }
+
+// ── el sonido: la exposición, en la afinación pitagórica ──
+let AC=null, playing=[], playT=null;
+function ctx(){ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); return AC; }
+function tone(f,t0,dur,vol){ const a=ctx(), o=a.createOscillator(), v=a.createGain(); o.type='triangle'; o.frequency.value=f;
+  v.gain.setValueAtTime(0,t0); v.gain.linearRampToValueAtTime(vol,t0+.02); v.gain.setTargetAtTime(vol*.6,t0+.05,.2); v.gain.setTargetAtTime(0,t0+Math.max(.05,dur-.06),.05);
+  o.connect(v).connect(a.destination); o.start(t0); o.stop(t0+dur+.4); playing.push(o); }
+function stopPlay(){ playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; clearTimeout(playT); document.getElementById('play').textContent='▶ PLAY'; }
+function play(){ if(playing.length){ stopPlay(); return; } if(!PLAN) return;
+  const a=ctx(), e8=60/state.bpm/2, t0=a.currentTime+.15; let end=0;
+  PLAN.entries.forEach(en=>en.notes.forEach(nt=>{ const t=t0+((en.bar-1+nt.bar)*8+nt.pos)*e8; tone(nt.p.freq,t,nt.du*e8*.95,.11); end=Math.max(end,t+nt.du*e8); }));
+  document.getElementById('play').textContent='■ STOP'; playT=setTimeout(stopPlay,(end-a.currentTime)*1000+400); }
+
+// ── el .mmf para el Score, con Salieri ──
+const KEYSIG={'0':'C','1':'G','2':'D','3':'A','4':'E','5':'B','6':'F#','7':'C#','-1':'F','-2':'Bb','-3':'Eb','-4':'Ab','-5':'Db','-6':'Gb','-7':'Cb'};
+const DURN={1:['eighth',false],2:['quarter',false],3:['quarter',true],4:['half',false],6:['half',true],8:['whole',false]};
+const PITCH=p=>p.letter+({2:'SS',1:'S',0:'N','-1':'B','-2':'BB'}[p.acc]);
+function mmf(){
+  const p=PLAN, ki=KI(), name=keyNameAcc(state.key,ALT[state.alt],state.mode);
+  const chans=Array.from({length:32},(_,i)=>({id:i,name:'Channel '+(i+1),clef:'G',clefChanges:[],staffHost:null,yOffset:0,visible:false,nameHidden:false,nameAbbr:false,coachLocked:false,coachUnlocked:false,opaque:true,muted:false,agogAutoLevel:0,ibGroupBeats:1,color:null,perc:false,mix:{},notes:[]}));
+  p.V.forEach(([nm,clef,ins],v)=>Object.assign(chans[v],{name:LANG==='es'?nm:VOZ_EN[nm],clef,visible:true,mix:{instrument:ins}}));
+  const rest=(ch,m)=>({measure:m,beat:1,beatPos:0,channel:ch,accidental:null,dotted:false,velocity:80,duration:'whole',isRest:true,pitch:'BN',octave:4});
+  for(let v=0;v<p.n;v++){ const notes=[];
+    for(let m=1;m<=p.N;m++){ const en=p.entries.find(e=>e.v===v&&m>=e.bar&&m<e.bar+p.T);
+      if(!en){ notes.push(rest(v,m)); continue; }
+      en.notes.filter(nt=>nt.bar===m-en.bar).forEach(nt=>{ const [dn,dot]=DURN[nt.du];
+        notes.push({measure:m,beat:Math.floor(nt.pos/2)+1,beatPos:nt.pos/2,channel:v,accidental:null,dotted:dot,velocity:80,duration:dn,isRest:false,
+          pitch:PITCH(nt.p),octave:nt.p.oct,e3:nt.p.e3,e2:nt.p.e2,freq:nt.p.freq}); }); }
+    chans[v].notes=notes; }
+  // Salieri vigila que cada entrada de la exposición copie al sujeto (con la mutación de la respuesta tonal)
+  const e0=p.entries[0], canon=p.entries.slice(1).map(en=>{ const ivs=en.notes.map((nt,i)=>nt.p.midi-e0.notes[i].p.midi);
+    const cnt={}; ivs.forEach(x=>cnt[x]=(cnt[x]||0)+1); const base=+Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];
+    const tonal=en.notes.map((nt,i)=>({measure:en.bar+nt.bar,beatPos:nt.pos/2,interval:ivs[i]})).filter((x,i)=>ivs[i]!==base);
+    return {kind:'fugue',dux:e0.v,comes:en.v,interval:base,delay:en.bar-1,from:en.bar,until:en.bar+p.T-1,passing:true,strong:[0,2],...(tonal.length?{tonal}:{})}; });
+  const ann=p.labels.map((l,i)=>({text:l.text,measure:l.bar,beat:1,channel:l.v,scope:'channel',id:1792900000000+i,fontSize:13,offsetX:0,offsetY:-18}));
+  const sv=tr('sv',{esp:tr(state.esp),n:p.n,t:p.T});
+  return {format:'mmf',type:'score',version:'1.1',app:'V2.7.127',intelligentBeams:1,created:new Date().toISOString(),system:'Tonal',
+    keySignature:KEYSIG[String(ki.fifths)],keyChanges:[],timeChanges:[],octaveLines:[],spacing:{h:1,v:1,byM:{}},
+    view:{zoom:90,barNums:'continuous',listenOct:{fit:'auto',start:2},page:{fit:'auto',staff:'7',sysGap:'4',pages:'0',mode:'ancho',paper:'A4',footer:true,pageNum:true}},
+    alteration:'n',a4:440,tempo:state.bpm,timeSignature:{num:4,den:4},subDiv:1,totalMeasures:p.N,barlines:{[p.N]:{id:'final'}},repeatMarks:[],repeatSections:[],_sectionSeq:0,
+    showRepeatSections:true,anacrusis:null,groups:[{showBarLines:true,id:1792900000001,type:'bracket',channels:p.V.map((_,v)=>v)}],
+    scoreInfo:{title:(LANG==='es'?'Fuga en ':'Fugue in ')+name,subtitle:sv,composer:'',author:'',copyright:'',file:'fuga-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':''),print:{},orchestra:'modern'},
+    tempoMarkings:[{measure:1,beatPos:0,term:'',noteValue:'quarter',bpm:state.bpm,visible:true,yOffset:-4,fontSize:18,xOffset:0}],
+    exprMarkings:[],dynMarkings:[],artMarkings:[],textAnnotations:ann,
+    coachRules:{enabled:true,canon,appliesTo:p.V.map((_,v)=>v),forbidSeventh:false},coachLog:null,
+    agogMarkings:[],agogMode:'normal',showAgogMarks:true,asymRegions:[],exprSyn:{},fxRegions:[],channels:chans}; }
+function save(){ if(!PLAN||state.spinning) return; const d=mmf(); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'}));
+  a.download=d.scoreInfo.file+'.mmf'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000); }
+const blobs=[];
+function openScore(){ if(!PLAN||state.spinning) return; const d=mmf(); const u=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'})); blobs.push(u);
+  const w=window.open('../apps/mm-score-page.html?file='+encodeURIComponent(u)+'&coach=salieri','_blank');
+  const ban=document.getElementById('banner');
+  if(!w){ ban.textContent=tr('noOpen'); return; }
+  try{ if(!(window.mmSalieriAbierto&&mmSalieriAbierto())) ban.textContent=tr('open'); else ban.textContent=''; }catch(e){} }
+
+// ── los mandos ──
+function seg(id,items,cur,fn,rebuild){ const el=document.getElementById(id);
+  el.innerHTML=items.map(([v,t])=>`<button class="btn${String(v)===String(cur)?' on':''}" data-v="${v}" aria-pressed="${String(v)===String(cur)}">${t}</button>`).join('');
+  el.onclick=e=>{ const b=e.target.closest('button'); if(!b||state.spinning) return; fn(b.dataset.v); [...el.children].forEach(c=>{ c.classList.toggle('on',c===b); c.setAttribute('aria-pressed',c===b); }); stopPlay(); fixKey(); if(rebuild) rebuild(); render(); }; }
+function fixKey(){ const ban=document.getElementById('banner'); ban.textContent='';
+  if(!keyOk(state.key,state.alt,state.mode)){ const v=vecinaDe(state.key,state.alt,state.mode); const a=keyNameAcc(state.key,ALT[state.alt],state.mode);
+    state.key=v.k; state.alt=v.a; ban.textContent=tr('vecina',{a,b:keyNameAcc(v.k,ALT[v.a],state.mode)}); syncSeg('keys',v.k); syncSeg('alts',v.a); } }
+function syncSeg(id,v){ [...document.getElementById(id).children].forEach(c=>{ const on=c.dataset.v===String(v); c.classList.toggle('on',on); c.setAttribute('aria-pressed',on); }); }
+seg('keys',[['F','F'],['C','C'],['G','G'],['D','D'],['A','A'],['E','E'],['B','B']],state.key,v=>state.key=v);
+seg('alts',[['b','♭'],['n','♮'],['#','♯']],state.alt,v=>state.alt=v);
+seg('modes',[['0','M'],['1','m']],state.mode,v=>state.mode=+v);
+seg('temas',[['2','2'],['4','4']],state.T,v=>{ const T=+v; if(T===state.T) return; const old=state.bars; state.T=T; state.held=[];
+  state.bars=T===2?[old[0],old[old.length-1]]:[old[0],makeBar(1,old[0].deg[old[0].deg.length-1]),makeBar(2,null),old[old.length-1]];
+  if(!subjectOk(state.bars)) state.bars=newBars(); },()=>buildReels());
+seg('especies',[['simple','SIMPLE'],['stretto','STRETTO']],state.esp,v=>state.esp=v);
+seg('voces',[['2','2'],['3','3'],['4','4']],state.n,v=>state.n=+v);
+seg('tams',[['escuela','SCHOOL'],['bach','BACH']],state.tam,v=>state.tam=v);
+document.getElementById('tempo').oninput=e=>{ state.bpm=+e.target.value; document.getElementById('bpm').textContent='♩ = '+state.bpm; };
+document.getElementById('spin').onclick=spin; document.getElementById('play').onclick=play;
+document.getElementById('save').onclick=save; document.getElementById('open').onclick=openScore;
+document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){ e.preventDefault(); spin(); } });
+// el sujeto de partida: la cabeza del Contrapunctus I (Re La | Fa Re), y su continuación
+state.bars=[{deg:[0,4],rh:[4,4]},{deg:[2,0,-1,0],rh:[2,2,2,2]}];
+buildReels(); render();
+</script>
+</body>
+</html>
