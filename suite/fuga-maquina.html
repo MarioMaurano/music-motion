@@ -81,6 +81,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .grid td.fin{background:var(--pink)}.grid td.cs{background:#3a3a62;color:var(--textm)}.grid td.epi{background:#2c2c4a;color:var(--textm)}
 .grid td.cad{background:var(--wine-l);color:#fff}
 .grid td.seq{background:#8a7bd8;color:#0e1016}
+.stepv{display:inline-block;min-width:2.2em;text-align:center;font-family:var(--mono);font-size:15px;color:var(--gold)}
 .leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:11px;color:var(--textm)}
 .leyenda i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-3px;margin-right:5px}
 .how{color:var(--textm);font-size:14px;line-height:1.6;max-width:72ch;margin:0 auto}
@@ -108,6 +109,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
     <div class="grp"><span class="cl">Key</span><span id="keys" class="grp"></span></div>
     <div class="grp"><span class="cl">Alteration</span><span id="alts" class="grp"></span></div>
     <div class="grp"><span class="cl">Mode</span><span id="modes" class="grp"></span></div>
+    <div class="grp"><span class="cl">Meter</span><span id="metros" class="grp"></span></div>
     <div class="grp"><span class="cl">Theme</span><span id="temas" class="grp"></span></div>
     <div class="grp"><span class="cl">Answer</span><span id="resps" class="grp"></span></div>
   </div>
@@ -128,7 +130,7 @@ const LANG=(()=>{ try{ const q=new URLSearchParams(location.search).get('lang');
 const I18N={
  es:{tit:'La máquina de fugas', kick:'Salieri Atelier · el esqueleto de la fuga', sub:'Los rodillos proponen un sujeto; la máquina arma la respuesta, las entradas y el largo de su fuga.',
   bar:'Compás', head:'Cabeza', cont:'Continuación', fin:'Final', plan:'El esqueleto', simple:'simple', stretto:'en stretto',
-  res:'Fuga {esp} a {n} voces en <b>{key}</b> · tema de {t} compases · respuesta <b>{resp}</b>{mut}<br>Exposición: compases 1–{e} · total ≈ <b>{tot} compases</b> (k ≈ {k})',
+  res:'Fuga {esp} a {n} voces en <b>{key}</b> · {met} · tema de {t} compases · respuesta <b>{resp}</b>{mut}<br>Exposición: compases 1–{e} · total ≈ <b>{tot} compases</b> (k ≈ {k})',
   tonal:'tonal', real:'real', mut:' ({a} → {b})',
   lSuj:'Sujeto', lResp:'Respuesta', lCs:'Contrapunto libre', lEnt:'Entrada en otra tonalidad', lEpi:'Episodio', lFin:'Entrada final', lCad:'Cadencia',
   aSuj:'Sujeto', aResp:'Respuesta', aRespT:'Respuesta (tonal)', aEnt:'Entrada · {key}', aEpi:'Episodio', aFin:'Entrada final · {key}', aStr:'Stretto', aCad:'Cadencia',
@@ -136,12 +138,12 @@ const I18N={
   rIV:'en la subdominante', rInv:'por inversión', aRespIV:'Respuesta (subdominante)', aRespInv:'Respuesta (inversión)',
   lSeq:'Secuencia (modelo ↓)', aSeq:'Secuencia ↓ · compás {m} del sujeto',
   vecina:'{a} es una tonalidad teórica: la máquina usa su vecina, {b}.',
-  sv:'La máquina de fugas · Salieri · {esp}, {n} voces, tema de {t} compases',
-  how:'<b>Cómo se juega.</b> Pulsa SPIN: los rodillos proponen un sujeto de fuga, con ritmos tomados de El arte de la fuga de Bach. Retén con HOLD el compás que te guste y vuelve a tirar. Elige la tonalidad, el largo del tema (2, 4 u 8 compases; en el de 8, los compases 5 a 7 repiten el ritmo de los primeros, como una secuencia), la respuesta (en la dominante, como casi siempre; en la subdominante; o por inversión, como en los Contrapuncti V a VII de Bach), la especie (simple o en stretto), las voces y el tamaño: escuela (k ≈ 4) o Bach (k ≈ 5). La máquina escribe la respuesta —real o tonal—, decide dónde entra cada voz y cuántos compases tendrá la fuga. En cada episodio propone una secuencia: un compás del sujeto como modelo, repetido un grado más abajo en una voz. <b>OPEN IN SCORE</b> abre la exposición escrita en el Score, con Salieri elegido, y el resto de los compases vacío con sus etiquetas: episodios, entradas en otras tonalidades y la cadencia. El resto lo escribe usted.',
+  sv:'La máquina de fugas · Salieri · {esp}, {n} voces, tema de {t} compases en {met}',
+  how:'<b>Cómo se juega.</b> Pulsa SPIN: los rodillos proponen un sujeto de fuga, con ritmos de Bach: en 4/4, de El arte de la fuga; en 3/4 y 3/8, de las fugas ternarias de El clave bien temperado. Retén con HOLD el compás que te guste y vuelve a tirar. Elige la tonalidad, el compás (4/4, 3/4 o 3/8), el largo del tema con las flechas (de 1 a 8 compases; desde 6, la segunda mitad repite el ritmo de la primera, como una secuencia), la respuesta (en la dominante, como casi siempre; en la subdominante; o por inversión, como en los Contrapuncti V a VII de Bach), la especie (simple o en stretto), las voces y el tamaño: escuela (k ≈ 4) o Bach (k ≈ 5). La máquina escribe la respuesta —real o tonal—, decide dónde entra cada voz y cuántos compases tendrá la fuga. En cada episodio propone una secuencia: un compás del sujeto como modelo, repetido un grado más abajo en una voz. <b>OPEN IN SCORE</b> abre la exposición escrita en el Score, con Salieri elegido, y el resto de los compases vacío con sus etiquetas: episodios, entradas en otras tonalidades y la cadencia. El resto lo escribe usted.',
   open:'Para abrir en el Score con Salieri hace falta el pase Salieri; sin él, el Score abre igual con el Coach.', noOpen:'El navegador bloqueó la ventana nueva: permite las ventanas emergentes de este sitio.'},
  en:{tit:'The Fugue Machine', kick:'Salieri Atelier · the skeleton of a fugue', sub:'The reels propose a subject; the machine builds the answer, the entries and the length of your fugue.',
   bar:'Bar', head:'Head', cont:'Continuation', fin:'End', plan:'The skeleton', simple:'simple', stretto:'stretto',
-  res:'{esp} fugue for {n} voices in <b>{key}</b> · {t}-bar subject · <b>{resp}</b> answer{mut}<br>Exposition: bars 1–{e} · total ≈ <b>{tot} bars</b> (k ≈ {k})',
+  res:'{esp} fugue for {n} voices in <b>{key}</b> · {met} · {t}-bar subject · <b>{resp}</b> answer{mut}<br>Exposition: bars 1–{e} · total ≈ <b>{tot} bars</b> (k ≈ {k})',
   tonal:'tonal', real:'real', mut:' ({a} → {b})',
   lSuj:'Subject', lResp:'Answer', lCs:'Free counterpoint', lEnt:'Entry in another key', lEpi:'Episode', lFin:'Final entry', lCad:'Cadence',
   aSuj:'Subject', aResp:'Answer', aRespT:'Answer (tonal)', aEnt:'Entry · {key}', aEpi:'Episode', aFin:'Final entry · {key}', aStr:'Stretto', aCad:'Cadence',
@@ -149,8 +151,8 @@ const I18N={
   rIV:'subdominant', rInv:'inverted', aRespIV:'Answer (subdominant)', aRespInv:'Answer (inversion)',
   lSeq:'Sequence (model ↓)', aSeq:'Sequence ↓ · bar {m} of the subject',
   vecina:'{a} is a theoretical key: the machine uses its neighbour, {b}.',
-  sv:'The Fugue Machine · Salieri · {esp}, {n} voices, {t}-bar subject',
-  how:'<b>How to play.</b> Press SPIN: the reels propose a fugue subject, with rhythms taken from Bach’s Art of Fugue. HOLD the bar you like and spin again. Choose the key, the length of the subject (2, 4 or 8 bars; in the 8-bar one, bars 5 to 7 repeat the rhythm of the first ones, like a sequence), the answer (at the dominant, as almost always; at the subdominant; or by inversion, as in Bach’s Contrapuncti V to VII), the species (simple or stretto), the voices and the size: school (k ≈ 4) or Bach (k ≈ 5). The machine writes the answer —real or tonal—, decides where each voice enters and how many bars the fugue will have. In each episode it proposes a sequence: one bar of the subject as a model, repeated one step lower in one voice. <b>OPEN IN SCORE</b> opens the written exposition in the Score with Salieri chosen, and the remaining bars empty with their labels: episodes, entries in other keys and the cadence. The rest is yours to write.',
+  sv:'The Fugue Machine · Salieri · {esp}, {n} voices, {t}-bar subject in {met}',
+  how:'<b>How to play.</b> Press SPIN: the reels propose a fugue subject, with Bach’s rhythms: in 4/4 from the Art of Fugue; in 3/4 and 3/8 from the triple-metre fugues of the Well-Tempered Clavier. HOLD the bar you like and spin again. Choose the key, the metre (4/4, 3/4 or 3/8), the length of the subject with the arrows (1 to 8 bars; from 6 on, the second half repeats the rhythm of the first, like a sequence), the answer (at the dominant, as almost always; at the subdominant; or by inversion, as in Bach’s Contrapuncti V to VII), the species (simple or stretto), the voices and the size: school (k ≈ 4) or Bach (k ≈ 5). The machine writes the answer —real or tonal—, decides where each voice enters and how many bars the fugue will have. In each episode it proposes a sequence: one bar of the subject as a model, repeated one step lower in one voice. <b>OPEN IN SCORE</b> opens the written exposition in the Score with Salieri chosen, and the remaining bars empty with their labels: episodes, entries in other keys and the cadence. The rest is yours to write.',
   open:'Opening the Score with Salieri needs the Salieri pass; without it, the Score opens with the Coach.', noOpen:'The browser blocked the new window: allow pop-ups for this site.'}};
 function tr(k,v){ const d=I18N[LANG]||I18N.es; let s=d[k]!=null?d[k]:I18N.es[k]; return v?s.replace(/\{(\w+)\}/g,(m,x)=>v[x]!=null?v[x]:m):s; }
 const SOLF={C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'}, SYM={2:'𝄪',1:'♯',0:'','-1':'♭','-2':'𝄫'};
@@ -172,7 +174,7 @@ function P(li,f){ const letter=LET[mod(li,7)], acc=Math.round((f-FIF[letter])/7)
 const up5=p=>P(p.li+4,p.f+1), up4=p=>P(p.li+3,p.f-1), oct=(p,k)=>P(p.li+7*k,p.f);
 function sigAcc(letter,fifths){ const sh=['F','C','G','D','A','E','B'], fl=['B','E','A','D','G','C','F'];
   if(fifths>0) return sh.slice(0,fifths).includes(letter)?1:0; if(fifths<0) return fl.slice(0,-fifths).includes(letter)?-1:0; return 0; }
-let state={key:'D',alt:'n',mode:1,T:4,resp:'V',esp:'simple',n:3,tam:'escuela',bpm:72,held:[],bars:[],spinning:false};
+let state={key:'D',alt:'n',mode:1,meter:'4/4',T:4,resp:'V',esp:'simple',n:3,tam:'escuela',bpm:72,held:[],bars:[],spinning:false};
 const fifthsOf=(k,a,m)=>FIF[k]+7*ALT[a]-(m?3:0);
 function vecinaDe(k,a,m){ const pc=mod(SEMI[k]+ALT[a],12);
   for(const L of LET) for(const al of ['n','#','b']){ if(mod(SEMI[L]+ALT[al],12)!==pc||(L===k&&al===a)) continue;
@@ -192,18 +194,25 @@ const IV_OK=new Set(['0:0','1:1','1:2','2:3','2:4','3:5','4:7','5:8','5:9','6:10
 function ivOk(a,b){ const st=b.li-a.li, se=b.midi-a.midi; return IV_OK.has(Math.abs(st)+':'+(st<0?-se:se)); }
 
 // ── los ritmos: compases de El arte de la fuga (en corcheas), con sus veces en toda la obra ──
+const RH={'4/4':{U:8,uq:.5,Q:2},'3/4':{U:12,uq:.25,Q:4},'3/8':{U:6,uq:.25,Q:2}};
+const MT=()=>RH[state.meter];
+// 3/4 y 3/8 (en semicorcheas): compases de las fugas ternarias de El clave bien temperado
+// (I/6, I/10, I/21, II/16, II/21 en 3/4 · I/11, II/15, II/24 en 3/8), contados voz por voz con sus veces
+RH['3/4'].INICIO=[[[12],53],[[4,4,4],47],[[4,1,1,1,1,1,1,1,1],21],[[4,8],10],[[8,4],8],[[4,2,2,4],4],[[4,2,2,2,2],3],[[6,2,4],3],[[4,2,1,1,2,2],2]]; RH['3/4'].MEDIO=[[[2,2,2,2,2,2],140],[[1,1,1,1,1,1,1,1,1,1,1,1],73],[[4,4,4],47],[[4,1,1,1,1,1,1,1,1],21],[[1,1,1,1,4,4],20],[[1,1,1,1,2,2,2,2],13],[[2,1,1,1,1,1,1,2,2],10],[[2,2,2,2,4],9],[[2,1,1,1,1,1,1,1,1,1,1],9],[[2,1,1,1,1,1,1,1,1,2],7],[[2,2,1,1,1,1,1,1,1,1],6],[[1,1,1,1,1,1,1,1,4],6],[[1,1,1,1,1,1,1,1,2,2],6],[[4,2,2,4],4],[[2,2,8],4],[[4,2,2,2,2],3],[[1,1,2,1,1,1,1,1,1,1,1],3],[[3,1,1,1,1,1,2,2],3],[[2,2,2,1,1,2,2],3],[[6,2,4],3],[[2,2,4,4],2],[[1,1,1,1,3,1,2,2],2],[[4,2,1,1,2,2],2],[[1,1,1,1,1,1,1,1,1,1,2],2],[[2,4,2,2,2],2]]; RH['3/4'].FINAL=[[[12],53],[[4,4,4],47],[[1,1,1,1,4,4],20],[[4,8],10],[[2,2,2,2,4],9],[[8,4],8],[[1,1,1,1,1,1,1,1,4],6],[[4,2,2,4],4],[[2,2,8],4],[[6,2,4],3],[[2,2,4,4],2]];
+RH['3/8'].INICIO=[[[2,2,2],103],[[6],47],[[2,1,1,1,1],46],[[4,2],22],[[2,4],16],[[3,1,1,1],3],[[2,1,1,2],2]]; RH['3/8'].MEDIO=[[[1,1,1,1,1,1],166],[[2,2,2],103],[[2,1,1,1,1],46],[[1,1,1,1,2],5],[[3,1,1,1],3],[[1,1,2,2],3],[[1,1,4],3],[[2,1,1,2],2]]; RH['3/8'].FINAL=[[[2,2,2],103],[[6],47],[[4,2],22],[[2,4],16],[[1,1,1,1,2],5],[[1,1,2,2],3],[[1,1,4],3],[[2,1,1,2],2]];
 const INICIO=[[[4,4],212],[[6,2],123],[[2,2,4],113],[[3,1,4],112],[[4,3,1],106],[[4,2,2],83],[[2,4,2],64]];
 const MEDIO=[[[2,2,2,2],359],[[1,1,1,1,1,1,1,1],120],[[3,1,3,1],164],[[1,1,1,1,2,2],52],[[2,1,1,2,2],42],[[2,2,1,1,2],36],[[3,1,2,2],26],[[1,1,2,2,2],22],[[4,2,2],83],[[6,1,1],54]];
 const FINAL=[[[2,2,4],113],[[3,1,4],112],[[4,4],212],[[1,1,1,1,4],66],[[2,1,1,4],27],[[6,2],123]];
+Object.assign(RH['4/4'],{INICIO,MEDIO,FINAL});
 const wpick=L=>{ let s=L.reduce((a,x)=>a+x[1],0)*Math.random(); for(const [v,w] of L){ s-=w; if(s<=0) return v.slice(); } return L[0][0].slice(); };
 const rnd=n=>Math.floor(Math.random()*n), pick=a=>a[rnd(a.length)];
 function roleOf(i){ return i===0?'head':(i===state.T-1?'fin':'cont'); }
 function makeBar(i,prev){
-  const role=roleOf(i), rh=wpick(role==='head'?INICIO:role==='fin'?FINAL:MEDIO), deg=[];
+  const mt=MT(), role=roleOf(i), rh=wpick(role==='head'?mt.INICIO:role==='fin'?mt.FINAL:mt.MEDIO), deg=[];
   let cur=prev;
   for(let k=0;k<rh.length;k++){
     if(cur==null){ cur=Math.random()<.65?0:4; deg.push(cur); continue; }
-    if(role==='head'){ const tri=[0,2,4,7,-3,-1].filter(c=>c!==cur&&Math.abs(c-cur)<=5); cur=pick(tri.length?tri:[0]); }
+    if(role==='head'&&(state.meter==='4/4'||rh[k]>=mt.Q)){ const tri=[0,2,4,7,-3,-1].filter(c=>c!==cur&&Math.abs(c-cur)<=5); cur=pick(tri.length?tri:[0]); }
     else { let st=pick([-1,-1,1,1,-1,1,2,-2,-1,3,-3]); if(cur+st<-3||cur+st>8) st=-st; cur+=st; }
     deg.push(cur);
   }
@@ -211,17 +220,20 @@ function makeBar(i,prev){
     const goals=[0,2,4,7].filter(g=>Math.abs(g-before)<=2); deg[last]=goals.length?pick(goals):nearest([0,2,4,7],before); }
   return {deg,rh};
 }
-// tema de 8: los compases 5–7 copian el ritmo y el contorno de los compases 1–3 (una secuencia), a un paso de la nota anterior
+// tema de 6 a 8 compases: la segunda mitad copia el ritmo y el contorno de los compases 1–3 (una secuencia), a un paso de la nota anterior
+const H=()=>Math.floor(state.T/2), isSeq=i=>state.T>=6&&i>=H()&&i<=state.T-2;
 function seqBar(src,prev){ let s=0; while(s===0) s=prev+pick([-1,1,-2,2])-src.deg[0]; return {deg:src.deg.map(x=>x+s),rh:src.rh.slice()}; }
 function nearest(set,x){ return set.reduce((b,c)=>Math.abs(c-x)<Math.abs(b-x)?c:b,set[0]); }
 function subjectOk(bars){ const degs=bars.flatMap(b=>b.deg), r=raises(degs), ps=degs.map((d,i)=>deg2P(d,r[i]));
-  if(Math.max(...degs)-Math.min(...degs)>(state.T===8?11:9)) return false;
+  if(Math.max(...degs)-Math.min(...degs)>(state.T>=6?11:9)) return false;
   for(let i=1;i<ps.length;i++){ if(!ivOk(ps[i-1],ps[i])) return false; if(i>1&&degs[i]===degs[i-1]&&degs[i-1]===degs[i-2]) return false; }
   const end=mod(degs[degs.length-1],7); return [0,2,4].includes(end); }
 function newBars(){ for(let t=0;t<400;t++){ const out=[]; let prev=null;
-    for(let i=0;i<state.T;i++){ const b=(state.held[i]&&state.bars[i])?state.bars[i]:(state.T===8&&i>=4&&i<=6)?seqBar(out[i-4],prev):makeBar(i,prev); out.push(b); prev=b.deg[b.deg.length-1]; }
+    for(let i=0;i<state.T;i++){ const b=(state.held[i]&&state.bars[i])?state.bars[i]:(isSeq(i))?seqBar(out[i-H()],prev):makeBar(i,prev); out.push(b); prev=b.deg[b.deg.length-1]; }
     if(subjectOk(out)) return out; }
-  return state.bars.length===state.T?state.bars:[{deg:[0,4],rh:[4,4]},{deg:[2,1,2,0],rh:[2,2,2,2]},{deg:[1,2,3,4],rh:[2,2,2,2]},{deg:[3,2,1,2],rh:[2,2,2,2]}].slice(0,state.T).concat(state.T===8?[{deg:[-1,0],rh:[4,4]},{deg:[1,2,3,2],rh:[2,2,2,2]},{deg:[2,1,0,1],rh:[2,2,2,2]},{deg:[-1,0],rh:[4,4]}]:[]); }
+  if(state.bars.length===state.T&&state.bars.every(b=>b.rh.reduce((a,x)=>a+x,0)===MT().U)) return state.bars;
+  if(state.meter!=='4/4') return Array.from({length:state.T},(_,i)=>({deg:[i===state.T-1?0:[0,4,2,1,3,2,1][i%7]],rh:[MT().U]}));
+  return [{deg:[0,4],rh:[4,4]},{deg:[2,1,2,0],rh:[2,2,2,2]},{deg:[1,2,3,4],rh:[2,2,2,2]},{deg:[3,2,1,2],rh:[2,2,2,2]}].slice(0,state.T).concat(state.T>4?[{deg:[-1,0],rh:[4,4]},{deg:[1,2,3,2],rh:[2,2,2,2]},{deg:[2,1,0,1],rh:[2,2,2,2]},{deg:[-1,0],rh:[4,4]}].slice(0,state.T-4):[]); }
 
 // ── la fuga: sujeto, respuesta, entradas, plan ──
 const VOCES={2:[['Voz 1','G','violin',[55,86]],['Voz 2','F','cello',[36,64]]],
@@ -294,20 +306,30 @@ function barSVG(bar,raise){
   m+=g('gClef',x,y0+3*SS); x+=34;
   if(ki.fifths){ const n=Math.abs(ki.fifths), ps=ki.fifths>0?[8,5,9,6,3,7,4]:[4,7,3,6,2,5,1];
     for(let i=0;i<n;i++){ m+=g(ki.fifths>0?'sharp':'flat',x,y0+4*SS-ps[i]*SS/2); x+=10; } x+=4; }
-  const span=W-x-22, heads=[]; let pos=0;
-  bar.deg.forEach((d,k)=>{ const p=deg2P(d,raise?raise[k]:0), ps=posOf(p), du=bar.rh[k]; const hx=x+span*pos/8+8, hy=y0+4*SS-ps*SS/2;
+  const span=W-x-22, heads=[], mt=MT(); let pos=0;
+  bar.deg.forEach((d,k)=>{ const p=deg2P(d,raise?raise[k]:0), ps=posOf(p), du=bar.rh[k], q=du*mt.uq; const hx=x+span*pos/mt.U+8, hy=y0+4*SS-ps*SS/2;
     for(let lp=-2;lp>=ps;lp-=2) m+=`<rect x="${hx-4}" y="${(y0+4*SS-lp*SS/2-.7).toFixed(1)}" width="20" height="1.4" fill="#0e2934"/>`;
     for(let lp=10;lp<=ps;lp+=2) m+=`<rect x="${hx-4}" y="${(y0+4*SS-lp*SS/2-.7).toFixed(1)}" width="20" height="1.4" fill="#0e2934"/>`;
     if(raise&&raise[k]){ const sa=sigAcc(p.letter,ki.fifths); m+=p.acc===0&&sa<0?natural(hx-11,hy):g('sharp',hx-11,hy); }
-    m+=g(du>=8?'whole':du>=4?'half':'black',hx,hy); if(du===3||du===6) m+=g('dot',hx+16,ps%2?hy:hy-SS/2);
-    heads.push({hx,hy,p:ps,du,pos}); pos+=du; });
-  for(let k=0;k<heads.length;k++){ const h=heads[k]; if(h.du>=8) continue; const up=h.p<4;
-    if(h.du===1&&heads[k+1]&&heads[k+1].du===1&&h.pos%2===0){ const b=heads[k+1], upb=(h.p+b.p)/2<4;
-      if(upb){ const top=Math.min(h.hy,b.hy)-35; for(const q of[h,b]) m+=`<rect x="${q.hx+11.2}" y="${top}" width="1.6" height="${q.hy-top}" fill="#0e2934"/>`; m+=`<rect x="${h.hx+11.2}" y="${top}" width="${b.hx-h.hx+1.6}" height="5" fill="#0e2934"/>`; }
-      else{ const bot=Math.max(h.hy,b.hy)+35; for(const q of[h,b]) m+=`<rect x="${q.hx}" y="${q.hy}" width="1.6" height="${bot-q.hy}" fill="#0e2934"/>`; m+=`<rect x="${h.hx}" y="${bot-5}" width="${b.hx-h.hx+1.6}" height="5" fill="#0e2934"/>`; }
-      k++; continue; }
-    if(up){ const sx=h.hx+11.2; m+=`<rect x="${sx}" y="${h.hy-35}" width="1.6" height="34" fill="#0e2934"/>`; if(h.du===1) m+=g('flagUp',sx,h.hy-35); }
-    else{ m+=`<rect x="${h.hx}" y="${h.hy+1}" width="1.6" height="34" fill="#0e2934"/>`; if(h.du===1) m+=g('flagDown',h.hx,h.hy+35); } }
+    m+=g(q>=4?'whole':q>=2?'half':'black',hx,hy); if([.75,1.5,3].includes(q)) m+=g('dot',hx+16,ps%2?hy:hy-SS/2);
+    heads.push({hx,hy,p:ps,du,q,pos}); pos+=du; });
+  // barras: corcheas y semicorcheas dentro del mismo tiempo (en 3/8, el compás entero)
+  const B=state.meter==='3/8'?mt.U:Math.round(1/mt.uq);
+  for(let k=0;k<heads.length;k++){ const h=heads[k]; if(h.q>=4) continue;
+    let j=k; if(h.q<1){ while(j+1<heads.length&&heads[j+1].q<1&&Math.floor(heads[j+1].pos/B)===Math.floor(h.pos/B)) j++; }
+    if(j>k){ const G=heads.slice(k,j+1), up=G.reduce((a,q)=>a+q.p,0)/G.length<4;
+      const tip=up?Math.min(...G.map(q=>q.hy))-35:Math.max(...G.map(q=>q.hy))+35, sxo=up?11.2:0;
+      for(const q of G) m+=up?`<rect x="${q.hx+sxo}" y="${tip}" width="1.6" height="${q.hy-tip}" fill="#0e2934"/>`:`<rect x="${q.hx}" y="${q.hy}" width="1.6" height="${tip-q.hy}" fill="#0e2934"/>`;
+      const by=up?tip:tip-5, by2=up?tip+8:tip-13, X=q=>q.hx+sxo;
+      m+=`<rect x="${X(G[0])}" y="${by}" width="${X(G[G.length-1])-X(G[0])+1.6}" height="5" fill="#0e2934"/>`;
+      for(let a=0;a<G.length;a++){ if(G[a].q>.25) continue;
+        if(a+1<G.length&&G[a+1].q<=.25){ m+=`<rect x="${X(G[a])}" y="${by2}" width="${X(G[a+1])-X(G[a])+1.6}" height="5" fill="#0e2934"/>`; continue; }
+        if(a>0&&G[a-1].q<=.25) continue;
+        const st=a+1<G.length?X(G[a]):X(G[a])-9; m+=`<rect x="${st}" y="${by2}" width="10.6" height="5" fill="#0e2934"/>`; }
+      k=j; continue; }
+    const up=h.p<4, nf=h.q<=.25?2:h.q<=.75&&h.q<1?1:0;
+    if(up){ const sx=h.hx+11.2; m+=`<rect x="${sx}" y="${h.hy-35}" width="1.6" height="34" fill="#0e2934"/>`; for(let f=0;f<(h.q<1?nf||1:0);f++) m+=g('flagUp',sx,h.hy-35+f*8); }
+    else{ m+=`<rect x="${h.hx}" y="${h.hy+1}" width="1.6" height="34" fill="#0e2934"/>`; for(let f=0;f<(h.q<1?nf||1:0);f++) m+=g('flagDown',h.hx,h.hy+35-f*8); } }
   m+=`<rect x="${W-8}" y="${y0}" width="1.6" height="${4*SS}" fill="#0e2934"/>`;
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img">${m}</svg>`;
 }
@@ -331,7 +353,7 @@ function drawPlan(p){
   const rows=p.V.map((_,v)=>`<tr><th>${vn(v)}</th>`+p.cells[v].map(c=>`<td class="${c}">${c==='suj'?'S':c==='resp'?'R':c==='ent'?'E':c==='fin'?'F':c==='cad'?'C':c==='seq'?'↘':''}</td>`).join('')+'</tr>').join('');
   const L=[['suj','lSuj'],['resp','lResp'],['cs','lCs'],['epi','lEpi'],['seq','lSeq'],['ent','lEnt'],['fin','lFin'],['cad','lCad']];
   document.getElementById('plan').innerHTML=`<h2>${tr('plan')}</h2>
-   <div class="res">${tr('res',{esp:tr(state.esp),n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),t:p.T,resp,mut,e:p.E,tot:p.N,k:String(p.k).replace('.',LANG==='es'?',':'.')})}</div>
+   <div class="res">${tr('res',{esp:tr(state.esp),met:state.meter,n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),t:p.T,resp,mut,e:p.E,tot:p.N,k:String(p.k).replace('.',LANG==='es'?',':'.')})}</div>
    <div class="grid"><table><thead>${head}</thead><tbody>${rows}</tbody></table></div>
    <div class="leyenda">${L.map(([c,k])=>`<span><i style="background:var(--lg-${c})"></i>${tr(k)}</span>`).join('')}</div>`;
 }
@@ -357,42 +379,43 @@ function tone(f,t0,dur,vol){ const a=ctx(), o=a.createOscillator(), v=a.createGa
   o.connect(v).connect(a.destination); o.start(t0); o.stop(t0+dur+.4); playing.push(o); }
 function stopPlay(){ playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; clearTimeout(playT); document.getElementById('play').textContent='▶ PLAY'; }
 function play(){ if(playing.length){ stopPlay(); return; } if(!PLAN) return;
-  const a=ctx(), e8=60/state.bpm/2, t0=a.currentTime+.15; let end=0;
-  PLAN.entries.forEach(en=>en.notes.forEach(nt=>{ const t=t0+((en.bar-1+nt.bar)*8+nt.pos)*e8; tone(nt.p.freq,t,nt.du*e8*.95,.11); end=Math.max(end,t+nt.du*e8); }));
+  const a=ctx(), mt=MT(), e8=60/state.bpm*mt.uq, t0=a.currentTime+.15; let end=0;
+  PLAN.entries.forEach(en=>en.notes.forEach(nt=>{ const t=t0+((en.bar-1+nt.bar)*mt.U+nt.pos)*e8; tone(nt.p.freq,t,nt.du*e8*.95,.11); end=Math.max(end,t+nt.du*e8); }));
   document.getElementById('play').textContent='■ STOP'; playT=setTimeout(stopPlay,(end-a.currentTime)*1000+400); }
 
 // ── el .mmf para el Score, con Salieri ──
 const KEYSIG={'0':'C','1':'G','2':'D','3':'A','4':'E','5':'B','6':'F#','7':'C#','-1':'F','-2':'Bb','-3':'Eb','-4':'Ab','-5':'Db','-6':'Gb','-7':'Cb'};
-const DURN={1:['eighth',false],2:['quarter',false],3:['quarter',true],4:['half',false],6:['half',true],8:['whole',false]};
+const DURQ={.25:['sixteenth',false],.5:['eighth',false],.75:['eighth',true],1:['quarter',false],1.5:['quarter',true],2:['half',false],3:['half',true],4:['whole',false]};
 const PITCH=p=>p.letter+({2:'SS',1:'S',0:'N','-1':'B','-2':'BB'}[p.acc]);
 function mmf(){
   const p=PLAN, ki=KI(), name=keyNameAcc(state.key,ALT[state.alt],state.mode);
   const chans=Array.from({length:32},(_,i)=>({id:i,name:'Channel '+(i+1),clef:'G',clefChanges:[],staffHost:null,yOffset:0,visible:false,nameHidden:false,nameAbbr:false,coachLocked:false,coachUnlocked:false,opaque:true,muted:false,agogAutoLevel:0,ibGroupBeats:1,color:null,perc:false,mix:{},notes:[]}));
   p.V.forEach(([nm,clef,ins],v)=>Object.assign(chans[v],{name:LANG==='es'?nm:VOZ_EN[nm],clef,visible:true,mix:{instrument:ins}}));
-  const rest=(ch,m)=>({measure:m,beat:1,beatPos:0,channel:ch,accidental:null,dotted:false,velocity:80,duration:'whole',isRest:true,pitch:'BN',octave:4});
+  const mt=MT(), [num,den]=state.meter.split('/').map(Number), bu=4/den, [rd,rdot]=DURQ[mt.U*mt.uq];
+  const rest=(ch,m)=>({measure:m,beat:1,beatPos:0,channel:ch,accidental:null,dotted:rdot,velocity:80,duration:rd,isRest:true,pitch:'BN',octave:4});
   for(let v=0;v<p.n;v++){ const notes=[];
     for(let m=1;m<=p.N;m++){ const en=p.entries.find(e=>e.v===v&&m>=e.bar&&m<e.bar+(e.len||p.T));
       if(!en){ notes.push(rest(v,m)); continue; }
-      en.notes.filter(nt=>nt.bar===m-en.bar).forEach(nt=>{ const [dn,dot]=DURN[nt.du];
-        notes.push({measure:m,beat:Math.floor(nt.pos/2)+1,beatPos:nt.pos/2,channel:v,accidental:null,dotted:dot,velocity:80,duration:dn,isRest:false,
+      en.notes.filter(nt=>nt.bar===m-en.bar).forEach(nt=>{ const [dn,dot]=DURQ[nt.du*mt.uq], bp=nt.pos*mt.uq;
+        notes.push({measure:m,beat:Math.floor(bp/bu)+1,beatPos:bp,channel:v,accidental:null,dotted:dot,velocity:80,duration:dn,isRest:false,
           pitch:PITCH(nt.p),octave:nt.p.oct,e3:nt.p.e3,e2:nt.p.e2,freq:nt.p.freq}); }); }
     chans[v].notes=notes; }
   // Salieri vigila que cada entrada de la exposición copie al sujeto (con la mutación de la respuesta tonal)
   const ex=p.entries.filter(e=>e.kind==='suj'||e.kind==='resp'), e0=ex[0], canon=ex.slice(1).map(en=>{ const ivs=en.notes.map((nt,i)=>nt.p.midi-e0.notes[i].p.midi);
     const cnt={}; ivs.forEach(x=>cnt[x]=(cnt[x]||0)+1); const base=+Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];
-    const tonal=en.notes.map((nt,i)=>({measure:en.bar+nt.bar,beatPos:nt.pos/2,interval:ivs[i]})).filter((x,i)=>ivs[i]!==base);
-    return {kind:'fugue',dux:e0.v,comes:en.v,interval:base,delay:en.bar-1,from:en.bar,until:en.bar+p.T-1,passing:true,strong:[0,2],...(tonal.length?{tonal}:{})}; });
+    const tonal=en.notes.map((nt,i)=>({measure:en.bar+nt.bar,beatPos:nt.pos*mt.uq,interval:ivs[i]})).filter((x,i)=>ivs[i]!==base);
+    return {kind:'fugue',dux:e0.v,comes:en.v,interval:base,delay:en.bar-1,from:en.bar,until:en.bar+p.T-1,passing:true,strong:state.meter==='4/4'?[0,2]:[0],...(tonal.length?{tonal}:{})}; });
   const ann=p.labels.map((l,i)=>({text:l.text,measure:l.bar,beat:1,channel:l.v,scope:'channel',id:1792900000000+i,fontSize:13,offsetX:12,offsetY:-18}));
   // cada sistema empieza en una sección (sujeto, respuesta, episodio, entrada): las etiquetas no se cortan al final del renglón
   const bl={[p.N]:{id:'final'}}; let last=1; [...new Set(p.labels.filter(l=>l.text!==tr('aCad')).map(l=>l.bar))].sort((x,y)=>x-y).forEach(b=>{ if(b>1&&b-last>=4&&b<=p.N){ bl[b-1]=Object.assign(bl[b-1]||{},{sysBreak:true}); last=b; } });
-  const sv=tr('sv',{esp:tr(state.esp),n:p.n,t:p.T});
+  const sv=tr('sv',{esp:tr(state.esp),n:p.n,t:p.T,met:state.meter});
   return {format:'mmf',type:'score',version:'1.1',app:'V2.7.127',intelligentBeams:1,created:new Date().toISOString(),system:'Tonal',
     keySignature:KEYSIG[String(ki.fifths)],keyChanges:[],timeChanges:[],octaveLines:[],spacing:{h:1,v:1,byM:{}},
     view:{zoom:90,barNums:'continuous',listenOct:{fit:'auto',start:2},page:{fit:'auto',staff:'6',sysGap:'4',pages:'0',mode:'ancho',paper:'A4',footer:true,pageNum:true}},
-    alteration:'n',a4:440,tempo:state.bpm,timeSignature:{num:4,den:4},subDiv:1,totalMeasures:p.N,barlines:bl,repeatMarks:[],repeatSections:[],_sectionSeq:0,
+    alteration:'n',a4:440,tempo:state.bpm,timeSignature:{num,den},subDiv:1,totalMeasures:p.N,barlines:bl,repeatMarks:[],repeatSections:[],_sectionSeq:0,
     showRepeatSections:true,anacrusis:null,groups:[{showBarLines:true,id:1792900000001,type:'bracket',channels:p.V.map((_,v)=>v)}],
-    scoreInfo:{title:(LANG==='es'?'Fuga en ':'Fugue in ')+name,subtitle:sv,composer:'',author:'',copyright:'',file:'fuga-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':''),print:{partShow:false},orchestra:'modern'},printNames:true,
-    tempoMarkings:[{measure:1,beatPos:0,term:'',noteValue:'quarter',bpm:state.bpm,visible:false,yOffset:-4,fontSize:18,xOffset:0}],
+    scoreInfo:{title:(LANG==='es'?'Fuga en ':'Fugue in ')+name,subtitle:sv,composer:'',author:'',copyright:'',file:'fuga-'+state.meter.replace('/','-')+'-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':''),print:{partShow:false},orchestra:'modern'},printNames:true,
+    tempoMarkings:[{measure:1,beatPos:0,term:'',noteValue:state.meter==='3/8'?'eighth':'quarter',bpm:state.meter==='3/8'?state.bpm*2:state.bpm,visible:false,yOffset:-4,fontSize:18,xOffset:0}],
     exprMarkings:[],dynMarkings:[],artMarkings:[],textAnnotations:ann,
     coachRules:{enabled:true,canon,appliesTo:p.V.map((_,v)=>v),forbidSeventh:false},coachLog:null,
     agogMarkings:[],agogMode:'normal',showAgogMarks:true,asymRegions:[],exprSyn:{},fxRegions:[],channels:chans}; }
@@ -416,9 +439,13 @@ function syncSeg(id,v){ [...document.getElementById(id).children].forEach(c=>{ c
 seg('keys',[['F','F'],['C','C'],['G','G'],['D','D'],['A','A'],['E','E'],['B','B']],state.key,v=>state.key=v);
 seg('alts',[['b','♭'],['n','♮'],['#','♯']],state.alt,v=>state.alt=v);
 seg('modes',[['0','M'],['1','m']],state.mode,v=>state.mode=+v);
-seg('temas',[['2','2'],['4','4'],['8','8']],state.T,v=>{ const T=+v; if(T===state.T) return; const old=state.bars; state.T=T; state.held=[];
-  const nb=[old[0]]; for(let i=1;i<T-1;i++){ const pv=nb[i-1].deg[nb[i-1].deg.length-1]; nb.push(old[i]&&i<old.length-1?old[i]:(T===8&&i>=4&&i<=6)?seqBar(nb[i-4],pv):makeBar(i,pv)); } nb.push(old[old.length-1]);
-  state.bars=nb; if(!subjectOk(state.bars)) state.bars=newBars(); },()=>buildReels());
+function setT(T){ T=Math.max(1,Math.min(8,T)); if(T===state.T) return; const old=state.bars; state.T=T; state.held=[];
+  const nb=[old[0]]; for(let i=1;i<T-1;i++){ const pv=nb[i-1].deg[nb[i-1].deg.length-1]; nb.push(old[i]&&i<old.length-1&&!isSeq(i)?old[i]:isSeq(i)?seqBar(nb[i-H()],pv):makeBar(i,pv)); } if(T>1) nb.push(old[old.length-1]);
+  state.bars=nb; if(!subjectOk(state.bars)) state.bars=newBars(); }
+{ const el=document.getElementById('temas');
+  el.innerHTML='<button class="btn" data-d="-1" aria-label="−1">◀</button><span class="stepv" id="tv">'+state.T+'</span><button class="btn" data-d="1" aria-label="+1">▶</button>';
+  el.onclick=e=>{ const b=e.target.closest('button'); if(!b||state.spinning) return; stopPlay(); setT(state.T+(+b.dataset.d)); document.getElementById('tv').textContent=state.T; buildReels(); render(); }; }
+seg('metros',[['4/4','4/4'],['3/4','3/4'],['3/8','3/8']],state.meter,v=>{ if(v===state.meter) return; state.meter=v; state.held=[]; state.bars=[]; state.bars=newBars(); },()=>buildReels());
 seg('resps',[['V','DOMINANT'],['IV','SUBDOMINANT'],['inv','INVERSION']],state.resp,v=>state.resp=v);
 seg('especies',[['simple','SIMPLE'],['stretto','STRETTO']],state.esp,v=>state.esp=v);
 seg('voces',[['2','2'],['3','3'],['4','4']],state.n,v=>state.n=+v);
