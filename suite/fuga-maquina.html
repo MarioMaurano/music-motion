@@ -802,17 +802,34 @@ async function spin(){
   state.bars=fin; render(); lights.classList.remove('run'); btn.disabled=false; state.spinning=false; }
 
 // ── el sonido: la exposición, en la afinación pitagórica ──
-let AC=null, playing=[], playT=null;
+// ── el sonido: el de la suite. La máquina no suena por su cuenta: manda las notas al Cosmic Keyboard por mm-sync,
+// como el Score. Si no hay un Keyboard abierto, lo carga escondido como motor (el mismo de la demo del Score).
+// Las alturas son las pitagóricas de la máquina (3ⁿ/2ᵐ sobre el Do de 440·16/27): el Keyboard las toca tal cual.
+let MM=null, KB=0, playing=[], playT=null, pend=[], nid=0;
+try{ MM=new BroadcastChannel('mm-sync'); MM.addEventListener('message',e=>{ const d=e.data; if(d&&d.cmd==='PRESENCE'&&d.app==='keyboard') KB=Date.now(); }); }catch(e){}
+window.addEventListener('load',()=>{ if(!MM||!/^https?:$/.test(location.protocol)) return;
+  setTimeout(()=>{ if(Date.now()-KB<4000) return;   // ya hay un Keyboard abierto: se usa ese
+    const f=document.createElement('iframe'); f.id='kbMotor'; f.src='../apps/mmk-scorekeyboard.html?motor=demo'; f.setAttribute('allow','autoplay'); f.setAttribute('aria-hidden','true'); f.tabIndex=-1;
+    f.style.cssText='position:fixed;left:-20px;top:-20px;width:1px;height:1px;border:0;opacity:0;pointer-events:none;'; document.body.appendChild(f); },2500); });
+let AC=null;   // solo si no hay Keyboard posible (archivo abierto con doble clic): un tono simple, con la misma altura pitagórica
 function ctx(){ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); return AC; }
-function tone(f,t0,dur,vol){ const a=ctx(), o=a.createOscillator(), v=a.createGain(); o.type='triangle'; o.frequency.value=f;
+function toneLocal(f,t0,dur,vol){ const a=ctx(), o=a.createOscillator(), v=a.createGain(); o.type='triangle'; o.frequency.value=f;
   v.gain.setValueAtTime(0,t0); v.gain.linearRampToValueAtTime(vol,t0+.02); v.gain.setTargetAtTime(vol*.6,t0+.05,.2); v.gain.setTargetAtTime(0,t0+Math.max(.05,dur-.06),.05);
-  o.connect(v).connect(a.destination); o.start(t0); o.stop(t0+dur+.4); playing.push(o); }
-function stopPlay(){ playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; clearTimeout(playT); document.getElementById('play').textContent='▶ PLAY'; }
-function play(){ if(playing.length){ stopPlay(); return; } if(!PLAN) return;
-  const a=ctx(), mt=MT(), e8=60/state.bpm*mt.uq, t0=a.currentTime+.15; let end=0;
-  PLAN.entries.forEach(en=>{ if(en.kind==='pedal'){ const t=t0+(en.bar-1)*mt.U*e8, du=en.len*mt.U*e8; tone(en.notes[0].p.freq,t,du*.98,.09*(PLAN.vol||1)); end=Math.max(end,t+du); return; }
-    en.notes.forEach(nt=>{ const t=t0+((en.bar-1+nt.bar)*mt.U+nt.pos)*e8; tone(nt.p.freq,t,nt.du*e8*.95,.11*(PLAN.vol||1)); end=Math.max(end,t+nt.du*e8); }); });
-  document.getElementById('play').textContent='■ STOP'; playT=setTimeout(stopPlay,(end-a.currentTime)*1000+400); }
+  o.connect(v).connect(a.destination); o.start(t0); o.stop(t0+dur+.4); playing.push({stop:()=>o.stop()}); }
+function stopPlay(){ pend.forEach(clearTimeout); pend=[]; playing.forEach(x=>{ try{ x.stop(); }catch(e){} }); playing=[]; clearTimeout(playT); document.getElementById('play').textContent='▶ PLAY'; }
+function play(){ if(playing.length||pend.length){ stopPlay(); return; } if(!PLAN) return;
+  const mt=MT(), sec=60/state.bpm*mt.uq, ev=[];
+  PLAN.entries.forEach(en=>{ const ins=PLAN.V[en.v]&&PLAN.V[en.v][2];
+    if(en.kind==='pedal'){ ev.push({t:(en.bar-1)*mt.U*sec,du:en.len*mt.U*sec,f:en.notes[0].p.freq,ch:en.v,ins,vel:.45}); return; }
+    en.notes.forEach(nt=>ev.push({t:((en.bar-1+nt.bar)*mt.U+nt.pos)*sec,du:nt.du*sec,f:nt.p.freq,ch:en.v,ins,vel:.6})); });
+  const vol=PLAN.vol||1, end=Math.max(...ev.map(x=>x.t+x.du));
+  const useKB=MM&&(Date.now()-KB<4000||document.getElementById('kbMotor'));
+  if(useKB){ ev.forEach(x=>{ const id='fm'+(++nid);
+      pend.push(setTimeout(()=>{ try{ MM.postMessage({cmd:'NOTE_ON',id,freq:x.f,vel:x.vel*vol,dur:Math.round(x.du*1000*.97),chId:x.ch,instr:x.ins,source:'minikeyboard'}); }catch(e){}
+        const off={stop:()=>{ try{ MM.postMessage({cmd:'NOTE_OFF',id,source:'minikeyboard'}); }catch(e){} }}; playing.push(off);
+        pend.push(setTimeout(()=>{ off.stop(); playing=playing.filter(y=>y!==off); },Math.round(x.du*1000*.97))); },Math.round(x.t*1000)+150)); }); }
+  else { const a=ctx(), t0=a.currentTime+.15; ev.forEach(x=>toneLocal(x.f,t0+x.t,x.du*.95,(x.vel>.5?.11:.09)*vol)); }
+  document.getElementById('play').textContent='■ STOP'; playT=setTimeout(stopPlay,end*1000+600); }
 
 // ── el .mmf para el Score, con Salieri ──
 const KEYSIG={'0':'C','1':'G','2':'D','3':'A','4':'E','5':'B','6':'F#','7':'C#','-1':'F','-2':'Bb','-3':'Eb','-4':'Ab','-5':'Db','-6':'Gb','-7':'Cb'};
