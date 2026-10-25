@@ -551,17 +551,20 @@ function airPlanSample(strict){ const C=airChords(), SN=state.meter==='4/4'?2:1,
   for(let t=0;t<200;t++){ const out=[segFit(0,I)?I:(C.find(c=>segFit(0,c))||I)]; let ok=true;
     for(let s=1;s<NS&&ok;s++){ const a=out[s-1]; let cand;
       const E=state.aend||'closed', VI=C.find(c=>c.r===5);
-      if(s===NS-1) cand=E==='open'?[V]:E==='dec'?[VI]:[I]; else if(s===NS-2) cand=E==='closed'?(strict?[C.find(c=>c.lab==='V7')]:C.filter(c=>c.r===4||c.r===3)):E==='dec'?C.filter(c=>c.r===4):cand=C.filter(c=>okTo(a,c)); else if(s===half) cand=state.held[Math.floor(s/SN)]?C.filter(c=>c.r===4&&c.lab!=='V/V'):[V];   /* si el compás vino dado, la semicadencia puede ser V7 */
-      else if(strict&&E==='closed'&&s===NS-3) cand=C.filter(c=>okTo(a,c)&&c.t.some(o=>mod(c.r+o-3,7)===0)&&c.t.some(o=>mod(c.r+o,7)===0));
+      if(s>=NS-SN) cand=E==='open'?[V]:E==='dec'?[VI]:[I]; else if(s===NS-SN-1) cand=E==='closed'?(strict?[C.find(c=>c.lab==='V7')]:C.filter(c=>c.r===4&&c.lab!=='V/V')):E==='dec'?C.filter(c=>c.r===4):cand=C.filter(c=>okTo(a,c)); else if(s===half) cand=state.held[Math.floor(s/SN)]?C.filter(c=>c.r===4&&c.lab!=='V/V'):[V];   /* si el compás vino dado, la semicadencia puede ser V7 */
+      else if(strict&&E==='closed'&&s===NS-SN-2) cand=C.filter(c=>(s-1===half||okTo(a,c))&&c.t.some(o=>mod(c.r+o-3,7)===0)&&c.t.some(o=>mod(c.r+o,7)===0));
       else cand=C.filter(c=>okTo(a,c)&&!(c===a&&Math.random()<.6));
-      cand=cand.filter(c=>okTo(a,c)&&segFit(s,c)); { const bq=bassAsk(Math.floor(s/SN),(s%SN)*(MT().U/SN)); if(bq!=null) cand=cand.filter(c=>bqOk(c,bq)); } if(!cand.length){ ok=false; break; }
+      cand=cand.filter(c=>(okTo(a,c)||(strict&&s-1===half&&s===NS-SN-2))&&segFit(s,c));   /* después de la semicadencia empieza otra frase */ { const bq=bassAsk(Math.floor(s/SN),(s%SN)*(MT().U/SN)); if(bq!=null) cand=cand.filter(c=>bqOk(c,bq)); } if(!cand.length){ ok=false; break; }
       const w=cand.map(c=>(GOOD[a.r]||[]).includes(c.r)?3:1+(mod(a.r-c.r,7)===4?2:0)); let x=Math.random()*w.reduce((p,q)=>p+q,0), k=0; while((x-=w[k])>0) k++; out.push(cand[Math.min(k,cand.length-1)]); }
-    if(ok){ if(state.T>=4){ const h=Math.floor(state.T/2)*SN, c=(state.T>=8?2:1)*SN; if(state.T>=8) for(let k=0;k<c&&h+k<NS-3;k++) out[h+k]=out[k]; } return out; } }
+    if(ok){ if(state.T>=4){ const h=Math.floor(state.T/2)*SN, c=(state.T>=8?2:1)*SN; if(state.T>=8) for(let k=0;k<c&&h+k<NS-SN-2;k++) out[h+k]=out[k]; } return out; } }
   return null; }
-function makeBarAir(i,prev,plan,b0){ const b=b0||makeBar(i,prev), mt=MT(), SN=state.meter==='4/4'?2:1, W=mt.U/SN; let pos=b.rest||0;
+function makeBarAir(i,prev,plan,b0){ const mt=MT(), SN=state.meter==='4/4'?2:1, W=mt.U/SN;
+  if(i===state.T-1&&!b0&&prev!=null&&plan.length===state.T*SN){ const t={closed:0,open:4,dec:0}[state.aend||'closed']; return {deg:[t+7*Math.round((prev-t)/7)],rh:[mt.U]}; }   /* el último compás: la nota final, larga */
+  const b=b0||makeBar(i,prev); let pos=b.rest||0;
   const tones=c=>c.t.map(o=>c.r+o);
   b.deg=b.deg.map((d,k)=>{ const p0=pos, du=b.rh[k]; pos+=du; const seg=i*SN+Math.floor(p0/W), c=plan[seg]; if(!c) return d;
-    if(p0%W===0||du>=Math.round(1/mt.uq)){ const last=seg===plan.length-1, cadV=seg===plan.length-2&&c.lab==='V7'&&(state.aend||'closed')==='closed', sp=state.meter==='4/4'?W/2:W/3; const ts=last?[c.r]:cadV?tones(c).filter((t,j)=>p0%W<sp?j===2:(j===1||j===2)):tones(c).filter((t,j)=>j>0); let best=d,bs=99; for(const t of ts) for(const o of [-7,0,7]){ const x=t+o+7*Math.round((d-t)/7); if(Math.abs(x-d)<bs){bs=Math.abs(x-d);best=x;} } return best; }
+    const cadW=seg===plan.length-SN-1&&c.lab==='V7'&&(state.aend||'closed')==='closed'&&(p0%W<(state.meter==='4/4'?W/2:W/3)||[2,3,6].includes(mod(d-c.r,7)));   /* sobre el V7 final la melodía no toca la tónica (el retardo), ni la sensible ni la 7.ª (las llevan las voces interiores) */
+    if(p0%W===0||du>=Math.round(1/mt.uq)||cadW){ const last=seg>=plan.length-SN, cadV=seg===plan.length-SN-1&&c.lab==='V7'&&(state.aend||'closed')==='closed', sp=state.meter==='4/4'?W/2:W/3; const ts=last?[c.r]:cadV?tones(c).filter((t,j)=>j===0||j===2):tones(c).filter((t,j)=>j>0); let best=d,bs=99; for(const t of ts) for(const o of [-7,0,7]){ const x=t+o+7*Math.round((d-t)/7); if(Math.abs(x-d)<bs){bs=Math.abs(x-d);best=x;} } return best; }
     return d; });
   return b; }
 function buildAir(){ const t0=performance.now();
@@ -602,8 +605,8 @@ function planAir(){ const S=subject(), T=state.T, SN0=state.meter==='4/4'?2:1, p
   const {parts,rom,SN}=ap, V=parts.map(x=>[LANG==='es'?x.name[0]:x.name[1],x.clef,x.ins,[0,127]]), cells=V.map(()=>Array(N).fill('')), entries=[], labels=[];
   parts.forEach((x,v)=>{ const cls={mel:'suj',acc:'acc',bass:'ped'}[x.role]; entries.push({v,bar:1,len:N,notes:x.notes,kind:x.role}); for(let b=0;b<N;b++) cells[v][b]=cls; });
   labels.push({v:0,bar:1,text:tr('aMelA')});
-  rom.forEach((t,s)=>labels.push({v:1,bar:Math.floor(s/SN)+1,beat:1+(s%SN)*(state.meter==='4/4'?2:0),text:t,roman:true}));
-  const romBar=Array.from({length:N},(_,b)=>rom.slice(b*SN,b*SN+SN).join(' '));
+  rom.forEach((t,s)=>t&&labels.push({v:1,bar:Math.floor(s/SN)+1,beat:1+(s%SN)*(state.meter==='4/4'?2:0),text:t,roman:true}));
+  const romBar=Array.from({length:N},(_,b)=>rom.slice(b*SN,b*SN+SN).filter(Boolean).join(' '));
   return {n:V.length,T,V,S,A:{notes:[],kind:'V'},d:1,G:[1],E:T,N,k:0,cells,entries,labels,acomp:true,canonRules:[],rom:romBar,romAll:rom}; }
 function planAcomp(){ return AIR()?planAir():planAcompBasic(); }
 function planAcompBasic(){ const S=subject(), T=state.T; if(state.relaxed){ state.relaxed=false; setTimeout(()=>{ const bn=document.getElementById('banner'); bn.textContent=tr('noMov'); buildReels(); },0); }
@@ -636,23 +639,26 @@ function harmAir(S,final){ const C=airChords(), mt=MT(), U=mt.U, SN=state.meter=
   let D=C.map(c=>({sc:fit(0,c)+(c.r===0&&c.t.length===3?4:-2),path:[c]}));
   for(let s=1;s<NS;s++) D=C.map(c=>{ let best=null; for(const q of D){ const a=q.path[q.path.length-1]; let sc=q.sc+trans(a,c)+fit(s,c);
       if(s===half) sc+=c.r===4?6:-1e6;
-      if(final&&(state.aend||'closed')==='closed'){ if(s===NS-2) sc+=c.lab==='V7'?8:c.r===4?3:-20; if(s===NS-3&&s!==half&&c.t.some(o=>mod(c.r+o-3,7)===0)&&c.t.some(o=>mod(c.r+o,7)===0)) sc+=3; }
-      if(final&&s===NS-1){ const E=state.aend||'closed'; sc+=E==='open'?(c.r===4&&c.t.length===3?8:-1e6):E==='dec'?(c.r===5?8:-1e6)+(a.r===4?6:-1e6):(c.r===0&&c.t.length===3?8:-1e6)+(a.r===4?6:a.r===3?3:-1e6); }
+      if(final&&(state.aend||'closed')==='closed'){ if(s===NS-SN-1) sc+=c.lab==='V7'?8:c.r===4?3:-20; if(s===NS-SN-2&&s!==half&&c.t.some(o=>mod(c.r+o-3,7)===0)&&c.t.some(o=>mod(c.r+o,7)===0)) sc+=3; }
+      if(final&&s>NS-SN) sc+=c===a?20:-1e6;
+      if(final&&s===NS-SN){ const E=state.aend||'closed'; sc+=E==='open'?(c.r===4&&c.t.length===3?8:-1e6):E==='dec'?(c.r===5?8:-1e6)+(a.r===4?6:-1e6):(c.r===0&&c.t.length===3?8:-1e6)+(a.r===4?6:a.r===3?3:-1e6); }
       if(!best||sc>best.sc) best={sc,path:q.path.concat([c])}; } return best; });
   const best=D.reduce((a,c)=>c.sc>a.sc?c:a); if(best.sc<-50) return null; return best.path; }
-function airParts(S,prog,md){ { const n=prog.length; if(md==='none'&&(state.aend||'closed')==='closed'&&n===state.T*(state.meter==='4/4'?2:1)&&n>=3&&prog[n-2].lab==='V7'&&prog[n-1].r===0){ prog=prog.slice(); prog[n-2]=airChords().find(c=>c.r===4&&c.t.length===3); } }   /* sin 7.ª preparada ni de paso, el V sin 7.ª */
+function airParts(S,prog,md){ { const n=prog.length, SN0=state.meter==='4/4'?2:1; if(md==='none'&&(state.aend||'closed')==='closed'&&n===state.T*(state.meter==='4/4'?2:1)&&n>=3&&prog[n-SN0-1].lab==='V7'&&prog[n-SN0].r===0){ prog=prog.slice(); prog[n-SN0-1]=airChords().find(c=>c.r===4&&c.t.length===3); } }   /* sin 7.ª preparada ni de paso, el V sin 7.ª */
   const mt=MT(), U=mt.U, SN=state.meter==='4/4'?2:1, W=U/SN, e8=Math.round(.5/mt.uq), mel=fitOct(S,MELR[state.mins]||[62,86]);
   // el bajo: fundamental o primera inversión, lo que camine mejor; posición fundamental en las cadencias
   let pb=null; const bassN=prog.map((c,s)=>{ const bq=bassAsk(Math.floor(s/SN),(s%SN)*W); if(bq!=null){ const k=c.t.findIndex(o=>mod(bq-c.r-o,7)===0); if(k===0||k===1){ const p=fitOct([{p:chordP(c,k)}],[36,50])[0].p; pb=p; return {k,p}; } }
     const cand=[0,1].map(k=>({k,p:fitOct([{p:chordP(c,k)}],[38,50])[0].p}));
-    const last=s===prog.length-1||s===prog.length-2; let best=cand[0],bs=1e9; for(const x of cand){ if(last&&x.k) continue; const sc=(pb?Math.abs(x.p.midi-pb.midi):0)+(x.k?2:0); if(sc<bs){bs=sc;best=x;} } pb=best.p; return best; });
+    const last=s>=prog.length-SN-1; let best=cand[0],bs=1e9; for(const x of cand){ if(last&&x.k) continue; const sc=(pb?Math.abs(x.p.midi-pb.midi):0)+(x.k?2:0); if(sc<bs){bs=sc;best=x;} } pb=best.p; return best; });
   const bass=[]; prog.forEach((c,s)=>{ const b=Math.floor(s/SN), st=(s%SN)*W, bn=bassN[s].p, others=c.t.map((_,k)=>k).filter(k=>k!==bassN[s].k).map(k=>fitOct([{p:chordP(c,k)}],[45,58])[0].p);
-    const seq=[bn,oct(bn,1),others[0],others[1]||others[0],oct(bn,1),(s===prog.length-2&&c.r===4&&others[1])||others[0]];   /* antes del acorde final, el bajo no termina en la sensible */ for(let i=0;i<W/e8;i++) bass.push({p:seq[i%seq.length],d:0,bar:b,pos:st+i*e8,du:e8}); });
+    const seq=[bn,oct(bn,1),others[0],others[1]||others[0],oct(bn,1),(s===prog.length-SN-1&&c.r===4&&others[1])||others[0]];   /* antes del acorde final, el bajo no termina en la sensible */ for(let i=0;i<W/e8;i++) bass.push({p:seq[i%seq.length],d:0,bar:b,pos:st+i*e8,du:e8}); });
+  const FULL=prog.length===state.T*SN, FS=FULL?prog.length-SN:prog.length;   /* FS: dónde empieza el compás final */
+  if(FULL){ const fb=Math.floor(FS/SN); for(let k=bass.length-1;k>=0;k--) if(bass[k].bar>=fb) bass.splice(k,1); bass.push({p:bassN[FS].p,d:0,bar:fb,pos:0,du:U}); }
   // dos voces interiores (violín II y viola): la séptima y la tercera primero, resolviendo por grado
   let prev=null, pbN=null; const inner=prog.map((c,s)=>{ const b=Math.floor(s/SN), st=(s%SN)*W, top=Math.min(...mel.filter(x=>x.bar===b&&x.pos<st+W&&x.pos+x.du>st).map(x=>x.p.midi).concat([90]));
     const pri=c.t.map((_,k)=>k).sort((x,y)=>([3,1,2,0][x]??9)-([3,1,2,0][y]??9)); let best=null,bs=1e9;
     for(const i of pri) for(const j of pri) if(i!==j) for(let o1=-1;o1<=2;o1++) for(let o2=-1;o2<=2;o2++){ const hi=oct(chordP(c,i),o1), lo=oct(chordP(c,j),o2);
-      if(hi.midi<=lo.midi||hi.midi>Math.min(74,top-2)||lo.midi<50||hi.midi-lo.midi>12) continue;
+      if(hi.midi<=lo.midi||hi.midi>Math.min(74,top-2)||lo.midi<50||hi.midi<55||hi.midi-lo.midi>12) continue;   /* el violín II no baja del sol */
       let sc=prev?Math.abs(hi.midi-prev[0].midi)+Math.abs(lo.midi-prev[1].midi):Math.abs(hi.midi-67)+Math.abs(lo.midi-60);
       sc+=pri.indexOf(i)+pri.indexOf(j); const bpc=mod(bassN[s].p.midi,12), mpc=(mel.find(x=>x.bar===b&&x.pos<=st&&x.pos+x.du>st)||{p:{midi:-1}}).p.midi;
       if(mod(hi.midi,12)===bpc) sc+=6; if(mod(lo.midi,12)===bpc) sc+=6; if(mpc>=0&&(mod(hi.midi-mpc,12)===0||mod(lo.midi-mpc,12)===0)) sc+=4;
@@ -664,39 +670,43 @@ function airParts(S,prog,md){ { const n=prog.length; if(md==='none'&&(state.aend
   // la cadencia final (CLOSED): la 7.ª del V llega ligada del acorde anterior y, encima del V, el retardo 4–3;
   // si la melodía no lo deja, el V7 directo, con la 7.ª de paso desde la fundamental
   const NS=prog.length, sp=state.meter==='4/4'?W/2:W/3; let cad='none', from=NS, cH=[], cL=[];
-  const cadOn=(state.aend||'closed')==='closed'&&NS===state.T*SN&&NS>=3&&prog[NS-1].r===0&&prog[NS-2].lab==='V7';
-  if(cadOn&&md&&md!=='none'){ const Pc=prog[NS-3], V7=prog[NS-2], Ic=prog[NS-1], has=d=>Pc.t.some(o=>mod(Pc.r+o-d,7)===0);
+  const Q=FS+1;
+  const cadOn=(state.aend||'closed')==='closed'&&FULL&&Q>=3&&prog[Q-1].r===0&&prog[Q-2].lab==='V7';
+  if(cadOn&&md&&md!=='none'){ const Pc=prog[Q-3], V7=prog[Q-2], Ic=prog[Q-1], has=d=>Pc.t.some(o=>mod(Pc.r+o-d,7)===0);
     const sOf=s=>Math.floor(s/SN)*U+(s%SN)*W, melIn=(s,a,b)=>mel.filter(x=>{ const t=x.bar*U+x.pos; return t<sOf(s)+b&&t+x.du>sOf(s)+a; }).map(x=>x.p.midi), top=s=>Math.min(74,...melIn(s,0,W).map(m=>m-1));
     const near=(p,m,lo,hi)=>{ for(let k=-4;k<=4;k++){ const q=oct(p,k); if(q.midi>=m+lo&&q.midi<=m+hi) return q; } return null; };
-    const fa0=chordP(V7,3), si0=chordP(V7,1), sol0=chordP(V7,0), do0=chordP(Ic,0), mi0=chordP(Ic,1), pv=inner[NS-4]||inner[NS-3];
+    const fa0=chordP(V7,3), si0=chordP(V7,1), sol0=chordP(V7,0), do0=chordP(Ic,0), mi0=chordP(Ic,1), pv=inner[Q-4]||inner[Q-3];
     const dist=(h,l,ref)=>ref?Math.abs(h-ref[0].midi)+Math.abs(l-ref[1].midi):0;
     const atT=(L,t)=>{ const n=L.filter(x=>x.bar*U+x.pos<=t&&t<x.bar*U+x.pos+x.du).slice(-1)[0]; return n?n.p.midi:null; };
     const parOk=(a0,a1,t)=>[bass,mel].every(L=>{ const b0=atT(L,t-1), b1=atT(L,t); if(b0==null||b1==null) return true; const i0=mod(a0-b0,12), i1=mod(a1-b1,12); return !(i0===i1&&(i0===0||i0===7)&&a0!==a1&&Math.sign(a1-a0)===Math.sign(b1-b0)); });   /* sin 5.as ni 8.as paralelas con el bajo ni con la melodía */
     let best=null, bs=1e9;
-    if(md==='susp'&&NS-3>=1&&has(3)&&has(0)&&!melIn(NS-2,0,sp).some(m=>[mod(si0.midi,12),mod(do0.midi,12)].includes(mod(m,12))))
+    if(md==='susp'&&Q-3>=1&&has(3)&&has(0)&&!melIn(Q-2,0,sp).some(m=>[mod(si0.midi,12),mod(do0.midi,12)].includes(mod(m,12))))
       for(let a=-2;a<=2;a++) for(let b=-2;b<=2;b++){ const fa=oct(fa0,a), dd=oct(do0,b); if(fa.midi===dd.midi||Math.abs(fa.midi-dd.midi)>12) continue;
         const mi=near(mi0,fa.midi,-2,-1), si=near(si0,dd.midi,-2,-1); if(!mi||!si||[fa,dd,mi,si].some(p=>p.midi<48)) continue;
-        if(Math.max(fa.midi,dd.midi)>Math.min(top(NS-3),top(NS-2))||Math.max(mi.midi,dd.midi)>top(NS-1)) continue;
-        const up=fa.midi>dd.midi; if((mi.midi>dd.midi)!==up||(fa.midi>si.midi)!==up) continue; if(!parOk(fa.midi,mi.midi,sOf(NS-1))||!parOk(si.midi,dd.midi,sOf(NS-1))) continue;
-        if(pv&&inner[NS-4]&&(!parOk(pv[up?0:1].midi,fa.midi,sOf(NS-3))||!parOk(pv[up?1:0].midi,dd.midi,sOf(NS-3)))) continue;
-        const sc=dist(Math.max(fa.midi,dd.midi),Math.min(fa.midi,dd.midi),pv); if(sc<bs){ bs=sc; best={fa,dd,mi,si,up}; } }
-    if(best){ const {fa,dd,mi,si,up}=best, F=[[NS-3,fa,0,W,1],[NS-2,fa,0,W],[NS-1,mi,0,W]], D=[[NS-3,dd,0,W,1],[NS-2,dd,0,sp],[NS-2,si,sp,W-sp],[NS-1,dd,0,W]];
-      cad='susp'; from=NS-3; cH=up?F:D; cL=up?D:F; }
-    if(md==='pass'){ const pv2=inner[NS-3];
+        if(Math.max(fa.midi,dd.midi)>Math.min(top(Q-3),top(Q-2))) continue;
+        const up=fa.midi>dd.midi; if((fa.midi>si.midi)!==up||mi.midi>top(Q-1)||!parOk(fa.midi,mi.midi,sOf(Q-1))) continue;
+        const de=[dd,near(chordP(Ic,2),si.midi,-4,-3)].find(e=>e&&e.midi>=48&&e.midi<=top(Q-1)&&(mi.midi>e.midi)===up&&parOk(si.midi,e.midi,sOf(Q-1))); if(!de||(up?[fa,mi]:[dd,si,de]).some(p=>p.midi<55)) continue;   /* si la sensible se doblaría con la melodía, baja a la 5.ª */
+        if(pv&&inner[Q-4]&&(!parOk(pv[up?0:1].midi,fa.midi,sOf(Q-3))||!parOk(pv[up?1:0].midi,dd.midi,sOf(Q-3)))) continue;
+        const sc=dist(Math.max(fa.midi,dd.midi),Math.min(fa.midi,dd.midi),pv)+(de===dd?0:3); if(sc<bs){ bs=sc; best={fa,dd,mi,si,up,de}; } }
+    if(best){ const {fa,dd,mi,si,up,de}=best, F=[[Q-3,fa,0,W,1],[Q-2,fa,0,W],[Q-1,mi,0,W*SN]], D=[[Q-3,dd,0,W,1],[Q-2,dd,0,sp],[Q-2,si,sp,W-sp],[Q-1,de,0,W*SN]];
+      cad='susp'; from=Q-3; cH=up?F:D; cL=up?D:F; }
+    if(md==='pass'){ const pv2=inner[Q-3];
       for(let a=-2;a<=2;a++) for(let b=-2;b<=2;b++){ const so=oct(sol0,a), si=oct(si0,b); if(so.midi===si.midi||Math.abs(so.midi-si.midi)>12) continue;
-        const fa=near(fa0,so.midi,-2,-1), mi=fa&&near(mi0,fa.midi,-2,-1), dd=near(do0,si.midi,1,2); if(!fa||!mi||!dd||[so,si,fa,mi,dd].some(p=>p.midi<48)) continue;
-        if(Math.max(so.midi,si.midi)>top(NS-2)||Math.max(mi.midi,dd.midi)>top(NS-1)) continue;
-        const up=so.midi>si.midi; if((fa.midi>si.midi)!==up||(mi.midi>dd.midi)!==up) continue; if(!parOk(fa.midi,mi.midi,sOf(NS-1))||!parOk(si.midi,dd.midi,sOf(NS-1))) continue;
-        if(pv2&&(!parOk(pv2[up?0:1].midi,so.midi,sOf(NS-2))||!parOk(pv2[up?1:0].midi,si.midi,sOf(NS-2)))) continue; if(!parOk(so.midi,fa.midi,sOf(NS-2)+W-sp)) continue;
+        const fa=near(fa0,so.midi,-2,-1), mi=fa&&near(mi0,fa.midi,-2,-1); if(!fa||!mi||[so,si,fa,mi].some(p=>p.midi<48)) continue;
+        if(Math.max(so.midi,si.midi)>top(Q-2)||mi.midi>top(Q-1)) continue;
+        const up=so.midi>si.midi; if((fa.midi>si.midi)!==up||!parOk(fa.midi,mi.midi,sOf(Q-1))) continue;
+        const dd=[near(do0,si.midi,1,2),near(chordP(Ic,2),si.midi,-4,-3)].find(e=>e&&e.midi>=48&&e.midi<=top(Q-1)&&(mi.midi>e.midi)===up&&parOk(si.midi,e.midi,sOf(Q-1))); if(!dd||(up?[so,fa,mi]:[si,dd]).some(p=>p.midi<55)) continue;
+        if(pv2&&(!parOk(pv2[up?0:1].midi,so.midi,sOf(Q-2))||!parOk(pv2[up?1:0].midi,si.midi,sOf(Q-2)))) continue; if(!parOk(so.midi,fa.midi,sOf(Q-2)+W-sp)) continue;
         const sc=dist(Math.max(so.midi,si.midi),Math.min(so.midi,si.midi),pv2); if(sc<bs){ bs=sc; best={so,si,fa,mi,dd,up}; } }
-      if(best){ const {so,si,fa,mi,dd,up}=best, A=[[NS-2,so,0,W-sp],[NS-2,fa,W-sp,sp],[NS-1,mi,0,W]], B=[[NS-2,si,0,W],[NS-1,dd,0,W]];
-        cad='pass'; from=NS-2; cH=up?A:B; cL=up?B:A; } } }
-  const vn=j=>inner.map((pp,s)=>({p:pp[j],d:0,bar:Math.floor(s/SN),pos:(s%SN)*W,du:W})).filter((n,s)=>s<from), seqN=L=>L.map(([s,p,off,du,tie])=>({p,d:0,bar:Math.floor(s/SN),pos:(s%SN)*W+off,du,tie:!!tie}));
+      if(best){ const {so,si,fa,mi,dd,up}=best, A=[[Q-2,so,0,W-sp],[Q-2,fa,W-sp,sp],[Q-1,mi,0,W*SN]], B=[[Q-2,si,0,W],[Q-1,dd,0,W*SN]];
+        cad='pass'; from=Q-2; cH=up?A:B; cL=up?B:A; } } }
+  const vn=j=>inner.map((pp,s)=>({p:pp[j],d:0,bar:Math.floor(s/SN),pos:(s%SN)*W,du:s===FS?U:W})).filter((n,s)=>s<from&&s<=FS), seqN=L=>L.map(([s,p,off,du,tie])=>({p,d:0,bar:Math.floor(s/SN),pos:(s%SN)*W+off,du,tie:!!tie}));
   const parts=[{role:'mel',ins:state.mins,name:INS[state.mins].slice(0,2),clef:'G',notes:mel},
     {role:'acc',ins:'violin',name:['Violín II','Violin II'],clef:'G',notes:vn(0).concat(seqN(cH))},
     {role:'acc',ins:'viola',name:['Viola','Viola'],clef:'C3',notes:vn(1).concat(seqN(cL))},
     {role:'bass',ins:'cello',name:['Violonchelo','Cello'],clef:'F',notes:bass}];
   const rom=prog.map((c,s)=>bassN[s].k?(c.t.length>3?c.lab.replace('7','6/5'):(c.lab==='V/V'?'V6/V':c.lab.replace(/^([ivIV]+)/,'$16'))):c.lab);
+  if(FULL) for(let s=FS+1;s<rom.length;s++) rom[s]='';
   return {parts,rom,SN,cad,cadOn}; }
 function airClean(bars,final,plan){ return withBars(bars,S=>{ if(!S.length) return false; const SN=state.meter==='4/4'?2:1, need=bars.length*SN;
   plan=plan||(state.airPlan&&state.airPlan.length===state.T*SN?state.airPlan:null); const prog=plan?plan.slice(0,need):harmAir(S,final); if(!prog||prog.length<need) return false;
@@ -933,7 +943,7 @@ function drawPlan(p){
   const head='<tr><th></th>'+Array.from({length:p.N},(_,i)=>`<th>${i+1}</th>`).join('')+'</tr>';
   const rows=p.V.map((_,v)=>`<tr><th>${vn(v)}</th>`+p.cells[v].map((c,i)=>`<td class="${c}">${c==='suj'?(p.inv?'M':p.canon?'D':'S'):c==='resp'?(p.inv?'I':p.canon?'C':'R'):c==='ent'?'E':c==='fin'?'F':c==='cad'?'C':c==='seq'?'↘':c==='ped'?'P':c==='dup'?'=':c==='acc'?(p.acomp?p.rom[i]:''):''}</td>`).join('')+'</tr>').join('');
   const L=p.acomp?[['suj','lMelA'],['acc','lAcc'],['ped','lBass']]:p.ped?[['ped','lPedL'],['suj','lMel'],['resp','lEntP'],['cs','lHeld'],['dup','lDup']]:p.sinf?[['suj','lMot'],['resp','lImit'],['seq','lSeq'],['cs','lCm'],['cad','lCadI'],['ped','lPed']]:p.inv?[['suj','lMot'],['resp','lImit'],['seq','lSeq'],['cs','lCm'],['cad','lCadI']]:p.canon?[['suj','lDux'],['resp','lComes'],['cs','lLibre']]:[['suj','lSuj'],['resp','lResp'],['cs','lCs'],['epi','lEpi'],['seq','lSeq'],['ent','lEnt'],['fin','lFin'],['cad','lCad']];
-  const sum=p.acomp?tr('ares',{key:keyNameAcc(state.key,ALT[state.alt],state.mode),met:state.meter,t:p.T,ty:tr({chords:'atC',pedal:'atP',arp:'atA',air:'atR'}[state.atype]),prog:(p.romAll||p.rom).join(' – ')}):p.ped?tr('pres',{pt:tr({T:'ptT',D:'ptD',W:'ptW',I:'ptI'}[state.ptype]),key:keyNameAcc(state.key,ALT[state.alt],state.mode),met:state.meter,t:p.T,n:state.pn,r:p.r,l2:p.l2?tr('pl2',{k:p.l2}):'',l3:p.l3?tr('pl3',{k:p.l3}):'',tot:p.N}):p.inv?tr(p.sinf?'sres':'ires',{key:p.k0,met:state.meter,t:p.T,k0:p.k0,k1:p.k1,k2:p.k2,tot:p.N}):p.canon?tr('cres',{n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),met:state.meter,t:p.T,iv:p.ivn,d:p.d,mov:tr(state.cmov==='inv'?'mInv':'mDir'),fin:tr(state.cfin==='perp'?'fPerp':'fCoda'),tot:p.N}):null;
+  const sum=p.acomp?tr('ares',{key:keyNameAcc(state.key,ALT[state.alt],state.mode),met:state.meter,t:p.T,ty:tr({chords:'atC',pedal:'atP',arp:'atA',air:'atR'}[state.atype]),prog:(p.romAll||p.rom).filter(Boolean).join(' – ')}):p.ped?tr('pres',{pt:tr({T:'ptT',D:'ptD',W:'ptW',I:'ptI'}[state.ptype]),key:keyNameAcc(state.key,ALT[state.alt],state.mode),met:state.meter,t:p.T,n:state.pn,r:p.r,l2:p.l2?tr('pl2',{k:p.l2}):'',l3:p.l3?tr('pl3',{k:p.l3}):'',tot:p.N}):p.inv?tr(p.sinf?'sres':'ires',{key:p.k0,met:state.meter,t:p.T,k0:p.k0,k1:p.k1,k2:p.k2,tot:p.N}):p.canon?tr('cres',{n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),met:state.meter,t:p.T,iv:p.ivn,d:p.d,mov:tr(state.cmov==='inv'?'mInv':'mDir'),fin:tr(state.cfin==='perp'?'fPerp':'fCoda'),tot:p.N}):null;
   document.getElementById('plan').innerHTML=`<h2>${tr('plan')}</h2>
    <div class="res">${sum||tr('res',{esp:tr(state.esp),sd:state.esp==='stretto'?tr('strD',{d:p.G.join(' · ')}):'',met:state.meter,n:p.n,key:keyNameAcc(state.key,ALT[state.alt],state.mode),t:p.T,resp,mut,e:p.E,tot:p.N,k:String(p.k).replace('.',LANG==='es'?',':'.')})}</div>
    <div class="grid"><table><thead>${head}</thead><tbody>${rows}</tbody></table></div>
