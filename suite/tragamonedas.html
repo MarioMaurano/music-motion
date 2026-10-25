@@ -714,25 +714,26 @@ document.addEventListener('keydown',ev=>{ if(!eco||ev.ctrlKey||ev.metaKey||ev.al
 let sube=null;
 function subeNivel(r){ return r<3?[4,7]:r<7?[2,3]:[1,1]; }
 function subePar(r){ const [lo,hi]=subeNivel(r); for(let k=0;k<200;k++){ const a=rnd(8), d=lo+rnd(hi-lo+1), b=a+(Math.random()<.5?d:-d); if(b>=0&&b<=7) return [a,b]; } return [0,4]; }
-function subeStop(){ if(!sube) return; sube.timers.forEach(clearTimeout); sube=null; const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML='';
+// las flechas están a la vista desde que se abre el juego (2026-10-25, Mario): la primera que se pulsa empieza
+function subePad(){ const pad=document.getElementById('ecoPad'); pad.innerHTML=`<div class="turno" id="subeTurno">${tr('upOrDown')}</div><button class="grande" data-v="1">⬆<small>${tr('up')}</small></button><button class="grande" data-v="-1">⬇<small>${tr('down')}</small></button><button data-v="0">🔁<small>${tr('again')}</small></button>`;
+  pad.hidden=false; pad.querySelectorAll('button').forEach(b=>b.onclick=()=>{ b.blur(); if(!sube){ subeStart(); return; } const v=+b.dataset.v; v?subeResp(v):subeOir(); }); }
+function subeStop(){ if(!sube) return; sube.timers.forEach(clearTimeout); sube=null; const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML=''; if(window._juegoId==='sube') subePad();
   const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash'); }
 function subeStart(){ if(sube){ subeStop(); return; } if(!keyInfo().ok||state.spinning) return; stopPlay(); if(eco) ecoStop();
-  sube={r:0,ok:0,par:null,listening:false,timers:[]};
-  const pad=document.getElementById('ecoPad'); pad.innerHTML=`<div class="turno" id="subeTurno"></div><button class="grande" data-v="1">⬆<small>${tr('up')}</small></button><button class="grande" data-v="-1">⬇<small>${tr('down')}</small></button><button data-v="0">🔁<small>${tr('again')}</small></button>`;
-  pad.hidden=false; pad.querySelectorAll('button').forEach(b=>b.onclick=()=>{ const v=+b.dataset.v; v?subeResp(v):subeOir(); }); subeRonda(); }
+  sube={r:0,ok:0,par:null,listening:false,done:false,k:0,timers:[]}; subePad(); subeRonda(); }
 function subeOir(){ const e=sube; if(!e||!e.par) return; const a=ctx(), t=a.currentTime+.1; tone(spell(e.par[0]).freq,t,.6,.16,true); tone(spell(e.par[1]).freq,t+.75,.6,.16,true);
-  e.listening=false; e.timers.push(setTimeout(()=>{ if(sube===e) e.listening=true; },1450)); }
-function subeRonda(){ const e=sube; if(!e) return; e.par=subePar(e.r);
+  if(e.done) return; const k=e.k; e.listening=false; e.timers.push(setTimeout(()=>{ if(sube===e&&e.k===k&&!e.done) e.listening=true; },1450)); }   /* una sola respuesta por ronda */
+function subeRonda(){ const e=sube; if(!e) return; e.k++; e.done=false; e.par=subePar(e.r);
   document.getElementById('subeTurno').textContent=tr('subeRound',{r:e.r+1,ok:e.ok});
   const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=tr('listen'); subeOir();
   e.timers.push(setTimeout(()=>{ if(sube===e) ban.textContent=tr('upOrDown'); },1450)); }
-function subeResp(v){ const e=sube; if(!e||!e.listening) return; e.listening=false; const bien=Math.sign(e.par[1]-e.par[0])===v, ban=document.getElementById('banner');
+function subeResp(v){ const e=sube; if(!e||!e.listening||e.done) return; e.listening=false; e.done=true; const bien=Math.sign(e.par[1]-e.par[0])===v, ban=document.getElementById('banner');
   if(bien){ e.ok++; ban.textContent=tr('good')+' '+tr(v>0?'upW':'downW'); ban.classList.add('flash'); const dog=document.getElementById('dog');
     if(dog&&!reduce){ dog.classList.add('in'); e.timers.push(setTimeout(()=>dog.classList.remove('in'),1200)); }
     try{ const a=ctx(), t=a.currentTime+.05; tone(spell(4).freq,t,.12,.08,true); tone(spell(7).freq,t+.12,.25,.08,true); }catch(x){} }
   else { ban.classList.remove('flash'); ban.textContent=tr(v>0?'wasDown':'wasUp'); subeOir(); }
   e.r++; e.timers.push(setTimeout(()=>{ if(sube!==e) return; if(e.r>=10){ const t=tr('score',{ok:e.ok}); subeStop(); if(e.ok>=8) jackpot(t+' '+tr('ear')); else { ban.textContent=t+' '+tr('tryAgain'); ban.classList.add('flash'); lluvia(40); }   /* al final, siempre llueve (Mario) */ return; } subeRonda(); }, bien?1300:2400)); }
-document.addEventListener('keydown',ev=>{ if(!sube) return; if(ev.key==='ArrowUp'){ ev.preventDefault(); subeResp(1); } else if(ev.key==='ArrowDown'){ ev.preventDefault(); subeResp(-1); } });
+document.addEventListener('keydown',ev=>{ if(!sube){ if(window._juegoId==='sube'&&(ev.key==='ArrowUp'||ev.key==='ArrowDown')&&!/INPUT|SELECT|TEXTAREA/.test(ev.target.tagName)){ ev.preventDefault(); subeStart(); } return; } if(ev.key==='ArrowUp'){ ev.preventDefault(); subeResp(1); } else if(ev.key==='ArrowDown'){ ev.preventDefault(); subeResp(-1); } });
 // ── 🧱 LA TORRE DE QUINTAS (2026-10-23, Mario): se empieza en Do; «QUINTA ↑» apila una quinta 3:2 hacia los sostenidos
 // (Sol Re La…), «QUINTA ↓» una hacia los bemoles (Fa Si♭ Mi♭…); cada nota baja a su octava. El perrito va arriba.
 // Siete bloques seguidos en la línea de quintas = una escala mayor (suena). Con doce, la torre tambalea; con trece se
@@ -851,10 +852,10 @@ document.getElementById('torreAbajo').onclick=()=>torreAdd(-1); document.getElem
 // perrito, mismas tonalidades; cambia el juego. El enlace puede llevar directo a uno: /melodias#eco.
 const JUEGOS=['maquina','eco','torre','paseo','sube'].map(id=>{ const [t,k,x]=tr('g_'+id); return {id,t,k,s:x}; });
 let juego=0;
-function ponJuego(i){ juego=(i+JUEGOS.length)%JUEGOS.length; const J=JUEGOS[juego]; window._juegoId=J.id; if(eco) ecoStop();
+function ponJuego(i){ juego=(i+JUEGOS.length)%JUEGOS.length; const J=JUEGOS[juego]; window._juegoId=J.id; if(eco) ecoStop(); { const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash'); }   /* al cambiar de juego no queda el aviso del anterior */
   document.getElementById('jTit').textContent=J.t; document.getElementById('jKick').textContent=J.k; document.getElementById('jSub').textContent=J.s;
   JUEGOS.forEach(x=>document.body.classList.toggle('juego-'+x.id,x===J));
-  if(sube) subeStop(); document.getElementById('ecoBtn').textContent=J.id==='paseo'?'🐾 '+tr('start'):J.id==='torre'?'🧱 '+tr('fifth'):J.id==='sube'?'⬆⬇ '+tr('start'):J.id==='eco'?'🐶 '+tr('start'):'🐶 '+tr('echo');
+  if(sube) subeStop(); if(!eco){ const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML=''; } if(J.id==='sube') subePad(); document.getElementById('ecoBtn').textContent=J.id==='paseo'?'🐾 '+tr('start'):J.id==='torre'?'🧱 '+tr('fifth'):J.id==='sube'?'⬆⬇ '+tr('start'):J.id==='eco'?'🐶 '+tr('start'):'🐶 '+tr('echo');
   document.getElementById('torreBox').hidden=J.id!=='torre'; if(J.id==='torre'){ torreAlt='n'; syncSeg('alts','n'); syncSeg('keys',''); torreNueva(); } else { syncSeg('keys',state.key); syncSeg('alts',state.alt); syncSeg('modes',state.mode); render(); }
   if(paseo) paseoStop(); document.getElementById('paseoBox').hidden=J.id!=='paseo'; if(J.id==='paseo') paseoDibuja();
   document.getElementById('torreAbajo').hidden=J.id!=='torre'; if(J.id==='torre') document.getElementById('ecoBtn').textContent='🧱 '+tr('fifth')+' ↑ ♯';
@@ -874,7 +875,7 @@ document.getElementById('chords').onclick=e=>{state.chords=!state.chords; e.curr
 for(let i=0;i<4;i++) document.getElementById('h'+i).onclick=e=>{ if(state.spinning) return; state.held[i]=!state.held[i]; const b=e.currentTarget; b.classList.toggle('on',state.held[i]); b.setAttribute('aria-pressed',state.held[i]); b.textContent=state.held[i]?'HELD':'HOLD'; document.getElementById('f'+i).classList.toggle('held',state.held[i]); if(state.held[i]&&state.held.every(Boolean)&&state.bars.length===4&&keyInfo().ok) tuMelodia(); };
 document.getElementById('spin').onclick=spin;
 document.getElementById('play').onclick=play;
-document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){e.preventDefault();spin();} });
+document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){e.preventDefault(); if(window._juegoId==='sube'){ sube?subeOir():subeStart(); return; } spin();} });   /* en ¿Sube o baja?, la barra espaciadora empieza o repite las dos notas */
 state.bars=[{deg:[2,2,3,4],rh:[2,2,2,2]},{deg:[5,5,4],rh:[2,2,4]},{deg:[4,3,2,1],rh:[3,1,2,2]},{deg:[2,1,0],rh:[2,2,4]}];
 render();
 </script>
