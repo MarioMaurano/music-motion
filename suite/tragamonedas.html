@@ -76,6 +76,7 @@ body.juego-torre .reels,body.juego-torre .hold,body.juego-torre #save,body.juego
 @keyframes cae{from{transform:translateY(-60px);opacity:0}to{transform:none;opacity:1}}
 @keyframes tamb{0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
 body.juego-maquina #ecoBtn{display:none}
+body:not(.juego-maquina) #readBtn{display:none}
 h1{font-family:var(--display);font-weight:400;letter-spacing:.06em;color:var(--gold);font-size:clamp(30px,7vw,58px);line-height:.95;margin:0;text-shadow:0 0 22px rgba(214,180,80,.45)}
 .kicker{font-family:var(--display);font-size:clamp(15px,2.4vw,20px);letter-spacing:.22em;text-transform:uppercase;color:var(--sky);text-align:center;margin:2px 0 0}
 @media (max-width:480px){.kicker{font-size:13px;letter-spacing:.12em}}
@@ -163,6 +164,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .dog .tail{transform-origin:22px 70px;animation:wag .18s ease-in-out infinite alternate}
 @keyframes wag{from{transform:rotate(-18deg)}to{transform:rotate(22deg)}}
 .dog .bub{font-family:var(--display);font-size:22px;fill:var(--ink)}
+.dog.sleep{bottom:max(10px,env(safe-area-inset-bottom,0px))}.dog.sleep>g:first-child{transform:translate(6px,66px) scale(1,.84)}.dog.sleep .tail{animation:none;transform:rotate(48deg)}   /* 📖 READ: con una nota equivocada el perrito se acuesta (zzz…) */
 @media (prefers-reduced-motion:reduce){.lights.run i,.lights.party i,.frame.spinning .bulbs i,.banner.flash,.dog .tail{animation:none}.rain:not(.suave){display:none}}
 @media (max-width:900px){.quintas{overflow:visible;gap:2px}.quintas span{flex:1 1 0;min-width:0;height:12px;padding:0;font-size:0;border-radius:4px}.quintas span.on{height:14px}}   /* teléfono: chips sin nombre, los 35 caben (Mario) */
 @media (max-height:520px) and (orientation:landscape){.marquee h1{font-size:30px}.flecha{width:30px;height:30px;font-size:20px}.marquee .kicker{font-size:11px;margin:0}.sub{display:none}.lights{margin:6px 4px 8px}.torre{min-height:0;padding:2px 0;justify-content:center}.lever{height:150px}.torre .blo{padding:2px 10px;font-size:12px}.torre .perro-torre{width:44px;height:46px}}   /* teléfono horizontal: más compacto */
@@ -189,6 +191,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
     <button class="btn" id="play">▶ PLAY</button>
  <button class="btn" id="torreAbajo" hidden>🧱 QUINTA ↓ ♭</button>
     <button class="btn" id="ecoBtn" aria-pressed="false" title="La máquina toca, tú repites">🐶 ECO</button>
+    <button class="btn" id="readBtn" aria-pressed="false">📖 READ</button>
     <button class="btn on" id="chords" aria-pressed="true">CHORDS</button>
     <button class="btn" id="save">⬇ SAVE .mmf</button>
   </div>
@@ -234,7 +237,7 @@ const LANG=(()=>{ const q=(/[?&]lang=(es|en|fr|nl|de)\b/.exec(location.search)||
   return nav==='es'?'es':'en'; })();
 const I18N={
 es:{ short:'Máquina de melodías', aula:'Música en el aula', prev:'Juego anterior', next:'Juego siguiente', quintasAria:'La línea de quintas: de {a} a {b}',
-  lever:'Palanca: tira hacia abajo para girar', ecoTitle:'La máquina toca, tú repites', bub:'¡GUAU!', barAria:'compás', bar:'Compás',
+  lever:'Palanca: tira hacia abajo para girar', ecoTitle:'La máquina toca, tú repites', bub:'¡GUAU!', readGo:'Lee la nota que brilla y tócala (teclas A S D F G H J K o los botones)', readTurn:'Nota {i} de {n}', readDone:'¡Melodía leída!', barAria:'compás', bar:'Compás',
   chordOf:'acorde de {r}', final:'I · final', start:'EMPEZAR', step:'PASO', fifth:'QUINTA', echo:'ECO',
   famOda:'¡La Oda a la alegría!', famEstr:'¡La Estrellita!', famFin:'¡El final de la Estrellita!', songEstr:'la Estrellita', songOda:'la Oda a la alegría',
   onTheWay:'¡Vas por {s}! {k} de 4 · HOLD y a tirar', three:'JACKPOT · tres ritmos iguales', yours:'¡Tu melodía!<small>cuatro compases elegidos</small>',
@@ -264,7 +267,7 @@ es:{ short:'Máquina de melodías', aula:'Música en el aula', prev:'Juego anter
   g_sube:['¿Sube o baja?','Juego de escucha','Suenan dos notas: ¿la segunda sube o baja? Pulsa ⬆ o ⬇ (o las flechas del teclado). Diez rondas, cada vez más cerca.'],
   how:'<b>Cómo se juega.</b> Tira de la palanca o pulsa SPIN: los rodillos giran y se detienen uno por uno en un compás nuevo, con otras notas y otros valores. El primero va sobre el acorde de I, el segundo sobre IV, el tercero sobre V y el cuarto vuelve a casa, siempre a la tónica. HOLD deja quieto el rodillo que te gustó. Con KEY y MODE la misma melodía suena en otra tonalidad, en mayor o en menor, en afinación pitagórica. Abajo están las teclas para tocarla en el Cosmic Keyboard (Tonal, fila del medio: A es la tónica). Si sale una melodía famosa, hay premio. Y si los cuatro rodillos forman la Estrellita o la Oda a la alegría completas, ¡GRAN PREMIO!: guarda con HOLD los trozos que vayan saliendo y sigue tirando. <b>SAVE .mmf</b> guarda la melodía con su acorde en cada compás para abrirla en el Score con File › Open.' },
 en:{ short:'Melody Machine', aula:'Music in the classroom', prev:'Previous game', next:'Next game', quintasAria:'The line of fifths: from {a} to {b}',
-  lever:'Lever: pull down to spin', ecoTitle:'The machine plays, you repeat', bub:'WOOF!', barAria:'bar', bar:'Bar',
+  lever:'Lever: pull down to spin', ecoTitle:'The machine plays, you repeat', bub:'WOOF!', readGo:'Read the glowing note and play it (keys A S D F G H J K or the buttons)', readTurn:'Note {i} of {n}', readDone:'Melody read!', barAria:'bar', bar:'Bar',
   chordOf:'{r} chord', final:'I · ending', start:'START', step:'STEP', fifth:'FIFTH', echo:'ECHO',
   famOda:'Ode to Joy!', famEstr:'Twinkle, Twinkle!', famFin:'The end of Twinkle, Twinkle!', songEstr:'Twinkle, Twinkle', songOda:'Ode to Joy',
   onTheWay:'On your way to {s}! {k} of 4 · HOLD and pull again', three:'JACKPOT · three matching rhythms', yours:'Your melody!<small>four bars you chose</small>',
@@ -294,7 +297,7 @@ en:{ short:'Melody Machine', aula:'Music in the classroom', prev:'Previous game'
   g_sube:['Up or Down?','A listening game','Two notes play: does the second one go up or down? Press ⬆ or ⬇ (or the arrow keys). Ten rounds, closer and closer.'],
   how:'<b>How to play.</b> Pull the lever or press SPIN: the reels spin and stop one by one on a new bar, with new notes and new rhythms. The first sits on the I chord, the second on IV, the third on V, and the fourth comes home, always to the tonic. HOLD keeps the reel you liked still. With KEY and MODE the same melody plays in another key, major or minor, in Pythagorean tuning. Below are the keys to play it on the Cosmic Keyboard (Tonal, middle row: A is the tonic). If a famous melody comes up, you win a prize. And if the four reels make the whole of Twinkle, Twinkle or Ode to Joy, GRAND PRIZE!: keep the pieces with HOLD as they come up and keep pulling. <b>SAVE .mmf</b> saves the melody with its chord in each bar, to open in the Score with File › Open.' },
 fr:{ short:'Machine à mélodies', aula:'La musique en classe', prev:'Jeu précédent', next:'Jeu suivant', quintasAria:'La ligne des quintes : de {a} à {b}',
-  lever:'Levier : tire vers le bas pour lancer', ecoTitle:'La machine joue, tu répètes', bub:'OUAF !', barAria:'mesure', bar:'Mesure',
+  lever:'Levier : tire vers le bas pour lancer', ecoTitle:'La machine joue, tu répètes', bub:'OUAF !', readGo:'Lis la note qui brille et joue-la (touches A S D F G H J K ou les boutons)', readTurn:'Note {i} sur {n}', readDone:'Mélodie lue !', barAria:'mesure', bar:'Mesure',
   chordOf:'accord de {r}', final:'I · fin', start:'DÉPART', step:'PAS', fifth:'QUINTE', echo:'ÉCHO',
   famOda:'L’Hymne à la joie !', famEstr:'Brille, brille, petite étoile !', famFin:'La fin de Brille, brille, petite étoile !', songEstr:'Brille, brille, petite étoile', songOda:'l’Hymne à la joie',
   onTheWay:'En route : {s} ! {k} sur 4 · HOLD et tire encore', three:'JACKPOT · trois rythmes pareils', yours:'Ta mélodie !<small>quatre mesures choisies</small>',
@@ -324,7 +327,7 @@ fr:{ short:'Machine à mélodies', aula:'La musique en classe', prev:'Jeu préc�
   g_sube:['Ça monte ou ça descend ?','Jeu d’écoute','Deux notes sonnent : la deuxième monte ou descend ? Appuie sur ⬆ ou ⬇ (ou les flèches du clavier). Dix manches, de plus en plus proches.'],
   how:'<b>Comment jouer.</b> Tire le levier ou appuie sur SPIN : les rouleaux tournent et s’arrêtent un par un sur une nouvelle mesure, avec d’autres notes et d’autres rythmes. Le premier est sur l’accord de I, le deuxième sur IV, le troisième sur V et le quatrième rentre à la maison, toujours sur la tonique. HOLD garde immobile le rouleau qui te plaît. Avec KEY et MODE, la même mélodie sonne dans une autre tonalité, en majeur ou en mineur, en accord pythagoricien. En dessous, tu trouves les touches pour la jouer sur le Cosmic Keyboard (Tonal, rangée du milieu : A est la tonique). Si une mélodie célèbre sort, tu gagnes un prix. Et si les quatre rouleaux forment Brille, brille, petite étoile ou l’Hymne à la joie en entier, GRAND PRIX ! : garde avec HOLD les morceaux qui sortent et continue à tirer. <b>SAVE .mmf</b> enregistre la mélodie avec son accord dans chaque mesure, pour l’ouvrir dans le Score avec File › Open.' },
 nl:{ short:'Melodiemachine', aula:'Muziek in de klas', prev:'Vorig spel', next:'Volgend spel', quintasAria:'De kwintenreeks: van {a} tot {b}',
-  lever:'Hendel: trek omlaag om te draaien', ecoTitle:'De machine speelt, jij speelt na', bub:'WOEF!', barAria:'maat', bar:'Maat',
+  lever:'Hendel: trek omlaag om te draaien', ecoTitle:'De machine speelt, jij speelt na', bub:'WOEF!', readGo:'Lees de noot die oplicht en speel hem (toetsen A S D F G H J K of de knoppen)', readTurn:'Noot {i} van {n}', readDone:'Melodie gelezen!', barAria:'maat', bar:'Maat',
   chordOf:'akkoord van {r}', final:'I · slot', start:'START', step:'STAP', fifth:'KWINT', echo:'ECHO',
   famOda:'Ode aan de vreugde!', famEstr:'Altijd is Kortjakje ziek!', famFin:'Het einde van Kortjakje!', songEstr:'Altijd is Kortjakje ziek', songOda:'Ode aan de vreugde',
   onTheWay:'Op weg naar {s}! {k} van 4 · HOLD en trek opnieuw', three:'JACKPOT · drie gelijke ritmes', yours:'Jouw melodie!<small>vier maten die jij koos</small>',
@@ -354,7 +357,7 @@ nl:{ short:'Melodiemachine', aula:'Muziek in de klas', prev:'Vorig spel', next:'
   g_sube:['Omhoog of omlaag?','Luisterspel','Er klinken twee noten: gaat de tweede omhoog of omlaag? Druk op ⬆ of ⬇ (of de pijltjestoetsen). Tien rondes, steeds dichter bij elkaar.'],
   how:'<b>Zo speel je.</b> Trek aan de hendel of druk op SPIN: de rollen draaien en stoppen één voor één op een nieuwe maat, met andere noten en andere ritmes. De eerste staat op het akkoord van I, de tweede op IV, de derde op V en de vierde komt thuis, altijd op de grondtoon. Met HOLD blijft de rol die je mooi vindt staan. Met KEY en MODE klinkt dezelfde melodie in een andere toonsoort, in majeur of mineur, in pythagoreïsche stemming. Hieronder staan de toetsen om hem te spelen op het Cosmic Keyboard (Tonal, middelste rij: A is de grondtoon). Komt er een bekende melodie uit, dan win je een prijs. En als de vier rollen samen heel Altijd is Kortjakje ziek of de Ode aan de vreugde vormen: HOOFDPRIJS! Houd de stukjes die uitkomen vast met HOLD en blijf trekken. <b>SAVE .mmf</b> bewaart de melodie met het akkoord in elke maat, om hem te openen in de Score met File › Open.' },
 de:{ short:'Melodiemaschine', aula:'Musik im Unterricht', prev:'Vorheriges Spiel', next:'Nächstes Spiel', quintasAria:'Die Quintenreihe: von {a} bis {b}',
-  lever:'Hebel: nach unten ziehen zum Drehen', ecoTitle:'Die Maschine spielt, du spielst nach', bub:'WAU!', barAria:'Takt', bar:'Takt',
+  lever:'Hebel: nach unten ziehen zum Drehen', ecoTitle:'Die Maschine spielt, du spielst nach', bub:'WAU!', readGo:'Lies die leuchtende Note und spiel sie (Tasten A S D F G H J K oder die Knöpfe)', readTurn:'Note {i} von {n}', readDone:'Melodie gelesen!', barAria:'Takt', bar:'Takt',
   chordOf:'{r}-Akkord', final:'I · Schluss', start:'START', step:'SCHRITT', fifth:'QUINTE', echo:'ECHO',
   famOda:'Ode an die Freude!', famEstr:'Funkel, funkel, kleiner Stern!', famFin:'Das Ende vom kleinen Stern!', songEstr:'Funkel, funkel, kleiner Stern', songOda:'Ode an die Freude',
   onTheWay:'Auf dem Weg: {s}! {k} von 4 · HOLD und weiterziehen', three:'JACKPOT · drei gleiche Rhythmen', yours:'Deine Melodie!<small>vier Takte, von dir gewählt</small>',
@@ -562,7 +565,7 @@ function newBars(){let prev=null; const out=[]; for(let i=0;i<4;i++){
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let tickT=null;
 async function spin(){
-  if(state.spinning) return; if(window._juegoId==='torre'){ torreAdd(1); return; } if(window._juegoId==='paseo'){ paseo&&paseo.on?paseoTap():paseoStart(); return; } if(eco) ecoStop(); if(sube) subeStop(); if(!keyInfo().ok){ ponKey('C','n',0); render(); } state.spinning=true; stopPlay();   // la palanca en una tonalidad teórica: vuelve a Do mayor y tira
+  if(state.spinning) return; if(window._juegoId==='torre'){ torreAdd(1); return; } if(window._juegoId==='paseo'){ paseo&&paseo.on?paseoTap():paseoStart(); return; } if(eco) ecoStop(); if(sube) subeStop(); if(lee) leeStop(); if(!keyInfo().ok){ ponKey('C','n',0); render(); } state.spinning=true; stopPlay();   // la palanca en una tonalidad teórica: vuelve a Do mayor y tira
   const btn=document.getElementById('spin'); btn.disabled=true; const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash');
   lights.classList.remove('party'); lights.classList.add('run'); [0,1,2,3].forEach(i=>document.getElementById('f'+i).classList.remove('win-flash'));
   const fin=newBars(); const nuevo=fin.map((b,i)=>!state.held[i]); const h=stripH(); let left=nuevo.filter(Boolean).length;
@@ -709,6 +712,29 @@ function ecoPress(d){ const e=eco; if(!e||!e.listening) return;
     try{ const a=ctx(); tone(spell(0).freq/2,a.currentTime+.05,.25,.08,true); }catch(x){}
     e.timers.push(setTimeout(()=>ecoRound(),1300)); } }
 document.addEventListener('keydown',ev=>{ if(!eco||ev.ctrlKey||ev.metaKey||ev.altKey) return; const d=KEYC.indexOf(ev.key.toUpperCase()); if(d>=0){ ev.preventDefault(); ecoPress(d); } });
+// ── 📖 READ (2026-10-25, Mario): leer la melodía en el pentagrama y tocarla, sin ritmo, con A S D F G H J K o los botones.
+// La nota que toca brilla; acierto → suena, el perrito mueve la cola y brilla la siguiente; error → el perrito se acuesta: zzz…
+let lee=null;
+function perro(m){ const dog=document.getElementById('dog'); if(!dog) return; const bub=dog.querySelector('.bub'); clearTimeout(perro.t);
+  dog.classList.toggle('sleep',m==='sleep'); dog.classList.toggle('in',!!m); if(bub) bub.textContent=m==='sleep'?'zzz…':tr('bub');
+  if(m) perro.t=setTimeout(()=>{ dog.classList.remove('in','sleep'); if(bub) bub.textContent=tr('bub'); },m==='sleep'?1500:1100); }
+function leeBtn(on){ const b=document.getElementById('readBtn'); b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); }
+function leeStop(){ if(!lee) return; lee.timers.forEach(clearTimeout); lee=null; leeBtn(false); const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML='';
+  const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash'); render(); }
+function leeTurno(){ document.getElementById('ecoTurno').textContent=tr('readTurn',{i:lee.pos+1,n:lee.target.length}); render(lee.hi[lee.pos]); }
+function leeStart(){ if(lee){ leeStop(); return; } if(!keyInfo().ok||state.spinning||state.bars.length<4) return; stopPlay(); if(eco) ecoStop();
+  lee={pos:0,target:[],hi:[],done:false,timers:[]}; state.bars.forEach((b,i)=>b.deg.forEach((d,k)=>{ lee.target.push(d); lee.hi.push([i,k]); })); leeBtn(true);
+  const pad=document.getElementById('ecoPad'); pad.innerHTML=`<div class="turno" id="ecoTurno"></div>`+[0,1,2,3,4,5,6,7].map(d=>`<button data-d="${d}">${KEYC[d]}<small>${nm(spell(d))}</small></button>`).join('');
+  pad.hidden=false; pad.querySelectorAll('button').forEach(b=>b.onclick=()=>{ b.blur(); leePress(+b.dataset.d); });
+  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=tr('readGo'); leeTurno(); }
+function leePress(d){ const e=lee; if(!e||e.done) return;
+  try{ const a=ctx(); tone(spell(d).freq,a.currentTime,.4,.16,true); }catch(x){}
+  const b=document.querySelector(`#ecoPad button[data-d="${d}"]`);
+  if(d===e.target[e.pos]){ if(b){ b.classList.add('ok'); setTimeout(()=>b.classList.remove('ok'),250); } if(!reduce) perro('wag'); e.pos++;
+    if(e.pos>=e.target.length){ e.done=true; render(); jackpot(tr('readDone')); e.timers.push(setTimeout(()=>{ if(lee===e) leeStop(); },3600)); return; }
+    leeTurno(); }
+  else { if(b){ b.classList.add('no'); setTimeout(()=>b.classList.remove('no'),400); } perro('sleep'); } }
+document.addEventListener('keydown',ev=>{ if(!lee||ev.ctrlKey||ev.metaKey||ev.altKey) return; const d=KEYC.indexOf(ev.key.toUpperCase()); if(d>=0){ ev.preventDefault(); leePress(d); } });
 // ── ⬆⬇ ¿SUBE O BAJA? (2026-10-23, Mario): dos notas de la escala; ¿la segunda sube o baja? Diez rondas: las primeras
 // con saltos grandes (5.ª o más), después 3.as y 4.as, y al final el paso de un grado (con los semitonos Mi–Fa y Si–Do).
 let sube=null;
@@ -846,13 +872,14 @@ function save(){
   a.download='nuestra-escena-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':'')+'.mmf'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);
 }
 document.getElementById('save').onclick=save;
+document.getElementById('readBtn').onclick=()=>leeStart();
 document.getElementById('ecoBtn').onclick=()=>{ const id=JUEGOS[juego].id; id==='torre'?torreAdd(1):id==='paseo'?(paseo&&paseo.on?paseoTap():paseoStart()):id==='sube'?subeStart():ecoStart(); };
 document.getElementById('torreAbajo').onclick=()=>torreAdd(-1); document.getElementById('torreAbajo').textContent='🧱 '+tr('fifth')+' ↓ ♭';
 // ── los juegos (2026-10-23, Mario: «para cada juego el título cambia, con flechas a cada lado»): mismos rodillos, mismo
 // perrito, mismas tonalidades; cambia el juego. El enlace puede llevar directo a uno: /melodias#eco.
 const JUEGOS=['maquina','eco','torre','paseo','sube'].map(id=>{ const [t,k,x]=tr('g_'+id); return {id,t,k,s:x}; });
 let juego=0;
-function ponJuego(i){ juego=(i+JUEGOS.length)%JUEGOS.length; const J=JUEGOS[juego]; window._juegoId=J.id; if(eco) ecoStop(); { const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash'); }   /* al cambiar de juego no queda el aviso del anterior */
+function ponJuego(i){ juego=(i+JUEGOS.length)%JUEGOS.length; const J=JUEGOS[juego]; window._juegoId=J.id; if(eco) ecoStop(); if(lee) leeStop(); { const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash'); }   /* al cambiar de juego no queda el aviso del anterior */
   document.getElementById('jTit').textContent=J.t; document.getElementById('jKick').textContent=J.k; document.getElementById('jSub').textContent=J.s;
   JUEGOS.forEach(x=>document.body.classList.toggle('juego-'+x.id,x===J));
   if(sube) subeStop(); if(!eco){ const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML=''; } if(J.id==='sube') subePad(); document.getElementById('ecoBtn').textContent=J.id==='paseo'?'🐾 '+tr('start'):J.id==='torre'?'🧱 '+tr('fifth'):J.id==='sube'?'⬆⬇ '+tr('start'):J.id==='eco'?'🐶 '+tr('start'):'🐶 '+tr('echo');
