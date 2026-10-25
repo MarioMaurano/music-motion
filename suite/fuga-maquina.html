@@ -87,7 +87,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .cmb{font-size:11px;padding:5px 8px;min-height:30px;letter-spacing:.06em;opacity:.9}.cmb[disabled]{opacity:.35}
 .mailbox{margin:10px auto 0;max-width:640px;border:1.5px dashed var(--gold-d);border-radius:12px;padding:9px 14px;text-align:center;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;color:var(--textm);cursor:pointer}
 .mailbox:hover,.mailbox.over{border-color:var(--gold);color:var(--gold);background:rgba(214,180,80,.06)}
-.tabs .btn{font-size:14px;padding:8px 22px}.tabs .btn.on{background:var(--gold);border-color:var(--gold);color:#0a0a10}
+.tabs .btn{font-size:14px;padding:8px 22px}.tabs a.btn{text-decoration:none;display:inline-flex;align-items:center}.tabs .btn.on{background:var(--gold);border-color:var(--gold);color:#0a0a10}
 body.win-canon .fx,body.win-fuga .cx,body.win-inv .fx,body.win-inv .cx,body.win-inv .vx,body.win-sinf .fx,body.win-sinf .cx,body.win-sinf .vx,body.win-ped .fx,body.win-ped .cx,body.win-ped .vx,body:not(.win-ped) .px,body.win-acomp .fx,body.win-acomp .cx,body.win-acomp .vx,body:not(.win-acomp) .ax,body:not(.win-acomp):not(.win-ped):not(.win-harm) .mx,body.win-harm .fx,body.win-harm .cx,body.win-harm .vx,body:not(.win-acomp):not(.win-harm) .ex,body:not(.win-harm) .hx{display:none}
 .stepv{display:inline-block;min-width:2.2em;text-align:center;font-family:var(--mono);font-size:15px;color:var(--gold)}
 .leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:11px;color:var(--textm)}
@@ -1266,7 +1266,7 @@ seg('cdis',[['1','1 BAR'],['2','2 BARS']],state.cdis,v=>state.cdis=+v);
 seg('cmov',[['dir','DIRECT'],['inv','INVERSION']],state.cmov,v=>state.cmov=v);
 seg('cfin',[['coda','CODA'],['perp','PERPETUAL']],state.cfin,v=>{ state.cfin=v; segVoces(); });
 { const el=document.getElementById('tabs');
-  el.innerHTML=[['canon','CANON'],['inv','INVENTION'],['sinf','SINFONIA'],['fuga','FUGUE'],['ped','PEDAL'],['acomp','ACCOMPANIED'],['harm','HARMONY']].map(([v,t])=>`<button class="btn${v===state.win?' on':''}" data-v="${v}" aria-pressed="${v===state.win}">${t}</button>`).join('');
+  el.innerHTML=[['canon','CANON'],['inv','INVENTION'],['sinf','SINFONIA'],['fuga','FUGUE'],['ped','PEDAL'],['acomp','ACCOMPANIED']].map(([v,t])=>`<button class="btn${v===state.win?' on':''}" data-v="${v}" aria-pressed="${v===state.win}">${t}</button>`).join('')+'<a class="btn" href="armonia-maquina.html">HARMONY ↗</a>';
   el.onclick=e=>{ const b=e.target.closest('button'); if(!b||state.spinning||b.dataset.v===state.win) return; stopPlay(); state.win=b.dataset.v;
     [...el.children].forEach(c=>{ c.classList.toggle('on',c===b); c.setAttribute('aria-pressed',c===b); });
     if(state.win==='canon'&&state.n>3) state.n=3; if(state.win==='inv'||state.win==='sinf'){ state.n=state.win==='inv'?2:3; if(state.T>2) setT(1); document.getElementById('tv').textContent=state.T; } if(state.win==='harm'&&state.T>8){ setT(8); document.getElementById('tv').textContent=state.T; } segVoces(); winTexts(); state.held=[]; buildReels(); render();
