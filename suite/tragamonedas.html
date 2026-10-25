@@ -164,7 +164,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .dog .tail{transform-origin:22px 70px;animation:wag .18s ease-in-out infinite alternate}
 @keyframes wag{from{transform:rotate(-18deg)}to{transform:rotate(22deg)}}
 .dog .bub{font-family:var(--display);font-size:22px;fill:var(--ink)}
-.dog.sleep{bottom:max(10px,env(safe-area-inset-bottom,0px))}.dog.sleep>g:first-child{transform:translate(6px,66px) scale(1,.84)}.dog.sleep .tail{animation:none;transform:rotate(48deg)}   /* 📖 READ: con una nota equivocada el perrito se acuesta (zzz…) */
+.dog.sleep{bottom:max(10px,env(safe-area-inset-bottom,0px))}.dog.quieto .tail{animation:none}.dog.quieto>g:last-of-type{opacity:0}.dog.sleep>g:first-child{transform:translate(6px,66px) scale(1,.84)}.dog.sleep .tail{animation:none;transform:rotate(48deg)}   /* 📖 READ: con una nota equivocada el perrito se acuesta (zzz…) */
 @media (prefers-reduced-motion:reduce){.lights.run i,.lights.party i,.frame.spinning .bulbs i,.banner.flash,.dog .tail{animation:none}.rain:not(.suave){display:none}}
 @media (max-width:900px){.quintas{overflow:visible;gap:2px}.quintas span{flex:1 1 0;min-width:0;height:12px;padding:0;font-size:0;border-radius:4px}.quintas span.on{height:14px}}   /* teléfono: chips sin nombre, los 35 caben (Mario) */
 @media (max-height:520px) and (orientation:landscape){.marquee h1{font-size:30px}.flecha{width:30px;height:30px;font-size:20px}.marquee .kicker{font-size:11px;margin:0}.sub{display:none}.lights{margin:6px 4px 8px}.torre{min-height:0;padding:2px 0;justify-content:center}.lever{height:150px}.torre .blo{padding:2px 10px;font-size:12px}.torre .perro-torre{width:44px;height:46px}}   /* teléfono horizontal: más compacto */
@@ -715,22 +715,22 @@ document.addEventListener('keydown',ev=>{ if(!eco||ev.ctrlKey||ev.metaKey||ev.al
 // ── 📖 READ (2026-10-25, Mario): leer la melodía en el pentagrama y tocarla, sin ritmo, con A S D F G H J K o los botones.
 // La nota que toca brilla; acierto → suena, el perrito mueve la cola y brilla la siguiente; error → el perrito se acuesta: zzz…
 let lee=null;
-function perro(m){ const dog=document.getElementById('dog'); if(!dog) return; const bub=dog.querySelector('.bub'); clearTimeout(perro.t);
-  dog.classList.toggle('sleep',m==='sleep'); dog.classList.toggle('in',!!m); if(bub) bub.textContent=m==='sleep'?'zzz…':tr('bub');
-  if(m) perro.t=setTimeout(()=>{ dog.classList.remove('in','sleep'); if(bub) bub.textContent=tr('bub'); },m==='sleep'?1500:1100); }
+function perro(m){ const dog=document.getElementById('dog'); if(!dog) return; const bub=dog.querySelector('.bub'); clearTimeout(perro.t);   /* durante READ el perrito se queda a la vista (Mario) */
+  dog.classList.toggle('sleep',m==='sleep'); dog.classList.toggle('quieto',!m&&!!lee); dog.classList.toggle('in',!!m||!!lee); if(bub) bub.textContent=m==='sleep'?'zzz…':tr('bub');
+  if(m) perro.t=setTimeout(()=>{ dog.classList.remove('sleep'); if(lee) dog.classList.add('quieto'); else dog.classList.remove('in'); if(bub) bub.textContent=tr('bub'); },m==='sleep'?1500:1100); }
 function leeBtn(on){ const b=document.getElementById('readBtn'); b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); }
-function leeStop(){ if(!lee) return; lee.timers.forEach(clearTimeout); lee=null; leeBtn(false); const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML='';
+function leeStop(){ if(!lee) return; lee.timers.forEach(clearTimeout); lee=null; leeBtn(false); clearTimeout(perro.t); { const dog=document.getElementById('dog'); if(dog){ dog.classList.remove('in','quieto','sleep'); const bub=dog.querySelector('.bub'); if(bub) bub.textContent=tr('bub'); } } const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML='';
   const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash'); render(); }
 function leeTurno(){ document.getElementById('ecoTurno').textContent=tr('readTurn',{i:lee.pos+1,n:lee.target.length}); render(lee.hi[lee.pos]); }
 function leeStart(){ if(lee){ leeStop(); return; } if(!keyInfo().ok||state.spinning||state.bars.length<4) return; stopPlay(); if(eco) ecoStop();
   lee={pos:0,target:[],hi:[],done:false,timers:[]}; state.bars.forEach((b,i)=>b.deg.forEach((d,k)=>{ lee.target.push(d); lee.hi.push([i,k]); })); leeBtn(true);
   const pad=document.getElementById('ecoPad'); pad.innerHTML=`<div class="turno" id="ecoTurno"></div>`+[0,1,2,3,4,5,6,7].map(d=>`<button data-d="${d}">${KEYC[d]}<small>${nm(spell(d))}</small></button>`).join('');
   pad.hidden=false; pad.querySelectorAll('button').forEach(b=>b.onclick=()=>{ b.blur(); leePress(+b.dataset.d); });
-  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=tr('readGo'); leeTurno(); }
+  const ban=document.getElementById('banner'); ban.classList.remove('flash'); ban.textContent=tr('readGo'); perro(null); leeTurno(); }
 function leePress(d){ const e=lee; if(!e||e.done) return;
   try{ const a=ctx(); tone(spell(d).freq,a.currentTime,.4,.16,true); }catch(x){}
   const b=document.querySelector(`#ecoPad button[data-d="${d}"]`);
-  if(d===e.target[e.pos]){ if(b){ b.classList.add('ok'); setTimeout(()=>b.classList.remove('ok'),250); } if(!reduce) perro('wag'); e.pos++;
+  if(d===e.target[e.pos]){ if(b){ b.classList.add('ok'); setTimeout(()=>b.classList.remove('ok'),250); } perro('wag'); e.pos++;
     if(e.pos>=e.target.length){ e.done=true; render(); jackpot(tr('readDone')); e.timers.push(setTimeout(()=>{ if(lee===e) leeStop(); },3600)); return; }
     leeTurno(); }
   else { if(b){ b.classList.add('no'); setTimeout(()=>b.classList.remove('no'),400); } perro('sleep'); } }
