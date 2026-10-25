@@ -1,0 +1,79 @@
+{
+ "ui": {
+  "es": {
+   "eyebrow": "Dirección de orquesta",
+   "title": "Conflictos y soluciones.",
+   "lead": "Momentos en que cada músico lee bien su parte y aun así algo no cuadra. Cada caso tiene la partitura con el conflicto en rojo y la solución a continuación, el análisis y las frases para el ensayo, en cinco idiomas.",
+   "lang": "Idioma",
+   "open": "Abrir el caso",
+   "inst": "Instrumentos",
+   "locked": "Este caso se abre con el pase de Salieri: la partitura, la solución y el análisis.",
+   "unlock": "Abrir con el pase",
+   "free": "Libre"
+  },
+  "en": {
+   "eyebrow": "Conducting",
+   "title": "Conflicts and solutions.",
+   "lead": "Moments when every musician reads their part correctly and still something does not fit. Each case has the score with the conflict in red and the solution right after, the analysis and the phrases for the rehearsal, in five languages.",
+   "lang": "Language",
+   "open": "Open the case",
+   "inst": "Instruments",
+   "locked": "This case opens with the Salieri pass: the score, the solution and the analysis.",
+   "unlock": "Open with the pass",
+   "free": "Free"
+  },
+  "fr": {
+   "eyebrow": "Direction d’orchestre",
+   "title": "Conflits et solutions.",
+   "lead": "Des moments où chaque musicien lit correctement sa partie et où pourtant quelque chose ne colle pas. Chaque cas comprend la partition avec le conflit en rouge et la solution juste après, l’analyse et les phrases pour la répétition, en cinq langues.",
+   "lang": "Langue",
+   "open": "Ouvrir le cas",
+   "inst": "Instruments",
+   "locked": "Ce cas s’ouvre avec le pass Salieri : la partition, la solution et l’analyse.",
+   "unlock": "Ouvrir avec le pass",
+   "free": "Libre"
+  },
+  "nl": {
+   "eyebrow": "Orkestdirectie",
+   "title": "Conflicten en oplossingen.",
+   "lead": "Momenten waarop elke musicus zijn partij correct leest en er toch iets niet klopt. Elk geval heeft de partituur met het conflict in rood en de oplossing meteen daarna, de analyse en de zinnen voor de repetitie, in vijf talen.",
+   "lang": "Taal",
+   "open": "Open het geval",
+   "inst": "Instrumenten",
+   "locked": "Dit geval opent met de Salieri-pas: de partituur, de oplossing en de analyse.",
+   "unlock": "Openen met de pas",
+   "free": "Vrij"
+  },
+  "de": {
+   "eyebrow": "Dirigieren",
+   "title": "Konflikte und Lösungen.",
+   "lead": "Momente, in denen jeder Musiker seine Stimme richtig liest und trotzdem etwas nicht passt. Jeder Fall enthält die Partitur mit dem Konflikt in Rot und gleich danach die Lösung, die Analyse und die Sätze für die Probe, in fünf Sprachen.",
+   "lang": "Sprache",
+   "open": "Fall öffnen",
+   "inst": "Instrumente",
+   "locked": "Dieser Fall öffnet sich mit dem Salieri-Pass: die Partitur, die Lösung und die Analyse.",
+   "unlock": "Mit dem Pass öffnen",
+   "free": "Frei"
+  }
+ },
+ "casos": [
+  {
+   "id": "RKcs240",
+   "inst": [
+    "voice_soprano",
+    "voice_alto",
+    "clarinet",
+    "bassoon",
+    "english_horn"
+   ],
+   "instNames": {
+    "es": "voz · clarinete · fagot · corno inglés",
+    "en": "voice · clarinet · bassoon · cor anglais",
+    "fr": "voix · clarinette · basson · cor anglais",
+    "nl": "stem · klarinet · fagot · Engelse hoorn",
+    "de": "Stimme · Klarinette · Fagott · Englischhorn"
+   },
+   "libre": true
+  }
+ ]
+}

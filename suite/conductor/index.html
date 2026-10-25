@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección de orquesta — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../mm-theme.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" type="image/svg+xml" href="/icons/mm-web-tab.svg">
+<link rel="apple-touch-icon" href="/icons/mm-web-180.png">
+<meta name="theme-color" content="#07070e">
+<!-- 2026-10-25 (Mario): página modelo para los ejemplos de Dirección de orquesta.
+     Portada de la colección: la lista sale de casos.json; cada caso se abre en caso.html. -->
+<style>
+.cs-langs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:22px 0 4px}
+.cs-langs .lbl{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--textd);margin-right:6px}
+.cs-langs button{font-family:var(--ff-mono);font-size:.8rem;letter-spacing:1px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--rad);background:transparent;color:var(--textm);cursor:pointer}
+.cs-langs button:hover{color:var(--gold);border-color:var(--gold)}
+.cs-langs button.on{background:var(--gold);border-color:var(--gold);color:#0a0a10}
+.cs-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:26px}
+.cs-card{display:block;padding:18px 18px 16px;border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);background:var(--panel);color:var(--text);transition:border-color .15s,transform .15s}
+.cs-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.cs-card .id{font-family:var(--ff-mono);font-size:.7rem;letter-spacing:1.5px;color:var(--gold)}
+.cs-card h3{margin:6px 0 8px;font-size:1.15rem}
+.cs-card .in{font-size:var(--fs-sm);color:var(--textm)}
+.cs-card .go{display:inline-block;margin-top:12px;font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+  </div>
+</header>
+<main style="--c:var(--gold)">
+<section style="border-bottom:none">
+  <div class="app-eyebrow" id="eyebrow"></div>
+  <h1 id="title"></h1>
+  <p class="lead" id="lead"></p>
+  <div class="cs-langs" id="langs"></div>
+  <div class="cs-list" id="list"></div>
+</section>
+</main>
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"></a>
+  <span class="foot-rights">© 2001–2026 Music Motion</span>
+</footer>
+<script src="../mm-theme.js"></script>
+<script src="../site.js"></script>
+<script>
+(function(){
+  var NAMES={es:'ES',en:'EN',fr:'FR',nl:'NL',de:'DE'}, LANGS=['es','en','fr','nl','de'];
+  var q=new URLSearchParams(location.search), D=null, CASES={}, lang='es';
+  function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
+  function $(i){return document.getElementById(i);}
+  function render(){
+    var U=D.ui[lang];
+    document.documentElement.lang=lang;
+    document.title=U.eyebrow+' — Music Motion v.2';
+    $('eyebrow').textContent='◈ '+U.eyebrow; $('title').textContent=U.title; $('lead').textContent=U.lead;
+    $('langs').innerHTML='<span class="lbl">'+U.lang+'</span>'+LANGS.map(function(l){return '<button data-l="'+l+'" class="'+(l===lang?'on':'')+'">'+NAMES[l]+'</button>';}).join('');
+    $('list').innerHTML=D.casos.map(function(c){
+      var C=CASES[c.id]; if(!C) return '';
+      var T=C.text[lang]||C.text.es;
+      return '<a class="cs-card" href="caso.html?c='+c.id+'&lang='+lang+'"><div class="id">'+c.id+' · '+(c.libre?U.free:'S · Salieri')+'</div><h3>'+T.title+'</h3><div class="in">'+(c.instNames[lang]||'')+'</div><span class="go">'+U.open+' →</span></a>';
+    }).join('');
+    ls('mmCoachLang',lang);
+    var u=new URL(location.href); u.searchParams.set('lang',lang); history.replaceState(null,'',u);
+  }
+  document.addEventListener('click',function(e){var b=e.target.closest('#langs button'); if(!b)return; lang=b.dataset.l; render();});
+  fetch('casos.json').then(function(r){return r.json();}).then(function(j){
+    D=j;
+    return Promise.all(D.casos.map(function(c){return fetch(c.id+'.json').then(function(r){return r.json();}).then(function(x){CASES[c.id]=x;}).catch(function(){});}));
+  }).then(function(){
+    var want=q.get('lang')||ls('mmCoachLang')||ls('mmSiteLang')||'es';
+    lang=LANGS.indexOf(want)>=0?want:'es'; render();
+  });
+})();
+</script>
+</body>
+</html>

@@ -36,6 +36,8 @@
 .cs-body .tw{overflow-x:auto}
 .cs-body ul.ensayo{list-style:none;margin-left:0}
 .cs-body ul.ensayo li{border-left:2px solid var(--gold);padding:4px 0 4px 14px;font-size:1.05rem;color:var(--text)}
+.cs-lock{margin-top:22px;padding:18px 20px;border:1px solid var(--border);border-left:2px solid var(--gold);background:var(--panel);max-width:72ch}
+.cs-lock p{color:var(--textm);margin-bottom:14px}
 .cs-src{font-size:var(--fs-sm);color:var(--textd);max-width:80ch}
 </style>
 </head>
@@ -58,16 +60,20 @@
 </header>
 <main style="--c:var(--gold)">
 <section style="border-bottom:none">
+  <a class="backlink" id="back" href="index.html"></a>
   <div class="app-eyebrow" id="eyebrow"></div>
   <h1 id="title"></h1>
   <p class="lead" id="lead"></p>
   <div class="cs-langs" id="langs"></div>
+  <div class="cs-lock" id="lock" hidden><p id="lockTxt"></p><button class="btn-launch" id="unlock" type="button"></button></div>
+  <div id="full">
   <div class="cs-open">
     <a class="btn-launch" id="open" target="_blank" rel="noopener"></a>
     <a id="pdf" target="_blank" rel="noopener"></a>
   </div>
   <p class="cs-help" id="help"></p>
   <div class="cs-frame"><iframe id="frame" title="Score" allow="autoplay"></iframe></div>
+  </div>
 </section>
 <div id="sections"></div>
 <section><p class="cs-src" id="src"></p></section>
@@ -78,12 +84,13 @@
 </footer>
 <script src="../mm-theme.js"></script>
 <script src="../site.js"></script>
+<script src="../mm-salieri.js"></script>
 <script>
 (function(){
   var NAMES={es:'ES',en:'EN',fr:'FR',nl:'NL',de:'DE'};
   var q=new URLSearchParams(location.search);
   var id=(q.get('c')||'RKcs240').replace(/[^\w-]/g,'');
-  var C=null, lang='es';
+  var C=null, lang='es', libre=false, UI=null;   // 2026-10-25 (Mario): un caso libre; los demás abren con el pase de Salieri
   function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
   function $(i){return document.getElementById(i);}
   function scoreUrl(){return '../../apps/mm-score-page.html?demo&file=../suite/conductor/'+encodeURIComponent(C.mmf[lang]||C.mmf.es)+'&page';}
@@ -91,6 +98,7 @@
     var T=C.text[lang], U=T.ui;
     document.documentElement.lang=lang;
     document.title=T.title+' — Music Motion v.2';
+    $('back').textContent='← '+U.back; $('back').href='index.html?lang='+lang;
     $('eyebrow').textContent='◈ '+U.collection;
     $('title').textContent=T.title;
     $('lead').innerHTML=T.lead;
@@ -98,6 +106,10 @@
     $('open').textContent=U.open+' ↗'; $('open').href=scoreUrl();
     var pf=C.pdf[lang]||C.pdf.es;
     $('pdf').textContent='⭳ '+U.pdf+(C.pdf[lang]?'':' · ES'); $('pdf').href=pf; $('pdf').title=C.pdf[lang]?'':U.pdfOnly;
+    var abierto=libre||!!(window.mmSalieriAbierto&&mmSalieriAbierto());
+    $('lock').hidden=abierto; $('full').hidden=!abierto; $('sections').hidden=!abierto;
+    if(!abierto){ $('lockTxt').textContent=UI[lang].locked; $('unlock').textContent=UI[lang].unlock+' ↗';
+      ls('mmCoachLang',lang); var u0=new URL(location.href); u0.searchParams.set('lang',lang); history.replaceState(null,'',u0); return; }
     $('help').textContent=U.openHelp;
     $('sections').innerHTML=T.sections.map(function(s){return '<section><div class="cs-body"><h2>'+s.h+'</h2>'+s.html.replace(/<table>/g,'<div class="tw"><table>').replace(/<\/table>/g,'</table></div>')+'</div></section>';}).join('');
     $('src').innerHTML=T.source;
@@ -107,7 +119,11 @@
   }
   document.addEventListener('click',function(e){var b=e.target.closest('#langs button'); if(!b)return; lang=b.dataset.l; render(); b=document.querySelector('#langs button[data-l="'+lang+'"]'); if(b)b.blur();});
   $('open').addEventListener('click',function(){ls('mmCoachLang',lang);});
-  fetch(id+'.json').then(function(r){return r.json();}).then(function(j){
+  $('unlock').addEventListener('click',function(){ if(window.mmSalieriPuerta) mmSalieriPuerta(); });
+  document.addEventListener('mm-salieri',function(){ if(C) render(); });   // la licencia abrió
+  Promise.all([fetch('casos.json').then(function(r){return r.json();}),fetch(id+'.json').then(function(r){return r.json();})]).then(function(a){
+    var D=a[0], j=a[1]; UI=D.ui;
+    D.casos.forEach(function(c){ if(c.id===id&&c.libre) libre=true; });
     C=j;
     var want=q.get('lang')||ls('mmCoachLang')||ls('mmSiteLang')||'es';
     lang=C.langs.indexOf(want)>=0?want:'es';

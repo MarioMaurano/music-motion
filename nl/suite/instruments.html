@@ -153,6 +153,10 @@
     if(!keys.length){ root.innerHTML='<div style="color:var(--textd);font-size:13px">—</div>'; return; }
     var SECS=window.MM_INSTRUMENT_SECTIONS||[];
     var html='', seen={}, FAM='0', FAMN=0;
+    var CASOS=[], CBASE=(/\/(fr|nl|de)\/suite\//.test(location.pathname)?'../../suite/':'')+'conductor/';
+    fetch(CBASE+'casos.json').then(function(r){return r.json();}).then(function(j){
+      j.casos.forEach(function(c){ fetch(CBASE+c.id+'.json').then(function(r){return r.json();}).then(function(x){ CASOS.push({id:c.id,inst:c.inst,text:x.text,libre:!!c.libre}); }).catch(function(){}); });
+    }).catch(function(){});
     function card(k,col){
       var p=P[k]||{}, c=p.class||{};
       var lbl=c.label||p.name||k;
@@ -206,6 +210,12 @@
           tc.toca.forEach(function(r){ h+='<div class="ficha-row"><div class="ficha-k">'+bi(r.sig,r.sigEn)+'</div><div class="ficha-v">'+bi(r.es,r.en)+'</div></div>'; });
         }
         h+='<div class="ficha-src">'+bi(window.MM_TECH.source,window.MM_TECH.sourceEn)+(tc.ref?' · '+esc(tc.ref):'')+'</div>';
+      }
+      var cs=CASOS.filter(function(c){ return c.inst.indexOf(SAL_ALIAS[k]||k)>=0; });   // 2026-10-25: casos de Dirección de orquesta (uno libre; los demás con el pase de Salieri)
+      if(cs.length){
+        var LG=((/\/(fr|nl|de)\/suite\//.exec(location.pathname)||[])[1])||document.documentElement.getAttribute('data-lang')||'es'; if(!/^(es|en|fr|nl|de)$/.test(LG)) LG='en';
+        h+='<div class="ficha-sec">'+esc({es:'Conflictos y soluciones · Dirección de orquesta',en:'Conflicts and solutions · Conducting',fr:'Conflits et solutions · Direction d’orchestre',nl:'Conflicten en oplossingen · Orkestdirectie',de:'Konflikte und Lösungen · Dirigieren'}[LG])+'</div>';
+        cs.forEach(function(c){ var T=c.text[LG]||c.text.es; h+='<div class="ficha-row"><div class="ficha-k">'+esc(c.id)+'</div><div class="ficha-v"><a href="'+CBASE+'caso.html?c='+encodeURIComponent(c.id)+'&lang='+LG+'">'+esc(T.title)+' →</a>'+(c.libre?'':' <span style="color:var(--textd)">· S · Salieri</span>')+'</div></div>'; });
       }
       if(!rk&&!tc) h+='<div class="ficha-row"><div class="ficha-v" style="color:var(--textd)">'+bi('Todavía sin ficha: este instrumento no tiene tabla de Rimsky ni notas de técnica.','No card yet: this instrument has neither a Rimsky table nor technique notes.')+'</div></div>';
       return h;
