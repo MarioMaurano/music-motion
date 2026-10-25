@@ -2,9 +2,9 @@
  "format": "mmf",
  "type": "score",
  "version": "1.1",
- "app": "V2.7.124",
+ "app": "V2.7.127",
  "intelligentBeams": 1,
- "created": "2026-10-20T20:08:43.980Z",
+ "created": "2026-10-25T22:28:22.572Z",
  "system": "Tonal",
  "keySignature": "G",
  "keyChanges": [],
@@ -16,7 +16,7 @@
   "byM": {}
  },
  "view": {
-  "zoom": 100,
+  "zoom": 125,
   "barNums": "continuous",
   "listenOct": {
    "fit": "auto",
@@ -216,7 +216,7 @@
  "artMarkings": [],
  "textAnnotations": [
   {
-   "text": "La♯ (voz) contra Si♭ (clarinete): 23,5 cents",
+   "text": "La♯ (voz) contra Si♭ (clarinete, Do♮ escrito): 23,5 cents",
    "measure": 2,
    "beat": 3,
    "channel": 6,
@@ -227,7 +227,7 @@
    "offsetY": -14
   },
   {
-   "text": "Sol♯ (voz) contra La♭ (clarinete): 23,5 cents",
+   "text": "Sol♯ (voz) contra La♭ (clarinete, Si♭ escrito): 23,5 cents",
    "measure": 4,
    "beat": 2,
    "channel": 6,
@@ -245,11 +245,11 @@
    "scope": "channel",
    "id": 1792800000003,
    "fontSize": 14,
-   "offsetX": -70,
-   "offsetY": 95
+   "offsetX": -154,
+   "offsetY": 95.00000000000003
   },
   {
-   "text": "Si♭, no La♯: baja a La con el clarinete",
+   "text": "Si♭, no La♯: baja a La con el clarinete (su Do♮ escrito)",
    "measure": 7,
    "beat": 3,
    "channel": 6,
@@ -260,7 +260,7 @@
    "offsetY": -14
   },
   {
-   "text": "La♭, no Sol♯: baja a Sol con el clarinete",
+   "text": "La♭, no Sol♯: baja a Sol con el clarinete (su Si♭ escrito)",
    "measure": 9,
    "beat": 2,
    "channel": 6,
@@ -371,7 +371,8 @@
      "_xVoice": 0,
      "_stemX": 224.4,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 1,
@@ -447,7 +448,8 @@
      "_xVoice": 0,
      "_stemX": 821.4327110784274,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 3,
@@ -518,7 +520,8 @@
      "_isDisplaced": false,
      "_xVoice": 0,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 6,
@@ -543,7 +546,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 224.4,
+     "_stemX": 1727.9254152069025,
      "_accShow": null,
      "_accW": 0
     },
@@ -566,7 +569,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 371.37226839189833,
+     "_stemX": 1874.8976835988008,
      "_accShow": null,
      "_accW": 0
     },
@@ -619,7 +622,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 821.4327110784274,
+     "_stemX": 2324.95812628533,
      "_accShow": null,
      "_accW": 0
     },
@@ -642,7 +645,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 989.4327110784274,
+     "_stemX": 2492.95812628533,
      "_accShow": null,
      "_accW": 0
     },
@@ -743,7 +746,8 @@
      "_xVoice": 0,
      "_stemX": 224.4,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 1,
@@ -819,7 +823,8 @@
      "_xVoice": 0,
      "_stemX": 808.2327110784273,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 3,
@@ -890,7 +895,8 @@
      "_isDisplaced": false,
      "_xVoice": 0,
      "_accShow": "flat",
-     "_accW": 16
+     "_accW": 16,
+     "_playActive": false
     },
     {
      "measure": 6,
@@ -915,7 +921,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 224.4,
+     "_stemX": 1727.9254152069025,
      "_accShow": null,
      "_accW": 0
     },
@@ -938,7 +944,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 371.37226839189833,
+     "_stemX": 1874.8976835988008,
      "_accShow": null,
      "_accW": 0
     },
@@ -991,7 +997,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 808.2327110784273,
+     "_stemX": 2311.75812628533,
      "_accShow": null,
      "_accW": 0
     },
@@ -1014,7 +1020,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 976.2327110784273,
+     "_stemX": 2479.75812628533,
      "_accShow": null,
      "_accW": 0
     },
@@ -1108,7 +1114,7 @@
      "beat": 1,
      "beatPos": 0,
      "channel": 2,
-     "accidental": null,
+     "accidental": "flat",
      "dotted": true,
      "velocity": 20,
      "isRest": false,
@@ -1127,20 +1133,22 @@
      "_isDisplaced": false,
      "_xVoice": 0,
      "_stemX": 508.31635553921365,
-     "_accShow": "flat",
+     "_accShow": "natural",
      "_accW": 16,
      "color": "#e0404a",
      "coachWhy": {
-      "es": "Si♭: la referencia",
-      "en": "B♭: the reference"
-     }
+      "es": "Si♭ real (tu Do♮): la referencia",
+      "en": "Sounding B♭ (your C♮): the reference"
+     },
+     "_playActive": false,
+     "courtesyAcc": "plain"
     },
     {
      "measure": 2,
      "beat": 4,
      "beatPos": 3,
      "channel": 2,
-     "accidental": null,
+     "accidental": "flat",
      "dotted": false,
      "velocity": 20,
      "isRest": false,
@@ -1159,8 +1167,8 @@
      "_accW": 0,
      "color": "#e0404a",
      "coachWhy": {
-      "es": "Si♭: la referencia",
-      "en": "B♭: the reference"
+      "es": "Si♭ real (tu Do♮): la referencia",
+      "en": "Sounding B♭ (your C♮): the reference"
      }
     },
     {
@@ -1194,7 +1202,7 @@
      "beat": 1,
      "beatPos": 0,
      "channel": 2,
-     "accidental": null,
+     "accidental": "flat",
      "dotted": true,
      "velocity": 20,
      "isRest": false,
@@ -1212,21 +1220,23 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1126.3767982257425,
-     "_accShow": "flat",
-     "_accW": 16,
+     "_stemX": 1097.1767982257427,
+     "_accShow": null,
+     "_accW": 0,
      "color": "#e0404a",
      "coachWhy": {
-      "es": "La♭: la referencia",
-      "en": "A♭: the reference"
-     }
+      "es": "La♭ real (tu Si♭): la referencia",
+      "en": "Sounding A♭ (your B♭): the reference"
+     },
+     "_playActive": false,
+     "courtesyAcc": false
     },
     {
      "measure": 4,
      "beat": 4,
      "beatPos": 3,
      "channel": 2,
-     "accidental": null,
+     "accidental": "flat",
      "dotted": false,
      "velocity": 20,
      "isRest": false,
@@ -1240,13 +1250,13 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1352.2649725203732,
+     "_stemX": 1323.0649725203734,
      "_accShow": null,
      "_accW": 0,
      "color": "#e0404a",
      "coachWhy": {
-      "es": "La♭: la referencia",
-      "en": "A♭: the reference"
+      "es": "La♭ real (tu Si♭): la referencia",
+      "en": "Sounding A♭ (your B♭): the reference"
      }
     },
     {
@@ -1311,7 +1321,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 508.31635553921365,
+     "_stemX": 2011.8417707461163,
      "_accShow": "flat",
      "_accW": 16
     },
@@ -1334,7 +1344,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 687.288623931112,
+     "_stemX": 2190.814039138015,
      "_accShow": null,
      "_accW": 0
     },
@@ -1387,7 +1397,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1126.3767982257425,
+     "_stemX": 2629.902213432645,
      "_accShow": "flat",
      "_accW": 16
     },
@@ -1410,7 +1420,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1352.2649725203732,
+     "_stemX": 2855.7903877272756,
      "_accShow": null,
      "_accW": 0
     },
@@ -1448,7 +1458,7 @@
    "clef": "F",
    "clefChanges": [],
    "staffHost": null,
-   "yOffset": 0,
+   "yOffset": 18.46153846153846,
    "visible": true,
    "nameHidden": false,
    "nameAbbr": false,
@@ -1508,7 +1518,8 @@
      "_xVoice": 0,
      "_stemX": 521.5163555392137,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 2,
@@ -1535,7 +1546,8 @@
      "_xVoice": 0,
      "_stemX": 628.4886239311121,
      "_accShow": "sharp",
-     "_accW": 16
+     "_accW": 16,
+     "_playActive": false
     },
     {
      "measure": 2,
@@ -1615,9 +1627,10 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1126.3767982257425,
+     "_stemX": 1110.3767982257425,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 4,
@@ -1642,14 +1655,15 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1283.3208853730578,
+     "_stemX": 1267.3208853730578,
      "_accShow": "sharp",
      "_accW": 16,
      "color": "#e0404a",
      "coachWhy": {
       "es": "Prueba con Mi♭",
       "en": "Try E♭"
-     }
+     },
+     "_playActive": false
     },
     {
      "measure": 4,
@@ -1670,7 +1684,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1352.2649725203732,
+     "_stemX": 1336.2649725203732,
      "_accShow": null,
      "_accW": 0,
      "color": "#e0404a",
@@ -1747,7 +1761,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 521.5163555392137,
+     "_stemX": 2025.041770746116,
      "_accShow": null,
      "_accW": 0
     },
@@ -1774,8 +1788,8 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 628.4886239311121,
-     "_accShow": "sharp",
+     "_stemX": 2132.0140391380146,
+     "_accShow": "natural",
      "_accW": 16
     },
     {
@@ -1797,7 +1811,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 700.4886239311121,
+     "_stemX": 2204.0140391380146,
      "_accShow": null,
      "_accW": 0
     },
@@ -1856,7 +1870,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1126.3767982257425,
+     "_stemX": 2629.902213432645,
      "_accShow": null,
      "_accW": 0
     },
@@ -1883,7 +1897,9 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1283.3208853730578
+     "_stemX": 2786.8463005799604,
+     "_accShow": "flat",
+     "_accW": 16
     },
     {
      "measure": 9,
@@ -1904,7 +1920,9 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1352.2649725203732
+     "_stemX": 2855.7903877272756,
+     "_accShow": null,
+     "_accW": 0
     },
     {
      "measure": 9,
@@ -1940,7 +1958,7 @@
    "clef": "F",
    "clefChanges": [],
    "staffHost": 3,
-   "yOffset": 0,
+   "yOffset": 18.46153846153846,
    "visible": true,
    "nameHidden": false,
    "nameAbbr": false,
@@ -1961,7 +1979,6 @@
      "beat": 1,
      "beatPos": 0,
      "channel": 4,
-     "accidental": null,
      "dotted": true,
      "velocity": 20,
      "isRest": false,
@@ -1970,7 +1987,7 @@
      "duration": "half",
      "e3": 0,
      "e2": 0,
-     "freq": 260.74074074074076,
+     "freq": 260.7407407407407,
      "tieTo": {
       "chId": 4,
       "noteIdx": 1
@@ -1980,15 +1997,15 @@
      "_isDisplaced": false,
      "_xVoice": 0,
      "_stemX": 508.31635553921365,
-     "_accShow": null,
-     "_accW": 0
+     "_accShow": "sharp",
+     "_accW": 16,
+     "_playActive": false
     },
     {
      "measure": 2,
      "beat": 4,
      "beatPos": 3,
      "channel": 4,
-     "accidental": null,
      "dotted": false,
      "velocity": 20,
      "isRest": false,
@@ -1997,7 +2014,7 @@
      "duration": "eighth",
      "e3": 0,
      "e2": 0,
-     "freq": 260.74074074074076,
+     "freq": 260.7407407407407,
      "_stemUp": false,
      "_xDisplace": 0,
      "_isDisplaced": false,
@@ -2042,9 +2059,10 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1113.1767982257427,
+     "_stemX": 1097.1767982257427,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 4,
@@ -2065,7 +2083,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1339.0649725203734,
+     "_stemX": 1323.0649725203734,
      "_accShow": null,
      "_accW": 0
     },
@@ -2105,7 +2123,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 508.31635553921365,
+     "_stemX": 2011.8417707461163,
      "_accShow": null,
      "_accW": 0
     },
@@ -2128,7 +2146,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 687.288623931112,
+     "_stemX": 2190.814039138015,
      "_accShow": null,
      "_accW": 0
     },
@@ -2168,7 +2186,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1113.1767982257427,
+     "_stemX": 2616.7022134326453,
      "_accShow": null,
      "_accW": 0
     },
@@ -2191,7 +2209,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1339.0649725203734,
+     "_stemX": 2842.590387727276,
      "_accShow": null,
      "_accW": 0
     },
@@ -2216,7 +2234,7 @@
    "clef": "G",
    "clefChanges": [],
    "staffHost": null,
-   "yOffset": 0,
+   "yOffset": 18.46153846153846,
    "visible": true,
    "nameHidden": false,
    "nameAbbr": false,
@@ -2257,7 +2275,8 @@
      "_xVoice": 0,
      "_stemX": 224.4,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 1,
@@ -2333,7 +2352,8 @@
      "_xVoice": 0,
      "_stemX": 821.4327110784274,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 3,
@@ -2404,7 +2424,8 @@
      "_isDisplaced": false,
      "_xVoice": 0,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 6,
@@ -2429,7 +2450,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 224.4,
+     "_stemX": 1727.9254152069025,
      "_accShow": null,
      "_accW": 0
     },
@@ -2452,7 +2473,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 371.37226839189833,
+     "_stemX": 1874.8976835988008,
      "_accShow": null,
      "_accW": 0
     },
@@ -2505,7 +2526,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 821.4327110784274,
+     "_stemX": 2324.95812628533,
      "_accShow": null,
      "_accW": 0
     },
@@ -2528,7 +2549,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 989.4327110784274,
+     "_stemX": 2492.95812628533,
      "_accShow": null,
      "_accW": 0
     },
@@ -2588,7 +2609,7 @@
    "clef": "G",
    "clefChanges": [],
    "staffHost": null,
-   "yOffset": 0,
+   "yOffset": 18.46153846153846,
    "visible": true,
    "nameHidden": false,
    "nameAbbr": false,
@@ -2637,7 +2658,8 @@
      "_xVoice": 0,
      "_stemX": 315.37226839189833,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 1,
@@ -2699,7 +2721,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 778,
+     "_beamTipY": 796.4615384615385,
      "_beamUp": true,
      "_accShow": "sharp",
      "_accW": 16,
@@ -2707,7 +2729,8 @@
      "coachWhy": {
       "es": "Prueba con Si♭",
       "en": "Try B♭"
-     }
+     },
+     "_playActive": false
     },
     {
      "measure": 2,
@@ -2730,7 +2753,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 778,
+     "_beamTipY": 796.4615384615385,
      "_beamUp": true,
      "_accShow": null,
      "_accW": 0,
@@ -2738,7 +2761,8 @@
      "coachWhy": {
       "es": "Prueba con Si♭",
       "en": "Try B♭"
-     }
+     },
+     "_playActive": false
     },
     {
      "measure": 3,
@@ -2762,7 +2786,8 @@
      "_xVoice": 0,
      "_stemX": 821.4327110784274,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 3,
@@ -2836,14 +2861,15 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1232.8488417994001,
+     "_stemX": 1216.8488417994001,
      "_accShow": "sharp",
      "_accW": 16,
      "color": "#e0404a",
      "coachWhy": {
       "es": "Prueba con La♭",
       "en": "Try A♭"
-     }
+     },
+     "_playActive": false
     },
     {
      "measure": 4,
@@ -2862,11 +2888,11 @@
      "freq": 417.65625000000006,
      "lyric": "et",
      "_stemUp": true,
-     "_stemX": 1283.3208853730578,
+     "_stemX": 1267.3208853730578,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 784,
+     "_beamTipY": 802.4615384615385,
      "_beamUp": true,
      "_accShow": null,
      "_accW": 0,
@@ -2874,7 +2900,8 @@
      "coachWhy": {
       "es": "Prueba con La♭",
       "en": "Try A♭"
-     }
+     },
+     "_playActive": false
     },
     {
      "measure": 4,
@@ -2893,11 +2920,11 @@
      "freq": 417.65625000000006,
      "lyric": "blan-",
      "_stemUp": true,
-     "_stemX": 1317.7929289467154,
+     "_stemX": 1301.7929289467154,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 784,
+     "_beamTipY": 802.4615384615385,
      "_beamUp": true,
      "_accShow": null,
      "_accW": 0,
@@ -2905,7 +2932,8 @@
      "coachWhy": {
       "es": "Prueba con La♭",
       "en": "Try A♭"
-     }
+     },
+     "_playActive": false
     },
     {
      "measure": 4,
@@ -2924,11 +2952,11 @@
      "freq": 417.65625000000006,
      "lyric": "che",
      "_stemUp": true,
-     "_stemX": 1352.2649725203732,
+     "_stemX": 1336.2649725203732,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 784,
+     "_beamTipY": 802.4615384615385,
      "_beamUp": true,
      "_accShow": null,
      "_accW": 0,
@@ -2936,7 +2964,8 @@
      "coachWhy": {
       "es": "Prueba con La♭",
       "en": "Try A♭"
-     }
+     },
+     "_playActive": false
     },
     {
      "measure": 4,
@@ -2955,11 +2984,11 @@
      "freq": 417.65625000000006,
      "lyric": "de",
      "_stemUp": true,
-     "_stemX": 1386.7370160940309,
+     "_stemX": 1370.7370160940309,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 784,
+     "_beamTipY": 802.4615384615385,
      "_beamUp": true,
      "_accShow": null,
      "_accW": 0,
@@ -2967,7 +2996,8 @@
      "coachWhy": {
       "es": "Prueba con La♭",
       "en": "Try A♭"
-     }
+     },
+     "_playActive": false
     },
     {
      "measure": 5,
@@ -2989,9 +3019,10 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1489.2090596676885,
+     "_stemX": 1473.2090596676885,
      "_accShow": null,
-     "_accW": 0
+     "_accW": 0,
+     "_playActive": false
     },
     {
      "measure": 5,
@@ -3065,7 +3096,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 315.37226839189833,
+     "_stemX": 1818.8976835988008,
      "_accShow": null,
      "_accW": 0
     },
@@ -3124,13 +3155,15 @@
      "e2": 4,
      "freq": 463.53909465020575,
      "lyric": "elle",
-     "_stemUp": true,
-     "_stemX": 700.4886239311121,
+     "_stemUp": false,
+     "_stemX": 2190.814039138015,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 778,
-     "_beamUp": true
+     "_beamTipY": 874.4615384615385,
+     "_beamUp": false,
+     "_accShow": "flat",
+     "_accW": 16
     },
     {
      "measure": 7,
@@ -3148,13 +3181,15 @@
      "e2": 4,
      "freq": 463.53909465020575,
      "lyric": "est",
-     "_stemUp": true,
-     "_stemX": 734.9606675047697,
+     "_stemUp": false,
+     "_stemX": 2225.2860827116724,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 778,
-     "_beamUp": true
+     "_beamTipY": 874.4615384615385,
+     "_beamUp": false,
+     "_accShow": null,
+     "_accW": 0
     },
     {
      "measure": 8,
@@ -3176,7 +3211,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 821.4327110784274,
+     "_stemX": 2324.95812628533,
      "_accShow": null,
      "_accW": 0
     },
@@ -3252,7 +3287,9 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1232.8488417994001
+     "_stemX": 2736.3742570063027,
+     "_accShow": "flat",
+     "_accW": 16
     },
     {
      "measure": 9,
@@ -3271,12 +3308,14 @@
      "freq": 412.0347508001829,
      "lyric": "et",
      "_stemUp": true,
-     "_stemX": 1283.3208853730578,
+     "_stemX": 2786.8463005799604,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 784,
-     "_beamUp": true
+     "_beamTipY": 796.4615384615385,
+     "_beamUp": true,
+     "_accShow": null,
+     "_accW": 0
     },
     {
      "measure": 9,
@@ -3295,12 +3334,14 @@
      "freq": 412.0347508001829,
      "lyric": "blan-",
      "_stemUp": true,
-     "_stemX": 1317.7929289467154,
+     "_stemX": 2821.318344153618,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 784,
-     "_beamUp": true
+     "_beamTipY": 796.4615384615385,
+     "_beamUp": true,
+     "_accShow": null,
+     "_accW": 0
     },
     {
      "measure": 9,
@@ -3319,12 +3360,14 @@
      "freq": 412.0347508001829,
      "lyric": "che",
      "_stemUp": true,
-     "_stemX": 1352.2649725203732,
+     "_stemX": 2855.7903877272756,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 784,
-     "_beamUp": true
+     "_beamTipY": 796.4615384615385,
+     "_beamUp": true,
+     "_accShow": null,
+     "_accW": 0
     },
     {
      "measure": 9,
@@ -3343,12 +3386,14 @@
      "freq": 412.0347508001829,
      "lyric": "de",
      "_stemUp": true,
-     "_stemX": 1386.7370160940309,
+     "_stemX": 2890.2624313009333,
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_beamTipY": 784,
-     "_beamUp": true
+     "_beamTipY": 796.4615384615385,
+     "_beamUp": true,
+     "_accShow": null,
+     "_accW": 0
     },
     {
      "measure": 10,
@@ -3370,7 +3415,7 @@
      "_xDisplace": 0,
      "_isDisplaced": false,
      "_xVoice": 0,
-     "_stemX": 1489.2090596676885,
+     "_stemX": 2992.734474874591,
      "_accShow": null,
      "_accW": 0
     },

@@ -74,6 +74,23 @@
     "de": "Stimme · Klarinette · Fagott · Englischhorn"
    },
    "libre": true
+  },
+  {
+   "id": "RKcs011",
+   "inst": [
+    "voice_soprano",
+    "voice_alto",
+    "voice_tenor",
+    "voice_bass",
+    "trombone"
+   ],
+   "instNames": {
+    "es": "voz · trombones",
+    "en": "voice · trombones",
+    "fr": "voix · trombones",
+    "nl": "stem · trombones",
+    "de": "Stimme · Posaunen"
+   }
   }
  ]
 }

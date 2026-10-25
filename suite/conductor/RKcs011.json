@@ -1,0 +1,202 @@
+{
+ "id": "RKcs011",
+ "pdf": {
+  "es": "RKcs011-analisis-ES.pdf"
+ },
+ "mmf": {
+  "es": "RKcs011.mmf",
+  "en": "RKcs011-en.mmf",
+  "fr": "RKcs011-fr.mmf",
+  "nl": "RKcs011-nl.mmf",
+  "de": "RKcs011-de.mmf"
+ },
+ "langs": [
+  "es",
+  "en",
+  "fr",
+  "nl",
+  "de"
+ ],
+ "text": {
+  "es": {
+   "ui": {
+    "lang": "Idioma",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Abre la partitura: compases 1–4 como los escribe Rimsky-Korsakov, con las notas que chocan en rojo; compases 5–8, la solución. Pasa el ratón sobre una nota roja y el Coach te dice qué tocar, en este idioma.",
+    "pdf": "Análisis completo (PDF)",
+    "pdfOnly": "El análisis en PDF está, por ahora, en español.",
+    "back": "Dirección de orquesta",
+    "collection": "Dirección de orquesta · conflictos y soluciones"
+   },
+   "title": "RK 11 — Sol♯ contra La♭",
+   "lead": "Rimsky-Korsakov, <i>Principios de orquestación</i>, n.º 11 — <i>El gallo de oro</i>. Alla breve, 4/4. Contrafagot, trompeta contralto en Fa, dos trombones, la voz (el rey Dodon) y contrabajos. Los trombones sostienen un acorde aumentado con La♭; el rey canta la misma nota como Sol♯. En afinación pitagórica no son la misma altura.",
+   "sections": [
+    {
+     "h": "Qué está escrito (en sonido real)",
+     "html": "<table><tr><th>Compás</th><th>Orquesta</th><th>Voz</th></tr><tr><td>1</td><td>trompeta Mi4; trombón 1 Mi – Si♭ – Do</td><td>Mi – Do</td></tr><tr><td>2</td><td>trompeta Mi4; trombones <b>La♭3</b> y Do4 (acorde aumentado Do – Mi – La♭)</td><td><b>Sol♯3</b> – Mi3</td></tr><tr><td>3</td><td>el mismo acorde sostenido; entran contrafagot y contrabajos</td><td>—</td></tr></table><p>Corrección de la transcripción: en el compás 3 el contrafagot tenía Fa♮ contra el Fa♯ del contrabajo, que dobla la misma línea de tonos enteros (Do – Fa♯ – Sol♯ – Re). Es Fa♯ en los dos.</p>"
+    },
+    {
+     "h": "Qué no cuadra",
+     "html": "<p>En el compás 2 los trombones tienen La♭ y el rey canta Sol♯: la misma tecla con dos nombres. La voz baja en arpegio de terceras mayores, Mi – Do – Sol♯ – Mi, y esa cadena no puede cerrar con la ortografía (Mi – Do – La♭ – Fa♭): en algún punto hay que cambiar de nombre. Rimsky-Korsakov lo cambia en la voz; los trombones se quedan en La♭. Otra vez, la voz pensada como línea y la orquesta como acorde.</p>"
+    },
+    {
+     "h": "En afinación pitagórica (La4 = 440 Hz)",
+     "html": "<table><tr><th>Nota</th><th>Hz</th><th></th><th>Nota</th><th>Hz</th><th>Diferencia</th></tr><tr><td>Sol♯3 (voz)</td><td>208,83</td><td>contra</td><td>La♭3 (trombones)</td><td>206,02</td><td><b>23,5 cents</b> (la coma pitagórica)</td></tr></table><p>El acorde aumentado reparte la octava en tres terceras mayores iguales, y eso solo existe en el temperamento igual. En pitagórico, dos terceras salen anchas (408 cents) y una estrecha (384, casi la tercera pura de 386). La ortografía decide dónde cae la estrecha:</p><ul><li><b>Con La♭:</b> La♭ – Do es ancha (408), pero La♭ con el Mi de la trompeta da una sexta menor casi pura (816 cents; la pura, 814).</li><li><b>Con Sol♯:</b> Sol♯ – Do es casi pura (384), pero la sexta con el Mi queda estrecha (792).</li></ul><p>Ninguna lo arregla todo. Lo que no puede pasar es que cada uno toque una distinta.</p>"
+    },
+    {
+     "h": "La solución (compases 5–8)",
+     "html": "<ul><li><b>Compás 6 (el 2 del original), voz:</b> La♭, no Sol♯, a 206,02 Hz, junto con los trombones. Ellos sostienen el acorde dos compases; la voz pasa por esa nota una negra y una corchea. Es la voz la que se une al acorde.</li></ul>"
+    },
+    {
+     "h": "Para el ensayo",
+     "html": "<ul class=\"ensayo\"><li>«Es La bemol, con los trombones.»</li></ul>"
+    }
+   ],
+   "source": "Fuente del ejemplo: Rimsky-Korsakov, <i>Principles of Orchestration</i> (ed. Steinberg, trad. Agate, 1922), Project Gutenberg, eBook 33900. Las cifras en cents salen de las frecuencias que Music Motion da a cada nota (afinación pitagórica, La4 = 440 Hz)."
+  },
+  "en": {
+   "ui": {
+    "lang": "Language",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Opens the score: bars 1–4 as Rimsky-Korsakov writes them, with the clashing notes in red; bars 5–8, the solution. Hover over a red note and the Coach tells you what to play, in this language.",
+    "pdf": "Full analysis (PDF)",
+    "pdfOnly": "For now, the PDF analysis is in Spanish.",
+    "back": "Conducting",
+    "collection": "Conducting · conflicts and solutions"
+   },
+   "title": "RK 11 — G♯ against A♭",
+   "lead": "Rimsky-Korsakov, <i>Principles of Orchestration</i>, no. 11 — <i>The Golden Cockerel</i>. Alla breve, 4/4. Contrabassoon, alto trumpet in F, two trombones, the voice (King Dodon) and double basses. The trombones hold an augmented chord with A♭; the king sings the same note as G♯. In Pythagorean tuning they are not the same pitch.",
+   "sections": [
+    {
+     "h": "What is written (sounding pitch)",
+     "html": "<table><tr><th>Bar</th><th>Orchestra</th><th>Voice</th></tr><tr><td>1</td><td>trumpet E4; trombone 1 E – B♭ – C</td><td>E – C</td></tr><tr><td>2</td><td>trumpet E4; trombones <b>A♭3</b> and C4 (augmented chord C – E – A♭)</td><td><b>G♯3</b> – E3</td></tr><tr><td>3</td><td>the same chord held; contrabassoon and double basses enter</td><td>—</td></tr></table><p>Transcription correction: in bar 3 the contrabassoon had F♮ against the F♯ of the double bass, which doubles the same whole-tone line (C – F♯ – G♯ – D). It is F♯ in both.</p>"
+    },
+    {
+     "h": "What does not fit",
+     "html": "<p>In bar 2 the trombones have A♭ and the king sings G♯: the same key under two names. The voice descends in an arpeggio of major thirds, E – C – G♯ – E, and that chain cannot close in spelling (E – C – A♭ – F♭): somewhere the name has to change. Rimsky-Korsakov changes it in the voice; the trombones stay on A♭. Once again, the voice conceived as a line and the orchestra as a chord.</p>"
+    },
+    {
+     "h": "In Pythagorean tuning (A4 = 440 Hz)",
+     "html": "<table><tr><th>Note</th><th>Hz</th><th></th><th>Note</th><th>Hz</th><th>Difference</th></tr><tr><td>G♯3 (voice)</td><td>208.83</td><td>against</td><td>A♭3 (trombones)</td><td>206.02</td><td><b>23.5 cents</b> (the Pythagorean comma)</td></tr></table><p>The augmented chord divides the octave into three equal major thirds, and that only exists in equal temperament. In Pythagorean tuning, two thirds come out wide (408 cents) and one narrow (384, almost the pure third of 386). The spelling decides where the narrow one falls:</p><ul><li><b>With A♭:</b> A♭ – C is wide (408), but A♭ with the trumpet’s E gives an almost pure minor sixth (816 cents; pure is 814).</li><li><b>With G♯:</b> G♯ – C is almost pure (384), but the sixth with E is narrow (792).</li></ul><p>Neither fixes everything. What must not happen is each player taking a different one.</p>"
+    },
+    {
+     "h": "The solution (bars 5–8)",
+     "html": "<ul><li><b>Bar 6 (bar 2 of the original), voice:</b> A♭, not G♯, at 206.02 Hz, together with the trombones. They hold the chord for two bars; the voice passes through that note for a crotchet and a quaver. It is the voice that joins the chord.</li></ul>"
+    },
+    {
+     "h": "For the rehearsal",
+     "html": "<ul class=\"ensayo\"><li>“It’s A flat, with the trombones.”</li></ul>"
+    }
+   ],
+   "source": "Source of the example: Rimsky-Korsakov, <i>Principles of Orchestration</i> (ed. Steinberg, trans. Agate, 1922), Project Gutenberg, eBook 33900. The figures in cents come from the frequencies Music Motion gives each note (Pythagorean tuning, A4 = 440 Hz)."
+  },
+  "fr": {
+   "ui": {
+    "lang": "Langue",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Ouvre la partition : mesures 1–4 telles que les écrit Rimski-Korsakov, avec les notes qui se heurtent en rouge ; mesures 5–8, la solution. Passez la souris sur une note rouge et le Coach vous dit quoi jouer, dans cette langue.",
+    "pdf": "Analyse complète (PDF)",
+    "pdfOnly": "Pour l’instant, l’analyse en PDF est en espagnol.",
+    "back": "Direction d’orchestre",
+    "collection": "Direction d’orchestre · conflits et solutions"
+   },
+   "title": "RK 11 — Sol♯ contre La♭",
+   "lead": "Rimski-Korsakov, <i>Principes d’orchestration</i>, n° 11 — <i>Le Coq d’or</i>. Alla breve, 4/4. Contrebasson, trompette alto en fa, deux trombones, la voix (le roi Dodon) et contrebasses. Les trombones tiennent un accord augmenté avec La♭ ; le roi chante la même note comme Sol♯. En accord pythagoricien, ce n’est pas la même hauteur.",
+   "sections": [
+    {
+     "h": "Ce qui est écrit (en sons réels)",
+     "html": "<table><tr><th>Mesure</th><th>Orchestre</th><th>Voix</th></tr><tr><td>1</td><td>trompette Mi4 ; trombone 1 Mi – Si♭ – Do</td><td>Mi – Do</td></tr><tr><td>2</td><td>trompette Mi4 ; trombones <b>La♭3</b> et Do4 (accord augmenté Do – Mi – La♭)</td><td><b>Sol♯3</b> – Mi3</td></tr><tr><td>3</td><td>le même accord tenu ; entrée du contrebasson et des contrebasses</td><td>—</td></tr></table><p>Correction de la transcription : à la mesure 3, le contrebasson avait Fa♮ contre le Fa♯ de la contrebasse, qui double la même ligne par tons entiers (Do – Fa♯ – Sol♯ – Ré). C’est Fa♯ dans les deux.</p>"
+    },
+    {
+     "h": "Ce qui ne colle pas",
+     "html": "<p>À la mesure 2, les trombones ont La♭ et le roi chante Sol♯ : la même touche sous deux noms. La voix descend en arpège de tierces majeures, Mi – Do – Sol♯ – Mi, et cette chaîne ne peut pas se refermer dans l’écriture (Mi – Do – La♭ – Fa♭) : quelque part, il faut changer de nom. Rimski-Korsakov le change à la voix ; les trombones restent sur La♭. Une fois de plus, la voix pensée comme ligne et l’orchestre comme accord.</p>"
+    },
+    {
+     "h": "En accord pythagoricien (La4 = 440 Hz)",
+     "html": "<table><tr><th>Note</th><th>Hz</th><th></th><th>Note</th><th>Hz</th><th>Différence</th></tr><tr><td>Sol♯3 (voix)</td><td>208,83</td><td>contre</td><td>La♭3 (trombones)</td><td>206,02</td><td><b>23,5 cents</b> (le comma pythagoricien)</td></tr></table><p>L’accord augmenté partage l’octave en trois tierces majeures égales, ce qui n’existe qu’en tempérament égal. En pythagoricien, deux tierces sont larges (408 cents) et une étroite (384, presque la tierce pure de 386). L’écriture décide où tombe l’étroite :</p><ul><li><b>Avec La♭ :</b> La♭ – Do est large (408), mais La♭ avec le Mi de la trompette donne une sixte mineure presque pure (816 cents ; la pure, 814).</li><li><b>Avec Sol♯ :</b> Sol♯ – Do est presque pure (384), mais la sixte avec le Mi est étroite (792).</li></ul><p>Aucune ne règle tout. Ce qui ne doit pas arriver, c’est que chacun joue une note différente.</p>"
+    },
+    {
+     "h": "La solution (mesures 5–8)",
+     "html": "<ul><li><b>Mesure 6 (la 2 de l’original), voix :</b> La♭, non Sol♯, à 206,02 Hz, avec les trombones. Ils tiennent l’accord deux mesures ; la voix passe sur cette note une noire et une croche. C’est la voix qui rejoint l’accord.</li></ul>"
+    },
+    {
+     "h": "Pour la répétition",
+     "html": "<ul class=\"ensayo\"><li>« C’est un la bémol, avec les trombones. »</li></ul>"
+    }
+   ],
+   "source": "Source de l’exemple : Rimski-Korsakov, <i>Principles of Orchestration</i> (éd. Steinberg, trad. Agate, 1922), Project Gutenberg, eBook 33900. Les valeurs en cents viennent des fréquences que Music Motion donne à chaque note (accord pythagoricien, La4 = 440 Hz)."
+  },
+  "nl": {
+   "ui": {
+    "lang": "Taal",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Opent de partituur: maten 1–4 zoals Rimski-Korsakov ze schrijft, met de botsende noten in rood; maten 5–8, de oplossing. Ga met de muis over een rode noot en de Coach zegt wat je moet spelen, in deze taal.",
+    "pdf": "Volledige analyse (PDF)",
+    "pdfOnly": "De PDF-analyse is voorlopig in het Spaans.",
+    "back": "Orkestdirectie",
+    "collection": "Orkestdirectie · conflicten en oplossingen"
+   },
+   "title": "RK 11 — Gis tegen As",
+   "lead": "Rimski-Korsakov, <i>Grondbeginselen van de orkestratie</i>, nr. 11 — <i>De gouden haan</i>. Alla breve, 4/4. Contrafagot, alttrompet in F, twee trombones, de stem (koning Dodon) en contrabassen. De trombones houden een overmatig akkoord aan met As; de koning zingt dezelfde noot als Gis. In pythagorese stemming is dat niet dezelfde toonhoogte.",
+   "sections": [
+    {
+     "h": "Wat er staat (klinkend genoteerd)",
+     "html": "<table><tr><th>Maat</th><th>Orkest</th><th>Stem</th></tr><tr><td>1</td><td>trompet E4; trombone 1 E – Bes – C</td><td>E – C</td></tr><tr><td>2</td><td>trompet E4; trombones <b>As3</b> en C4 (overmatig akkoord C – E – As)</td><td><b>Gis3</b> – E3</td></tr><tr><td>3</td><td>hetzelfde akkoord aangehouden; contrafagot en contrabassen vallen in</td><td>—</td></tr></table><p>Correctie van de transcriptie: in maat 3 had de contrafagot F tegen de Fis van de contrabas, die dezelfde heletoonslijn verdubbelt (C – Fis – Gis – D). Het is Fis in beide.</p>"
+    },
+    {
+     "h": "Wat niet klopt",
+     "html": "<p>In maat 2 hebben de trombones As en zingt de koning Gis: dezelfde toets onder twee namen. De stem daalt in een arpeggio van grote tertsen, E – C – Gis – E, en die keten kan in de spelling niet sluiten (E – C – As – Fes): ergens moet de naam veranderen. Rimski-Korsakov verandert hem in de stem; de trombones blijven op As. Opnieuw is de stem gedacht als lijn en het orkest als akkoord.</p>"
+    },
+    {
+     "h": "In pythagorese stemming (A4 = 440 Hz)",
+     "html": "<table><tr><th>Noot</th><th>Hz</th><th></th><th>Noot</th><th>Hz</th><th>Verschil</th></tr><tr><td>Gis3 (stem)</td><td>208,83</td><td>tegen</td><td>As3 (trombones)</td><td>206,02</td><td><b>23,5 cent</b> (het pythagorese komma)</td></tr></table><p>Het overmatig akkoord deelt het octaaf in drie gelijke grote tertsen, en dat bestaat alleen in de gelijkzwevende stemming. In pythagorese stemming zijn twee tertsen breed (408 cent) en één smal (384, bijna de reine terts van 386). De spelling bepaalt waar de smalle valt:</p><ul><li><b>Met As:</b> As – C is breed (408), maar As met de E van de trompet geeft een bijna reine kleine sext (816 cent; rein is 814).</li><li><b>Met Gis:</b> Gis – C is bijna rein (384), maar de sext met de E is smal (792).</li></ul><p>Geen van beide lost alles op. Wat niet mag gebeuren, is dat ieder een andere noot speelt.</p>"
+    },
+    {
+     "h": "De oplossing (maten 5–8)",
+     "html": "<ul><li><b>Maat 6 (maat 2 van het origineel), stem:</b> As, geen Gis, op 206,02 Hz, samen met de trombones. Zij houden het akkoord twee maten aan; de stem passeert die noot een kwart en een achtste lang. Het is de stem die zich bij het akkoord voegt.</li></ul>"
+    },
+    {
+     "h": "Voor de repetitie",
+     "html": "<ul class=\"ensayo\"><li>„Het is as, met de trombones.”</li></ul>"
+    }
+   ],
+   "source": "Bron van het voorbeeld: Rimski-Korsakov, <i>Principles of Orchestration</i> (ed. Steinberg, vert. Agate, 1922), Project Gutenberg, eBook 33900. De waarden in cent komen uit de frequenties die Music Motion aan elke noot geeft (pythagorese stemming, A4 = 440 Hz)."
+  },
+  "de": {
+   "ui": {
+    "lang": "Sprache",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Öffnet die Partitur: Takte 1–4, wie Rimski-Korsakow sie schreibt, mit den kollidierenden Noten in Rot; Takte 5–8, die Lösung. Fahren Sie mit der Maus über eine rote Note, und der Coach sagt, was zu spielen ist – in dieser Sprache.",
+    "pdf": "Vollständige Analyse (PDF)",
+    "pdfOnly": "Die PDF-Analyse ist vorerst auf Spanisch.",
+    "back": "Dirigieren",
+    "collection": "Dirigieren · Konflikte und Lösungen"
+   },
+   "title": "RK 11 — Gis gegen As",
+   "lead": "Rimski-Korsakow, <i>Grundlagen der Orchestration</i>, Nr. 11 — <i>Der goldene Hahn</i>. Alla breve, 4/4. Kontrafagott, Alttrompete in F, zwei Posaunen, die Singstimme (König Dodon) und Kontrabässe. Die Posaunen halten einen übermäßigen Akkord mit As; der König singt denselben Ton als Gis. In pythagoreischer Stimmung ist das nicht dieselbe Tonhöhe.",
+   "sections": [
+    {
+     "h": "Was dasteht (klingend notiert)",
+     "html": "<table><tr><th>Takt</th><th>Orchester</th><th>Stimme</th></tr><tr><td>1</td><td>Trompete E4; Posaune 1 E – B – C</td><td>E – C</td></tr><tr><td>2</td><td>Trompete E4; Posaunen <b>As3</b> und C4 (übermäßiger Akkord C – E – As)</td><td><b>Gis3</b> – E3</td></tr><tr><td>3</td><td>derselbe Akkord gehalten; Kontrafagott und Kontrabässe setzen ein</td><td>—</td></tr></table><p>Korrektur der Transkription: In Takt 3 hatte das Kontrafagott F gegen das Fis des Kontrabasses, der dieselbe Ganztonlinie verdoppelt (C – Fis – Gis – D). Es ist in beiden Fis.</p>"
+    },
+    {
+     "h": "Was nicht passt",
+     "html": "<p>In Takt 2 haben die Posaunen As, und der König singt Gis: dieselbe Taste unter zwei Namen. Die Stimme steigt in einem Arpeggio aus großen Terzen ab, E – C – Gis – E, und diese Kette kann sich in der Schreibweise nicht schließen (E – C – As – Fes): Irgendwo muss der Name wechseln. Rimski-Korsakow wechselt ihn in der Stimme; die Posaunen bleiben auf As. Wieder ist die Stimme als Linie gedacht und das Orchester als Akkord.</p>"
+    },
+    {
+     "h": "In pythagoreischer Stimmung (A4 = 440 Hz)",
+     "html": "<table><tr><th>Ton</th><th>Hz</th><th></th><th>Ton</th><th>Hz</th><th>Unterschied</th></tr><tr><td>Gis3 (Stimme)</td><td>208,83</td><td>gegen</td><td>As3 (Posaunen)</td><td>206,02</td><td><b>23,5 Cent</b> (das pythagoreische Komma)</td></tr></table><p>Der übermäßige Akkord teilt die Oktave in drei gleiche große Terzen, und das gibt es nur in der gleichstufigen Stimmung. Pythagoreisch sind zwei Terzen weit (408 Cent) und eine eng (384, fast die reine Terz von 386). Die Schreibweise entscheidet, wohin die enge fällt:</p><ul><li><b>Mit As:</b> As – C ist weit (408), aber As mit dem E der Trompete ergibt eine fast reine kleine Sexte (816 Cent; rein sind 814).</li><li><b>Mit Gis:</b> Gis – C ist fast rein (384), aber die Sexte mit dem E ist eng (792).</li></ul><p>Keine von beiden löst alles. Was nicht passieren darf: dass jeder einen anderen Ton spielt.</p>"
+    },
+    {
+     "h": "Die Lösung (Takte 5–8)",
+     "html": "<ul><li><b>Takt 6 (Takt 2 des Originals), Stimme:</b> As, nicht Gis, auf 206,02 Hz, zusammen mit den Posaunen. Sie halten den Akkord zwei Takte; die Stimme geht eine Viertel und eine Achtel über diesen Ton. Es ist die Stimme, die sich dem Akkord anschließt.</li></ul>"
+    },
+    {
+     "h": "Für die Probe",
+     "html": "<ul class=\"ensayo\"><li>„Das ist ein As, mit den Posaunen.“</li></ul>"
+    }
+   ],
+   "source": "Quelle des Beispiels: Rimski-Korsakow, <i>Principles of Orchestration</i> (Hg. Steinberg, Übers. Agate, 1922), Project Gutenberg, eBook 33900. Die Werte in Cent stammen aus den Frequenzen, die Music Motion jedem Ton gibt (pythagoreische Stimmung, A4 = 440 Hz)."
+  }
+ }
+}
