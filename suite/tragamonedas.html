@@ -38,7 +38,7 @@ body.juego-eco .hold,body.juego-sube .hold{visibility:hidden}
 body:not(.juego-torre) .quintas{display:none}
 .quintas{display:flex;gap:3px;justify-content:space-between;overflow-x:auto;margin:-6px 4px 10px;padding:2px 0;scrollbar-width:thin}
 .quintas span{flex:1 0 24px;min-width:24px;padding:3px 3px;border-radius:7px;border:1.5px solid var(--c);color:var(--c);background:color-mix(in srgb,var(--c) 13%,transparent);font:600 11px/1.1 var(--mono,monospace);text-align:center;opacity:.32;transition:opacity .25s,background .25s}
-.quintas span.on{opacity:1;background:var(--c);color:#0e1016}
+.quintas span.on{opacity:1;background:var(--c);color:#0e1016}.quintas span{cursor:pointer}.quintas span:hover{opacity:.9;filter:brightness(1.35);box-shadow:0 0 9px var(--c)}.quintas span.on:hover{filter:brightness(1.15)}
 .quintas span.nuevo{animation:chipon .6s ease-out}
 .quintas span.re{outline:1px dashed rgba(255,255,255,.35);outline-offset:1px}
 @keyframes chipon{0%{transform:scale(1.6)}100%{transform:none}}
@@ -153,7 +153,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .out{background:rgba(0,0,0,.28);border:1px solid var(--gold-d);border-radius:12px;padding:12px 14px;display:grid;gap:6px;font-size:14px}
 .out .k{font-family:var(--mono);color:var(--gold);word-break:break-word;font-size:15px}
 .out .d{font-family:var(--mono);color:var(--textm);font-size:12px}
-.how{color:var(--textm);font-size:14px;line-height:1.6;max-width:70ch;margin:0 auto}
+.how{color:var(--textm);font-size:15px;line-height:1.7;background:rgba(0,0,0,.28);border:1px solid var(--gold-d);border-radius:12px;padding:14px 20px;display:grid;gap:10px}.how p{margin:0}
 .how b{color:var(--text)}
 /* la lluvia de notas y Canelo */
 .rain{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20}
@@ -204,7 +204,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
   </div>
 </div>
 <div class="out" id="out" aria-live="polite"></div>
-<p class="how"><b>Cómo se juega.</b> Tira de la palanca o pulsa SPIN: los rodillos giran y se detienen uno por uno en un compás nuevo, con otras notas y otros valores. El primero va sobre el acorde de I, el segundo sobre IV, el tercero sobre V y el cuarto vuelve a casa, siempre a la tónica. HOLD deja quieto el rodillo que te gustó. Con KEY y MODE la misma melodía suena en otra tonalidad, en mayor o en menor, en afinación pitagórica. Abajo están las teclas para tocarla en el Cosmic Keyboard (Tonal, fila del medio: A es la tónica). Si sale una melodía famosa, hay premio. Y si los cuatro rodillos forman la Estrellita o la Oda a la alegría completas, ¡GRAN PREMIO!: guarda con HOLD los trozos que vayan saliendo y sigue tirando. <b>SAVE .mmf</b> guarda la melodía con su acorde en cada compás para abrirla en el Score con File › Open.</p>
+<div class="how"><b>Cómo se juega.</b> Tira de la palanca o pulsa SPIN: los rodillos giran y se detienen uno por uno en un compás nuevo, con otras notas y otros valores. El primero va sobre el acorde de I, el segundo sobre IV, el tercero sobre V y el cuarto vuelve a casa, siempre a la tónica. HOLD deja quieto el rodillo que te gustó. Con KEY y MODE la misma melodía suena en otra tonalidad, en mayor o en menor, en afinación pitagórica. Abajo están las teclas para tocarla en el Cosmic Keyboard (Tonal, fila del medio: A es la tónica). Si sale una melodía famosa, hay premio. Y si los cuatro rodillos forman la Estrellita o la Oda a la alegría completas, ¡GRAN PREMIO!: guarda con HOLD los trozos que vayan saliendo y sigue tirando. <b>SAVE .mmf</b> guarda la melodía con su acorde en cada compás para abrirla en el Score con File › Open.</div>
 </div>
 <div class="rain" id="rain" aria-hidden="true"></div>
 <svg class="dog" id="dog" viewBox="0 0 160 170" aria-hidden="true">
@@ -230,6 +230,11 @@ input[type=range]{accent-color:var(--gold);width:130px}
   <g class="globo" transform="translate(70,4)"><rect x="0" y="0" width="84" height="40" rx="14" fill="#f7f2e4"/><path d="M18 38 L 10 52 L 32 38 Z" fill="#f7f2e4"/><text class="bub" x="42" y="28" text-anchor="middle">¡GUAU!</text></g>
 </svg>
 <script>
+// «Cómo se juega» en dos párrafos, en un cuadro del ancho de la app (2026-10-25, Mario: más fácil de leer)
+function dosP(h){ const n=h.length, i=h.indexOf('<b>',3); if(i>n*.25&&i<n*.8) return '<p>'+h.slice(0,i).trim()+'</p><p>'+h.slice(i).trim()+'</p>';
+  const re=/[.!?] (?=[A-ZÁÉÍÓÚÑÄÖÜ¿¡«„<])/g; let m, best=-1; while((m=re.exec(h))) if(best<0||Math.abs(m.index-n/2)<Math.abs(best-n/2)) best=m.index;
+  return best<0?'<p>'+h+'</p>':'<p>'+h.slice(0,best+1)+'</p><p>'+h.slice(best+2)+'</p>'; }
+
 // ── los cinco idiomas (2026-10-23, Mario: «genial para los niños de cada idioma») ──
 // El idioma: ?lang=xx (se guarda) → el que eligió aquí antes → si llega desde /fr/ /nl/ /de/ → el del navegador (fr nl de)
 // → el del sitio (es/en) → español si el navegador es español, si no inglés. Cada idioma con los nombres de nota de su
@@ -412,7 +417,7 @@ document.documentElement.lang=LANG; document.title='mm '+tr('short');
   q('#jPrev',e=>e.setAttribute('aria-label',tr('prev'))); q('#jNext',e=>e.setAttribute('aria-label',tr('next')));
   q('#quintas',e=>e.setAttribute('aria-label',tr('quintasAria',{a:nomb('F',-2),b:nomb('B',2)})));
   q('#lever',e=>e.setAttribute('aria-label',tr('lever'))); q('#ecoBtn',e=>e.title=tr('ecoTitle'));
-  q('.how',e=>e.innerHTML=tr('how')); q('#dog .bub',e=>e.textContent=tr('bub'));
+  q('.how',e=>e.innerHTML=dosP(tr('how'))); q('#dog .bub',e=>e.textContent=tr('bub'));
   q('.top',e=>{ const s=document.createElement('span'); s.className='langs'; s.id='langs';
     s.innerHTML=LANGS.map(l=>`<button class="${l===LANG?'on':''}" data-l="${l}" aria-pressed="${l===LANG}">${l.toUpperCase()}</button>`).join('');
     s.onclick=ev=>{ const b=ev.target.closest('button'); if(!b||b.dataset.l===LANG) return; const u=new URL(location.href); u.searchParams.set('lang',b.dataset.l); location.href=u.href; };
