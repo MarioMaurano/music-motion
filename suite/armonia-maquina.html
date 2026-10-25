@@ -732,8 +732,10 @@ RH.chor={'4/4':{U:8,INICIO:[[[2,2,2,2],5],[[4,2,2],2],[[2,2,4],2],[[3,1,2,2],1]]
   '3/4':{U:12,INICIO:[[[4,4,4],5],[[8,4],2]],MEDIO:[[[4,4,4],6],[[4,2,2,4],2],[[8,4],1],[[2,2,4,4],1]]},
   '3/8':{U:6,INICIO:[[[2,2,2],5],[[4,2],2]],MEDIO:[[[2,2,2],5],[[4,2],2],[[1,1,2,2],1]]}};
 function hChords(){ return !state.mode
-  ?[{r:0,t:[0,2,4],lab:'I'},{r:1,t:[0,2,4],lab:'ii'},{r:1,t:[0,2,4,6],lab:'ii7'},{r:2,t:[0,2,4],lab:'iii'},{r:3,t:[0,2,4],lab:'IV'},{r:4,t:[0,2,4],lab:'V'},{r:4,t:[0,2,4,6],lab:'V7'},{r:5,t:[0,2,4],lab:'vi'},{r:6,t:[0,2,4],lab:'vii°'}]
-  :[{r:0,t:[0,2,4],lab:'i'},{r:1,t:[0,2,4],lab:'ii°'},{r:2,t:[0,2,4],lab:'III'},{r:3,t:[0,2,4],lab:'iv'},{r:4,t:[0,2,4],alt:{6:1},lab:'V'},{r:4,t:[0,2,4,6],alt:{6:1},lab:'V7'},{r:5,t:[0,2,4],lab:'VI'},{r:6,t:[0,2,4],alt:{6:1},lab:'vii°'}]; }
+  ?[{r:0,t:[0,2,4],lab:'I'},{r:1,t:[0,2,4],lab:'ii'},{r:1,t:[0,2,4,6],lab:'ii7'},{r:2,t:[0,2,4],lab:'iii'},{r:3,t:[0,2,4],lab:'IV'},{r:4,t:[0,2,4],lab:'V',dom:0},{r:4,t:[0,2,4,6],lab:'V7',dom:0},{r:5,t:[0,2,4],lab:'vi'},{r:6,t:[0,2,4],lab:'vii°',dom:0},
+     {r:1,t:[0,2,4],alt:{3:1},lab:'V/V',dom:4},{r:1,t:[0,2,4,6],alt:{3:1},lab:'V7/V',dom:4}]
+  :[{r:0,t:[0,2,4],lab:'i'},{r:1,t:[0,2,4],lab:'ii°'},{r:2,t:[0,2,4],lab:'III'},{r:3,t:[0,2,4],lab:'iv'},{r:4,t:[0,2,4],alt:{6:1},lab:'V',dom:0},{r:4,t:[0,2,4,6],alt:{6:1},lab:'V7',dom:0},{r:5,t:[0,2,4],lab:'VI'},{r:6,t:[0,2,4],alt:{6:1},lab:'vii°',dom:0},
+     {r:1,t:[0,2,4],alt:{3:1,5:1},lab:'V/V',dom:4},{r:1,t:[0,2,4,6],alt:{3:1,5:1},lab:'V7/V',dom:4},{r:0,t:[0,2,4],alt:{2:1},lab:'I',pic:true}]; }   /* en menor, el final con tercera de picardía (Bach: 10 a 1) */
 const hBeat=()=>{ const U=MT().U; return state.meter==='4/4'?U/4:U/3; };
 // los segmentos de armonía: cada tiempo, cada medio compás o cada compás (Rhythm); donde el bajo vino dado, sus notas marcan los cambios
 function hSegs(){ const U=MT().U, T=state.T, sp=SPLIT(), hr=state.hr||'beat', bt=hBeat(), out=[];
@@ -749,14 +751,18 @@ function hSegs(){ const U=MT().U, T=state.T, sp=SPLIT(), hr=state.hr||'beat', bt
   if(T===1) out[out.length-1].fin=true;
   return out; }
 const hInC=(c,x)=>{ const k=c.t.findIndex(o=>mod(x.d-c.r-o,7)===0); return k>=0&&mod(chordP(c,k).midi-x.p.midi,12)===0; };
-const hLT=c=>[4,6].includes(c.r)?mod(chordP(c,c.t.findIndex(o=>mod(c.r+o,7)===6)).midi,12):null;
+const hLT=c=>{ if(c.dom==null) return null; const k=c.t.findIndex(o=>mod(c.r+o-c.dom+1,7)===0); return k<0?null:mod(chordP(c,k).midi,12); };
 // la elección de los acordes: un camino por los segmentos (Viterbi), con las reglas de la función tonal y la cadencia elegida
 function hHarm(S,segs,tau,score){ const C=hChords(), NEG=-1e6, E=state.aend||'closed', n=segs.length, H2=Math.floor(state.T/2), bt=hBeat();
   const node=(s,c)=>{ const g=segs[s]; let sc=0; const st=S.find(x=>x.bar===g.bar&&x.pos<=g.pos&&x.pos+x.du>g.pos);
     if(st) sc+=hInC(c,st)?3:NEG;
     for(const x of S.filter(x=>x.bar===g.bar&&x.pos>g.pos&&x.pos<g.pos+g.du)) sc+=hInC(c,x)?(x.pos%bt===0?1:.5):(x.pos%bt===0?-2:-.5);
     const bq=bassAsk(g.bar,g.pos); if(bq!=null){ const k=c.t.findIndex(o=>mod(bq-c.r-o,7)===0); if(k<0) sc+=NEG; else if(c.t.length===3&&k===2&&!g.six4) sc-=4; if(c.r===6||c.lab==='ii°'){ if(k!==1) sc+=NEG; } }
-    if(c.lab==='iii') sc-=5; if(c.r===6) sc-=1; if(c.lab==='ii7') sc-=.5;
+    if(c.lab==='iii') sc-=5; if(c.r===6) sc-=1; if(c.lab==='ii7') sc-=.5; if(c.dom===4) sc-=.5;
+    if(c.pic){ if(!g.fin) return NEG; sc+=1.5; }
+    if(bq!=null){ const nx=s+1<n?bassAsk(segs[s+1].bar,segs[s+1].pos):null, up=nx!=null?nx>bq:null, T0=state.mode?'i':'I';   /* la regla de la octava: qué acorde va sobre cada grado del bajo, subiendo y bajando */
+      const RO={0:[T0,0],1:['V7',2],2:[T0,1],3:up===false?['V7',3]:(!state.mode?['ii7',1]:null),4:['V',0],5:up===false?['V7/V',2]:(!state.mode?['IV',1]:['iv',1]),6:up===false?['V',1]:['V7',1]}[mod(bq,7)];
+      if(RO&&c.lab===RO[0]&&c.t.findIndex(o=>mod(bq-c.r-o,7)===0)===RO[1]) sc+=2.5; }
     if(s===0) sc+=c.r===0&&c.t.length===3?4:-30;
     if(state.T>=4&&!g.fin&&g.bar===H2-1&&(s+1>=n||segs[s+1].bar!==g.bar)) sc+=c.r===4&&c.t.length===3?6:state.held[g.bar]?0:-8;   // la semicadencia
     if(state.T>=4&&g.bar===H2&&g.pos===0&&c.r===0) sc+=2;   // la respuesta empieza en la tónica
@@ -767,6 +773,7 @@ function hHarm(S,segs,tau,score){ const C=hChords(), NEG=-1e6, E=state.aend||'cl
     if(segs[s-1].six4&&!(c.r===mod(a.r-3,7)&&c.t.length===3)&&g.bar===segs[s-1].bar) return NEG;
     if(g.fin){ if(E==='closed') return c.r===0&&c.t.length===3&&a.r===4?(a.lab==='V7'?6:5):NEG; if(E==='dec') return c.r===5&&a.r===4?5:NEG; return c.r===4&&c.t.length===3&&a.r!==4?3:NEG; }
     { const bq=bassAsk(g.bar,g.pos); if(bq!=null&&c.t.length===3&&c.t.findIndex(o=>mod(bq-c.r-o,7)===0)===2) return a.r===4?NEG:[1,3].includes(a.r)?3:0; }   /* el 6/4 cadencial: después de un acorde de subdominante, no del V */
+    if(a.dom===4) return c.r===4&&c.dom===0?3:NEG;   /* la dominante de la dominante va al V */
     if(a.r===4){ const ok=c.r===0?3:c.r===5?.5:null; if(a.lab==='V7') return ok??NEG; return ok??(c.lab==='V7'?2:c===a?-1:NEG); }   /* V–vi (la cadencia rota) con medida */
     if(a.r===6) return c.r===0?3:NEG;
     if(a===c) return g.pos===0?-3:-1;
@@ -805,11 +812,12 @@ function hVoice(S,segs,path){ const mel=hMel(S), NEG=1e6, n=segs.length, E=state
   const tc=(u,v,cu,cv)=>{ let x=0; const same=cu===cv, P=[u.Se,u.A.midi,u.T.midi,u.B.midi], Q=[v.S,v.A.midi,v.T.midi,v.B.midi];
     for(let i=0;i<4;i++) for(let j=i+1;j<4;j++){ const a0=P[i],a1=Q[i],b0=P[j],b1=Q[j]; if(a0==null||a1==null||b0==null||b1==null||a0===a1||b0===b1) continue;
       const i0=mod(a0-b0,12), i1=mod(a1-b1,12); if((i0===0&&i1===0)||(i0===7&&i1===7)){ if(Math.sign(a1-a0)===Math.sign(b1-b0)) return NEG; x+=i===0&&j===3?6:3; }
-      if(i===0&&j===3&&(i1===0||i1===7)&&Math.sign(a1-a0)===Math.sign(b1-b0)&&Math.abs(a1-a0)>2) x+=4; }   // paralelas (prohibidas), por movimiento contrario, y directas en las voces extremas
+      if(i===0&&j===3&&(i1===0||i1===7)&&Math.sign(a1-a0)===Math.sign(b1-b0)&&Math.abs(a1-a0)>2) x+=12; }   // paralelas (prohibidas), por movimiento contrario, y directas en las voces extremas
     for(const k of [1,2]){ const d=Math.abs(Q[k]-P[k]); x+=d; if(d>4) x+=3; if(d>7) x+=10; } x+=.3*Math.abs(Q[3]-P[3]); if(Math.abs(Q[3]-P[3])>12) x+=5;
     if(!same){ const pv=cv.t.map((o,k)=>mod(chordP(cv,k).midi,12)); for(const k of [1,2]) if(pv.includes(mod(P[k],12))&&Q[k]!==P[k]) x+=1.5; }
     if(P[0]!=null&&Q[1]>P[0]) x+=3; if(Q[2]>P[1]||Q[1]<P[2]||Q[3]>P[2]||Q[2]<P[3]) x+=3;   // sin cruces ni solapamientos
-    if(!same){ const lt=hLT(cu); if(lt!=null&&[0,5].includes(cv.r)) for(const k of [1,2,3]) if(mod(P[k],12)===lt){ const d=Q[k]-P[k]; if(d===1) continue; x+=(k<3&&cv.r===0&&(d===-3||d===-4))?1.5:6; }
+    if(!same){ const lt=hLT(cu); if(lt!=null&&(cv.r===cu.dom||(cu.dom===0&&cv.r===5))) for(const k of [1,2,3]) if(mod(P[k],12)===lt){ const d=Q[k]-P[k]; if(d===1) continue; x+=k<3?((d===-3||d===-4)&&cv.r===cu.dom?.5:6):15; }   /* Bach: en contralto o tenor la sensible puede caer a la 5.ª */
+      if(cv.dom===0&&cv.r===4){ const lv=hLT(cv); for(const k of [1,2]) if(lv!=null&&mod(Q[k],12)===lv&&P[k]===Q[k]+1) x-=4; }   /* la tónica que baja a la sensible: ahí cabe el retardo 4–3 */
       if(cu.t.length>3){ const sv=mod(chordP(cu,3).midi,12); for(const k of [1,2,3]) if(mod(P[k],12)===sv){ const d=Q[k]-P[k]; if(d===-1||d===-2) continue; x+=d===0?4:15; } } }
     return x; };
   let D=cands[0].map(v=>({c:v.sc,bp:-1})); const all=[D];
@@ -837,11 +845,18 @@ function buildHarm(){ const T=state.T, U=MT().U, t0=performance.now(), allHeld=s
   return null; }
 function planHarm(){ const S=subject(), T=state.T, U=MT().U, sol=harmSolve(S,0), mel=hMel(S);
   const V=[['Soprano','G',state.mins,[0,127]],['Alto','G','violin',[0,127]],['Tenor','C3','viola',[0,127]],['Bajo','F','cello',[0,127]]];
-  const fig=(c,k)=>c.t.length>3?c.lab.replace('7','')+['7','6/5','4/3','2'][k]:c.lab+['','6','6/4'][k];
+  const fig=(c,k)=>{ const [b0,tg]=c.lab.split('/'); return (c.t.length>3?b0.replace('7','')+['7','6/5','4/3','2'][k]:b0+['','6','6/4'][k])+(tg?'/'+tg:''); };   /* V7/V, V6/5/V, V6/V */
   const A=[],Tn=[],B=[]; let rom=[];
   if(sol){ const {segs,path,vo}=sol; segs.forEach((g,s)=>{ const v=vo[s], nx=vo[s+1], same=nx&&path[s+1]===path[s];
       [[A,'A'],[Tn,'T'],[B,'B']].forEach(([arr,key])=>arr.push({p:v[key],d:0,bar:g.bar,pos:g.pos,du:g.du,tie:!!(same&&nx[key].midi===v[key].midi)})); });
-    rom=segs.map((g,s)=>s>0&&path[s-1]===path[s]&&vo[s-1].k===vo[s].k?'':fig(path[s],vo[s].k)); }
+    rom=segs.map((g,s)=>s>0&&path[s-1]===path[s]&&vo[s-1].k===vo[s].k?'':fig(path[s],vo[s].k));
+    const n=segs.length, cs=n-2, E=state.aend||'closed';   /* el retardo 4–3 sobre el V de la cadencia: la tónica se queda ligada y baja a la sensible */
+    if(E!=='open'&&cs>0&&path[cs].dom===0&&path[cs].r===4&&path[cs+1].r!==4&&segs[cs].du>=2&&path[cs-1]!==path[cs]&&vo[cs-1].B.midi!==vo[cs].B.midi){ const g=segs[cs], lt=hLT(path[cs]), h=g.du/2;
+      const melAt=t=>mel.find(x=>x.bar*U+x.pos<=t&&t<x.bar*U+x.pos+x.du), t0=g.bar*U+g.pos, m0=melAt(t0), m1=melAt(t0+h), mPrev=melAt(t0+h-1);
+      for(const [arr,key] of [[A,'A'],[Tn,'T']]){ const v=vo[cs], pv=vo[cs-1]; if(mod(v[key].midi,12)!==lt||pv[key].midi!==v[key].midi+1) continue;
+        if(m0&&[lt,mod(lt+1,12)].includes(mod(m0.p.midi,12))) continue;
+        if(m1&&mPrev&&m1!==mPrev){ const i0=mod(mPrev.p.midi-pv[key].midi,12), i1=mod(m1.p.midi-v[key].midi,12); if((i0===0||i0===7)&&i0===i1&&Math.sign(m1.p.midi-mPrev.p.midi)===Math.sign(v[key].midi-pv[key].midi)) continue; }
+        arr[cs-1].tie=true; arr.splice(cs,1,{p:pv[key],d:0,bar:g.bar,pos:g.pos,du:h},{p:v[key],d:0,bar:g.bar,pos:g.pos+h,du:g.du-h}); rom[cs]=rom[cs]+' 4–3'; break; } } }
   const parts=[mel,A,Tn,B], cls=['suj','acc','acc','ped'], entries=parts.map((notes,v)=>({v,bar:1,len:T,notes,kind:['mel','acc','acc','bass'][v]})).filter(e=>e.notes.length);
   const cells=V.map((_,v)=>Array(T).fill(cls[v])), bt=hBeat(), segs=sol?sol.segs:[];
   const labels=segs.map((g,s)=>rom[s]?{v:3,bar:g.bar+1,beat:1+Math.floor(g.pos/bt),text:rom[s],roman:true}:null).filter(Boolean);
