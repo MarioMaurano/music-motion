@@ -1,0 +1,222 @@
+{
+ "id": "RKcs240",
+ "pdf": {
+  "es": "RKcs240-analisis-ES.pdf"
+ },
+ "mmf": {
+  "es": "RKcs240.mmf",
+  "en": "RKcs240-en.mmf",
+  "fr": "RKcs240-fr.mmf",
+  "nl": "RKcs240-nl.mmf",
+  "de": "RKcs240-de.mmf"
+ },
+ "langs": [
+  "es",
+  "en",
+  "fr",
+  "nl",
+  "de"
+ ],
+ "text": {
+  "es": {
+   "ui": {
+    "lang": "Idioma",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Abre la partitura: compases 1–5 como los escribe Rimsky-Korsakov, con las notas que chocan en rojo; compases 6–10, la solución. Pasa el ratón sobre una nota roja y el Coach te dice qué tocar, en este idioma.",
+    "pdf": "Análisis completo (PDF)",
+    "pdfOnly": "El análisis en PDF está, por ahora, en español.",
+    "back": "Dirección de orquesta",
+    "collection": "Dirección de orquesta · conflictos y soluciones"
+   },
+   "title": "RK 240 — La♯ contra Si♭, Sol♯ contra La♭",
+   "lead": "Rimsky-Korsakov, <i>Principios de orquestación</i>, vol. I, p. 109, n.º 240 — <i>La novia del zar</i> (n.º 123 de la partitura). Allegro moderato, negra = 112, 4/4. Oboe, corno inglés, clarinete en Si♭, dos fagotes, trompa en Fa y la voz (Lioubacha). Cada músico lee bien su parte y aun así el acorde no se asienta: dos partes piensan la misma nota con nombres distintos, y en afinación pitagórica no son la misma altura.",
+   "sections": [
+    {
+     "h": "Qué está escrito (en sonido real)",
+     "html": "<table><tr><th>Compás</th><th>Acorde</th><th>Voz</th></tr><tr><td>1</td><td>Mi menor — oboe Si, corno inglés Sol, trompa Mi</td><td>Si</td></tr><tr><td>2</td><td>fagotes Do · Mi, luego <b>Mi♯</b>; clarinete <b>Si♭</b></td><td><b>La♯</b> (corcheas)</td></tr><tr><td>3</td><td>Re mayor — oboe La, corno inglés Fa♯, trompa Re</td><td>La</td></tr><tr><td>4</td><td>fagotes Si · Re, luego <b>Re♯</b>; clarinete <b>La♭</b></td><td><b>Sol♯</b> (corcheas)</td></tr><tr><td>5</td><td>Do menor — oboe Sol, corno inglés <b>Mi♭</b>, trompa Do</td><td>Sol</td></tr></table>"
+    },
+    {
+     "h": "Qué no cuadra",
+     "html": "<p>En los compases 2 y 4 la voz y el clarinete tienen la misma nota con dos nombres a la vez: La♯ contra Si♭ y Sol♯ contra La♭. En el compás 4 el fagot sube de Re a Re♯, y esa nota sigue como Mi♭ en el compás siguiente, en el corno inglés.</p><p>En la orquesta se oye así: el clarinete, como bemol, tiende a tocar bajo; la cantante lee sostenido y lo canta alto, como sensible. Los dos tienen razón y el acorde no se asienta. La voz está pensada como línea melódica (Si – La♯ – La, La – Sol♯ – Sol), no desde la armonía.</p>"
+    },
+    {
+     "h": "Lectura tonal",
+     "html": "<ul><li><b>Compás 4, hacia Do menor.</b> Si es sensible y sube a Do; La♭ es la 6.ª menor de Do y baja a Sol; el Re♯ del fagot es en realidad Mi♭, la 3.ª de Do menor, que llega antes. La escritura tonal es <b>Si – Mi♭ – La♭</b>. El Sol♯ de la voz, que baja a Sol, va al revés de lo tonal: una bajada cromática escrita con sostenido.</li><li><b>Compás 2, hacia Re mayor.</b> Si♭ es la 6.ª menor de Re y baja a La: la voz debería leer <b>Si♭</b>, no La♯. El <b>Mi♯</b> del fagot se defiende sobre el papel (sube a Fa♯, la 3.ª de Re), pero lo usual es <b>Fa♮</b> y luego Fa♯, y al oído suena mejor.</li></ul>"
+    },
+    {
+     "h": "En afinación pitagórica (La4 = 440 Hz)",
+     "html": "<table><tr><th>Nota</th><th>Hz</th><th></th><th>Nota</th><th>Hz</th><th>Diferencia</th></tr><tr><td>La♯4 (voz)</td><td>469,86</td><td>contra</td><td>Si♭4 (clarinete)</td><td>463,54</td><td><b>23,5 cents</b> (la coma pitagórica)</td></tr><tr><td>Sol♯4 (voz)</td><td>417,66</td><td>contra</td><td>La♭4 (clarinete)</td><td>412,03</td><td><b>23,5 cents</b></td></tr><tr><td>Re♯4 (fagot, c. 4)</td><td>313,24</td><td>sigue como</td><td>Mi♭4 (corno inglés, c. 5)</td><td>309,03</td><td><b>23,5 cents</b> de salto en la «misma» nota</td></tr><tr><td>Mi♯4 (fagot, c. 2)</td><td>352,40</td><td>contra</td><td>Fa4</td><td>347,65</td><td><b>23,5 cents</b>: con Si♭ en la voz y el clarinete, asienta el Fa♮</td></tr></table><p>Escritos como en el libro, en la suite el choque no se queda en el papel: suena.</p>"
+    },
+    {
+     "h": "La solución (compases 6–10)",
+     "html": "<p>La voz y el fagot piensan en la armonía, no en la línea:</p><ul><li><b>Compás 7 (el 2 del original), voz:</b> Si♭, no La♯; baja a La junto con el clarinete, a 463,54 Hz, igual que él.</li><li><b>Compás 9 (el 4), voz:</b> La♭, no Sol♯; baja a Sol junto con el clarinete, a 412,03 Hz.</li><li><b>Compás 9 (el 4), fagot:</b> Mi♭, no Re♯; ya es la 3.ª de Do menor y enlaza sin salto con el Mi♭ del corno inglés (309,03 Hz).</li><li><b>Compás 7 (el 2), fagot:</b> Fa♮, no Mi♯, y después sube a Fa♯. Con la voz y el clarinete en Si♭, el acorde piensa del lado de los bemoles: Fa♮ forma cuartas puras con el Do del otro fagot y con el Si♭ (4:3); el Mi♯, una coma más alto, no. El oído lo confirma: suena mejor.</li></ul>"
+    },
+    {
+     "h": "Para el ensayo",
+     "html": "<ul class=\"ensayo\"><li>«Es Si bemol, no La sostenido.»</li><li>«Es La bemol: baja con el clarinete.»</li><li>Al fagot, compás 2: «Fa natural, no Mi sostenido.»</li><li>Al fagot, compás 4: «Ese Re sostenido ya es el Mi bemol del acorde siguiente.»</li></ul>"
+    }
+   ],
+   "source": "Fuente del ejemplo: Rimsky-Korsakov, <i>Principles of Orchestration</i> (ed. Steinberg, trad. Agate, 1922), Project Gutenberg, eBook 33900. Las cifras en cents salen de las frecuencias que Music Motion da a cada nota (afinación pitagórica, La4 = 440 Hz)."
+  },
+  "en": {
+   "ui": {
+    "lang": "Language",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Opens the score: bars 1–5 as Rimsky-Korsakov writes them, with the clashing notes in red; bars 6–10, the solution. Hover over a red note and the Coach tells you what to play, in this language.",
+    "pdf": "Full analysis (PDF)",
+    "pdfOnly": "For now, the PDF analysis is in Spanish.",
+    "back": "Conducting",
+    "collection": "Conducting · conflicts and solutions"
+   },
+   "title": "RK 240 — A♯ against B♭, G♯ against A♭",
+   "lead": "Rimsky-Korsakov, <i>Principles of Orchestration</i>, vol. I, p. 109, no. 240 — <i>The Tsar’s Bride</i> (no. 123 of the score). Allegro moderato, crotchet = 112, 4/4. Oboe, cor anglais, clarinet in B♭, two bassoons, horn in F and the voice (Lioubacha). Every musician reads their part correctly, and still the chord will not settle: two parts think of the same note under different names, and in Pythagorean tuning they are not the same pitch.",
+   "sections": [
+    {
+     "h": "What is written (sounding pitch)",
+     "html": "<table><tr><th>Bar</th><th>Chord</th><th>Voice</th></tr><tr><td>1</td><td>E minor — oboe B, cor anglais G, horn E</td><td>B</td></tr><tr><td>2</td><td>bassoons C · E, then <b>E♯</b>; clarinet <b>B♭</b></td><td><b>A♯</b> (quavers)</td></tr><tr><td>3</td><td>D major — oboe A, cor anglais F♯, horn D</td><td>A</td></tr><tr><td>4</td><td>bassoons B · D, then <b>D♯</b>; clarinet <b>A♭</b></td><td><b>G♯</b> (quavers)</td></tr><tr><td>5</td><td>C minor — oboe G, cor anglais <b>E♭</b>, horn C</td><td>G</td></tr></table>"
+    },
+    {
+     "h": "What does not fit",
+     "html": "<p>In bars 2 and 4 the voice and the clarinet have the same note under two names at once: A♯ against B♭ and G♯ against A♭. In bar 4 the bassoon rises from D to D♯, and that note carries on as E♭ in the next bar, in the cor anglais.</p><p>In the orchestra it sounds like this: the clarinet, reading a flat, tends to play low; the singer reads a sharp and sings it high, as a leading note. Both are right, and the chord does not settle. The voice is conceived as a melodic line (B – A♯ – A, A – G♯ – G), not from the harmony.</p>"
+    },
+    {
+     "h": "Tonal reading",
+     "html": "<ul><li><b>Bar 4, towards C minor.</b> B is the leading note and rises to C; A♭ is the minor 6th of C and falls to G; the bassoon’s D♯ is really E♭, the 3rd of C minor, arriving early. The tonal spelling is <b>B – E♭ – A♭</b>. The voice’s G♯, falling to G, runs against the tonal sense: a chromatic descent written with a sharp.</li><li><b>Bar 2, towards D major.</b> B♭ is the minor 6th of D and falls to A: the voice should read <b>B♭</b>, not A♯. The bassoon’s <b>E♯</b> can be defended on paper (it rises to F♯, the 3rd of D), but the usual spelling is <b>F♮</b> and then F♯, and to the ear it sounds better.</li></ul>"
+    },
+    {
+     "h": "In Pythagorean tuning (A4 = 440 Hz)",
+     "html": "<table><tr><th>Note</th><th>Hz</th><th></th><th>Note</th><th>Hz</th><th>Difference</th></tr><tr><td>A♯4 (voice)</td><td>469.86</td><td>against</td><td>B♭4 (clarinet)</td><td>463.54</td><td><b>23.5 cents</b> (the Pythagorean comma)</td></tr><tr><td>G♯4 (voice)</td><td>417.66</td><td>against</td><td>A♭4 (clarinet)</td><td>412.03</td><td><b>23.5 cents</b></td></tr><tr><td>D♯4 (bassoon, b. 4)</td><td>313.24</td><td>continues as</td><td>E♭4 (cor anglais, b. 5)</td><td>309.03</td><td><b>23.5 cents</b> jump on the “same” note</td></tr><tr><td>E♯4 (bassoon, b. 2)</td><td>352.40</td><td>against</td><td>F4</td><td>347.65</td><td><b>23.5 cents</b>: with B♭ in the voice and the clarinet, F♮ is what settles</td></tr></table><p>Written as in the book, in the suite the clash does not stay on paper: you hear it.</p>"
+    },
+    {
+     "h": "The solution (bars 6–10)",
+     "html": "<p>The voice and the bassoon think of the harmony, not the line:</p><ul><li><b>Bar 7 (bar 2 of the original), voice:</b> B♭, not A♯; it falls to A together with the clarinet, at 463.54 Hz, the same as the clarinet.</li><li><b>Bar 9 (bar 4), voice:</b> A♭, not G♯; it falls to G together with the clarinet, at 412.03 Hz.</li><li><b>Bar 9 (bar 4), bassoon:</b> E♭, not D♯; it is already the 3rd of C minor and joins the cor anglais’ E♭ without a jump (309.03 Hz).</li><li><b>Bar 7 (bar 2), bassoon:</b> F♮, not E♯, then up to F♯. With the voice and the clarinet on B♭, the chord leans to the flat side: F♮ makes pure fourths with the other bassoon’s C and with the B♭ (4:3); E♯, a comma higher, does not. The ear confirms it: it sounds better.</li></ul>"
+    },
+    {
+     "h": "For the rehearsal",
+     "html": "<ul class=\"ensayo\"><li>“It’s B flat, not A sharp.”</li><li>“It’s A flat: go down with the clarinet.”</li><li>To the bassoon, bar 2: “F natural, not E sharp.”</li><li>To the bassoon, bar 4: “That D sharp is already the E flat of the next chord.”</li></ul>"
+    }
+   ],
+   "source": "Source of the example: Rimsky-Korsakov, <i>Principles of Orchestration</i> (ed. Steinberg, trans. Agate, 1922), Project Gutenberg, eBook 33900. The figures in cents come from the frequencies Music Motion gives each note (Pythagorean tuning, A4 = 440 Hz)."
+  },
+  "fr": {
+   "ui": {
+    "lang": "Langue",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Ouvre la partition : mesures 1–5 telles que les écrit Rimski-Korsakov, avec les notes qui se heurtent en rouge ; mesures 6–10, la solution. Passez la souris sur une note rouge et le Coach vous dit quoi jouer, dans cette langue.",
+    "pdf": "Analyse complète (PDF)",
+    "pdfOnly": "Pour l’instant, l’analyse en PDF est en espagnol.",
+    "back": "Direction d’orchestre",
+    "collection": "Direction d’orchestre · conflits et solutions"
+   },
+   "title": "RK 240 — La♯ contre Si♭, Sol♯ contre La♭",
+   "lead": "Rimski-Korsakov, <i>Principes d’orchestration</i>, vol. I, p. 109, n° 240 — <i>La Fiancée du tsar</i> (n° 123 de la partition). Allegro moderato, noire = 112, 4/4. Hautbois, cor anglais, clarinette en Si♭, deux bassons, cor en Fa et la voix (Lioubacha). Chaque musicien lit correctement sa partie, et pourtant l’accord ne se pose pas : deux parties pensent la même note sous deux noms différents, et en accord pythagoricien ce n’est pas la même hauteur.",
+   "sections": [
+    {
+     "h": "Ce qui est écrit (en sons réels)",
+     "html": "<table><tr><th>Mesure</th><th>Accord</th><th>Voix</th></tr><tr><td>1</td><td>Mi mineur — hautbois Si, cor anglais Sol, cor Mi</td><td>Si</td></tr><tr><td>2</td><td>bassons Do · Mi, puis <b>Mi♯</b> ; clarinette <b>Si♭</b></td><td><b>La♯</b> (croches)</td></tr><tr><td>3</td><td>Ré majeur — hautbois La, cor anglais Fa♯, cor Ré</td><td>La</td></tr><tr><td>4</td><td>bassons Si · Ré, puis <b>Ré♯</b> ; clarinette <b>La♭</b></td><td><b>Sol♯</b> (croches)</td></tr><tr><td>5</td><td>Do mineur — hautbois Sol, cor anglais <b>Mi♭</b>, cor Do</td><td>Sol</td></tr></table>"
+    },
+    {
+     "h": "Ce qui ne colle pas",
+     "html": "<p>Aux mesures 2 et 4, la voix et la clarinette ont la même note sous deux noms à la fois : La♯ contre Si♭ et Sol♯ contre La♭. À la mesure 4, le basson monte de Ré à Ré♯, et cette note se prolonge en Mi♭ à la mesure suivante, au cor anglais.</p><p>À l’orchestre, cela s’entend ainsi : la clarinette, qui lit un bémol, a tendance à jouer bas ; la chanteuse lit un dièse et le chante haut, comme une sensible. Les deux ont raison, et l’accord ne se pose pas. La voix est pensée comme ligne mélodique (Si – La♯ – La, La – Sol♯ – Sol), non à partir de l’harmonie.</p>"
+    },
+    {
+     "h": "Lecture tonale",
+     "html": "<ul><li><b>Mesure 4, vers Do mineur.</b> Si est la sensible et monte à Do ; La♭ est la 6<sup>te</sup> mineure de Do et descend à Sol ; le Ré♯ du basson est en réalité Mi♭, la tierce de Do mineur, qui arrive en avance. L’écriture tonale est <b>Si – Mi♭ – La♭</b>. Le Sol♯ de la voix, qui descend à Sol, va à contresens : une descente chromatique écrite avec un dièse.</li><li><b>Mesure 2, vers Ré majeur.</b> Si♭ est la 6<sup>te</sup> mineure de Ré et descend à La : la voix devrait lire <b>Si♭</b>, non La♯. Le <b>Mi♯</b> du basson se défend sur le papier (il monte à Fa♯, la tierce de Ré), mais l’usage est <b>Fa♮</b> puis Fa♯, et à l’oreille cela sonne mieux.</li></ul>"
+    },
+    {
+     "h": "En accord pythagoricien (La4 = 440 Hz)",
+     "html": "<table><tr><th>Note</th><th>Hz</th><th></th><th>Note</th><th>Hz</th><th>Différence</th></tr><tr><td>La♯4 (voix)</td><td>469,86</td><td>contre</td><td>Si♭4 (clarinette)</td><td>463,54</td><td><b>23,5 cents</b> (le comma pythagoricien)</td></tr><tr><td>Sol♯4 (voix)</td><td>417,66</td><td>contre</td><td>La♭4 (clarinette)</td><td>412,03</td><td><b>23,5 cents</b></td></tr><tr><td>Ré♯4 (basson, m. 4)</td><td>313,24</td><td>devient</td><td>Mi♭4 (cor anglais, m. 5)</td><td>309,03</td><td><b>23,5 cents</b> de saut sur la « même » note</td></tr><tr><td>Mi♯4 (basson, m. 2)</td><td>352,40</td><td>contre</td><td>Fa4</td><td>347,65</td><td><b>23,5 cents</b> : avec Si♭ à la voix et à la clarinette, c’est le Fa♮ qui pose l’accord</td></tr></table><p>Écrit comme dans le livre, dans la suite le heurt ne reste pas sur le papier : on l’entend.</p>"
+    },
+    {
+     "h": "La solution (mesures 6–10)",
+     "html": "<p>La voix et le basson pensent à l’harmonie, non à la ligne :</p><ul><li><b>Mesure 7 (la 2 de l’original), voix :</b> Si♭, non La♯ ; elle descend à La avec la clarinette, à 463,54 Hz, comme elle.</li><li><b>Mesure 9 (la 4), voix :</b> La♭, non Sol♯ ; elle descend à Sol avec la clarinette, à 412,03 Hz.</li><li><b>Mesure 9 (la 4), basson :</b> Mi♭, non Ré♯ ; c’est déjà la tierce de Do mineur, qui s’enchaîne sans saut au Mi♭ du cor anglais (309,03 Hz).</li><li><b>Mesure 7 (la 2), basson :</b> Fa♮, non Mi♯, puis il monte à Fa♯. Avec la voix et la clarinette sur Si♭, l’accord penche du côté des bémols : le Fa♮ forme des quartes justes avec le Do de l’autre basson et avec le Si♭ (4:3) ; le Mi♯, un comma plus haut, non. L’oreille le confirme : cela sonne mieux.</li></ul>"
+    },
+    {
+     "h": "Pour la répétition",
+     "html": "<ul class=\"ensayo\"><li>« C’est un si bémol, pas un la dièse. »</li><li>« C’est un la bémol : descendez avec la clarinette. »</li><li>Au basson, mesure 2 : « Fa naturel, pas mi dièse. »</li><li>Au basson, mesure 4 : « Ce ré dièse est déjà le mi bémol de l’accord suivant. »</li></ul>"
+    }
+   ],
+   "source": "Source de l’exemple : Rimski-Korsakov, <i>Principles of Orchestration</i> (éd. Steinberg, trad. Agate, 1922), Project Gutenberg, eBook 33900. Les valeurs en cents viennent des fréquences que Music Motion donne à chaque note (accord pythagoricien, La4 = 440 Hz)."
+  },
+  "nl": {
+   "ui": {
+    "lang": "Taal",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Opent de partituur: maten 1–5 zoals Rimski-Korsakov ze schrijft, met de botsende noten in rood; maten 6–10, de oplossing. Ga met de muis over een rode noot en de Coach zegt wat je moet spelen, in deze taal.",
+    "pdf": "Volledige analyse (PDF)",
+    "pdfOnly": "De PDF-analyse is voorlopig in het Spaans.",
+    "back": "Orkestdirectie",
+    "collection": "Orkestdirectie · conflicten en oplossingen"
+   },
+   "title": "RK 240 — Ais tegen Bes, Gis tegen As",
+   "lead": "Rimski-Korsakov, <i>Grondbeginselen van de orkestratie</i>, deel I, p. 109, nr. 240 — <i>De bruid van de tsaar</i> (nr. 123 van de partituur). Allegro moderato, kwart = 112, 4/4. Hobo, Engelse hoorn, klarinet in Bes, twee fagotten, hoorn in F en de stem (Lioebasja). Elke musicus leest zijn partij correct, en toch valt het akkoord niet op zijn plaats: twee partijen denken dezelfde noot met een andere naam, en in pythagorese stemming is dat niet dezelfde toonhoogte.",
+   "sections": [
+    {
+     "h": "Wat er staat (klinkend genoteerd)",
+     "html": "<table><tr><th>Maat</th><th>Akkoord</th><th>Stem</th></tr><tr><td>1</td><td>e klein — hobo B, Engelse hoorn G, hoorn E</td><td>B</td></tr><tr><td>2</td><td>fagotten C · E, dan <b>Eis</b>; klarinet <b>Bes</b></td><td><b>Ais</b> (achtsten)</td></tr><tr><td>3</td><td>D groot — hobo A, Engelse hoorn Fis, hoorn D</td><td>A</td></tr><tr><td>4</td><td>fagotten B · D, dan <b>Dis</b>; klarinet <b>As</b></td><td><b>Gis</b> (achtsten)</td></tr><tr><td>5</td><td>c klein — hobo G, Engelse hoorn <b>Es</b>, hoorn C</td><td>G</td></tr></table>"
+    },
+    {
+     "h": "Wat niet klopt",
+     "html": "<p>In maat 2 en 4 hebben de stem en de klarinet dezelfde noot onder twee namen tegelijk: Ais tegen Bes en Gis tegen As. In maat 4 stijgt de fagot van D naar Dis, en die noot gaat in de volgende maat verder als Es, in de Engelse hoorn.</p><p>In het orkest klinkt het zo: de klarinet leest een mol en speelt eerder laag; de zangeres leest een kruis en zingt het hoog, als leidtoon. Beiden hebben gelijk, en het akkoord valt niet op zijn plaats. De stem is gedacht als melodische lijn (B – Ais – A, A – Gis – G), niet vanuit de harmonie.</p>"
+    },
+    {
+     "h": "Tonale lezing",
+     "html": "<ul><li><b>Maat 4, naar c klein.</b> B is leidtoon en stijgt naar C; As is de kleine sext van C en daalt naar G; de Dis van de fagot is eigenlijk Es, de terts van c klein, die vroeger aankomt. De tonale spelling is <b>B – Es – As</b>. De Gis van de stem, die naar G daalt, gaat tegen de tonale zin in: een chromatische daling, geschreven met een kruis.</li><li><b>Maat 2, naar D groot.</b> Bes is de kleine sext van D en daalt naar A: de stem zou <b>Bes</b> moeten lezen, niet Ais. De <b>Eis</b> van de fagot is op papier te verdedigen (hij stijgt naar Fis, de terts van D), maar gebruikelijk is <b>F</b> en dan Fis, en voor het oor klinkt dat beter.</li></ul>"
+    },
+    {
+     "h": "In pythagorese stemming (A4 = 440 Hz)",
+     "html": "<table><tr><th>Noot</th><th>Hz</th><th></th><th>Noot</th><th>Hz</th><th>Verschil</th></tr><tr><td>Ais4 (stem)</td><td>469,86</td><td>tegen</td><td>Bes4 (klarinet)</td><td>463,54</td><td><b>23,5 cent</b> (het pythagorese komma)</td></tr><tr><td>Gis4 (stem)</td><td>417,66</td><td>tegen</td><td>As4 (klarinet)</td><td>412,03</td><td><b>23,5 cent</b></td></tr><tr><td>Dis4 (fagot, m. 4)</td><td>313,24</td><td>gaat verder als</td><td>Es4 (Engelse hoorn, m. 5)</td><td>309,03</td><td><b>23,5 cent</b> sprong op de „zelfde” noot</td></tr><tr><td>Eis4 (fagot, m. 2)</td><td>352,40</td><td>tegen</td><td>F4</td><td>347,65</td><td><b>23,5 cent</b>: met Bes in stem en klarinet zet de F het akkoord neer</td></tr></table><p>Geschreven zoals in het boek blijft de botsing in de suite niet op papier: je hoort ze.</p>"
+    },
+    {
+     "h": "De oplossing (maten 6–10)",
+     "html": "<p>De stem en de fagot denken vanuit de harmonie, niet vanuit de lijn:</p><ul><li><b>Maat 7 (maat 2 van het origineel), stem:</b> Bes, niet Ais; daalt samen met de klarinet naar A, op 463,54 Hz, net als de klarinet.</li><li><b>Maat 9 (maat 4), stem:</b> As, niet Gis; daalt samen met de klarinet naar G, op 412,03 Hz.</li><li><b>Maat 9 (maat 4), fagot:</b> Es, niet Dis; dat is al de terts van c klein en sluit zonder sprong aan bij de Es van de Engelse hoorn (309,03 Hz).</li><li><b>Maat 7 (maat 2), fagot:</b> F, niet Eis, en daarna omhoog naar Fis. Met stem en klarinet op Bes leunt het akkoord naar de molkant: de F vormt reine kwarten met de C van de andere fagot en met de Bes (4:3); de Eis, een komma hoger, niet. Het oor bevestigt het: het klinkt beter.</li></ul>"
+    },
+    {
+     "h": "Voor de repetitie",
+     "html": "<ul class=\"ensayo\"><li>„Het is bes, geen ais.”</li><li>„Het is as: ga mee omlaag met de klarinet.”</li><li>Tegen de fagot, maat 2: „F, geen eis.”</li><li>Tegen de fagot, maat 4: „Die dis is al de es van het volgende akkoord.”</li></ul>"
+    }
+   ],
+   "source": "Bron van het voorbeeld: Rimski-Korsakov, <i>Principles of Orchestration</i> (ed. Steinberg, vert. Agate, 1922), Project Gutenberg, eBook 33900. De waarden in cent komen uit de frequenties die Music Motion aan elke noot geeft (pythagorese stemming, A4 = 440 Hz)."
+  },
+  "de": {
+   "ui": {
+    "lang": "Sprache",
+    "open": "OPEN IN SCORE",
+    "openHelp": "Öffnet die Partitur: Takte 1–5, wie Rimski-Korsakow sie schreibt, mit den kollidierenden Noten in Rot; Takte 6–10, die Lösung. Fahren Sie mit der Maus über eine rote Note, und der Coach sagt, was zu spielen ist – in dieser Sprache.",
+    "pdf": "Vollständige Analyse (PDF)",
+    "pdfOnly": "Die PDF-Analyse ist vorerst auf Spanisch.",
+    "back": "Dirigieren",
+    "collection": "Dirigieren · Konflikte und Lösungen"
+   },
+   "title": "RK 240 — Ais gegen B, Gis gegen As",
+   "lead": "Rimski-Korsakow, <i>Grundlagen der Orchestration</i>, Bd. I, S. 109, Nr. 240 — <i>Die Zarenbraut</i> (Nr. 123 der Partitur). Allegro moderato, Viertel = 112, 4/4. Oboe, Englischhorn, Klarinette in B, zwei Fagotte, Horn in F und die Singstimme (Ljubascha). Jeder Musiker liest seine Stimme richtig, und doch setzt sich der Akkord nicht: Zwei Stimmen denken denselben Ton unter verschiedenen Namen, und in pythagoreischer Stimmung ist das nicht dieselbe Tonhöhe.",
+   "sections": [
+    {
+     "h": "Was dasteht (klingend notiert)",
+     "html": "<table><tr><th>Takt</th><th>Akkord</th><th>Stimme</th></tr><tr><td>1</td><td>e-Moll — Oboe H, Englischhorn G, Horn E</td><td>H</td></tr><tr><td>2</td><td>Fagotte C · E, dann <b>Eis</b>; Klarinette <b>B</b></td><td><b>Ais</b> (Achtel)</td></tr><tr><td>3</td><td>D-Dur — Oboe A, Englischhorn Fis, Horn D</td><td>A</td></tr><tr><td>4</td><td>Fagotte H · D, dann <b>Dis</b>; Klarinette <b>As</b></td><td><b>Gis</b> (Achtel)</td></tr><tr><td>5</td><td>c-Moll — Oboe G, Englischhorn <b>Es</b>, Horn C</td><td>G</td></tr></table>"
+    },
+    {
+     "h": "Was nicht passt",
+     "html": "<p>In Takt 2 und 4 haben Singstimme und Klarinette denselben Ton unter zwei Namen zugleich: Ais gegen B und Gis gegen As. In Takt 4 steigt das Fagott von D nach Dis, und dieser Ton geht im nächsten Takt als Es weiter, im Englischhorn.</p><p>Im Orchester klingt das so: Die Klarinette liest ein b und spielt eher tief; die Sängerin liest ein Kreuz und singt es hoch, als Leitton. Beide haben recht, und der Akkord setzt sich nicht. Die Singstimme ist als melodische Linie gedacht (H – Ais – A, A – Gis – G), nicht von der Harmonie her.</p>"
+    },
+    {
+     "h": "Tonale Lesart",
+     "html": "<ul><li><b>Takt 4, nach c-Moll.</b> H ist Leitton und steigt nach C; As ist die kleine Sexte von C und fällt nach G; das Dis des Fagotts ist in Wahrheit Es, die Terz von c-Moll, die früher eintrifft. Die tonale Schreibweise ist <b>H – Es – As</b>. Das Gis der Singstimme, das nach G fällt, läuft dem tonalen Sinn entgegen: ein chromatischer Abstieg, mit Kreuz geschrieben.</li><li><b>Takt 2, nach D-Dur.</b> B ist die kleine Sexte von D und fällt nach A: Die Singstimme sollte <b>B</b> lesen, nicht Ais. Das <b>Eis</b> des Fagotts lässt sich auf dem Papier verteidigen (es steigt nach Fis, der Terz von D), üblich ist aber <b>F</b> und dann Fis, und für das Ohr klingt das besser.</li></ul>"
+    },
+    {
+     "h": "In pythagoreischer Stimmung (A4 = 440 Hz)",
+     "html": "<table><tr><th>Ton</th><th>Hz</th><th></th><th>Ton</th><th>Hz</th><th>Unterschied</th></tr><tr><td>Ais4 (Stimme)</td><td>469,86</td><td>gegen</td><td>B4 (Klarinette)</td><td>463,54</td><td><b>23,5 Cent</b> (das pythagoreische Komma)</td></tr><tr><td>Gis4 (Stimme)</td><td>417,66</td><td>gegen</td><td>As4 (Klarinette)</td><td>412,03</td><td><b>23,5 Cent</b></td></tr><tr><td>Dis4 (Fagott, T. 4)</td><td>313,24</td><td>geht weiter als</td><td>Es4 (Englischhorn, T. 5)</td><td>309,03</td><td><b>23,5 Cent</b> Sprung auf dem „gleichen“ Ton</td></tr><tr><td>Eis4 (Fagott, T. 2)</td><td>352,40</td><td>gegen</td><td>F4</td><td>347,65</td><td><b>23,5 Cent</b>: mit B in Stimme und Klarinette setzt das F den Akkord</td></tr></table><p>So geschrieben wie im Buch, bleibt der Zusammenstoß in der Suite nicht auf dem Papier: Man hört ihn.</p>"
+    },
+    {
+     "h": "Die Lösung (Takte 6–10)",
+     "html": "<p>Singstimme und Fagott denken von der Harmonie her, nicht von der Linie:</p><ul><li><b>Takt 7 (Takt 2 des Originals), Stimme:</b> B, nicht Ais; sie fällt zusammen mit der Klarinette nach A, auf 463,54 Hz, genau wie die Klarinette.</li><li><b>Takt 9 (Takt 4), Stimme:</b> As, nicht Gis; sie fällt zusammen mit der Klarinette nach G, auf 412,03 Hz.</li><li><b>Takt 9 (Takt 4), Fagott:</b> Es, nicht Dis; das ist schon die Terz von c-Moll und schließt ohne Sprung an das Es des Englischhorns an (309,03 Hz).</li><li><b>Takt 7 (Takt 2), Fagott:</b> F, nicht Eis, danach hinauf nach Fis. Mit Stimme und Klarinette auf B neigt der Akkord zur b-Seite: Das F bildet reine Quarten mit dem C des anderen Fagotts und mit dem B (4:3); das Eis, ein Komma höher, nicht. Das Ohr bestätigt es: Es klingt besser.</li></ul>"
+    },
+    {
+     "h": "Für die Probe",
+     "html": "<ul class=\"ensayo\"><li>„Das ist ein B, kein Ais.“</li><li>„Das ist ein As: mit der Klarinette hinunter.“</li><li>Zum Fagott, Takt 2: „F, nicht Eis.“</li><li>Zum Fagott, Takt 4: „Dieses Dis ist schon das Es des nächsten Akkords.“</li></ul>"
+    }
+   ],
+   "source": "Quelle des Beispiels: Rimski-Korsakow, <i>Principles of Orchestration</i> (Hg. Steinberg, Übers. Agate, 1922), Project Gutenberg, eBook 33900. Die Werte in Cent stammen aus den Frequenzen, die Music Motion jedem Ton gibt (pythagoreische Stimmung, A4 = 440 Hz)."
+  }
+ }
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección de orquesta — Music Motion v.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../mm-theme.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="icon" type="image/svg+xml" href="/icons/mm-web-tab.svg">
+<link rel="apple-touch-icon" href="/icons/mm-web-180.png">
+<meta name="theme-color" content="#07070e">
+<!-- 2026-10-25 (Mario): página modelo para los ejemplos de Dirección de orquesta.
+     Un caso = un .json (textos en ES EN FR NL DE) + un .mmf por idioma. caso.html?c=RKcs240&lang=nl -->
+<style>
+.cs-langs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:22px 0 4px}
+.cs-langs .lbl{font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--textd);margin-right:6px}
+.cs-langs button{font-family:var(--ff-mono);font-size:.8rem;letter-spacing:1px;padding:6px 12px;border:1px solid var(--border);border-radius:var(--rad);background:transparent;color:var(--textm);cursor:pointer}
+.cs-langs button:hover{color:var(--gold);border-color:var(--gold)}
+.cs-langs button.on{background:var(--gold);border-color:var(--gold);color:#0a0a10}
+.cs-open{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:22px}
+.cs-help{color:var(--textm);max-width:72ch;margin-top:12px;font-size:var(--fs-sm)}
+.cs-frame{margin-top:22px;border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);overflow:hidden;background:var(--panel)}
+.cs-frame iframe{display:block;width:100%;height:min(760px,80vh);border:0;background:#fff}
+.cs-body{max-width:80ch}
+.cs-body h2{margin-top:6px}
+.cs-body p,.cs-body li{color:var(--textm)}
+.cs-body b{color:var(--text)}
+.cs-body ul{margin:12px 0 0 20px}
+.cs-body li{margin-bottom:8px}
+.cs-body table{border-collapse:collapse;margin-top:14px;font-size:var(--fs-sm);width:100%}
+.cs-body th,.cs-body td{border-bottom:1px solid var(--border);padding:7px 10px;text-align:left;vertical-align:top;color:var(--textm)}
+.cs-body th{font-family:var(--ff-mono);font-size:.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--textd)}
+.cs-body .tw{overflow-x:auto}
+.cs-body ul.ensayo{list-style:none;margin-left:0}
+.cs-body ul.ensayo li{border-left:2px solid var(--gold);padding:4px 0 4px 14px;font-size:1.05rem;color:var(--text)}
+.cs-src{font-size:var(--fs-sm);color:var(--textd);max-width:80ch}
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
+  <div class="tools">
+    <div class="sizetog" title="Tamaño del texto / Text size">
+      <button data-sz="100" class="on" title="Normal">A</button>
+      <button data-sz="115" title="Grande / Larger">A</button>
+      <button data-sz="130" title="Mayor / Largest">A</button>
+    </div>
+    <div class="themetog" title="Tema / Theme">
+      <button data-th="dark" class="on" style="background:#0e0e1a" title="Dark"></button>
+      <button data-th="gray" style="background:#2c2e38" title="Classic Gray"></button>
+      <button data-th="clear" style="background:#f6efda" title="Clear"></button>
+      <button data-th="contrast" style="background:#000;border-color:#ffcf48" title="High Contrast"></button>
+    </div>
+  </div>
+</header>
+<main style="--c:var(--gold)">
+<section style="border-bottom:none">
+  <div class="app-eyebrow" id="eyebrow"></div>
+  <h1 id="title"></h1>
+  <p class="lead" id="lead"></p>
+  <div class="cs-langs" id="langs"></div>
+  <div class="cs-open">
+    <a class="btn-launch" id="open" target="_blank" rel="noopener"></a>
+    <a id="pdf" target="_blank" rel="noopener"></a>
+  </div>
+  <p class="cs-help" id="help"></p>
+  <div class="cs-frame"><iframe id="frame" title="Score" allow="autoplay"></iframe></div>
+</section>
+<div id="sections"></div>
+<section><p class="cs-src" id="src"></p></section>
+</main>
+<footer class="foot-bar">
+  <a href="../index.html" class="foot-brand" title="Inicio / Home"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"></a>
+  <span class="foot-rights">© 2001–2026 Music Motion</span>
+</footer>
+<script src="../mm-theme.js"></script>
+<script src="../site.js"></script>
+<script>
+(function(){
+  var NAMES={es:'ES',en:'EN',fr:'FR',nl:'NL',de:'DE'};
+  var q=new URLSearchParams(location.search);
+  var id=(q.get('c')||'RKcs240').replace(/[^\w-]/g,'');
+  var C=null, lang='es';
+  function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
+  function $(i){return document.getElementById(i);}
+  function scoreUrl(){return '../../apps/mm-score-page.html?demo&file=../suite/conductor/'+encodeURIComponent(C.mmf[lang]||C.mmf.es)+'&page';}
+  function render(){
+    var T=C.text[lang], U=T.ui;
+    document.documentElement.lang=lang;
+    document.title=T.title+' — Music Motion v.2';
+    $('eyebrow').textContent='◈ '+U.collection;
+    $('title').textContent=T.title;
+    $('lead').innerHTML=T.lead;
+    $('langs').innerHTML='<span class="lbl">'+U.lang+'</span>'+C.langs.map(function(l){return '<button data-l="'+l+'" class="'+(l===lang?'on':'')+'">'+NAMES[l]+'</button>';}).join('');
+    $('open').textContent=U.open+' ↗'; $('open').href=scoreUrl();
+    var pf=C.pdf[lang]||C.pdf.es;
+    $('pdf').textContent='⭳ '+U.pdf+(C.pdf[lang]?'':' · ES'); $('pdf').href=pf; $('pdf').title=C.pdf[lang]?'':U.pdfOnly;
+    $('help').textContent=U.openHelp;
+    $('sections').innerHTML=T.sections.map(function(s){return '<section><div class="cs-body"><h2>'+s.h+'</h2>'+s.html.replace(/<table>/g,'<div class="tw"><table>').replace(/<\/table>/g,'</table></div>')+'</div></section>';}).join('');
+    $('src').innerHTML=T.source;
+    ls('mmCoachLang',lang);               // el Coach del Score habla en este idioma
+    if($('frame').dataset.l!==lang){ $('frame').dataset.l=lang; $('frame').src=scoreUrl(); }
+    var u=new URL(location.href); u.searchParams.set('lang',lang); history.replaceState(null,'',u);
+  }
+  document.addEventListener('click',function(e){var b=e.target.closest('#langs button'); if(!b)return; lang=b.dataset.l; render(); b=document.querySelector('#langs button[data-l="'+lang+'"]'); if(b)b.blur();});
+  $('open').addEventListener('click',function(){ls('mmCoachLang',lang);});
+  fetch(id+'.json').then(function(r){return r.json();}).then(function(j){
+    C=j;
+    var want=q.get('lang')||ls('mmCoachLang')||ls('mmSiteLang')||'es';
+    lang=C.langs.indexOf(want)>=0?want:'es';
+    render();
+  });
+})();
+</script>
+</body>
+</html>
