@@ -164,7 +164,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
 .dog .tail{transform-origin:22px 70px;animation:wag .18s ease-in-out infinite alternate}
 @keyframes wag{from{transform:rotate(-18deg)}to{transform:rotate(22deg)}}
 .dog .bub{font-family:var(--display);font-size:22px;fill:var(--ink)}
-.dog.sleep{bottom:max(10px,env(safe-area-inset-bottom,0px))}.dog.quieto .tail{animation:none}.dog.quieto>g:last-of-type{opacity:0}.dog.sleep>g:first-child{transform:translate(6px,66px) scale(1,.84)}.dog.sleep .tail{animation:none;transform:rotate(48deg)}   /* 📖 READ: con una nota equivocada el perrito se acuesta (zzz…) */
+.dog.sleep{bottom:max(10px,env(safe-area-inset-bottom,0px))}.dog.quieto .tail{animation:none}.dog.quieto .globo{opacity:0}.dog .dormido{display:none}.dog.sleep .dormido{display:inline}.dog.sleep .parado{display:none}.dog.izq{transform:scaleX(-1)}.dog.izq .globo{transform:translate(70px,4px) scale(-1,1) translate(-84px,0)}.dog.salta{animation:salto .6s ease-out}.dog.salta .globo{opacity:0}@keyframes salto{0%{transform:translateY(0) scaleX(var(--f0,1))}45%{transform:translateY(-80px) scaleX(0)}100%{transform:translateY(0) scaleX(var(--f1,1))}}@media (prefers-reduced-motion:reduce){.dog.salta{animation:none}}   /* 📖 READ: con una nota equivocada el perrito se acuesta (zzz…) */
 @media (prefers-reduced-motion:reduce){.lights.run i,.lights.party i,.frame.spinning .bulbs i,.banner.flash,.dog .tail{animation:none}.rain:not(.suave){display:none}}
 @media (max-width:900px){.quintas{overflow:visible;gap:2px}.quintas span{flex:1 1 0;min-width:0;height:12px;padding:0;font-size:0;border-radius:4px}.quintas span.on{height:14px}}   /* teléfono: chips sin nombre, los 35 caben (Mario) */
 @media (max-height:520px) and (orientation:landscape){.marquee h1{font-size:30px}.flecha{width:30px;height:30px;font-size:20px}.marquee .kicker{font-size:11px;margin:0}.sub{display:none}.lights{margin:6px 4px 8px}.torre{min-height:0;padding:2px 0;justify-content:center}.lever{height:150px}.torre .blo{padding:2px 10px;font-size:12px}.torre .perro-torre{width:44px;height:46px}}   /* teléfono horizontal: más compacto */
@@ -208,7 +208,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
 </div>
 <div class="rain" id="rain" aria-hidden="true"></div>
 <svg class="dog" id="dog" viewBox="0 0 160 170" aria-hidden="true">
-  <g transform="translate(6,52)">
+  <g class="parado" transform="translate(6,52)">
     <path class="tail" d="M22 70 C 2 60, -2 40, 10 30" fill="none" stroke="#c98a4a" stroke-width="9" stroke-linecap="round"/>
     <ellipse cx="62" cy="82" rx="46" ry="28" fill="#d99a58"/>
     <rect x="28" y="94" width="13" height="24" rx="6" fill="#c98a4a"/><rect x="80" y="94" width="13" height="24" rx="6" fill="#c98a4a"/>
@@ -219,7 +219,15 @@ input[type=range]{accent-color:var(--gold);width:130px}
     <path d="M112 70 Q 120 77 128 70" fill="none" stroke="#2b1a0e" stroke-width="2.4" stroke-linecap="round"/>
     <rect x="70" y="76" width="30" height="7" rx="3.5" fill="#b0324a"/>
   </g>
-  <g transform="translate(70,4)"><rect x="0" y="0" width="84" height="40" rx="14" fill="#f7f2e4"/><path d="M18 38 L 10 52 L 32 38 Z" fill="#f7f2e4"/><text class="bub" x="42" y="28" text-anchor="middle">¡GUAU!</text></g>
+  <g class="dormido">   <!-- READ (Mario): acostado — sin patas a la vista, la cola en el suelo, la cabeza apoyada -->
+    <path d="M22 160 C 10 162, 4 165, 1 168" fill="none" stroke="#c98a4a" stroke-width="8" stroke-linecap="round"/>
+    <ellipse cx="64" cy="153" rx="50" ry="16" fill="#d99a58"/>
+    <circle cx="116" cy="151" r="19" fill="#d99a58"/>
+    <path d="M103 140 C 90 150, 95 167, 108 163 Z" fill="#8a5a2c"/>
+    <ellipse cx="132" cy="160" rx="13" ry="8" fill="#f1d3a8"/><circle cx="142" cy="157" r="4" fill="#2b1a0e"/>
+    <path d="M110 147 q 5 3.5 10 0" fill="none" stroke="#2b1a0e" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g class="globo" transform="translate(70,4)"><rect x="0" y="0" width="84" height="40" rx="14" fill="#f7f2e4"/><path d="M18 38 L 10 52 L 32 38 Z" fill="#f7f2e4"/><text class="bub" x="42" y="28" text-anchor="middle">¡GUAU!</text></g>
 </svg>
 <script>
 // ── los cinco idiomas (2026-10-23, Mario: «genial para los niños de cada idioma») ──
@@ -717,9 +725,10 @@ document.addEventListener('keydown',ev=>{ if(!eco||ev.ctrlKey||ev.metaKey||ev.al
 let lee=null;
 function perro(m){ const dog=document.getElementById('dog'); if(!dog) return; const bub=dog.querySelector('.bub'); clearTimeout(perro.t);   /* durante READ el perrito se queda a la vista (Mario) */
   dog.classList.toggle('sleep',m==='sleep'); dog.classList.toggle('quieto',!m&&!!lee); dog.classList.toggle('in',!!m||!!lee); if(bub) bub.textContent=m==='sleep'?'zzz…':tr('bub');
+  if(m==='wag'&&lee&&!reduce){ const f0=dog.classList.contains('izq')?-1:1; dog.style.setProperty('--f0',f0); dog.style.setProperty('--f1',-f0); dog.classList.remove('salta'); void dog.getBoundingClientRect(); dog.classList.toggle('izq',f0>0); dog.classList.add('salta'); dog.onanimationend=()=>dog.classList.remove('salta'); }   /* con una buena nota salta y se da la vuelta */
   if(m) perro.t=setTimeout(()=>{ dog.classList.remove('sleep'); if(lee) dog.classList.add('quieto'); else dog.classList.remove('in'); if(bub) bub.textContent=tr('bub'); },m==='sleep'?1500:1100); }
 function leeBtn(on){ const b=document.getElementById('readBtn'); b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); }
-function leeStop(){ if(!lee) return; lee.timers.forEach(clearTimeout); lee=null; leeBtn(false); clearTimeout(perro.t); { const dog=document.getElementById('dog'); if(dog){ dog.classList.remove('in','quieto','sleep'); const bub=dog.querySelector('.bub'); if(bub) bub.textContent=tr('bub'); } } const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML='';
+function leeStop(){ if(!lee) return; lee.timers.forEach(clearTimeout); lee=null; leeBtn(false); clearTimeout(perro.t); { const dog=document.getElementById('dog'); if(dog){ dog.classList.remove('in','quieto','sleep','salta','izq'); const bub=dog.querySelector('.bub'); if(bub) bub.textContent=tr('bub'); } } const pad=document.getElementById('ecoPad'); pad.hidden=true; pad.innerHTML='';
   const ban=document.getElementById('banner'); ban.textContent=''; ban.classList.remove('flash'); render(); }
 function leeTurno(){ document.getElementById('ecoTurno').textContent=tr('readTurn',{i:lee.pos+1,n:lee.target.length}); render(lee.hi[lee.pos]); }
 function leeStart(){ if(lee){ leeStop(); return; } if(!keyInfo().ok||state.spinning||state.bars.length<4) return; stopPlay(); if(eco) ecoStop();
