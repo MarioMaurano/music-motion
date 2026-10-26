@@ -1,0 +1,25 @@
+{
+  "id": "/apps/mm-score-page.html",
+  "name": "mm Score",
+  "short_name": "mm Score",
+  "description": "Music Motion Score: abre los archivos .mmf con doble clic.",
+  "lang": "es",
+  "start_url": "/apps/mm-score-page.html",
+  "scope": "/apps/mm-score-page.html",
+  "display": "standalone",
+  "background_color": "#07070e",
+  "theme_color": "#07070e",
+  "file_handlers": [
+    {
+      "action": "/apps/mm-score-page.html",
+      "accept": { "application/x-music-motion-score": [".mmf"] },
+      "icons": [ { "src": "/icons/mm-suite-192.png", "sizes": "192x192", "type": "image/png" } ],
+      "launch_type": "multiple-clients"
+    }
+  ],
+  "icons": [
+    { "src": "/icons/mm-suite-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/mm-suite-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/mm-suite-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
