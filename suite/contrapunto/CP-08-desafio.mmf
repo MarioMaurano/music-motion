@@ -111,7 +111,9 @@
    0,
    1
   ],
-  "forbidSeventh": false
+  "forbidSeventh": false,
+  "duration": "sixteenth",
+  "durationMix": true
  },
  "coachLog": null,
  "agogMarkings": [],

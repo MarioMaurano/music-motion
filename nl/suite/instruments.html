@@ -215,7 +215,7 @@
       if(cs.length){
         var LG=((/\/(fr|nl|de)\/suite\//.exec(location.pathname)||[])[1])||document.documentElement.getAttribute('data-lang')||'es'; if(!/^(es|en|fr|nl|de)$/.test(LG)) LG='en';
         h+='<div class="ficha-sec">'+esc({es:'Conflictos y soluciones · Dirección de orquesta',en:'Conflicts and solutions · Conducting',fr:'Conflits et solutions · Direction d’orchestre',nl:'Conflicten en oplossingen · Orkestdirectie',de:'Konflikte und Lösungen · Dirigieren'}[LG])+'</div>';
-        cs.forEach(function(c){ var T=c.text[LG]||c.text.es; h+='<div class="ficha-row"><div class="ficha-k">'+esc(c.id)+'</div><div class="ficha-v"><a href="'+CBASE+'caso.html?c='+encodeURIComponent(c.id)+'&lang='+LG+'">'+esc(T.title)+' →</a>'+(c.libre?'':' <span style="color:var(--textd)">· S · Salieri</span>')+'</div></div>'; });
+        cs.forEach(function(c){ var T=c.text[LG]||c.text.es; h+='<div class="ficha-row"><div class="ficha-k">'+esc(c.id)+'</div><div class="ficha-v"><a href="../../suite/'+CBASE+'caso.html?c='+encodeURIComponent(c.id)+'&lang='+LG+'">'+esc(T.title)+' →</a>'+(c.libre?'':' <span style="color:var(--textd)">· S · Salieri</span>')+'</div></div>'; });
       }
       if(!rk&&!tc) h+='<div class="ficha-row"><div class="ficha-v" style="color:var(--textd)">'+bi('Todavía sin ficha: este instrumento no tiene tabla de Rimsky ni notas de técnica.','No card yet: this instrument has neither a Rimsky table nor technique notes.')+'</div></div>';
       return h;

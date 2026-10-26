@@ -144,7 +144,9 @@
   "appliesTo": [
    0,
    1
-  ]
+  ],
+  "duration": "quarter",
+  "durationMix": true
  },
  "coachLog": null,
  "agogMarkings": [],

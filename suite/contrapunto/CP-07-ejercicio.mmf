@@ -111,7 +111,9 @@
   "appliesTo": [
    0,
    1
-  ]
+  ],
+  "duration": "half",
+  "durationMix": true
  },
  "coachLog": null,
  "agogMarkings": [],
