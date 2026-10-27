@@ -614,7 +614,9 @@ function newBars1(acepta){let prev=null, fallo=false; const out=[]; for(let i=0;
       const repOk=b=>{ const D=out.flatMap(x=>x.deg).concat(b.deg), R=out.flatMap(x=>x.rh).concat(b.rh), k0=Math.max(1,D.length-b.deg.length);
         for(let k=k0;k<(songOf(b,i)?Math.min(D.length,k0+2):D.length);k++){ if(D[k]===D[k-1]&&R[k]>R[k-1]) return false; if(k>1&&D[k]===D[k-1]&&D[k-1]===D[k-2]) return false; }
         return true; };
-      const fits=b=>barOk(b.deg,prev)&&(nx==null||ivOk(b.deg[b.deg.length-1],nx))&&celda(b)&&repOk(b);
+      // 2026-10-27 (Mario): la primera nota de la segunda célula (compás 3) es distinta de la última de la primera (compás 2).
+      const cambia=b=>i!==2||b.deg[0]!==prev;
+      const fits=b=>barOk(b.deg,prev)&&(nx==null||ivOk(b.deg[b.deg.length-1],nx))&&celda(b)&&repOk(b)&&cambia(b);
       const lp=()=>i%2===1?1-leapsIn(out[i-1].deg):1;
       const ya=out.flatMap(x=>x.deg), ult=ya.length>=2?ya[ya.length-1]-ya[ya.length-2]:null;   // la dirección que trae la línea
       let b=makeBar(i,prev,lp(),ult); for(let t=0;t<200&&!fits(b);t++) b=makeBar(i,prev,lp(),ult); if(!fits(b)) fallo=true; out.push(b); }
