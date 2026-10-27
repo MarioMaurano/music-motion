@@ -671,9 +671,10 @@ function ctx(){ if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)(
 function tone(f,t0,dur,vol,fx){const a=ctx(); const o=a.createOscillator(); const v=a.createGain(); o.setPeriodicWave(wave); o.frequency.value=f;
   v.gain.setValueAtTime(0,t0); v.gain.linearRampToValueAtTime(vol,t0+.015); v.gain.setTargetAtTime(vol*.55,t0+.04,.18); v.gain.setTargetAtTime(0,t0+Math.max(.04,dur-.05),.05);
   o.connect(v).connect(a.destination); o.start(t0); o.stop(t0+dur+.4); if(!fx) playing.push(o);}
-function tick(){try{const a=ctx(); tone(1500+rnd(300),a.currentTime,.025,.025,true);}catch(e){}}
-function clack(){try{const a=ctx(); const t=a.currentTime; tone(150,t,.09,.14,true); tone(900,t,.03,.05,true);}catch(e){}}
-function fanfare(){try{const a=ctx(); const t=a.currentTime+.05; [0,2,4,7].forEach((d,k)=>{tone(spell(d).freq,t+k*.11,.22,.12,true);}); tone(spell(7).freq,t+.44,.5,.12,true); tone(spell(4).freq,t+.44,.5,.08,true);}catch(e){}}
+// 2026-10-27 (Mario: «bájale el sonido a los efectos»): tic, clac y fanfarria a la mitad del volumen; la melodía no cambia.
+function tick(){try{const a=ctx(); tone(1500+rnd(300),a.currentTime,.025,.0125,true);}catch(e){}}
+function clack(){try{const a=ctx(); const t=a.currentTime; tone(150,t,.09,.07,true); tone(900,t,.03,.025,true);}catch(e){}}
+function fanfare(){try{const a=ctx(); const t=a.currentTime+.05; [0,2,4,7].forEach((d,k)=>{tone(spell(d).freq,t+k*.11,.22,.06,true);}); tone(spell(7).freq,t+.44,.5,.06,true); tone(spell(4).freq,t+.44,.5,.04,true);}catch(e){}}
 const pid=s=>s.letter+s.oct+({2:'SS',1:'S',0:'N','-1':'B','-2':'BB'}[s.acc]);
 function stopPlay(){playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; playTimer.forEach(clearTimeout); playTimer=[]; clearInterval(sched); sched=null;
   sounding.forEach(m=>msg({cmd:'NOTE_OFF',id:m.id,chId:m.chId,source:'minikeyboard'})); sounding=[];
