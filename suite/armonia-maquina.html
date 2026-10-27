@@ -481,6 +481,19 @@ function headRest(mt){ for(let t=0;t<30;t++){ const r=pick(RESTS[state.meter]); 
     while(cut>0&&rh.length){ if(rh[0]>cut){ rh[0]-=cut; cut=0; } else { cut-=rh.shift(); } }
     if(cut===0&&rh.length&&rh.every(x=>QOK.has(x*mt.uq))&&QOK.has(r*mt.uq)) return {rest:r,rh}; }
   return null; }
+// ── LA LÍNEA PRIMERO (2026-10-27, Mario: «en las clases de armonía se enfatizaba la verticalidad … esta separación siempre se
+// me hizo una gran pérdida»; «la célula primera de una melodía aporta ya unos elementos rítmicos para las voces interiores sin
+// tener necesariamente que imitarlas completamente»). Ver _Salieri/Composicion/cuadro-de-la-melodia. Las reglas se aflojan a
+// medida que avanzan las épocas; por ahora solo existe BAROQUE. saltos = saltos por célula (dos compases) · sigue = la línea
+// que viene por grado sigue su dirección · compensa = el salto vuelve por grado · fig = la tercera repetida (Re Fa Re Fa Do) ·
+// bajo = el bajo prefiere moverse por grado · inv = cuánto pesa la primera inversión (menos = más inversiones) · ritmo = las
+// voces del coral toman notas de paso con valores de la primera célula.
+const LINEA={baroque:{saltos:1,sigue:2/3,compensa:2/3,fig:.4,bajo:1,inv:.6,ritmo:.5}};
+const LNP=()=>LINEA[state.era]||LINEA.baroque;
+const LIN_ON=()=>state.win==='harm'||(state.win==='acomp'&&!AIR());
+const esFigS=(d,k)=>k+4<d.length&&Math.abs(d[k+1]-d[k])===2&&d[k+2]===d[k]&&d[k+3]===d[k+1]&&d[k+4]===d[k]-Math.sign(d[k+1]-d[k]);
+const leapsS=d=>{ let n=0; for(let k=1;k<d.length;k++){ if(esFigS(d,k-1)){ n++; k+=3; continue; } if(Math.abs(d[k]-d[k-1])>=2) n++; } return n; };
+let _linPresu=null, _linUlt=null;   // lo que la célula ya gastó y la dirección que trae la línea (los pone buildHarm)
 function makeBar(i,prev){
   // en la invención el motivo es corto y activo: ritmos de continuación (semicorcheas, corcheas), por grado
   const inv=state.win==='inv'||state.win==='sinf', mt=MT(), role=inv?(i===state.T-1&&state.T>1?'fin':'cont'):roleOf(i), hr=(!AIR()&&state.win!=='harm'&&(inv?i===0:role==='head')&&(state.T>1||inv)&&Math.random()<.4)?headRest(mt):null;
@@ -490,10 +503,17 @@ function makeBar(i,prev){
   const LONG=L=>L.map(([c,w])=>[c,Math.max(...c)>=5?w*3:w]);   // en el Air, la nota larga manda
   const rh=hr?hr.rh:state.win==='harm'?(()=>{ const C=RH.chor[state.meter], sc=mt.U/C.U; return wpick(role==='head'?C.INICIO:C.MEDIO).map(x=>x*sc); })():(busy||still)?wpick(CMP(role==='head'?mt.INICIO:role==='fin'?mt.FINAL:mt.MEDIO)):AIR()?wpick(LONG(role==='head'?mt.INICIO:role==='fin'?mt.FINAL:mt.MEDIO)):wpick(inv?(role==='fin'?mt.FINAL:ACT(mt.MEDIO)):role==='head'?mt.INICIO:role==='fin'?mt.FINAL:mt.MEDIO), deg=[];
   let cur=prev;
+  const LIN=LIN_ON(), LL=LNP(); let presu=_linPresu!=null?_linPresu:LL.saltos, ult=_linUlt, fig=LIN&&rh.length>=5&&Math.random()<LL.fig;
   for(let k=0;k<rh.length;k++){
     if(cur==null){ cur=Math.random()<.65?0:4; deg.push(cur); continue; }
-    if(role==='head'&&(state.meter==='4/4'||rh[k]>=mt.Q)){ const tri=[0,2,4,7,-3,-1].filter(c=>c!==cur&&Math.abs(c-cur)<=5); cur=pick(tri.length?tri:[0]); }
-    else { let st=pick([-1,-1,1,1,-1,1,2,-2,-1,3,-3]); if(cur+st<-3||cur+st>8) st=-st; cur+=st; }
+    const c0=cur;
+    if(LIN&&fig&&k===1&&presu>0&&rh.length-k>=4){ fig=false; const up=cur<=-2?1:cur>=6?-1:pick([-1,1]), Y=cur+2*up, Z=cur-up;   // la tercera repetida: X Y X Y Z
+      for(const n of [Y,cur,Y,Z]){ deg.push(n); k++; } k--; presu--; ult=Z-Y; cur=Z; continue; }
+    if(role==='head'&&(state.meter==='4/4'||rh[k]>=mt.Q)){ let tri=[0,2,4,7,-3,-1].filter(c=>c!==cur&&Math.abs(c-cur)<=5); if(LIN&&presu<=0) tri=tri.filter(c=>Math.abs(c-cur)<=1); cur=tri.length?pick(tri):(LIN?cur+pick([-1,1]):0); }
+    else { const OP=[-1,-1,1,1,-1,1,2,-2,-1,3,-3].map(s=>(cur+s<-3||cur+s>8)?-s:s); let st=pick(OP);
+      if(LIN&&ult!=null&&ult!==0&&Math.random()<(Math.abs(ult)===1?LL.sigue:LL.compensa)){ const f=Math.abs(ult)===1?OP.filter(s=>Math.sign(s)===Math.sign(ult)):OP.filter(s=>Math.abs(s)===1&&Math.sign(s)===-Math.sign(ult)); if(f.length) st=pick(f); }
+      if(LIN&&presu<=0&&Math.abs(st)>=2) st=Math.sign(st); cur+=st; }
+    if(LIN){ if(Math.abs(cur-c0)>=2) presu--; if(cur!==c0) ult=cur-c0; }
     deg.push(cur);
   }
   if(role==='fin'){ const last=deg.length-1, before=last?deg[last-1]:prev;
@@ -513,6 +533,10 @@ function nearest(set,x){ return set.reduce((b,c)=>Math.abs(c-x)<Math.abs(b-x)?c:
 function subjectOk(bars,partial){ const degs=bars.flatMap(b=>b.deg), r=raises(degs), ps=degs.map((d,i)=>deg2P(d,r[i]));
   if(Math.max(...degs)-Math.min(...degs)>(state.T>=6?11:9)) return false;
   for(let i=1;i<ps.length;i++){ if(!ivOk(ps[i-1],ps[i])) return false; if(i>1&&degs[i]===degs[i-1]&&degs[i-1]===degs[i-2]) return false; }
+  if(LIN_ON()){ const L=LNP(), rr=bars.flatMap(b=>b.rh);   // la línea primero: la nota repetida no dura más; un salto por célula; las células no se tocan
+    for(let i=1;i<degs.length;i++) if(degs[i]===degs[i-1]&&rr[i]>rr[i-1]) return false;
+    for(let c=0;2*c<bars.length;c++){ if(leapsS(bars.slice(2*c,2*c+2).flatMap(b=>b.deg))>L.saltos) return false;
+      if(c>0){ const pv=bars[2*c-1].deg; if(bars[2*c].deg[0]===pv[pv.length-1]) return false; } } }
   if(partial) return true; const end=mod(degs[degs.length-1],7); return (state.win==='acomp'||state.win==='harm'?ENDS[state.aend||'closed']:[0,2,4]).includes(end); }
 // ── el stretto: el sujeto superpuesto consigo mismo (y con la respuesta) tiene que sonar limpio ──
 // tiempos fuertes consonantes (la 4.ª justa contra el bajo cuenta como disonancia), disonancias solo de paso
@@ -966,7 +990,7 @@ function hVoice(S,segs,path){ const mel=hMel(S), NEG=1e6, n=segs.length, E=state
       let sc=0; if(c.t.length===3&&!cnt(pcs[2])) sc+=g.fin?.5:2;
       if(vs.length===4&&c.t.length===3){ const dbl=pcs.findIndex(pc=>cnt(pc)>=2);
         if(b.k===2){ if(dbl!==2) sc+=2; } else if(b.k===0){ if(dbl===1) sc+=3; else if(dbl===2) sc+=1; } else if(dbl===1&&!(c.r===6||c.lab==='ii°'||c.r===1)) sc+=1; }
-      if(b.k===1&&bq==null) sc+=[0,1,3].includes(c.r)?.8:(c.r===4||c.r===6||c.lab==='ii°')?1.2:5;   /* el bajo prefiere la fundamental; la primera inversión, con medida */
+      if(b.k===1&&bq==null) sc+=([0,1,3].includes(c.r)?.8:(c.r===4||c.r===6||c.lab==='ii°')?1.2:5)*LNP().inv;   /* la línea primero: la inversión pesa menos, para que el bajo pueda caminar */   /* el bajo prefiere la fundamental; la primera inversión, con medida */
       sc+=.08*(Math.abs(A-65)+Math.abs(T-57));
       out.push({S:sm,Se:sopAt(g,true),A:a.p,T:t.p,B:b.p,k:b.k,sc}); }
     return out.sort((x,y)=>x.sc-y.sc).slice(0,80); });
@@ -976,6 +1000,7 @@ function hVoice(S,segs,path){ const mel=hMel(S), NEG=1e6, n=segs.length, E=state
       const i0=mod(a0-b0,12), i1=mod(a1-b1,12); if((i0===0&&i1===0)||(i0===7&&i1===7)){ if(Math.sign(a1-a0)===Math.sign(b1-b0)) return NEG; x+=i===0&&j===3?6:3; }
       if(i===0&&j===3&&(i1===0||i1===7)&&Math.sign(a1-a0)===Math.sign(b1-b0)&&Math.abs(a1-a0)>2) x+=12; }   // paralelas (prohibidas), por movimiento contrario, y directas en las voces extremas
     for(const k of [1,2]){ const d=Math.abs(Q[k]-P[k]); x+=d; if(d>4) x+=3; if(d>7) x+=10; } x+=.3*Math.abs(Q[3]-P[3]); if(Math.abs(Q[3]-P[3])>12) x+=5;
+    { const db=Math.abs(Q[3]-P[3]); x+=LNP().bajo*(db===0?0:db<=2?-.6:db<=4?0:db<=7?1.2:2.5); }   // el bajo como línea: prefiere el paso
     if(!same){ const pv=cv.t.map((o,k)=>mod(chordP(cv,k).midi,12)); for(const k of [1,2]) if(pv.includes(mod(P[k],12))&&Q[k]!==P[k]) x+=1.5; }
     if(P[0]!=null&&Q[1]>P[0]) x+=3; if(Q[2]>P[1]||Q[1]<P[2]||Q[3]>P[2]||Q[2]<P[3]) x+=3;   // sin cruces ni solapamientos
     if(!same){ const lt=hLT(cu); if(lt!=null&&(cv.r===cu.dom||(cu.dom===0&&cv.r===5))) for(const k of [1,2,3]) if(mod(P[k],12)===lt){ const d=Q[k]-P[k]; if(d===1) continue; x+=k<3?((d===-3||d===-4)&&cv.r===cu.dom?.5:6):15; }   /* Bach: en contralto o tenor la sensible puede caer a la 5.ª */
@@ -998,13 +1023,36 @@ function buildHarm(){ const T=state.T, U=MT().U, t0=performance.now(), allHeld=s
   while(performance.now()-t0<2500){ const out=[]; let prev=null;
     for(let i=0;i<T;i++){ let b; if(state.held[i]&&state.bars[i]) b=state.bars[i];
       else if(i===T-1&&T>1&&prev!=null){ const t={closed:0,open:pick([4,1]),dec:0}[state.aend||'closed']; b={deg:[t+7*Math.round((prev-t)/7)],rh:[U]}; }
-      else b=isAns(i)?ansBar(i,out):makeBar(i,prev);
+      else { const ya=out.flatMap(x=>x.deg), ci=i%2===1?out[i-1].deg:null; _linUlt=ya.length>=2?ya[ya.length-1]-ya[ya.length-2]:null; _linPresu=ci?LNP().saltos-leapsS(ci):LNP().saltos;
+        b=isAns(i)?ansBar(i,out):makeBar(i,prev); for(let t=0;t<40&&!subjectOk(out.concat([b]),true);t++) b=isAns(i)?ansBar(i,out):makeBar(i,prev); _linPresu=_linUlt=null; }
       if(!(state.held[i]&&state.bars[i])&&prev!=null&&i<T-1&&(CM(i)==='stay'||CM(i)==='mov')){   /* STAY y MOVE: la melodía arranca (o se queda) en el acorde que sigue */
         const R=prev-pick([0,2,4]), tt=[R,R+2,R+4], sp=SPLIT(); let pos=b.rest||0;
         b={...b,deg:b.deg.map((d,k)=>{ const p0=pos; pos+=b.rh[k]; if(CM(i)==='mov'&&p0>=sp) return d; let best=d,bs=99; for(const t of tt) for(const o of [-7,0,7]){ const x=t+o+7*Math.round((d-t)/7); if(Math.abs(x-d)<bs){bs=Math.abs(x-d);best=x;} } return best; })}; }
       out.push(b); prev=b.deg[b.deg.length-1]; }
     if(!allHeld&&(!subjectOk(out)||withBars(out,S=>hMel(S).some(x=>x.p.midi<SATB.S[0]||x.p.midi>SATB.S[1])))) continue; state.hprog=null;   /* la soprano, en su registro */ if(harmOk(out)) return out; if(allHeld) break; }
   return null; }
+// las voces del coral toman valores de la primera célula (los dos primeros compases): donde una voz salta una 3.ª, la llena con
+// una nota de paso, partiendo su valor como lo parte la célula (sin copiarla entera). Se deshace si crea paralelas o cruces.
+function sinParalelas(V,U){ const W=V.map(v=>v.map(n=>({t:n.bar*U+n.pos,e:n.bar*U+n.pos+n.du,m:n.p.midi}))), ts=[...new Set(W.flatMap(v=>v.map(n=>n.t)))].sort((a,b)=>a-b);
+  const at=(v,t)=>{ const n=v.find(n=>n.t<=t&&t<n.e); return n?n.m:null; }; let prev=null, mal=0;
+  for(const t of ts){ const now=W.map(v=>at(v,t));
+    for(let i=0;i+1<now.length;i++) if(now[i]!=null&&now[i+1]!=null&&now[i]<now[i+1]) mal++;
+    if(prev) for(let i=0;i<now.length;i++) for(let j=i+1;j<now.length;j++){ const a0=prev[i],a1=now[i],b0=prev[j],b1=now[j]; if([a0,a1,b0,b1].some(x=>x==null)||a0===a1||b0===b1) continue;
+      const i0=mod(a0-b0,12), i1=mod(a1-b1,12); if(((i0===0&&i1===0)||(i0===7&&i1===7))&&Math.sign(a1-a0)===Math.sign(b1-b0)) mal++; }
+    prev=now; }
+  return mal; }
+function lineaInterior(mel,VS,U){ const L=LNP(); if(!L.ritmo) return;
+  const cel=mel.filter(x=>x.bar<Math.min(2,state.T)).map(x=>x.du), vals=new Set(cel), pares=[];
+  for(let i=0;i+1<cel.length;i++) pares.push([cel[i],cel[i+1]]);
+  const parte=D=>{ const c=pares.filter(([a,b])=>a+b===D); if(c.length) return pick(c); const v=[...vals].filter(a=>a<D&&vals.has(D-a)); return v.length?(a=>[a,D-a])(pick(v)):null; };
+  const todas=()=>[mel,...VS]; let base=sinParalelas(todas(),U);
+  VS.forEach((arr,vi)=>{ for(let k=0;k+1<arr.length;k++){ const a=arr[k], b=arr[k+1]; if(a.tie||a.paso) continue;
+      const dl=b.p.li-a.p.li; if(Math.abs(dl)!==2||Math.random()>(vi===2?L.ritmo*.6:L.ritmo)) continue;
+      const sp=parte(a.du); if(!sp) continue;
+      const li=a.p.li+Math.sign(dl), dg=li-KI().li0, ok=q=>{ const s1=Math.abs(q.midi-a.p.midi), s2=Math.abs(b.p.midi-q.midi); return s1>=1&&s1<=2&&s2>=1&&s2<=2; };
+      let q=deg2P(dg,0); if(!ok(q)&&state.mode&&[5,6].includes(mod(dg,7))) q=deg2P(dg,1); if(!ok(q)) continue;
+      const n1={...a,du:sp[0]}, n2={p:q,d:0,bar:a.bar,pos:a.pos+sp[0],du:sp[1],tie:false,paso:true};
+      arr.splice(k,1,n1,n2); const m=sinParalelas(todas(),U); if(m>base) arr.splice(k,2,a); else { base=m; k++; } } }); }
 function planHarm(){ const S=subject(), T=state.T, U=MT().U, sol=harmSolve(S,0), mel=hMel(S);
   const V=[['Soprano','G',state.mins,[0,127]],['Alto','G','violin',[0,127]],['Tenor','C3','viola',[0,127]],['Bajo','F','cello',[0,127]]];
   const fig=(c,k)=>{ const [b0,tg]=c.lab.split('/'); return (c.t.length>3?b0.replace('7','')+['7','6/5','4/3','2'][k]:b0+['','6','6/4'][k])+(tg?'/'+tg:''); };   /* V7/V, V6/5/V, V6/V */
@@ -1019,6 +1067,7 @@ function planHarm(){ const S=subject(), T=state.T, U=MT().U, sol=harmSolve(S,0),
         if(m0&&[lt,mod(lt+1,12)].includes(mod(m0.p.midi,12))) continue;
         if(m1&&mPrev&&m1!==mPrev){ const i0=mod(mPrev.p.midi-pv[key].midi,12), i1=mod(m1.p.midi-v[key].midi,12); if((i0===0||i0===7)&&i0===i1&&Math.sign(m1.p.midi-mPrev.p.midi)===Math.sign(v[key].midi-pv[key].midi)) continue; }
         arr[cs-1].tie=true; arr.splice(cs,1,{p:pv[key],d:0,bar:g.bar,pos:g.pos,du:h},{p:v[key],d:0,bar:g.bar,pos:g.pos+h,du:g.du-h}); rom[cs]=rom[cs]+' 4–3'; break; } } }
+  if(sol) lineaInterior(mel,[A,Tn,B],U);
   const parts=[mel,A,Tn,B], cls=['suj','acc','acc','ped'], entries=parts.map((notes,v)=>({v,bar:1,len:T,notes,kind:['mel','acc','acc','bass'][v]})).filter(e=>e.notes.length);
   const cells=V.map((_,v)=>Array(T).fill(cls[v])), bt=hBeat(), segs=sol?sol.segs:[];
   const labels=segs.map((g,s)=>rom[s]?{v:3,bar:g.bar+1,beat:1+Math.floor(g.pos/bt),text:rom[s],roman:true}:null).filter(Boolean);
