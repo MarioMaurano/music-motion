@@ -534,10 +534,11 @@ function nearest(set,x){ return set.reduce((b,c)=>Math.abs(c-x)<Math.abs(b-x)?c:
 function subjectOk(bars,partial){ const degs=bars.flatMap(b=>b.deg), r=raises(degs), ps=degs.map((d,i)=>deg2P(d,r[i]));
   if(Math.max(...degs)-Math.min(...degs)>(state.T>=6?11:9)) return false;
   for(let i=1;i<ps.length;i++){ if(!ivOk(ps[i-1],ps[i])) return false; if(i>1&&degs[i]===degs[i-1]&&degs[i-1]===degs[i-2]) return false; }
-  if(LIN_ON()){ const L=LNP(), rr=bars.flatMap(b=>b.rh);   // la línea primero: la nota repetida no dura más; un salto por célula; las células no se tocan
-    for(let i=1;i<degs.length;i++) if(degs[i]===degs[i-1]&&rr[i]>rr[i-1]) return false;
-    for(let c=0;2*c<bars.length;c++){ if(leapsS(bars.slice(2*c,2*c+2).flatMap(b=>b.deg))>L.saltos) return false;
-      if(c>0){ const pv=bars[2*c-1].deg; if(bars[2*c].deg[0]===pv[pv.length-1]) return false; } } }
+  if(LIN_ON()){ const L=LNP(), rr=bars.flatMap(b=>b.rh), bi=bars.flatMap((b,i)=>b.deg.map(()=>i)), H_=i=>!!(state.held[i]&&state.bars[i]===bars[i]);   // la línea primero: la nota repetida no dura más; un salto por célula; las células no se tocan
+    // lo que el alumno trajo por el buzón (o dejó en HOLD) es suyo: las reglas solo miran lo que escribe la máquina
+    for(let i=1;i<degs.length;i++) if(degs[i]===degs[i-1]&&rr[i]>rr[i-1]&&!(H_(bi[i])||H_(bi[i-1]))) return false;
+    for(let c=0;2*c<bars.length;c++){ if(H_(2*c)||H_(2*c+1)) continue; if(leapsS(bars.slice(2*c,2*c+2).flatMap(b=>b.deg))>L.saltos) return false;
+      if(c>0&&!H_(2*c-1)){ const pv=bars[2*c-1].deg; if(bars[2*c].deg[0]===pv[pv.length-1]) return false; } } }
   if(partial) return true; const end=mod(degs[degs.length-1],7); return (state.win==='acomp'||state.win==='harm'?ENDS[state.aend||'closed']:[0,2,4]).includes(end); }
 // ── el stretto: el sujeto superpuesto consigo mismo (y con la respuesta) tiene que sonar limpio ──
 // tiempos fuertes consonantes (la 4.ª justa contra el bajo cuenta como disonancia), disonancias solo de paso
