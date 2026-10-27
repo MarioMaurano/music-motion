@@ -814,9 +814,9 @@ function makeBarAir(i,prev,plan,b0){ const mt=MT(), SN=state.meter==='4/4'?2:1, 
     if(p0%W===0||du>=Math.round(1/mt.uq)||cadW){ const last=seg>=plan.length-SN, cadV=seg===plan.length-SN-1&&c.lab==='V7'&&(state.aend||'closed')==='closed', sp=state.meter==='4/4'?W/2:W/3; const ts=last?[c.r]:cadV?tones(c).filter((t,j)=>j===0||j===2):tones(c).filter((t,j)=>j>0); let best=d,bs=99; for(const t of ts) for(const o of [-7,0,7]){ const x=t+o+7*Math.round((d-t)/7); if(Math.abs(x-d)<bs){bs=Math.abs(x-d);best=x;} } return best; }
     return d; });
   return b; }
-function buildAir(){ const t0=performance.now();
-  while(performance.now()-t0<4500){ const plan=airPlanSample(performance.now()-t0<2500); if(!plan) continue; const T=state.T, out=[]; let i=0, tries=[], fails=0;
-    while(i<T&&fails<400&&performance.now()-t0<4500){ tries[i]=(tries[i]||0)+1;
+function buildAir(){ const t0=performance.now(), BUD=state._bud||4500;
+  while(performance.now()-t0<BUD){ const plan=airPlanSample(performance.now()-t0<2500); if(!plan) continue; const T=state.T, out=[]; let i=0, tries=[], fails=0;
+    while(i<T&&fails<400&&performance.now()-t0<BUD){ tries[i]=(tries[i]||0)+1;
       if(tries[i]>(isAns(i)&&state.T>=8?2:30)){ if(i===0||state.held[i]) break; tries[i]=0; i--; out.length=i; fails++; continue; }
       const prev=i?out[i-1].deg[out[i-1].deg.length-1]:null, bb=(state.held[i]&&state.bars[i])?state.bars[i]:isAns(i)?(state.T>=8?ansBar(i,out):makeBarAir(i,prev,plan,ansBar(i,out))):makeBarAir(i,prev,plan), tst=out.slice(0,i).concat([bb]);
       if(subjectOk(tst,i<T-1)&&airClean(tst,i===T-1,plan)){ out[i]=bb; out.length=i+1; i++; tries[i]=0; } else fails++; }
@@ -830,7 +830,7 @@ function makeBarPlan(i,prev,plan,rh){ let b=makeBar(i,prev); if(rh){ for(let t=0
     return d; });
   return b; }
 function buildAcomp(){ if(AIR()) return buildAir(); const T=state.T, t0=performance.now();
-  while(performance.now()-t0<2500){ const plan=harmonize([],true,2.5,T); if(!plan) continue; const out=[]; let ok=true, prev=null;
+  while(performance.now()-t0<(state._bud||2500)){ const plan=harmonize([],true,2.5,T); if(!plan) continue; const out=[]; let ok=true, prev=null;
     if(T>=8){ const h=Math.floor(T/2); plan[h]=plan[0]; plan[h+1]=plan[1]; }
     for(let i=0;i<T&&ok;i++){ let got=null; const tries=i===T-1?120:40;
       for(let a=0;a<tries&&!got;a++){ const bb=(state.held[i]&&state.bars[i])?state.bars[i]:isAns(i)?(T>=8?ansBar(i,out):makeBarPlan(i,prev,plan,out[i-H()])):makeBarPlan(i,prev,plan), tst=out.concat([bb]);
@@ -1587,11 +1587,19 @@ seg('resps',[['V','DOMINANT'],['IV','SUBDOMINANT'],['inv','INVERSION']],state.re
 seg('especies',[['simple','SIMPLE'],['stretto','STRETTO']],state.esp,v=>state.esp=v);
 function segVoces(){ if(state.win==='canon'&&state.cfin==='perp') state.n=2; seg('voces',(state.win==='canon'?(state.cfin==='perp'?[2]:[2,3]):[2,3,4]).map(x=>[String(x),String(x)]),state.n,v=>state.n=+v); }
 segVoces();
-seg('aend',[['closed','CLOSED'],['open','OPEN'],['dec','DECEPTIVE']],state.aend,v=>{ state.aend=v; state.prog=null; state.airPlan=null; state.hprog=null; });
+seg('aend',[['closed','CLOSED'],['open','OPEN'],['dec','DECEPTIVE']],state.aend,v=>{ state.aend=v; state.prog=null; state.airPlan=null; state.hprog=null; ajustaMel(); });
 seg('hrh',[['beat','BEAT'],['half','HALF'],['bar','BAR']],state.hr,v=>{ state.hr=v; state.hprog=null; });
 seg('bmode',[['root','ROOT'],['follow','INVERSIONS'],['walk','WALK']],state.bmode,v=>{ state.bmode=v; state.prog=null; });
 seg('mins',[['flute','FLUTE'],['oboe','OBOE'],['clarinet','CLARINET'],['recorder_soprano','RECORDER']],state.mins,v=>state.mins=v);
-seg('atype',[['chords','CHORDS'],['pedal','PEDAL'],['arp','ARPEGGIO'],['alberti','ALBERTI'],['air','AIR']],state.atype,v=>{ state.atype=v; state.held=[]; state.bars=[]; state.bars=newBars(); },()=>buildReels());
+seg('atype',[['chords','CHORDS'],['pedal','PEDAL'],['arp','ARPEGGIO'],['alberti','ALBERTI'],['air','AIR']],state.atype,v=>{ const de=state.atype; state.atype=v; state.prog=null; state.airPlan=null;
+  if((de==='air')!==(v==='air')){ state.noStr=false; let nb=newBars(); if(state.noStr){ state.held=[]; state.bars=[]; state.noStr=false; nb=newBars(); } state.bars=nb; }   /* AIR es otro estilo de melodía */
+  else ajustaMel(); },()=>buildReels());
+/* Al cambiar Accomp. o Ending, la melodía se queda; si no cabe, se rehacen solo los compases del final que hace falta (HOLD no se toca) */
+function ajustaMel(){ if(state.win!=='acomp'||state.bars.length!==state.T||acompClean(state.bars,true)) return;
+  const H=state.held.slice(), BK=state.bk, T=state.T, ks=[...new Set([...Array(T-Math.ceil(T/2)).keys()].map(j=>T-1-j).concat([0]))];
+  for(const k of ks){ state.held=state.bars.map((_,i)=>i<k||!!H[i]); state.bk=BK; state.noStr=false; state._bud=k?400:0; const nb=newBars(); state._bud=0;
+    if(!state.noStr&&acompClean(nb,true)){ state.bars=nb; break; } }
+  state.held=H; state.bk=BK; state.noStr=false; }
 seg('ptype',[['T','TONIC'],['D','DOMINANT'],['W','DOUBLE'],['I','INVERTED']],state.ptype,v=>{ state.ptype=v; if(state.pn>PMAX()){ state.pn=PMAX(); document.getElementById('pv').textContent=state.pn; } });
 { const el=document.getElementById('pvoc');
   el.innerHTML='<button class="btn" data-d="-1" aria-label="−1">◀</button><span class="stepv" id="pv">'+state.pn+'</span><button class="btn" data-d="1" aria-label="+1">▶</button>';
