@@ -139,6 +139,7 @@ body.win-canon .fx,body.win-fuga .cx,body.win-inv .fx,body.win-inv .cx,body.win-
     <div class="grp cx"><span class="cl">Motion</span><span id="cmov" class="grp"></span></div>
     <div class="grp cx"><span class="cl">Ending</span><span id="cfin" class="grp"></span></div>
     <div class="grp"><span class="cl">Tempo</span><input type="range" id="tempo" min="48" max="112" step="4" value="72" aria-label="Tempo"><span id="bpm" class="fn">♩ = 72</span></div>
+    <div class="grp"><span class="cl">Volume</span><input type="range" id="vol" min="0" max="100" step="5" value="65" aria-label="Volume"><span id="volv" class="fn">65 %</span></div>
   </div>
 </div>
 <div class="plan" id="plan" aria-live="polite"></div>
@@ -1284,13 +1285,17 @@ function toneLocal(f,t0,dur,vol){ const a=ctx(), o=a.createOscillator(), v=a.cre
   o.connect(v).connect(a.destination); o.start(t0); o.stop(t0+dur+.4); playing.push({stop:()=>o.stop()}); }
 function stopPlay(){ pend.forEach(clearTimeout); pend=[]; playing.forEach(x=>{ try{ x.stop(); }catch(e){} }); playing=[]; clearTimeout(playT); document.getElementById('play').textContent='▶ PLAY'; }
 let waitKB=0;
-function play(){ if(playing.length||pend.length){ stopPlay(); return; } if(!PLAN) return;
-  if(document.getElementById('kbMotor')&&Date.now()-KB>4000&&waitKB<12){ waitKB++; document.getElementById('play').textContent='… PLAY'; setTimeout(play,250); return; } waitKB=0;
-  const mt=MT(), sec=60/state.bpm*mt.uq, ev=[];
+// 2026-10-27 (Mario: «el tempo slider no funciona»): el tempo y el volumen se aplican también mientras suena — al soltar el
+// mando, la música sigue desde donde iba con el valor nuevo. desde = posición en unidades de la partitura.
+let pb0=0, pbSec=0, pbDesde=0;
+function play(desde){ if((playing.length||pend.length)&&desde==null){ stopPlay(); return; } if(!PLAN) return; desde=+desde||0;
+  if(document.getElementById('kbMotor')&&Date.now()-KB>4000&&waitKB<12){ waitKB++; document.getElementById('play').textContent='… PLAY'; setTimeout(()=>play(desde||null),250); return; } waitKB=0;
+  const mt=MT(), sec=60/state.bpm*mt.uq; let ev=[];
   PLAN.entries.forEach(en=>{ const ins=PLAN.V[en.v]&&PLAN.V[en.v][2];
     if(en.kind==='pedal'){ ev.push({t:(en.bar-1)*mt.U*sec,du:en.len*mt.U*sec,f:en.notes[0].p.freq,ch:en.v,ins,vel:.45}); return; }
     en.notes.forEach(nt=>ev.push({t:((en.bar-1+nt.bar)*mt.U+nt.pos)*sec,du:nt.du*sec,f:nt.p.freq,ch:en.v,ins,vel:.6})); });
-  const vol=PLAN.vol||1, end=Math.max(...ev.map(x=>x.t+x.du));
+  const off=desde*sec; ev=ev.filter(x=>x.t>=off-1e-6).map(x=>({...x,t:x.t-off})); if(!ev.length) return; pb0=performance.now(); pbSec=sec; pbDesde=desde;
+  const vol=(PLAN.vol||1)*(state.vol!=null?state.vol:.65), end=Math.max(...ev.map(x=>x.t+x.du));   // Volume: 65 % de entrada (Mario, 2026-10-27)
   const useKB=MM&&(Date.now()-KB<4000||document.getElementById('kbMotor'));
   if(useKB){ ev.forEach(x=>{ const id='fm'+(++nid);
       pend.push(setTimeout(()=>{ try{ MM.postMessage({cmd:'NOTE_ON',id,freq:x.f,vel:x.vel*vol,dur:Math.round(x.du*1000*.97),chId:x.ch,instr:x.ins,source:'minikeyboard'}); }catch(e){}
@@ -1439,7 +1444,11 @@ seg('cfin',[['coda','CODA'],['perp','PERPETUAL']],state.cfin,v=>{ state.cfin=v; 
     try{ const u=new URL(location.href); if(state.win!=='fuga') u.searchParams.set('win',state.win); else u.searchParams.delete('win'); history.replaceState(null,'',u.href); }catch(e){} }; }
 seg('tams',[['escuela','SCHOOL'],['bach','BACH']],state.tam,v=>state.tam=v);
 document.getElementById('tempo').oninput=e=>{ state.bpm=+e.target.value; document.getElementById('bpm').textContent='♩ = '+state.bpm; };
-document.getElementById('spin').onclick=spin; document.getElementById('play').onclick=play;
+const sigueSonando=()=>{ if(!(playing.length||pend.length)) return; const pos=pbDesde+Math.max(0,(performance.now()-pb0-150)/1000/pbSec); stopPlay(); play(pos); };
+document.getElementById('tempo').onchange=sigueSonando;
+document.getElementById('vol').oninput=e=>{ state.vol=+e.target.value/100; document.getElementById('volv').textContent=e.target.value+' %'; };
+document.getElementById('vol').onchange=sigueSonando;
+document.getElementById('spin').onclick=spin; document.getElementById('play').onclick=()=>play();
 document.getElementById('save').onclick=save; document.getElementById('open').onclick=openScore;
 document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){ e.preventDefault(); spin(); } });
 // el sujeto de partida: el del Contrapunctus I (Re La | Fa Re | Do♯ Re Mi | Fa · Sol Fa Mi Re)
