@@ -1357,7 +1357,8 @@ function play(desde){ if((playing.length||pend.length)&&desde==null){ stopPlay()
   const mt=MT(), sec=60/state.bpm*mt.uq; let ev=[];
   PLAN.entries.forEach(en=>{ const ins=PLAN.V[en.v]&&PLAN.V[en.v][2];
     if(en.kind==='pedal'){ ev.push({t:(en.bar-1)*mt.U*sec,du:en.len*mt.U*sec,f:en.notes[0].p.freq,ch:en.v,ins,vel:.45}); return; }
-    en.notes.forEach(nt=>ev.push({t:((en.bar-1+nt.bar)*mt.U+nt.pos)*sec,du:nt.du*sec,f:nt.p.freq,ch:en.v,ins,vel:.6})); });
+    const vv=(en.v===0&&(PLAN.harm||PLAN.acomp))?.75:.6;   // 2026-10-27 (Mario: «más presencia a la primera voz»): la melodía, un poco por encima del acompañamiento
+    en.notes.forEach(nt=>ev.push({t:((en.bar-1+nt.bar)*mt.U+nt.pos)*sec,du:nt.du*sec,f:nt.p.freq,ch:en.v,ins,vel:vv})); });
   const off=desde*sec; ev=ev.filter(x=>x.t>=off-1e-6).map(x=>({...x,t:x.t-off})); if(!ev.length) return; pb0=performance.now(); pbSec=sec; pbDesde=desde;
   const vol=(PLAN.vol||1)*(state.vol!=null?state.vol:.65), end=Math.max(...ev.map(x=>x.t+x.du));   // Volume: 65 % de entrada (Mario, 2026-10-27)
   const useKB=MM&&(Date.now()-KB<4000||document.getElementById('kbMotor'));
@@ -1365,7 +1366,7 @@ function play(desde){ if((playing.length||pend.length)&&desde==null){ stopPlay()
       pend.push(setTimeout(()=>{ try{ MM.postMessage({cmd:'NOTE_ON',id,freq:x.f,vel:x.vel*vol,dur:Math.round(x.du*1000*.97),chId:x.ch,instr:x.ins,source:'minikeyboard'}); }catch(e){}
         const off={stop:()=>{ try{ MM.postMessage({cmd:'NOTE_OFF',id,source:'minikeyboard'}); }catch(e){} }}; playing.push(off);
         pend.push(setTimeout(()=>{ off.stop(); playing=playing.filter(y=>y!==off); },Math.round(x.du*1000*.97))); },Math.round(x.t*1000)+150)); }); }
-  else { const a=ctx(), t0=a.currentTime+.15; ev.forEach(x=>toneLocal(x.f,t0+x.t,x.du*.95,(x.vel>.5?.11:.09)*vol)); }
+  else { const a=ctx(), t0=a.currentTime+.15; ev.forEach(x=>toneLocal(x.f,t0+x.t,x.du*.95,(x.vel>.5?.11*x.vel/.6:.09)*vol)); }
   document.getElementById('play').textContent='■ STOP'; playT=setTimeout(stopPlay,end*1000+600); }
 
 // ── el .mmf para el Score, con Salieri ──
