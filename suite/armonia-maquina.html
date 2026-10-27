@@ -489,7 +489,10 @@ function headRest(mt){ for(let t=0;t<30;t++){ const r=pick(RESTS[state.meter]); 
 // que viene por grado sigue su dirección · compensa = el salto vuelve por grado · fig = la tercera repetida (Re Fa Re Fa Do) ·
 // bajo = el bajo prefiere moverse por grado · inv = cuánto pesa la primera inversión (menos = más inversiones) · ritmo = las
 // voces del coral toman notas de paso con valores de la primera célula.
-const LINEA={baroque:{saltos:1,sigue:2/3,compensa:2/3,fig:.4,bajo:1,inv:.6,ritmo:.5}};
+const LINEA={baroque:{saltos:1,sigue:2/3,compensa:2/3,fig:.4,bajo:1,inv:.6,ritmo:.5,repLarga:false,apo:0},
+  // 2026-10-27 (Mario: «podemos pasar a classical?»): Haydn y Mozart. La melodía arpegia (dos saltos por célula), repite notas
+  // también largas (nunca tres iguales) y apoya en los tiempos fuertes notas ajenas al acorde que resuelven bajando por grado.
+  classical:{saltos:2,sigue:.6,compensa:.5,fig:.5,bajo:.6,inv:.5,ritmo:.35,repLarga:true,apo:.3}};
 const LNP=()=>LINEA[state.era]||LINEA.baroque;
 const LIN_ON=()=>state.win==='harm'||(state.win==='acomp'&&!AIR());
 const esFigS=(d,k)=>k+4<d.length&&Math.abs(d[k+1]-d[k])===2&&d[k+2]===d[k]&&d[k+3]===d[k+1]&&d[k+4]===d[k]-Math.sign(d[k+1]-d[k]);
@@ -519,7 +522,11 @@ function makeBar(i,prev){
   }
   if(role==='fin'){ const last=deg.length-1, before=last?deg[last-1]:prev;
     const goals=[0,2,4,7].filter(g=>Math.abs(g-before)<=2); deg[last]=goals.length?pick(goals):nearest([0,2,4,7],before); }
-  return hr?{deg,rh,rest:hr.rest}:{deg,rh};
+  // la apoyatura (CLASSICAL, en el coral): en un tiempo fuerte, una nota un grado arriba de la que sigue, que resuelve bajando;
+  // la armonía se elige por la nota de llegada. Con la armonía cada tiempo no cabe (la llegada caería en otro acorde).
+  const apo=[]; if(LIN&&LL.apo&&state.win==='harm'&&state.hr!=='beat'){ let pos=hr?hr.rest:0; const fuerte=state.meter==='4/4'?mt.U/2:mt.U;
+    for(let k=0;k<deg.length-1&&!apo.length;k++){ if(pos%fuerte===0&&k>0&&rh[k]<=mt.Q&&!(role==='fin'&&k+1===deg.length-1)&&Math.random()<LL.apo){ deg[k]=deg[k+1]+1; apo.push(k); } pos+=rh[k]; } }
+  const out_=hr?{deg,rh,rest:hr.rest}:{deg,rh}; if(apo.length) out_.apo=apo; return out_;
 }
 // tema de 6 a 8 compases: la segunda mitad copia el ritmo y el contorno de los compases 1–3 (una secuencia), a un paso de la nota anterior
 const H=()=>Math.floor(state.T/2), isSeq=i=>state.T>=6&&state.T<=8&&state.win!=='acomp'&&i>=H()&&i<=state.T-2;
@@ -536,7 +543,7 @@ function subjectOk(bars,partial){ const degs=bars.flatMap(b=>b.deg), r=raises(de
   for(let i=1;i<ps.length;i++){ if(!ivOk(ps[i-1],ps[i])) return false; if(i>1&&degs[i]===degs[i-1]&&degs[i-1]===degs[i-2]) return false; }
   if(LIN_ON()){ const L=LNP(), rr=bars.flatMap(b=>b.rh), bi=bars.flatMap((b,i)=>b.deg.map(()=>i)), H_=i=>!!(state.held[i]&&state.bars[i]===bars[i]);   // la línea primero: la nota repetida no dura más; un salto por célula; las células no se tocan
     // lo que el alumno trajo por el buzón (o dejó en HOLD) es suyo: las reglas solo miran lo que escribe la máquina
-    for(let i=1;i<degs.length;i++) if(degs[i]===degs[i-1]&&rr[i]>rr[i-1]&&!(H_(bi[i])||H_(bi[i-1]))) return false;
+    if(!L.repLarga) for(let i=1;i<degs.length;i++) if(degs[i]===degs[i-1]&&rr[i]>rr[i-1]&&!(H_(bi[i])||H_(bi[i-1]))) return false;
     for(let c=0;2*c<bars.length;c++){ if(H_(2*c)||H_(2*c+1)) continue; if(leapsS(bars.slice(2*c,2*c+2).flatMap(b=>b.deg))>L.saltos) return false;
       if(c>0&&!H_(2*c-1)){ const pv=bars[2*c-1].deg; if(bars[2*c].deg[0]===pv[pv.length-1]) return false; } } }
   if(partial) return true; const end=mod(degs[degs.length-1],7); return (state.win==='acomp'||state.win==='harm'?ENDS[state.aend||'closed']:[0,2,4]).includes(end); }
@@ -942,7 +949,8 @@ const hInC=(c,x)=>{ const k=c.t.findIndex(o=>mod(x.d-c.r-o,7)===0); return k>=0&
 const hLT=c=>{ if(c.dom==null) return null; const k=c.t.findIndex(o=>mod(c.r+o-c.dom+1,7)===0); return k<0?null:mod(chordP(c,k).midi,12); };
 // la elección de los acordes: un camino por los segmentos (Viterbi), con las reglas de la función tonal y la cadencia elegida
 function hHarm(S,segs,tau,score){ const C=hChords(), NEG=-1e6, E=state.aend||'closed', n=segs.length, H2=Math.floor(state.T/2), bt=hBeat();
-  const node=(s,c)=>{ const g=segs[s]; let sc=0; const st=S.find(x=>x.bar===g.bar&&x.pos<=g.pos&&x.pos+x.du>g.pos);
+  const node=(s,c)=>{ const g=segs[s]; let sc=0; let st=S.find(x=>x.bar===g.bar&&x.pos<=g.pos&&x.pos+x.du>g.pos);
+    if(st&&st.apo){ const nx=S[S.indexOf(st)+1]; if(nx&&nx.bar===g.bar&&nx.pos<g.pos+g.du) st=nx; }   // la apoyatura: manda la nota de llegada
     if(st) sc+=hInC(c,st)?3:NEG;
     for(const x of S.filter(x=>x.bar===g.bar&&x.pos>g.pos&&x.pos<g.pos+g.du)) sc+=hInC(c,x)?(x.pos%bt===0?1:.5):(x.pos%bt===0?-2:-.5);
     const bq=bassAsk(g.bar,g.pos); if(bq!=null){ const k=c.t.findIndex(o=>mod(bq-c.r-o,7)===0); if(k<0) sc+=NEG; else if(c.t.length===3&&k===2&&!g.six4) sc-=4; if(c.r===6||c.lab==='ii°'){ if(k!==1) sc+=NEG; } }
@@ -1129,7 +1137,7 @@ const NOMS={fr:{Flute:'Flûte',Oboe:'Hautbois',Clarinet:'Clarinette',Recorder:'F
 const LN=(es,en)=>{ if(LANG==='es') return es; if(LANG==='en'||!NOMS[LANG]) return en; const m=String(en).match(/^(.*?)( \d+)?$/), t=NOMS[LANG][m[1]]; return t?t+(m[2]||''):en; };   /* el nombre de la voz o del instrumento en el idioma de la página */
 const VOZ_EN={'Voz 1':'Voice 1','Voz 2':'Voice 2','Soprano':'Soprano','Alto':'Alto','Tenor':'Tenor','Bajo':'Bass'};
 function subject(){ const degs=state.bars.flatMap(b=>b.deg), r=raises(degs); let k=0, t=0, out=[];
-  state.bars.forEach((b,bi)=>{ let pos=b.rest||0; b.deg.forEach((d,j)=>{ out.push({p:deg2P(d,r[k]),d,bar:bi,pos,du:b.rh[j]}); pos+=b.rh[j]; k++; }); });
+  state.bars.forEach((b,bi)=>{ let pos=b.rest||0; b.deg.forEach((d,j)=>{ out.push({p:deg2P(d,r[k]),d,bar:bi,pos,du:b.rh[j],...(b.apo&&b.apo.includes(j)?{apo:true}:{})}); pos+=b.rh[j]; k++; }); });
   return out; }
 function answer(S){
   if(state.resp==='IV') return {tonal:false, kind:'IV', notes:S.map(n=>({...n,p:up4(n.p)}))};
@@ -1503,6 +1511,7 @@ seg('cdis',[['1','1 BAR'],['2','2 BARS']],state.cdis,v=>state.cdis=+v);
 seg('cmov',[['dir','DIRECT'],['inv','INVERSION']],state.cmov,v=>state.cmov=v);
 seg('cfin',[['coda','CODA'],['perp','PERPETUAL']],state.cfin,v=>{ state.cfin=v; segVoces(); });
 { const el=document.getElementById('tabs'), ERAS=[['modal','MODAL'],['baroque','BAROQUE'],['classical','CLASSICAL'],['romantic','ROMANTIC'],['impress','IMPRESSIONIST'],['jazz','JAZZ'],['piano','PIANO']], READY=['baroque'];
+  try{ if(new URLSearchParams(location.search).get('era')==='classical'){ READY.push('classical'); state.era='classical'; } }catch(e){}   // 2026-10-27: CLASSICAL a prueba con ?era=classical, mientras se construye
   el.innerHTML=ERAS.map(([v,t])=>`<button class="btn${v===state.era?' on':''}${READY.includes(v)?'':' soon'}" data-v="${v}" aria-pressed="${v===state.era}">${t}</button>`).join('');
   el.onclick=e=>{ const b=e.target.closest('button'); if(!b||state.spinning) return; if(!READY.includes(b.dataset.v)){ document.getElementById('banner').textContent=tr('soon',{e:b.textContent}); return; } if(b.dataset.v===state.era) return;
     stopPlay(); state.era=b.dataset.v; [...el.children].forEach(c=>{ c.classList.toggle('on',c===b); c.setAttribute('aria-pressed',c===b); }); winTexts(); state.held=[]; buildReels(); render(); }; }
