@@ -1438,7 +1438,8 @@ seg('cdis',[['1','1 BAR'],['2','2 BARS']],state.cdis,v=>state.cdis=+v);
 seg('cmov',[['dir','DIRECT'],['inv','INVERSION']],state.cmov,v=>state.cmov=v);
 seg('cfin',[['coda','CODA'],['perp','PERPETUAL']],state.cfin,v=>{ state.cfin=v; segVoces(); });
 { const el=document.getElementById('tabs');
-  el.innerHTML=[['canon','CANON'],['inv','INVENTION'],['sinf','SINFONIA'],['fuga','FUGUE'],['ped','PEDAL'],['acomp','ACCOMPANIED']].map(([v,t])=>`<button class="btn${v===state.win?' on':''}" data-v="${v}" aria-pressed="${v===state.win}">${t}</button>`).join('')+'<a class="btn" href="armonia-maquina.html">HARMONY ↗</a>';
+  if(state.win==='acomp'){ location.replace('armonia-maquina.html?win=acomp'); }   // 2026-10-27: la melodía acompañada vive en la máquina de armonía
+  el.innerHTML=[['canon','CANON'],['inv','INVENTION'],['sinf','SINFONIA'],['fuga','FUGUE'],['ped','PEDAL']].map(([v,t])=>`<button class="btn${v===state.win?' on':''}" data-v="${v}" aria-pressed="${v===state.win}">${t}</button>`).join('')+'<a class="btn" href="armonia-maquina.html?win=acomp">ACCOMPANIED ↗</a>'+'<a class="btn" href="armonia-maquina.html">HARMONY ↗</a>';
   el.onclick=e=>{ const b=e.target.closest('button'); if(!b||state.spinning||b.dataset.v===state.win) return; stopPlay(); state.win=b.dataset.v;
     [...el.children].forEach(c=>{ c.classList.toggle('on',c===b); c.setAttribute('aria-pressed',c===b); });
     if(state.win==='canon'&&state.n>3) state.n=3; if(state.win==='inv'||state.win==='sinf'){ state.n=state.win==='inv'?2:3; if(state.T>2) setT(1); document.getElementById('tv').textContent=state.T; } if(state.win==='harm'&&state.T>8){ setT(8); document.getElementById('tv').textContent=state.T; } segVoces(); winTexts(); state.held=[]; buildReels(); render();
