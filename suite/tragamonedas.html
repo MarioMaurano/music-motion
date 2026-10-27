@@ -193,6 +193,7 @@ input[type=range]{accent-color:var(--gold);width:130px}
     <button class="btn" id="ecoBtn" aria-pressed="false" title="La máquina toca, tú repites">🐶 ECO</button>
     <button class="btn" id="readBtn" aria-pressed="false">📖 READ</button>
     <button class="btn on" id="chords" aria-pressed="true">CHORDS</button>
+    <button class="btn on" id="fxBtn" aria-pressed="true">🔊 FX</button>
     <button class="btn" id="save">⬇ SAVE .mmf</button>
   </div>
   <div class="row">
@@ -671,10 +672,11 @@ function ctx(){ if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)(
 function tone(f,t0,dur,vol,fx){const a=ctx(); const o=a.createOscillator(); const v=a.createGain(); o.setPeriodicWave(wave); o.frequency.value=f;
   v.gain.setValueAtTime(0,t0); v.gain.linearRampToValueAtTime(vol,t0+.015); v.gain.setTargetAtTime(vol*.55,t0+.04,.18); v.gain.setTargetAtTime(0,t0+Math.max(.04,dur-.05),.05);
   o.connect(v).connect(a.destination); o.start(t0); o.stop(t0+dur+.4); if(!fx) playing.push(o);}
-// 2026-10-27 (Mario: «bájale el sonido a los efectos»): tic, clac y fanfarria a la mitad del volumen; la melodía no cambia.
-function tick(){try{const a=ctx(); tone(1500+rnd(300),a.currentTime,.025,.0125,true);}catch(e){}}
-function clack(){try{const a=ctx(); const t=a.currentTime; tone(150,t,.09,.07,true); tone(900,t,.03,.025,true);}catch(e){}}
-function fanfare(){try{const a=ctx(); const t=a.currentTime+.05; [0,2,4,7].forEach((d,k)=>{tone(spell(d).freq,t+k*.11,.22,.06,true);}); tone(spell(7).freq,t+.44,.5,.06,true); tone(spell(4).freq,t+.44,.5,.04,true);}catch(e){}}
+// 2026-10-27 (Mario: «bájale el sonido a los efectos»): tic, clac y fanfarria a la mitad del volumen; la melodía no cambia. Después (15:09): «el guau está bien», el tic de las luces y los golpes del final, otra vez a la mitad.
+let fxOn=true; try{ fxOn=localStorage.getItem('mmTragaFx')!=='0'; }catch(e){}   // 2026-10-27 (Mario): botón FX para silenciar los efectos
+function tick(){if(!fxOn) return; try{const a=ctx(); tone(1500+rnd(300),a.currentTime,.025,.006,true);}catch(e){}}
+function clack(){if(!fxOn) return; try{const a=ctx(); const t=a.currentTime; tone(150,t,.09,.035,true); tone(900,t,.03,.012,true);}catch(e){}}
+function fanfare(){if(!fxOn) return; try{const a=ctx(); const t=a.currentTime+.05; [0,2,4,7].forEach((d,k)=>{tone(spell(d).freq,t+k*.11,.22,.06,true);}); tone(spell(7).freq,t+.44,.5,.06,true); tone(spell(4).freq,t+.44,.5,.04,true);}catch(e){}}
 const pid=s=>s.letter+s.oct+({2:'SS',1:'S',0:'N','-1':'B','-2':'BB'}[s.acc]);
 function stopPlay(){playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; playTimer.forEach(clearTimeout); playTimer=[]; clearInterval(sched); sched=null;
   sounding.forEach(m=>msg({cmd:'NOTE_OFF',id:m.id,chId:m.chId,source:'minikeyboard'})); sounding=[];
@@ -929,6 +931,8 @@ seg('keys',[['F','F'],['C','C'],['G','G'],['D','D'],['A','A'],['E','E'],['B',LAN
 seg('alts',[['b','♭'],['n','♮'],['#','♯']],'n',v=>{ if(window._juegoId==='torre'){ torreAlt=v; return; } state.alt=v; });
 seg('modes',[['0','M'],['1','m']],'0',v=>state.mode=+v);
 document.getElementById('tempo').oninput=e=>{state.bpm=+e.target.value; document.getElementById('bpm').textContent='♩ = '+state.bpm;};
+(function(){ const b=document.getElementById('fxBtn'); const pinta=()=>{ b.classList.toggle('on',fxOn); b.setAttribute('aria-pressed',fxOn); b.textContent=fxOn?'🔊 FX':'🔇 FX'; }; pinta();
+  b.onclick=()=>{ fxOn=!fxOn; try{ localStorage.setItem('mmTragaFx',fxOn?'1':'0'); }catch(e){} pinta(); }; })();
 document.getElementById('chords').onclick=e=>{state.chords=!state.chords; e.currentTarget.classList.toggle('on',state.chords); e.currentTarget.setAttribute('aria-pressed',state.chords);};
 for(let i=0;i<4;i++) document.getElementById('h'+i).onclick=e=>{ if(state.spinning) return; state.held[i]=!state.held[i]; const b=e.currentTarget; b.classList.toggle('on',state.held[i]); b.setAttribute('aria-pressed',state.held[i]); b.textContent=state.held[i]?'HELD':'HOLD'; document.getElementById('f'+i).classList.toggle('held',state.held[i]); if(state.held[i]&&state.held.every(Boolean)&&state.bars.length===4&&keyInfo().ok) tuMelodia(); };
 document.getElementById('spin').onclick=spin;
