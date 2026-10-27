@@ -89,7 +89,30 @@
  "exprMarkings": [],
  "dynMarkings": [],
  "artMarkings": [],
- "textAnnotations": [],
+ "textAnnotations": [
+  {
+   "beat": 1,
+   "channel": 0,
+   "scope": "channel",
+   "fontSize": 14,
+   "offsetX": 12,
+   "offsetY": -44,
+   "measure": 1,
+   "id": 1792860006001,
+   "text": "Pregunta: por grados, con un solo salto; termina abierta, en cualquier grado que no sea la tónica."
+  },
+  {
+   "beat": 1,
+   "channel": 0,
+   "scope": "channel",
+   "fontSize": 14,
+   "offsetX": 12,
+   "offsetY": -30,
+   "measure": 1,
+   "id": 1792860006002,
+   "text": "Respuesta: la misma regla, un solo salto; cierra en la tónica, bajando por grado."
+  }
+ ],
  "coachRules": {
   "enabled": true,
   "species": 2,

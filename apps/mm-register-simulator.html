@@ -181,6 +181,11 @@ main button:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.45
 <script src="mm-i18n.js"></script>   
 <script>(function(){if(!window['MutationObserver'])return;function a(){try{return localStorage['getItem']('mmCoachLang')==='es';}catch(f){return![];}}function b(e){return window['mmT']?window['mmT'](e):e;}function c(f){var g=a(),h;if(f['hasAttribute']('data-title-es')&&f['hasAttribute']('data-title-en')){h=g?f['getAttribute']('data-title-es'):b(f['getAttribute']('data-title-en'));if(h&&f['title']!==h)f['title']=h;}if(f['hasAttribute']('data-les')&&f['hasAttribute']('data-len')){h=g?f['getAttribute']('data-les'):b(f['getAttribute']('data-len'));if(h&&f['title']!==h)f['title']=h;}if(f['hasAttribute']('data-es')&&f['hasAttribute']('data-en')){h=g?f['getAttribute']('data-es'):b(f['getAttribute']('data-en'));if(h&&f['textContent']!==h)f['textContent']=h;}if(f['classList']&&f['classList']['contains']('mmen')){if(!f['hasAttribute']('data-i18n-en'))f['setAttribute']('data-i18n-en',f['innerHTML']);h=b(f['getAttribute']('data-i18n-en'));if(f['innerHTML']!==h)f['innerHTML']=h;}}var d='[data-title-es],[data-les],[data-es],.mmen';window['mmI18nPoner']=function(e){(e||document)['querySelectorAll'](d)['forEach'](c);},new MutationObserver(function(e){e['forEach'](function(f){f['addedNodes']['forEach'](function(g){if(g['nodeType']!==0x1)return;if(g['matches'](d))c(g);g['querySelectorAll'](d)['forEach'](c);});});})['observe'](document['documentElement'],{'childList':!![],'subtree':!![]});}());</script>
 <script src="mm-lexicon.js"></script>
+
+<!-- 2026-10-27 · icono de inicio: app simulator (ver _Brand/iconos-de-inicio.md) -->
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/mm-app-simulator-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/mm-app-simulator-192.png">
+<link rel="apple-touch-icon" href="/icons/mm-app-simulator-180.png">
 </head>
 <body>
 <div id="app">

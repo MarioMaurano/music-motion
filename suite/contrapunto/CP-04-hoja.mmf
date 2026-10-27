@@ -192,7 +192,7 @@
    "offsetY": -30
   },
   {
-   "text": "Ejercicio 3 · su propio cantus firmus abajo, y su contrapunto arriba",
+   "text": "Ejercicio 3 · su propio cantus firmus abajo, y su contrapunto arriba — en dos mitades: pregunta y respuesta",
    "measure": 58,
    "beat": 1,
    "channel": 0,
@@ -203,7 +203,7 @@
    "offsetY": -58
   },
   {
-   "text": "En Re: el comienzo y el final ya están escritos (Re … Mi Re). Casi todo por grado; saltos de 3.ª, 4.ª o 5.ª,",
+   "text": "Pregunta (este sistema): por grados, con un solo salto (3.ª, 4.ª o 5.ª, y vuelva por grado); quede abierta, no en Re.",
    "measure": 58,
    "beat": 1,
    "channel": 0,
@@ -214,7 +214,7 @@
    "offsetY": -44
   },
   {
-   "text": "y después vuelva por grado en sentido contrario. Un solo punto más alto, sin notas repetidas ni tritono (Fa–Si).",
+   "text": "Un solo punto más alto, sin notas repetidas ni tritono (Fa–Si). El comienzo y el final ya están escritos (Re … Mi Re).",
    "measure": 58,
    "beat": 1,
    "channel": 0,
@@ -234,6 +234,17 @@
    "fontSize": 14,
    "offsetX": 12,
    "offsetY": -30
+  },
+  {
+   "text": "Respuesta (este sistema): la misma regla, un solo salto; puede ir a otro grado, pero cierra en Re bajando por grado.",
+   "measure": 63,
+   "beat": 1,
+   "channel": 0,
+   "scope": "channel",
+   "id": 1792860005009,
+   "fontSize": 14,
+   "offsetX": 12,
+   "offsetY": -44
   }
  ],
  "coachRules": null,
