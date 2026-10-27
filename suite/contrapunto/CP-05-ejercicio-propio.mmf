@@ -99,7 +99,7 @@
    "offsetY": -44,
    "measure": 1,
    "id": 1792860006001,
-   "text": "Pregunta: por grados, con un solo salto; termina abierta, en cualquier grado que no sea la tónica."
+   "text": "Compases 1–4, pregunta: por grados, con un solo salto; queda abierta, en un grado que no sea la tónica."
   },
   {
    "beat": 1,
@@ -110,7 +110,7 @@
    "offsetY": -30,
    "measure": 1,
    "id": 1792860006002,
-   "text": "Respuesta: la misma regla, un solo salto; cierra en la tónica, bajando por grado."
+   "text": "Compases 5–8, respuesta: la misma regla; puede aterrizar en otro grado. Compases 9–10: cadencia a la tónica, por grado."
   }
  ],
  "coachRules": {

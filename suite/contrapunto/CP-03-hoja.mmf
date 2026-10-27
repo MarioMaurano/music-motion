@@ -81,10 +81,6 @@
    "id": "double",
    "sysBreak": true
   },
-  "62": {
-   "id": "simple",
-   "sysBreak": true
-  },
   "67": {
    "id": "final"
   },
@@ -93,6 +89,10 @@
    "sysBreak": true
   },
   "8": {
+   "id": "simple",
+   "sysBreak": true
+  },
+  "61": {
    "id": "simple",
    "sysBreak": true
   }
@@ -198,7 +198,7 @@
    "offsetY": -30
   },
   {
-   "text": "Ejercicio 3 · su propio cantus firmus abajo, y su contrapunto arriba — en dos mitades: pregunta y respuesta",
+   "text": "Ejercicio 3 · su propio cantus firmus abajo, y su contrapunto arriba — pregunta, respuesta y cadencia (4 + 4 + 2)",
    "measure": 58,
    "beat": 1,
    "channel": 0,
@@ -209,7 +209,7 @@
    "offsetY": -58
   },
   {
-   "text": "Pregunta (este sistema): por grados, con un solo salto (3.ª, 4.ª o 5.ª, y vuelva por grado); quede abierta, no en Re.",
+   "text": "Compases 1–4, pregunta: por grados, con un solo salto (3.ª, 4.ª o 5.ª, y vuelva por grado); quede abierta, no en Re.",
    "measure": 58,
    "beat": 1,
    "channel": 0,
@@ -232,7 +232,7 @@
   },
   {
    "text": "Otros modos para la próxima: La, Do, Mi, Fa o Sol (teclas blancas). Con un cantus bien hecho, las soluciones son incontables.",
-   "measure": 63,
+   "measure": 62,
    "beat": 1,
    "channel": 0,
    "scope": "channel",
@@ -242,8 +242,8 @@
    "offsetY": -30
   },
   {
-   "text": "Respuesta (este sistema): la misma regla, un solo salto; puede ir a otro grado, pero cierra en Re bajando por grado.",
-   "measure": 63,
+   "text": "Compases 5–8, respuesta: la misma regla, un solo salto; puede aterrizar en otro grado. Compases 9–10: la cadencia (Mi–Re).",
+   "measure": 62,
    "beat": 1,
    "channel": 0,
    "scope": "channel",
