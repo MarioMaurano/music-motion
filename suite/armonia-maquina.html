@@ -729,7 +729,7 @@ const AHALF=()=>state.win==='acomp'&&!AIR()&&(POST()||IMP())&&state.ahr==='half'
 const CHI=b=>({lyd:[0,1,2,4,5],mix:[0,1,3,4,5,6],aeo:[0,2,3,4,5,6],dor:[0,1,2,3,4,6]})[state.imod]||(keyB(b).mode?[0,3,4,5]:[0,1,2,3,4,5]);   /* sin los acordes disminuidos de cada modo */   /* IMPRESSIONIST en la melodía acompañada: también iii, y ♭VII (v sin sensible) en los modos */
 // las transiciones de IMPRESSIONIST en la melodía acompañada: cualquier acorde a cualquiera (sin la dominante obligada);
 // la cadencia, modal o plagal; la pregunta queda en cualquier acorde que no sea I
-const impTA=(q,r,last,isLast,E,endR)=>{ if(isLast){ if(r!==endR) return -1e6; return E==='closed'?(q!==0?([3,6].includes(q)?4:3):-1e6):E==='dec'?(q!==5?3:-1e6):2; } if(q===r) return -1; const d=mod(r-q,7); return d===1||d===6?1.5:d===3||d===4?1:0; };
+const impTA=(q,r,last,isLast,E,endR)=>{ if(isLast){ if(r!==endR) return -1e6; return E==='closed'?(q!==0?([3,6].includes(q)?4:3):-1e6):E==='dec'?(q!==5?3:-1e6):2; } if(q===r) return 4.5; const d=mod(r-q,7); return (d===1||d===6?1.5:d===3||d===4?1:0)+(ICHAR[state.imod]===r?1.2:0); };
 const degPA=(d,X)=>deg2P(d,X&&X.alt[mod(d,7)]!=null?X.alt[mod(d,7)]:(MODE()&&mod(d,7)===6&&!(IMP()&&state.imod!=='ton')?1:0));   // la nota del acorde, con sus alteraciones
 const okT=(g,t)=>!g.x||g.x.alt[mod(t,7)]==null;
 // 2026-10-28 IMPRESSIONIST · ACCOMPANIED (Mario: «¿suena menos impresionista que Chorale?»): el piano toca acordes con color.
@@ -761,7 +761,7 @@ function harmLayers(S,final,TF){ const T=TF||Math.max(1,...S.map(x=>x.bar+1)), C
   const last=final&&T>1, endR={closed:0,open:4,dec:5}[E];
   const trans=(q,r,b)=>{ if(b>0&&!mismaK(keyB(b),keyB(b-1))){ const ro=pivA(r,b); return ro==null?NEG:trans0(q,ro,b)+1.5; } return trans0(q,r,b); },   // la modulación: el acorde puente
     trans0=(q,r,b)=>{ const m=CM(b); if(m==='stay'||m==='mov') return q===r?1:NEG;
-    if(IMP()){ if(state.T>=4&&b===H2) return r===0?3:r===3?2:0; return impTA(q,r,last,last&&b===T-1,E,endR); }
+    if(IMP()) return impTA(q,r,last,last&&b===T-1,E,endR);
     const Xq=XCb(q,b-1), Xr=XCb(r,b);   /* ROMANTIC: los cromáticos */
     if(Xq){ if(last&&b===T-1) return r===endR&&E==='closed'&&Xq.lab==='iv'?4:NEG;   /* iv – I, el cierre plagal */
       if(Xq.med) return r===0?4:NEG;   /* la mediante vuelve a la tónica */
@@ -798,7 +798,7 @@ function harmonizeH(S,final,tau,TF){ const T=TF||Math.max(1,...S.map(x=>x.bar+1)
     if(CM(b)!=='chg'&&b>0) return q===r?1:NEG;
     if(h===1&&!HALF&&!frzRootA(b)) return q===r?0:NEG;   /* en BAR, un solo acorde por compás */
     const Xq=XCb(q,bq), Xr=XCb(r,b), vS=last?2*T-3:-1, sc=state.T>=4?2*H2-1:-1;
-    if(IMP()){ if(last&&b===T-1&&h===1) return q===r?1:NEG; if(q===r&&h===1) return 0; if(state.T>=4&&b===H2&&h===0) return r===0?3:r===3?2:0; return impTA(q,r,last,last&&b===T-1,E,endR); }
+    if(IMP()){ if(last&&b===T-1&&h===1) return q===r?1:NEG; if(q===r&&h===1) return 0; return impTA(q,r,last,last&&b===T-1,E,endR); }
     if(last&&b===T-1){ if(h===1) return q===r?1:NEG; if(r!==endR) return NEG; if(Xq) return E==='closed'&&Xq.lab==='iv'?4:NEG; if(E==='closed') return q===4?5:q===3?4:NEG; if(E==='dec') return q===4?5:NEG; return (GOOD[q]||[]).includes(4)||q===4?2:0; }
     if(q===r&&h===1) return 0;   /* la armonía se queda el compás entero */
     const lugar=X=>!(X.n6||X.a6)||s===vS-1||(X.a6&&s===sc-1);   /* la napolitana y la sexta aumentada, justo antes del V */
@@ -1166,7 +1166,10 @@ function hSegs(S){ const U=MT().U, T=state.T, sp=SPLIT(), hr=state.hr||'beat', b
       const a=state.meter==='4/4'?U/2:U/3, b=state.meter==='4/4'?U/4:U/3; out.splice(fi,1,{bar:T-1,pos:0,du:a,fin:true,ped:true},{bar:T-1,pos:a,du:b,plag:1,ped:true},{bar:T-1,pos:a+b,du:U-a-b,plag:2,ped:true}); } }
   return out; }
 const pedQ=g=>g.ped?-7:bassAsk(g.bar,g.pos);
-function impMod(){ if(!IMP()){ state.imod=null; return; } state.iseed=1+Math.floor(Math.random()*9999); const r=Math.random(); state.imod=r<.4?'ton':r<.8?(MODE()?(Math.random()<.5?'dor':'aeo'):(Math.random()<.5?'lyd':'mix')):'pent'; }   /* la escala de cada SPIN */   // el pedal: la tónica, una octava abajo
+// 2026-10-28 (Mario: «la armonización puede ser más estática y más frecuentemente modal que tonal»): la tonalidad baja a un
+// 15 %; el acorde característico de cada modo pesa más (lidio II · mixolidio ♭VII · dórico IV · eólico ♭VII); la armonía se queda.
+const ICHAR={lyd:1,mix:6,dor:3,aeo:6};
+function impMod(){ if(!IMP()){ state.imod=null; return; } state.iseed=1+Math.floor(Math.random()*9999); const r=Math.random(); state.imod=r<.15?'ton':r<.8?(MODE()?(Math.random()<.5?'dor':'aeo'):(Math.random()<.5?'lyd':'mix')):'pent'; }   /* la escala de cada SPIN */   // el pedal: la tónica, una octava abajo
 const hInC=(c,x)=>{ const k=c.t.findIndex(o=>mod(x.d-c.r-o,7)===0); return k>=0&&mod(chordP(c,k).midi-x.p.midi,12)===0; };
 const hLT=c=>{ if(c.dom==null) return null; const k=c.t.findIndex(o=>mod(c.r+o-c.dom+1,7)===0); return k<0?null:mod(chordP(c,k).midi,12); };
 // la elección de los acordes: un camino por los segmentos (Viterbi), con las reglas de la función tonal y la cadencia elegida
@@ -1186,7 +1189,7 @@ function hHarm(S,segs,tau,score){ const Cs=segs.map(g=>enKey(g.bar,hChords)), NE
     if(bq!=null){ const nx=s+1<n?bassAsk(segs[s+1].bar,segs[s+1].pos):null, up=nx!=null?nx>bq:null, T0=MODE()?'i':'I';   /* la regla de la octava: qué acorde va sobre cada grado del bajo, subiendo y bajando */
       const RO={0:[T0,0],1:['V7',2],2:[T0,1],3:up===false?['V7',3]:(!MODE()?['ii7',1]:null),4:['V',0],5:up===false?['V7/V',2]:(!MODE()?['IV',1]:['iv',1]),6:up===false?['V',1]:['V7',1]}[mod(bq,7)];
       if(RO&&c.lab===RO[0]&&c.t.findIndex(o=>mod(bq-c.r-o,7)===0)===RO[1]) sc+=2.5; }
-    if(IMP()){ if(c.col) sc+=.2; if(c.q) sc+=.2; if(/°|\+/.test(c.lab)&&!c.col) sc-=2; }   /* IMPRESSIONIST: el color */
+    if(IMP()){ if(c.col) sc+=.2; if(c.q) sc+=.2; if(ICHAR[state.imod]===c.r&&!c.q) sc+=1.2; if(/°|\+/.test(c.lab)&&!c.col) sc-=2; }   /* IMPRESSIONIST: el color */
     if(s===0) sc+=c.r===0&&(c.t.length===3||IMP())?4:-30;
     if(state.T>=4&&!g.fin&&g.bar===H2-1&&(s+1>=n||segs[s+1].bar!==g.bar)) sc+=IMP()?(c.r!==0?3:state.held[g.bar]?0:-6):c.r===4&&c.t.length===3&&c.dom===0?(POST()?9:6):state.held[g.bar]?0:-8;   // la semicadencia (IMPRESSIONIST: la pregunta queda en cualquier acorde que no sea I)
     if(state.T>=4&&g.bar===H2&&g.pos===0&&c.r===0) sc+=2;   // la respuesta empieza en la tónica
@@ -1204,7 +1207,7 @@ function hHarm(S,segs,tau,score){ const Cs=segs.map(g=>enKey(g.bar,hChords)), NE
     if(g.stay) return a===c?0:NEG; if(g.six4){ const k=c.t.findIndex(o=>mod(a.r-c.r-o,7)===0); return c!==a&&(k===1||k===2)&&c.r!==6&&!c.lab.includes('°')?(k===2&&c.t.length===3?1:0):NEG; }   /* MOVE: el bajo se queda y el acorde de arriba cambia (I–IV6/4, I–vi6…) */
     if(segs[s-1].six4&&!(c.r===mod(a.r-3,7)&&c.t.length===3)&&g.bar===segs[s-1].bar) return NEG;
     if(IMP()){ if(g.fin){ if(E==='closed') return c.r===0&&a.r!==0?(a.r===6||a.r===3?4:3):NEG; if(E==='dec') return c.r===5&&a.r!==5?3:NEG; return c.r!==0&&a!==c?2:NEG; }   /* la cadencia modal o plagal; el final puede tener color */
-      if(a===c) return g.pos===0?-2:0; let v=0; const d=mod(c.r-a.r,7); if((d===1||d===6)&&a.t.join()===c.t.join()) v+=2.5;   /* el planeo: el mismo acorde, un grado arriba o abajo */
+      if(a===c) return 2.5; if(a.r===c.r) return 2; let v=0; const d=mod(c.r-a.r,7); if((d===1||d===6)&&a.t.join()===c.t.join()) v+=2.5;   /* el planeo: el mismo acorde, un grado arriba o abajo */
       else if(d===3||d===4) v+=1; if(a.r===c.r) v+=.5; return v; }
     if(g.plag) return g.plag===1?(c.r===3&&c.t.length===3&&a.r===0?3:NEG):(c.r===0&&c.t.length===3&&!c.pic&&a.r===3?3:NEG);   /* ROMANTIC: el cierre plagal, I – iv – I sobre la tónica */
     if(ROM()&&state.T>=6&&g.bar===state.T-2&&g.pos===0&&a.r===4&&a.dom===0&&c.r===5&&!c.bor) return 6;   /* ROMANTIC: la cadencia rota antes de la final */
@@ -1275,7 +1278,7 @@ function harmSolve(S,tau,avoid){ const segs=hSegs(S); if(!segs.length||!S.length
     if(avoid&&path.map(c=>c.lab).join()===avoid.join()) continue; const r=tryP(path); if(r){ state.hprog=path.map(c=>c.lab); return r; } }
   return null; }
 const harmOk=bars=>withBars(bars,S=>!!harmSolve(S,0));
-function buildHarm(){ if(!state.held.some(Boolean)){ impMod(); state.rPed=(ROM()&&Math.random()<.35)||(IMP()&&Math.random()<.45); state.rPlag=ROM()&&Math.random()<.5; } let intC64=0; const T=state.T, U=MT().U, t0=performance.now(),   /* intC64: el clásico busca una melodía que admita el 6/4 cadencial */ allHeld=state.bars.length===T&&Array.from({length:T},(_,i)=>state.held[i]).every(Boolean);
+function buildHarm(){ if(!state.held.some(Boolean)){ impMod(); state.rPed=(ROM()&&Math.random()<.35)||(IMP()&&Math.random()<.6); state.rPlag=ROM()&&Math.random()<.5; } let intC64=0; const T=state.T, U=MT().U, t0=performance.now(),   /* intC64: el clásico busca una melodía que admita el 6/4 cadencial */ allHeld=state.bars.length===T&&Array.from({length:T},(_,i)=>state.held[i]).every(Boolean);
   while(performance.now()-t0<2500){ const out=[]; let prev=null;
     for(let i=0;i<T;i++){ let b; if(state.held[i]&&state.bars[i]) b=state.bars[i];
       else if(i===T-1&&T>1&&prev!=null){ const t={closed:0,open:pick([4,1]),dec:0}[state.aend||'closed'];
