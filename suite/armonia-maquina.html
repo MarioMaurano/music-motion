@@ -1387,7 +1387,8 @@ function planHarm(){ const S=subject(), T=state.T, U=MT().U, sol=harmSolve(S,0),
   const labels=segs.map((g,s)=>rom[s]?{v:3,bar:g.bar+1,beat:1+Math.floor(g.pos/bt),text:rom[s],roman:true}:null).filter(Boolean);
   if(canonLbl) labels.push({...canonLbl,text:tr('imit')});
   const romBar=Array.from({length:T},(_,b)=>segs.map((g,s)=>g.bar===b?rom[s]:'').filter(Boolean).join(' '));
-  return {n:4,T,V,S,A:{notes:[],kind:'V'},d:1,G:[1],E:T,N:T,k:0,cells,entries,labels,acomp:true,harm:true,canonRules:[],rom:romBar,romAll:rom}; }
+  const rasgos=[]; if(IMP()&&state.tex==='plan') rasgos.push('planing'); if(IMP()) rasgos.push('pizz'); if(canonLbl) rasgos.push('imitacion'); if([A,Tn].some(a=>a.some(n=>n.pz))) rasgos.push('corcheas'); if(sol&&sol.segs.some(g=>g.ped)) rasgos.push('pedal'); if(sol&&sol.segs.some(g=>g.plag)) rasgos.push('plagal');
+  return {n:4,T,V,S,A:{notes:[],kind:'V'},d:1,G:[1],E:T,N:T,k:0,cells,entries,labels,acomp:true,harm:true,rasgos,canonRules:[],rom:romBar,romAll:rom}; }
 function buildCanon(){ const T=state.T, t0=performance.now();
   while(performance.now()-t0<1500){ const out=[]; let prev=null, ok=true;
     for(let i=0;i<T&&ok;i++){ let got=null; const tries=i===T-1?200:40;   // el último compás cierra el canon (y en el perpetuo empalma con el principio)
@@ -1700,6 +1701,7 @@ const DURQ={.25:['sixteenth',false],.5:['eighth',false],.75:['eighth',true],1:['
 const PITCH=p=>p.letter+({2:'SS',1:'S',0:'N','-1':'B','-2':'BB'}[p.acc]);
 function mmf(){
   const p=PLAN, ki=enKey(0,()=>KI()), name=keyNameAcc(state.key,ALT[state.alt],state.mode);
+  let FI=null;   /* la ficha (coral y melodía acompañada; se calcula abajo, cuando ya está sv) */
   const kch=[]; for(let b=1;b<state.T;b++) if(!mismaK(keyB(b),keyB(b-1))) kch.push({measure:b+1,key:KEYSIG[String(enKey(b,()=>KI()).fifths)],alteration:'n'});   // la modulación: cambio de armadura
   const chans=Array.from({length:32},(_,i)=>({id:i,name:'Channel '+(i+1),clef:'G',clefChanges:[],staffHost:null,yOffset:0,visible:false,nameHidden:false,nameAbbr:false,coachLocked:false,coachUnlocked:false,opaque:true,muted:false,agogAutoLevel:0,ibGroupBeats:1,color:null,perc:false,mix:{},notes:[]}));
   p.V.forEach(([nm,clef,ins],v)=>Object.assign(chans[v],{name:LN(nm,VOZ_EN[nm]||nm),clef,visible:true,mix:{instrument:ins}}));
@@ -1730,16 +1732,40 @@ function mmf(){
   // cada sistema empieza en una sección (sujeto, respuesta, episodio, entrada): las etiquetas no se cortan al final del renglón
   const bl={[p.N]:{id:'final'}}; let last=1; [...new Set(p.labels.filter(l=>l.text!==tr('aCad')&&!l.roman).map(l=>l.bar))].sort((x,y)=>x-y).forEach(b=>{ if(b>1&&b-last>=4&&b<=p.N){ bl[b-1]=Object.assign(bl[b-1]||{},{sysBreak:true}); last=b; } });
   const sv=p.harm?tr('hsv',{hr:tr({beat:'hrB',half:'hrH',bar:'hrM'}[state.hr||'beat'])}):p.acomp?tr('asv',{ty:tr({chords:'atC',pedal:'atP',arp:'atA',alberti:'atL',openarp:'atO',waves:'atW',air:'atR'}[state.atype])}):p.ped?tr('psv',{n:state.pn,pt:tr({T:'ptT',D:'ptD',W:'ptW',I:'ptI'}[state.ptype]).toLowerCase()}):p.sinf?tr('ssv',{t:p.T}):p.inv?tr('isv',{t:p.T}):p.canon?tr('csv',{n:p.n,iv:p.ivn,d:p.d,mov:tr(state.cmov==='inv'?'mInv':'mDir')}):tr('sv',{esp:tr(state.esp),n:p.n,t:p.T,met:state.meter});
+  if(state.win==='harm'||state.win==='acomp') FI=ficha(p,sv);
   return {format:'mmf',type:'score',version:'1.1',app:'V2.7.127',intelligentBeams:1,created:new Date().toISOString(),system:'Tonal',
     keySignature:KEYSIG[String(ki.fifths)],keyChanges:kch,timeChanges:[],octaveLines:[],spacing:{h:1,v:1,byM:{}},
     view:{zoom:90,barNums:'continuous',listenOct:{fit:'auto',start:2},page:{fit:'auto',staff:p.n>8?'4':'6',sysGap:'4',pages:'0',mode:'ancho',paper:'A4',footer:true,pageNum:true}},
     alteration:'n',a4:440,tempo:state.bpm,timeSignature:{num,den},subDiv:1,totalMeasures:p.N,barlines:bl,repeatMarks:[],repeatSections:[],_sectionSeq:0,
     showRepeatSections:true,anacrusis:null,groups:[{showBarLines:true,id:1792900000001,type:'bracket',channels:p.V.map((_,v)=>v)}],
-    scoreInfo:{title:(p.harm?({es:'Coral en ',en:'Chorale in ',fr:'Choral en ',nl:'Koraal in ',de:'Choral in '}[LANG]):p.acomp?({es:'Melodía acompañada en ',en:'Accompanied melody in ',fr:'Mélodie accompagnée en ',nl:'Begeleide melodie in ',de:'Begleitete Melodie in '}[LANG]):p.ped?({es:'Pedal en ',en:'Pedal point in ',fr:'Pédale en ',nl:'Orgelpunt in ',de:'Orgelpunkt in '}[LANG]):p.sinf?({es:'Sinfonía en ',en:'Sinfonia in ',fr:'Sinfonia en ',nl:'Sinfonia in ',de:'Sinfonia in '}[LANG]):p.inv?({es:'Invención en ',en:'Invention in ',fr:'Invention en ',nl:'Inventie in ',de:'Invention in '}[LANG]):p.canon?({es:'Canon en ',en:'Canon in ',fr:'Canon en ',nl:'Canon in ',de:'Kanon in '}[LANG]):({es:'Fuga en ',en:'Fugue in ',fr:'Fugue en ',nl:'Fuga in ',de:'Fuge in '}[LANG]))+name,subtitle:sv,composer:'',author:'',copyright:'',file:(p.harm?'coral-':p.acomp?'melodia-acompanada-':p.ped?'pedal-':p.sinf?'sinfonia-':p.inv?'invencion-':p.canon?'canon-':'fuga-')+state.meter.replace('/','-')+'-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':''),print:{partShow:false},orchestra:'modern'},printNames:true,
+    scoreInfo:{title:(p.harm?({es:'Coral en ',en:'Chorale in ',fr:'Choral en ',nl:'Koraal in ',de:'Choral in '}[LANG]):p.acomp?({es:'Melodía acompañada en ',en:'Accompanied melody in ',fr:'Mélodie accompagnée en ',nl:'Begeleide melodie in ',de:'Begleitete Melodie in '}[LANG]):p.ped?({es:'Pedal en ',en:'Pedal point in ',fr:'Pédale en ',nl:'Orgelpunt in ',de:'Orgelpunkt in '}[LANG]):p.sinf?({es:'Sinfonía en ',en:'Sinfonia in ',fr:'Sinfonia en ',nl:'Sinfonia in ',de:'Sinfonia in '}[LANG]):p.inv?({es:'Invención en ',en:'Invention in ',fr:'Invention en ',nl:'Inventie in ',de:'Invention in '}[LANG]):p.canon?({es:'Canon en ',en:'Canon in ',fr:'Canon en ',nl:'Canon in ',de:'Kanon in '}[LANG]):({es:'Fuga en ',en:'Fugue in ',fr:'Fugue en ',nl:'Fuga in ',de:'Fuge in '}[LANG]))+name,subtitle:FI?FI.sub:sv,composer:'',author:'',copyright:'',file:FI?FI.name:(p.harm?'coral-':p.acomp?'melodia-acompanada-':p.ped?'pedal-':p.sinf?'sinfonia-':p.inv?'invencion-':p.canon?'canon-':'fuga-')+state.meter.replace('/','-')+'-'+state.key+(state.alt==='n'?'':state.alt==='#'?'s':'b')+(state.mode?'m':''),print:{partShow:false},orchestra:'modern'},printNames:true,
     tempoMarkings:[{measure:1,beatPos:0,term:'',noteValue:state.meter==='3/8'?'eighth':'quarter',bpm:state.meter==='3/8'?state.bpm*2:state.bpm,visible:false,yOffset:-4,fontSize:18,xOffset:0}],
     exprMarkings:[],dynMarkings:[],artMarkings:artPizz(p),textAnnotations:ann,
-    coachRules:{enabled:true,canon,appliesTo:p.V.map((_,v)=>v),forbidSeventh:false},coachLog:null,
+    coachRules:{enabled:true,canon,appliesTo:p.V.map((_,v)=>v),forbidSeventh:false,...(FI?{ficha:FI.data}:{}),...(state.win==='harm'?{chord:chordCfg()}:{})},coachLog:null,
     agogMarkings:[],agogMode:'normal',showAgogMarks:true,asymRegions:[],exprSyn:{},fxRegions:[],channels:chans}; }
+// Salieri mira el acorde entero en el Score (2026-10-28): la tonalidad de cada compás y si avisa la quinta vacía (no en el
+// impresionismo, donde la quinta vacía y la sensible duplicada son color).
+function chordCfg(){ const PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11}, ks=[];
+  for(let i=0;i<state.T;i++){ const k=keyB(i), pc=(PC[k.key]+(k.alt==='#'?1:k.alt==='b'?-1:0)+12)%12, mo=k.mode?1:0;
+    if(!ks.length||ks[ks.length-1].pc!==pc||ks[ks.length-1].mode!==mo) ks.push({m:i+1,pc,mode:mo}); }
+  return IMP()?{keys:ks,missingThird:false,leadingTone:false}:{keys:ks}; }
+// 2026-10-28 (Mario: «el nombre del file tiene poca información para reconocerlos en el futuro o saber cómo se hicieron…
+// adopta la nueva regla de nombre e info que queda en el mmf»): la FICHA de cada pieza del coral y de la melodía acompañada.
+// Nombre: fecha_época_textura_tónica-escala_compás_Nc_ritmo_rasgos (sin tildes ni espacios). La ficha completa viaja en
+// coachRules.ficha (el Score la conserva al guardar) y un resumen en el subtítulo, que se ve al imprimir.
+function ficha(p,sv){ const d=new Date(), f=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const EP={baroque:'BAR',classical:'CLA',romantic:'ROM',impress:'IMP'}[state.era]||state.era.slice(0,3).toUpperCase(), SOL={C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'};
+  const ton=k=>SOL[k.key]+(k.alt==='b'?'b':k.alt==='#'?'#':''), md=k=>k.mode?'menor':'mayor';
+  const ESC={ton:null,lyd:'lidio',mix:'mixolidio',dor:'dorico',aeo:'eolico',pent:'penta'}, esc=IMP()&&state.imod&&ESC[state.imod]?ESC[state.imod]+(state.imod==='pent'?'-'+md(keyB(0)):''):md(keyB(0));
+  const tex=state.win==='harm'?'coral-'+(IMP()&&state.tex==='plan'?'planing':'voces'):'acomp-'+state.atype, rit=state.win==='harm'?(state.hr||'beat'):(AHALF()?'half':'bar');
+  const k0=keyB(0), kN=keyB(state.T-1), mod_=modula()?['a-'+ton(kN)+(kN.mode!==k0.mode?'-'+md(kN):'')]:[], ras=(p.rasgos||[]).concat(state.win==='acomp'&&IMP()?['pizz']:[]).concat(mod_);
+  const name=[f,EP,tex,ton(k0)+'-'+esc,state.meter.replace('/','-'),state.T+'c',rit].concat(ras.length?[ras.join('-')]:[]).join('_');
+  const ERA={baroque:'BAROQUE',classical:'CLASSICAL',romantic:'ROMANTIC',impress:'IMPRESSIONIST'}[state.era]||state.era, ESN={lidio:'lidio',mixolidio:'mixolidio',dorico:'dórico',eolico:'eólico',penta:'pentatónica'};
+  const sub=sv+' · '+ERA+(IMP()&&state.imod&&ESC[state.imod]?' · '+(LANG==='es'?ESN[ESC[state.imod]]:({lyd:'Lydian',mix:'Mixolydian',dor:'Dorian',aeo:'Aeolian',pent:'pentatonic'}[state.imod])):'')+(ras.length?' · '+ras.filter(r=>!/^a-/.test(r)).map(r=>(LANG==='es'?{pizz:'pizz.',imitacion:'imitación de la célula 1',corcheas:'corcheas pizz.',pedal:'pedal de tónica',plagal:'cierre plagal',planing:'planing'}:{pizz:'pizz.',imitacion:'imitation of cell 1',corcheas:'pizz. quavers',pedal:'tonic pedal',plagal:'plagal close',planing:'planing'})[r]||r).join(', '):'');
+  const data={fecha:d.toISOString(),maquina:'armonia-maquina',ventana:state.win==='harm'?'CHORALE':'ACCOMPANIED',epoca:ERA,tonalidad:keyTxt(),clave:{key:k0.key,alt:k0.alt,mode:k0.mode},escala:IMP()?state.imod:null,
+    compas:state.meter,compases:state.T,rhythm:rit,textura:state.win==='harm'?(IMP()?state.tex:'voices'):state.atype,bajo:state.win==='acomp'?state.bmode:null,final:state.aend||'closed',tempo:state.bpm,
+    hold:state.bars.map((_,i)=>state.held[i]?i+1:0).filter(Boolean),tarjetas:state.cm&&state.cm.some(Boolean)?state.cm.slice(0,state.T):null,progresion:(p.romAll||[]).filter(Boolean).join(' '),rasgos:ras,melodia:state.mins};
+  return {name,sub,data}; }
 function save(){ if(!PLAN||state.spinning) return; const d=mmf(); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'}));
   a.download=d.scoreInfo.file+'.mmf'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000); }
 const blobs=[];
