@@ -1599,15 +1599,26 @@ function vFill(x,y,m){ const tg=y==null||y===x?x:y-Math.sign(y-x), L=Math.abs(tg
     for(let i=1;i<L;i++) res.push(x+Math.sign(tg-x)*i); return res.slice(0,m); }
   return Array.from({length:m},(_,i)=>x+Math.round(i*(tg-x)/(m-1))); }
 function varGlosa(notes,j,p,R){ const mt=MT(), q=mt.U/(+state.meter[0]), T=p.T, out=[], last=notes.length-1;
+  // 2026-10-28 (Mario: «1) vuelven a la nota al final de la primera célula, 2) con notas del arpegio intercaladas, 3) corchea que
+  // salta en arpegio seguida de semicorcheas sin saltar»): por tiempo (negra) —
+  //   1 semicorcheas: la 1.ª célula da la vuelta y vuelve a la nota (x, x+1, x−1, x); las siguientes caminan por grado hacia la próxima
+  //   2 tresillos: nota de la línea, una nota del arpegio intercalada (salto a la del acorde de abajo), y el paso que sigue la línea
+  //   3 corchea + dos semicorcheas: la corchea salta en arpegio (la 1.ª es la del tema), las semicorcheas siguen por grado, sin saltar
   const pcsAt=(bar,pos)=>{ const pcs=new Set(); p.entries.forEach(e=>{ if(e.kind==='mel') return; const t=(bar+1-e.bar)*mt.U+pos; e.notes.forEach(n=>{ if(!n.rest&&n.bar*mt.U+n.pos<=t+1e-6&&t<n.bar*mt.U+n.pos+n.du-1e-6) pcs.add(mod(n.p.midi,12)); }); }); return pcs; };
+  const R0=state.win==='harm'?SATB.S:(MELR[state.mins]||[60,88]);
   notes.forEach((n,i)=>{ if(n.rest||n.d==null||i===last||n.tie||n.bar===T-1||n.du<q/2-1e-6){ out.push(n); return; }
-    const bi=n.bar, k0=Math.round((n.p.li-enKey(bi,()=>degP(n.d)).li)/7), P=d=>oct(enKey(bi,()=>degP(d)),k0), nx=notes[i+1], y=nx&&!nx.rest&&nx.d!=null?nx.d:null;
-    let sub=j===2?q/3:j===3?q/2:q/4; if(j===2&&n.du<q-1e-6) { out.push(n); return; } if(j===3&&n.du<q-1e-6) sub=q/4;
-    const m=Math.round(n.du/sub); if(m<2){ out.push(n); return; }
-    let ds=vFill(n.d,y,m);
-    if(j===3&&sub===q/2){ const pcs=pcsAt(bi,n.pos), cd=[]; if(pcs.has(mod(n.p.midi,12))){ for(let d=n.d-1;d>=n.d-7&&cd.length<2;d--) if(pcs.has(mod(P(d).midi,12))) cd.push(d); if(cd.length===2){ const pat=[n.d,cd[0],cd[1],cd[0]]; ds=Array.from({length:m},(_,k)=>pat[k%4]); } } }
-    const R0=state.win==='harm'?SATB.S:(MELR[state.mins]||[60,88]); if(ds.some((d,k)=>{ const m=k?P(d).midi:n.p.midi; return m<R0[0]||m>R0[1]; })){ out.push(n); return; }   /* fuera del registro de la melodía: la nota queda como en el tema */
-    ds.forEach((d,k)=>out.push({p:k===0?n.p:P(d),d,bar:bi,pos:n.pos+k*sub,du:sub,...(j===2?{tri:true}:{})})); });
+    const bi=n.bar, k0=Math.round((n.p.li-enKey(bi,()=>degP(n.d)).li)/7), P=d=>oct(enKey(bi,()=>degP(d)),k0), nx=notes[i+1], y=nx&&!nx.rest&&nx.d!=null?nx.d:n.d, x=n.d;
+    const st=(a,t)=>a===t?a+1:a+Math.sign(t-a), inC=(d,pos)=>pcsAt(bi,pos).has(mod(P(d).midi,12));
+    const arp=(a,pos,dir,tgt)=>{ let best=null; for(let k=2;k<=5;k++) for(const sg of dir?[dir]:[-1,1]){ const d=a+sg*k; if(inC(d,pos)&&(best==null||Math.abs(d-tgt)<Math.abs(best-tgt))) best=d; } return best==null?a-2:best; };
+    const ev=[]; const beats=Math.floor(n.du/q+1e-6), rest=n.du-beats*q;
+    if(beats<1){ if(j!==1){ out.push(n); return; } ev.push([x,q/4],[st(x,y),q/4]); }
+    else for(let b=0;b<beats;b++){ const pos=n.pos+b*q, lastB=b===beats-1, tgt=lastB?y:x, prev=ev.length?ev[ev.length-1][0]:x;
+      if(j===1){ if(b===0) ev.push([x,q/4],[x+1,q/4],[x-1,q/4],[x,q/4]); else vFill(prev,lastB?y:prev,4).forEach(d=>ev.push([d,q/4])); }
+      else if(j===2){ const L0=b===0?x:st(prev,tgt), A=arp(L0,pos,-1,L0-2), L1=lastB?(y===L0?L0:st(L0,y)):L0; ev.push([L0,q/3],[A,q/3],[L1,q/3]); }
+      else { const E=b===0?x:arp(prev,pos,0,tgt), s1=st(E,tgt); let s2=st(s1,tgt); if(lastB&&s2===y) s2=s1+(s1-y)||s1-1; if(s2===s1) s2=s1+1; ev.push([E,q/2],[s1,q/4],[s2,q/4]); } }   /* la última semicorchea no cae en la nota que sigue */
+    if(beats>=1&&rest>1e-6) ev.push([st(ev[ev.length-1][0],y),rest]);
+    if(ev.some(([d],k)=>{ const m=k?P(d).midi:n.p.midi; return m<R0[0]||m>R0[1]; })){ out.push(n); return; }   /* fuera del registro de la melodía: la nota queda como en el tema */
+    let pos=n.pos; ev.forEach(([d,du],k)=>{ out.push({p:k===0?n.p:P(d),d,bar:bi,pos,du,...(j===2&&Math.abs(du-q/3)<1e-6?{tri:true}:{})}); pos+=du; }); });
   return out; }
 function varPlan(p){ const k=state.vari||0; if(!p||!k||!VAR_OK()||!p.entries) return p; const T=p.T, mel=p.entries.find(e=>e.kind==='mel'); if(!mel) return p;
   const seed=state.bars.flatMap(b=>b.deg).reduce((a,d,i)=>(a*31+d+9+i)|0,7), out={...p,N:T*(1+k),entries:p.entries.slice(),labels:(p.labels||[]).slice(),vari:k,
