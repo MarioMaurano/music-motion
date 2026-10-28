@@ -545,6 +545,7 @@ function makeBar(i,prev){
   const LIN=LIN_ON(), LL=LNP(); let presu=_linPresu!=null?_linPresu:LL.saltos, ult=_linUlt, fig=LIN&&rh.length>=5&&Math.random()<LL.fig, exp_=false;
   for(let k=0;k<rh.length;k++){
     if(cur==null){ cur=Math.random()<.65?0:4; deg.push(cur); continue; }
+    if(k===0&&LIN&&!hr&&Math.random()<.2){ deg.push(cur); continue; }   // 2026-10-28 (Mario: «al cambiar de compás se puede repetir la nota»)
     const c0=cur;
     if(LIN&&fig&&k===1&&presu>0&&rh.length-k>=4){ fig=false; const up=cur<=-2?1:cur>=6?-1:pick([-1,1]), Y=cur+2*up, Z=cur-up;   // la tercera repetida: X Y X Y Z
       for(const n of [Y,cur,Y,Z]){ deg.push(n); k++; } k--; presu--; ult=Z-Y; cur=Z; continue; }
@@ -589,12 +590,11 @@ function subjectOk(bars,partial){ const degs0=bars.flatMap(b=>b.deg), bi_=bars.f
   for(let i=1;i<ps.length;i++){ if(!(ch_[i]&&ps[i].li===ps[i-1].li&&Math.abs(ps[i].midi-ps[i-1].midi)===1)&&!ivOk(ps[i-1],ps[i])) return false; if(i>1&&degs[i]===degs[i-1]&&degs[i-1]===degs[i-2]) return false; }
   for(let i=0;i<ps.length;i++) if(ch_[i]){ const nx=ps[i+1]; if(!nx||nx.midi-ps[i].midi!==ch_[i]||Math.abs(nx.li-ps[i].li)!==1) return false;   // el adorno cromático: un semitono hacia la nota siguiente
     if(i>0&&ps[i-1].li===ps[i].li&&ps[i].midi-ps[i-1].midi!==ch_[i]) return false; }
-  if(LIN_ON()){ const L=LNP(), rr=bars.flatMap(b=>b.rh), bi=bars.flatMap((b,i)=>b.deg.map(()=>i)), H_=i=>!!(state.held[i]&&state.bars[i]===bars[i]);   // la línea primero: la nota repetida no dura más; un salto por célula; las células no se tocan
+  if(LIN_ON()){ const L=LNP(), rr=bars.flatMap(b=>b.rh), bi=bars.flatMap((b,i)=>b.deg.map(()=>i)), H_=i=>!!(state.held[i]&&state.bars[i]===bars[i]);   // la línea primero: la nota repetida no dura más; un salto por célula
     // lo que el alumno trajo por el buzón (o dejó en HOLD) es suyo: las reglas solo miran lo que escribe la máquina
     if(!L.repLarga) for(let i=1;i<degs.length;i++) if(degs[i]===degs[i-1]&&rr[i]>rr[i-1]&&!(H_(bi[i])||H_(bi[i-1]))) return false;
     const ini=[]; let ac=0; bars.forEach((b,i)=>{ ini[i]=ac; ac+=b.deg.length; }); const DB=i=>degs.slice(ini[i],ini[i]+bars[i].deg.length);   // los grados, ya en una sola tonalidad
-    for(let c=0;2*c<bars.length;c++){ if(H_(2*c)||H_(2*c+1)) continue; if(leapsS(DB(2*c).concat(bars[2*c+1]?DB(2*c+1):[]))>L.saltos) return false;
-      if(c>0&&!H_(2*c-1)){ const pv=DB(2*c-1); if(DB(2*c)[0]===pv[pv.length-1]) return false; } } }
+    for(let c=0;2*c<bars.length;c++){ if(H_(2*c)||H_(2*c+1)) continue; if(leapsS(DB(2*c).concat(bars[2*c+1]?DB(2*c+1):[]))>L.saltos) return false; } }   // 2026-10-28 (Mario): al cambiar de compás la nota se puede repetir (sale la regla de las células que no se tocan); nunca tres iguales
   if(!partial&&LIN_ON()&&LNP().cumbre&&!state.held.some(Boolean)){ const mx=Math.max(...degs), at=degs.map((d,i)=>d===mx?i:-1).filter(i=>i>=0);   // ROMANTIC: un solo punto culminante, hacia los dos tercios
     if(at.length!==1) return false; const tt=[]; let ac=0; bars.forEach(b=>{ let p=b.rest||0; b.rh.forEach(r=>{ tt.push(ac+p); p+=r; }); ac+=MT().U; }); const fr=tt[at[0]]/(bars.length*MT().U); if(fr<.4||fr>.85) return false; }
   if(partial) return true; const end=mod(degs[degs.length-1],7); return (state.win==='acomp'||state.win==='harm'?ENDS[state.aend||'closed']:[0,2,4]).includes(end); }
