@@ -1610,22 +1610,23 @@ function varGlosa(notes,j,p,R){ const mt=MT(), q=mt.U/(+state.meter[0]), T=p.T, 
     const bi=n.bar, k0=Math.round((n.p.li-enKey(bi,()=>degP(n.d)).li)/7), P=d=>oct(enKey(bi,()=>degP(d)),k0), nx=notes[i+1], y=nx&&!nx.rest&&nx.d!=null?nx.d:n.d, x=n.d;
     const P2=PLF, st=(a,t)=>a===t?a+1:a+Math.sign(t-a), inC=(d,pos)=>pcsAt(bi,pos).has(mod(P(d).midi,12));
     const arp=(a,pos,dir,tgt)=>{ let best=null; for(let k=2;k<=5;k++) for(const sg of dir?[dir]:[-1,1]){ const d=a+sg*k; if(inC(d,pos)&&(best==null||Math.abs(d-tgt)<Math.abs(best-tgt))) best=d; } return best==null?a-2:best; };
+    const TRI=(state.era==='impress'&&j===1)||(state.era==='romantic'&&j===2)||(state.era==='classical'&&j===2); if(TRI&&n.pos%q>1e-6){ out.push(n); return; }   /* 2026-10-28 (revisión vs corpus): el tresillo empieza en el tiempo; la nota a contratiempo queda como en el tema */
     const ev=[]; const beats=Math.floor(n.du/q+1e-6), rest=n.du-beats*q;
     if(beats<1){ if(j!==1||state.era==='romantic'||state.era==='impress'){ out.push(n); return; } ev.push([x,q/4],[st(x,y),q/4]); }
     else for(let b=0;b<beats;b++){ const pos=n.pos+b*q, lastB=b===beats-1, tgt=lastB?y:x, prev=ev.length?ev[ev.length-1][0]:x;
       const ER=state.era, L=b===0?x:st(prev,tgt);
       if(ER==='baroque'){   /* las dobles de Bach: 1 corcheas por grado · 2 semicorcheas en escala continua · 3 el acorde quebrado en semicorcheas */
-        if(j===1) (b===0?vFill(x,beats===1?y:x,2):vFill(prev,lastB?y:prev,2)).forEach(d=>ev.push([d,q/2]));
+        if(j===1){ const f=b===0?x:st(prev,tgt); vFill(f,lastB?y:f,2).forEach(d=>ev.push([d,q/2])); }
         else if(j===2) vFill(b===0?x:prev,lastB?y:(b===0?x:prev),4).forEach(d=>ev.push([d,q/4]));
         else { let top=b===0?x:null; if(top==null){ for(let k=0;k<=3&&top==null;k++) for(const sg of [Math.sign(tgt-prev)||1,-(Math.sign(tgt-prev)||1)]) if(top==null&&inC(prev+sg*k,pos)) top=prev+sg*k; if(top==null) top=prev; }
           const dn=P(top).midi-9>=R0[0], c1=dn?arp(top,pos,-1,top-2):arp(top,pos,1,top+2), c2=dn?arp(c1,pos,-1,c1-2):arp(c1,pos,1,c1+2); ev.push([top,q/4],[c1,q/4],[c2,q/4],[c1,q/4]); } }   /* sin lugar abajo, el acorde se quiebra hacia arriba */
       else if(ER==='romantic'){   /* 1 la apoyatura (de arriba, en el tiempo, que resuelve) · 2 la bordadura cromática de abajo, en tresillo · 3 minore/maggiore (en varPlan) */
-        if(j===1) ev.push([L+1,q/2],[L,q/2]);
-        else if(j===2){ const lo=P(L-1), hi=P(L); const ch=hi.midi-lo.midi===2?P2(lo.li,lo.f+7):lo; ev.push([L,q/3],[L-1,q/3,ch],[L,q/3]); }
+        if(j===1){ const ap=ev.length&&ev[ev.length-1][0]===L+1?L-1:L+1; ev.push([ap,q/2],[L,q/2]); }   /* la apoyatura, de arriba; de abajo si arriba repetiría la nota anterior */
+        else if(j===2){ const lo=P(L-1), hi=P(L); const cr=pos<1e-6&&mod(L,7)!==6&&hi.midi-lo.midi===2, ch=cr?P2(lo.li,lo.f+7):lo; ev.push([L,q/3],[L-1,q/3,ch],[L,q/3]); }   /* 2026-10-28 (revisión vs corpus: Brahms, Tchaikovsky y Glière no pasan del 30 % de semitonos): cromática solo en el primer tiempo, y nunca bajo la sensible (Mi♯); en los otros tiempos, la bordadura diatónica */
         else ev.push([L,q]); }
-      else if(ER==='impress'){   /* 1 el arabesco en tresillos · 2 la anticipación (la nota que sigue llega una corchea antes) · 3 el arabesco pentatónico en semicorcheas */
+      else if(ER==='impress'){   /* 1 el arabesco en tresillos · 2 la escapada (échappée) · 3 el arabesco pentatónico en semicorcheas */
         if(j===1) ev.push([L,q/3],[L+2,q/3],[L+1,q/3]);
-        else if(j===2){ if(lastB&&y!==x) ev.push([L,q/2],[y,q/2]); else ev.push([L,q]); }
+        else if(j===2){ const es=L-(Math.sign((lastB?y:tgt)-L)||1); ev.push([L,q/2],[es,q/2]); }   /* la escapada: un paso hacia el otro lado y salta a la que sigue */
         else { const PU=d=>{ let e=d+1; while(![0,1,2,4,5].includes(mod(e,7))) e++; return e; }; const a1=PU(L), a2=PU(a1); ev.push([L,q/4],[a1,q/4],[a2,q/4],[a1,q/4]); } }
       else if(j===1){ if(b===0) ev.push([x,q/4],[x+1,q/4],[x-1,q/4],[x,q/4]); else vFill(prev,lastB?y:prev,4).forEach(d=>ev.push([d,q/4])); }
       else if(j===2){ const L0=b===0?x:st(prev,tgt), A=arp(L0,pos,-1,L0-2), L1=lastB?(y===L0?L0:st(L0,y)):L0; ev.push([L0,q/3],[A,q/3],[L1,q/3]); }
@@ -1633,16 +1634,47 @@ function varGlosa(notes,j,p,R){ const mt=MT(), q=mt.U/(+state.meter[0]), T=p.T, 
     if(beats>=1&&rest>1e-6) ev.push([st(ev[ev.length-1][0],y),rest]);
     const pit=(e,k)=>e[2]||(k===0&&e[0]===x?n.p:P(e[0]));
     if(ev.some((e,k)=>{ const m=pit(e,k).midi; return m<R0[0]||m>R0[1]; })){ out.push(n); return; }   /* fuera del registro de la melodía: la nota queda como en el tema */
-    let pos=n.pos; ev.forEach((e,k)=>{ const [d,du]=e; out.push({p:pit(e,k),d,bar:bi,pos,du,...(Math.abs(du-q/3)<1e-6?{tri:true}:{})}); pos+=du; }); });
-  return out; }
+    let pos=n.pos; ev.forEach((e,k)=>{ const [d,du]=e; out.push({p:pit(e,k),d,bar:bi,pos,du,g:!e[2],...(k===0?{th:true}:{}),...(Math.abs(du-q/3)<1e-6?{tri:true}:{})}); pos+=du; }); });
+  return varCells(out,p,q); }
+// 2026-10-28 (Mario: «en las variaciones se deben conservar las reglas de dónde caen las últimas notas de las células; después de un
+// grupo de notas que vuelve a la original sigue un movimiento en la misma dirección, preferiblemente en movimiento contrario»):
+// célula = las notas de un tiempo. (a) la última nota de una célula no es la primera de la siguiente (las células no se tocan en la
+// misma nota) y llega a ella por grado si puede; (b) después de una célula que vuelve a su primera nota, la siguiente va en una sola
+// dirección, por grado — de preferencia contraria al bajo. La primera nota de cada célula (la del tiempo) no se toca.
+function varCells(ns,p,q){ const mt=MT(), U=mt.U, cells=[]; let cur=null; const R0=state.win==='harm'?SATB.S:(MELR[state.mins]||[60,88]);
+  ns.forEach(n=>{ const k=n.bar*U+Math.floor((n.pos+1e-6)/q)*q; if(!cur||cur.k!==k){ cur={k,ns:[]}; cells.push(cur); } cur.ns.push(n); });
+  const bass=p.entries.find(e=>e.kind==='bass'), bAt=t=>{ if(!bass) return null; const x=bass.notes.find(m=>!m.rest&&m.bar*U+m.pos<=t+1e-6&&t<m.bar*U+m.pos+m.du-1e-6); return x?x.p.midi:null; };
+  const rp=(n,d)=>{ const k0=Math.round((n.p.li-enKey(n.bar,()=>degP(n.d)).li)/7); return {...n,d,p:oct(enKey(n.bar,()=>degP(d)),k0)}; }, inR=n=>n.p.midi>=R0[0]&&n.p.midi<=R0[1];
+  for(let c=0;c<cells.length;c++){ const C=cells[c].ns, N=cells[c+1]&&cells[c+1].ns[0]; if(C.length<2||!C.every(n=>n.g)) continue;
+    const prev=cells[c-1]&&cells[c-1].ns, ret=prev&&prev.length>=3&&prev[prev.length-1].d===prev[0].d, last0=prev&&prev[prev.length-1];
+    if(ret&&C.length>=3){ const m=C.length, b0=bAt(cells[c].k), b1=N?bAt(cells[c].k+q):null, bd=b0!=null&&b1!=null?Math.sign(b1-b0):0;
+      const opts=[-1,1].flatMap(dd=>[0,1].map(alt=>{ const f=C[0].th?C[0].d:last0.d+dd, run=Array.from({length:m},(_,i)=>f+dd*(alt&&i===m-1?m-3:i)), end=run[m-1];   /* alt: la última vuelve un paso (si la recta choca con la nota que sigue o sale del registro) */
+          const nn=run.map((d,i)=>i===0&&C[0].th?C[0]:rp(C[i],d)); return {dd,run,nn,end,alt}; }))
+        .filter(o=>o.nn.every(inR)&&(!N||N.d==null||o.end!==N.d)&&!(C[0].th&&false));
+      const sc=o=>(N&&N.d!=null?Math.abs(Math.abs(o.end-N.d)-1):0)*2+(bd&&o.dd===bd?1:0)+(o.alt?3:0);   /* llega por grado a la célula que sigue; contrario al bajo */
+      opts.sort((A,B)=>sc(A)-sc(B)); if(opts.length) opts[0].nn.forEach((x,i)=>{ C[i]=x; }); }
+    const L=C[C.length-1]; if(N&&N.d!=null&&L.d===N.d&&!(N.g&&!N.th&&L.d===C[0].d)){   /* si la que sigue es glosa, es ella la que se mueve (la célula que vuelve se queda) */ const a=C[C.length-2].d, alt=[N.d+1,N.d-1].filter(d=>d!==a).sort((x,y)=>Math.abs(x-a)-Math.abs(y-a)).map(d=>rp(L,d)).find(inR); if(alt) C[C.length-1]=alt; } }   /* las células no se tocan en la misma nota */
+  return cells.flatMap(c=>c.ns); }
+// 2026-10-28 (revisión vs corpus: en los compases de tonos enteros salían Mi♯ y Fa en el mismo compás, y saltos La–Mi♯, Sol–Mi♯): en el compás
+// de tonos enteros, la 6.ª alzada (Mi♯ en Sol) se escribe como la 7.ª bajada (Fa) — una sola ortografía, la de la escala Sol La Si Do♯ Re♯ Fa.
+function wtSpell(p){ if(!p||!p.entries||!state.bars.some(b=>b&&b.wt)) return p; const T=p.T||state.T;
+  return {...p,entries:p.entries.map(e=>({...e,notes:e.notes.map(n=>{ if(n.rest||!n.p) return n; const b=mod(e.bar-1+(n.bar||0),T); if(!(state.bars[b]&&state.bars[b].wt)) return n;
+    const t=enKey(b,()=>deg2P(0,0)); return mod(n.p.midi-t.midi,12)===10&&mod(n.p.li-t.li,7)===5?{...n,p:P(n.p.li+1,n.p.f-12)}:n; })}))}; }
 function varPlan(p){ const k=state.vari||0; if(!p||!k||!VAR_OK()||!p.entries) return p; const T=p.T, mel=p.entries.find(e=>e.kind==='mel'); if(!mel) return p;
   const seed=state.bars.flatMap(b=>b.deg).reduce((a,d,i)=>(a*31+d+9+i)|0,7), out={...p,N:T*(1+k),entries:p.entries.slice(),labels:(p.labels||[]).slice(),vari:k,
     cells:(p.cells||[]).map(c=>{ let r=c.slice(0,T); for(let j=0;j<k;j++) r=r.concat(c.slice(0,T)); return r; }),rom:Array.isArray(p.rom)&&p.acomp?Array.from({length:T*(1+k)},(_,i)=>p.rom[i%T]):p.rom};
   for(let j=1;j<=k;j++){ const off=j*T;
     const mino=state.era==='romantic'&&j===3;   /* ROMANTIC 3: minore (o maggiore): la misma pieza en el modo opuesto — 3.ª y 6.ª de la escala, en todas las voces */
-    const alt=(nt,bar)=>{ if(nt.rest||!nt.p) return nt; const k=keyB(bar%T), tm=enKey(bar%T,()=>deg2P(0,0)).midi, r=mod(nt.p.midi-tm,12), mn=k.mode===1;
+    /* 2026-10-28 (revisión vs corpus: Mi–Sol♯–Si pasaba a Mi♭–Sol♯–Si♭): el acorde con una alteración ascendente cromática (dominante secundaria) queda como en el tema, en todas las voces */
+    const U0=MT().U, frz=mino?p.entries.filter(x=>x!==mel).flatMap(x=>x.notes.filter(m=>!m.rest&&m.p&&m.p.f-enKey(mod(x.bar-1+(m.bar||0),T),()=>deg2P(0,0)).f>5).map(m=>{ const t=(x.bar-1+(m.bar||0))*U0+m.pos; return [t,t+m.du]; })):[];
+    const alt=(nt,bar)=>{ if(nt.rest||!nt.p) return nt; { const t=bar*U0+(nt.pos||0), t1=t+(nt.du||0); if(frz.some(([a,b])=>t<b-1e-6&&t1>a+1e-6)) return nt; } const k=keyB(bar%T), tm=enKey(bar%T,()=>deg2P(0,0)).midi, r=mod(nt.p.midi-tm,12), mn=k.mode===1;
       const dn=!mn&&(r===4||r===9), up=mn&&(r===3||r===8); return dn?{...nt,p:P(nt.p.li,nt.p.f-7)}:up?{...nt,p:P(nt.p.li,nt.p.f+7)}:nt; };
-    p.entries.forEach(e=>{ let ns=e===mel&&!mino?varGlosa(e.notes,j,p,rngV(seed+j*977)):e.notes; if(mino) ns=ns.map(nt=>alt(nt,e.bar-1+(nt.bar||0))); out.entries.push({...e,bar:e.bar+off,notes:ns}); });
+    p.entries.forEach(e=>{ let ns=e===mel&&!mino?varGlosa(e.notes,j,p,rngV(seed+j*977)):e.notes; if(mino){ const o=ns; ns=o.map(nt=>alt(nt,e.bar-1+(nt.bar||0)));
+        /* 2026-10-28 (revisión vs corpus): la bordadura cromática de abajo sigue a su nota — si la nota baja (Si→Si♭), la bordadura también (La♯→La), y no queda La♯–Si♭ */
+        for(let i=0;i+1<o.length;i++){ const a=o[i], b=o[i+1]; if(a.rest||b.rest||!a.p||!b.p||ns[i]!==a||ns[i+1]===b) continue; if(b.p.midi-a.p.midi===1&&mod(b.p.li-a.p.li,7)===1) ns[i]={...a,p:P(a.p.li,a.p.f-7)}; }
+        /* y la alteración cromática de la nota que bajó la sigue: Mi–Mi♯–Fa♯ pasa a Mi♭–Mi–Fa♯, no Mi♭–Mi♯ */
+        for(let i=0;i<o.length;i++) [i-1,i+1].forEach(k=>{ const a=o[i], b=o[k]; if(!b||a.rest||b.rest||!a.p||!b.p||ns[i]!==a||ns[k]===b) return; if(mod(a.p.li-b.p.li,7)===0&&a.p.f===b.p.f+7&&Math.abs(a.p.midi-b.p.midi)===1) ns[i]={...a,p:P(a.p.li,a.p.f-7)}; }); }
+      out.entries.push({...e,bar:e.bar+off,notes:ns}); });
     if(mino) (out.modo=out.modo||[]).push({from:off+1,to:off+T});
     (p.labels||[]).forEach(l=>out.labels.push({...l,bar:l.bar+off}));
     out.labels.push({v:0,bar:off+1,beat:1,text:LN('Variación '+j,'Variation '+j)+(mino?(keyB(0).mode?' (maggiore)':' (minore)'):'')}); }
@@ -1752,7 +1784,7 @@ function render(){
   const degs=state.bars.flatMap(b=>b.deg), ch=chrOf(state.bars), r0=raises(degs,state.bars.flatMap((b,i)=>b.deg.map(()=>i))).map((x,i)=>x+ch[i]), r=rWT(state.bars,r0); let k=0;
   state.bars.forEach((b,i)=>{ const rr=b.deg.map(()=>r[k++]); const st=document.getElementById('s'+i); st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.remove('blur');
     st.innerHTML=enKey(i,()=>barSVG(b,rr)); document.getElementById('l'+i).textContent=(modula()?'('+keyNameAcc(keyB(i).key,ALT[keyB(i).alt],keyB(i).mode)+') ':'')+b.deg.map((d,j)=>{ const p=enKey(i,()=>deg2P(d,rr[j])); return nomb(p.letter,p.acc); }).join(' '); });
-  PLAN=varPlan(plan()); drawPlan(PLAN); { const vb=document.getElementById('vari'); if(vb){ vb.style.display=VAR_OK()?'':'none'; vb.disabled=(state.vari||0)>=3; } }
+  PLAN=wtSpell(varPlan(plan())); drawPlan(PLAN); { const vb=document.getElementById('vari'); if(vb){ vb.style.display=VAR_OK()?'':'none'; vb.disabled=(state.vari||0)>=3; } }
   const ban=document.getElementById('banner'); if(state.noStr) ban.textContent=tr(state.noStr===true?'noStr':state.noStr); else if(['noStr','noCan','noPed','noAcc','noHarm'].some(k=>ban.textContent===tr(k))) ban.textContent=''; }
 function drawPlan(p){
   const resp=p.A.kind==='IV'?tr('rIV'):p.A.kind==='inv'?tr('rInv'):p.A.tonal?tr('tonal'):tr('real'), mut=p.A.tonal?tr('mut',{a:p.head,b:p.headA}):'';
@@ -1853,7 +1885,7 @@ function mmf(){
             tuplet:{gid:'tri-'+v+'-'+m+'-'+bt,idx:Math.round((bp-bt)*3),actual:3,normal:2,factor:2/3,bracket:'straight',number:true,side:'above'}}); return; }
         let q=nt.du*mt.uq, bp=nt.pos*mt.uq; const pieces=[];
         if(Math.abs(q-1.5)<1e-9&&Math.abs(bp%1-.5)<1e-9){ pieces.push([bp,1.5]); q=0; }   /* la negra con puntillo a contratiempo (la hemiola): una sola figura */
-        while(q>1e-9){ const c=[4,3,2,1.5,1,.75,.5,.25].find(x=>x<=q+1e-9&&(x<1||Math.abs((bp%1))<1e-9||x<=1-(bp%1)+1e-9)); pieces.push([bp,c]); bp+=c; q-=c; }
+        while(q>1e-9){ const c=[4,3,2,1.5,1,.75,.5,.25].find(x=>x<=q+1e-9&&(Math.abs((bp%1))<1e-9||x<=1-(bp%1)+1e-9));   /* 2026-10-28 (revisión vs corpus): a contratiempo, la figura llega hasta el tiempo y se liga — no la corchea con puntillo que cruza el pulso */ pieces.push([bp,c]); bp+=c; q-=c; }
         pieces.forEach(([b0,c],k)=>{ const [dn,dot]=DURQ[c];
           if(nt.chord&&notes.length&&k===0){} 
           if(nt.rest){ notes.push({measure:m,beat:Math.floor(b0/bu)+1,beatPos:b0,channel:v,accidental:null,dotted:dot,velocity:80,duration:dn,isRest:true,pitch:'BN',octave:4}); return; }
@@ -2032,7 +2064,7 @@ seg('civs',[['8','8VE'],['5','5TH'],['4','4TH'],['1','UNISON']],state.civ,v=>sta
 seg('cdis',[['1','1 BAR'],['2','2 BARS']],state.cdis,v=>state.cdis=+v);
 seg('cmov',[['dir','DIRECT'],['inv','INVERSION']],state.cmov,v=>state.cmov=v);
 seg('cfin',[['coda','CODA'],['perp','PERPETUAL']],state.cfin,v=>{ state.cfin=v; segVoces(); });
-{ const el=document.getElementById('tabs'), ERAS=[['modal','MODAL'],['baroque','BAROQUE'],['classical','CLASSICAL'],['romantic','ROMANTIC'],['impress','IMPRESSIONIST'],['jazz','JAZZ'],['piano','PIANO']], READY=['baroque','classical','romantic'];   /* 2026-10-27: CLASSICAL aprobado por Mario · 2026-10-28: ROMANTIC abierto (Mario: «sí, lo puedes abrir así lo veo online») */
+{ const el=document.getElementById('tabs'), ERAS=[['modal','MODAL'],['baroque','BAROQUE'],['classical','CLASSICAL'],['romantic','ROMANTIC'],['impress','IMPRESSIONIST'],['jazz','JAZZ'],['piano','PIANO']], READY=['baroque','classical','romantic','impress'];   /* 2026-10-28: IMPRESSIONIST abierto (Mario: «¿puedes subir Impressionist?») */   /* 2026-10-27: CLASSICAL aprobado por Mario · 2026-10-28: ROMANTIC abierto (Mario: «sí, lo puedes abrir así lo veo online») */
   try{ const q=new URLSearchParams(location.search).get('era'); if(q==='impress'){ if(!READY.includes(q)) READY.push(q); state.era=q; eraAcomp(); state.hr='bar'; syncSeg('hrh','bar'); }   // 2026-10-28: IMPRESSIONIST a prueba con ?era=impress
     if(q==='classical'||q==='romantic'){ if(!READY.includes(q)) READY.push(q); state.era=q; eraAcomp(); if(state.hr==='beat'){ state.hr='half'; syncSeg('hrh','half'); } } }catch(e){}   // 2026-10-28: ROMANTIC a prueba con ?era=romantic, mientras se construye   // 2026-10-27: CLASSICAL a prueba con ?era=classical, mientras se construye
   el.innerHTML=ERAS.map(([v,t])=>`<button class="btn${v===state.era?' on':''}${READY.includes(v)?'':' soon'}" data-v="${v}" aria-pressed="${v===state.era}">${t}</button>`).join('');
