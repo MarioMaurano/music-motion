@@ -112,6 +112,7 @@ body.win-canon .fx,body.win-fuga .cx,body.win-inv .fx,body.win-inv .cx,body.win-
   <div class="banner" id="banner" aria-live="polite"></div>
   <div class="row">
     <button class="spin" id="spin">SPIN</button>
+    <button class="btn" id="undo" disabled>↶ UNDO</button>
     <button class="btn" id="play">▶ PLAY</button>
     <button class="btn" id="save">⬇ SAVE .mmf</button>
     <button class="btn" id="open">🎩 OPEN IN SCORE</button>
@@ -1678,8 +1679,8 @@ function rearm(){ const ban=document.getElementById('banner');
   else { const pr=progFor(state.bars,state.prog); if(pr&&(!state.prog||pr.join()!==state.prog.join())){ state.prog=pr; render(); return; } }
   ban.textContent=tr('noRe'); }
 async function spin(){
-  if((state.win==='acomp'||state.win==='harm')&&state.bars.length===state.T&&Array.from({length:state.T},(_,i)=>state.held[i]).every(Boolean)){ stopPlay(); rearm(); return; }
-  if(state.spinning) return; state.spinning=true; stopPlay(); const btn=document.getElementById('spin'); btn.disabled=true; lights.classList.add('run');
+  if((state.win==='acomp'||state.win==='harm')&&state.bars.length===state.T&&Array.from({length:state.T},(_,i)=>state.held[i]).every(Boolean)){ undoPush(); stopPlay(); rearm(); return; }
+  if(state.spinning) return; undoPush(); state.spinning=true; undoBtn(); stopPlay(); const btn=document.getElementById('spin'); btn.disabled=true; lights.classList.add('run');
   const fin=newBars(), nuevo=fin.map((_,i)=>!state.held[i]);
   const degs=fin.flatMap(b=>b.deg), ch=chrOf(fin), r0=raises(degs,fin.flatMap((b,i)=>b.deg.map(()=>i))).map((x,i)=>x+ch[i]), r=rWT(fin,r0); let kk=0; const rr=fin.map(b=>b.deg.map(()=>r[kk++]));
   await Promise.all(fin.map((b,i)=>new Promise(res=>{ if(!nuevo[i]||reduce){res();return;}
@@ -1688,7 +1689,7 @@ async function spin(){
     fr.classList.add('spinning'); st.innerHTML=html; st.style.transition='none'; st.style.transform='translateY(0)'; st.classList.add('blur');
     const dur=1+(i%4)*.4+(i>=4?.3:0); requestAnimationFrame(()=>requestAnimationFrame(()=>{ st.style.transition=`transform ${dur}s cubic-bezier(.12,.62,.3,1.06)`; st.style.transform=`translateY(-${(n+1)*h}px)`; }));
     setTimeout(()=>{ st.classList.remove('blur'); fr.classList.remove('spinning'); res(); },dur*1000+40); })));
-  state.bars=fin; render(); lights.classList.remove('run'); btn.disabled=false; state.spinning=false; }
+  state.bars=fin; render(); lights.classList.remove('run'); btn.disabled=false; state.spinning=false; undoBtn(); }
 
 // ── el sonido: la exposición, en la afinación pitagórica ──
 // ── el sonido: el de la suite. La máquina no suena por su cuenta: manda las notas al Cosmic Keyboard por mm-sync,
@@ -1818,7 +1819,7 @@ function openScore(){ if(!PLAN||state.spinning) return; const d=mmf(); const u=U
   try{ if(!(window.mmSalieriAbierto&&mmSalieriAbierto())) ban.textContent=tr('open'); else ban.textContent=''; }catch(e){} }
 
 // ── el buzón: un .mmf de 1 a 4 compases entra en los rodillos, en HOLD, y la máquina arma el resto ──
-function importMMF(d){ const ban=document.getElementById('banner'), warn=[];
+function importMMF(d){ undoPush(); const ban=document.getElementById('banner'), warn=[];
   const ts=d.timeSignature||{num:4,den:4}, met=ts.num+'/'+ts.den; if(!['4/4','3/4','3/8'].includes(met)){ ban.textContent=tr('mbMeter',{m:met}); return; }
   const fifths=+(Object.keys(KEYSIG).find(k=>KEYSIG[k]===d.keySignature)||0);
   const chans=(d.channels||[]).filter(c=>(c.notes||[]).some(n=>!n.isRest)); if(!chans.length){ ban.textContent=tr('mbEmpty'); return; }
@@ -1957,6 +1958,26 @@ const sigueSonando=()=>{ if(!(playing.length||pend.length)) return; const pos=pb
 document.getElementById('tempo').onchange=sigueSonando;
 document.getElementById('vol').oninput=e=>{ state.vol=+e.target.value/100; document.getElementById('volv').textContent=e.target.value+' %'; };
 document.getElementById('vol').onchange=sigueSonando;
+// 2026-10-28 (Mario: «sería bueno tener un UNDO»): antes de cada SPIN, de cada cambio de época, de ventana, de Theme o de un botón, y de
+// cada HOLD/CHANGE, se guarda la pieza entera (state, PLAN y lo congelado); UNDO (o Ctrl+Z) vuelve al paso anterior. Hasta 20 pasos.
+// El volumen y el tempo no cuentan: no cambian la pieza.
+const UNDO=[];
+function undoBtn(){ const b=document.getElementById('undo'); if(b) b.disabled=!UNDO.length||!!state.spinning; }
+function undoPush(){ if(state.spinning) return; let s; try{ s=structuredClone({...state,spinning:false}); }catch(e){ return; }
+  const j=JSON.stringify(s); if(UNDO.length&&UNDO[UNDO.length-1].j===j) return;
+  UNDO.push({s,j,P:PLAN,H:HSOL,A:ASOL}); if(UNDO.length>20) UNDO.shift(); undoBtn(); }
+function undo(){ if(state.spinning||!UNDO.length) return; stopPlay(); const u=UNDO.pop(), keep={vol:state.vol,bpm:state.bpm};
+  Object.keys(state).forEach(k=>delete state[k]); Object.assign(state,structuredClone(u.s),keep);
+  [...document.getElementById('tabs').children].forEach(c=>{ const on=c.dataset.v===state.era; c.classList.toggle('on',on); c.setAttribute('aria-pressed',on); });
+  [...document.getElementById('wins').children].forEach(c=>{ const on=c.dataset.v===state.win; c.classList.toggle('on',on); c.setAttribute('aria-pressed',on); });
+  [['keys','key'],['alts','alt'],['modes','mode'],['metros','meter'],['aend','aend'],['hrh','hr'],['bmode','bmode'],['mins','mins'],['tex','tex'],['ahr','ahr'],['atype','atype']].forEach(([id,k])=>{ if(document.getElementById(id)&&state[k]!=null) syncSeg(id,state[k]); });
+  try{ const u2=new URL(location.href); if(state.win==='acomp') u2.searchParams.set('win','acomp'); else u2.searchParams.delete('win'); history.replaceState(null,'',u2.href); }catch(e){}
+  document.getElementById('tv').textContent=state.T; eraAcomp(); winTexts(); buildReels(); render();
+  PLAN=u.P; HSOL=u.H; ASOL=u.A; if(PLAN) drawPlan(PLAN); document.getElementById('banner').textContent=''; undoBtn(); }
+document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('button'); if(!b||state.spinning) return;
+  if(b.closest('#tabs,#wins,#temas,.grp,.reels')&&!b.closest('#vol,#tempo')) undoPush(); },true);
+document.getElementById('undo').onclick=undo;
+document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&(e.key==='z'||e.key==='Z')){ e.preventDefault(); undo(); } });
 document.getElementById('spin').onclick=spin; document.getElementById('play').onclick=()=>play();
 document.getElementById('save').onclick=save; document.getElementById('open').onclick=openScore;
 document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){ e.preventDefault(); spin(); } });
