@@ -21,4 +21,7 @@
   };
   // restaurar al cargar
   try{ var saved=localStorage.getItem(KEY); if(THEMES.indexOf(saved)>=0) window.setTheme(saved); }catch(e){}
+  // 2026-10-29 (Mario: «abrir los links en clear mode para que no sea tan grande el cambio»): ?theme=clear (o dark ·
+  // gray · contrast) en el enlace elige el tema y lo deja guardado, como si se hubiera elegido con el botón.
+  try{ var q=new URLSearchParams(location.search).get('theme'); if(q && THEMES.indexOf(q)>=0) window.setTheme(q); }catch(e){}
 })();

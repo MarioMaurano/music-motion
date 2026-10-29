@@ -105,13 +105,13 @@
       doc.addEventListener('pointerdown', function(e){ if(w.classList.contains('open') && !w._pinned && !w.contains(e.target)) w.classList.remove('open'); });
     }
     w.innerHTML=
-      '<div class="mmsp-hd" id="mmsp-hd"><h3>Salieri · '+L('pase propio','own pass')+'</h3>'+
+      '<div class="mmsp-hd" id="mmsp-hd"><h3>Music School Coach · '+L('con Salieri','with Salieri')+'</h3>'+
         '<button class="mmsp-pin on" id="mmsp-pin" title="'+L('Fijar (clic afuera no cierra)','Pin (outside click keeps it open)')+'">⊗</button></div>'+
       '<div class="mmsp-bd">'+
         '<p>'+L('Salieri es el maestro exigente de la suite. Sabe todo lo del Suite Coach y va más hondo: el <b>catálogo de orquestación</b> (los 314 ejemplos de Rimsky-Korsakov, por instrumento) y las clases de <b>armonía</b> y <b>contrapunto</b>.',
                "Salieri is the suite's demanding master. He knows everything the Suite Coach teaches and goes deeper: the <b>orchestration catalogue</b> (Rimsky-Korsakov's 314 examples, by instrument) and the <b>harmony</b> and <b>counterpoint</b> classes.")+'</p>'+
-        '<p>'+L('Tiene su propio pase, aparte de los días de uso de la suite. Estará a la venta próximamente.',
-               "He comes with his own pass, separate from the suite's days of use. It will be on sale soon.")+'</p>'+
+        '<p>'+L('El Music School Coach tiene su propio pase anual, aparte de los días de uso de la suite. Estará a la venta próximamente.',
+               "The Music School Coach has its own annual pass, separate from the suite's days of use. It will be on sale soon.")+'</p>'+
         '<div class="mmsp-acts">'+
           '<a class="mmsp-btn main" id="mmsp-avisar" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">Notify me</a>'+
           '<button class="mmsp-btn" id="mmsp-cerrar" type="button">Keep Suite Coach</button>'+

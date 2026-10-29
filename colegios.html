@@ -68,6 +68,13 @@
        la página se rearma en partes cortas con título: entrada con el precio, aula (3 tarjetas), lo que cuesta (3 cifras),
        la cuenta, cómo se pide (3 pasos), para el profesor y probarlo. El contenido es el mismo, ordenado. -->
   <style>
+    .planes{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}
+    .plan{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+    .plan h4{margin:0;font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+    .plan .quien{margin:0;font-family:var(--ff-display);font-weight:700;font-size:1.12rem;line-height:1.3;color:var(--text)}
+    .plan .cap{margin:0;font-size:var(--fs-sm);color:var(--textm)}
+    .plan .precio{margin:auto 0 0;padding-top:10px;border-top:1px solid var(--line);font-size:var(--fs-sm);color:var(--textm)}
+    .plan .precio b{font-family:var(--ff-display);font-size:1.25rem;color:var(--gold);margin-right:2px}
     .cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:20px}
     .cifra{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);padding:16px 18px}
     .cifra b{display:block;font-family:var(--ff-display);font-size:2rem;line-height:1.1;color:var(--gold);margin-bottom:6px}
@@ -81,6 +88,9 @@
   <p><span class="es">Escribir, leer y ver la partitura no cuesta nada; con la licencia, el <b>sonido</b> de todas las aplicaciones está abierto todo el curso.</span><span class="en">Writing, reading and viewing the score cost nothing; with the licence, the <b>sound</b> of all the applications is open for the whole school year.</span></p>
   <p><span class="es">Cada alumno y cada profesor entra <b>desde donde esté</b> —la computadora del aula, el teléfono, la tableta o la computadora de casa— <b>sin costo adicional</b>: todo está incluido en la licencia del colegio.</span><span class="en">Every student and every teacher gets in <b>from wherever they are</b> —the classroom computer, a phone, a tablet or the computer at home— <b>at no extra cost</b>: everything is included in the school licence.</span></p>
   <p><span class="es">Sin instalar nada y sin cuentas para los alumnos.</span><span class="en">Nothing to install and no student accounts.</span></p>
+  <div class="note">
+    <span class="es"><b>¿Quieres ver todo el proyecto en una sola página?</b> Quiénes somos, las clases del aula, las aplicaciones y un recorrido de 20 minutos, en cinco idiomas. <a href="conocer.html">Conocer Music Motion →</a></span><span class="en"><b>Want to see the whole project on a single page?</b> Who we are, the classroom lessons, the apps and a 20-minute tour, in five languages. <a href="conocer.html">Get to know Music Motion →</a></span>
+  </div>
 
   <h3 class="sec" id="aula"><span class="es">Para el aula</span><span class="en">For the classroom</span></h3>
   <p><span class="es">Dos niveles de clases semanales para sumar al programa de música que el colegio ya tiene. No hace falta saber música para darlas.</span><span class="en">Two levels of weekly lessons to add to the music programme the school already has. No musical training is needed to teach them.</span></p>
@@ -108,11 +118,36 @@
     <a class="btn-launch" style="--c:var(--gold)" href="suite/seikilos-ninos.html" data-local="../website/seikilos-ninos.html"><span class="es">Ejemplo: Seikilos para niños</span><span class="en">Example: Seikilos for children</span></a>
   </div>
 
-  <h3 class="sec"><span class="es">Lo que cuesta</span><span class="en">What it costs</span></h3>
-  <div class="cifras">
-    <div class="cifra"><b>99 €</b><span><span class="es">al año: licencia docente, para un profesor y todos sus alumnos</span><span class="en">a year: teacher licence, for one teacher and all their students</span></span></div>
-    <div class="cifra"><b>240 €</b><span><span class="es">al año: colegio de hasta 99 alumnos</span><span class="en">a year: school with up to 99 students</span></span></div>
-    <div class="cifra"><b>440 € · 640 €</b><span><span class="es">al año: colegio de 100 a 299 alumnos · de 300 alumnos o más</span><span class="en">a year: school with 100 to 299 students · 300 students or more</span></span></div>
+  <!-- 2026-10-29 (Mario: «da mejor impresión primero lo que obtienen y luego el precio, más chiquito»): cada tarjeta dice
+       para quién es y cuánta gente entra; el precio va abajo, más chico. Lo común a todas va una sola vez, arriba.
+       Los aparatos salen de LIC_TOPES (Colegios.gs): unas dos veces los alumnos, porque cada uno entra en el aula y en casa. Docente: 100 (Mario, 2026-10-29: «docente hasta 300 a 99 € es un error»; antes 300, más que el colegio de 99 alumnos). -->
+  <h3 class="sec"><span class="es">Qué incluye cada licencia</span><span class="en">What each licence includes</span></h3>
+  <p><span class="es">Todas las licencias traen <b>toda la ScoreSuite</b> y el programa <b>Música en el aula</b>, <b>un solo código</b> para todos (sin cuentas ni contraseñas) y el <b>informe de uso</b> del colegio, durante un año escolar completo.</span><span class="en">Every licence includes <b>the whole ScoreSuite</b> and the <b>Music in the classroom</b> programme, <b>a single code</b> for everyone (no accounts or passwords) and the school’s <b>usage report</b>, for a full school year.</span></p>
+  <div class="planes">
+    <div class="plan plan-doc">
+      <h4><span class="es">Licencia docente</span><span class="en">Teacher licence</span></h4>
+      <p class="quien"><span class="es">Un profesor y todos sus alumnos</span><span class="en">One teacher and all their students</span></p>
+      <p class="cap"><span class="es">Hasta 100 aparatos: cada alumno entra en el aula y en casa</span><span class="en">Up to 100 devices: each student can use it in class and at home</span></p>
+      <p class="precio"><b>99 €</b> <span class="es">al año</span><span class="en">a year</span></p>
+    </div>
+    <div class="plan">
+      <h4><span class="es">Colegio</span><span class="en">School</span></h4>
+      <p class="quien"><span class="es">Hasta 99 alumnos, con todos sus profesores</span><span class="en">Up to 99 students, with all their teachers</span></p>
+      <p class="cap"><span class="es">Hasta 200 aparatos</span><span class="en">Up to 200 devices</span></p>
+      <p class="precio"><b>240 €</b> <span class="es">al año</span><span class="en">a year</span></p>
+    </div>
+    <div class="plan">
+      <h4><span class="es">Colegio mediano</span><span class="en">Medium school</span></h4>
+      <p class="quien"><span class="es">De 100 a 299 alumnos, con todos sus profesores</span><span class="en">100 to 299 students, with all their teachers</span></p>
+      <p class="cap"><span class="es">Hasta 600 aparatos</span><span class="en">Up to 600 devices</span></p>
+      <p class="precio"><b>440 €</b> <span class="es">al año</span><span class="en">a year</span></p>
+    </div>
+    <div class="plan">
+      <h4><span class="es">Colegio grande</span><span class="en">Large school</span></h4>
+      <p class="quien"><span class="es">300 alumnos o más, con todos sus profesores</span><span class="en">300 students or more, with all their teachers</span></p>
+      <p class="cap"><span class="es">Aparatos sin límite</span><span class="en">Unlimited devices</span></p>
+      <p class="precio"><b>640 €</b> <span class="es">al año</span><span class="en">a year</span></p>
+    </div>
   </div>
   <p style="margin-top:14px"><span class="es">Precios sin IVA, para un año escolar completo. Para un colegio de 350 alumnos, eso es <b>menos de 2 € por alumno al año</b>. La licencia se obtiene <b>por contacto directo</b> con Music Motion: no está en la tienda en línea.</span><span class="en">Prices exclude VAT, for a full school year. For a school of 350 students, that is <b>less than €2 per student per year</b>. The licence is available <b>by direct contact</b> with Music Motion: it is not in the online shop.</span></p>
   <p><span class="es">La licencia dura hasta el final del curso. Antes de que venza les avisamos por correo para renovarla; si no se renueva, la suite deja de sonar, pero nada se borra.</span><span class="en">The licence lasts until the end of the school year. Before it expires we let you know by email so you can renew it; if it is not renewed, the suite stops sounding, but nothing is deleted.</span></p>
@@ -194,6 +229,7 @@
     <a href="apps/mmk-scorekeyboard.html" data-local="../_BASE/mmk-scorekeyboard.html">Cosmic Keyboard</a>
     <a href="colegios.html" class="nav-hi"><span class="es">Colegios</span><span class="en">Schools</span></a>
     <a href="descargas.html"><span class="es">Descargas</span><span class="en">Downloads</span></a>
+    <a href="conocer.html"><span class="es">Conocer Music Motion</span><span class="en">Get to know Music Motion</span></a>
     <a href="contacto.html"><span class="es">Contacto</span><span class="en">Contact</span></a>
   </div>
   <span class="foot-rights">© 2001–2026 Music Motion · <span class="es">m Δ° m es marca registrada (BOIP 1544147) · todos los derechos reservados</span><span class="en">m Δ° m is a registered trademark (BOIP 1544147) · all rights reserved</span></span>

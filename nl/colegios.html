@@ -68,6 +68,13 @@
        la página se rearma en partes cortas con título: entrada con el precio, aula (3 tarjetas), lo que cuesta (3 cifras),
        la cuenta, cómo se pide (3 pasos), para el profesor y probarlo. El contenido es el mismo, ordenado. -->
   <style>
+    .planes{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}
+    .plan{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+    .plan h4{margin:0;font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+    .plan .quien{margin:0;font-family:var(--ff-display);font-weight:700;font-size:1.12rem;line-height:1.3;color:var(--text)}
+    .plan .cap{margin:0;font-size:var(--fs-sm);color:var(--textm)}
+    .plan .precio{margin:auto 0 0;padding-top:10px;border-top:1px solid var(--line);font-size:var(--fs-sm);color:var(--textm)}
+    .plan .precio b{font-family:var(--ff-display);font-size:1.25rem;color:var(--gold);margin-right:2px}
     .cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:20px}
     .cifra{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:0 0 var(--rad) var(--rad);padding:16px 18px}
     .cifra b{display:block;font-family:var(--ff-display);font-size:2rem;line-height:1.1;color:var(--gold);margin-bottom:6px}
@@ -81,6 +88,9 @@
   <p><span class="tr">Schrijven, lezen en de partituur bekijken kost niets; met de licentie staat de <b>klank</b> van alle toepassingen het hele schooljaar open.</span></p>
   <p><span class="tr">Elke leerling en elke leerkracht komt binnen <b>waar hij ook is</b> — de computer in de klas, een telefoon, een tablet of de computer thuis — <b>zonder extra kosten</b>: alles zit in de licentie van de school.</span></p>
   <p><span class="tr">Niets te installeren en geen accounts voor leerlingen.</span></p>
+  <div class="note">
+    <span class="tr"><b>Wil je het hele project op één pagina zien?</b> Wie we zijn, de lessen voor de klas, de apps en een rondleiding van 20 minuten, in vijf talen. <a href="../conocer.html#nl">Kennismaken met Music Motion →</a></span>
+  </div>
 
   <h3 class="sec" id="aula"><span class="tr">In de klas</span></h3>
   <p><span class="tr">Twee niveaus met wekelijkse lessen, als aanvulling op het muziekprogramma dat de school al heeft. Je hoeft geen muzikant te zijn om ze te geven.</span></p>
@@ -108,11 +118,36 @@
     <a class="btn-launch" style="--c:var(--gold)" href="suite/seikilos-ninos.html" data-local="../website/seikilos-ninos.html"><span class="tr">Voorbeeld: Seikilos voor kinderen</span></a>
   </div>
 
-  <h3 class="sec"><span class="tr">Wat het kost</span></h3>
-  <div class="cifras">
-    <div class="cifra"><b>99 €</b><span><span class="tr">per jaar: leerkrachtlicentie, voor één leerkracht en al zijn leerlingen</span></span></div>
-    <div class="cifra"><b>240 €</b><span><span class="tr">per jaar: school met maximaal 99 leerlingen</span></span></div>
-    <div class="cifra"><b>440 € · 640 €</b><span><span class="tr">per jaar: school met 100 tot 299 leerlingen · 300 leerlingen of meer</span></span></div>
+  <!-- 2026-10-29 (Mario: «da mejor impresión primero lo que obtienen y luego el precio, más chiquito»): cada tarjeta dice
+       para quién es y cuánta gente entra; el precio va abajo, más chico. Lo común a todas va una sola vez, arriba.
+       Los aparatos salen de LIC_TOPES (Colegios.gs): unas dos veces los alumnos, porque cada uno entra en el aula y en casa. Docente: 100 (Mario, 2026-10-29: «docente hasta 300 a 99 € es un error»; antes 300, más que el colegio de 99 alumnos). -->
+  <h3 class="sec"><span class="tr">Wat elke licentie omvat</span></h3>
+  <p><span class="tr">Elke licentie omvat <b>de volledige ScoreSuite</b> en het programma <b>Muziek in de klas</b>, <b>één enkele code</b> voor iedereen (zonder accounts of wachtwoorden) en het <b>gebruiksrapport</b> van de school, voor een volledig schooljaar.</span></p>
+  <div class="planes">
+    <div class="plan plan-doc">
+      <h4><span class="tr">Leerkrachtlicentie</span></h4>
+      <p class="quien"><span class="tr">Eén leerkracht en al zijn leerlingen</span></p>
+      <p class="cap"><span class="tr">Tot 100 toestellen: elke leerling gebruikt het in de klas en thuis</span></p>
+      <p class="precio"><b>99 €</b> <span class="tr">per jaar</span></p>
+    </div>
+    <div class="plan">
+      <h4><span class="tr">School</span></h4>
+      <p class="quien"><span class="tr">Tot 99 leerlingen, met al hun leerkrachten</span></p>
+      <p class="cap"><span class="tr">Tot 200 toestellen</span></p>
+      <p class="precio"><b>240 €</b> <span class="tr">per jaar</span></p>
+    </div>
+    <div class="plan">
+      <h4><span class="tr">Middelgrote school</span></h4>
+      <p class="quien"><span class="tr">100 tot 299 leerlingen, met al hun leerkrachten</span></p>
+      <p class="cap"><span class="tr">Tot 600 toestellen</span></p>
+      <p class="precio"><b>440 €</b> <span class="tr">per jaar</span></p>
+    </div>
+    <div class="plan">
+      <h4><span class="tr">Grote school</span></h4>
+      <p class="quien"><span class="tr">300 leerlingen of meer, met al hun leerkrachten</span></p>
+      <p class="cap"><span class="tr">Onbeperkt aantal toestellen</span></p>
+      <p class="precio"><b>640 €</b> <span class="tr">per jaar</span></p>
+    </div>
   </div>
   <p style="margin-top:14px"><span class="tr">Prijzen exclusief btw, voor een volledig schooljaar. Voor een school met 350 leerlingen is dat <b>minder dan € 2 per leerling per jaar</b>. De licentie krijgt u <b>via rechtstreeks contact</b> met Music Motion: ze staat niet in de webwinkel.</span></p>
   <p><span class="tr">De licentie loopt tot het einde van het schooljaar. Voor ze vervalt, laten we het u per e-mail weten, zodat u ze kunt vernieuwen; wordt ze niet vernieuwd, dan zwijgt de suite, maar er wordt niets gewist.</span></p>
@@ -194,6 +229,7 @@
     <a href="../apps/mmk-scorekeyboard.html" data-local="../_BASE/mmk-scorekeyboard.html">Cosmic Keyboard</a>
     <a href="colegios.html" class="nav-hi"><span class="tr">Scholen</span></a>
     <a href="descargas.html"><span class="tr">Downloads</span></a>
+    <a href="../conocer.html#nl"><span class="tr">Kennismaken met Music Motion</span></a>
     <a href="contacto.html"><span class="tr">Contact</span></a>
   </div>
   <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">m Δ° m is een geregistreerd merk (BOIP 1544147) · alle rechten voorbehouden</span></span>
