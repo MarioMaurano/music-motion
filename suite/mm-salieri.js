@@ -100,23 +100,41 @@
           "box-shadow:0 8px 28px rgba(0,0,0,.6);font-family:'DM Mono',monospace;color:var(--text,#e0e0f4)}"+
         '#mm-salieri-pase.open{display:block}'+
         '.mmsp-hd{display:flex;align-items:center;gap:10px;padding:7px 10px;cursor:move;border-bottom:1px solid var(--border,#1e1e34)}'+
-        ".mmsp-hd h3{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#9a7ad8;margin:0;flex:1}"+
+        ".mmsp-hd h3{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#9a7ad8;margin:0;flex:1;text-align:center;padding-left:22px}"+
         '.mmsp-pin{cursor:pointer;font-size:12px;color:var(--textm,#c0c0e0);background:none;border:none;line-height:1}'+
         '.mmsp-pin.on{color:#9a7ad8}'+
         '.mmsp-bd{padding:12px 14px 14px;font-size:12px;line-height:1.65;color:var(--textm,#c0c0e0)}'+
-        '.mmsp-bd p{margin:0 0 10px}'+
+        '.mmsp-bd p{margin:0 0 10px;text-align:justify}'+
         '.mmsp-bd b{color:var(--text,#e0e0f4);font-weight:500}'+
         '.mmsp-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}'+
         '.mmsp-btn{font-family:inherit;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 11px;cursor:pointer;'+
           'background:none;border:1px solid var(--border,#1e1e34);color:var(--textm,#c0c0e0);text-decoration:none}'+
         '.mmsp-btn:hover{border-color:#9a7ad8;color:var(--text,#e0e0f4)}'+
-        '.mmsp-btn.main{border-color:#9a7ad8;color:#9a7ad8}';
+        '.mmsp-btn.main{border-color:#9a7ad8;color:#9a7ad8}'+
+        // la compra en tarjeta clara, como la puerta de los créditos (mm-puerta.js · .cc-pago) — 2026-10-30, Mario
+        '.mmsp-pago{margin:4px 0 12px;background:#fff;color:#1f2330;border-radius:8px;padding:16px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}'+
+        '.mmsp-h{font-size:13px;font-weight:600;margin:0 0 10px;color:#1f2330}'+
+        '.mmsp-paq{display:flex;gap:8px}'+
+        '.mmsp-paq a{flex:1;display:block;text-align:center;text-decoration:none;border:1px solid #d5d9e2;border-radius:6px;padding:10px 4px;color:#1f2330;background:#fff;transition:border-color .12s,box-shadow .12s}'+
+        '.mmsp-paq a:hover{border-color:#635bff;box-shadow:0 0 0 3px rgba(99,91,255,.15)}'+
+        '.mmsp-paq b{display:block;font-size:17px;font-weight:600;color:#1f2330}'+
+        '.mmsp-paq span{display:block;font-size:11px;color:#5d6475;margin-top:2px}'+
+        '.mmsp-met{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:10px 0 2px}'+
+        '.mmsp-met span{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;border:1px solid #d5d9e2;border-radius:4px;padding:2px 7px;color:#3c4257;background:#f6f8fa}'+
+        '.mmsp-pp{display:flex;align-items:center;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid #eceef3;font-size:11px;color:#5d6475}'+
+        '.mmsp-pp a{text-decoration:none;color:#003087;font-weight:600;border:1px solid #d5d9e2;border-radius:4px;padding:3px 9px;background:#ffc439}'+
+        '.mmsp-ya{display:block;width:100%;margin-top:12px;padding:9px;border:1px solid #d5d9e2;border-radius:6px;background:#f6f8fa;color:#1f2330;font-family:inherit;font-size:12px;cursor:pointer}'+
+        '.mmsp-ya:hover{border-color:#635bff}'+
+        '#mmsp-msg{font-size:11px;color:#5d6475;margin:8px 0 0;min-height:1.2em;text-align:center}';
       doc.head.appendChild(css);
       w=doc.createElement('div'); w.id='mm-salieri-pase';
       doc.body.appendChild(w);
       w._pinned=true;
       doc.addEventListener('pointerdown', function(e){ if(w.classList.contains('open') && !w._pinned && !w.contains(e.target)) w.classList.remove('open'); });
     }
+    // 2026-10-30, Mario: «da la impresión que solo con PayPal»: los métodos de Stripe a la vista, como en la puerta de la suite.
+    var _icoTarjeta='<svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true"><rect x=".5" y=".5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor"/><rect x="0" y="2.5" width="14" height="1.6" fill="currentColor"/></svg>';
+    var _icoMovil='<svg width="9" height="12" viewBox="0 0 9 12" aria-hidden="true"><rect x=".5" y=".5" width="8" height="11" rx="1.5" fill="none" stroke="currentColor"/><rect x="3" y="9" width="3" height="1" fill="currentColor"/></svg>';
     w.innerHTML=
       '<div class="mmsp-hd" id="mmsp-hd"><h3>Music School Coach · '+L('con Salieri','with Salieri')+'</h3>'+
         '<button class="mmsp-pin on" id="mmsp-pin" title="'+L('Fijar (clic afuera no cierra)','Pin (outside click keeps it open)')+'">⊗</button></div>'+
@@ -125,14 +143,20 @@
                "Salieri is the suite's demanding master. He knows everything the Suite Coach teaches and goes deeper: the <b>orchestration catalogue</b> (Rimsky-Korsakov's 314 examples, by instrument) and the <b>harmony</b> and <b>counterpoint</b> classes.")+'</p>'+
         '<p>'+L('El Music School Coach es un pase anual aparte de los días de uso de la suite: <b>49 €</b> al año, con la suite incluida. Si ya tienes el pase anual o el código de tu colegio, la <b>mejora</b> cuesta <b>20 €</b> y dura hasta la misma fecha. Tras pagar, vuelve aquí y toca «Ya pagué».',
                "The Music School Coach is an annual pass separate from the suite's days of use: <b>€49</b> a year, suite included. If you already have the annual pass or your school code, the <b>upgrade</b> costs <b>€20</b> and lasts until the same date. After paying, come back here and press “I paid”.")+'</p>'+
-        '<div class="mmsp-acts">'+
-          '<a class="mmsp-btn main" id="mmsp-49" href="'+_compra(STRIPE_49)+'" target="_blank" rel="noopener">49 € · '+L('un año, con la suite','one year, suite included')+'</a>'+
-          (_base()===false ? '' : '<a class="mmsp-btn" id="mmsp-20" href="'+_compra(STRIPE_20)+'" target="_blank" rel="noopener">20 € · '+L('mejora','upgrade')+'</a>')+
-          '<a class="mmsp-btn" id="mmsp-paypal" href="'+PAYPAL_49+'" target="_blank" rel="noopener">PayPal 49 €</a>'+
-          '<button class="mmsp-btn" id="mmsp-revisar" type="button">'+L('Ya pagué — volver a mirar','I paid — check again')+'</button>'+
-          '<button class="mmsp-btn" id="mmsp-cerrar" type="button">Keep Suite Coach</button>'+
+        '<div class="mmsp-pago">'+
+          '<div class="mmsp-h">'+L('Elige una opción','Choose an option')+'</div>'+
+          '<div class="mmsp-paq">'+
+            '<a id="mmsp-49" href="'+_compra(STRIPE_49)+'" target="_blank" rel="noopener"><b>49 €</b><span>'+L('un año, con la suite','one year, suite included')+'</span></a>'+
+            (_base()===false ? '' : '<a id="mmsp-20" href="'+_compra(STRIPE_20)+'" target="_blank" rel="noopener"><b>20 €</b><span>'+L('mejora','upgrade')+'</span></a>')+
+          '</div>'+
+          '<div class="mmsp-met"><span>'+_icoTarjeta+L('Tarjeta','Card')+'</span><span>'+_icoTarjeta+'Bancontact</span><span>'+_icoMovil+'Apple Pay</span><span>'+_icoMovil+'Google Pay</span></div>'+
+          '<div class="mmsp-pp"><span style="flex:1">'+L('o con PayPal','or with PayPal')+'</span>'+
+            '<a id="mmsp-paypal" href="'+PAYPAL_49+'" target="_blank" rel="noopener">49 €</a></div>'+
+          '<button class="mmsp-ya" id="mmsp-revisar" type="button">'+L('Ya pagué — volver a mirar','I paid — check again')+'</button>'+
+          '<p id="mmsp-msg"></p>'+
         '</div>'+
-        '<p id="mmsp-msg" style="margin:8px 0 0;min-height:1.2em"></p></div>';
+        '<div class="mmsp-acts"><button class="mmsp-btn" id="mmsp-cerrar" type="button">Keep Suite Coach</button></div>'+
+      '</div>';
     w._pinned=true;
     var pin=doc.getElementById('mmsp-pin');
     pin.addEventListener('pointerdown', function(e){ e.stopPropagation(); });   // contrato popup: pin con stop en mousedown
