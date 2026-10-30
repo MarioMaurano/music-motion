@@ -16,7 +16,9 @@
   // con la clave privada de Mario; aquí solo vive la clave PÚBLICA, y la firma se comprueba en el aparato. La
   // licencia se guarda en mmPaseSalieri {lic, sig} y solo vale en el aparato que la pidió (lic.a = mmCredToken).
   // Sin clave pública configurada (MM_SALIERI_PUB vacío) nada abre por licencia: solo local y ?salieri=test.
-  var PUB = (typeof window.MM_SALIERI_PUB === 'string') ? window.MM_SALIERI_PUB : '';   // ← la clave pública (spki, base64) de generar-claves-salieri.html
+  // 2026-10-30: la clave PÚBLICA del servidor real (la privada vive en las propiedades del script mm-credits-backend,
+  // creada con el Administrador de Salieri). Si algún día se reemplaza allá, se cambia acá: las licencias viejas dejan de valer.
+  var PUB = (typeof window.MM_SALIERI_PUB === 'string') ? window.MM_SALIERI_PUB : 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzbRORGVXWVPEZL7TqRsit1ktjr95pbo+IabOFk/4X2SmzPR7zQ3vTayGQ5Pb3EEApJUHNHb5mV6G0SQVwbfxlzF7PM1Orl/OcWM7JOicbYJmFHRLyA3Ax9kTyp5nMc8biwVq65xcTaPD4b9JSCY9AxvoU+FbBK3+C1pMxGF16wR7hFIxBdGjhxKQtyf+DxQbuFzIZjq0eOhnKE/uqN+9kqJaPGB5DxOthd6YhDY6i+pGaj260KDesszrJXGA2g4ejzW3f/rAHsirPFSdNEkFC5N7CC2ypaqhsuizi1bI28dIBo49qIjjDaX1aNiwCr63GwTfIFxEBMXdDeOejlr+WwIDAQAB';
   var GAS = 'https://script.google.com/macros/s/AKfycbxBbtMDqXziUUpWcntf6tDuNSnAMOhxLHGTXZTPRSrUg2VGvyR4zQw44ZAqFnKhnbSkPg/exec';
   var KEY = 'ZA3Qkfo9LtuxFAmz6_qBJh7UmNFCYkkN';   // la misma key pública de la puerta
   // MODO PRUEBA (2026-10-22, con Mario): ?salieri=prueba deja este aparato hablando con el servidor de PRUEBA
@@ -29,6 +31,11 @@
     if(/[?&]salieri=real(&|$)/.test(location.search)){ localStorage.removeItem('mmSalieriPrueba'); localStorage.removeItem('mmPaseSalieri'); }
     if(localStorage.getItem('mmSalieriPrueba')==='1' && typeof window.MM_SALIERI_PUB !== 'string'){ GAS = PRUEBA.gas; PUB = PRUEBA.pub; }
   }catch(e){}
+  // 2026-10-30: los dos Payment Links del Music School Coach (en Stripe llevan metadata producto=salieri; el Worker
+  // mm-pagos la pasa y Salieri.gs da el pase) y PayPal para el pase completo. Se cuelga el aparato (client_reference_id).
+  var STRIPE_49 = 'https://buy.stripe.com/8x214mfII6rAb3Jh19ebu04';   // plink_1UWHySBPfHClmQ3HFDQkxhRe · un año, con la suite
+  var STRIPE_20 = 'https://buy.stripe.com/4gMaEW5442bk9ZF12bebu05';   // plink_1UWI4GBPfHClmQ3HSMWTI2JY · mejora: ya tiene el pase anual o el código del colegio
+  var PAYPAL_49 = 'https://www.paypal.me/MarioMAURANO/49';
   var LS = 'mmPaseSalieri', _ok = false, _prom = null;
   function _local(){
     try{
@@ -76,6 +83,12 @@
     return _prom;
   };
   setTimeout(function(){ window.mmSalieriVerificar(); }, 0);
+  // «Ya pagué — volver a mirar»: olvida la licencia guardada y vuelve a preguntarle al servidor.
+  window.mmSalieriRevisar=function(){ try{ localStorage.removeItem(LS); }catch(e){} _prom=null; _ok=false; return window.mmSalieriVerificar(); };
+  function _compra(u){ var q=[]; var t=_token(); if(t) q.push('client_reference_id='+encodeURIComponent(t)); var m=''; try{ m=localStorage.getItem('mmCredEmail')||''; }catch(e){} if(m.indexOf('@')>0) q.push('prefilled_email='+encodeURIComponent(m)); return u+(q.length?'?'+q.join('&'):''); }
+  // ¿tiene base para la mejora? El pie de la puerta (mm-puerta.js) dice «Pase anual» o «Licencia …» cuando entró con una;
+  // si dice otra cosa (créditos), no; si no hay pie (páginas del sitio), no se sabe y se ofrece igual.
+  function _base(){ var el=document.getElementById('cred-saldo'); if(!el) return null; return /Pase anual|Annual pass|Licencia|Licence/.test(el.textContent||''); }
   function L(es, en){ var l=document.documentElement.getAttribute('data-lang'); if(!l){ try{ l=localStorage.getItem('mmSiteLang'); }catch(e){} } return l==='es' ? es : en; }   // en el sitio: el idioma del sitio (es · en)
   window.mmSalieriPuerta=function(){
     var doc=document, w=doc.getElementById('mm-salieri-pase');
@@ -110,12 +123,16 @@
       '<div class="mmsp-bd">'+
         '<p>'+L('Salieri es el maestro exigente de la suite. Sabe todo lo del Suite Coach y va más hondo: el <b>catálogo de orquestación</b> (los 314 ejemplos de Rimsky-Korsakov, por instrumento) y las clases de <b>armonía</b> y <b>contrapunto</b>.',
                "Salieri is the suite's demanding master. He knows everything the Suite Coach teaches and goes deeper: the <b>orchestration catalogue</b> (Rimsky-Korsakov's 314 examples, by instrument) and the <b>harmony</b> and <b>counterpoint</b> classes.")+'</p>'+
-        '<p>'+L('El Music School Coach tiene su propio pase anual, aparte de los días de uso de la suite. Estará a la venta próximamente.',
-               "The Music School Coach has its own annual pass, separate from the suite's days of use. It will be on sale soon.")+'</p>'+
+        '<p>'+L('El Music School Coach es un pase anual aparte de los días de uso de la suite: <b>49 €</b> al año, con la suite incluida. Si ya tienes el pase anual o el código de tu colegio, la <b>mejora</b> cuesta <b>20 €</b> y dura hasta la misma fecha. Tras pagar, vuelve aquí y toca «Ya pagué».',
+               "The Music School Coach is an annual pass separate from the suite's days of use: <b>€49</b> a year, suite included. If you already have the annual pass or your school code, the <b>upgrade</b> costs <b>€20</b> and lasts until the same date. After paying, come back here and press “I paid”.")+'</p>'+
         '<div class="mmsp-acts">'+
-          '<a class="mmsp-btn main" id="mmsp-avisar" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">Notify me</a>'+
+          '<a class="mmsp-btn main" id="mmsp-49" href="'+_compra(STRIPE_49)+'" target="_blank" rel="noopener">49 € · '+L('un año, con la suite','one year, suite included')+'</a>'+
+          (_base()===false ? '' : '<a class="mmsp-btn" id="mmsp-20" href="'+_compra(STRIPE_20)+'" target="_blank" rel="noopener">20 € · '+L('mejora','upgrade')+'</a>')+
+          '<a class="mmsp-btn" id="mmsp-paypal" href="'+PAYPAL_49+'" target="_blank" rel="noopener">PayPal 49 €</a>'+
+          '<button class="mmsp-btn" id="mmsp-revisar" type="button">'+L('Ya pagué — volver a mirar','I paid — check again')+'</button>'+
           '<button class="mmsp-btn" id="mmsp-cerrar" type="button">Keep Suite Coach</button>'+
-        '</div></div>';
+        '</div>'+
+        '<p id="mmsp-msg" style="margin:8px 0 0;min-height:1.2em"></p></div>';
     w._pinned=true;
     var pin=doc.getElementById('mmsp-pin');
     pin.addEventListener('pointerdown', function(e){ e.stopPropagation(); });   // contrato popup: pin con stop en mousedown
@@ -123,6 +140,13 @@
       if(w._pinned){ w.classList.remove('open'); w._pinned=false; pin.classList.remove('on'); pin.textContent='⊕'; return; }
       w._pinned=true; pin.classList.add('on'); pin.textContent='⊗'; });
     doc.getElementById('mmsp-cerrar').addEventListener('click', function(){ w.classList.remove('open'); });
+    doc.getElementById('mmsp-revisar').addEventListener('click', function(){
+      var msg=doc.getElementById('mmsp-msg'); msg.textContent=L('Preguntando al servidor…','Asking the server…');
+      window.mmSalieriRevisar().then(function(v){
+        if(v){ msg.textContent=L('Salieri abierto. ¡Gracias!','Salieri is open. Thank you!'); setTimeout(function(){ w.classList.remove('open'); }, 1200); }
+        else msg.textContent=L('Todavía no llega el pago. Espera unos segundos y vuelve a mirar; si pagaste con otro correo, escríbenos a contacto@musicmotionsuite.com.','The payment has not arrived yet. Wait a few seconds and check again; if you paid with another email, write to contacto@musicmotionsuite.com.');
+      });
+    });
     var hd=doc.getElementById('mmsp-hd'), dx=0, dy=0, drag=false;
     hd.addEventListener('pointerdown', function(e){ if(e.target.id==='mmsp-pin') return;
       var r=w.getBoundingClientRect(); w.style.transform='none'; w.style.left=r.left+'px'; w.style.top=r.top+'px';
