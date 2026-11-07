@@ -740,12 +740,13 @@ const pid=s=>s.letter+s.oct+({2:'SS',1:'S',0:'N','-1':'B','-2':'BB'}[s.acc]);
 function stopPlay(){playing.forEach(o=>{try{o.stop();}catch(e){}}); playing=[]; playTimer.forEach(clearTimeout); playTimer=[]; clearInterval(sched); sched=null;
   sounding.forEach(m=>msg({cmd:'NOTE_OFF',id:m.id,chId:m.chId,source:'minikeyboard'})); sounding=[];
   document.getElementById('play').textContent='▶ PLAY'; if(state.bars.length&&!state.spinning) render();}
-function play(){
+function play(solo){   /* solo = índice de un compás (clic derecho en su carta): suena solo ese compás */
+  if(typeof solo!=='number') solo=null;   /* el botón PLAY llama play(evento): eso no es un compás */
   if(window._juegoId==='torre'){ torrePlay(); return; }   // 2026-10-23 (Mario): en la torre, PLAY toca las quintas
   if(!keyInfo().ok) return;   // tonalidad teórica: no hay melodía que tocar
-  if(!keyInfo().ok||state.spinning) return; if(playing.length||sched){stopPlay();return;}
+  if(!keyInfo().ok||state.spinning) return; if(playing.length||sched){stopPlay(); if(solo==null) return;}
   const e8=60/state.bpm/2; const ev=[]; let t=0.25;
-  state.bars.forEach((b,i)=>{
+  state.bars.forEach((b,i)=>{ if(solo!=null&&i!==solo) return;
     if(state.chords){ let ct=t; for(const [r,len] of chordsOf(b,i)){ for(const d of [r%7,(r+2)%7,(r+4)%7]){const s=spell(d); ev.push({t:ct,dur:len*e8,s:{...s,oct:s.oct-1,freq:s.freq/2},ch:1,vel:.32,instr:'harp'});} ct+=len*e8; } }
     b.deg.forEach((d,k)=>{const s=spell(d); const du=b.rh[k]*e8; ev.push({t,dur:du*.95,s,ch:0,vel:.6,instr:'flute',hi:[i,k]}); t+=du;});
   });
@@ -763,6 +764,8 @@ function play(){
   ev.forEach(e=>{ if(e.hi) playTimer.push(setTimeout(()=>render(e.hi),e.t*1000)); });
   playTimer.push(setTimeout(()=>{playing=[];sounding=[];document.getElementById('play').textContent='▶ PLAY';render();},t*1000+400));
 }
+/* 2026-11-07 (Mario: «muy útil oír donde quieras sin tocar toda la pieza»): clic derecho sobre la carta de un compás → suena solo ese compás, con su acompañamiento (play(desde,hasta)). */
+reelsEl.addEventListener('contextmenu',e=>{ const r=e.target.closest('.reel'); if(!r) return; e.preventDefault(); if(state.spinning||eco||window._juegoId==='torre'||!state.bars.length) return; const i=[...reelsEl.children].indexOf(r); if(i<0||!state.bars[i]) return; play(i); });
 // ── 🐶 EL ECO (2026-10-23, Mario): la máquina toca, el niño repite con A S D F G H J K o con los botones grandes.
 // Ronda 1: el compás 1; ronda 2: compases 1–2; … ronda 4: la melodía entera. Acierto → el perrito sale y mueve la cola;
 // error → «escucha otra vez» y la ronda se repite. Solo cuentan las alturas (el ritmo lo da la máquina).

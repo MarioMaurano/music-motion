@@ -1287,15 +1287,15 @@ function stopPlay(){ pend.forEach(clearTimeout); pend=[]; playing.forEach(x=>{ t
 let waitKB=0;
 // 2026-10-27 (Mario: «el tempo slider no funciona»): el tempo y el volumen se aplican también mientras suena — al soltar el
 // mando, la música sigue desde donde iba con el valor nuevo. desde = posición en unidades de la partitura.
-let pb0=0, pbSec=0, pbDesde=0;
-function play(desde){ if((playing.length||pend.length)&&desde==null){ stopPlay(); return; } if(!PLAN) return; desde=+desde||0;
-  if(document.getElementById('kbMotor')&&Date.now()-KB>4000&&waitKB<12){ waitKB++; document.getElementById('play').textContent='… PLAY'; setTimeout(()=>play(desde||null),250); return; } waitKB=0;
+let pb0=0, pbSec=0, pbDesde=0, pbHasta=null;
+function play(desde,hasta){ if((playing.length||pend.length)&&desde==null){ stopPlay(); return; } if(!PLAN) return; desde=+desde||0;
+  if(document.getElementById('kbMotor')&&Date.now()-KB>4000&&waitKB<12){ waitKB++; document.getElementById('play').textContent='… PLAY'; setTimeout(()=>play(desde||null,hasta),250); return; } waitKB=0;
   const mt=MT(), sec=60/state.bpm*mt.uq; let ev=[];
   PLAN.entries.forEach(en=>{ const ins=PLAN.V[en.v]&&PLAN.V[en.v][2];
     if(en.kind==='pedal'){ ev.push({t:(en.bar-1)*mt.U*sec,du:en.len*mt.U*sec,f:en.notes[0].p.freq,ch:en.v,ins,vel:.45}); return; }
     const vv=(en.v===0&&(PLAN.harm||PLAN.acomp))?.75:.6;   // 2026-10-27 (Mario: «más presencia a la primera voz»): la melodía, un poco por encima del acompañamiento
     en.notes.forEach(nt=>ev.push({t:((en.bar-1+nt.bar)*mt.U+nt.pos)*sec,du:nt.du*sec,f:nt.p.freq,ch:en.v,ins,vel:vv})); });
-  const off=desde*sec; ev=ev.filter(x=>x.t>=off-1e-6).map(x=>({...x,t:x.t-off})); if(!ev.length) return; pb0=performance.now(); pbSec=sec; pbDesde=desde;
+  const off=desde*sec, hOff=hasta!=null?hasta*sec:Infinity; ev=hasta!=null?ev.filter(x=>x.t<hOff-1e-6&&x.t+x.du>off+1e-6).map(x=>({...x,t:Math.max(0,x.t-off),du:Math.min(x.t+x.du,hOff)-Math.max(x.t,off)})):ev.filter(x=>x.t>=off-1e-6).map(x=>({...x,t:x.t-off})); if(!ev.length) return; pb0=performance.now(); pbSec=sec; pbDesde=desde; pbHasta=hasta!=null?hasta:null;   /* con hasta: solo lo que suena dentro del tramo (la nota tenida que viene de antes entra recortada) */
   const vol=(PLAN.vol||1)*(state.vol!=null?state.vol:.65), end=Math.max(...ev.map(x=>x.t+x.du));   // Volume: 65 % de entrada (Mario, 2026-10-27)
   const useKB=MM&&(Date.now()-KB<4000||document.getElementById('kbMotor'));
   if(useKB){ ev.forEach(x=>{ const id='fm'+(++nid);
@@ -1446,10 +1446,12 @@ seg('cfin',[['coda','CODA'],['perp','PERPETUAL']],state.cfin,v=>{ state.cfin=v; 
     try{ const u=new URL(location.href); if(state.win!=='fuga') u.searchParams.set('win',state.win); else u.searchParams.delete('win'); history.replaceState(null,'',u.href); }catch(e){} }; }
 seg('tams',[['escuela','SCHOOL'],['bach','BACH']],state.tam,v=>state.tam=v);
 document.getElementById('tempo').oninput=e=>{ state.bpm=+e.target.value; document.getElementById('bpm').textContent='♩ = '+state.bpm; };
-const sigueSonando=()=>{ if(!(playing.length||pend.length)) return; const pos=pbDesde+Math.max(0,(performance.now()-pb0-150)/1000/pbSec); stopPlay(); play(pos); };
+const sigueSonando=()=>{ if(!(playing.length||pend.length)) return; const pos=pbDesde+Math.max(0,(performance.now()-pb0-150)/1000/pbSec); stopPlay(); play(pos,pbHasta); };
 document.getElementById('tempo').onchange=sigueSonando;
 document.getElementById('vol').oninput=e=>{ state.vol=+e.target.value/100; document.getElementById('volv').textContent=e.target.value+' %'; };
 document.getElementById('vol').onchange=sigueSonando;
+/* 2026-11-07 (Mario: «muy útil oír donde quieras sin tocar toda la pieza»): clic derecho sobre la carta de un compás → suena solo ese compás, con su acompañamiento (play(desde,hasta)). */
+reelsEl.addEventListener('contextmenu',e=>{ const r=e.target.closest('.reel'); if(!r) return; e.preventDefault(); if(state.spinning||!PLAN) return; const i=[...reelsEl.children].indexOf(r); if(i<0) return; stopPlay(); const U=MT().U; play(i*U,(i+1)*U); });
 document.getElementById('spin').onclick=spin; document.getElementById('play').onclick=()=>play();
 document.getElementById('save').onclick=save; document.getElementById('open').onclick=openScore;
 document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.code==='Space'&&e.target===document.body){ e.preventDefault(); spin(); } });
