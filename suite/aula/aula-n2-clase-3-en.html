@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Fast notes and ornaments · In the classroom · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+  .tecla{width:62px;border:1px solid var(--navy);border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff6df;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .teclas.mini .tecla{width:48px;padding:5px 0 4px}
+  .teclas.mini .tecla .k{font-size:17px} .teclas.mini .tecla .nt{font-size:13px}
+  /* 2026-10-14 · el teclado de tres filas, como en el Coach (QWERTY · AZERTY · QWERTZ) */
+  .kbd3{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;break-inside:avoid}
+  .kbd3 .lay{display:flex;gap:6px;justify-content:center;margin-bottom:4px}
+  .kbd3 .lay button{font:bold 12px Consolas,monospace;padding:4px 9px;border:1px solid var(--navy);border-radius:5px;background:#fff;color:var(--navy);cursor:pointer}
+  .kbd3 .lay button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .kbd3 .kname{display:block;text-align:center;font-size:12.5px;color:#5b6876;margin-top:6px}
+  .kbd3 .teclas{margin:4px 0 4px}
+  @media print{.kbd3 .lay button:not([aria-pressed="true"]){display:none}}
+  h2.section{break-after:avoid}
+  .pulsobox{border:1px solid var(--navy);border-left:5px solid var(--amber);background:#f8fbfd;border-radius:4px;padding:14px 18px;margin:18px 0}
+  .pulsobox h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:0 0 8px}
+  .pulsobox ol{margin:6px 0 0 0}
+  img.shot2{display:block;width:100%;border-radius:6px;margin:10px 0 6px;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+  /* Nivel 1 · Clase 2 (2026-10-15): el dibujo del sonido */
+  .dibujo{border:1px solid #c9d6de;border-radius:8px;padding:12px 14px 6px;margin:12px 0 8px;background:#fff;break-inside:avoid}
+  @media print{.pulsobox{break-inside:avoid}}
+  .dibujo svg{display:block;width:100%;height:auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media screen and (max-width:640px){.dos{grid-template-columns:1fr}}
+  /* Nivel 1 · Clase 3 y 4 (2026-10-18) */
+  .sabias{background:#f4f1fb;border-left:5px solid #7b5ea7;border-radius:4px;padding:10px 14px;margin:12px 0;font-size:14.5px;break-inside:avoid}
+  .sabias b{color:#4b3575}
+  .partitura{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;background:#fff;break-inside:avoid;overflow-x:auto}
+  .partitura svg{display:block;width:100%;height:auto;margin:0 auto}
+  .partitura .pie{font-size:13px;color:#5b6876;text-align:center;margin:2px 0 6px}
+  .pantalla{font-size:13.5px;color:#5b6876;margin:4px 0 0;font-style:italic}
+  table.casillas{border-collapse:collapse;width:100%;margin:8px 0;font-size:14px;text-align:center}
+  table.casillas th{background:var(--navy);color:#fff;padding:6px;font-size:13px}
+  table.casillas td{border:1px solid #9fb3bf;padding:7px 4px;font-family:Consolas,monospace;font-weight:bold;color:var(--navy)}
+  table.casillas td.l{font-family:Calibri,Arial,sans-serif;font-weight:normal;color:#24485a;text-align:left}
+  /* Nivel 1 · Clase 8 (2026-10-18): tarjetas para recortar */
+  .cartas{display:flex;flex-wrap:wrap;gap:0;margin:10px 0}
+  .carta{box-sizing:border-box;height:3.4cm;border:1.5px dashed var(--navy);padding:4px 2px 2px;text-align:center;background:#fffdf6;break-inside:avoid;display:flex;flex-direction:column;justify-content:center}
+  .carta .fg svg{display:block;margin:0 auto;height:2.2cm;width:auto;max-width:95%}
+  .carta .v{font-family:Georgia,serif;font-weight:bold;color:var(--navy);font-size:16px;line-height:1.1}
+  .carta .nm{font-size:11px;color:var(--gray)}
+  .compasv{display:flex;align-items:stretch;margin:6px 0;break-inside:avoid}
+  .compasv .ts{width:1.2cm;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:Georgia,serif;font-weight:bold;font-size:26px;line-height:1;color:var(--navy)}
+  .compasv .slot{box-sizing:border-box;width:3cm;height:3.4cm;border:2px dashed #b5772a;border-left:none;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;color:#b5772a;font-family:Georgia,serif;font-size:15px}
+  .compasv .slot:first-of-type{border-left:3px solid var(--navy)}
+  .compasv .fin{width:8px;border-left:2px solid var(--navy);border-right:6px solid var(--navy);margin-left:4px}
+  /* Nivel 1 · Clase 9 (2026-10-18): las tiras de compás */
+  .tiras{display:flex;flex-direction:column;gap:0;margin:8px 0}
+  .tira{border:1.5px dashed var(--navy);border-top:none;padding:6px 8px;background:#fffdf6;break-inside:avoid}
+  .tira:first-child{border-top:1.5px dashed var(--navy)}
+  .tira svg{display:block;width:13.5cm;max-width:100%;height:auto}
+  .tira .nm{font-size:11px;color:var(--gray)}
+  .ejt{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media screen and (max-width:640px){.ejt{grid-template-columns:1fr}}
+  /* Ficha del alumno (2026-10-18): de «Elementos de música», en el estilo del programa */
+  .ficha{border:2px solid var(--navy);border-top:6px solid var(--amber);border-radius:6px;padding:16px 20px;margin:30px 0 10px;background:#fff;break-inside:avoid;page-break-before:always}
+  .ficha h2{font-family:Georgia,serif;color:var(--navy);font-size:22px;margin:0 0 2px}
+  .ficha .sub{color:var(--gray);font-size:13px;margin:0 0 12px}
+  table.figtab{border-collapse:collapse;width:100%;font-size:15px}
+  table.figtab th{background:var(--navy);color:#fff;font-size:13px;padding:6px 8px;text-align:center}
+  table.figtab td{border-bottom:1px solid #cfdae1;padding:4px 8px;text-align:center;vertical-align:middle}
+  table.figtab td.fig svg{display:block;margin:0 auto;height:70px;width:auto;max-width:none}
+  table.figtab td.nom{font-family:Georgia,serif;font-weight:bold;color:var(--navy);font-size:17px;text-align:left}
+  .completa{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin:10px 0 4px;font-size:15px}
+  @media screen and (max-width:640px){.completa{grid-template-columns:1fr}}
+  .completa span.caja{display:inline-block;width:34px;border-bottom:2px solid var(--navy);margin:0 4px}
+  .figs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}
+  .figs>div{border:1px solid #cfdae1;border-radius:6px;padding:4px;text-align:center;font-size:13.5px;background:#fff}
+  .figs svg{height:74px;width:auto;max-width:100%}
+  @media (max-width:640px){.figs{grid-template-columns:repeat(2,1fr)}}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:10px;break-inside:avoid}
+  .dos .partitura{margin:6px 0}
+  .orn{display:flex;gap:18px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:8px 0}
+  .orn div{text-align:center;font-size:13.5px}
+  .orn svg{height:44px;width:auto;display:block;margin:0 auto 2px}
+</style>
+
+<!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+
+
+
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+<style>.mm-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:#0e2934;font:600 14px/1.2 Lato,Calibri,Arial,sans-serif}.mm-nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid #33586a;white-space:nowrap}.mm-nav a:hover,.mm-nav a:focus-visible{background:#f0b03c;color:#0e2934;border-color:#f0b03c;outline:none}.mm-nav span{display:flex;gap:8px}.mm-nav a.off{visibility:hidden}@media print{.mm-nav{display:none}}</style></head>
+<body><nav class="mm-nav" aria-label="Programme"><a href="../ejercicios/index.html#nivel-2">&#9776; Programme</a><span><a href="aula-n2-clase-2-en.html">&larr; Previous</a><a href="aula-n2-clase-4-en.html">Next &rarr;</a></span></nav><script>/* 2026-11-10 (Mario): si la clase se abrió desde Conocer (?invitado=), «☰ Programa» vuelve a Conocer y no a la lista pública del sitio. Dura lo que dura la pestaña. */(function(){try{var q=/[?&]invitado=mmk7q4/.test(location.search);if(q)sessionStorage.setItem('mmDesdeConocer','1');if(!q&&sessionStorage.getItem('mmDesdeConocer')!=='1')return;var a=document.querySelector('.mm-nav > a');if(!a)return;var l=(document.documentElement.lang||'es').slice(0,2),T={es:'Conocer',en:'Discover',fr:'Découvrir',nl:'Kennismaken',de:'Kennenlernen'};if(!T[l])l='es';a.href=(/^\/website\//.test(location.pathname)?'/portal/conocer.html':'/conocer.html')+'#'+l;a.innerHTML='&#9776; '+T[l];}catch(e){}})();</script>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">In the classroom &mdash; Fast notes and ornaments</div>
+  </header>
+  <main>
+<h1 class="title">Fast notes and ornaments</h1>
+<h2 class="exercise">Level 2 · Lesson 3 · demisemiquavers and hemidemisemiquavers, the triplet, the trill and the mordent, written in the Score · the Baroque with Bach and Sinfonia No. 9 in three tunings</h2>
+<p class="rights">Teacher’s guide. &copy; 2026 Music Motion.</p>
+<div class="intro"><p><b>For:</b> ages 9 to 14, the whole class and then in groups of 4 or 5. <b>Length:</b> 50 minutes.</p>
+<p><b>Main objective:</b> by the end of the lesson, each group writes a bar of 2/4 with demisemiquavers or with a triplet, and an ornament; they play it or clap it, and the class says which note values and which ornament they used.</p>
+<p><b>Secondary objectives:</b> (1) say how many demisemiquavers fit in a crotchet (8) and in a quaver (4); (2) name the three tunings in which Bach’s Sinfonia No. 9 is heard.</p>
+<p><b>What you need:</b> a computer with speakers and a projector, <a class="link" href="https://musicmotionsuite.com/apps/mmk-demo.html" target="_blank" rel="noopener">the Cosmic Keyboard</a>, the Score (with the school account, ideally one computer per group), <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/bach-sinfonia-9.mmf&amp;page" target="_blank" rel="noopener">Sinfonia No. 9 in the Score</a> and <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/alla-turca.mmf&amp;page" target="_blank" rel="noopener">“Alla Turca”</a>. It helps to have done Lesson 2 (the dot and semiquavers).</p>
+<p><b>Before the lesson (10 minutes, at home): practise.</b></p>
+<ul style="margin:4px 0 6px"><li>Listen to the beginning of Sinfonia No. 9 in the Score and find the mordent sign in bar 12.</li>
+<li>In the Score, write a bar with the NUM PAD: 5 crotchet, 4 quaver, 3 semiquaver, 2 demisemiquaver, 1 hemidemisemiquaver. Play it back.</li>
+<li>Try the triplet: select a note and open <b>³ TUPLET</b> in its menu. And an ornament: the trill and the mordent are among the articulations (ART).</li></ul></div>
+
+<h2 class="section">Before we start: faster than the semiquaver</h2>
+<div class="pulsobox"><h3>The stave is not a keyboard</h3><p>Each line and each space of the stave is a <b>step of the scale</b> (C, D, E, F…), not a key on the piano. The stave tells you which step is played, but <b>not how big</b> each step is: that is decided by the key and by the musician’s ear. A ♯ or a ♭ changes the name of the note on that line or in that space; it does not mean “the black key”.</p><div class="partitura"><svg viewBox="0 0 251.0 118.0" role="img" aria-label="C, D and F sharp on the stave" style="max-width:402px"><rect x="6.00" y="31.35" width="241.00" height="1.30" fill="#0e2934"/><rect x="6.00" y="41.35" width="241.00" height="1.30" fill="#0e2934"/><rect x="6.00" y="51.35" width="241.00" height="1.30" fill="#0e2934"/><rect x="6.00" y="61.35" width="241.00" height="1.30" fill="#0e2934"/><rect x="6.00" y="71.35" width="241.00" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(10.00,62.00) scale(0.0400,-0.0400)" d="M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z"/><rect x="48.00" y="81.20" width="20.00" height="1.60" fill="#0e2934"/><path fill="#0e2934" transform="translate(52.00,82.00) scale(0.0400,-0.0400)" d="M97 -125C262 -125 295 9 295 42C295 93 254 125 196 125C47 125 0 10 0 -42C0 -95 42 -125 97 -125ZM75 -87C54 -87 42 -76 35 -64C32 -58 29 -51 29 -44C29 5 174 84 221 84C240 84 251 75 258 63C261 57 264 51 264 44C264 1 123 -87 75 -87Z"/><text x="58.00" y="104.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">C</text><path fill="#0e2934" transform="translate(94.05,77.00) scale(0.0400,-0.0400)" d="M97 -125C262 -125 295 9 295 42C295 93 254 125 196 125C47 125 0 10 0 -42C0 -95 42 -125 97 -125ZM75 -87C54 -87 42 -76 35 -64C32 -58 29 -51 29 -44C29 5 174 84 221 84C240 84 251 75 258 63C261 57 264 51 264 44C264 1 123 -87 75 -87Z"/><text x="100.05" y="104.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">D</text><rect x="139.10" y="32.00" width="1.60" height="40.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(151.10,67.00) scale(0.0400,-0.0400)" d="M237 118C244 121 249 129 249 135V206C249 211 246 214 242 214C240 214 239 214 237 213C237 213 217 205 212 204C205 204 198 209 198 217V339C198 345 192 350 184 350C174 350 168 345 168 339V209C167 199 164 186 155 180C143 173 109 159 92 155C83 155 80 167 80 175V295C80 301 73 306 66 306C56 306 50 301 50 295V160C50 146 44 136 38 133C32 130 12 122 12 122C5 120 0 112 0 106V35C0 29 3 26 9 26L11 27C12 27 27 33 35 37L36 38C44 38 50 28 50 20V-79C50 -90 45 -99 39 -102C33 -104 12 -113 12 -113C5 -115 0 -123 0 -129V-200C0 -206 3 -209 9 -209L11 -208C12 -208 26 -202 35 -199C36 -198 37 -198 38 -198C45 -198 50 -209 50 -214V-337C50 -343 56 -348 63 -348C73 -348 80 -343 80 -337V-198C80 -185 85 -178 90 -176L151 -151C151 -151 152 -151 152 -151L154 -150C163 -150 168 -162 168 -168V-293C168 -299 174 -304 181 -304C192 -304 198 -299 198 -293V-151C198 -143 202 -131 209 -128C216 -125 237 -117 237 -117C244 -114 249 -106 249 -100V-29C249 -24 246 -21 242 -21C240 -21 239 -21 237 -22L211 -32C205 -32 198 -26 198 -14V79C198 86 203 105 211 108ZM168 -45C162 -65 115 -85 92 -85C86 -85 81 -83 80 -80C78 -76 77 -54 77 -30C77 1 78 36 80 44C82 61 128 82 153 82C160 82 166 80 168 76C170 71 172 46 172 19C172 -8 170 -36 168 -45Z"/><path fill="#0e2934" transform="translate(166.10,67.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="172.10" y="104.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">F♯</text><rect x="230.00" y="32.00" width="1.60" height="40.00" fill="#0e2934"/><rect x="235.00" y="32.00" width="5.00" height="40.00" fill="#0e2934"/><rect x="62.60" y="47.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="104.65" y="42.00" width="1.70" height="33.30" fill="#0e2934"/></svg><p class="pie">C and D are on neighbouring steps; F♯ lives in the space of F, with its sharp. Nowhere does it say which key to play.</p></div><p>All semitones being the same size is an agreement made for the piano: the <b>tempered</b> system. The voice and the violin build the staircase in a different way, and the same written note can sound slightly different depending on who plays it. You will see and hear this in Lesson 4.</p></div>
+
+<div class="pulsobox"><h3>The chocolate bar keeps splitting</h3>
+<p>In Level 1 the semibreve was a whole bar of chocolate, which was split into minims, crotchets and quavers. In Lesson 2 came the semiquaver, half of the quaver. The chocolate bar keeps splitting: half of the semiquaver is the <b>demisemiquaver</b> (1/32 of the semibreve) and half of the demisemiquaver, the <b>hemidemisemiquaver</b> (1/64). Each time the note lasts half as long, it gets one more beam.</p>
+<div class="figs"><div><svg viewBox="0 0 88.0 86.0" role="img" aria-label="quavers" style="height:74px;width:auto;max-width:100%"><rect x="4.0" y="31.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="41.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="51.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="61.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="71.35" width="80.0" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(20.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="30.60" y="26.00" width="1.70" height="36.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(46.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="56.60" y="26.00" width="1.70" height="36.00" fill="#0e2934"/><rect x="30.60" y="26.00" width="27.70" height="5.00" fill="#0e2934"/></svg><div><b>quavers</b><br>1/8 · 1 beam</div></div><div><svg viewBox="0 0 88.0 86.0" role="img" aria-label="semiquavers" style="height:74px;width:auto;max-width:100%"><rect x="4.0" y="31.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="41.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="51.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="61.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="71.35" width="80.0" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(20.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="30.60" y="19.00" width="1.70" height="43.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(46.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="56.60" y="19.00" width="1.70" height="43.00" fill="#0e2934"/><rect x="30.60" y="19.00" width="27.70" height="5.00" fill="#0e2934"/><rect x="30.60" y="26.50" width="27.70" height="5.00" fill="#0e2934"/></svg><div><b>semiquavers</b><br>1/16 · 2 beams</div></div><div><svg viewBox="0 0 88.0 86.0" role="img" aria-label="demisemiquavers" style="height:74px;width:auto;max-width:100%"><rect x="4.0" y="31.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="41.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="51.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="61.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="71.35" width="80.0" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(20.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="30.60" y="12.00" width="1.70" height="50.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(46.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="56.60" y="12.00" width="1.70" height="50.00" fill="#0e2934"/><rect x="30.60" y="12.00" width="27.70" height="5.00" fill="#0e2934"/><rect x="30.60" y="19.50" width="27.70" height="5.00" fill="#0e2934"/><rect x="30.60" y="27.00" width="27.70" height="5.00" fill="#0e2934"/></svg><div><b>demisemiquavers</b><br>1/32 · 3 beams</div></div><div><svg viewBox="0 0 88.0 86.0" role="img" aria-label="hemidemisemiquavers" style="height:74px;width:auto;max-width:100%"><rect x="4.0" y="31.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="41.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="51.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="61.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="71.35" width="80.0" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(20.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="30.60" y="5.00" width="1.70" height="57.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(46.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="56.60" y="5.00" width="1.70" height="57.00" fill="#0e2934"/><rect x="30.60" y="5.00" width="27.70" height="5.00" fill="#0e2934"/><rect x="30.60" y="12.50" width="27.70" height="5.00" fill="#0e2934"/><rect x="30.60" y="20.00" width="27.70" height="5.00" fill="#0e2934"/><rect x="30.60" y="27.50" width="27.70" height="5.00" fill="#0e2934"/></svg><div><b>hemidemisemiquavers</b><br>1/64 · 4 beams</div></div></div>
+<p>A crotchet holds 2 quavers, 4 semiquavers, 8 demisemiquavers or 16 hemidemisemiquavers. These are the notes of fast passages and of ornaments.</p></div>
+
+<div class="pulsobox"><h3>The triplet: three instead of two</h3>
+<p>Sometimes we want three equal notes in the time of two. Three quavers are written with a <b>3</b> above them: that is a <b>triplet</b>. Together the three last as long as a crotchet, just like two ordinary quavers. We say “tri-pe-ta” on one beat, instead of “ti-ti”.</p>
+<div class="dos"><div class="partitura"><svg viewBox="0 0 88.0 86.0" role="img" aria-label="Two quavers" style="height:96px;width:auto;max-width:100%"><rect x="4.0" y="31.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="41.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="51.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="61.35" width="80.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="71.35" width="80.0" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(20.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="30.60" y="26.00" width="1.70" height="36.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(46.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="56.60" y="26.00" width="1.70" height="36.00" fill="#0e2934"/><rect x="30.60" y="26.00" width="27.70" height="5.00" fill="#0e2934"/></svg><p class="pie">Two quavers on one beat: “ti-ti”.</p></div><div class="partitura"><svg viewBox="0 0 114.0 86.0" role="img" aria-label="Quaver triplet" style="height:96px;width:auto;max-width:100%"><rect x="4.0" y="31.35" width="106.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="41.35" width="106.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="51.35" width="106.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="61.35" width="106.0" height="1.30" fill="#0e2934"/><rect x="4.0" y="71.35" width="106.0" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(20.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="30.60" y="26.00" width="1.70" height="36.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(46.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="56.60" y="26.00" width="1.70" height="36.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(72.00,62.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><rect x="82.60" y="26.00" width="1.70" height="36.00" fill="#0e2934"/><rect x="30.60" y="26.00" width="53.70" height="5.00" fill="#0e2934"/><text x="57.0" y="20.0" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-weight="bold" font-size="15.0" fill="#0e2934">3</text></svg><p class="pie">A triplet on one beat: “tri-pe-ta”.</p></div></div></div>
+
+<div class="pulsobox"><h3>Ornaments</h3>
+<p><b>Ornaments</b> are fast notes that decorate a main note. They are not written out note by note: a small sign above the note says what to do.</p>
+<div class="orn"><div><svg viewBox="0 0 45 34" role="img" aria-label="trill"><path fill="#0e2934" transform="translate(5.60,22.40) scale(0.0560,-0.0560)" d="M266 390C262 390 256 388 253 387L204 371C195 368 191 365 187 355L151 267C147 257 146 255 143 255C139 255 133 260 124 264C110 270 97 273 82 273C35 273 0 245 0 203C0 172 21 146 66 146C78 146 91 148 97 148C99 148 100 147 100 145C100 143 99 140 97 135L86 108C75 81 67 61 67 40C67 12 86 -10 124 -10C176 -10 226 32 226 106C226 130 222 152 213 174C211 179 210 181 210 184C210 190 216 195 232 204L238 207C273 228 297 242 316 242C325 242 329 239 329 227C329 217 326 205 323 198L250 17C248 12 247 9 247 6C247 2 250 0 258 0H307C316 0 319 2 323 12L388 174C401 207 433 244 455 244C461 244 465 242 465 238C465 229 443 226 443 198C443 178 458 166 479 166C503 166 521 186 521 221C521 250 506 274 469 274C443 274 422 260 407 243C398 233 397 229 393 229C388 229 392 236 384 251C377 264 362 273 340 273C300 273 262 253 241 242C228 235 222 231 217 231C215 231 214 232 214 234C214 238 217 244 219 249L269 373C271 378 272 381 272 384C272 388 270 390 266 390ZM82 250C93 250 133 241 133 226C133 223 131 218 129 213L125 203C120 190 116 187 103 184C90 181 78 179 68 179C35 179 27 195 27 209C27 227 42 250 82 250ZM189 167C198 167 203 114 203 105C203 61 176 21 147 21C139 21 136 26 136 33C136 41 140 54 144 64C144 65 145 65 183 160C185 165 186 167 189 167Z"/></svg><b>trill</b><br>the note and its upper neighbour, alternating quickly</div><div><svg viewBox="0 0 45 34" role="img" aria-label="mordent"><path fill="#0e2934" transform="translate(5.60,22.40) scale(0.0560,-0.0560)" d="M379 184V319H348V150L319 116C315 111 309 111 305 116C269 158 215 220 210 227C202 235 196 244 179 245C170 245 165 242 157 236L14 74C8 68 1 58 1 51C1 45 6 41 21 41C37 41 51 55 61 65C74 76 86 88 100 99C110 107 117 112 122 112C127 112 131 108 137 100L224 7C228 2 236 0 244 0C251 0 258 2 262 6C272 12 330 65 346 79V-73H378V106C382 109 386 111 390 111C395 111 400 108 406 100C410 94 484 17 493 7C497 2 505 0 512 0C520 0 527 2 531 6C539 12 702 190 715 205L717 208C723 214 729 221 729 228C729 238 711 245 703 245C696 245 690 242 685 238C674 229 605 143 593 132C585 125 580 122 575 122C568 122 562 127 557 132C549 140 483 222 473 231C464 239 456 245 448 245C440 245 435 243 426 236C417 229 410 219 403 211Z"/></svg><b>mordent</b><br>the note, its lower neighbour and the note again</div><div><svg viewBox="0 0 45 34" role="img" aria-label="upper mordent"><path fill="#0e2934" transform="translate(5.60,22.40) scale(0.0560,-0.0560)" d="M298 116 209 226C202 235 196 243 178 245C171 245 165 243 156 236C110 186 61 129 11 73C6 67 0 60 0 50C0 44 5 40 20 40C29 40 38 43 49 53L110 107C113 110 117 111 121 111C126 111 130 107 137 99C141 94 215 17 223 7C227 2 235 0 243 0C251 0 258 2 262 5L370 103C377 110 382 111 385 111C390 111 393 108 401 99C406 94 479 17 488 7C492 2 500 0 508 0C516 0 523 2 527 5C534 11 698 189 711 204C717 212 725 223 725 227C725 237 707 245 698 245C692 245 686 242 680 238C669 229 600 142 589 131C581 124 575 121 570 121C563 121 558 126 553 131C544 140 478 221 468 230C460 238 452 244 445 244C436 244 430 243 421 236C412 228 405 219 398 211C370 180 341 148 308 116C305 112 301 112 298 116Z"/></svg><b>upper mordent</b><br>with the upper neighbour</div></div>
+<p>The <b>appoggiatura</b> is a small note before the main one, which leans on it; if it has a little line through it, it is an <b>acciaccatura</b> and is played as fast as possible. “Alla Turca” from Lesson 1 is full of them.</p></div>
+
+<div class="pulsobox"><h3>The time machine: Bach, the Baroque and Sinfonia No. 9</h3>
+<p>Germany, 1720. Johann Sebastian Bach writes a book for his nine-year-old son Wilhelm Friedemann, to learn to play the keyboard. On one of its first pages he draws him a table of ornaments, with each sign and the notes to play. In the Baroque, ornaments were part of the style: the musician decorated the melody, and anyone who could do it well was admired.</p>
+<p>Three years later Bach makes a fair copy of his 15 <b>Sinfonias</b>, pieces in three voices for his pupils. No. 9, in F minor, is one of the most intense. It can be heard in three tunings:</p>
+<ul style="margin:4px 0 6px"><li><b>Tonal</b> (Pythagorean), <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/bach-sinfonia-9.mmf&amp;page" target="_blank" rel="noopener">in the Score</a>, or in the Keyboard: recs › Built-in Demo · Bach › ◈ Tonal Mode.</li>
+<li><b>Well-tempered</b> (Werckmeister III), the tuning of many keyboards in Bach’s time, <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/bach-sinfonia-9-werckmeister.mmf&amp;page" target="_blank" rel="noopener">in the Score</a>.</li>
+<li><b>Equal temperament</b>, the tuning of today’s piano, in the Keyboard: recs › Built-in Demo · Bach › ⬦ Tempered.</li></ul>
+<p>All 15 Sinfonias, in the three versions, are in <a class="link" href="https://musicmotionsuite.com/suite/demos/bach-sinfonias-bwv787-801.zip" target="_blank" rel="noopener">the demos zip file</a>. Lesson 4 explains why the three sound different.</p></div>
+
+<h2 class="section">The lesson, step by step</h2>
+<p style="font-size:14.5px">The lesson follows five stages: the goal, what they already know, the new material, the application and the review of the goal. <b>In each activity, you do it first and the class follows you.</b></p>
+<ol class="pasos"><li><span class="min">3 min</span><h3>The goal</h3><p>Tell the class, in these words or similar ones:</p><p class="dice">“Some music runs so fast that the semiquaver is not enough, and some musicians decorate every note. Today we are going to write those fast notes and those ornaments.”</p><p>Write the goal on the board: <b>I can write fast notes, a triplet and an ornament.</b></p></li>
+<li><span class="min">5 min</span><h3>What they already know: the chocolate bar and the semiquaver</h3><p>Draw a crotchet on the board. “How many quavers fit in it? And semiquavers?” Two and four. Clap together one beat with two quavers (“ti-ti”) and one with four semiquavers (“ti-ki-ti-ki”).</p></li>
+<li style="break-inside:auto"><span class="min">17 min</span><h3>New material: demisemiquavers, the triplet and ornaments</h3><ol style="margin:4px 0 8px;padding-left:22px">
+<li><b>The demisemiquaver and the hemidemisemiquaver</b> (5 min). Keep splitting the chocolate bar on the board: the demisemiquaver, with three beams; the hemidemisemiquaver, with four. “How many demisemiquavers fit in a crotchet?” Eight. Clap eight very fast claps in one beat.</li>
+<li><b>The triplet</b> (4 min). Clap “ti-ti” and then “tri-pe-ta”, on the same beat. The class follows you, alternating.</li>
+<li><b>Ornaments</b> (4 min). Sing a long note, then the same note with a trill; then with a mordent. Listen to bar 12 of <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/bach-sinfonia-9.mmf&amp;page" target="_blank" rel="noopener">Sinfonia No. 9</a> and to the appoggiaturas in <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/alla-turca.mmf&amp;page" target="_blank" rel="noopener">“Alla Turca”</a>.</li>
+<li><b>Bach in three tunings</b> (4 min). Play the beginning of Sinfonia No. 9 in tonal and in equal temperament. “Do they sound the same?” Note down what they say; the answer comes in Lesson 4.</li></ol>
+<p class="pantalla">With an interactive whiteboard or a projector, the class sees the Score on the screen with ⛶ FULL; without a screen, draw the note values on the board.</p></li>
+<li style="break-inside:auto"><span class="min">20 min</span><h3>Application: a bar with fast notes and an ornament</h3>
+<p><b>On paper</b> (7 min). Write an example on the board yourself: a bar of 2/4 with a triplet, a crotchet and a trill. Each group writes its own: two beats, with demisemiquavers or a triplet, and an ornament on one note.</p>
+<p><b>In the Score</b> (10 min). Groups with a computer write it in the Score with the NUM PAD (5 crotchet, 4 quaver, 3 semiquaver, 2 demisemiquaver, 1 hemidemisemiquaver), the triplet with ³ TUPLET and the ornament from ART. They play it back and correct it. Without a computer, they clap it and sing it.</p>
+<p><b>Guess</b> (3 min). Each group plays or claps its bar without showing it; the class says which note values and which ornament they used.</p></li>
+<li><span class="min">5 min</span><h3>Reviewing the goal</h3><p>Go back to the sentence on the board.</p><p class="dice">“How many demisemiquavers fit in a crotchet? And in a quaver? What is a triplet? In which three tunings did we hear Bach?”</p><p>Listen to the answers: eight; four; three notes in the time of two; tonal, well-tempered and equal temperament.</p></li></ol>
+
+<div class="sabias"><b>A challenge for the quick ones:</b> “How many hemidemisemiquavers fit in a semibreve?” Sixty-four: that is why it is 1/64. And one more: “In 2/4, how many quaver triplets fit in a bar?” Two, one per beat.</div>
+<div class="ojo"><b>If they find it hard:</b><ul style="margin:6px 0 0;padding-left:20px"><li><b>They get lost with the beams:</b> have them count the beams: one, two, three, four; each beam splits the note in half.</li><li><b>Their triplet comes out as two quavers plus one more:</b> have them say “tri-pe-ta” with the clap only on “tri”.</li><li><b>They cannot find the ornament in the Score:</b> first they select the note and then open ART.</li></ul></div>
+
+<div class="pulsobox"><h3>After this lesson: a review with Don Quixote</h3><p>The pupil’s workbook closes chapters 1 to 3 with a review: <b>“Don Quixote sets off on a journey”</b>. In 1605 Miguel de Cervantes published the novel; more than a hundred years later, Georg Philipp Telemann turned it into music in his suite <i>Burlesque de Quixotte</i>. It is a good opportunity to show how literature and music have gone hand in hand for centuries.</p><p>Listen to “Le Galope de Rosinante” and, straight after it, Sancho Panza’s donkey. Each bar has three quavers. Rocinante gallops with four semiquavers and a quaver; the donkey plods along with a dotted quaver and three semiquavers. Clap them together and then <b>make up a dance</b>: the knights leap to the gallop, the squires walk with the donkey, and when the music changes, the steps change.</p></div>
+<h2 class="section">The keys and their notes</h2>
+<div class="kbd3"><div class="lay"><button type="button" data-lay="QWERTY">QWERTY</button><button type="button" data-lay="AZERTY">AZERTY</button><button type="button" data-lay="QWERTZ">QWERTZ</button></div><span class="kname">Top · high notes</span><div class="teclas"><div class="tecla"><div class="k" data-r="top" data-j="0">Q</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="top" data-j="1">W</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="top" data-j="2">E</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="top" data-j="3">R</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="top" data-j="4">T</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="top" data-j="5">Y</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="top" data-j="6">U</div><div class="nt" data-i="6"></div></div></div><span class="kname">Middle</span><div class="teclas"><div class="tecla"><div class="k" data-r="mid" data-j="0">A</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="1">S</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="2">D</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="3">F</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="4">G</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="5">H</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="6">J</div><div class="nt" data-i="6"></div></div></div><span class="kname">Bottom · low notes</span><div class="teclas"><div class="tecla"><div class="k" data-r="low" data-j="0">Z</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="low" data-j="1">X</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="low" data-j="2">C</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="low" data-j="3">V</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="low" data-j="4">B</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="low" data-j="5">N</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="low" data-j="6">M</div><div class="nt" data-i="6"></div></div></div></div>
+<p class="caption">A trill on the keyboard: two neighbouring keys alternated quickly, for example <kbd>G</kbd> G and <kbd>H</kbd> A. A mordent: <kbd>G</kbd> <kbd>F</kbd> <kbd>G</kbd>, very fast.</p>
+<p class="caption"><b>Note names:</b> C = Do · D = Re · E = Mi · F = Fa · G = Sol · A = La · B = Si.</p>
+<div class="check"><b>How to tell it worked:</b> at least three out of four groups write a bar of 2/4 that adds up correctly, with demisemiquavers or a triplet and an ornament; the class guesses the note values of most groups; and most pupils can say how many demisemiquavers fit in a crotchet and name the three tunings of Sinfonia No. 9.</div>
+<div class="intro ampliar"><p><b>These lessons are a starting point.</b> Each teacher can design the examples to suit their own class. For our part, we will keep adding lesson topics according to the requests we receive through the <a class="link" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">contact form</a>.</p></div>
+
+<div class="ficha"><h2>Pupil’s sheet · Fast notes and ornaments</h2>
+<p class="sub">To project in class or print. Based on the slide “Notes: relationships and values” from <i>Elements of Music</i>.</p>
+<table class="casillas"><tr><th>Note value</th><th>Part of the semibreve</th><th>Beams</th><th>How many fit in a crotchet</th></tr>
+<tr><td>quaver</td><td>1/8</td><td>1</td><td>2</td></tr><tr><td>semiquaver</td><td>1/16</td><td>2</td><td><span class="caja" style="width:40px"></span></td></tr>
+<tr><td>demisemiquaver</td><td><span class="caja" style="width:40px"></span></td><td>3</td><td><span class="caja" style="width:40px"></span></td></tr><tr><td>hemidemisemiquaver</td><td><span class="caja" style="width:40px"></span></td><td><span class="caja" style="width:40px"></span></td><td><span class="caja" style="width:40px"></span></td></tr></table>
+<div class="completa"><div>A triplet is <span class="caja" style="width:40px"></span> notes in the time of <span class="caja" style="width:40px"></span></div><div>“tr” above a note means <span class="caja" style="width:80px"></span></div><div>Our bar of 2/4 (draw it): <span class="caja" style="width:240px;height:46px;border:1px solid var(--navy);border-radius:4px;vertical-align:middle"></span></div><div>Bach’s three tunings: tonal, <span class="caja" style="width:110px"></span> and <span class="caja" style="width:110px"></span></div></div></div>
+
+<div class="tarjeta"><div class="tij">&#9986; &nbsp; cut out and take home</div>
+<h2>Notes that run and notes that get decorated</h2>
+<p class="sub">For parents · 10 minutes a week · no music knowledge needed</p>
+<p>Today we met the fastest notes (demisemiquavers and hemidemisemiquavers), the triplet and ornaments, and we listened to Bach in three tunings. This week, play together:</p>
+<ol><li><b>The chocolate bar:</b> with a bar of chocolate (or a sheet of paper), split it into halves, quarters, eighths… how far can you go? Your child tells you the name of each note value.</li>
+<li><b>Bach twice:</b> listen to <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/bach-sinfonia-9.mmf&amp;page" target="_blank" rel="noopener">Sinfonia No. 9 in the Score</a> and then on the keyboard (<b>musicmotionsuite.com/apps/mmk-demo.html</b>, recs › Built-in Demo · Bach), in Tempered. Can you hear the difference?</li>
+<li><b>The trill:</b> ask your child to play you a trill on the keyboard, alternating two neighbouring keys very fast.</li>
+<li><b>Tri-pe-ta:</b> say “tri-pe-ta” and “ti-ti” together, one beat each, clapping the beat. Which one fits in the same clap? Both!</li></ol></div>
+
+</main>
+  <footer class="doc-footer">
+    <span>musicmotionsuite.com</span>
+    <span>&copy; 2026 Music Motion</span>
+  </footer>
+</div>
+<script>/* nombres de las notas segun el idioma de la pagina (2026-10-07): el armado de idiomas no traduce
+   palabras de menos de tres letras, y en aleman la nota «B» es otra (Si = H) */
+(function(){var N={es:['Do','Re','Mi','Fa','Sol','La','Si'],en:['C','D','E','F','G','A','B'],fr:['Do','Ré','Mi','Fa','Sol','La','Si'],nl:['C','D','E','F','G','A','B'],de:['C','D','E','F','G','A','H']};
+var l=(document.documentElement.lang||'es').slice(0,2),n=N[l]||N.es;
+[].forEach.call(document.querySelectorAll('.nt[data-i]'),function(e){e.textContent=n[+e.getAttribute('data-i')];});})();</script>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+<script>/* 2026-10-14 · teclado de tres filas: las letras siguen al tipo de teclado; cada idioma abre con el suyo */
+(function(){var L={QWERTY:{top:'QWERTYU',mid:'ASDFGHJ',low:'ZXCVBNM'},AZERTY:{top:'AZERTYU',mid:'QSDFGHJ',low:'WXCVBN,'},QWERTZ:{top:'QWERTZU',mid:'ASDFGHJ',low:'YXCVBNM'}};
+var lg=(document.documentElement.lang||'es').slice(0,2),cur=lg==='fr'||lg==='nl'?'AZERTY':lg==='de'?'QWERTZ':'QWERTY';
+function pon(k){cur=k;[].forEach.call(document.querySelectorAll('.k[data-r]'),function(e){e.textContent=L[k][e.getAttribute('data-r')][+e.getAttribute('data-j')];});
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.textContent=b.getAttribute('data-lay');b.setAttribute('aria-pressed',b.getAttribute('data-lay')===k);});}
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.addEventListener('click',function(){pon(b.getAttribute('data-lay'));});});pon(cur);})();</script>
+<!-- 2026-10-18 (Mario): desde la Clase 2, las lecciones son para cuentas que compraron créditos; la entrada es la misma de la suite (un crédito = un día). -->
+<script src="../../apps/mm-puerta.js" data-pagado="si"></script>
+</body>
+</html>

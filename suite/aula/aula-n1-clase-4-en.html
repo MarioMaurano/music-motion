@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The treble clef · In the classroom · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+  .tecla{width:62px;border:1px solid var(--navy);border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff6df;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .teclas.mini .tecla{width:48px;padding:5px 0 4px}
+  .teclas.mini .tecla .k{font-size:17px} .teclas.mini .tecla .nt{font-size:13px}
+  /* 2026-10-14 · el teclado de tres filas, como en el Coach (QWERTY · AZERTY · QWERTZ) */
+  .kbd3{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;break-inside:avoid}
+  .kbd3 .lay{display:flex;gap:6px;justify-content:center;margin-bottom:4px}
+  .kbd3 .lay button{font:bold 12px Consolas,monospace;padding:4px 9px;border:1px solid var(--navy);border-radius:5px;background:#fff;color:var(--navy);cursor:pointer}
+  .kbd3 .lay button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .kbd3 .kname{display:block;text-align:center;font-size:12.5px;color:#5b6876;margin-top:6px}
+  .kbd3 .teclas{margin:4px 0 4px}
+  @media print{.kbd3 .lay button:not([aria-pressed="true"]){display:none}}
+  h2.section{break-after:avoid}
+  .pulsobox{border:1px solid var(--navy);border-left:5px solid var(--amber);background:#f8fbfd;border-radius:4px;padding:14px 18px;margin:18px 0}
+  .pulsobox h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:0 0 8px}
+  .pulsobox ol{margin:6px 0 0 0}
+  img.shot2{display:block;width:100%;border-radius:6px;margin:10px 0 6px;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+  /* Nivel 1 · Clase 2 (2026-10-15): el dibujo del sonido */
+  .dibujo{border:1px solid #c9d6de;border-radius:8px;padding:12px 14px 6px;margin:12px 0 8px;background:#fff;break-inside:avoid}
+  @media print{.pulsobox{break-inside:avoid}}
+  .dibujo svg{display:block;width:100%;height:auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media screen and (max-width:640px){.dos{grid-template-columns:1fr}}
+  /* Nivel 1 · Clase 3 y 4 (2026-10-18) */
+  .sabias{background:#f4f1fb;border-left:5px solid #7b5ea7;border-radius:4px;padding:10px 14px;margin:12px 0;font-size:14.5px;break-inside:avoid}
+  .sabias b{color:#4b3575}
+  .partitura{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;background:#fff;break-inside:avoid;overflow-x:auto}
+  .partitura svg{display:block;width:100%;height:auto;margin:0 auto}
+  .partitura .pie{font-size:13px;color:#5b6876;text-align:center;margin:2px 0 6px}
+  .pantalla{font-size:13.5px;color:#5b6876;margin:4px 0 0;font-style:italic}
+</style>
+
+<!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+
+
+
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+<style>.mm-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:#0e2934;font:600 14px/1.2 Lato,Calibri,Arial,sans-serif}.mm-nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid #33586a;white-space:nowrap}.mm-nav a:hover,.mm-nav a:focus-visible{background:#f0b03c;color:#0e2934;border-color:#f0b03c;outline:none}.mm-nav span{display:flex;gap:8px}.mm-nav a.off{visibility:hidden}@media print{.mm-nav{display:none}}</style></head>
+<body><nav class="mm-nav" aria-label="Programme"><a href="../ejercicios/index.html#nivel-1">&#9776; Programme</a><span><a href="aula-n1-clase-3-en.html">&larr; Previous</a><a href="aula-n1-clase-5-en.html">Next &rarr;</a></span></nav><script>/* 2026-11-10 (Mario): si la clase se abrió desde Conocer (?invitado=), «☰ Programa» vuelve a Conocer y no a la lista pública del sitio. Dura lo que dura la pestaña. */(function(){try{var q=/[?&]invitado=mmk7q4/.test(location.search);if(q)sessionStorage.setItem('mmDesdeConocer','1');if(!q&&sessionStorage.getItem('mmDesdeConocer')!=='1')return;var a=document.querySelector('.mm-nav > a');if(!a)return;var l=(document.documentElement.lang||'es').slice(0,2),T={es:'Conocer',en:'Discover',fr:'Découvrir',nl:'Kennismaken',de:'Kennenlernen'};if(!T[l])l='es';a.href=(/^\/website\//.test(location.pathname)?'/portal/conocer.html':'/conocer.html')+'#'+l;a.innerHTML='&#9776; '+T[l];}catch(e){}})();</script>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">In the classroom &mdash; The treble clef</div>
+  </header>
+  <main>
+    <h1 class="title">The treble clef</h1>
+    <h2 class="exercise">Level 1 · Lesson 4 · the names of the notes</h2>
+    <p class="rights">Teacher’s guide. &copy; 2026 Music Motion.</p>
+    <div class="intro"><p><b>For:</b> ages 8 to 12, the whole class. <b>Length:</b> 50 minutes.</p>
+<p><b>Main objective:</b> by the end of the lesson, each pair reads aloud the note names of a short tune written in the treble clef on the board, counting from G, and plays it on the keyboard; the class confirms with a thumbs-up whether the written tune was what they heard.</p>
+<p><b>Secondary objectives:</b> (1) draw the treble clef and point to line 2, where G lives; (2) name G’s neighbours: A one step up and F one step down.</p>
+<p><b>What you need:</b> a computer with speakers and internet, the board and, if available, a projector. The five-line sheet from Lesson 3. It helps to have done Lessons 1 to 3. <b>No music knowledge needed:</b> the keyboard does the work; you guide.</p>
+<p><b>Before the lesson (10 minutes, at home): practise the keyboard and the story.</b> In class your attention needs to be on the children, not on the buttons. Repeat these steps until you can do them without looking at the guide:</p>
+<ul style="margin:4px 0 6px"><li>Open <a class="link" href="https://musicmotionsuite.com/suite/seikilos-ninos.html" target="_blank" rel="noopener">the children’s version of the Seikilos song</a>. Press <b>Start</b> and go through the first three pages with <b>Next</b>: the oldest song, the city of Tralles and the song carved in stone. Then go on to the <b>Listen to it!</b> page and press <b>Listen</b>.</li><li>Just for you: open <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/seikilos-en.mmf&amp;page" target="_blank" rel="noopener">the Seikilos song in the Score</a> and listen to it while you follow the notes with the words underneath. You do not need to show it in class: the tune is in 6/8 and goes from low D to high D, more than the children read in Level 1. Notice that it begins on G, on line 2: you will use this to close the lesson.</li><li>Before the pupils arrive, leave two tabs open on the computer: the children’s version (for the story) and the Seikilos song in the Score (for the challenge). That way you can switch from one to the other without searching. In the bar above the score, <b>⛶ FULL</b> makes it full screen for projecting (Esc to exit) and <b>−</b> / <b>+</b> make the page smaller or larger until the whole piece fits. If there is no projector, print the score with the Score’s <b>PRINT</b> button.</li><li><b>The tempo knob (new):</b> in the same bar, <b>♩ PULSE</b> opens a small panel with a knob. Drag it upwards and the music goes faster; downwards, slower. The tempo marking on the page changes with it: the number and the word (Lento, Adagio, Andante, Allegro…). A double-click takes it back to the written tempo. Try it with the Seikilos song before the lesson; you will use it in every lesson that has a score.</li><li>Draw the treble clef on a piece of paper, starting with the spiral around line 2. Repeat it until it comes out without thinking.</li><li>Open <a class="link" href="https://musicmotionsuite.com/apps/mmk-demo.html" target="_blank" rel="noopener">the Cosmic Keyboard</a>. Play <kbd>B</kbd>: it is the G on the bottom row. Then its neighbours: <kbd>N</kbd> (A) and <kbd>V</kbd> (F).</li><li>Play the short tune from this guide, slowly: <kbd>Z</kbd> <kbd>C</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>X</kbd> <kbd>V</kbd> <kbd>C</kbd> <kbd>Z</kbd>.</li></ul></div>
+
+    <h2 class="section">Before we start: the key to the house</h2>
+<div class="pulsobox">
+<h3>The song in the stone</h3>
+<p>Almost two thousand years ago, in Tralles, a Greek city in what is now Turkey, a man called <b>Seikilos</b> had a song carved on a small marble column. Above each syllable he put <b>a letter that tells you which note to sing</b>. It is the oldest complete song we know, and it can still be sung because the notes had names and were written down.</p>
+<p>The stone is like a book in a library: for almost two thousand years the song was there, in plain sight, and silent for anyone who could not read those letters. It sounded again when someone was able to read them. That is what the class begins to learn today: to read music, so that no library of sounds stays closed to them.</p>
+<p>The song was sung with the <b>natural sounds</b> of the Greeks, the same ones the Cosmic Keyboard plays. In this lesson there is no need to explain this: you simply tell the children the story and they listen to the song.</p>
+<p>The rest of the story (the railway, the column used as a flowerpot, the fire and the journey to Copenhagen) is told in Level 2.</p>
+</div>
+<div class="pulsobox">
+<h3>The treble clef</h3>
+<p>At the beginning of the stave there is a <b>clef</b>. The one used most is the <b>treble clef</b>, also called the G clef: its spiral curls around <b>line 2</b> and gives that line the name <b>G</b>. It grew out of a letter <b>G</b>, just like the monks’ C; over the centuries it turned into a spiral. Like the key to a house, from that G we know what all the other notes are called: one step higher is A, one step lower is F.</p>
+<div class="partitura"><svg viewBox="0 0 544.2 132.0" role="img" aria-label="The staircase from C to C in the treble clef" style="max-width:871px"><rect x="6.00" y="45.35" width="534.20" height="1.30" fill="#0e2934"/><rect x="6.00" y="55.35" width="534.20" height="1.30" fill="#0e2934"/><rect x="6.00" y="65.35" width="534.20" height="1.30" fill="#0e2934"/><rect x="6.00" y="75.35" width="534.20" height="1.30" fill="#0e2934"/><rect x="6.00" y="85.35" width="534.20" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(10.00,76.00) scale(0.0400,-0.0400)" d="M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z"/><rect x="50.44" y="95.20" width="20.00" height="1.60" fill="#0e2934"/><path fill="#0e2934" transform="translate(52.00,96.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="58.00" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">C</text><text x="58.00" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">Z</text><path fill="#0e2934" transform="translate(112.90,91.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="118.90" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">D</text><text x="118.90" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">X</text><path fill="#0e2934" transform="translate(173.80,86.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="179.80" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">E</text><text x="179.80" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">C</text><path fill="#0e2934" transform="translate(234.70,81.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="240.70" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">F</text><text x="240.70" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">V</text><path fill="#0e2934" transform="translate(295.60,76.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="301.60" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">G</text><text x="301.60" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">B</text><path fill="#0e2934" transform="translate(356.50,71.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="362.50" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">A</text><text x="362.50" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">N</text><path fill="#0e2934" transform="translate(417.40,66.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="423.40" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">B</text><text x="423.40" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">M</text><path fill="#0e2934" transform="translate(478.30,61.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="484.30" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">C</text><text x="484.30" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">A</text></svg><p class="pie">The staircase written in the treble clef, with its note names and its keys. The first C needs a little line of its own: a ledger line, below the stave.</p></div>
+<div class="sabias"><b>The tempo knob:</b> above the score, on the left, there is a word and a number, for example “Adagio ♩ = 72”. The word gives the character (Adagio is calm, Allegro is cheerful and fast) and the number says how many beats there are per minute. The words are Italian and musicians all over the world use them. There is no need to teach them: when you turn the PULSE knob, the children see them change and learn them by themselves, by listening.</div><div class="sabias"><b>Did you know…?</b> On the lines live <b>E, G, B, D, F</b> (from the bottom up) and in the spaces <b>F, A, C, E</b>. Some teachers remember them with a sentence the class makes up, one word per line (a well-known one is “Every Good Boy Deserves Football”); the spaces spell the word FACE.</div>
+</div>
+
+<h2 class="section">The lesson, step by step</h2>
+    <p style="font-size:14.5px">The lesson follows five stages: the goal, what they already know, the new material, the application and the review of the goal. <b>In each activity, you do it first and the class follows you.</b></p>
+    <ol class="pasos"><li><span class="min">5 min</span><h3>The goal: the song in the stone</h3><p>Project <a class="link" href="https://musicmotionsuite.com/suite/seikilos-ninos.html" target="_blank" rel="noopener">the children’s version of the Seikilos song</a> and go through the first three pages with the class. Tell the story in your own words or read the text on each page. Then go on to the <b>Listen to it!</b> page and press <b>Listen</b>: the class listens and watches the syllables light up on the stone as it plays.</p><p class="dice">“This song is almost two thousand years old and we can still hear it because its notes were written down. For many centuries it was silent, until someone was able to read it. Today we are going to learn to read our own. At the end, every pair will read the note names of a tune written on the board and play it on the keyboard.”</p><p>Write the goal on the board: <b>I can read the names of the notes with the treble clef.</b></p></li><li><span class="min">5 min</span><h3>What they already know: the five-storey house</h3><p>Draw the stave. You count the lines from the bottom up; the class counts with you a second time. Then play “line or space?” with three or four notes, using the gestures from Lesson 3: arms crossed for a line, hands together for a space.</p><p class="dice">“We know where each note lives in the house. But what is its name?”</p></li><li><span class="min">17 min</span><h3>New material: the key to the house</h3><ol style="margin:4px 0 8px;padding-left:22px"><li><b>The key</b> (7 min). Draw the treble clef without hurrying, starting with the spiral around line 2. Then everyone draws it in the air, big, with the whole arm, while you draw it again on the board. Then each pupil draws it on their sheet. Go over line 2 together: “G lives here.” Play <kbd>B</kbd>: “This is G.” The class sings it.</li><li><b>G’s neighbours</b> (10 min). From G, one step up is A (<kbd>N</kbd>); one step down is F (<kbd>V</kbd>). Show it yourself first: point to G, move one step up with your finger and say “A” while you play <kbd>N</kbd>. Then write the whole staircase from C to C with the names underneath, as in the drawing in “Before we start”. The class reads the names aloud while you play each key; then half the class reads and the other half listens to check that they match, and they swap.</li></ol><p class="pantalla">With an interactive whiteboard or a projector, the class sees the drawing on the screen; without a screen, copy it onto the board. The first C needs a little line of its own, below the house: this is the one Lesson 3 promised.</p></li><li><span class="min">18 min</span><h3>Application: reading and playing</h3><p><b>Note detectives</b> (8 min). Write four separate notes on the board, for example E, G, C, A. Work out the first one aloud yourself: “G is on line 2. This note is on line 1: one step down, F; another step down, E. It is E.” The class works out the other three, first all together and then in pairs. A volunteer plays them: if the name is right, the note on the board and the note on the keyboard match.</p><p><b>The tune of the goal</b> (10 min). Write the short tune below, without names or keys. Read it yourself first, saying the names, and play it with the metronome set slow.</p><div class="partitura"><svg viewBox="0 0 334.6 132.0" role="img" aria-label="A short tune to read" style="max-width:535px"><rect x="6.00" y="45.35" width="324.60" height="1.30" fill="#0e2934"/><rect x="6.00" y="55.35" width="324.60" height="1.30" fill="#0e2934"/><rect x="6.00" y="65.35" width="324.60" height="1.30" fill="#0e2934"/><rect x="6.00" y="75.35" width="324.60" height="1.30" fill="#0e2934"/><rect x="6.00" y="85.35" width="324.60" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(10.00,76.00) scale(0.0400,-0.0400)" d="M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z"/><rect x="48.00" y="95.20" width="20.00" height="1.60" fill="#0e2934"/><path fill="#0e2934" transform="translate(52.00,96.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="58.00" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">C</text><text x="58.00" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">Z</text><path fill="#0e2934" transform="translate(82.45,86.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="88.45" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">E</text><text x="88.45" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">C</text><path fill="#0e2934" transform="translate(112.90,76.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="118.90" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">G</text><text x="118.90" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">B</text><path fill="#0e2934" transform="translate(143.35,86.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="149.35" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">E</text><text x="149.35" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">C</text><rect x="176.80" y="46.00" width="1.60" height="40.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(188.80,91.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="194.80" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">D</text><text x="194.80" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">X</text><path fill="#0e2934" transform="translate(219.25,81.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="225.25" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">F</text><text x="225.25" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">V</text><path fill="#0e2934" transform="translate(249.70,86.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="255.70" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">E</text><text x="255.70" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">C</text><rect x="276.15" y="95.20" width="20.00" height="1.60" fill="#0e2934"/><path fill="#0e2934" transform="translate(280.15,96.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="286.15" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">C</text><text x="286.15" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">Z</text><rect x="313.60" y="46.00" width="1.60" height="40.00" fill="#0e2934"/><rect x="318.60" y="46.00" width="5.00" height="40.00" fill="#0e2934"/><rect x="62.60" y="61.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="93.05" y="51.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="123.50" y="41.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="153.95" y="51.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="199.40" y="56.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="229.85" y="46.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="260.30" y="51.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="290.75" y="61.00" width="1.70" height="33.30" fill="#0e2934"/></svg><p class="pie">The tune of the goal: eight crotchets with C, D, E, F and G. The names and the keys can be covered up so that the class works them out.</p></div><ol style="margin:4px 0 8px;padding-left:22px"><li>The whole class reads the names aloud, note by note, while you point.</li><li>A pair comes up to the computer: one says each name and the other plays the key.</li><li>The class gives a thumbs-up if the written tune is what they heard. If not, the pair reads it again, slowly.</li><li>The pairs take turns and swap roles. While one pair plays, the rest of the class sings the names quietly.</li></ol></li><li><span class="min">5 min</span><h3>Reviewing the goal</h3><p>Go back to the sentence on the board. Write one last four-note tune with C, D, E, F and G; the pairs who have not had a turn yet read it and play it, and the class gives a thumbs-up if it matches.</p><p>To finish, write a single note on the board: the first note of the Seikilos song, a crotchet on line 2. The class says its name and a volunteer plays it (<kbd>B</kbd>).</p><p class="dice">“It is G, the note of our key. The oldest song in the world begins with G.”</p><p class="dice">“How did you know the name of each note? Where did you start counting from?”</p><p>Listen to the answers: finding line 2, counting up or down from G.</p></li></ol>
+<div class="sabias"><b>A challenge for fast finishers:</b> while the pairs take turns at the computer, whoever finishes first can look for the Gs in the Seikilos song. Project <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/seikilos-en.mmf&amp;page" target="_blank" rel="noopener">the Seikilos song in the Score</a> (with <b>−</b> all 9 bars fit) and ask: “How many Gs are there on the top stave?” They only need to look for the notes that live on line 2, even though they do not know the note values yet. <b>Answer: 8.</b> The bottom stave, with a different clef, is the accompaniment: they will meet it in Level 2. And if there is a minute left, open <b>♩ PULSE</b>, turn the knob and play the Seikilos song slower or faster: the class watches the word at the top of the page change and says whether they like it better calm or cheerful.</div>
+<div class="pulsobox"><h3>With the Melody Machine: reading with the key</h3>
+<p>To close the lesson, or to start the next one. Open the <a class="link" href="https://musicmotionsuite.com/suite/tragamonedas.html?lang=en" target="_blank" rel="noopener">Melody Machine</a> and press <b>SPIN</b>.</p>
+<ol style="margin:4px 0 6px;padding-left:22px">
+<li><b>Find the G.</b> The treble clef is at the beginning of the bar. The class looks in the tune for the notes on the second line: they are G.</li>
+<li><b>Read the names.</b> Press <b>READ</b>: a note lights up. A volunteer says its name, counting from G, and the class sings it.</li>
+<li><b>Check.</b> Press <b>PLAY</b>: the class sings the names of the first bar while it plays.</li></ol></div>
+<div class="ojo"><b>If they find it hard:</b><ul style="margin:6px 0 0;padding-left:20px"><li><b>They cannot find line 2:</b> count together from the bottom, as in Lesson 3, and go over it in colour on the sheet.</li><li><b>They cannot draw the treble clef:</b> have them always start with the spiral on line 2; the rest of the shape can come out crooked. What matters is where it curls.</li><li><b>They get lost with the names:</b> sing “C, D, E, F, G” going up the written staircase and leave the staircase with its names in a corner of the board, so they can check it.</li><li><b>They read correctly but play a different key:</b> have them look at the keys and their notes in this guide; G is <kbd>B</kbd>, and from there you count on the keyboard just as on paper.</li><li><b>The Seikilos page does not load:</b> it needs the internet. If there is none, tell the story from “Before we start” in your own words.</li></ul></div>
+
+    <h2 class="section">The keys and their notes</h2>
+<div class="kbd3"><div class="lay"><button type="button" data-lay="QWERTY">QWERTY</button><button type="button" data-lay="AZERTY">AZERTY</button><button type="button" data-lay="QWERTZ">QWERTZ</button></div><span class="kname">Top · high notes</span><div class="teclas"><div class="tecla"><div class="k" data-r="top" data-j="0">Q</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="top" data-j="1">W</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="top" data-j="2">E</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="top" data-j="3">R</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="top" data-j="4">T</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="top" data-j="5">Y</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="top" data-j="6">U</div><div class="nt" data-i="6"></div></div></div><span class="kname">Middle</span><div class="teclas"><div class="tecla"><div class="k" data-r="mid" data-j="0">A</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="1">S</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="2">D</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="3">F</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="4">G</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="5">H</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="6">J</div><div class="nt" data-i="6"></div></div></div><span class="kname">Bottom · low notes</span><div class="teclas"><div class="tecla"><div class="k" data-r="low" data-j="0">Z</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="low" data-j="1">X</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="low" data-j="2">C</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="low" data-j="3">V</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="low" data-j="4">B</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="low" data-j="5">N</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="low" data-j="6">M</div><div class="nt" data-i="6"></div></div></div></div>
+<p class="caption">In this lesson you play the bottom row: G is <kbd>B</kbd>, A is <kbd>N</kbd> and F is <kbd>V</kbd>. The <kbd>A</kbd> key on the middle row is the next C.</p>
+<p class="caption"><b>Note names:</b> C = Do · D = Re · E = Mi · F = Fa · G = Sol · A = La · B = Si. Some materials use the syllables: both name the same note.</p>
+<div class="check"><b>How to tell it worked:</b> at least three out of four pairs read the names of the tune and play it correctly, and the class confirms it with a thumbs-up. In addition, most pupils draw the treble clef on line 2 and name F and A as G’s neighbours.</div>
+
+    <div class="intro ampliar"><p><b>These lessons are a starting point.</b> Each teacher can design the examples to suit their own class. For our part, we will keep adding lesson topics according to the requests we receive through the <a class="link" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">contact form</a>.</p></div>
+<div class="tarjeta">
+      <div class="tij">&#9986; &nbsp; cut out and take home</div>
+      <h2>The key to the house, at home</h2>
+<p class="sub">For parents · 10 minutes a week · no music knowledge needed</p>
+<p>Today in class we learned the treble clef: its spiral marks the line where the note G lives, and from there we can name all the others. We also met the oldest complete song in the world. This week, play together:</p>
+<ol>
+<li>Open the keyboard on the computer: <b>musicmotionsuite.com/apps/mmk-demo.html</b></li>
+<li><b>G and its neighbours on the floor:</b> lay out the five strings or ribbons from last week again. The child stands on line 2: “G lives here.” You say “A” or “F”; the child jumps one step up or down. Then swap.</li>
+<li><b>On the keyboard:</b> the child plays <b>B</b> (G) and its neighbours <b>N</b> (A) and <b>V</b> (F), and says the name of each one.</li>
+<li><b>The song in the stone:</b> open <b>musicmotionsuite.com/suite/seikilos-ninos.html</b>. The child tells you the story of Seikilos and you listen to the song together on the last page.</li>
+<li>The Melody Machine: open <b>musicmotionsuite.com/suite/tragamonedas.html</b> and press <b>SPIN</b>. Look for all the G notes (on the second line, where the clef curls). With <b>PRINT</b> you can print the tune and write the name of each note underneath. No registration needed.</li>
+</ol>
+    </div>
+  </main>
+  <footer class="doc-footer">
+    <span>musicmotionsuite.com</span>
+    <span>&copy; 2026 Music Motion</span>
+  </footer>
+</div>
+<script>/* nombres de las notas segun el idioma de la pagina (2026-10-07): el armado de idiomas no traduce
+   palabras de menos de tres letras, y en aleman la nota «B» es otra (Si = H) */
+(function(){var N={es:['Do','Re','Mi','Fa','Sol','La','Si'],en:['C','D','E','F','G','A','B'],fr:['Do','Ré','Mi','Fa','Sol','La','Si'],nl:['C','D','E','F','G','A','B'],de:['C','D','E','F','G','A','H']};
+var l=(document.documentElement.lang||'es').slice(0,2),n=N[l]||N.es;
+[].forEach.call(document.querySelectorAll('.nt[data-i]'),function(e){e.textContent=n[+e.getAttribute('data-i')];});})();</script>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+<script>/* 2026-10-14 · teclado de tres filas: las letras siguen al tipo de teclado; cada idioma abre con el suyo */
+(function(){var L={QWERTY:{top:'QWERTYU',mid:'ASDFGHJ',low:'ZXCVBNM'},AZERTY:{top:'AZERTYU',mid:'QSDFGHJ',low:'WXCVBN,'},QWERTZ:{top:'QWERTZU',mid:'ASDFGHJ',low:'YXCVBNM'}};
+var lg=(document.documentElement.lang||'es').slice(0,2),cur=lg==='fr'||lg==='nl'?'AZERTY':lg==='de'?'QWERTZ':'QWERTY';
+function pon(k){cur=k;[].forEach.call(document.querySelectorAll('.k[data-r]'),function(e){e.textContent=L[k][e.getAttribute('data-r')][+e.getAttribute('data-j')];});
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.textContent=b.getAttribute('data-lay');b.setAttribute('aria-pressed',b.getAttribute('data-lay')===k);});}
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.addEventListener('click',function(){pon(b.getAttribute('data-lay'));});});pon(cur);})();</script>
+<!-- 2026-10-18 (Mario): desde la Clase 2, las lecciones son para cuentas que compraron créditos; la entrada es la misma de la suite (un crédito = un día). -->
+<script src="../../apps/mm-puerta.js" data-pagado="si"></script>
+</body>
+</html>

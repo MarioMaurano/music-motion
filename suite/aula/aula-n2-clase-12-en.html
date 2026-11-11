@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Premiere: “I’ve Lost My Sandwich!” · In the classroom · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+  .tecla{width:62px;border:1px solid var(--navy);border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff6df;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .teclas.mini .tecla{width:48px;padding:5px 0 4px}
+  .teclas.mini .tecla .k{font-size:17px} .teclas.mini .tecla .nt{font-size:13px}
+  /* 2026-10-14 · el teclado de tres filas, como en el Coach (QWERTY · AZERTY · QWERTZ) */
+  .kbd3{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;break-inside:avoid}
+  .kbd3 .lay{display:flex;gap:6px;justify-content:center;margin-bottom:4px}
+  .kbd3 .lay button{font:bold 12px Consolas,monospace;padding:4px 9px;border:1px solid var(--navy);border-radius:5px;background:#fff;color:var(--navy);cursor:pointer}
+  .kbd3 .lay button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .kbd3 .kname{display:block;text-align:center;font-size:12.5px;color:#5b6876;margin-top:6px}
+  .kbd3 .teclas{margin:4px 0 4px}
+  @media print{.kbd3 .lay button:not([aria-pressed="true"]){display:none}}
+  h2.section{break-after:avoid}
+  .pulsobox{border:1px solid var(--navy);border-left:5px solid var(--amber);background:#f8fbfd;border-radius:4px;padding:14px 18px;margin:18px 0}
+  .pulsobox h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:0 0 8px}
+  .pulsobox ol{margin:6px 0 0 0}
+  img.shot2{display:block;width:100%;border-radius:6px;margin:10px 0 6px;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+  /* Nivel 1 · Clase 2 (2026-10-15): el dibujo del sonido */
+  .dibujo{border:1px solid #c9d6de;border-radius:8px;padding:12px 14px 6px;margin:12px 0 8px;background:#fff;break-inside:avoid}
+  @media print{.pulsobox{break-inside:avoid}}
+  .dibujo svg{display:block;width:100%;height:auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media screen and (max-width:640px){.dos{grid-template-columns:1fr}}
+  /* Nivel 1 · Clase 3 y 4 (2026-10-18) */
+  .sabias{background:#f4f1fb;border-left:5px solid #7b5ea7;border-radius:4px;padding:10px 14px;margin:12px 0;font-size:14.5px;break-inside:avoid}
+  .sabias b{color:#4b3575}
+  .partitura{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;background:#fff;break-inside:avoid;overflow-x:auto}
+  .partitura svg{display:block;width:100%;height:auto;margin:0 auto}
+  .partitura .pie{font-size:13px;color:#5b6876;text-align:center;margin:2px 0 6px}
+  .pantalla{font-size:13.5px;color:#5b6876;margin:4px 0 0;font-style:italic}
+  table.casillas{border-collapse:collapse;width:100%;margin:8px 0;font-size:14px;text-align:center}
+  table.casillas th{background:var(--navy);color:#fff;padding:6px;font-size:13px}
+  table.casillas td{border:1px solid #9fb3bf;padding:7px 4px;font-family:Consolas,monospace;font-weight:bold;color:var(--navy)}
+  table.casillas td.l{font-family:Calibri,Arial,sans-serif;font-weight:normal;color:#24485a;text-align:left}
+  /* Nivel 1 · Clase 8 (2026-10-18): tarjetas para recortar */
+  .cartas{display:flex;flex-wrap:wrap;gap:0;margin:10px 0}
+  .carta{box-sizing:border-box;height:3.4cm;border:1.5px dashed var(--navy);padding:4px 2px 2px;text-align:center;background:#fffdf6;break-inside:avoid;display:flex;flex-direction:column;justify-content:center}
+  .carta .fg svg{display:block;margin:0 auto;height:2.2cm;width:auto;max-width:95%}
+  .carta .v{font-family:Georgia,serif;font-weight:bold;color:var(--navy);font-size:16px;line-height:1.1}
+  .carta .nm{font-size:11px;color:var(--gray)}
+  .compasv{display:flex;align-items:stretch;margin:6px 0;break-inside:avoid}
+  .compasv .ts{width:1.2cm;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:Georgia,serif;font-weight:bold;font-size:26px;line-height:1;color:var(--navy)}
+  .compasv .slot{box-sizing:border-box;width:3cm;height:3.4cm;border:2px dashed #b5772a;border-left:none;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;color:#b5772a;font-family:Georgia,serif;font-size:15px}
+  .compasv .slot:first-of-type{border-left:3px solid var(--navy)}
+  .compasv .fin{width:8px;border-left:2px solid var(--navy);border-right:6px solid var(--navy);margin-left:4px}
+  /* Nivel 1 · Clase 9 (2026-10-18): las tiras de compás */
+  .tiras{display:flex;flex-direction:column;gap:0;margin:8px 0}
+  .tira{border:1.5px dashed var(--navy);border-top:none;padding:6px 8px;background:#fffdf6;break-inside:avoid}
+  .tira:first-child{border-top:1.5px dashed var(--navy)}
+  .tira svg{display:block;width:13.5cm;max-width:100%;height:auto}
+  .tira .nm{font-size:11px;color:var(--gray)}
+  .ejt{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media screen and (max-width:640px){.ejt{grid-template-columns:1fr}}
+  /* Ficha del alumno (2026-10-18): de «Elementos de música», en el estilo del programa */
+  .ficha{border:2px solid var(--navy);border-top:6px solid var(--amber);border-radius:6px;padding:16px 20px;margin:30px 0 10px;background:#fff;break-inside:avoid;page-break-before:always}
+  .ficha h2{font-family:Georgia,serif;color:var(--navy);font-size:22px;margin:0 0 2px}
+  .ficha .sub{color:var(--gray);font-size:13px;margin:0 0 12px}
+  table.figtab{border-collapse:collapse;width:100%;font-size:15px}
+  table.figtab th{background:var(--navy);color:#fff;font-size:13px;padding:6px 8px;text-align:center}
+  table.figtab td{border-bottom:1px solid #cfdae1;padding:4px 8px;text-align:center;vertical-align:middle}
+  table.figtab td.fig svg{display:block;margin:0 auto;height:70px;width:auto;max-width:none}
+  table.figtab td.nom{font-family:Georgia,serif;font-weight:bold;color:var(--navy);font-size:17px;text-align:left}
+  .completa{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin:10px 0 4px;font-size:15px}
+  @media screen and (max-width:640px){.completa{grid-template-columns:1fr}}
+  .completa span.caja{display:inline-block;width:34px;border-bottom:2px solid var(--navy);margin:0 4px}
+  .plant{width:100%;border-collapse:collapse;margin:6px 0;font-size:14px}
+  .plant td,.plant th{border:1px solid #9fb3bf;height:30px;padding:2px 8px;text-align:center}
+  .plant th{background:#eef3f6;font-weight:600}
+  .camino{columns:2;column-gap:24px;font-size:14.5px;margin:6px 0}
+  .camino li{break-inside:avoid;margin-bottom:3px}
+  @media (max-width:640px){.camino{columns:1}}
+</style>
+
+<!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+
+
+
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+<style>.mm-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:#0e2934;font:600 14px/1.2 Lato,Calibri,Arial,sans-serif}.mm-nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid #33586a;white-space:nowrap}.mm-nav a:hover,.mm-nav a:focus-visible{background:#f0b03c;color:#0e2934;border-color:#f0b03c;outline:none}.mm-nav span{display:flex;gap:8px}.mm-nav a.off{visibility:hidden}@media print{.mm-nav{display:none}}</style></head>
+<body><nav class="mm-nav" aria-label="Programme"><a href="../ejercicios/index.html#nivel-2">&#9776; Programme</a><span><a href="aula-n2-clase-11-en.html">&larr; Previous</a><a href="aula-n2-clase-14-en.html">Next &rarr;</a></span></nav><script>/* 2026-11-10 (Mario): si la clase se abrió desde Conocer (?invitado=), «☰ Programa» vuelve a Conocer y no a la lista pública del sitio. Dura lo que dura la pestaña. */(function(){try{var q=/[?&]invitado=mmk7q4/.test(location.search);if(q)sessionStorage.setItem('mmDesdeConocer','1');if(!q&&sessionStorage.getItem('mmDesdeConocer')!=='1')return;var a=document.querySelector('.mm-nav > a');if(!a)return;var l=(document.documentElement.lang||'es').slice(0,2),T={es:'Conocer',en:'Discover',fr:'Découvrir',nl:'Kennismaken',de:'Kennenlernen'};if(!T[l])l='es';a.href=(/^\/website\//.test(location.pathname)?'/portal/conocer.html':'/conocer.html')+'#'+l;a.innerHTML='&#9776; '+T[l];}catch(e){}})();</script>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">In the classroom &mdash; The premiere</div>
+  </header>
+  <main>
+<h1 class="title">Premiere: “I’ve Lost My Sandwich!”</h1>
+<h2 class="exercise">Level 2 · Lesson 12 · the class premieres its opera: the narrator, the five scenes, the interludes and the grand finale · the whole work is recorded</h2>
+<p class="rights">Teacher’s guide. &copy; 2026 Music Motion.</p>
+<div class="intro"><p><b>For:</b> ages 9 to 14, the whole class, in the five groups from Lesson 11 and each pupil with a job. <b>Length:</b> 50 minutes. If the premiere is for families, hold the dress rehearsal in one lesson and the premiere in another.</p>
+<p><b>Main objective:</b> by the end of the lesson, the whole opera is performed, from the overture to the grand finale, without stopping, and it is recorded.</p>
+<p><b>Secondary objectives:</b> (1) every pupil does their job in the premiere; (2) while listening to the recording, each group says why its music tells what happens in its scene: major or minor, dynamics, tempo.</p>
+<p><b>What you need:</b> the classroom computer with speakers and a projector; the music for the five scenes, saved in the Score in Lesson 11; <a class="link" href="https://musicmotionsuite.com/apps/mmk-demo.html" target="_blank" rel="noopener">the Cosmic Keyboard</a>; for the programme, <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/seikilos-acordes-en.mmf&amp;page" target="_blank" rel="noopener">the Seikilos song with chords</a>, Rocinante’s gallop from Telemann’s suite “Burlesque de Quixotte” (in <a class="link" href="https://musicmotionsuite.com/descargas.html" target="_blank" rel="noopener">Downloads</a>) and <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/ode-to-joy-matices.mmf&amp;page" target="_blank" rel="noopener">“Ode an die Freude” <i>(Ode to Joy)</i> with dynamics</a>; a phone to record with; and the printed programme from the workbook (chapter 12) or a copy of the sheet in this guide.</p>
+<p><b>Before the lesson (15 minutes, at home):</b> open the five scenes in the Score and listen to them in order; read the libretto in this guide aloud with a stopwatch (the whole opera lasts about 15 minutes); and decide where each group will stand, so that nobody has to cross the room between one scene and the next.</p></div>
+
+<h2 class="section">Before we start: the libretto</h2>
+<div class="pulsobox"><h3>I’ve Lost My Sandwich! · an opera in five scenes</h3>
+<p>The narrator reads their part before each scene. Then the group says its dialogue (the one it wrote in Lesson 11) and plays or performs its music. If a character speaks while the music is playing, it is a <i>melodrama</i>.</p>
+<p><b>Scene 1 · Break time</b> <span style="color:#5a6b75">(cheerful · C major)</span><br><b>Narrator:</b> “The bell rings for break. The children run out into the playground, jumping, playing ball and laughing. Lucy is hungry: this morning her grandma made her favourite sandwich.”</p>
+<p><b>Scene 2 · Where is it?</b> <span style="color:#5a6b75">(restless · D minor)</span><br><b>Narrator:</b> “Lucy opens her school bag… and the sandwich isn’t there. She looks between her exercise books, in her pockets, under the bench. Her friends help her look. Who could have taken it?”</p>
+<p><b>Scene 3 · The suspicious dog</b> <span style="color:#5a6b75">(playful · G major)</span><br><b>Narrator:</b> “At the playground gate appears Canelo, the school dog. He wags his tail, sniffs the school bags and licks his lips. Everyone looks at him. Could it be him? Canelo runs round in circles, jumps and hides behind the teacher.”</p>
+<p><b>Scene 4 · No sandwich</b> <span style="color:#5a6b75">(sad · A minor)</span><br><b>Narrator:</b> “Break is over. Lucy sits alone on a step. She is hungry and sad. Canelo comes over slowly and rests his head on her knees.”</p>
+<p><b>Scene 5 · Here it is!</b> <span style="color:#5a6b75">(happy · C major)</span><br><b>Narrator:</b> “Back in the music room, Lucy opens the piano lid… and there is her sandwich! She had left it there at the morning rehearsal. It wasn’t Canelo’s fault: he could only smell the sandwich in the school bag. Lucy shares it with her friends, and Canelo can breathe easy at last.”</p>
+<p style="font-size:14px">The libretto is a starting point: each group can change the words of its scene, and the narrator can be one pupil or several, one per scene.</p></div>
+
+<div class="pulsobox"><h3>The premiere programme</h3>
+<p>The premiere brings together the work of the year. It is the same printed programme as in the workbook; each school puts it together to suit itself.</p>
+<ol style="margin:4px 0 6px"><li><b>Overture.</b> <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/seikilos-acordes-en.mmf&amp;page" target="_blank" rel="noopener">The Seikilos song with chords</a>: the class “kithara” (Lessons 7 and 10).</li>
+<li><b>The opera.</b> Scenes 1 to 5, each with its narration, its dialogue and its music.</li>
+<li><b>Dance interlude.</b> Rocinante’s gallop, from Telemann’s suite about Don Quixote (in <a class="link" href="https://musicmotionsuite.com/descargas.html" target="_blank" rel="noopener">Downloads</a>): the dancers gallop, a long step and a short step.</li>
+<li><b>Percussion interlude.</b> The drum circle (Lesson 9): the whole class taps the table with their palms, to the same beat, and grows from <i>pp</i> to <i>fff</i> following the signs.</li>
+<li><b>Grand finale.</b> Everyone sings <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/ode-to-joy-matices.mmf&amp;page" target="_blank" rel="noopener">“Ode to Joy” with dynamics</a> (Lesson 9).</li></ol></div>
+
+<div class="pulsobox"><h3>The jobs</h3>
+<p>An opera is made by lots of people working together. Every pupil has a job, as well as their group:</p>
+<table class="casillas"><tr><th>Job</th><th>What they do</th></tr>
+<tr><td class="l">Narrators</td><td class="l">Read the libretto and introduce each scene.</td></tr>
+<tr><td class="l">Librettists</td><td class="l">Write the dialogues and fill in the printed programme.</td></tr>
+<tr><td class="l">Set designers</td><td class="l">Paint the backdrop for each scene or project the drawings.</td></tr>
+<tr><td class="l">Costumes</td><td class="l">Prepare the clothes and the props: the school bag and the sandwich.</td></tr>
+<tr><td class="l">Dancers</td><td class="l">Dance in the interlude and in the finale.</td></tr>
+<tr><td class="l">Choir</td><td class="l">Sings the grand finale.</td></tr>
+<tr><td class="l">Suite technicians</td><td class="l">Project the score with the Score (FULL), play live on the Keyboard and play the music for each scene.</td></tr></table></div>
+<div class="sabias"><b>Did you know…?</b> In opera many arts work together: literature tells the story, theatre acts it out, dance moves it, painting and set design give it its world and its colours. And music brings them all together: that is why opera is sometimes called “the total work of art”.</div>
+
+<h2 class="section">The lesson, step by step</h2>
+<p style="font-size:14.5px">The lesson follows five stages: the goal, what they already know, the new material, the application and the review of the goal. <b>In each activity, you do it first and the class follows you.</b></p>
+<ol class="pasos"><li><span class="min">3 min</span><h3>The goal</h3><p>Tell the class, in these words or similar ones:</p><p class="dice">“Today is the premiere. You wrote this opera yourselves: the story, the dialogues and the music. Today we perform the whole thing, as in a theatre, and we record it.”</p><p>Write the goal on the board: <b>We can perform our opera from beginning to end.</b></p></li>
+<li><span class="min">5 min</span><h3>What they already know: each scene and its key</h3><p>Ask each group, in the order of the story: “Which is your scene? Major or minor? Why?” Each group answers in one sentence. Play the home note of each scene yourself on the Keyboard (Tonal, the <kbd>A</kbd> key) so that the technicians have it in their ears.</p></li>
+<li style="break-inside:auto"><span class="min">10 min</span><h3>New material: the dress rehearsal</h3><ol style="margin:4px 0 8px;padding-left:22px">
+<li><b>The order</b> (3 min). Write the programme on the board. Each job says what it does and when it comes in.</li>
+<li><b>The entries</b> (5 min). Run through only the beginnings and endings: the narrator reads the first sentence of each scene, the group says the first line of the dialogue and the technicians play the first two bars. That way everyone knows when it is their turn.</li>
+<li><b>Silence and applause</b> (2 min). Practise with the class yourself: before the overture, total silence; at the end of each number, a short round of applause; at the very end, the big applause and the bow.</li></ol>
+<p class="pantalla">With an interactive whiteboard or a projector, the technicians show the score of each scene in the Score (FULL) while it plays; without a screen, the programme written on the board is enough.</p></li>
+<li style="break-inside:auto"><span class="min">22 min</span><h3>Application: the premiere</h3>
+<p>Start recording with the phone and don’t stop: if something goes wrong, carry on, just as in a real theatre. The overture, the five scenes, the dance interlude, the percussion interlude and the grand finale, with everyone standing to sing the Ode.</p></li>
+<li><span class="min">10 min</span><h3>Reviewing the goal: listening to the recording</h3><p>Go back to the sentence on the board. Listen together to part of the recording, for example scenes 3 and 4. “What changed from one scene to the next? How did the music do it?” Listen to the answers: from major to minor, from fast to slow, from staccato to legato, from <i>f</i> to <i>p</i>. Finish with a question for each group: “What would you change in your scene for the next performance?”</p></li></ol>
+
+<div class="pulsobox"><h3>In the workbook: chapter 12, “The premiere”</h3><p>The last two pages of chapter 12 of the pupil’s workbook, <i>My Little Music Grammar · Level 2</i>, prepare this lesson. “The premiere: a show by everyone” has the table of jobs, with a column to write down who does each one, and a space to draw the backdrop for the scene or the character’s costume. “The premiere programme” is the printed programme, with the date and the names of the narrators and technicians to fill in, and the “Did you know…?” about the total work of art.</p></div>
+<div class="ojo"><b>If they find it hard:</b><ul style="margin:6px 0 0;padding-left:20px"><li><b>There are nerves:</b> have the group say the dialogue once quietly before starting; the narrator can also read the dialogue if someone freezes.</li><li><b>A piece of music isn’t ready:</b> the group plays its scene live on the Keyboard (Tonal, with the KEY and MODE of its scene), even if it is only four bars.</li><li><b>They get lost between scenes:</b> have the narrator hold the programme and say the number before each part.</li><li><b>There isn’t time for everything:</b> drop an interlude; the five scenes and the grand finale are never dropped.</li></ul></div>
+<div class="sabias"><b>Challenge for the quick ones:</b> “Compose four bars of a new overture with the melody machine, in C major, to play while the audience sits down.” And one more: “Write a review of the premiere for the school newsletter: which scene you liked best and what the music did in it.”</div>
+
+<div class="check"><b>How to tell it worked:</b> the whole opera is performed, from the overture to the grand finale, and it is recorded; every pupil did their job; and while listening to the recording each group explains in one sentence what its music does to tell its scene.</div>
+<div class="intro ampliar"><p><b>These lessons are a starting point.</b> Each teacher can design the examples to suit their own class. For our part, we will keep adding lesson topics according to the requests we receive through the <a class="link" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">contact form</a>.</p></div>
+
+<div class="ficha"><h2>Pupil’s sheet · The premiere programme</h2>
+<p class="sub">To project in class or print.</p>
+<p style="font-size:17px;margin:8px 0 2px;text-align:center"><b>I’ve Lost My Sandwich!</b></p>
+<p style="font-size:14.5px;margin:0 0 8px;text-align:center">An opera by class <span class="caja" style="width:90px"></span> · date <span class="caja" style="width:110px"></span></p>
+<table class="plant"><tr><th>Number</th><th>What we hear</th><th>Who</th></tr>
+<tr><td>1 · Overture</td><td>Seikilos with chords</td><td></td></tr>
+<tr><td>2 · Scene 1</td><td>Break time · C major</td><td></td></tr>
+<tr><td>3 · Scene 2</td><td>Where is it? · D minor</td><td></td></tr>
+<tr><td>4 · Scene 3</td><td>The suspicious dog · G major</td><td></td></tr>
+<tr><td>5 · Scene 4</td><td>No sandwich · A minor</td><td></td></tr>
+<tr><td>6 · Scene 5</td><td>Here it is! · C major</td><td></td></tr>
+<tr><td>7 · Dance</td><td>Rocinante’s gallop (Telemann)</td><td></td></tr>
+<tr><td>8 · Percussion</td><td>The drum circle, from <i>pp</i> to <i>fff</i></td><td></td></tr>
+<tr><td>9 · Grand finale</td><td>Ode to Joy with dynamics</td><td>Everyone</td></tr></table>
+<div class="completa"><div>My job in the premiere: <span class="caja" style="width:220px"></span></div><div>The scene that best tells what happens is no. <span class="caja" style="width:40px"></span>, because <span class="caja" style="width:220px"></span></div></div></div>
+
+<div class="tarjeta"><div class="tij">&#9986; &nbsp; cut out and take home</div>
+<h2>Premiere: “I’ve Lost My Sandwich!”</h2>
+<p class="sub">For parents · 10 minutes a week · no music knowledge needed</p>
+<p>Today the class premiered the opera it composed: a narrator, five scenes with their own music, a dance, a drum circle and a grand finale sung by everyone. This week, at home:</p>
+<ol><li><b>The premiere:</b> ask your child to tell you the story of Lucy and her sandwich, and what job they had.</li>
+<li><b>Your child’s scene:</b> ask them to play you the music of their scene on the keyboard (<b>musicmotionsuite.com/apps/mmk-demo.html</b>) and tell you why it is major or minor.</li>
+<li><b>The grand finale:</b> open <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/ode-to-joy-matices.mmf&amp;page" target="_blank" rel="noopener">“Ode to Joy” with dynamics</a> and sing it together, from soft to loud.</li></ol></div>
+
+</main>
+  <footer class="doc-footer">
+    <span>musicmotionsuite.com</span>
+    <span>&copy; 2026 Music Motion</span>
+  </footer>
+</div>
+<script>/* nombres de las notas segun el idioma de la pagina (2026-10-07): el armado de idiomas no traduce
+   palabras de menos de tres letras, y en aleman la nota «B» es otra (Si = H) */
+(function(){var N={es:['Do','Re','Mi','Fa','Sol','La','Si'],en:['C','D','E','F','G','A','B'],fr:['Do','Ré','Mi','Fa','Sol','La','Si'],nl:['C','D','E','F','G','A','B'],de:['C','D','E','F','G','A','H']};
+var l=(document.documentElement.lang||'es').slice(0,2),n=N[l]||N.es;
+[].forEach.call(document.querySelectorAll('.nt[data-i]'),function(e){e.textContent=n[+e.getAttribute('data-i')];});})();</script>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+<script>/* 2026-10-14 · teclado de tres filas: las letras siguen al tipo de teclado; cada idioma abre con el suyo */
+(function(){var L={QWERTY:{top:'QWERTYU',mid:'ASDFGHJ',low:'ZXCVBNM'},AZERTY:{top:'AZERTYU',mid:'QSDFGHJ',low:'WXCVBN,'},QWERTZ:{top:'QWERTZU',mid:'ASDFGHJ',low:'YXCVBNM'}};
+var lg=(document.documentElement.lang||'es').slice(0,2),cur=lg==='fr'||lg==='nl'?'AZERTY':lg==='de'?'QWERTZ':'QWERTY';
+function pon(k){cur=k;[].forEach.call(document.querySelectorAll('.k[data-r]'),function(e){e.textContent=L[k][e.getAttribute('data-r')][+e.getAttribute('data-j')];});
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.textContent=b.getAttribute('data-lay');b.setAttribute('aria-pressed',b.getAttribute('data-lay')===k);});}
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.addEventListener('click',function(){pon(b.getAttribute('data-lay'));});});pon(cur);})();</script>
+<!-- 2026-10-18 (Mario): desde la Clase 2, las lecciones son para cuentas que compraron créditos; la entrada es la misma de la suite (un crédito = un día). -->
+<script src="../../apps/mm-puerta.js" data-pagado="si"></script>
+</body>
+</html>

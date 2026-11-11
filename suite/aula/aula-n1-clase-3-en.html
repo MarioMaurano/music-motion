@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The house of the notes · In the classroom · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+  .tecla{width:62px;border:1px solid var(--navy);border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff6df;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .teclas.mini .tecla{width:48px;padding:5px 0 4px}
+  .teclas.mini .tecla .k{font-size:17px} .teclas.mini .tecla .nt{font-size:13px}
+  /* 2026-10-14 · el teclado de tres filas, como en el Coach (QWERTY · AZERTY · QWERTZ) */
+  .kbd3{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;break-inside:avoid}
+  .kbd3 .lay{display:flex;gap:6px;justify-content:center;margin-bottom:4px}
+  .kbd3 .lay button{font:bold 12px Consolas,monospace;padding:4px 9px;border:1px solid var(--navy);border-radius:5px;background:#fff;color:var(--navy);cursor:pointer}
+  .kbd3 .lay button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .kbd3 .kname{display:block;text-align:center;font-size:12.5px;color:#5b6876;margin-top:6px}
+  .kbd3 .teclas{margin:4px 0 4px}
+  @media print{.kbd3 .lay button:not([aria-pressed="true"]){display:none}}
+  h2.section{break-after:avoid}
+  .pulsobox{border:1px solid var(--navy);border-left:5px solid var(--amber);background:#f8fbfd;border-radius:4px;padding:14px 18px;margin:18px 0}
+  .pulsobox h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:0 0 8px}
+  .pulsobox ol{margin:6px 0 0 0}
+  img.shot2{display:block;width:100%;border-radius:6px;margin:10px 0 6px;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+  /* Nivel 1 · Clase 2 (2026-10-15): el dibujo del sonido */
+  .dibujo{border:1px solid #c9d6de;border-radius:8px;padding:12px 14px 6px;margin:12px 0 8px;background:#fff;break-inside:avoid}
+  @media print{.pulsobox{break-inside:avoid}}
+  .dibujo svg{display:block;width:100%;height:auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media screen and (max-width:640px){.dos{grid-template-columns:1fr}}
+  /* Nivel 1 · Clase 3 (2026-10-18): el pentagrama */
+  .partitura{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;background:#fff;break-inside:avoid;overflow-x:auto}
+  .partitura svg{display:block;width:100%;height:auto;margin:0 auto}
+  .partitura .pie{font-size:13px;color:#5b6876;text-align:center;margin:2px 0 6px}
+  .pantalla{font-size:13.5px;color:#5b6876;margin:4px 0 0;font-style:italic}
+</style>
+
+<!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+
+
+
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+<style>.mm-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:#0e2934;font:600 14px/1.2 Lato,Calibri,Arial,sans-serif}.mm-nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid #33586a;white-space:nowrap}.mm-nav a:hover,.mm-nav a:focus-visible{background:#f0b03c;color:#0e2934;border-color:#f0b03c;outline:none}.mm-nav span{display:flex;gap:8px}.mm-nav a.off{visibility:hidden}@media print{.mm-nav{display:none}}</style></head>
+<body><nav class="mm-nav" aria-label="Programme"><a href="../ejercicios/index.html#nivel-1">&#9776; Programme</a><span><a href="aula-n1-clase-2-en.html">&larr; Previous</a><a href="aula-n1-clase-4-en.html">Next &rarr;</a></span></nav><script>/* 2026-11-10 (Mario): si la clase se abrió desde Conocer (?invitado=), «☰ Programa» vuelve a Conocer y no a la lista pública del sitio. Dura lo que dura la pestaña. */(function(){try{var q=/[?&]invitado=mmk7q4/.test(location.search);if(q)sessionStorage.setItem('mmDesdeConocer','1');if(!q&&sessionStorage.getItem('mmDesdeConocer')!=='1')return;var a=document.querySelector('.mm-nav > a');if(!a)return;var l=(document.documentElement.lang||'es').slice(0,2),T={es:'Conocer',en:'Discover',fr:'Découvrir',nl:'Kennismaken',de:'Kennenlernen'};if(!T[l])l='es';a.href=(/^\/website\//.test(location.pathname)?'/portal/conocer.html':'/conocer.html')+'#'+l;a.innerHTML='&#9776; '+T[l];}catch(e){}})();</script>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">In the classroom &mdash; The house of the notes</div>
+  </header>
+  <main>
+    <h1 class="title">The house of the notes</h1>
+    <h2 class="exercise">Level 1 · Lesson 3 · the stave</h2>
+    <p class="rights">Teacher’s guide. &copy; 2026 Music Motion.</p>
+    <div class="intro"><p><b>For:</b> ages 8 to 12, the whole class. <b>Length:</b> 50 minutes.</p>
+<p><b>Main objective:</b> by the end of the lesson, each pair finds on the keyboard a note that the teacher points to on the stave on the board, counting the steps from the first note; the class gives a thumbs-up if it is the right one.</p>
+<p><b>Secondary objectives:</b> (1) count the lines and spaces of the stave from the bottom up; (2) show with the body whether a note is on a line or in a space.</p>
+<p><b>What you need:</b> a computer with speakers, the board and, if available, a projector. A sheet with five lines for each pupil, or a music manuscript book. It helps to have done Lesson 2. <b>No music knowledge needed:</b> the keyboard does the work; you guide.</p>
+<p><b>Before the lesson (10 minutes, at home): practise the keyboard.</b> In class your attention needs to be on the children, not on the buttons. Repeat these steps until you can do them without looking at the guide:</p>
+<ul style="margin:4px 0 6px"><li>Open <a class="link" href="https://musicmotionsuite.com/apps/mmk-demo.html" target="_blank" rel="noopener">the Cosmic Keyboard</a>. Play <kbd>Z</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>V</kbd> <kbd>B</kbd> <kbd>N</kbd> <kbd>M</kbd> <kbd>A</kbd> slowly: this is the eight-note staircase you are going to draw on the stave. The first seven are on the bottom row; <kbd>A</kbd>, on the middle row, is the eighth step.</li><li>Practise the hidden note: play a single key, for example <kbd>B</kbd>, and count from <kbd>Z</kbd> until you reach it: “<kbd>Z</kbd> one, <kbd>X</kbd> two, <kbd>C</kbd> three, <kbd>V</kbd> four, <kbd>B</kbd> five”. It is the fifth note of the staircase.</li><li>Before the pupils arrive, draw five long lines on the board, about a finger and a half apart. Have the five-line sheets ready.</li></ul></div>
+
+    <h2 class="section">Before we start: the house of the notes</h2>
+<div class="pulsobox">
+<h3>The stave: a five-storey house</h3>
+<p>The <b>stave</b> is five identical lines on which music is written. The lines are counted <b>from the bottom up</b>: line 1 is the bottom one and line 5 the top one. Between the lines there are four <b>spaces</b>, which are also counted from the bottom.</p>
+</div>
+<div class="pulsobox">
+<h3>On a line or in a space</h3>
+<p>A note can live <b>on a line</b> (the line goes through its middle) or <b>in a space</b> (it sits between two lines, without either of them touching it). The higher the note, the higher it sounds: it is the “drawing of the sound” from Lesson 2, now with fixed floors so that everyone draws it the same way.</p>
+<div class="partitura"><svg viewBox="0 0 700 150" role="img" aria-label="The five lines and four spaces of the stave, counted from the bottom"><rect x="60" y="29" width="520" height="2.4" fill="#0e2934"/><text x="595" y="35" font-family="Calibri,Arial,sans-serif" font-size="15" fill="#24485a">line 5</text><rect x="60" y="51" width="520" height="2.4" fill="#0e2934"/><text x="595" y="57" font-family="Calibri,Arial,sans-serif" font-size="15" fill="#24485a">line 4</text><rect x="60" y="73" width="520" height="2.4" fill="#0e2934"/><text x="595" y="79" font-family="Calibri,Arial,sans-serif" font-size="15" fill="#24485a">line 3</text><rect x="60" y="95" width="520" height="2.4" fill="#0e2934"/><text x="595" y="101" font-family="Calibri,Arial,sans-serif" font-size="15" fill="#24485a">line 2</text><rect x="60" y="117" width="520" height="2.4" fill="#0e2934"/><text x="595" y="123" font-family="Calibri,Arial,sans-serif" font-size="15" fill="#24485a">line 1</text><text x="20" y="46" font-family="Calibri,Arial,sans-serif" font-size="14" fill="#f0b03c" font-weight="bold">sp. 4</text><text x="20" y="68" font-family="Calibri,Arial,sans-serif" font-size="14" fill="#f0b03c" font-weight="bold">sp. 3</text><text x="20" y="90" font-family="Calibri,Arial,sans-serif" font-size="14" fill="#f0b03c" font-weight="bold">sp. 2</text><text x="20" y="112" font-family="Calibri,Arial,sans-serif" font-size="14" fill="#f0b03c" font-weight="bold">sp. 1</text><path fill="#0e2934" transform="translate(90.00,118.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><path fill="#b5772a" transform="translate(142.00,107.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><path fill="#0e2934" transform="translate(194.00,96.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><path fill="#b5772a" transform="translate(246.00,85.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><path fill="#0e2934" transform="translate(298.00,74.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><path fill="#b5772a" transform="translate(350.00,63.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><path fill="#0e2934" transform="translate(402.00,52.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><path fill="#b5772a" transform="translate(454.00,41.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><path fill="#0e2934" transform="translate(506.00,30.00) scale(0.0880,-0.0880)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="300" y="146" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14" fill="#24485a">line · space · line · space… the staircase goes up one step each time</text></svg><p class="pie">One note on each step: line, space, line, space… The black notes live on a line; the coloured ones, in a space.</p></div>
+</div>
+
+<h2 class="section">The lesson, step by step</h2>
+    <p style="font-size:14.5px">The lesson follows five stages: the goal, what they already know, the new material, the application and the review of the goal. <b>In each activity, you do it first and the class follows you.</b></p>
+    <ol class="pasos"><li><span class="min">3 min</span><h3>The goal</h3><p>Tell the class, in these words or similar ones:</p><p class="dice">“Today we are going to get to know the house where the notes live. At the end, every pair will play on the keyboard the note I point to in the house.”</p><p>Write the goal on the board: <b>I can find a note on the stave and play it.</b></p></li><li><span class="min">5 min</span><h3>What they already know: the drawing of the sound</h3><p>Play three or four sounds, some from the bottom row and some from the top row. The class plays the lift game from Lesson 2: crouching for low, standing for high. Then a pupil draws on the board what they heard, with dashes up or down.</p><p class="dice">“How do we know how high each dash should go? What if the house of sound had floors, so that we all draw the same way?”</p></li><li><span class="min">17 min</span><h3>New material: the five-storey house</h3><ol style="margin:4px 0 8px;padding-left:22px"><li><b>Counting the floors</b> (3 min). Show the stave on the board. Count first yourself, pointing to each line from the bottom up: “one, two, three, four, five”. The class counts with you a second time. Then the spaces: “one, two, three, four”. Game: you point to a line or a space and the class says its number; first the whole class, then one half and then the other.</li><li><b>Line or space?</b> (6 min). Draw a note (a circle) on a line and show the gesture yourself: <b>arms crossed</b>, like a line going through it. Draw another in a space: <b>hands pressed together</b>, like something squeezed between two walls. Now draw notes in different places; the whole class answers, then one half and the other, and finally the pairs, facing each other.</li><li><b>The staircase in the house</b> (5 min). Draw eight notes going up: line, space, line, space… as in the picture in “Before we start”. Play <kbd>Z</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>V</kbd> <kbd>B</kbd> <kbd>N</kbd> <kbd>M</kbd> <kbd>A</kbd> slowly while you point to each note; the class sings on an “ah”. Repeat with a volunteer doing the pointing. Then from the top down. Each key is <b>one step</b> of the house: from a line to the next space, or from a space to the next line.</li></ol><p class="dice">“Does this note live on the top floor or the bottom floor? Will it sound high or low?”</p><p class="pantalla">With an interactive whiteboard or a projector, the class sees the picture on the screen; without a screen, copy it on to the board. (In the next lesson they will see that, with the treble clef, the first C lives on a little line of its own, a ledger line, below the house. For now, what matters is that each key goes up one step.)</p></li><li><b>The key to C</b> (3 min). Tell the class: “About a thousand years ago, monks wrote music on four lines. To know which note was which, they put a letter at the start of a line: <b>C</b>. That letter was the first clef (the word “clef” means “key”).” Write a C at the start of one line of the stave on the board: the note on that line is C. The class sings it and climbs the staircase from there: C, D, E… Then rub out the C, put it on another line and repeat: the same house, with a different key. In the pupil’s workbook, My Little Music Grammar · Level 1 (chapter 3), each pupil chooses their line and colours in the notes with the colours of Canelo’s mat.</li><li><span class="min">20 min</span><h3>Application: the hidden note</h3><p><b>On the sheet</b> (8 min). Each pupil draws the eight-note staircase on their sheet, just like the one on the board. You play <b>a single key</b> of the staircase. The first time, everyone counts aloud together, with a finger on the sheet, from the first note: “one, two, three…” while you play again from <kbd>Z</kbd> until you reach the hidden key. After that, each pupil looks for it alone and shows it with a finger to their partner.</p><p><b>Playing the note you point to</b> (12 min). Now the other way round. Show it yourself first: point to a note on the board, for example the one in space 2 (the fourth), and count the steps aloud from the bottom: “one, two, three, four”. Then count the keys from <kbd>Z</kbd>: “<kbd>Z</kbd>, <kbd>X</kbd>, <kbd>C</kbd>, <kbd>V</kbd>” and play <kbd>V</kbd>.</p><ol style="margin:4px 0 8px;padding-left:22px"><li>A pair comes up to the computer. You point to a note of the staircase on the board.</li><li>One of the pair counts the steps on the board; the other counts the keys from <kbd>Z</kbd> and plays the note.</li><li>The class gives a thumbs-up if it is the right one. To check, play the staircase yourself from <kbd>Z</kbd> up to that note while the class counts.</li><li>The pairs take turns and swap roles. While one pair plays, the rest point to the note on their sheet.</li></ol></li><li><span class="min">5 min</span><h3>Reviewing the goal</h3><p>Go back to the sentence on the board. Point to one last note; the pairs who have not had a turn yet play it, and the class gives a thumbs-up if it is the right one.</p><p class="dice">“How did you find the note on the keyboard? Where did you start counting?”</p><p>Listen to the answers: counting from the bottom, line and space one at a time, and always starting on <kbd>Z</kbd>.</p></li></ol>
+<div class="pulsobox"><h3>With the Melody Machine: the house of the notes</h3>
+<p>To end the lesson, or to start the next one. Open <a class="link" href="https://musicmotionsuite.com/suite/tragamonedas.html?lang=en" target="_blank" rel="noopener">the Melody Machine</a> and press <b>SPIN</b>.</p>
+<ol style="margin:4px 0 6px;padding-left:22px">
+<li><b>Line or space?</b> Point to a note in the first bar: the class says whether it is on a line or in a space, and on which floor of the house.</li>
+<li><b>The shining note.</b> Press <b>READ</b>: a note lights up. A volunteer counts the steps from the previous note and says whether it went up or down.</li>
+<li><b>Listening to the house.</b> Press <b>PLAY</b> and follow the notes with your finger on the screen: when the melody goes up, the finger goes up a floor.</li></ol></div>
+<div class="ojo"><b>If they find it hard:</b><ul style="margin:6px 0 0;padding-left:20px"><li><b>They count from the top:</b> draw an arrow pointing up next to the stave and write “1” beside the bottom line. Repeat together: “we count the house from the ground up”.</li><li><b>They mix up line and space:</b> draw the note big and ask: “Does the line go through its middle, or is the note between two lines?” Ask them to trace it with a finger on their sheet.</li><li><b>They get lost counting the steps:</b> count aloud with a finger on each note, and sing “C, D, E…” as you go up. If needed, draw only four notes and add the others once they can find them.</li><li><b>They play a different key:</b> play together from <kbd>Z</kbd>, key by key, while a classmate points to each step on the board, until you reach the note.</li></ul></div>
+
+    <h2 class="section">The keys and their notes</h2>
+<div class="kbd3"><div class="lay"><button type="button" data-lay="QWERTY">QWERTY</button><button type="button" data-lay="AZERTY">AZERTY</button><button type="button" data-lay="QWERTZ">QWERTZ</button></div><span class="kname">Top · high notes</span><div class="teclas"><div class="tecla"><div class="k" data-r="top" data-j="0">Q</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="top" data-j="1">W</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="top" data-j="2">E</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="top" data-j="3">R</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="top" data-j="4">T</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="top" data-j="5">Y</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="top" data-j="6">U</div><div class="nt" data-i="6"></div></div></div><span class="kname">Middle</span><div class="teclas"><div class="tecla"><div class="k" data-r="mid" data-j="0">A</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="1">S</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="2">D</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="3">F</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="4">G</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="5">H</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="6">J</div><div class="nt" data-i="6"></div></div></div><span class="kname">Bottom · low notes</span><div class="teclas"><div class="tecla"><div class="k" data-r="low" data-j="0">Z</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="low" data-j="1">X</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="low" data-j="2">C</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="low" data-j="3">V</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="low" data-j="4">B</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="low" data-j="5">N</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="low" data-j="6">M</div><div class="nt" data-i="6"></div></div></div></div>
+<p class="caption">The staircase for this lesson: from <kbd>Z</kbd> to <kbd>M</kbd> on the bottom row, and <kbd>A</kbd> on the middle row, which is the next C, the eighth step.</p>
+<p class="caption"><b>Note names:</b> C = Do · D = Re · E = Mi · F = Fa · G = Sol · A = La · B = Si. Some materials use the syllables: both name the same note.</p>
+<div class="check"><b>How to tell it worked:</b> at least three out of four pairs play on the keyboard the note pointed to on the stave, and the class confirms it with a thumbs-up. In addition, most pupils count the lines from the bottom and show with their body whether a note is on a line or in a space.</div>
+
+    <div class="intro ampliar"><p><b>These lessons are a starting point.</b> Each teacher can design the examples to suit their own class. For our part, we will keep adding lesson topics according to the requests we receive through the <a class="link" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">contact form</a>.</p></div>
+<div class="tarjeta">
+      <div class="tij">&#9986; &nbsp; cut out and take home</div>
+      <h2>The house of the notes, at home</h2>
+<p class="sub">For parents · 10 minutes a week · no music knowledge needed</p>
+<p>Today in class we learned that music is written on five lines, the stave, and that the notes live on the lines or in the spaces. This week, play together:</p>
+<ol>
+<li>Open the keyboard on the computer: <b>musicmotionsuite.com/apps/mmk-demo.html</b></li>
+<li><b>The house on the floor:</b> lay five pieces of string or strips of tape on the floor, one step apart. One person says “line 2” or “space 3”; the other jumps there. Then swap. Remember: line 1 is the one closest to you.</li>
+<li><b>Line or space?</b> On a sheet with five lines, one person draws a note; the other says where it lives.</li>
+<li><b>The staircase:</b> the child draws eight notes going up (line, space, line…) and plays them on the keyboard from <b>Z</b> to <b>M</b> and then <b>A</b>, while the adult points to each note.</li>
+<li>The Melody Machine: open <b>musicmotionsuite.com/suite/tragamonedas.html</b>, press <b>SPIN</b> and look at the notes: which are on a line and which are in a space? With <b>PRINT</b> you can print the melody and colour in the notes on the lines. No registration needed.</li>
+</ol>
+    </div>
+  </main>
+  <footer class="doc-footer">
+    <span>musicmotionsuite.com</span>
+    <span>&copy; 2026 Music Motion</span>
+  </footer>
+</div>
+<script>/* nombres de las notas segun el idioma de la pagina (2026-10-07): el armado de idiomas no traduce
+   palabras de menos de tres letras, y en aleman la nota «B» es otra (Si = H) */
+(function(){var N={es:['Do','Re','Mi','Fa','Sol','La','Si'],en:['C','D','E','F','G','A','B'],fr:['Do','Ré','Mi','Fa','Sol','La','Si'],nl:['C','D','E','F','G','A','B'],de:['C','D','E','F','G','A','H']};
+var l=(document.documentElement.lang||'es').slice(0,2),n=N[l]||N.es;
+[].forEach.call(document.querySelectorAll('.nt[data-i]'),function(e){e.textContent=n[+e.getAttribute('data-i')];});})();</script>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+<script>/* 2026-10-14 · teclado de tres filas: las letras siguen al tipo de teclado; cada idioma abre con el suyo */
+(function(){var L={QWERTY:{top:'QWERTYU',mid:'ASDFGHJ',low:'ZXCVBNM'},AZERTY:{top:'AZERTYU',mid:'QSDFGHJ',low:'WXCVBN,'},QWERTZ:{top:'QWERTZU',mid:'ASDFGHJ',low:'YXCVBNM'}};
+var lg=(document.documentElement.lang||'es').slice(0,2),cur=lg==='fr'||lg==='nl'?'AZERTY':lg==='de'?'QWERTZ':'QWERTY';
+function pon(k){cur=k;[].forEach.call(document.querySelectorAll('.k[data-r]'),function(e){e.textContent=L[k][e.getAttribute('data-r')][+e.getAttribute('data-j')];});
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.textContent=b.getAttribute('data-lay');b.setAttribute('aria-pressed',b.getAttribute('data-lay')===k);});}
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.addEventListener('click',function(){pon(b.getAttribute('data-lay'));});});pon(cur);})();</script>
+<!-- 2026-10-18 (Mario): desde la Clase 2, las lecciones son para cuentas que compraron créditos; la entrada es la misma de la suite (un crédito = un día). -->
+<script src="../../apps/mm-puerta.js" data-pagado="si"></script>
+</body>
+</html>
