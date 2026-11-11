@@ -254,7 +254,7 @@ function dosP(h){ const n=h.length, i=h.indexOf('<b>',3); if(i>n*.25&&i<n*.8) re
 // ── los cinco idiomas (2026-10-23, Mario: «genial para los niños de cada idioma») ──
 // El idioma: ?lang=xx (se guarda) → el que eligió aquí antes → si llega desde /fr/ /nl/ /de/ → el del navegador (fr nl de)
 // → el del sitio (es/en) → español si el navegador es español, si no inglés. Cada idioma con los nombres de nota de su
-// escuela: es/fr Do Re (Ré) Mi, en/nl C D E, de con H (= Si) y B (= Si♭), Fis, Es… Para corregir una traducción, cambia la
+// escuela: es/fr/nl Do Re (Ré) Mi, en C D E, de con H (= Si) y B (= Si♭), Fis, Es… Para corregir una traducción, cambia la
 // frase de ese idioma aquí abajo; {x} es lo que la máquina pone (una nota, un número).
 const LANGS=['es','en','fr','nl','de'];
 const LANG=(()=>{ const q=(/[?&]lang=(es|en|fr|nl|de)\b/.exec(location.search)||[])[1];
@@ -417,7 +417,7 @@ de:{ short:'Melodiemaschine', aula:'Musik im Unterricht', prev:'Vorheriges Spiel
   how:'<b>So wird gespielt.</b> Zieh am Hebel oder drück SPIN: Die Walzen drehen sich und bleiben eine nach der anderen bei einem neuen Takt stehen, mit anderen Tönen und anderen Rhythmen. Die erste steht immer auf dem Akkord der I. Stufe, und die vierte kommt nach Hause, zum Grundton; dazwischen wählt jeder Dreh seinen eigenen Weg der Akkorde (IV, V, VI oder II), und der Name des Akkords steht über jeder Walze. HOLD hält die Walze fest, die dir gefällt. Mit KEY und MODE klingt dieselbe Melodie in einer anderen Tonart, in Dur oder Moll, in pythagoreischer Stimmung. Unten stehen die Tasten, um sie auf dem Cosmic Keyboard zu spielen (Tonal, mittlere Reihe: A ist der Grundton). Kommt eine berühmte Melodie heraus, gibt es einen Preis. Und wenn die vier Walzen ganz „Funkel, funkel, kleiner Stern“ oder die Ode an die Freude ergeben: HAUPTGEWINN! Halte die Stücke, die herauskommen, mit HOLD fest und zieh weiter. <b>SAVE .mmf</b> speichert die Melodie mit ihrem Akkord in jedem Takt, zum Öffnen im Score mit File › Open. <b>PRINT</b> druckt deine Melodie auf ein Blatt, mit vier leeren Takten, damit du die Takte 5 bis 8 selbst schreibst.' } };
 function tr(k,v){ const d=I18N[LANG]||I18N.es; let s=d[k]!=null?d[k]:I18N.es[k]; if(typeof s!=='string') return s; return v?s.replace(/\{(\w+)\}/g,(m,x)=>v[x]!=null?v[x]:m):s; }
 // los nombres de las notas en la escuela de cada idioma
-const SOLF={es:{C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'},fr:{C:'Do',D:'Ré',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'}};
+const SOLF={es:{C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'},fr:{C:'Do',D:'Ré',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'},nl:{C:'Do',D:'Re',E:'Mi',F:'Fa',G:'Sol',A:'La',B:'Si'}};   // 2026-11-11 (Mario): nl = Flandes, Do Re Mi como el cuaderno y las guías
 const SYM={2:'𝄪',1:'♯',0:'','-1':'♭','-2':'𝄫'};
 function nomb(L,acc){ acc=acc||0;
   if(LANG==='de'){ if(L==='B') return ['Heses','B','H','His','Hisis'][acc+2];
