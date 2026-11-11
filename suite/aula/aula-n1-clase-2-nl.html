@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Hoog en laag, lang en kort · In de klas · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+  .tecla{width:62px;border:1px solid var(--navy);border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff6df;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .teclas.mini .tecla{width:48px;padding:5px 0 4px}
+  .teclas.mini .tecla .k{font-size:17px} .teclas.mini .tecla .nt{font-size:13px}
+  /* 2026-10-14 · el teclado de tres filas, como en el Coach (QWERTY · AZERTY · QWERTZ) */
+  .kbd3{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;break-inside:avoid}
+  .kbd3 .lay{display:flex;gap:6px;justify-content:center;margin-bottom:4px}
+  .kbd3 .lay button{font:bold 12px Consolas,monospace;padding:4px 9px;border:1px solid var(--navy);border-radius:5px;background:#fff;color:var(--navy);cursor:pointer}
+  .kbd3 .lay button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .kbd3 .kname{display:block;text-align:center;font-size:12.5px;color:#5b6876;margin-top:6px}
+  .kbd3 .teclas{margin:4px 0 4px}
+  @media print{.kbd3 .lay button:not([aria-pressed="true"]){display:none}}
+  h2.section{break-after:avoid}
+  .pulsobox{border:1px solid var(--navy);border-left:5px solid var(--amber);background:#f8fbfd;border-radius:4px;padding:14px 18px;margin:18px 0}
+  .pulsobox h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:0 0 8px}
+  .pulsobox ol{margin:6px 0 0 0}
+  img.shot2{display:block;width:100%;border-radius:6px;margin:10px 0 6px;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+  /* Nivel 1 · Clase 2 (2026-10-15): el dibujo del sonido */
+  .dibujo{border:1px solid #c9d6de;border-radius:8px;padding:12px 14px 6px;margin:12px 0 8px;background:#fff;break-inside:avoid}
+  @media print{.pulsobox{break-inside:avoid}}
+  .dibujo svg{display:block;width:100%;height:auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media screen and (max-width:640px){.dos{grid-template-columns:1fr}}
+</style>
+
+<!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+
+
+
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+<style>.mm-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:#0e2934;font:600 14px/1.2 Lato,Calibri,Arial,sans-serif}.mm-nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid #33586a;white-space:nowrap}.mm-nav a:hover,.mm-nav a:focus-visible{background:#f0b03c;color:#0e2934;border-color:#f0b03c;outline:none}.mm-nav span{display:flex;gap:8px}.mm-nav a.off{visibility:hidden}@media print{.mm-nav{display:none}}</style></head>
+<body><nav class="mm-nav" aria-label="Programma"><a href="../../nl/suite/ejercicios/index.html#nivel-1">&#9776; Programma</a><span><a href="../../nl/suite/ejercicios/in-de-klas-les-1-nl.html">&larr; Vorige</a><a href="aula-n1-clase-3-nl.html">Volgende &rarr;</a></span></nav><script>/* 2026-11-10 (Mario): si la clase se abrió desde Conocer (?invitado=), «☰ Programa» vuelve a Conocer y no a la lista pública del sitio. Dura lo que dura la pestaña. */(function(){try{var q=/[?&]invitado=mmk7q4/.test(location.search);if(q)sessionStorage.setItem('mmDesdeConocer','1');if(!q&&sessionStorage.getItem('mmDesdeConocer')!=='1')return;var a=document.querySelector('.mm-nav > a');if(!a)return;var l=(document.documentElement.lang||'es').slice(0,2),T={es:'Conocer',en:'Discover',fr:'Découvrir',nl:'Kennismaken',de:'Kennenlernen'};if(!T[l])l='es';a.href=(/^\/website\//.test(location.pathname)?'/portal/conocer.html':'/conocer.html')+'#'+l;a.innerHTML='&#9776; '+T[l];}catch(e){}})();</script>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">In de klas &mdash; Hoog en laag, lang en kort</div>
+  </header>
+  <main>
+    <h1 class="title">Hoog en laag, lang en kort</h1>
+    <h2 class="exercise">Niveau 1 · Les 2 · hoog en laag, lang en kort</h2>
+    <p class="rights">Gids voor de leerkracht. &copy; 2026 Music Motion.</p>
+    <div class="intro"><p><b>Voor:</b> kinderen van 8 tot 12 jaar, de hele klas. <b>Duur:</b> 50 minuten.</p>
+<p><b>Hoofddoel:</b> op het einde van de les leest elk duo op het bord een tekening van drie of vier streepjes (hoog of laag, kort of lang) en speelt ze op het klavier; de klas bevestigt met de duim of het klonk zoals de tekening.</p>
+<p><b>Nevendoelen:</b> (1) met het lichaam tonen of een klank hoog of laag is; (2) met de tel tellen hoeveel klikken een lange klank duurt.</p>
+<p><b>Wat je nodig hebt:</b> een computer met luidsprekers, het bord en, als het kan, een projector. Het helpt als je Les 1 al hebt gedaan. <b>Geen muziekkennis nodig:</b> het klavier doet het werk; jij begeleidt.</p>
+<p><b>Vóór de les (10 minuten, thuis): oefen met het klavier.</b> In de klas moet je aandacht bij de kinderen zijn, niet bij de knoppen. Herhaal deze stappen tot je ze kunt doen zonder in de gids te kijken:</p>
+<ul style="margin:4px 0 6px"><li>Open <a class="link" href="https://musicmotionsuite.com/apps/mmk-demo.html" target="_blank" rel="noopener">de Cosmic Keyboard</a>. Druk op <kbd>W</kbd> en daarna op <kbd>U</kbd>: de eerste is laag en de tweede hoog.</li><li>Speel <kbd>W</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>V</kbd> <kbd>B</kbd> <kbd>N</kbd> <kbd>,</kbd>, druk twee keer op <kbd>←</kbd> en speel ze opnieuw: de hele trap gaat lager. Druk twee keer op <kbd>→</kbd> om terug naar het midden te gaan.</li><li>Open de metronoom met <b>pulse</b>, stel met <b>tap</b> ongeveer 60 BPM in, druk op <b>start</b> en zet <b>click</b> aan, zoals in Les 1.</li><li>Speel, terwijl de metronoom loopt, <kbd>W</kbd> en laat de toets meteen los (één klik); houd hem daarna vier klikken lang ingedrukt. De klank duurt zolang de toets ingedrukt is.</li></ul></div>
+
+    <h2 class="section">Voor we beginnen: twee woorden uit de muziek</h2>
+<div class="pulsobox">
+<h3>Hoog en laag</h3>
+<p>In het dagelijks leven gaan „hoog” en „laag” vaak over het volume: „zet de muziek wat lager”. In de muziek niet: <b>hoog en laag gaan over de toonhoogte</b>. Een <b>hoge</b> klank is fijn en helder, zoals het gezang van een vogel of een fluitje. Een <b>lage</b> klank is dik en diep, zoals de donder, een grote trom of de contrabas van een orkest.</p>
+<p>Het volume is iets anders: een klank kan hoog en zacht zijn, of laag en luid. In deze les veranderen we het volume niet.</p>
+</div>
+<div class="pulsobox">
+<h3>Lang en kort</h3>
+<p>Een klank kan ook kort of lang duren. Om te meten hoe lang hij duurt, gebruiken we <b>de tel</b> uit Les 1: een <b>korte</b> klank duurt één klik van de metronoom („ta”); een <b>lange</b> klank duurt meer klikken („taaaa”). Op het klavier duurt de klank zolang de toets ingedrukt is.</p>
+<p>Voor de metronoom: <b>pulse</b>, een traag tempo met <b>tap</b> (ongeveer 60 BPM), <b>start</b> en <b>click</b>, zoals in Les 1.</p>
+</div>
+
+<h2 class="section">De les, stap voor stap</h2>
+    <p style="font-size:14.5px">De les verloopt in vijf fasen: het doel, wat ze al weten, de nieuwe leerstof, de toepassing en de terugblik op het doel. <b>Bij elke activiteit doe jij het eerst voor en volgt de klas je.</b></p>
+    <ol class="pasos"><li><span class="min">3 min</span><h3>Het doel</h3><p>Zeg tegen de klas, met deze of gelijkaardige woorden:</p><p class="dice">„Vandaag leren we een klank tekenen en een tekening spelen. Op het einde speelt elk duo op het klavier wat we op het bord tekenen.”</p><p>Schrijf het doel op het bord: <b>Ik kan een klank tekenen en een tekening spelen.</b></p></li><li><span class="min">5 min</span><h3>Wat ze al weten: de trap en de tel</h3><p>Speel met een trage metronoom <kbd>W</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>V</kbd> <kbd>B</kbd> <kbd>N</kbd> <kbd>,</kbd>, één toets per klik. De klas zingt elke noot op een „aa” en tikt de tel mee met de voeten, zoals in Les 1.</p><p class="dice">„Gaat de trap omhoog of omlaag? Waar begint de laagste noot?”</p></li><li><span class="min">17 min</span><h3>Nieuwe leerstof: hoog en laag, lang en kort</h3><ol style="margin:4px 0 8px;padding-left:22px"><li><b>Het liftspel</b> (5 min). Speel een lage noot (<kbd>W</kbd>) en daarna een hoge (<kbd>U</kbd>, op de bovenste rij). Doe het eerst zelf voor: <b>gehurkt</b> voor laag, <b>rechtop met de armen omhoog</b> voor hoog. Daarna losse noten door elkaar: de klas gaat omhoog of omlaag volgens wat ze hoort. Moeilijker: speel <b>twee noten na elkaar</b>; gaat de tweede omhoog of omlaag? De klas toont het met de hand.</li><li><b>De zingende glazen</b> (2 min). Vul vóór de les vier gelijke glazen: één vol, één half, één voor een derde en één leeg. Tik er in willekeurige volgorde tegen met een lepel, en de klas speelt het liftspel: gehurkt als de klank laag is, rechtop als hij hoog is. Vraag daarna: „Welk glas klinkt het laagst?” Het is dezelfde tekening als in het werkboek, hoofdstuk 2.</li><li><b>Hetzelfde liedje, hoog en laag</b> (3 min). Speel de trap op de onderste rij. Druk twee keer op <kbd>←</kbd> en speel ze nog eens: ze klinkt veel lager. Druk vier keer op <kbd>→</kbd> (twee keer om terug naar het midden te gaan en nog twee keer) en speel ze opnieuw: nu klinkt ze heel hoog. Het is dezelfde melodie, op een andere hoogte.</li><li><b>Lang en kort</b> (7 min). Speel met een trage metronoom <kbd>W</kbd> en laat de toets meteen los: dat is een <b>korte</b> klank, één klik. De klas klapt één keer in de handen. Houd <kbd>W</kbd> daarna <b>vier klikken</b> lang ingedrukt: dat is een <b>lange</b> klank. De klas opent langzaam de armen zolang hij klinkt en sluit ze als hij uitdooft. Wissel korte en lange klanken af zonder het aan te kondigen; de klas telt hardop hoeveel klikken elke lange klank duurt: twee, drie of vier.</li></ol><p class="dice">„Welk dier zou deze klank zijn? Een muis of een olifant? Welke lijkt op een reus en welke op een fee?”</p></li><li><span class="min">20 min</span><h3>Toepassing: de klank tekenen en de tekening spelen</h3><p><b>De klank tekenen</b> (10 min). Teken op het bord een lijn op halve hoogte: dat is de „middelste verdieping”. Een <b>hoge</b> klank teken je boven de lijn, een <b>lage</b> eronder. Een <b>korte</b> klank is een kort streepje; een <b>lange</b>, een lang streepje.</p><div class="dibujo"><svg viewBox="0 0 760 250" role="img" aria-label="Vier getekende klanken: kort en hoog, lang en hoog, kort en laag, lang en laag">
+<rect x="1" y="1" width="758" height="248" rx="10" fill="#f8fbfd" stroke="#cfdae1"/>
+<line x1="40" y1="125" x2="720" y2="125" stroke="#cfdae1" stroke-dasharray="6 6"/>
+<text x="24" y="58" font-family="Georgia,serif" font-size="20" fill="#f0b03c" font-weight="bold">hoog ↑</text>
+<text x="24" y="226" font-family="Georgia,serif" font-size="20" fill="#f0b03c" font-weight="bold">laag ↓</text>
+<rect x="130" y="63" width="30" height="14" rx="7" fill="#0e2934"/><text x="145.0" y="100" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">kort · hoog</text>
+<rect x="260" y="63" width="150" height="14" rx="7" fill="#0e2934"/><text x="335.0" y="100" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">lang · hoog</text>
+<rect x="470" y="173" width="30" height="14" rx="7" fill="#0e2934"/><text x="485.0" y="210" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">kort · laag</text>
+<rect x="560" y="173" width="150" height="14" rx="7" fill="#0e2934"/><text x="635.0" y="210" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">lang · laag</text>
+</svg></div><p>Eerst speel jij drie of vier klanken en een leerling tekent op het bord wat hij hoort; de klas zegt of de tekening klopt. Herhaal met andere leerlingen.</p><p><b>De tekening spelen</b> (10 min). Nu andersom. Doe het eerst zelf voor met dit voorbeeld, terwijl de metronoom loopt: drie korte klanken die stijgen en een lange onderaan.</p><div class="dibujo"><svg viewBox="0 0 760 170" role="img" aria-label="Voorbeeld om te spelen: drie korte klanken die stijgen en een lange onderaan">
+<rect x="1" y="1" width="758" height="168" rx="10" fill="#f8fbfd" stroke="#cfdae1"/>
+<line x1="40" y1="85" x2="720" y2="85" stroke="#cfdae1" stroke-dasharray="6 6"/>
+<rect x="90" y="118" width="34" height="14" rx="7" fill="#0e2934"/>
+<rect x="190" y="93" width="34" height="14" rx="7" fill="#0e2934"/>
+<rect x="290" y="68" width="34" height="14" rx="7" fill="#0e2934"/>
+<rect x="400" y="123" width="260" height="14" rx="7" fill="#0e2934"/>
+<text x="107" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="bold" fill="#24485a">W</text>
+<text x="207" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="bold" fill="#24485a">C</text>
+<text x="307" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="bold" fill="#24485a">B</text>
+<text x="530" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="bold" fill="#24485a">W · 4 klikken</text>
+<text x="380" y="30" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="20" fill="#24485a">ta · ta · ta · taaaa</text>
+</svg></div><ol style="margin:4px 0 8px;padding-left:22px"><li>Een leerling tekent drie of vier streepjes op het bord.</li><li>Een duo komt naar de computer: de ene wijst elk streepje aan en de andere speelt het (onderste rij voor laag, bovenste rij voor hoog; kort is één klik, lang zijn meer klikken).</li><li>De klas steekt de duim op als het klonk zoals de tekening. Zo niet, dan probeert het duo het opnieuw.</li><li>De duo’s komen om de beurt. Terwijl een duo speelt, toont de rest met het lichaam wat ze horen: hoog of laag, armen dicht of open.</li></ol><p>Deze tekening is de grootvader van de partituur: in de volgende les worden de streepjes noten op vijf lijnen. Zo begonnen ook de monniken in de middeleeuwen: vóór er een notenbalk bestond, tekenden ze de melodie met kleine tekentjes die boven de tekst stegen en daalden: de <b>neumen</b>.</p></li><li><span class="min">5 min</span><h3>Terugblik op het doel</h3><p>Ga terug naar de zin op het bord. Maak een laatste tekening van vier streepjes; de duo’s die nog niet aan de beurt waren, spelen ze, en de klas steekt de duim op als het klopt.</p><p class="dice">„Hoe wisten jullie of een streepje boven of onder moest? En of het lang of kort was?”</p><p>Luister naar de antwoorden: luisteren of de klank fijn of dik is, kijken naar de rij van het toetsenbord, de klikken van de metronoom tellen.</p></li></ol>
+<div class="pulsobox"><h3>Met de melodiemachine: hoog, laag, lang en kort</h3>
+<p>Om de les af te sluiten, of om de volgende te beginnen. Open <a class="link" href="https://musicmotionsuite.com/suite/tragamonedas.html?lang=nl" target="_blank" rel="noopener">de melodiemachine</a>, zet het <b>Tempo</b> lager, op ongeveer 80, en druk op <b>SPIN</b>.</p>
+<ol style="margin:4px 0 6px;padding-left:22px">
+<li><b>Het liftspel.</b> Druk op <b>PLAY</b>: de klas toont met de hand of de melodie stijgt of daalt, zoals bij het liftspel van vandaag.</li>
+<li><b>Lang en kort.</b> Nog eens <b>PLAY</b>: telkens als er een lange noot klinkt, opent de klas langzaam de armen; bij de korte klapt ze één keer in de handen.</li>
+<li><b>De tekening in de machine.</b> Toon het scherm: elke noot staat hoger of lager op vijf lijnen, zoals de streepjes op het bord. In de volgende les leren ze die lezen.</li>
+<li><b>Stijgt of daalt het?</b> In dezelfde machine zit het spel <a class="link" href="https://musicmotionsuite.com/suite/tragamonedas.html?lang=nl#sube" target="_blank" rel="noopener">Stijgt of daalt het?</a>: er klinken twee noten en de klas toont met de hand of de tweede omhoog of omlaag gaat. Het zijn tien rondes, telkens met de noten dichter bij elkaar. De leerlingen spelen het ook in hun werkboek (hoofdstuk 2).</li></ol>
+<p>Met <b>HOLD</b> houdt de klas de maat die ze het mooist vindt vast en blijft ze verder draaien.</p></div>
+<div class="ojo"><b>Als het moeilijk gaat:</b><ul style="margin:6px 0 0;padding-left:20px"><li><b>Ze verwarren hoog met luid:</b> zing zelf dezelfde noot zacht en daarna luid: het is dezelfde hoogte. Speel daarna <kbd>W</kbd> en <kbd>U</kbd>: dat is wel laag en hoog. Herinner hen eraan: „hoog en laag is fijn of dik, niet meer of minder lawaai”.</li><li><b>Ze horen geen verschil tussen twee noten die dicht bij elkaar liggen:</b> gebruik noten die ver uit elkaar liggen, <kbd>W</kbd> en <kbd>U</kbd>, en breng ze stap voor stap dichter bij elkaar. Laat hen de ogen sluiten om te luisteren.</li><li><b>Ze laten de toets te vroeg los:</b> tel de klikken hardop met hen mee („één, twee, drie, vier”) en haal op het einde zelf je hand weg.</li><li><b>De tekening klopt niet met wat ze spelen:</b> speel streepje per streepje, langzaam; na elke klank zegt de klas of hij hoog of laag was, kort of lang.</li></ul></div>
+
+    <h2 class="section">De toetsen en hun noten</h2>
+<div class="kbd3"><div class="lay"><button type="button" data-lay="QWERTY">QWERTY</button><button type="button" data-lay="AZERTY">AZERTY</button><button type="button" data-lay="QWERTZ">QWERTZ</button></div><span class="kname">Boven · hoge noten</span><div class="teclas"><div class="tecla"><div class="k" data-r="top" data-j="0">Q</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="top" data-j="1">W</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="top" data-j="2">E</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="top" data-j="3">R</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="top" data-j="4">T</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="top" data-j="5">Y</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="top" data-j="6">U</div><div class="nt" data-i="6"></div></div></div><span class="kname">In het midden</span><div class="teclas"><div class="tecla"><div class="k" data-r="mid" data-j="0">A</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="1">S</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="2">D</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="3">F</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="4">G</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="5">H</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="6">J</div><div class="nt" data-i="6"></div></div></div><span class="kname">Onder · lage noten</span><div class="teclas"><div class="tecla"><div class="k" data-r="low" data-j="0">Z</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="low" data-j="1">X</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="low" data-j="2">C</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="low" data-j="3">V</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="low" data-j="4">B</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="low" data-j="5">N</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="low" data-j="6">M</div><div class="nt" data-i="6"></div></div></div></div>
+<p class="caption">De onderste rij is de laagste en de bovenste de hoogste; alle drie hebben ze dezelfde trap, van Do tot Si. De pijltjestoetsen <kbd>←</kbd> en <kbd>→</kbd> veranderen het octaaf: de hele trap gaat lager of hoger. In deze gids staan de toetsen van een AZERTY-toetsenbord: de onderste rij gaat van <kbd>W</kbd> tot de komma <kbd>,</kbd>; op een QWERTY-toetsenbord van <kbd>Z</kbd> tot <kbd>M</kbd>.</p>
+<p class="caption"><b>Namen van de noten:</b> Do = C · Re = D · Mi = E · Fa = F · Sol = G · La = A · Si = B. Sommige methodes gebruiken de letters: beide benoemen dezelfde noot.</p>
+<div class="check"><b>Zo zie je dat het gelukt is:</b> minstens drie op de vier duo’s spelen de tekening op het bord met de juiste hoogte en duur, en de klas bevestigt het met de duim. Bovendien toont de meerderheid met het lichaam of een klank hoog of laag is en telt ze de klikken van een lange klank juist.</div>
+
+    <div class="intro ampliar"><p><b>Deze lessen zijn een vertrekpunt.</b> Elke leerkracht kan de voorbeelden aanpassen aan de eigen klas. Wij van onze kant blijven nieuwe lesonderwerpen toevoegen op basis van de vragen die we krijgen via het <a class="link" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">contactformulier</a>.</p></div>
+<div class="tarjeta">
+      <div class="tij">&#9986; &nbsp; uitknippen en mee naar huis nemen</div>
+      <h2>Hoog en laag, lang en kort, thuis</h2>
+<p class="sub">Voor ouders · 10 minuten per week · geen muziekkennis nodig</p>
+<p>Vandaag hebben we in de klas geleerd dat een klank hoog of laag kan zijn, en lang of kort. Speel deze week samen:</p>
+<ol>
+<li>Open het klavier op de computer: <b>musicmotionsuite.com/apps/mmk-demo.html</b></li>
+<li><b>Het liftspel:</b> de ene speelt een toets van de onderste rij (laag) of van de bovenste rij (hoog); de andere hurkt of rekt zich uit. Wissel daarna om.</li>
+<li><b>Lang of kort:</b> de ene houdt een toets een tijdje ingedrukt of laat hem meteen los; de andere opent de armen zolang de klank duurt.</li>
+<li><b>Klankenjagers:</b> zoek in huis een hoge klank (een deurbel, een vogel), een lage (de wasmachine, een vrachtwagen die voorbijrijdt), een lange en een korte. Teken ze zoals in de klas: boven of onder, een kort of een lang streepje.</li>
+<li><b>De melodiemachine:</b> open <b>musicmotionsuite.com/suite/tragamonedas.html</b> en druk op <b>SPIN</b> en <b>PLAY</b>. Stijgt of daalt de melodie? Waar zit een lange noot? Met <b>PRINT</b> druk je de melodie af op een blad. Je hoeft je niet te registreren.</li>
+<li><b>Het wandelende hondje:</b> open <b>musicmotionsuite.com/suite/tragamonedas.html#paseo</b>. Canelo wandelt op de tel van de melodie: tik bij elke stap op <b>TAP HERE</b> (of de spatiebalk). Laat hem niet struikelen! Eerst het kind, dan de volwassene.</li>
+<li><b>De zingende glazen:</b> vul een paar gelijke glazen met verschillende hoeveelheden water en tik er zachtjes tegen met een lepel. Welk glas klinkt het hoogst: dat met meer water of dat met minder?</li>
+</ol>
+    </div>
+  </main>
+  <footer class="doc-footer">
+    <span>musicmotionsuite.com</span>
+    <span>&copy; 2026 Music Motion</span>
+  </footer>
+</div>
+<script>/* nombres de las notas segun el idioma de la pagina (2026-10-07): el armado de idiomas no traduce
+   palabras de menos de tres letras, y en aleman la nota «B» es otra (Si = H) */
+(function(){var N={es:['Do','Re','Mi','Fa','Sol','La','Si'],en:['C','D','E','F','G','A','B'],fr:['Do','Ré','Mi','Fa','Sol','La','Si'],nl:['C','D','E','F','G','A','B'],de:['C','D','E','F','G','A','H']};
+var l=(document.documentElement.lang||'es').slice(0,2),n=N[l]||N.es;
+[].forEach.call(document.querySelectorAll('.nt[data-i]'),function(e){e.textContent=n[+e.getAttribute('data-i')];});})();</script>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+<script>/* 2026-10-14 · teclado de tres filas: las letras siguen al tipo de teclado; cada idioma abre con el suyo */
+(function(){var L={QWERTY:{top:'QWERTYU',mid:'ASDFGHJ',low:'ZXCVBNM'},AZERTY:{top:'AZERTYU',mid:'QSDFGHJ',low:'WXCVBN,'},QWERTZ:{top:'QWERTZU',mid:'ASDFGHJ',low:'YXCVBNM'}};
+var lg=(document.documentElement.lang||'es').slice(0,2),cur=lg==='fr'||lg==='nl'?'AZERTY':lg==='de'?'QWERTZ':'QWERTY';
+function pon(k){cur=k;[].forEach.call(document.querySelectorAll('.k[data-r]'),function(e){e.textContent=L[k][e.getAttribute('data-r')][+e.getAttribute('data-j')];});
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.textContent=b.getAttribute('data-lay');b.setAttribute('aria-pressed',b.getAttribute('data-lay')===k);});}
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.addEventListener('click',function(){pon(b.getAttribute('data-lay'));});});pon(cur);})();</script>
+<!-- 2026-10-18 (Mario): desde la Clase 2, las lecciones son para cuentas que compraron créditos; la entrada es la misma de la suite (un crédito = un día). -->
+<script src="../../apps/mm-puerta.js" data-pagado="si"></script>
+</body>
+</html>

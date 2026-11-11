@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>De solsleutel · In de klas · Music Motion</title>
+<style>
+  :root {
+    --navy:#0e2934; --amber:#f0b03c; --gray:#6b6b6b; --lightgray:#9a9a9a;
+    --hilite:#d6e9f5; --paper:#ffffff; --bg:#eef1f3;
+    box-sizing:border-box;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); font-family:Calibri, Arial, sans-serif;
+    color:#1a1a1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    max-width:900px; margin:24px auto; background:var(--paper);
+    padding:0; box-shadow:0 2px 18px rgba(0,0,0,0.12); border-radius:4px; overflow:hidden;
+  }
+  header.doc-header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 40px; border-bottom:3px solid var(--amber);
+  }
+  .logo { font-family:Georgia, serif; font-weight:bold; font-size:18px; color:var(--navy); }
+  .logo .delta { color:var(--amber); }
+  .logo .brand { font-family:Calibri, Arial, sans-serif; letter-spacing:1.5px; font-size:13px; margin-left:6px;}
+  .doc-title { font-style:italic; color:var(--gray); font-size:14px; }
+  main { padding:8px 40px 40px; }
+  h1.title { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:34px; margin:30px 0 6px; }
+  h2.exercise { font-family:Georgia, serif; font-style:italic; font-weight:bold; color:var(--navy); font-size:22px; margin:26px 0 10px; }
+  p.rights { font-size:12px; line-height:1.5; color:var(--gray); margin:-4px 0 18px; }
+  h2.section { text-align:center; font-family:Georgia, serif; color:var(--navy); font-size:24px; margin:40px 0 18px; }
+  p { font-size:15px; line-height:1.5; margin:10px 0; }
+  .tip b { color:#000; }
+  a.link { color:#2a6db5; word-break:break-all; }
+  img.shot { display:block; width:100%; border-radius:6px; margin:14px 0 18px; box-shadow:0 1px 8px rgba(0,0,0,.25); break-inside:avoid; }
+  ol, ul { font-size:15px; line-height:1.5; }
+  ol.alpha { list-style-type:lower-alpha; }
+  .caption { text-align:center; font-style:italic; color:var(--gray); font-size:13px; margin:8px 0 26px; }
+  table.extable { border-collapse:collapse; width:100%; margin-top:10px; table-layout:fixed; }
+  table.extable thead th {
+    background:var(--navy); color:#fff; font-size:14px; padding:8px 4px; border:1px solid var(--navy);
+  }
+  table.extable td { border:1px solid #999; vertical-align:top; padding:4px 2px; }
+  table.extable td.mcol {
+    text-align:center; vertical-align:middle; font-weight:bold; color:var(--navy);
+    font-size:16px; border:2px solid var(--navy); width:9%;
+  }
+  table.extable td.sub { text-align:center; width: 11.375%; border-top:2px solid var(--navy); border-bottom:2px solid var(--navy); border-left:none; border-right:none;}
+  table.extable td.subcell-end { border-right:2px solid var(--navy) !important; }
+  table.extable tr.grouprow td:nth-child(2) { border-left:2px solid var(--navy); }
+  table.extable tr.grouprow td:nth-child(6) { border-left:2px solid var(--navy); }
+  .ln { font-weight:bold; line-height:1.3; min-height:1em; }
+  .ln.hilite { background:var(--hilite); }
+  tr.grouprow { break-inside: avoid; page-break-inside: avoid; }
+  .congrats {
+    text-align:center; font-family:Georgia,serif; font-style:italic; font-weight:bold;
+    color:var(--navy); font-size:18px; border-top:2px solid var(--amber); padding-top:16px; margin-top:30px;
+  }
+  footer.doc-footer {
+    display:flex; justify-content:space-between; padding:14px 40px; border-top:1px solid #ccc;
+    font-size:12px; color:var(--lightgray);
+  }
+
+  /* ── Bloques de apoyo para el usuario no musico (2026-09-25) ── */
+  .intro { border:1px solid #cfdae1; background:#f8fbfd; border-radius:4px;
+    padding:14px 18px; margin:16px 0 22px; }
+  .intro p { margin:6px 0; font-size:15px; }
+  .leerbox { border:1px solid var(--navy); border-left:5px solid var(--amber);
+    background:#f8fbfd; border-radius:4px; padding:14px 18px; margin:18px 0 6px; }
+  .leerbox h3 { font-family:Georgia, serif; color:var(--navy); font-size:17px; margin:0 0 8px; }
+  .leerbox dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:0;
+    font-size:14.5px; line-height:1.45; }
+  .leerbox dt { font-weight:bold; color:var(--navy); white-space:nowrap; }
+  .leerbox dd { margin:0; }
+  .leerbox .ej { margin:12px 0 0; padding-top:10px; border-top:1px dashed #b9cdd8; font-size:14.5px; }
+  .check { background:#f1f7ef; border-left:5px solid #4d8b3f; border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .check b { color:#2f5c26; }
+  .ojo { background:#fdf5e8; border-left:5px solid var(--amber); border-radius:4px;
+    padding:10px 14px; margin:12px 0; font-size:14.5px; }
+  .siguiente { text-align:center; font-size:14.5px; color:var(--gray); margin:6px 0 0; }
+  .teclas{display:flex;justify-content:center;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+  .tecla{width:62px;border:1px solid var(--navy);border-bottom-width:4px;border-radius:6px;text-align:center;padding:8px 0 6px;background:#fff6df;break-inside:avoid}
+  .tecla .k{font-family:Consolas,monospace;font-weight:bold;font-size:22px;color:var(--navy)}
+  .tecla .nt{font-family:Georgia,serif;font-size:16px;color:#24485a;margin-top:2px}
+  .teclas.mini .tecla{width:48px;padding:5px 0 4px}
+  .teclas.mini .tecla .k{font-size:17px} .teclas.mini .tecla .nt{font-size:13px}
+  /* 2026-10-14 · el teclado de tres filas, como en el Coach (QWERTY · AZERTY · QWERTZ) */
+  .kbd3{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;break-inside:avoid}
+  .kbd3 .lay{display:flex;gap:6px;justify-content:center;margin-bottom:4px}
+  .kbd3 .lay button{font:bold 12px Consolas,monospace;padding:4px 9px;border:1px solid var(--navy);border-radius:5px;background:#fff;color:var(--navy);cursor:pointer}
+  .kbd3 .lay button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .kbd3 .kname{display:block;text-align:center;font-size:12.5px;color:#5b6876;margin-top:6px}
+  .kbd3 .teclas{margin:4px 0 4px}
+  @media print{.kbd3 .lay button:not([aria-pressed="true"]){display:none}}
+  h2.section{break-after:avoid}
+  .pulsobox{border:1px solid var(--navy);border-left:5px solid var(--amber);background:#f8fbfd;border-radius:4px;padding:14px 18px;margin:18px 0}
+  .pulsobox h3{font-family:Georgia,serif;color:var(--navy);font-size:18px;margin:0 0 8px}
+  .pulsobox ol{margin:6px 0 0 0}
+  img.shot2{display:block;width:100%;border-radius:6px;margin:10px 0 6px;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+  @media print { .intro, .leerbox, .check, .ojo { break-inside:avoid; } }
+  @media print {
+    body { background:#fff; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    header.doc-header { position:running(pageHeader); }
+    footer.doc-footer { position:running(pageFooter); }
+    @page { margin:70px 50px 60px; }
+  }
+
+  /* teléfono (2026-09-30): nombres largos de archivo, la tabla y el pie caben en la pantalla; no toca la impresión */
+  @media screen and (max-width:640px){
+    code, kbd, .btn { overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+    table { max-width:100%; }
+    table.mov td:first-child { white-space:normal; }
+    footer.doc-footer { flex-direction:column; gap:4px; padding:14px 16px; text-align:left; }
+  }
+
+  /* ── Para el aula (2026-10-07) ── */
+  .pasos{counter-reset:paso;list-style:none;padding:0;margin:10px 0}
+  .pasos>li{counter-increment:paso;position:relative;padding:10px 14px 10px 54px;margin:10px 0;border:1px solid #cfdae1;border-radius:4px;background:#fff;break-inside:avoid}
+  .pasos>li::before{content:counter(paso);position:absolute;left:12px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:bold;display:grid;place-items:center;font-size:15px}
+  .pasos .min{float:right;color:var(--gray);font-size:13px;font-style:italic}
+  .pasos h3{margin:0 0 4px;font-family:Georgia,serif;color:var(--navy);font-size:17px}
+  .pasos p{margin:4px 0;font-size:14.5px}
+  .dice{font-style:italic;color:#24485a}
+  kbd{font-family:Consolas,monospace;background:#eef1f3;border:1px solid #b9cdd8;border-bottom-width:2px;border-radius:3px;padding:0 5px;font-size:13.5px;font-weight:bold;color:var(--navy)}
+  .tarjeta{border:2px dashed var(--navy);border-radius:8px;padding:18px 22px;margin:34px 0 10px;background:#fffdf6;break-inside:avoid;page-break-before:always}
+  .tarjeta .tij{font-size:12px;color:var(--gray);text-align:center;margin:-8px 0 10px;letter-spacing:1px}
+  .tarjeta h2{font-family:Georgia,serif;color:var(--navy);font-size:21px;margin:0 0 4px}
+  .tarjeta .sub{color:var(--gray);font-size:13.5px;margin:0 0 12px}
+  .tarjeta ol{font-size:15px}
+  .tarjeta .priv{font-size:12.5px;color:var(--gray);border-top:1px solid #e3d9b8;padding-top:8px;margin-top:12px}
+  @media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:none}}
+  /* Nivel 1 · Clase 2 (2026-10-15): el dibujo del sonido */
+  .dibujo{border:1px solid #c9d6de;border-radius:8px;padding:12px 14px 6px;margin:12px 0 8px;background:#fff;break-inside:avoid}
+  @media print{.pulsobox{break-inside:avoid}}
+  .dibujo svg{display:block;width:100%;height:auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media screen and (max-width:640px){.dos{grid-template-columns:1fr}}
+  /* Nivel 1 · Clase 3 y 4 (2026-10-18) */
+  .sabias{background:#f4f1fb;border-left:5px solid #7b5ea7;border-radius:4px;padding:10px 14px;margin:12px 0;font-size:14.5px;break-inside:avoid}
+  .sabias b{color:#4b3575}
+  .partitura{border:1px solid #c9d6de;border-radius:8px;padding:10px 12px 4px;margin:12px 0 8px;background:#fff;break-inside:avoid;overflow-x:auto}
+  .partitura svg{display:block;width:100%;height:auto;margin:0 auto}
+  .partitura .pie{font-size:13px;color:#5b6876;text-align:center;margin:2px 0 6px}
+  .pantalla{font-size:13.5px;color:#5b6876;margin:4px 0 0;font-style:italic}
+</style>
+
+<!-- 2026-10-08 · icono de inicio: grupo web (ver _Brand/iconos-de-inicio.md) -->
+
+
+
+<meta name="theme-color" content="#07070e">
+<meta name="apple-mobile-web-app-title" content="Music Motion">
+<style>.mm-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:#0e2934;font:600 14px/1.2 Lato,Calibri,Arial,sans-serif}.mm-nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:6px;border:1px solid #33586a;white-space:nowrap}.mm-nav a:hover,.mm-nav a:focus-visible{background:#f0b03c;color:#0e2934;border-color:#f0b03c;outline:none}.mm-nav span{display:flex;gap:8px}.mm-nav a.off{visibility:hidden}@media print{.mm-nav{display:none}}</style></head>
+<body><nav class="mm-nav" aria-label="Programma"><a href="../../nl/suite/ejercicios/index.html#nivel-1">&#9776; Programma</a><span><a href="aula-n1-clase-3-nl.html">&larr; Vorige</a><a href="aula-n1-clase-5-nl.html">Volgende &rarr;</a></span></nav><script>/* 2026-11-10 (Mario): si la clase se abrió desde Conocer (?invitado=), «☰ Programa» vuelve a Conocer y no a la lista pública del sitio. Dura lo que dura la pestaña. */(function(){try{var q=/[?&]invitado=mmk7q4/.test(location.search);if(q)sessionStorage.setItem('mmDesdeConocer','1');if(!q&&sessionStorage.getItem('mmDesdeConocer')!=='1')return;var a=document.querySelector('.mm-nav > a');if(!a)return;var l=(document.documentElement.lang||'es').slice(0,2),T={es:'Conocer',en:'Discover',fr:'Découvrir',nl:'Kennismaken',de:'Kennenlernen'};if(!T[l])l='es';a.href=(/^\/website\//.test(location.pathname)?'/portal/conocer.html':'/conocer.html')+'#'+l;a.innerHTML='&#9776; '+T[l];}catch(e){}})();</script>
+<div class="page">
+  <header class="doc-header">
+    <div class="logo">m<span class="delta">&Delta;</span>m<span class="brand">MUSIC MOTION</span></div>
+    <div class="doc-title">In de klas &mdash; De solsleutel</div>
+  </header>
+  <main>
+    <h1 class="title">De solsleutel</h1>
+    <h2 class="exercise">Niveau 1 · Les 4 · de namen van de noten</h2>
+    <p class="rights">Gids voor de leerkracht. &copy; 2026 Music Motion.</p>
+    <div class="intro"><p><b>Voor:</b> kinderen van 8 tot 12 jaar, de hele klas. <b>Duur:</b> 50 minuten.</p>
+<p><b>Hoofddoel:</b> op het einde van de les leest elk duo hardop de namen van een korte melodie die in de solsleutel op het bord staat, door te tellen vanaf Sol, en speelt ze op het klavier; de klas bevestigt met de duim of de geschreven melodie klonk.</p>
+<p><b>Nevendoelen:</b> (1) de solsleutel tekenen en lijn 2 aanwijzen, waar Sol woont; (2) de buren van Sol benoemen: La één trede hoger en Fa één trede lager.</p>
+<p><b>Wat je nodig hebt:</b> een computer met luidsprekers en internet, het bord en, als het kan, een projector. Het blad met vijf lijnen uit Les 3. Het helpt als je Les 1 tot 3 al hebt gedaan. <b>Geen muziekkennis nodig:</b> het klavier doet het werk; jij begeleidt.</p>
+<p><b>Vóór de les (10 minuten, thuis): oefen met het klavier en het verhaal.</b> In de klas moet je aandacht bij de kinderen zijn, niet bij de knoppen. Herhaal deze stappen tot je ze kunt doen zonder in de gids te kijken:</p>
+<ul style="margin:4px 0 6px"><li>Open <a class="link" href="https://musicmotionsuite.com/nl/suite/seikilos-ninos.html" target="_blank" rel="noopener">de kinderversie van het lied van Seikilos</a>. Klik op <b>Beginnen</b> en blader met <b>Volgende</b> door de eerste drie pagina’s: het oudste lied, de stad Tralles en het lied in steen. Ga daarna verder tot de pagina <b>Luister ernaar!</b> en klik op <b>Luisteren</b>.</li><li>Alleen voor jou: open <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/seikilos-nl.mmf&amp;page" target="_blank" rel="noopener">het lied van Seikilos in de Score</a> en luister ernaar terwijl je de noten met de tekst eronder bekijkt. Je hoeft het niet in de klas te tonen: de melodie staat in 6/8 en gaat van de lage Re tot de hoge Re, meer dan wat de kinderen in Niveau 1 lezen. Let op: ze begint op Sol, op lijn 2. Dat gebruik je om de les af te sluiten.</li><li>Open, voor de leerlingen binnenkomen, twee tabbladen op de computer: de kinderversie (voor het verhaal) en het lied van Seikilos in de Score (voor de uitdaging). Zo ga je van het ene naar het andere zonder te zoeken. In de balk boven de partituur zet <b>⛶ FULL</b> ze op volledig scherm om te projecteren (Esc om terug te keren), en met <b>−</b> / <b>+</b> maak je het blad kleiner of groter tot het hele stuk erop past. Is er geen projector, druk de partituur dan af met de knop <b>PRINT</b> van de Score.</li><li><b>De tempoknop (nieuw):</b> in dezelfde balk opent <b>♩ PULSE</b> een klein paneel met een draaiknop. Sleep hem omhoog en de muziek gaat sneller; omlaag gaat ze trager. De metronoomaanduiding op het blad verandert mee: het getal en het woord (Lento, Adagio, Andante, Allegro…). Met een dubbelklik keer je terug naar het geschreven tempo. Probeer hem voor de les uit met het lied van Seikilos; je gebruikt hem in alle lessen met een partituur.</li><li>Teken de solsleutel op papier en begin met de krul rond lijn 2. Herhaal tot het lukt zonder na te denken.</li><li>Open <a class="link" href="https://musicmotionsuite.com/apps/mmk-demo.html" target="_blank" rel="noopener">de Cosmic Keyboard</a>. Speel <kbd>B</kbd>: dat is de Sol van de onderste rij. Daarna zijn buren: <kbd>N</kbd> (La) en <kbd>V</kbd> (Fa).</li><li>Speel de korte melodie van deze gids, langzaam: <kbd>W</kbd> <kbd>C</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>X</kbd> <kbd>V</kbd> <kbd>C</kbd> <kbd>W</kbd>.</li></ul></div>
+
+    <h2 class="section">Voor we beginnen: de sleutel van het huis</h2>
+<div class="pulsobox">
+<h3>Het lied van de steen</h3>
+<p>Bijna tweeduizend jaar geleden liet een man die <b>Seikilos</b> heette, in Tralles, een Griekse stad in wat nu Turkije is, een lied graveren in een klein marmeren zuiltje. Boven elke lettergreep zette hij <b>een letter die zegt welke noot je moet zingen</b>. Het is het oudste volledige lied dat we kennen, en we kunnen het nog altijd zingen omdat de noten een naam hadden en opgeschreven werden.</p>
+<p>De steen is als een boek in een bibliotheek: bijna tweeduizend jaar lang stond het lied daar, voor iedereen zichtbaar, en stil voor wie die letters niet kon lezen. Het klonk opnieuw toen iemand ze kon lezen. Dat begint de klas vandaag te leren: muziek lezen, zodat geen enkele bibliotheek van klanken voor hen gesloten blijft.</p>
+<p>Het lied werd gezongen met de <b>natuurlijke klanken</b> van de Grieken, dezelfde die de Cosmic Keyboard speelt. In deze les hoef je dat niet uit te leggen: je vertelt de kinderen alleen het verhaal en ze luisteren naar het lied.</p>
+<p>De rest van het verhaal (de trein, de bloempotzuil, de brand en de reis naar Kopenhagen) komt aan bod in Niveau 2.</p>
+</div>
+<div class="pulsobox">
+<h3>De solsleutel</h3>
+<p>Aan het begin van de notenbalk staat een <b>sleutel</b>. De bekendste is de <b>solsleutel</b>: zijn krul draait rond <b>lijn 2</b> en geeft die lijn de naam <b>Sol</b>. Hij is ontstaan uit de letter <b>G</b>, en G is Sol, zoals de C van de monniken; na eeuwen werd hij een krul. Hij is als de sleutel van het huis: vanuit die Sol weet je hoe alle andere noten heten. Eén trede hoger is La, één trede lager is Fa.</p>
+<div class="partitura"><svg viewBox="0 0 544.2 132.0" role="img" aria-label="De trap van Do tot Do in de solsleutel" style="max-width:871px"><rect x="6.00" y="45.35" width="534.20" height="1.30" fill="#0e2934"/><rect x="6.00" y="55.35" width="534.20" height="1.30" fill="#0e2934"/><rect x="6.00" y="65.35" width="534.20" height="1.30" fill="#0e2934"/><rect x="6.00" y="75.35" width="534.20" height="1.30" fill="#0e2934"/><rect x="6.00" y="85.35" width="534.20" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(10.00,76.00) scale(0.0400,-0.0400)" d="M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z"/><rect x="50.44" y="95.20" width="20.00" height="1.60" fill="#0e2934"/><path fill="#0e2934" transform="translate(52.00,96.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="58.00" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Do</text><text x="58.00" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">W</text><path fill="#0e2934" transform="translate(112.90,91.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="118.90" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Re</text><text x="118.90" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">X</text><path fill="#0e2934" transform="translate(173.80,86.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="179.80" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Mi</text><text x="179.80" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">C</text><path fill="#0e2934" transform="translate(234.70,81.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="240.70" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Fa</text><text x="240.70" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">V</text><path fill="#0e2934" transform="translate(295.60,76.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="301.60" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Sol</text><text x="301.60" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">B</text><path fill="#0e2934" transform="translate(356.50,71.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="362.50" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">La</text><text x="362.50" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">N</text><path fill="#0e2934" transform="translate(417.40,66.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="423.40" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Si</text><text x="423.40" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">,</text><path fill="#0e2934" transform="translate(478.30,61.00) scale(0.0400,-0.0400)" d="M216 125C83 125 0 70 0 2C0 -65 57 -125 206 -125C370 -125 422 -68 422 2C422 73 309 125 216 125ZM111 63C122 98 159 103 190 103C259 103 314 29 314 -31C314 -62 301 -90 268 -98C258 -101 247 -102 237 -102C201 -102 164 -78 143 -50C123 -27 108 7 108 39C108 47 109 55 111 63Z"/><text x="484.30" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Do</text><text x="484.30" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">Q</text></svg><p class="pie">De trap in de solsleutel, met de namen en de toetsen. De eerste Do heeft een eigen streepje nodig: een hulplijntje, onder de notenbalk.</p></div>
+<div class="sabias"><b>De tempoknop:</b> boven de partituur, links, staan een woord en een getal, bijvoorbeeld „Adagio ♩ = 72”. Het woord zegt het karakter (Adagio is rustig, Allegro is vrolijk en snel) en het getal hoeveel tellen er per minuut zijn. De woorden zijn Italiaans en muzikanten over de hele wereld gebruiken ze. Je hoeft ze niet aan te leren: als je aan de knop van PULSE draait, zien de kinderen ze veranderen en leren ze die vanzelf, al luisterend.</div><div class="sabias"><b>Wist je dat…?</b> Op de lijnen wonen <b>Mi, Sol, Si, Re, Fa</b> (van onder naar boven) en in de tussenruimtes <b>Fa, La, Do, Mi</b>. Sommige leerkrachten onthouden ze met een zin die de klas zelf verzint, één woord per lijn.</div>
+</div>
+
+<h2 class="section">De les, stap voor stap</h2>
+    <p style="font-size:14.5px">De les verloopt in vijf fasen: het doel, wat ze al weten, de nieuwe leerstof, de toepassing en de terugblik op het doel. <b>Bij elke activiteit doe jij het eerst voor en volgt de klas je.</b></p>
+    <ol class="pasos"><li><span class="min">5 min</span><h3>Het doel: het lied van de steen</h3><p>Projecteer <a class="link" href="https://musicmotionsuite.com/nl/suite/seikilos-ninos.html" target="_blank" rel="noopener">de kinderversie van het lied van Seikilos</a> en blader met de klas door de eerste drie pagina’s. Vertel het verhaal in je eigen woorden of lees de tekst van elke pagina voor. Ga daarna verder tot de pagina <b>Luister ernaar!</b> en klik op <b>Luisteren</b>: de klas luistert en kijkt hoe de lettergrepen op de steen oplichten terwijl het lied klinkt.</p><p class="dice">„Dit lied is bijna tweeduizend jaar oud en we kunnen het nog altijd horen omdat de noten opgeschreven werden. Eeuwenlang was het stil, tot iemand het kon lezen. Vandaag leren we onze eigen noten lezen. Op het einde leest elk duo de namen van een melodie op het bord en speelt het ze op het klavier.”</p><p>Schrijf het doel op het bord: <b>Ik kan de namen van de noten lezen met de solsleutel.</b></p></li><li><span class="min">5 min</span><h3>Wat ze al weten: het huis met vijf verdiepingen</h3><p>Teken de notenbalk. Tel zelf de lijnen van onder naar boven; de tweede keer telt de klas met je mee. Daarna „lijn of tussenruimte?” met drie of vier noten, met de gebaren uit Les 3: armen gekruist voor de lijn, handen tegen elkaar voor de tussenruimte.</p><p class="dice">„We weten waar elke noot woont in het huis. Maar hoe heet ze?”</p></li><li><span class="min">17 min</span><h3>Nieuwe leerstof: de sleutel van het huis</h3><ol style="margin:4px 0 8px;padding-left:22px"><li><b>De sleutel</b> (7 min). Teken rustig de solsleutel en begin met de krul rond lijn 2. Daarna tekent iedereen hem groot in de lucht, met de hele arm, terwijl jij hem nog eens op het bord tekent. Dan tekent elk kind hem op zijn blad. Trek samen lijn 2 extra dik over: „hier woont Sol”. Speel <kbd>B</kbd>: „dit is Sol”. De klas zingt die noot.</li><li><b>De buren van Sol</b> (10 min). Vanaf Sol is één trede hoger La (<kbd>N</kbd>); één trede lager is Fa (<kbd>V</kbd>). Doe het eerst zelf voor: wijs Sol aan, ga met je vinger één trede hoger en zeg „La” terwijl je <kbd>N</kbd> speelt. Schrijf daarna de volledige trap van Do tot Do met de namen eronder, zoals in de tekening van „Voor we beginnen”. De klas leest de namen hardop terwijl jij elke toets speelt; daarna leest de ene helft en luistert de andere of het klopt, en dan wisselen ze.</li></ol><p class="pantalla">Met een digitaal bord of een projector ziet de klas de tekening op het scherm; zonder scherm teken je ze over op het bord. De eerste Do heeft een eigen streepje nodig, onder het huis: dat is het hulplijntje dat in Les 3 al aangekondigd werd.</p></li><li><span class="min">18 min</span><h3>Toepassing: lezen en spelen</h3><p><b>Notendetectives</b> (8 min). Schrijf vier losse noten op het bord, bijvoorbeeld Mi, Sol, Do, La. Ontdek zelf hardop de eerste: „Sol staat op lijn 2. Deze noot staat op lijn 1: één trede lager, Fa; nog een trede lager, Mi. Het is Mi.” De andere drie ontdekken ze eerst samen en daarna per twee. Een vrijwilliger speelt ze: als de naam juist is, komen de noot op het bord en die op het klavier overeen.</p><p><b>De melodie van het doel</b> (10 min). Schrijf de korte melodie hieronder op het bord, zonder namen of toetsen. Lees ze eerst zelf voor met de namen en speel ze met de metronoom op een traag tempo.</p><div class="partitura"><svg viewBox="0 0 334.6 132.0" role="img" aria-label="Korte melodie om te lezen" style="max-width:535px"><rect x="6.00" y="45.35" width="324.60" height="1.30" fill="#0e2934"/><rect x="6.00" y="55.35" width="324.60" height="1.30" fill="#0e2934"/><rect x="6.00" y="65.35" width="324.60" height="1.30" fill="#0e2934"/><rect x="6.00" y="75.35" width="324.60" height="1.30" fill="#0e2934"/><rect x="6.00" y="85.35" width="324.60" height="1.30" fill="#0e2934"/><path fill="#0e2934" transform="translate(10.00,76.00) scale(0.0400,-0.0400)" d="M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z"/><rect x="48.00" y="95.20" width="20.00" height="1.60" fill="#0e2934"/><path fill="#0e2934" transform="translate(52.00,96.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="58.00" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Do</text><text x="58.00" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">W</text><path fill="#0e2934" transform="translate(82.45,86.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="88.45" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Mi</text><text x="88.45" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">C</text><path fill="#0e2934" transform="translate(112.90,76.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="118.90" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Sol</text><text x="118.90" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">B</text><path fill="#0e2934" transform="translate(143.35,86.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="149.35" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Mi</text><text x="149.35" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">C</text><rect x="176.80" y="46.00" width="1.60" height="40.00" fill="#0e2934"/><path fill="#0e2934" transform="translate(188.80,91.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="194.80" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Re</text><text x="194.80" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">X</text><path fill="#0e2934" transform="translate(219.25,81.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="225.25" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Fa</text><text x="225.25" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">V</text><path fill="#0e2934" transform="translate(249.70,86.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="255.70" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Mi</text><text x="255.70" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">C</text><rect x="276.15" y="95.20" width="20.00" height="1.60" fill="#0e2934"/><path fill="#0e2934" transform="translate(280.15,96.00) scale(0.0400,-0.0400)" d="M97 -125C186 -125 295 -43 295 42C295 93 255 125 198 125C88 125 0 44 0 -42C0 -94 43 -125 97 -125Z"/><text x="286.15" y="118.00" text-anchor="middle" font-family="Calibri,Arial,sans-serif" font-size="14.5" fill="#24485a">Do</text><text x="286.15" y="26.00" text-anchor="middle" font-family="Consolas,monospace" font-weight="bold" font-size="13.5" fill="#24485a">W</text><rect x="313.60" y="46.00" width="1.60" height="40.00" fill="#0e2934"/><rect x="318.60" y="46.00" width="5.00" height="40.00" fill="#0e2934"/><rect x="62.60" y="61.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="93.05" y="51.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="123.50" y="41.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="153.95" y="51.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="199.40" y="56.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="229.85" y="46.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="260.30" y="51.00" width="1.70" height="33.30" fill="#0e2934"/><rect x="290.75" y="61.00" width="1.70" height="33.30" fill="#0e2934"/></svg><p class="pie">De melodie van het doel: acht kwartnoten met Do, Re, Mi, Fa en Sol. Je kunt de namen en de toetsen afdekken, zodat de klas ze zelf ontdekt.</p></div><ol style="margin:4px 0 8px;padding-left:22px"><li>De hele klas leest de namen hardop, noot per noot, terwijl jij aanwijst.</li><li>Een duo komt naar de computer: de ene zegt elke naam en de andere speelt de toets.</li><li>De klas steekt de duim op als de geschreven melodie klonk. Zo niet, dan leest het duo ze nog eens, langzaam.</li><li>De duo’s komen om de beurt en wisselen van rol. Terwijl een duo speelt, zingt de rest zachtjes de namen.</li></ol></li><li><span class="min">5 min</span><h3>Terugblik op het doel</h3><p>Ga terug naar de zin op het bord. Schrijf een laatste melodie van vier noten met Do, Re, Mi, Fa en Sol; de duo’s die nog niet aan de beurt waren, lezen en spelen ze, en de klas steekt de duim op als het klopt.</p><p>Schrijf om af te sluiten één noot op het bord: de eerste van het lied van Seikilos, een kwartnoot op lijn 2. De klas zegt haar naam en een vrijwilliger speelt ze (<kbd>B</kbd>).</p><p class="dice">„Het is Sol, de noot van onze sleutel. Met Sol begint het oudste lied ter wereld.”</p><p class="dice">„Hoe wisten jullie hoe elke noot heet? Van waar zijn jullie beginnen te tellen?”</p><p>Luister naar de antwoorden: lijn 2 zoeken, vanaf Sol omhoog of omlaag tellen.</p></li></ol>
+<div class="sabias"><b>Uitdaging voor de snelle leerlingen:</b> terwijl de duo’s naar de computer komen, kan wie eerder klaar is de Sol-noten in het lied van Seikilos zoeken. Projecteer <a class="link" href="https://musicmotionsuite.com/apps/mm-score-page.html?demo&amp;file=../suite/demos/seikilos-nl.mmf&amp;page" target="_blank" rel="noopener">het lied van Seikilos in de Score</a> (met <b>−</b> passen de 9 maten op het scherm) en vraag: „Hoeveel keer staat Sol op de bovenste notenbalk?” Ze moeten alleen de noten zoeken die op lijn 2 wonen, ook al kennen ze de nootwaarden nog niet. <b>Antwoord: 8.</b> De onderste notenbalk, met een andere sleutel, is de begeleiding: die leren ze kennen in Niveau 2. En als er nog een minuutje over is, open je <b>♩ PULSE</b>, draai je aan de knop en laat je het lied van Seikilos trager of sneller klinken: de klas kijkt hoe het woord boven op het blad verandert en zegt of ze het liever rustig of vrolijk hebben.</div>
+<div class="pulsobox"><h3>Met de melodiemachine: lezen met de sleutel</h3>
+<p>Om de les af te sluiten, of om de volgende te beginnen. Open <a class="link" href="https://musicmotionsuite.com/suite/tragamonedas.html?lang=nl" target="_blank" rel="noopener">de melodiemachine</a> en druk op <b>SPIN</b>.</p>
+<ol style="margin:4px 0 6px;padding-left:22px">
+<li><b>Sol zoeken.</b> De solsleutel staat aan het begin van de maat. De klas zoekt in de melodie de noten op de tweede lijn: dat zijn Sol-noten.</li>
+<li><b>De namen lezen.</b> Druk op <b>READ</b>: er licht een noot op. Een vrijwilliger zegt haar naam door te tellen vanaf Sol, en de klas zingt ze.</li>
+<li><b>Controleren.</b> Druk op <b>PLAY</b>: de klas zingt de namen van de eerste maat terwijl de melodie klinkt.</li></ol></div>
+<div class="ojo"><b>Als het moeilijk gaat:</b><ul style="margin:6px 0 0;padding-left:20px"><li><b>Ze vinden lijn 2 niet:</b> tel samen van onder af, zoals in Les 3, en trek ze met kleur over op het blad.</li><li><b>De solsleutel lukt niet:</b> laat hen altijd beginnen met de krul rond lijn 2; de rest van de figuur mag scheef zijn. Wat belangrijk is, is waar hij krult.</li><li><b>Ze raken de namen kwijt:</b> zing samen „Do, Re, Mi, Fa, Sol” terwijl jullie de geschreven trap opgaan, en laat de trap met de namen in een hoek van het bord staan om ze op te zoeken.</li><li><b>Ze lezen goed maar spelen een andere toets:</b> laat hen kijken naar „De toetsen en hun noten” in deze gids; Sol is <kbd>B</kbd>, en van daaruit tel je op het klavier net zoals op papier.</li><li><b>De pagina van Seikilos laadt niet:</b> ze heeft internet nodig. Is er geen internet, vertel dan het verhaal van „Voor we beginnen” in je eigen woorden.</li></ul></div>
+
+    <h2 class="section">De toetsen en hun noten</h2>
+<div class="kbd3"><div class="lay"><button type="button" data-lay="QWERTY">QWERTY</button><button type="button" data-lay="AZERTY">AZERTY</button><button type="button" data-lay="QWERTZ">QWERTZ</button></div><span class="kname">Boven · hoge noten</span><div class="teclas"><div class="tecla"><div class="k" data-r="top" data-j="0">Q</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="top" data-j="1">W</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="top" data-j="2">E</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="top" data-j="3">R</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="top" data-j="4">T</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="top" data-j="5">Y</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="top" data-j="6">U</div><div class="nt" data-i="6"></div></div></div><span class="kname">In het midden</span><div class="teclas"><div class="tecla"><div class="k" data-r="mid" data-j="0">A</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="1">S</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="2">D</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="3">F</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="4">G</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="5">H</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="mid" data-j="6">J</div><div class="nt" data-i="6"></div></div></div><span class="kname">Onder · lage noten</span><div class="teclas"><div class="tecla"><div class="k" data-r="low" data-j="0">Z</div><div class="nt" data-i="0"></div></div><div class="tecla"><div class="k" data-r="low" data-j="1">X</div><div class="nt" data-i="1"></div></div><div class="tecla"><div class="k" data-r="low" data-j="2">C</div><div class="nt" data-i="2"></div></div><div class="tecla"><div class="k" data-r="low" data-j="3">V</div><div class="nt" data-i="3"></div></div><div class="tecla"><div class="k" data-r="low" data-j="4">B</div><div class="nt" data-i="4"></div></div><div class="tecla"><div class="k" data-r="low" data-j="5">N</div><div class="nt" data-i="5"></div></div><div class="tecla"><div class="k" data-r="low" data-j="6">M</div><div class="nt" data-i="6"></div></div></div></div>
+<p class="caption">In deze les speel je op de onderste rij: Sol is <kbd>B</kbd>, La is <kbd>N</kbd> en Fa is <kbd>V</kbd>. De <kbd>Q</kbd> van de middelste rij is de volgende Do (op een QWERTY-toetsenbord: de <kbd>A</kbd>).</p>
+<p class="caption"><b>Namen van de noten:</b> Do = C · Re = D · Mi = E · Fa = F · Sol = G · La = A · Si = B. Sommige methodes gebruiken de letters: beide benoemen dezelfde noot.</p>
+<div class="check"><b>Zo zie je dat het gelukt is:</b> minstens drie op de vier duo’s lezen de namen van de melodie en spelen ze juist, en de klas bevestigt het met de duim. Bovendien tekenen de meeste leerlingen de solsleutel op lijn 2 en noemen ze Fa en La als buren van Sol.</div>
+
+    <div class="intro ampliar"><p><b>Deze lessen zijn een vertrekpunt.</b> Elke leerkracht kan de voorbeelden aanpassen aan de eigen klas. Wij van onze kant blijven nieuwe lesonderwerpen toevoegen op basis van de vragen die we krijgen via het <a class="link" href="https://musicmotionsuite.com/contacto.html" target="_blank" rel="noopener">contactformulier</a>.</p></div>
+<div class="tarjeta">
+      <div class="tij">&#9986; &nbsp; uitknippen en mee naar huis nemen</div>
+      <h2>De sleutel van het huis, thuis</h2>
+<p class="sub">Voor ouders · 10 minuten per week · geen muziekkennis nodig</p>
+<p>Vandaag hebben we in de klas de solsleutel leren kennen: zijn krul duidt de lijn aan waar de noot Sol woont, en van daaruit benoem je de andere noten. We hebben ook het oudste volledige lied ter wereld leren kennen. Speel deze week samen:</p>
+<ol>
+<li>Open het klavier op de computer: <b>musicmotionsuite.com/apps/mmk-demo.html</b></li>
+<li><b>Sol en zijn buren op de vloer:</b> leg de vijf touwen of linten van vorige week opnieuw op de vloer. Het kind gaat op lijn 2 staan: „hier woont Sol”. Jij zegt „La” of „Fa”; het kind springt een trede hoger of lager. Wissel daarna om.</li>
+<li><b>Op het toetsenbord:</b> het kind speelt <b>B</b> (Sol) en zijn buren <b>N</b> (La) en <b>V</b> (Fa), en zegt de naam van elke noot.</li>
+<li><b>Het lied van de steen:</b> open <b>musicmotionsuite.com/nl/suite/seikilos-ninos.html</b>. Je kind vertelt je het verhaal van Seikilos en jullie luisteren samen naar het lied op de laatste pagina.</li>
+<li>De melodiemachine: open <b>musicmotionsuite.com/suite/tragamonedas.html</b> en druk op <b>SPIN</b>. Zoek alle Sol-noten (op de tweede lijn, waar de sleutel krult). Met <b>PRINT</b> druk je de melodie af en schrijf je onder elke noot hoe ze heet. Je hoeft je niet te registreren.</li>
+</ol>
+    </div>
+  </main>
+  <footer class="doc-footer">
+    <span>musicmotionsuite.com</span>
+    <span>&copy; 2026 Music Motion</span>
+  </footer>
+</div>
+<script>/* nombres de las notas segun el idioma de la pagina (2026-10-07): el armado de idiomas no traduce
+   palabras de menos de tres letras, y en aleman la nota «B» es otra (Si = H) */
+(function(){var N={es:['Do','Re','Mi','Fa','Sol','La','Si'],en:['C','D','E','F','G','A','B'],fr:['Do','Ré','Mi','Fa','Sol','La','Si'],nl:['C','D','E','F','G','A','B'],de:['C','D','E','F','G','A','H']};
+var l=(document.documentElement.lang||'es').slice(0,2),n=N[l]||N.es;
+[].forEach.call(document.querySelectorAll('.nt[data-i]'),function(e){e.textContent=n[+e.getAttribute('data-i')];});})();</script>
+<script>(function(){/* 2026-10-07 contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado: en local (file:// o localhost) no cuenta. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
+<script>/* 2026-10-14 · teclado de tres filas: las letras siguen al tipo de teclado; cada idioma abre con el suyo */
+(function(){var L={QWERTY:{top:'QWERTYU',mid:'ASDFGHJ',low:'ZXCVBNM'},AZERTY:{top:'AZERTYU',mid:'QSDFGHJ',low:'WXCVBN,'},QWERTZ:{top:'QWERTZU',mid:'ASDFGHJ',low:'YXCVBNM'}};
+var lg=(document.documentElement.lang||'es').slice(0,2),cur=lg==='fr'||lg==='nl'?'AZERTY':lg==='de'?'QWERTZ':'QWERTY';
+function pon(k){cur=k;[].forEach.call(document.querySelectorAll('.k[data-r]'),function(e){e.textContent=L[k][e.getAttribute('data-r')][+e.getAttribute('data-j')];});
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.textContent=b.getAttribute('data-lay');b.setAttribute('aria-pressed',b.getAttribute('data-lay')===k);});}
+[].forEach.call(document.querySelectorAll('.kbd3 .lay button'),function(b){b.addEventListener('click',function(){pon(b.getAttribute('data-lay'));});});pon(cur);})();</script>
+<!-- 2026-10-18 (Mario): desde la Clase 2, las lecciones son para cuentas que compraron créditos; la entrada es la misma de la suite (un crédito = un día). -->
+<script src="../../apps/mm-puerta.js" data-pagado="si"></script>
+</body>
+</html>
