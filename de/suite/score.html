@@ -110,6 +110,7 @@
     <div class="spec">
       <h3 id="agogica-nota"><span class="tr">Agogik</span></h3>
       <p><span class="tr">Ausdrucksakzente pro Note: <strong>+1</strong> dezent und <strong>+2</strong> ausdrucksvoll, mit direkter (π) oder inverser (INV) Kurve. Kleine zeitliche Nuancen, die der Linie Leben geben, ohne das Raster zu verlassen.</span></p>
+      <p><span class="tr">Die Taste <b>AGOG</b> öffnet die Karte der Agogik des Werks: jeder Notenakzent und jede Phrasen-Agogik in einer Liste, nach Takt; ein Klick bringt dich dorthin und öffnet ihren Editor. Mit einer geschlossenen Auswahl erzeugt <b>Phrase from selection</b> die Phrasen-Agogik dieses Abschnitts.</span></p>
     </div>
 
     <div class="spec">
@@ -190,6 +191,7 @@
     <div class="spec">
       <h3 id="tinta-que-no-llega-al-papel"><span class="tr">Tinte, die nie aufs Papier kommt</span></h3>
       <p><span class="tr">Die Geste lässt sich ausblenden, so wie es bei Tempoangaben und Ausdrücken schon ging: <b>Hide</b> behält sie in der Datei, zeigt sie gedimmt, solange <b>SHOW HIDDEN</b> aktiv ist — damit du sie weiter bearbeiten kannst — und druckt sie nie. Für das, was man hören, aber nicht sehen soll.</span></p>
+      <p><span class="tr">Dasselbe gilt für die Präsenz (<b>PRES</b>, im Note Editor) und eine von Hand festgelegte Velocity: Mit eingeschaltetem <b>SHOW HIDDEN</b> —im Tempofenster oder im Note Editor selbst— zeigt jede Note, die sie trägt, ihr graues Zeichen daneben und den Notenkopf in Lavendel, damit du sie findest und wieder bearbeitest. Nichts davon wird gedruckt.</span></p>
     </div>
 
     <div class="spec">
@@ -243,6 +245,7 @@
       <p><span class="tr">Ein Takt kann sich über einen Abschnitt wiederholen — der typische Fall ist das Pedal: Du schreibst, wie EIN Takt pedalisiert wird, und sagst „und so weiter bis 61“. Das ist eine <b>Sequenz</b>, und sie hat jetzt ihr eigenes Fenster: <b>Open sequence…</b>, aus dem SELECT-Panel oder über den Rechtsklick. Es listet die Sequenzen des Werks mit ihrem Abschnitt und dem Inhalt des Mustertakts auf, und ein Klick auf eine Zeile bringt die Ansicht dorthin.</span></p>
       <p><span class="tr">Es gibt zwei Wege, eine anzulegen, und sie klingen gleich, sehen aber verschieden aus. Die <b>RULE (⟳)</b> schreibt nichts: Die Engine prägt das Muster bei jeder Wiedergabe auf, und kein einziges neues Zeichen erscheint auf der Seite. <b>WRITE (⧉)</b> setzt echte Zeichen, einen Satz pro Takt, einzeln bearbeitbar. Und ein Schalter <b>◉ SHOW / ◌ HIDE</b> entscheidet, ob diese Zeichen auf der Seite erscheinen: Ausgeblendete klingen trotzdem, denn Tinte und Füße sind zwei Ebenen.</span></p>
       <p><span class="tr">Jede Zeile trägt außerdem ein ◉/◌, das ihre <b>Bereichslinie</b> über der obersten Notenzeile einschaltet, um ihre Reichweite auf einen Blick zu sehen. Standardmäßig aus und nicht in der Datei gespeichert: eine Arbeitshilfe, keine Notation.</span></p>
+      <p><span class="tr">Die Taste <b>SEQ</b> in der Leiste öffnet dieses Fenster dort, wo du bist: Der Mustertakt ist der Takt des Cursors (oder der Anfang der Auswahl), und der Abschnitt beginnt im nächsten Takt.</span></p>
     </div>
 
     <div class="spec">
@@ -385,6 +388,17 @@
       <h3 id="la-seccion-empieza-con-su-anacrusa"><span class="tr">Ein Abschnitt kann mit seinem eigenen Auftakt beginnen</span></h3>
       <p><span class="tr">In einem Menuett, einem Marsch oder dem Rondo alla Turca endet der Abschnitt mitten im Takt, und der Rest dieses Taktes ist der Auftakt des nächsten. Der Score schreibt es jetzt so: Der Taktstrich —doppelt oder Wiederholung— wird <b>im</b> Takt gezeichnet, auf seiner Zählzeit (<b>BARS › Beat</b>, und <b>Beat</b> neben <b>From</b> und <b>To</b> in <b>:|</b>), die Wiederholung geht zum Auftakt zurück —auch zu dem am Anfang des Stücks, mit From 0— und ein Stück kann mehrere Abschnitte hintereinander haben: alle werden wiederholt.</span></p>
       <p><span class="tr">Auch die erste und zweite Klammer haben ihre Zählzeit, erklingen nur in ihrem Durchgang und tragen die Nummer dieses Durchgangs („1.“, „2.“, „3.“).</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="repeticiones-en-un-lugar"><span class="tr">Wiederholungen: an einem Ort erstellen und korrigieren</span></h3>
+      <p><span class="tr">In <b>Repeats</b> erstellt die Schaltfläche <b>1st / 2nd ending</b> die Wiederholung mit beiden Klammern in einem Schritt. Zum Korrigieren Rechtsklick auf ihre Schattierung, ihren Taktstrich ‖: oder :‖ oder die Klammer eines Schlusses: dasselbe Popup öffnet sich mit allem geladen, mit <b>Apply</b> und <b>Delete</b>. Über Apply zeigt die Zeile <b>Plays</b>, in welcher Reihenfolge die Takte gespielt werden — „1–3 · 1–2 · 4–12“ —: Sie stammt von derselben Engine, die spielt. D.C. und D.S., al Fine oder al Coda, erklingen ebenfalls.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-hoja-se-pagina-sola"><span class="tr">Das Blatt setzt sich selbst</span></h3>
+      <p><span class="tr">In <b>PAGE</b> beginnt jeder Satz auf einem neuen System mit seinem Titel darüber, ohne auf ein neues Blatt zu springen; kein System bleibt mit einem oder zwei Takten; und wenn Sie nur ein Instrument sichtbar lassen, wird das Blatt zu seiner Stimme, mit seinem Namen oben und dem Titel des Werks auf jeder Seite.</span></p>
+      <p><span class="tr">Jedes System nimmt auf dem Blatt den Platz seiner Tinte ein, nicht den der höchsten und der tiefsten Note des ganzen Werks; der Abstand zwischen den Systemen ist der, den du bei <b>Gap</b> wählst, plus höchstens 4 mm. Bachs 15 Sinfonien passen auf 33 Blätter, mit 4 Systemen pro Blatt.</span></p>
     </div>
 
     <div class="spec">

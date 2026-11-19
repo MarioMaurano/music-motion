@@ -110,6 +110,7 @@
     <div class="spec">
       <h3 id="agogica-nota"><span class="tr">Agogique</span></h3>
       <p><span class="tr">Des accents expressifs par note : <strong>+1</strong> subtil et <strong>+2</strong> expressif, avec une courbe directe (π) ou inverse (INV). De petites nuances de temps qui donnent vie à la ligne sans quitter la grille.</span></p>
+      <p><span class="tr">Le bouton <b>AGOG</b> ouvre la carte de l’agogique de l’œuvre : chaque accent de note et chaque agogique de phrase dans une liste, par mesure ; un clic vous y emmène et ouvre son éditeur. Avec une sélection fermée, <b>Phrase from selection</b> crée l’agogique de phrase de ce passage.</span></p>
     </div>
 
     <div class="spec">
@@ -190,6 +191,7 @@
     <div class="spec">
       <h3 id="tinta-que-no-llega-al-papel"><span class="tr">Une encre qui n’arrive jamais sur la page</span></h3>
       <p><span class="tr">Le geste peut être masqué, comme on pouvait déjà le faire avec les indications de tempo et les expressions : <b>Hide</b> le garde dans le fichier, l’affiche estompé tant que <b>SHOW HIDDEN</b> est activé — pour que vous puissiez encore le modifier — et ne l’imprime jamais. Pour ce que vous voulez entendre sans le voir.</span></p>
+      <p><span class="tr">Il en va de même pour la présence (<b>PRES</b>, dans le Note Editor) et la vélocité fixée à la main : avec <b>SHOW HIDDEN</b> activé —dans la fenêtre du tempo ou dans le Note Editor lui-même— chaque note qui les porte montre sa marque grise à côté et sa tête en lavande, pour les retrouver et les modifier. Rien n’en est imprimé.</span></p>
     </div>
 
     <div class="spec">
@@ -243,6 +245,7 @@
       <p><span class="tr">Une mesure peut se répéter sur un passage — le cas typique est la pédale : vous écrivez comment se pédale UNE mesure et vous dites « et ainsi de suite jusqu’à la 61 ». C’est une <b>séquence</b>, et elle a désormais sa propre fenêtre : <b>Open sequence…</b>, depuis le panneau SELECT ou le clic droit. Elle liste celles de l’œuvre avec leur étendue et le contenu de la mesure modèle, et un clic sur une ligne y amène la vue.</span></p>
       <p><span class="tr">Il y a deux façons d’en créer une ; elles sonnent de la même manière, mais ne se voient pas de la même manière. La <b>RULE (⟳)</b> n’écrit rien : le moteur applique le modèle à chaque lecture et pas une seule nouvelle marque n’apparaît sur la page. <b>WRITE (⧉)</b> pose de vraies marques, un jeu par mesure, modifiables une à une. Et un interrupteur <b>◉ SHOW / ◌ HIDE</b> décide si ces marques apparaissent sur la page : les marques masquées sonnent quand même, car l’encre et les pieds sont deux couches distinctes.</span></p>
       <p><span class="tr">Chaque ligne porte aussi un ◉/◌ qui active sa <b>ligne d’étendue</b> au-dessus de la portée supérieure, pour en voir la portée d’un coup d’œil. Désactivée par défaut, et non enregistrée dans le fichier : une aide de travail, pas de la notation.</span></p>
+      <p><span class="tr">Le bouton <b>SEQ</b> de la barre ouvre cette fenêtre là où vous êtes : la mesure modèle est celle du curseur (ou le début de la sélection), et le passage commence à la mesure suivante.</span></p>
     </div>
 
     <div class="spec">
@@ -385,6 +388,17 @@
       <h3 id="la-seccion-empieza-con-su-anacrusa"><span class="tr">Une section peut commencer par sa propre anacrouse</span></h3>
       <p><span class="tr">Dans un menuet, une marche ou le Rondo alla Turca, la section se termine au milieu d’une mesure et le reste de cette mesure est l’anacrouse de la suivante. Le Score l’écrit désormais ainsi : la barre —double ou de reprise— se dessine <b>à l’intérieur</b> de la mesure, à son temps (<b>BARS › Beat</b>, et <b>Beat</b> à côté de <b>From</b> et <b>To</b> dans <b>:|</b>), la reprise revient à l’anacrouse —aussi à celle du début de l’œuvre, avec From 0— et une œuvre peut avoir plusieurs sections à la suite : toutes se répètent.</span></p>
       <p><span class="tr">Les cases de 1re et 2e fois portent aussi leur temps, ne sonnent qu’à leur passage et portent le numéro de ce passage (« 1. », « 2. », « 3. »).</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="repeticiones-en-un-lugar"><span class="tr">Reprises : se créent et se corrigent au même endroit</span></h3>
+      <p><span class="tr">Dans <b>Repeats</b>, le bouton <b>1st / 2nd ending</b> crée la reprise avec ses deux fins en une fois. Pour la corriger, clic droit sur sa zone ombrée, sa barre ‖: ou :‖, ou le crochet d’une fin : le même popup s’ouvre avec tout chargé, avec <b>Apply</b> et <b>Delete</b>. Au-dessus d’Apply, la ligne <b>Plays</b> indique dans quel ordre les mesures seront jouées — « 1–3 · 1–2 · 4–12 » — : c’est le moteur qui joue qui l’écrit. D.C. et D.S., al Fine ou al Coda, sont joués aussi.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="la-hoja-se-pagina-sola"><span class="tr">La feuille se met en page toute seule</span></h3>
+      <p><span class="tr">Dans <b>PAGE</b>, chaque mouvement commence sur un nouveau système avec son titre au-dessus, sans changer de feuille ; aucun système ne reste avec une ou deux mesures ; et si vous ne laissez visible qu’un seul instrument, la feuille devient sa partie, avec son nom en haut et le titre de l’œuvre sur chaque page.</span></p>
+      <p><span class="tr">Chaque système occupe sur la feuille la place de son encre, et non celle de la note la plus aiguë et de la plus grave de toute l’œuvre ; l’espace entre les systèmes est celui que vous demandez dans <b>Gap</b>, plus 4 mm au plus. Les 15 Sinfonias de Bach tiennent sur 33 feuilles, avec 4 systèmes par feuille.</span></p>
     </div>
 
     <div class="spec">
