@@ -58,12 +58,93 @@
   </h1>
   <p class="lead">
     
-    <span class="tr">Was jedes Bedienelement jeder App tut, geschrieben für Musiker. Es wächst App für App, so wie die Suite wächst: die Console und jetzt der Coach.</span>
+    <span class="tr">Jedes farbige Wort ist ein Link zu seiner Erklärung: Klick, um sie zu lesen, und um dorthin zurückzukehren, wo du warst, nimm den Pfeil <b>←</b> deines Browsers (oder <b>Alt + ←</b>). So verlierst du nie den Faden. Hier steht, was jedes Bedienelement jeder App tut, geschrieben für Musiker; die Anleitung wächst mit der Suite.</span>
   </p>
   <div class="note">
     
     <span class="tr">Die technische und architektonische Seite steht im <b>Manual</b> der Suite. Die Apps laufen im Browser — <b>überall, wo es eine Internetverbindung gibt</b>, auf Computer, Tablet oder Handy — und verbinden sich untereinander über <b>mm-sync</b>.</span>
   </div>
+<!-- 2026-11-20 (Mario: «es difícil de encontrar print»): BUSCADOR + ÍNDICE de la guía. Se arma solo desde los h3 y
+     las secciones que ya existen, así que sale traducido en cada idioma sin segmentos nuevos; las pocas palabras de la
+     interfaz van en el diccionario T (es · en · fr · nl · de). Busca en todo el texto de la sección —en la página
+     ES/EN, en los dos idiomas a la vez— sin distinguir tildes ni mayúsculas. -->
+<style>
+#ugFind{margin:22px 0 4px}
+#ugFind .ugq{display:flex;gap:8px;align-items:center}
+#ugFind input{flex:1;font:inherit;font-size:1rem;padding:9px 12px;border:1px solid var(--border);border-radius:var(--rad);background:var(--panel2,var(--panel));color:var(--text);outline:none}
+#ugFind input:focus{border-color:var(--gold)}
+#ugFind .ugn{font-family:var(--ff-mono);font-size:.72rem;color:var(--textd);min-width:7em;text-align:right}
+#ugFind .ugres{margin:8px 0 0;padding:0;list-style:none;max-height:60vh;overflow-y:auto}
+#ugFind .ugres li{padding:7px 10px;border-bottom:1px solid var(--border)}
+#ugFind .ugres a{font-weight:600;color:var(--gold);text-decoration:none}
+#ugFind .ugres a:hover{text-decoration:underline}
+#ugFind .ugres .ugp{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.5px;color:var(--textd);margin-left:6px}
+#ugFind .ugres .ugs{display:block;font-size:.85rem;color:var(--textm,var(--textd));margin-top:2px;line-height:1.4}
+#ugFind .ugres mark{background:rgba(242,140,40,.35);color:inherit;border-radius:2px}
+#ugFind details{margin:6px 0 0;border:1px solid var(--border);border-radius:var(--rad);padding:6px 12px}
+#ugFind summary{cursor:pointer;font-weight:600;color:var(--text)}
+#ugFind .ugidx{columns:2 260px;column-gap:28px;margin:8px 0 4px}
+#ugFind .ugpart{break-inside:avoid;margin:0 0 6px}
+#ugFind .ugpart>summary{font-family:var(--ff-mono);font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
+#ugFind .ugpart ul{margin:4px 0 6px 16px;padding:0;font-size:.88rem;line-height:1.5}
+#ugFind .ugpart a{color:var(--text);text-decoration:none}
+#ugFind .ugpart a:hover{color:var(--gold);text-decoration:underline}
+#ugTop{position:fixed;right:18px;bottom:18px;z-index:50;font-family:var(--ff-mono);font-size:.78rem;letter-spacing:1px;padding:8px 12px;border:1px solid var(--gold);border-radius:var(--rad);background:var(--panel);color:var(--gold);cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);display:none}
+#ugTop:hover{background:var(--gold);color:var(--bg)}
+</style>
+<div id="ugFind"></div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var T={es:{ph:'Buscar en la guía… (por ejemplo: imprimir, pulse, wav)',idx:'Índice de la guía',n1:'1 sección',nn:' secciones',none:'Sin resultados',top:'↑ Buscar'},
+         en:{ph:'Search the guide… (for example: print, pulse, wav)',idx:'Contents of the guide',n1:'1 section',nn:' sections',none:'No results',top:'↑ Search'},
+         fr:{ph:'Chercher dans le guide… (par exemple : imprimer, pulse, wav)',idx:'Sommaire du guide',n1:'1 section',nn:' sections',none:'Aucun résultat',top:'↑ Chercher'},
+         nl:{ph:'Zoeken in de handleiding… (bijvoorbeeld: afdrukken, pulse, wav)',idx:'Inhoud van de handleiding',n1:'1 onderdeel',nn:' onderdelen',none:'Geen resultaten',top:'↑ Zoeken'},
+         de:{ph:'In der Anleitung suchen… (zum Beispiel: drucken, pulse, wav)',idx:'Inhalt der Anleitung',n1:'1 Abschnitt',nn:' Abschnitte',none:'Keine Ergebnisse',top:'↑ Suchen'}};
+  var root=document.getElementById('ugFind'); if(!root) return;   // corre al terminar de cargar: las secciones están más abajo
+  function lang(){ var l=(document.documentElement.getAttribute('data-lang')||document.documentElement.lang||'es').slice(0,2); return T[l]?l:'en'; }
+  function txt(el){ if(!el) return ''; var l=lang(), s=el.querySelector(':scope > .'+l); if((l==='es'||l==='en')&&s) return s.textContent.replace(/\s+/g,' ').trim(); return el.textContent.replace(/\s+/g,' ').trim(); }
+  function norm(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
+  // las partes: cada <section> con su rótulo (.app-eyebrow), y sus secciones (h3 con id)
+  var parts=[], items=[];
+  [].forEach.call(document.querySelectorAll('main > section'), function(sec){
+    var hs=sec.querySelectorAll('h3[id]'); if(!hs.length) return;
+    var p={el:sec, eb:sec.querySelector('.app-eyebrow'), items:[]}; parts.push(p);
+    [].forEach.call(hs, function(h){ var box=h.closest('.spec')||h.parentNode; var it={h:h,box:box,part:p,all:norm(box.textContent.replace(/\s+/g,' '))}; p.items.push(it); items.push(it); });
+  });
+  root.innerHTML='<div class="ugq"><input type="search" id="ugQ" autocomplete="off"><span class="ugn" id="ugN"></span></div><ul class="ugres" id="ugR"></ul><details id="ugIdx"><summary></summary><div class="ugidx"></div></details>';
+  var q=document.getElementById('ugQ'), R=document.getElementById('ugR'), N=document.getElementById('ugN'), D=document.getElementById('ugIdx');
+  var top=document.createElement('button'); top.id='ugTop'; document.body.appendChild(top);
+  top.addEventListener('click',function(){ root.scrollIntoView({behavior:'smooth',block:'start'}); setTimeout(function(){ q.focus(); },400); });
+  window.addEventListener('scroll',function(){ top.style.display = window.scrollY>900 ? 'block' : 'none'; },{passive:true});
+  function esc(s){ return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function partName(p){ return p.eb ? txt(p.eb).replace(/^[▸⊞\s]+/,'') : ''; }
+  function snippet(it,w){ // una línea de contexto, en el idioma visible si la palabra aparece ahí
+    var paras=it.box.querySelectorAll('p,li,figcaption'), l=lang();
+    for(var i=0;i<paras.length;i++){ var t=txt(paras[i]); var k=norm(t).indexOf(w); if(k>=0){ var a=Math.max(0,k-50), b=Math.min(t.length,k+w.length+70);
+      return (a>0?'…':'')+esc(t.slice(a,k))+'<mark>'+esc(t.slice(k,k+w.length))+'</mark>'+esc(t.slice(k+w.length,b))+(b<t.length?'…':''); } }
+    var t0=paras.length?txt(paras[0]):''; return esc(t0.slice(0,120))+(t0.length>120?'…':''); }
+  function buscar(){
+    var raw=q.value.trim(), w=norm(raw); R.innerHTML=''; N.textContent='';
+    if(w.length<2){ return; }
+    var ws=w.split(/\s+/).filter(Boolean);
+    var hits=items.filter(function(it){ return ws.every(function(x){ return it.all.indexOf(x)>=0; }); });
+    // primero los que lo tienen en el título
+    hits.sort(function(a,b){ var ta=norm(txt(a.h)).indexOf(ws[0])>=0?0:1, tb=norm(txt(b.h)).indexOf(ws[0])>=0?0:1; return ta-tb; });
+    var t=T[lang()]; N.textContent = hits.length ? (hits.length===1?t.n1:hits.length+t.nn) : t.none;
+    R.innerHTML=hits.slice(0,60).map(function(it){ return '<li><a href="#'+it.h.id+'">'+esc(txt(it.h))+'</a><span class="ugp">'+esc(partName(it.part))+'</span><span class="ugs">'+snippet(it,ws[0])+'</span></li>'; }).join('');
+  }
+  function indice(){
+    var t=T[lang()]; D.querySelector('summary').textContent=t.idx; q.placeholder=t.ph; top.textContent=t.top;
+    D.querySelector('.ugidx').innerHTML=parts.map(function(p){ return '<details class="ugpart"><summary>'+esc(partName(p))+' <span class="ugp">'+p.items.length+'</span></summary><ul>'+
+      p.items.map(function(it){ return '<li><a href="#'+it.h.id+'">'+esc(txt(it.h))+'</a></li>'; }).join('')+'</ul></details>'; }).join('');
+    buscar();
+  }
+  q.addEventListener('input',buscar);
+  q.addEventListener('keydown',function(e){ if(e.key==='Enter'){ var a=R.querySelector('a'); if(a) a.click(); } if(e.key==='Escape'){ q.value=''; buscar(); } });
+  new MutationObserver(indice).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});
+  indice();
+});
+</script>
 </section>
 
 <section id="primeros-pasos" style="--c:var(--teal)">
@@ -83,7 +164,7 @@
     <div class="spec">
       <h3 id="pp-escribir"><span class="tr">2 · Schreib vier Noten</span></h3>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
-        <li style="margin:2px 0"><span class="tr">Klick an den Anfang des ersten Takts im oberen System. Der <a href="#sc-cursor">Cursor</a>, der kleine gelbe Strich, steht dann dort: Dort landet die Note.</span></li>
+        <li style="margin:2px 0"><span class="tr">Klick an den Anfang des ersten Takts im oberen System. Der <a href="#sc-cursor">Cursor</a>, der kleine farbige senkrechte Strich, steht dann dort: Dort landet die Note.</span></li>
         <li style="margin:2px 0"><span class="tr">Der Notenwert ist schon die Viertelnote. Für einen anderen nimm den <a href="#sc-numpad">Ziffernblock</a>: 4 = Achtel, 5 = Viertel, 6 = Halbe.</span></li>
         <li style="margin:2px 0"><span class="tr">Klick auf der Klaviatur unten auf <b>C4</b>, <b>D4</b>, <b>E4</b> und <b>F4</b>, eine nach der anderen. Jede Taste klingt und schreibt ihre Note.</span></li>
       </ol>
@@ -287,48 +368,132 @@
   <div class="specs">
 
     <div class="spec">
-      <h3 id="tres-maneras-de-tocar"><span class="tr">Drei Arten zu spielen</span></h3>
-      <p><span class="tr"><b>Axiomatic</b>: das reine pythagoreische System — Tasten nach ihren Namen. <b><a href="https://musicmotionsuite.com/faq.html?lang=de#12-tet" title="Häufige Fragen">12 TET</a></b>: Die QWERTY-Tastatur übernimmt die klassische Klavieranordnung und klingt auf den cyanfarbenen Streifen temperiert. <b>Tonal</b>: Wähle Tonart, Alteration und Modus, und die Computertastatur spielt nach Stufen — du kannst in jeder Tonart korrekt komponieren, ohne Klavier spielen zu können. Gruppen, die nicht zutreffen, sind abgedunkelt; sie leuchten auf, wenn du in Tonal wechselst.</span></p>
+      <h3 id="tres-maneras-de-tocar"><span class="tr">Wie das Keyboard stimmt · SYSTEM, KEY, MODE und SENS</span></h3>
+      <p><span class="tr">Die erste Reihe von Tasten bestimmt, <b>wie</b> jede Taste <b>klingt</b>: in welcher Stimmung und in welcher Tonart.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-sistema.png" alt="La primera línea del Keyboard: SYSTEM, KEY, ALTERATION, MODE, SENS y el rótulo de la tonalidad" width="1040" height="70" loading="lazy" style="display:block;width:100%;height:auto;max-width:1040px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① SYSTEM · ② KEY · ③ ALTERATION · ④ MODE · ⑤ SENS · ⑥ wo du bist.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>SYSTEM</b> ① wählt zwischen drei Arten zu spielen. <b>12 TET</b> ist das gewohnte temperierte Klavier und klingt auf den cyanfarbenen Streifen der Tasten. <b>Axiomatic</b> ist die reine pythagoreische Stimmung: jede Taste bei ihrem Namen. <b>Tonal</b> spielt nach Stufen einer Tonart: Wer nicht Klavier spielen kann, spielt und komponiert in jeder Tonart richtig.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>KEY</b> ② und <b>ALTERATION</b> ③ wählen den Grundton: G und ♮ ist G, B und ♭ ist B♭. Sie leuchten nur in Tonal.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>MODE</b> ④: <b>M</b> ist Dur und <b>m</b> Moll.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>SENS</b> ⑤ ist, wie weit der Leitton steigt, die Note, die zum Grundton «zieht»: <b>0</b> gar nicht, <b>+1</b> normal (dort fängt es an) und <b>+2</b> ein stärkerer Effekt, auch auf den chromatischen Noten.</span></li>
+        <li style="margin:2px 0"><span class="tr">Die Beschriftung ⑥ sagt, wo du bist: AXIOMATIC, oder die Tonart, wie <b>G♮ MAJOR</b>.</span></li>
+      </ul>
+      <p><span class="tr">Auch die Tasten deines Computers spielen: Welche Taste in jedem System welche Note gibt, steht in <a href="keyboard-shortcuts.html">den Tastenkürzeln des Keyboards</a>.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Beschriftung ⑥ zeigt, was du gewählt hast, und in Tonal spielt die untere Reihe der Computertastatur (Z X C V B N M; auf QWERTZ Y X C V B N M) die Tonleiter dieser Tonart.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="acord-lab-oir-acordes-con-el-mouse"><span class="tr">Chord Lab — Akkorde mit der Maus hören</span></h3>
-      <p><span class="tr">Eine Note spielst du mit dem Linksklick. Ein <b>Rechtsklick</b> auf die Tastatur lässt sie mit eingeschaltetem Licht weiterklingen (Hold); jede neue Note, die du spielst, stapelt sich darauf, so dass du den ganzen Akkord hörst. Ein weiterer <b>Rechtsklick</b> schaltet alles aus. Um komplexe Akkorde zu hören, ohne mehrere Tasten gedrückt zu halten.</span></p>
+      <h3 id="acord-lab-oir-acordes-con-el-mouse"><span class="tr">Acord Lab — Akkorde mit der Maus hören</span></h3>
+      <p><span class="tr">Mit dem <b>Linksklick</b> spielst du eine Note. Ein <b>Rechtsklick</b> auf die Tasten schaltet das Halten ein: Die Note, die du spielst, klingt mit leuchtendem Licht weiter, und jede Note, die du danach mit dem Linksklick spielst, kommt dazu. So hörst du den ganzen Akkord, ohne mehrere Tasten gedrückt zu halten. Ein weiterer <b>Rechtsklick</b> schaltet alles aus.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Tasten des Akkords bleiben beleuchtet und klingen zusammen.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="la-salida-hifi"><span class="tr">Der HiFi-Ausgang</span></h3>
-      <p><span class="tr">In der zweiten Zeile die Ausgangskette: VOL (die Lautstärke dessen, <b>was du auf den Tasten spielst</b> — der Score hat seine eigene, und der Gesamtpegel liegt im MASTER der Console) · REV (Hall) · TONE (dunkel ↔ hell — sein Licht wird blau oder gelb, wie eine Flagge) · WARM (Wärme, Sättigung mit konsonanten Obertönen) · BAL (deine Position vor den Lautsprechern). Jeder Regler mit seinem farbigen Licht, und ein Doppelklick führt zurück auf neutral.</span></p>
+      <h3 id="la-salida-hifi"><span class="tr">Der HiFi-Ausgang · die Lautstärke und die Farbe des Klangs</span></h3>
+      <p><span class="tr">In der zweiten Reihe sechs Drehknöpfe. Du drehst sie, indem du nach oben oder unten ziehst, und ein Doppelklick bringt sie zurück in die Mitte. Das Licht daneben geht an, wenn der Knopf benutzt wird.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-salida.png" alt="Las perillas VOL, REV, ECHO, TONE, WARM y BAL del Keyboard" width="610" height="66" loading="lazy" style="display:block;width:100%;height:auto;max-width:610px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① VOL · ② REV · ③ ECHO · ④ TONE · ⑤ WARM · ⑥ BAL.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>VOL</b> ①: die Lautstärke dessen, <b>was du auf den Tasten spielst</b>. Das Score hat seine eigene Lautstärke, und die Gesamtlautstärke ist der MASTER der Console.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>REV</b> ②: der Hall, als würdest du in einem großen Saal spielen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>ECHO</b> ③: das Echo, die Note, die sich immer leiser wiederholt. Es beginnt ausgeschaltet.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>TONE</b> ④: dunkler oder heller.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>WARM</b> ⑤: wärmer, mit etwas mehr Obertönen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>BAL</b> ⑥: die Balance, mehr nach links oder mehr nach rechts.</span></li>
+      </ul>
+      <p><span class="tr">VOL gilt nur für die Tasten; die anderen fünf verändern <b>alles, was du hörst</b>, auch das Score, und es sind dieselben wie in der Console: Bewegst du einen hier, bewegt er sich dort mit.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du den Knopf drehst, ändert sich der Klang und sein Licht geht an; ein Doppelklick stellt ihn zurück.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="el-cofre-de-grabaciones"><span class="tr">Die Truhe der Aufnahmen</span></h3>
-      <p><span class="tr">⏺ nimmt auf, was du spielst — exakte Frequenzen, kein <a href="https://musicmotionsuite.com/faq.html?lang=de#midi" title="Häufige Fragen">MIDI</a>, keine Quantisierung. Der Button „☰ recs“ öffnet die Liste: umbenennen, ▶, .mmf exportieren, .mmf oder .mid laden (MIDI kommt als temperierte Schicht herein, in Cyan). Der Regler PLAYBACK TEMPO spielt jede Aufnahme mit halber bis doppelter Geschwindigkeit ab: langsam aufnehmen, im Tempo anhören. Der Transport hat ⏪ ⏸ ⏩: dort anhalten, wo du bist, und zehn Sekunden zurück- oder vorspringen, mit der Uhr bis auf die Millisekunde (00.00.000). Springst du in einen anderen Tanz, stimmt sich das Keyboard auf die Tonart dieses Abschnitts ein. Was du gerade aufgenommen hast, erscheint oben in der Truhe, mit „keep in list“ und „save as .mmf“ griffbereit. Und du kannst aufnehmen, während der Score spielt: Die Aufnahme kommt sauber heraus, nur mit dem, was du gespielt hast.</span></p>
+      <h3 id="el-cofre-de-grabaciones"><span class="tr">Aufnehmen und die Aufnahmetruhe</span></h3>
+      <p><span class="tr">Das Keyboard nimmt auf, was du spielst, und bewahrt es auf, damit du es später hören kannst. Es bewahrt jede Note mit ihrer exakten Stimmung, ohne <a href="https://musicmotionsuite.com/faq.html?lang=de#midi" title="Häufige Fragen">MIDI</a> und ohne Quantisierung: Was wieder erklingt, ist genau das, was du gespielt hast.</span></p>
+      <p><span class="tr"><b>Zum Aufnehmen:</b> Drück <b>⏺</b> ① in der Leiste <b>Rec</b>, spiel, und drück <b>⏹</b> zum Beenden. <b>▶</b> ② spielt die Aufnahme ab und hält sie an, wenn du noch einmal drückst; <b>⏪</b> und <b>⏩</b> springen zehn Sekunden zurück oder vor, und die Uhr zeigt die Zeit auf die Millisekunde genau (00.00.000).</span></p>
+      <p><span class="tr"><b>Zum Öffnen der Truhe:</b> Drück <b>☰ recs</b> ③, neben <b>♩ pulse</b> und <b>⊕ FX</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-cofre.png" alt="La barra Rec y el botón recs del Keyboard, y el cofre Recordings abierto con una grabación nueva, la perilla PLAYBACK TEMPO y la lista" width="1088" height="218" loading="lazy" style="display:block;width:100%;height:auto;max-width:1088px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① aufnehmen · ② abspielen · ③ die Truhe öffnen · ④ .mmf oder .mid laden · ⑤ die neue Aufnahme · ⑥ PLAYBACK TEMPO · ⑦ deine Aufnahmen.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>load mmf</b> und <b>load mid</b> ④ holen eine Aufnahme von deinem Computer. MIDI kommt als temperierte Schicht herein, in Cyan.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Die neue Aufnahme</b> ⑤ erscheint oben, griffbereit: <b>keep in list</b> behält sie in der Liste, und <b>save as .mmf</b> lädt sie als Datei herunter.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Die Liste</b> ⑦: Schreib über den Namen, um ihn zu ändern; <b>▶</b> spielt sie ab, <b>⬇</b> speichert sie als .mmf und <b>✕</b> löscht sie.</span></li>
+        <li style="margin:2px 0"><span class="tr">Unten in der Truhe liegen die Demos von Bartók und Bach, zum Ausprobieren.</span></li>
+      </ul>
+      <p><span class="tr"><b>PLAYBACK TEMPO</b> ⑥ ändert die Geschwindigkeit, mit der eine Aufnahme klingt, ohne die Noten zu ändern: Sie bleiben genauso sauber gestimmt, nur langsamer oder schneller. Zieh den Drehknopf nach unten, um langsamer zu werden, bis <b>×0.50</b> (die Hälfte), oder nach oben, um schneller zu werden, bis <b>×2.00</b> (das Doppelte). Mit <b>Shift</b> bewegt er sich fein, und ein Doppelklick bringt ihn zurück auf <b>×1.00</b>, die ursprüngliche Geschwindigkeit.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-playback-tempo.png" alt="La perilla PLAYBACK TEMPO en tres posiciones: ×0.50, ×1.00 y ×2.00" width="260" height="160" loading="lazy" style="display:block;width:100%;height:auto;max-width:260px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Oben ×0.50, halb so schnell · in der Mitte ×1.00, so wie du es aufgenommen hast · unten ×2.00, doppelt so schnell.</span></figcaption></figure>
+      <p><span class="tr">Das ist für zwei Dinge gut: eine schwierige Stelle langsam aufnehmen und im Tempo hören, oder ein Stück langsam anhören, um jede Note zu verfolgen. Es gilt für das ▶ jeder Aufnahme in der Truhe, auch für die .mmf- und .mid-Dateien, die du lädst. Wenn du ▶ drückst, schließt sich die Truhe; willst du die Geschwindigkeit ändern, während es spielt, öffne sie wieder mit <b>☰ recs</b>, beweg den Drehknopf und lass los: Das Stück spielt dort weiter, wo es war, mit der neuen Geschwindigkeit.</span></p>
+      <p><span class="tr">Wenn du zu einem anderen Tanz springst, kommt das Keyboard in der Tonart dieser Stelle gestimmt herein. Und du kannst aufnehmen, während das Score spielt: Die Aufnahme kommt sauber heraus, nur mit dem, was du gespielt hast. Um den Klang als Audiodatei zu speichern, nimm <a href="#wav-guardar-lo-que-estas-oyendo">⬤ wav</a>.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Nach ⏹ erscheint „NEW RECORDING READY“, und mit ▶ hörst du, was du gespielt hast. Mit dem Drehknopf auf ×0.50 klingt es mit halber Geschwindigkeit, in derselben Stimmung.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="pulse-el-metronomo"><span class="tr">♩ Pulse — das Metronom</span></h3>
-      <p><span class="tr">Der Button ♩ öffnet eine kleine Konsole: ein schlagendes Licht, ▶, Tap zum Festlegen des Tempos, einen BPM-Regler, das klassische Menü von Largo bis Presto und einen optionalen Klick mit Lautstärke und Klangfarbe. Mit ⊗ angeheftet läuft es weiter; nicht angeheftet stoppt es beim Schließen — nichts klingt versehentlich weiter. Und es schlägt mit der Musik: Beim Abspielen einer mmf aus der Truhe oder wenn der Score spielt — auch innerhalb einer A–B-Schleife — folgt das Licht dem Takt, und die Anzeige zeigt das Tempo dieses Abschnitts. Das Werk führt: Sobald sein Puls einsetzt, stoppt das freie Metronom von selbst.</span></p>
+      <h3 id="pulse-el-metronomo"><span class="tr">♩ Pulse — das Metronom des Keyboards</span></h3>
+      <p><span class="tr">Das Keyboard hat ein eigenes Metronom, vollständiger als das des Scores: Hier wählst du das Tempo selbst, und du kannst zusätzlich zum Licht einen Klick hören.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Drück <b>♩ pulse</b> ① in der Leiste des Keyboards.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-pulse.png" alt="El botón pulse del Keyboard y su consola: la luz, start, tap, la perilla de BPM, el menú de Largo a Presto, click y tone" width="806" height="117" loading="lazy" style="display:block;width:100%;height:auto;max-width:806px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① pulse · ② das Licht · ③ starten · ④ tap · ⑤ BPM · ⑥ von Largo bis Presto · ⑦ der Klick und seine Lautstärke · ⑧ der Ton des Klicks.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Das Licht</b> ② schlägt mit dem Puls, und <b>▶ start</b> ③ schaltet es ein und aus.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>tap</b> ④: Drück diese Taste mehrmals im Tempo, das du im Kopf hast, und das Metronom übernimmt dieses Tempo. Die Anschläge müssen aufeinanderfolgen: Wenn mehr als 2 Sekunden vergehen, beginnt es neu zu zählen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>BPM</b> ⑤: der Drehknopf und die Zahl; BPM heißt Schläge pro Minute.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Das Menü</b> ⑥: die klassischen Tempi, von <b>Largo · 50</b> bis <b>Presto · 184</b>. Drehknopf, Menü und tap gehören zusammen: Änderst du eins, bewegen sich die anderen mit.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>click</b> ⑦ schaltet den Ton ein; er beginnt ausgeschaltet, nur mit dem Licht. Der Knopf daneben ist seine Lautstärke, und <b>tone</b> ⑧ der Ton des Klicks, tiefer oder höher.</span></li>
+      </ul>
+      <p><span class="tr">Mit angeheftetem <b>⊗</b> läuft das Metronom weiter, auch wenn du etwas anderes machst; nicht angeheftet stoppt es beim Schließen, damit nichts aus Versehen weiterklingt. Und es schlägt mit dem Stück: Wenn ein .mmf aus der Truhe oder das Score spielt —auch in einer A–B-Schleife—, folgt das Licht dem Takt und die Zahl zeigt das Tempo dieser Stelle. Das Stück bestimmt: Sobald sein Puls einsetzt, hält das freie Metronom von selbst an.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Das Licht schlägt im gewählten Tempo, und mit eingeschaltetem <b>click</b> hörst du es. Das PULSE des Scores ist ein anderes: nur Licht, mit dem Tempo der Partitur (siehe <a href="#pop-pulse">das Pulse des Scores</a>).</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="la-nota-y-el-horizonte"><span class="tr">Die Note und der Horizont</span></h3>
-      <p><span class="tr">Unter dem Instrument zeigt das Display die Note und ihre exakte Frequenz in Hz. Daneben der künstliche Horizont: Linie in der Mitte = axiomatisch; sie steigt, wenn die Note nach oben zieht (Leitton), und sinkt, wenn sie nach unten auflöst. A= legt die Referenz (415–466 plus Feineinstellung) für die ganze Suite fest.</span></p>
+      <h3 id="la-nota-y-el-horizonte"><span class="tr">Die Note und der Horizont · was gerade klingt</span></h3>
+      <p><span class="tr">Unter dem Instrument sagt dir das Keyboard, welche Note du gerade gespielt hast.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-nota.png" alt="La nota Fa sostenido 3, sus 185,625 Hz y el horizonte, con la línea por encima del centro" width="405" height="81" loading="lazy" style="display:block;width:100%;height:auto;max-width:405px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① die Note · ② ihre Frequenz · ③ der Horizont.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Die Note</b> ①: ihr Name und ihre Oktave, wie <b>F♯ 3</b>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Die Frequenz</b> ②: wie viele Schwingungen pro Sekunde (Hz) sie hat, genau, und in welchem System du bist.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Der Horizont</b> ③, wie der eines Flugzeugs: Mit der Linie in der Mitte steht die Note an ihrem pythagoreischen Platz; sie steigt, wenn die Note nach oben zieht (der Leitton), und sinkt, wenn sie nach unten zieht.</span></li>
+      </ul>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du in Tonal den Leitton spielst —Fis in G-Dur—, steigt die Linie des Horizonts.</span></p>
     </div>
 
+    <div class="spec">
+      <h3 id="kb-instrument"><span class="tr">Instrument — wie die Tasten des Keyboards klingen</span></h3>
+      <p><span class="tr">Das Keyboard lässt die ganze Suite klingen: Auch das Score klingt über das Keyboard. <b>Instrument</b> wählt, wie die Tasten klingen, wenn du sie spielst, mit der Maus oder mit der Computertastatur: Klavier, Geige, Flöte…</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Drück das Feld <b>Instrument</b> ① in der zweiten Zeile der Leiste. Die Liste aller Instrumente geht auf.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-instrument.png" alt="El campo Instrument del Keyboard y la lista de instrumentos abierta, con Violin elegido" width="1078" height="552" loading="lazy" style="display:block;width:100%;height:auto;max-width:1078px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Instrument · ② filter · ③ die Familie · ④ das Instrument, das gerade klingt.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>filter</b> ②: Tipp ein paar Buchstaben („vio“, „flu“), und es bleiben nur die Instrumente, die sie im Namen haben.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Die Familien</b> ③: Jede Spalte fasst ähnliche Instrumente zusammen: Holzbläser, Blechbläser, Schlagwerk, Streicher, Stimmen…</span></li>
+        <li style="margin:2px 0"><span class="tr">Klick auf eins ④, und es ist gewählt: Die Liste schließt sich, und das Feld zeigt seinen Namen. Das Instrument, das gerade klingt, ist links mit einem Strich markiert.</span></li>
+      </ul>
+      <p><span class="tr">Was du hier wählst, ändert die Partitur nicht. Wenn das Score spielt, kommt jede Note mit dem Instrument ihres Kanals beim Keyboard an, und das hörst du (siehe <a href="#sc-instrumentos">Das Instrument eines Kanals</a>). Zum Beispiel: Du stellst hier <b>Violin</b> ein und drückst ▶ bei einem Klavierstück. Du hörst das Klavier, und wenn du mit den Tasten dazu spielst, klingt das wie eine Geige. Deine Wahl wird auch an das Register weitergegeben, das dasselbe Instrument lädt.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Das Feld zeigt den Namen, den du gewählt hast, und wenn du eine Taste spielst, hörst du dieses Instrument.</span></p>
+    </div>
     <div class="spec">
       <h3 id="kb-a-ref"><span class="tr">A= · der Stimmton der ganzen Suite</span></h3>
-      <p><span class="tr">Der Button <b>A= 440</b>, oben rechts. Er öffnet <b>Tuning Reference</b>: sechs Stimmtöne, mit einem Klick erreichbar — 415 barock, 430 klassisch, 432 natürlich, 440 modern, 442 brillant, 466 Renaissance — und den Schieberegler <b>fine</b>, von 380 bis 480 Hz in Halb-Hertz-Schritten. Wenn sich das A bewegt, bewegt sich die ganze Quintenkette mit: Die 35 Tonhöhen steigen oder sinken gemeinsam, und die Intervalle bleiben rein pythagoreisch. Es transponiert die Musik nicht: Es stimmt sie als Ganzes tiefer oder höher.</span></p>
-      <p><span class="tr"><b>Während der Score spielt.</b> Das A= des Keyboards und das des Score sind ein und dasselbe: Was du an einem änderst, übernimmt das andere. So kannst du im Score eine Partitur abspielen lassen und beim Zuhören auf dem Keyboard deine Referenz suchen: die deines Instruments, deines Orchesters oder die eines historischen Repertoires. Die bereits klingende Note endet, wie sie begonnen hat; die nächste setzt auf dem neuen A ein. Wenn du dann aus dem Score speicherst, merkt sich die .mmf den Stimmton, und das Stück öffnet sich wieder damit. Der <b>Pythagorean Tuner</b> hat dasselbe Bedienelement (<i>Reference pitch A4</i>), ist aber eine eigene Anwendung: Wenn du dein Instrument damit auf 442 stimmst, stelle auch hier 442 ein. <a href="https://musicmotionsuite.com/faq.html?lang=de#diapason" title="Häufige Fragen">Mehr in den FAQ</a>.</span></p>
-      <figure style="margin:14px 0 2px;overflow-x:auto;max-width:68ch">
-        <img src="../../suite/ug-keyboard-aref.png" alt="El Cosmic Keyboard con el popup Tuning Reference abierto: botones 415 baroque, 430 classical, 432 natural, 440 modern, 442 bright, 466 renaissance y el deslizador fine en 440.0 Hz" loading="lazy" style="display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Das Popup Tuning Reference, über dem Keyboard geöffnet: die sechs Stimmtöne und der Schieberegler fine, auf 440,0 Hz.</span></figcaption>
-      </figure>
+      <p><span class="tr">Der <b>Kammerton</b> ist das A, auf das alles gestimmt wird. Heute sind es fast immer 440 Hz, aber in anderen Zeiten und Orchestern lag er tiefer oder höher.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Drück <b>A= 440</b> ①, oben rechts. <b>Tuning Reference</b> geht auf.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-aref.png" alt="El botón A= 440 y el popup Tuning Reference: seis diapasones y el deslizador fine" width="325" height="238" loading="lazy" style="display:block;width:100%;height:auto;max-width:325px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① A= · ② die sechs Kammertöne · ③ fine.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Die sechs Kammertöne</b> ②, mit einem Klick: 415 barock, 430 klassisch, 432 natürlich, 440 modern, 442 brillant und 466 Renaissance.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>fine</b> ③: für einen genauen Wert, von 380 bis 480 Hz, in halben Hertz.</span></li>
+      </ul>
+      <p><span class="tr">Wenn du das A änderst, wird die Musik nicht transponiert: Das ganze Stück klingt etwas tiefer oder höher, und die Intervalle bleiben gleich. Es ist dasselbe A= wie im Score: Du kannst ein Stück im Score spielen lassen und hier, während du zuhörst, den Kammerton deines Instruments oder deines Orchesters suchen. Wenn du danach aus dem Score speicherst, merkt sich die .mmf ihn. Der <b>Pythagorean Tuner</b> hat seinen eigenen Regler (<i>Reference pitch A4</i>): Stimmst du dein Instrument damit auf 442, stell hier auch 442 ein. <a href="https://musicmotionsuite.com/faq.html?lang=de#diapason" title="Häufige Fragen">Mehr in den häufigen Fragen</a>.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Taste zeigt das neue A (zum Beispiel <b>A= 415</b>), und die nächste Note, die du spielst, klingt schon damit.</span></p>
     </div>
 
     <div class="spec">
       <h3 id="octavas-y-panico"><span class="tr">Oktaven und Panik</span></h3>
-      <p><span class="tr">OCTAVE SHIFT unten (◀ ▶ oder die Pfeiltasten ← →) verschiebt das Oktavfenster — deine Hand verlässt nie die Tasten. In Tonal stimmen ↑/↓ die gehaltene Note live um eine Apotome um. Escape schaltet jeden Klang ab. Die Reihen der Computertastatur zählen nach <b>Position</b>, nicht nach Buchstabe: Auf einer AZERTY- oder QWERTZ-Tastatur spielt die Taste, die an der Stelle der QWERTY-Taste liegt.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>OCTAVE SHIFT</b>, unten auf dem Bildschirm (◀ ▶, oder die Pfeile ← → der Computertastatur), verschiebt die Tasten um eine Oktave nach unten oder oben, ohne dass du die Hand bewegst.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Escape</b> schaltet den ganzen Klang auf einmal ab.</span></li>
+        <li style="margin:2px 0"><span class="tr">In Tonal stimmen ↑ und ↓ die Note, die du hältst, live höher oder tiefer.</span></li>
+        <li style="margin:2px 0"><span class="tr">Die Computertasten zählen nach ihrem <b>Platz</b>, nicht nach ihrem Buchstaben: Auf einer AZERTY- oder QWERTZ-Tastatur klingt die Taste, die an derselben Stelle liegt wie auf QWERTY.</span></li>
+      </ul>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du ▶ drückst, ändert sich die Zahl von OCTAVE SHIFT und dieselbe Taste klingt eine Oktave höher.</span></p>
     </div>
 
     <div class="spec">
@@ -348,12 +513,26 @@
 
     <div class="spec">
       <h3 id="la-tonalidad-del-keyboard-sigue-a-la-pieza"><span class="tr">Die Tonart des Keyboards folgt dem Stück</span></h3>
-      <p><span class="tr">Was der Score an das Keyboard schickt, ist die <b>Tonartvorzeichnung</b>, nicht die Tonart: f-Moll kommt als As an und g-Moll als B (gleiche Vorzeichnung, andere Tonika). Die wirkliche Tonart — Tonika und Modus — gibt es nur, wenn das Werk ein <b>Datenblatt</b> mit seinem deklarierten tonalen Zentrum trägt; mit dem Datenblatt zeigt das Badge des Keyboards „F minor“ an und wechselt von selbst, während die einzelnen Stücke der Datei vorüberziehen. Das Datenblatt kann jetzt den Takt angeben, in dem jeder Satz beginnt: Vorher kam das nur aus den auf die Partitur geschriebenen Satzbezeichnungen, so dass ein Werk, dessen Titel anders geschrieben waren, ohne Karte blieb und das Keyboard auf die Vorzeichnung zurückfiel. Und wenn ein deklariertes Zentrum auf keinen Takt fällt, wird die ganze Karte verworfen, und die geschriebene Vorzeichnung gilt (der Hinweis bleibt in der Konsole): Eine halbe Karte ist schlimmer als keine — sie stempelte die Tonart des ersten Satzes über das ganze Werk, 544 Takte als C-Dur angekündigt.</span></p>
+      <p><span class="tr">Wenn ein Stück aus dem Score oder aus der Truhe spielt, wechselt das Keyboard von selbst die Tonart, um mitzuspielen, und die Beschriftung oben zeigt, welche es ist. Hat das Stück mehrere Teile in verschiedenen Tonarten, wechselt es beim Übergang von einem zum nächsten.</span></p>
+      <p><span class="tr">Ein Detail: Die Partitur gibt nur die <b>Vorzeichen</b> an, und dieselben Vorzeichen gehören zu zwei Tonarten (B-Dur und g-Moll haben dieselben Bs). Sagt das Stück nicht, welche es ist, nimmt das Keyboard die Dur-Tonart. Die Stücke der Suite, die ihre Karte mit der Tonart jedes Teils mitbringen, zeigen die genaue Tonart, wie «f-Moll».</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Während das Stück spielt, ändert sich die Beschriftung der Tonart, wenn der Teil wechselt.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="wav-guardar-lo-que-estas-oyendo"><span class="tr">⬤ wav — speichern, was du hörst</span></h3>
-      <p><span class="tr">Die Rekorderleiste hat einen Button <b>⬤ wav</b>. Ein Klick startet die Aufnahme — der Button wird rot und zählt die Sekunden — und ein weiterer schließt die Aufnahme ab und lädt die Datei herunter, Stereo und <b>24 Bit</b>. Es ist kein Offline-Rendering: Es nimmt <b>live</b> auf, was den Master verlässt, im echten Audio-Thread, und deshalb eignet es sich, um Artefakte zu hören — ein Knacken, ein Kratzen —, die ein idealer Mix nie hätte. Die Aufnahme wird <i>nach</i> Klangfarbe, Wärme, Hall, Balance und dem <b>MASTER</b> der Console abgegriffen: Steht der MASTER auf 20 %, kommt die Datei mit 20 % heraus. Mit Absicht: Gespeichert wird, was klingt — deshalb landet alles, was du während der Aufnahme in der Console bewegst (Fader, Pan, Mute, Master, Hall), in der Datei. Das Audio muss bereits laufen — spiele eine Note, bevor du ihn drückst. Aus dem Score wird dieselbe Aufnahme mit <b>File → SAVE AS WAV</b> angefordert: Er spielt das Stück oder die SELECT-Region ab und lädt die nach dem Stück benannte Datei herunter.</span></p>
+      <h3 id="wav-guardar-lo-que-estas-oyendo"><span class="tr">⬤ wav — was du hörst, als Audio speichern</span></h3>
+      <p><span class="tr"><b>⬤ wav</b> speichert alles, was in der Suite klingt, in einer Audiodatei (.wav): was du auf dem Keyboard spielst, eine Aufnahme aus der Truhe oder ein Stück aus dem Score. Die Datei lässt sich auf jedem Computer oder Telefon öffnen, und du kannst sie verschicken oder als Erinnerung an eine Stunde aufheben.</span></p>
+      <p><span class="tr"><b>Zum Aufnehmen:</b> Spiel zuerst eine Note, denn das Audio muss laufen (sonst bittet dich das Keyboard darum). Die Taste ist neben <b>♩ pulse</b>, <b>⊕ FX</b> und <b>☰ recs</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-wav.png" alt="El botón wav del Keyboard, primero listo y después grabando: rojo y contando los segundos" width="695" height="72" loading="lazy" style="display:block;width:100%;height:auto;max-width:695px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① ⬤ wav, bereit · ② nimmt auf: rot und zählt die Sekunden.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Drück <b>⬤ wav</b> ①. Ab diesem Moment nimmt es alles auf, was klingt.</span></li>
+        <li style="margin:2px 0"><span class="tr">Spiel, oder lass eine Aufnahme oder das Stück laufen. Die Taste ② wird rot und zählt die Sekunden.</span></li>
+        <li style="margin:2px 0"><span class="tr">Drück die Taste noch einmal zum Beenden. Die Datei wird von selbst in den Download-Ordner deines Browsers (<b>Downloads</b>) geladen, mit einem Namen wie <b>mm-capture-153012.wav</b>: die Uhrzeit, zu der du aufgehört hast.</span></li>
+      </ul>
+      <p><span class="tr">Es nimmt auf, was du hörst, so wie du es hörst. Wenn du während der Aufnahme etwas in der Console bewegst —den <b>MASTER</b>, die Fader, das Pan, den Hall—, landet das in der Datei; steht der MASTER auf 20 %, kommt die Datei mit 20 % heraus. Stell die Lautstärke vor der Aufnahme so ein, wie es klingen soll.</span></p>
+      <p><span class="tr">Im Score geht dasselbe mit <b>File → SAVE AS WAV</b>: Es spielt das Stück oder den mit SELECT markierten Abschnitt und lädt die Datei mit dem Namen des Stücks herunter.</span></p>
+      <p><span class="tr">Für Neugierige: Das ist keine nachträglich berechnete Mischung, sondern das, was in diesem Moment zu den Lautsprechern geht, in Stereo und mit 24 Bit. Deshalb hält es auch ein Knacken oder ein Kratzen fest, wenn es eins gab.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Während der Aufnahme ist die Taste rot und die Sekunden laufen; am Ende erscheint die .wav-Datei in <b>Downloads</b>, und wenn du sie öffnest, hörst du, was geklungen hat.</span></p>
     </div>
 
     <div class="spec">
@@ -367,9 +546,18 @@
     </div>
 
     <div class="spec">
-      <h3 id="fx-por-canal-en-vivo"><span class="tr">⊕ FX: Hall, Echo, Porta und Rotary pro Kanal, live</span></h3>
-      <p><span class="tr">Der Button <b>⊕ FX</b> der Werkzeugleiste öffnet ein Popup pro Kanal mit sechs Reglern — <b>Reverb · Echo wet · Echo fb · Echo time · Porta · Rotary</b> —, das den Instrumentennamen des Kanals zeigt, in der Sprache des Coach. Sie wirken <b>nur auf das, was du live spielst</b>. <b>Vibrato</b> ist nicht hier: Es ist der sechste Regler des Popups im Score, weil es dort als Bereich des Stücks geschrieben wird und das Live-Spiel keinen Ort hat, es aufzubewahren. <b>Rotary</b> ist der rotierende Lautsprecher der Jazzorgel (Leslie): Auf 0 ist er aus; durch Drehen schaltest du ihn ein, von Slow (0,8 Hz) bis Fast (6,7 Hz), und er beschleunigt und verlangsamt wie der echte. Doppelklick: Off.</span></p>
-      <p><span class="tr">Die beiden Popups teilen sich die Arbeit: Dieses ist für das <b>Live</b>-Spiel, das des Score für die <b>Wiedergabe</b>. Sie teilen sich dieselbe Echoleitung und denselben Hall, aber jede Note trägt ihren eigenen Send, so dass ein Anheben des Echos hier die Wiedergabe einer Partitur nicht nasser macht, und umgekehrt ebenso wenig. Das Popup öffnet sich <b>angeheftet</b> (⊗) direkt unter dem Button und schließt mit einem Klick auf das Schloss; zieh es an seiner Kopfzeile, und seine Breite lässt sich ändern.</span></p>
+      <h3 id="fx-por-canal-en-vivo"><span class="tr">⊕ FX · Hall, Echo, Porta und Rotary für das, was du spielst</span></h3>
+      <p><span class="tr"><b>Zum Öffnen:</b> Drück <b>⊕ FX</b> ①, neben ♩ pulse. Oben steht das Instrument des Kanals, auf dem du spielst: Die Effekte gehören zu diesem Kanal.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-fx.png" alt="El botón FX y el popup Sound FX del Keyboard con sus seis perillas" width="524" height="163" loading="lazy" style="display:block;width:100%;height:auto;max-width:524px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① ⊕ FX · ② Reverb · ③ Echo wet · ④ Echo fb · ⑤ Echo time · ⑥ Porta · ⑦ Rotary.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Reverb</b> ②: der Nachhall eines großen Saals.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Echo wet</b> ③: wie viel Echo du hörst; <b>Echo fb</b> ④: wie oft es sich wiederholt; <b>Echo time</b> ⑤: wie lange jede Wiederholung dauert, in Millisekunden.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Porta</b> ⑥: Die Note gleitet zur nächsten, wie eine Geige oder eine Stimme.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Rotary</b> ⑦: der drehende Lautsprecher der Jazzorgel. Auf 0 ist er aus; wenn du ihn drehst, geht er von langsam zu schnell. Doppelklick: Off.</span></li>
+      </ul>
+      <p><span class="tr">Diese Effekte verändern <b>nur das, was du live spielst</b>. Damit die Partitur mit Hall oder Echo klingt, schreibt man sie im Score, in seinem eigenen Sound FX (siehe <a href="#pop-sound-fx">Sound FX</a>). Und sie sind nicht dasselbe wie REV und ECHO in der Leiste, die für alles gelten, was klingt. Das Popup bleibt offen (⊗), bis du es schließt, und du ziehst es an seiner Kopfzeile.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du mit höherem Reverb oder Echo wet spielst, hörst du den Saal oder das Echo; die Partitur ändert sich beim Abspielen nicht.</span></p>
     </div>
 
   </div>
@@ -419,12 +607,12 @@
 
     <div class="spec">
       <h3 id="modo-pagina-editar-sobre-la-hoja"><span class="tr">Seitenmodus: auf dem Blatt bearbeiten</span></h3>
-      <p><span class="tr">Der Button <b>PAGE</b> in der Werkzeugleiste schaltet zwischen der durchgehenden Leiste und der <b>Blatt</b>-Ansicht um: Die Partitur erscheint als A4-Seiten im selben Fenster, mit demselben Notensatz wie der Druck, aber darauf bearbeitbar. Ein zweiter Wähler bestimmt die Ansicht (Whole page · Fit width · Side by side). Auf dem Blatt kannst du bereits <b>eine Note auswählen</b> und dort den Cursor setzen, <b>ein Zeichen auswählen</b> (Dynamik, Ausdruck, Artikulation, Tempo, Agogik), um es mit den Zoom-Buttons in der Größe zu ändern, oder auf eine leere Stelle klicken, um den Cursor zu setzen (der am Raster einrastet). Ein <b>Rechtsklick</b> öffnet dieselben Kontextmenüs wie auf der Leiste (Note, Haltebogen, Bogen, Text, Zeichen, Kanal), und beim Darüberfahren wird der Zeiger über allem Anklickbaren zur Hand. Während der Wiedergabe leuchten die rote Linie und die klingenden Noten auf dem Blatt auf. Das Blatt hat eigenen Zoom und eigenes Scrollen (Mausrad; Shift+Mausrad seitwärts; Strg+Mausrad Zoom). Es ist umkehrbar und lässt die Leiste unberührt. <b>Noch nicht</b>: Noten ziehen oder neue Noten mit der Maus auf dem Blatt schreiben — dafür nimm die Leiste oder die schwebende Leiste.</span></p>
+      <p><span class="tr">Der Button <b>📄 PAGE</b> in der Werkzeugleiste schaltet zwischen der durchgehenden Leiste und der <b>Blatt</b>-Ansicht um: Die Partitur erscheint als A4-Seiten im selben Fenster, mit demselben Notensatz wie der Druck, aber darauf bearbeitbar. Ein zweiter Wähler bestimmt die Ansicht (Whole page · Fit width · Side by side). Auf dem Blatt kannst du bereits <b>eine Note auswählen</b> und dort den Cursor setzen, <b>ein Zeichen auswählen</b> (Dynamik, Ausdruck, Artikulation, Tempo, Agogik), um es mit den Zoom-Buttons in der Größe zu ändern, oder auf eine leere Stelle klicken, um den Cursor zu setzen (der am Raster einrastet). Ein <b>Rechtsklick</b> öffnet dieselben Kontextmenüs wie auf der Leiste (Note, Haltebogen, Bogen, Text, Zeichen, Kanal), und beim Darüberfahren wird der Zeiger über allem Anklickbaren zur Hand. Während der Wiedergabe leuchten die rote Linie und die klingenden Noten auf dem Blatt auf. Das Blatt hat eigenen Zoom und eigenes Scrollen (Mausrad; Shift+Mausrad seitwärts; Strg+Mausrad Zoom). Es ist umkehrbar und lässt die Leiste unberührt. Auf dem Blatt lassen sich auch Noten und Zeichen ziehen; zum vielen Schreiben ist die Leiste bequemer.</span></p>
     </div>
 
     <div class="spec">
       <h3 id="modo-pagina-ajustes-de-hoja-en-la-barra"><span class="tr">Seitenmodus: Blatteinstellungen in der Werkzeugleiste</span></h3>
-      <p><span class="tr">Im Seitenmodus (der Button <b>📄 PAGE / ▦ SCROLL</b> wechselt zwischen Blatt und Leiste) gibt es neben dem Ansichtswähler (Full page · Fit width · Side by side) zwei neue Dropdowns, um das Blatt <b>live</b> anzupassen, ohne 🖨 PRINT VIEW zu öffnen. <b>„Bars/system“</b> legt fest, wie viele Takte pro System (Auto oder 1 bis 6), und <b>„Staff space“</b> die Größe der Notenzeile (3 bis 9 mm); das Blatt wird sofort neu gesetzt, während du sie veränderst. Sie bleiben in beide Richtungen <b>synchron</b> mit dem Modal 🖨 PRINT. Standard: Auto · Staff 5 mm.</span></p>
+      <p><span class="tr">Im Seitenmodus (der Button <b>📄 PAGE / ▦ SCROLL</b> wechselt zwischen Blatt und Leiste) gibt es neben dem Ansichtswähler (Full page · Fit width · Side by side) zwei neue Dropdowns, um das Blatt <b>live</b> anzupassen, ohne 🖨 PRINT VIEW zu öffnen. <b>„Bars/system“</b> legt fest, wie viele Takte pro System (Auto oder 1 bis 9), und <b>„Staff space“</b> die Größe der Notenzeile (3 bis 9 mm); das Blatt wird sofort neu gesetzt, während du sie veränderst. Sie bleiben in beide Richtungen <b>synchron</b> mit dem Modal 🖨 PRINT. Standard: Auto · Staff 5 mm.</span></p>
     </div>
 
     <div class="spec">
@@ -546,7 +734,7 @@
 
     <div class="spec">
       <h3 id="ajustes-de-la-hoja-impresa"><span class="tr">Einstellungen des gedruckten Blatts</span></h3>
-      <p><span class="tr">Die Fußzeile des Drucks ist jetzt eine einzige Zeile (Autor · ©). Im Modal PRINT wählt <b>„Bars/system“</b>, wie viele Takte pro System (Auto oder 1 bis 6 — standardmäßig 4), und <b>„Staff space“</b> legt die Größe der Notenzeile fest, von 3 bis 9 mm, im Modus Auto.</span></p>
+      <p><span class="tr">Die Fußzeile des Drucks ist jetzt eine einzige Zeile (Autor · ©). Im Modal PRINT wählt <b>„Bars/system“</b>, wie viele Takte pro System (Auto oder 1 bis 9), und <b>„Staff space“</b> legt die Größe der Notenzeile fest, von 3 bis 9 mm, im Modus Auto.</span></p>
     </div>
 
     <div class="spec">
@@ -1106,13 +1294,41 @@
     </div>
   <p class="lead"><span class="tr"><b>Das Blatt</b> — darauf arbeiten oder es aufs Papier bringen.</span></p>
     <div class="spec">
-      <h3 id="sc-page"><span class="tr">📄 PAGE · auf dem Blatt arbeiten</span></h3>
-      <p><span class="tr">Der Button <b>📄 PAGE</b> tauscht die durchgehende Leiste gegen das <b>paginierte Blatt</b>, im selben Fenster — und du <b>bearbeitest</b> dort weiter: Noten und Zeichen lassen sich ziehen, die Bereichsauswahl funktioniert, ein Klick setzt den Cursor. Seine Leiste enthält, was über das Layout entscheidet: <b>Takte pro System</b> (Auto oder 1 bis 9), die <b>Notenzeile in Millimetern</b>, den <b>Abstand zwischen den Systemen</b> und <b>Pages</b>, das das Stück bittet, auf so viele Blätter zu passen. Der Zoom des Blatts ist <b>Strg + Mausrad</b>. Die durchgehende Leiste bleibt dahinter unberührt: Der Button bringt dich zurück.</span></p>
+      <h3 id="sc-page"><span class="tr">📄 PAGE / ▦ SCROLL · die Leiste oder das Blatt</span></h3>
+      <p><span class="tr">Das Score zeigt dir die Musik auf zwei Arten. In <b>SCROLL</b> ist sie eine lange Leiste, die nach rechts läuft: am bequemsten zum Schreiben. In <b>PAGE</b> siehst du sie auf Blättern, so wie sie gedruckt wird, und dort entscheidest du, wie sie sich auf die Seiten verteilt.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Drück <b>📄 PAGE</b> ①. Dieselbe Taste zeigt dann <b>▦ SCROLL</b>: Drück sie, um zur Leiste zurückzukehren. Die Leiste ändert sich nicht: Sie wartet so auf dich, wie sie war.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-page.png" alt="El botón PAGE del Score y, en la vista de hoja, el botón SCROLL con los menús de vista, compases por sistema, pauta, espacio y páginas" width="830" height="272" loading="lazy" style="display:block;width:100%;height:auto;max-width:830px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① 📄 PAGE · ② die Ansicht · ③ Takte pro Zeile · ④ Größe der Notenzeile · ⑤ Abstand zwischen den Zeilen · ⑥ wie viele Seiten.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Die Ansicht</b> ②: <b>Full page</b> (das ganze Blatt), <b>Fit width</b> (auf Bildschirmbreite) oder <b>Side by side</b> (zwei Blätter, wie ein offenes Buch).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Bars/sys</b> ③: wie viele Takte in jede Zeile passen (in der Musik ein <i>System</i>). <b>Auto</b> passt sie an die Breite an; oder du wählst 1 bis 9.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Staff</b> ④: die Größe der Notenzeile, in Millimetern Papier, von 3 bis 9. Für eine Stimme, die am Notenpult gespielt wird, 7 mm; für eine Partitur mit vielen Instrumenten 4 oder 5.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Gap</b> ⑤: der Abstand zwischen einer Zeile und der nächsten.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Pages</b> ⑥: auf wie vielen Blättern du das Stück haben willst. Das Score ordnet es von selbst an; passt es nicht, sagt es dir die kleinstmögliche Zahl.</span></li>
+      </ul>
+      <p><span class="tr">Auf dem Blatt arbeitest du weiter: Ein Klick setzt den Cursor oder wählt eine Note, Noten und Zeichen lassen sich ziehen, du kannst einen Bereich auswählen, und der Rechtsklick öffnet dieselben Menüs wie auf der Leiste. Wenn du ▶ drückst, leuchten die klingenden Noten auf dem Blatt auf. Zoomen geht mit <b>Strg + Mausrad</b>. Zum vielen Schreiben ist die Leiste bequemer.</span></p>
+      <p><span class="tr">Diese Einstellungen werden mit dem Stück gespeichert und sind dieselben wie auf dem Druckblatt (<a href="#sc-print-pdf">PRINT / PDF</a>): Was du hier anordnest, kommt so aufs Papier. Hat eine Zeile einen Takt zu viel oder zu wenig, kannst du sie mit einem Rechtsklick verschieben oder ihr einen Takt weitergeben (siehe <a href="#pop-ctx-system">⠿ System</a>).</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Du siehst das Stück auf weißen Blättern, wie ein Buch, und wenn du ③ oder ⑥ änderst, ordnet sich das Blatt sofort neu.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-print-pdf"><span class="tr">🖨 PRINT / PDF · das Blatt herausbringen</span></h3>
-      <p><span class="tr">Im <b>MENU FILES</b>, und es ist etwas anderes als PAGE: Du bearbeitest nicht, du <b>druckst</b>. Es fügt alles hinzu, was zum Papier gehört — <b>Papier</b> A4, Letter oder A3; <b>Show</b> die ganze Partitur oder nur die gewählten Kanäle; die <b>Ansicht</b> als ganze Seite, an die Breite angepasst oder als Doppelseite; die Fußzeile und die Seitenzahl. Die <b>Notenzeile in Millimetern</b> ist die professionelle Entscheidung: <b>7 mm für eine Stimme</b>, <b>4 oder 5 für eine Partitur</b>. Und es hat eine <b>Kopfzeilenleiste nur für das Blatt</b>: Titel, Untertitel, Komponist, Stimmenname und ©, jedes mit seiner Größe, die <b>Score Info nur auf dem Papier überschreiben</b> — ein leeres Feld greift auf Score Info zurück —; und auf Seite 1 lässt sich der Kopfblock <b>mit der Maus greifen und verschieben</b>, sein Versatz wird in Millimetern im Stück gespeichert. <b>Print / PDF</b> übergibt dem Browser <b>nur die Blätter</b>, in Papiergröße: Was du siehst, kommt heraus.</span></p>
+      <h3 id="sc-print-pdf"><span class="tr">🖨 PRINT / PDF · die Partitur drucken oder als PDF speichern</span></h3>
+      <p><span class="tr"><b>Zum Öffnen:</b> Drück <b>MENU FILES</b> ① und dann <b>🖨 PRINT / PDF</b> ②. Das Druckblatt öffnet sich: die Seiten so, wie sie herauskommen, mit ihrer Einstellungsleiste oben.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-print-menu.png" alt="El botón MENU FILES del Score y su menú, con PRINT / PDF marcado" width="309" height="461" loading="lazy" style="display:block;width:100%;height:auto;max-width:309px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① MENU FILES · ② 🖨 PRINT / PDF.</span></figcaption></figure>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-print.png" alt="La barra de la hoja de impresión: Show, Paper, los sistemas, Print / PDF, Close y la cabecera de la página" width="1430" height="198" loading="lazy" style="display:block;width:100%;height:auto;max-width:1430px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">③ was gedruckt wird · ④ das Papier · ⑤ wie es verteilt wird · ⑥ drucken · ⑦ schließen · ⑧ der Titel des Blatts.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Show</b> ③: <b>Full score</b>, die ganze Partitur, oder <b>Selected CH</b>, nur die gewählten Kanäle (die Stimme eines Instruments; siehe unten).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Paper</b> ④: A4, Letter oder A3.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Bars/system, Staff mm, Sys gap und Pages</b> ⑤: dieselben Einstellungen wie in <a href="#sc-page">PAGE</a>, und sie gehören zusammen: Was du hier änderst, ändert sich dort auch.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Print / PDF</b> ⑥ öffnet das Druckfenster deines Browsers. Wähl deinen Drucker, oder wähl unter <b>Destination</b> die Option <b>Save as PDF</b>, um eine PDF-Datei zu speichern.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Close</b> ⑦ geht zurück zur Partitur.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PAGE HEADER · print only</b> ⑧: der Titel, der Untertitel, der Komponist, der Name der Stimme und das ©, jedes mit seiner Größe. Sie ändern nur das Papier: Lässt du ein Feld leer, wird das aus <a href="#pop-score-info">Score Info</a> verwendet. Auf Seite 1 kannst du die Kopfzeile mit der Maus greifen und verschieben.</span></li>
+      </ul>
+      <p><span class="tr">Was du auf dem Druckblatt siehst, kommt heraus: ohne die cyanfarbene Auswahl, ohne die Tasten und ohne versteckte Noten. Unter der Leiste schalten <b>Footer</b> und <b>Page #</b> die Fußzeile und die Seitenzahl ein oder aus.</span></p>
+      <p><span class="tr">Hast du das Stück aus einer Stunde geöffnet, im <a href="#score-demo">Demo-Modus</a>, geht es kürzer: Die Taste <b>🖨 PRINT</b> oben, neben dem Titel, setzt das Blatt und öffnet direkt das Druckfenster.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Das Druckfenster des Browsers öffnet sich und zeigt deine Blätter; mit <b>Save as PDF</b> landet die Datei in <b>Downloads</b>.</span></p>
     </div>
 
     <div class="spec">
@@ -1121,12 +1337,18 @@
     </div>
   <p class="lead"><span class="tr"><b>Die untere Leiste</b> — der Transport und die Zahlen des Stücks.</span></p>
     <div class="spec">
-      <h3 id="sc-transporte"><span class="tr">Die untere Leiste · flach ist Information, gerahmt ist zum Ändern</span></h3>
-      <p><span class="tr">Die Transportleiste folgt einer visuellen Regel, die man kennen sollte, weil sie dir das Raten erspart: Was <b>flach</b> ist, ist eine <b>Anzeige</b> — sie informiert dich und wird nicht angefasst; was in einem kleinen Kästchen <b>gerahmt</b> ist, das sich unter der Maus anhebt, ist ein <b>Bedienelement</b> und ändert sich mit einem Klick. Transport links, die vier Chips und die drei Anzeigen in der Mitte, Puls und Schleife rechts.</span></p>
-      <figure style="margin:14px 0 2px;overflow-x:auto;max-width:68ch">
-        <img src="../../suite/ug-transport-3.png" alt="La barra del transporte del Score: los botones de transporte, TIME, los chips MEASURE, BEAT, SUBDIV y BPM, los displays PITCH y CURSOR, y los botones PULSE y LOOP" style="display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Gerahmt: MEASURE · BEAT · SUBDIV · BPM. Flach: TIME, PITCH und CURSOR. TOTAL erscheint erst, wenn das Stück spielt.</span></figcaption>
-      </figure>
+      <h3 id="sc-transporte"><span class="tr">Die untere Leiste · was sie dir sagt und was du ändern kannst</span></h3>
+      <p><span class="tr">Ganz unten ist die <b>Transportleiste</b>. Sie sagt dir, wo du im Stück bist, während du schreibst und während es spielt.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-transporte.png" alt="La barra de abajo del Score: TIME, los chips MEASURE, BEAT, SUBDIV y BPM, y los displays PITCH y CURSOR" width="995" height="51" loading="lazy" style="display:block;width:100%;height:auto;max-width:995px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① TIME · ② die vier Chips · ③ PITCH · ④ CURSOR.</span></figcaption></figure>
+      <p><span class="tr">Eine einfache Regel zum Lesen: Was einen <b>Rahmen</b> hat, änderst du mit einem Klick; was keinen Rahmen hat, informiert dich nur.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>TIME</b> ①: wie viel Zeit seit dem Anfang vergangen ist, in Minuten, Sekunden und Tausendsteln.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>MEASURE · BEAT · SUBDIV · BPM</b> ②: der Takt, die Zählzeit im Takt, die Schrittgröße des Cursors und die Geschwindigkeit. Sie haben einen Rahmen: Du kannst sie ändern. Wie, steht unter <a href="#sc-transporte-chips">die vier Chips</a>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PITCH</b> ③: die Tonhöhe der letzten Taste, die du gespielt hast.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>CURSOR</b> ④: auf welchem Instrument der <a href="#sc-cursor">Cursor</a> steht.</span></li>
+      </ul>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Drück ▶ und schau auf TIME: Die Zahlen laufen. Während das Stück spielt, erscheint daneben <b>TOTAL</b>: wie lange das ganze Stück dauert.</span></p>
     </div>
 
     <div class="spec">
@@ -1145,8 +1367,23 @@
     </div>
 
     <div class="spec">
-      <h3 id="sc-transporte-botones"><span class="tr">Der Transport und die beiden Buttons rechts</span></h3>
-      <p><span class="tr"><b>⏮</b> zum Anfang, <b>⏪</b> und <b>⏩</b> Takt für Takt, <b>▶ ⏸ ⏹</b>, <b>⏭</b> zum Ende. Bei eingeschalteter Schleife <b>bringt dich ⏮ zum Anfang der Schleife</b> und nicht zu Takt 1, und das willst du, während du an einer Passage arbeitest. Rechts öffnet <b>♩ PULSE</b> das Metronom des Score, das das Tempo nicht wählt: Es <b>liest es aus der Partitur</b>, aus dem Takt, in dem der Cursor steht, und schlägt nach SUBDIV — der erste Schlag jeder Gruppe leuchtet heller, so dass sich der Schlag innerhalb der Achtel lesen lässt, und daneben wird der Wert genannt, der gerade schlägt. <i>(Und es ist absichtlich kleiner als das des Keyboard: Dort hast du einen BPM-Regler, <b>tap</b>, italienische Tempobezeichnungen, Klick und Tonhöhe, weil jenes Metronom das Tempo <b>wählt</b>; hier ist das Tempo das des Stücks, und ein Regler wäre eine zweite Uhr, die gegen die erste kämpft. Auch der hörbare Schlag ist der des Keyboard, da es die Klang-Engine ist: Der des Score ist Licht.)</i> Und <b>🔁 LOOP</b> schaltet die Schleife ein und aus; sein Rechtsklick öffnet das kleine Panel mit „play the loop“, dem Zoom auf den Abschnitt und dem Löschen.</span></p>
+      <h3 id="sc-transporte-botones"><span class="tr">Die Tasten zum Anhören · abspielen, anhalten und springen</span></h3>
+      <p><span class="tr">Links in der unteren Leiste sind die Tasten zum Anhören des Stücks, wie bei jedem Musikplayer.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-transporte-botones.png" alt="Los botones del transporte del Score y los botones PULSE y LOOP" width="413" height="51" loading="lazy" style="display:block;width:100%;height:auto;max-width:413px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Die Nummern sind die der Liste unten.</span></figcaption></figure>
+      <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>⏮</b> geht zurück zum Anfang des Stücks. Wenn du einen <a href="#pop-work-range">Arbeitsbereich</a> markiert hast, zum Anfang des Bereichs.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏪</b> geht einen Takt zurück.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>▶</b> spielt das Stück ab der Stelle, an der du bist. Tastenkürzel: die Leertaste.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏸</b> macht eine Pause. Ein weiterer Klick spielt an derselben Stelle weiter.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏹</b> hält an.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏩</b> geht einen Takt vor.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏭</b> geht zum Ende des Stücks.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>♩ PULSE</b> schaltet das <a href="#pop-pulse">Metronom</a> ein. Es wählt das Tempo nicht: Es liest es aus der Partitur.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>🔁 LOOP</b> wiederholt eine Stelle immer wieder. Wie du die Stelle markierst, steht unter <a href="#sc-loop-ab">die Schleife</a>.</span></li>
+      </ol>
+      <p><span class="tr"><b>Vorsicht:</b> Den Klang macht das <b>Keyboard</b>. Wenn es nicht offen ist, bewegt ▶ die Abspiellinie, aber du hörst nichts.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du ▶ drückst, hörst du die Musik, eine Linie läuft über die Partitur und TIME läuft in der unteren Leiste.</span></p>
     </div>
   <p class="lead"><span class="tr"><b>Die Navigatorleiste</b> — eine Passage finden und sich darin einschließen.</span></p>
     <div class="spec">
@@ -1170,23 +1407,65 @@
     </div>
   <p class="lead"><span class="tr"><b>Die Kanäle</b> — sehen, hören und wem was gehört.</span></p>
     <div class="spec">
-      <h3 id="sc-canal-vista"><span class="tr">Sehen und nicht sehen · das Kontrollkästchen und das 👁 sind verschiedene Dinge</span></h3>
-      <p><span class="tr">Das <b>Kontrollkästchen</b> in der Kanalliste bedeutet <b>sichtbar</b>: Ausgeschaltet <b>verschwindet</b> diese Notenzeile vom Bildschirm, und die Partitur rückt zusammen — und da der Kanal weiterhin existiert, <b>klingt er weiterhin</b>. Das <b>👁</b> ist etwas anderes: Es lässt die Notenzeile <b>geisterhaft</b> erscheinen, kaum sichtbar, so dass du sie als Referenz behalten kannst, ohne dass sie mit dem konkurriert, was du schreibst. Ein Detail, das Rätselraten erspart: Ist der Kanal <b>unsichtbar</b>, bewirken das Auge und das Mute in dieser Zeile nichts — du musst ihn zuerst sichtbar machen.</span></p>
+      <h3 id="sc-canal-vista"><span class="tr">Einen Kanal sehen oder nicht · das Kästchen und das Auge</span></h3>
+      <p><span class="tr">In der Kanalliste (Taste <b>⚙ CHANNELS</b>) hat jede Zeile zwei Schalter für die Ansicht. Sie machen verschiedene Dinge.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-canales.png" alt="El botón CHANNELS y la lista de canales: en cada fila la casilla, el número de canal, el instrumento, la clave, el ojo, el botón de silencio, FX y el menú" width="500" height="746" loading="lazy" style="display:block;width:100%;height:auto;max-width:500px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① das Kästchen · ② das Auge · ③ die Taste zum Stummschalten · ④ FX, die Effekte.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Das Kästchen</b> ①: Ausgeschaltet verschwindet das Notensystem vom Bildschirm, und die anderen rücken zusammen. Der Kanal ist weiter da, also <b>klingt er weiter</b>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Das Auge 👁</b> ②: macht das Notensystem ganz blass, fast durchsichtig. Damit behältst du es als Bezug im Blick, während du in einem anderen schreibst.</span></li>
+              <li style="margin:2px 0"><span class="tr"><b>FX</b> ④ öffnet die Klangeffekte des Kanals: Hall, Echo und mehr. Sie werden unter <a href="#pop-sound-fx">Sound FX</a> erklärt. Wenn der Kanal schon Effekte hat, ist FX grün.</span></li>
+      </ul>
+      <p><span class="tr">Zum Stummschalten eines Kanals gibt es ③: Das wird unter <a href="#sc-canal-sonido">Einen Kanal hören oder nicht</a> erklärt.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Mit ausgeschaltetem Kästchen siehst du dieses Notensystem nicht mehr; mit dem Auge siehst du es blass. Noch ein Klick, und es ist wieder wie vorher.</span></p>
+      <p><span class="tr"><b>Vorsicht:</b> Bei ausgeschaltetem Kästchen machen das Auge und das Stummschalten dieser Zeile nichts. Schalte zuerst das Kästchen wieder ein.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-canal-sonido"><span class="tr">Hören und nicht hören · Mute verbirgt nichts</span></h3>
-      <p><span class="tr">Das <b>Mute</b> — das ◉ auf der Karte des aktiven Kanals, der Lautsprecher in der Liste, die Zeile im Etikettmenü — <b>schaltet den Kanal stumm und lässt ihn sichtbar</b>: Das einzige Signal ist, dass sein Name grau wird. Zwei Achsen, die sich nicht berühren: Das Ausschalten der Ansicht macht nicht stumm, und das Stummschalten verbirgt nicht. Und das Mute <b>reist im Stück mit</b>: Die Datei wird mit den Kanälen gespeichert, die du stumm gelassen hast.</span></p>
+      <h3 id="sc-canal-sonido"><span class="tr">Einen Kanal hören oder nicht · stummschalten versteckt nichts</span></h3>
+      <p><span class="tr"><b>Stummschalten</b> (auf Englisch <b>mute</b>) bringt einen Kanal zum Schweigen, lässt ihn aber sichtbar. Damit hörst du zum Beispiel das Klavier ohne die linke Hand.</span></p>
+      <p><span class="tr"><b>Um einen Kanal stummzuschalten</b>, nimm eine dieser drei Möglichkeiten:</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">die Taste <b>◉</b> in seiner Zeile der Liste <b>⚙ CHANNELS</b> (③ im Bild <a href="#sc-canal-vista">oben</a>);</span></li>
+        <li style="margin:2px 0"><span class="tr">das <b>◉</b> in der Karte des aktiven Kanals, unten rechts;</span></li>
+        <li style="margin:2px 0"><span class="tr">Rechtsklick auf den Namen des Kanals, links vom Notensystem, und dann <b>Mute</b> (siehe <a href="#sc-canal-solo">das Bild beim Solo</a>).</span></li>
+      </ul>
+      <p><span class="tr">Sehen und Hören sind zwei getrennte Dinge: Ein verstecktes Notensystem klingt weiter, und ein stummes bleibt sichtbar.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Der Name des Kanals wird grau, und wenn du das Stück abspielst, klingt dieses Notensystem nicht. Dieselbe Taste schaltet es wieder ein.</span></p>
+      <p><span class="tr">Das Stummschalten wird mit dem Stück gespeichert: Wenn du die Datei wieder öffnest, bleiben die Kanäle, die du stumm gelassen hast, stumm.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-canal-solo"><span class="tr">Das Solo des Score heißt „die anderen stummschalten“, und der Mix kehrt exakt zurück</span></h3>
-      <p><span class="tr">Das <b>Solo</b> im Etikettmenü ist kein eigener Schalter: Es macht eine Momentaufnahme des Mixes, <b>schaltet alles stumm, was nicht zu dieser Zeile gehört</b>, und <b>gibt beim Ausschalten den Mix so zurück, wie er war</b>, Mute für Mute. Es arbeitet mit ganzen Zeilen, so dass ein Duo oder ein Trio vollständig klingt. Es ist Sitzungsspeicher: Es wird nicht im Stück gespeichert.</span></p>
+      <h3 id="sc-canal-solo"><span class="tr">Einen Kanal allein hören · Solo</span></h3>
+      <p><span class="tr"><b>Solo</b> macht das Gegenteil von Stummschalten: Es bringt alle anderen Kanäle zum Schweigen und lässt nur diesen spielen. Damit hörst du eine Stimme ohne den Rest.</span></p>
+      <p><span class="tr"><b>So benutzt du es:</b></span></p>
+      <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Rechtsklick auf den Namen des Kanals, links vom Notensystem (zum Beispiel «CH1 · R.H.»). Sein Menü geht auf.</span></li>
+        <li style="margin:2px 0"><span class="tr">Wähl <b>Solo</b> ②.</span></li>
+        <li style="margin:2px 0"><span class="tr">Um wieder alles zu hören, öffne dasselbe Menü und schalte Solo aus.</span></li>
+      </ol>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-canal-solo.png" alt="El menú del nombre de un canal: Mute, Solo, Sound FX, Name y Hide" width="280" height="252" loading="lazy" style="display:block;width:100%;height:auto;max-width:280px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Mute · ② Solo · ③ Hide: Im selben Menü gibt es auch Stummschalten und Verstecken.</span></figcaption></figure>
+      <p><span class="tr">Wenn das Notensystem zwei Kanäle zugleich trägt (zum Beispiel zwei Stimmen), lässt Solo beide spielen: Deshalb kann im Menü «Solo CH1+CH3» stehen.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du das Stück abspielst, hörst du nur dieses Notensystem. Wenn du Solo ausschaltest, ist jeder Kanal genau wieder wie vorher, auch die, die du schon stummgeschaltet hattest.</span></p>
+      <p><span class="tr">Solo wird nicht mit dem Stück gespeichert: Es ist eine Hilfe beim Arbeiten.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-instrumentos"><span class="tr">Das Instrument eines Kanals · und was wirklich entscheidet</span></h3>
-      <p><span class="tr">Das Dropdown in jeder Zeile öffnet keine lange Liste: Es öffnet die <b>Spaltenpalette</b> mit der ganzen Bank auf einen Blick. Die Wahl eines Instruments bewirkt drei Dinge: Sie benennt den Kanal, sie gibt ihm seinen <b>Platz im Orchester</b> — seine Position im Panorama und die Lautstärke seiner Gruppe — und kann die Notation ändern, etwa den Schlüssel. Die alten Tooltips sagen, das Etikett sei „kosmetisch“: Das stimmt nicht mehr. Das Etikett sendet keinen MIDI-Programmwechsel, aber es <b>entscheidet über die Klangfarbe</b>: Der Score schickt das Instrument Note für Note an das Keyboard. Mit <b>List</b> lädst du statt der Werksbank eine im Register erstellte Bank.</span></p>
+      <h3 id="sc-instrumentos"><span class="tr">Das Instrument eines Kanals · wählen, wer spielt</span></h3>
+      <p><span class="tr">Jedes Notensystem der Partitur ist ein <b>Kanal</b>, und jeder Kanal hat sein <b>Instrument</b>: Klavier, Geige, Flöte… Das Instrument bestimmt, wie dieses Notensystem klingt.</span></p>
+      <p><span class="tr"><b>So wählst du es:</b></span></p>
+      <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Drück oben die Taste <b>⚙ CHANNELS</b>. Die Liste der Kanäle geht auf.</span></li>
+        <li style="margin:2px 0"><span class="tr">Klick in der Zeile des Kanals auf das Ausklappmenü des Instruments ①. Die Palette mit allen Instrumenten geht auf, nach Familien geordnet.</span></li>
+        <li style="margin:2px 0"><span class="tr">Klick auf das Instrument, das du willst ②. Wenn du den Namen kennst, tipp ihn in <b>filter</b> ein, und die Palette zeigt nur die passenden.</span></li>
+      </ol>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-instrumentos.png" alt="La lista CHANNELS con la paleta de instrumentos abierta: Woodwinds, Brass, Percussion, Harp &amp; Keyboards, Strings, Voice, Synths" width="1016" height="624" loading="lazy" style="display:block;width:100%;height:auto;max-width:1016px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Die Nummern sind die Schritte 2 und 3.</span></figcaption></figure>
+      <p><span class="tr">Du kannst es auch wählen, ohne CHANNELS zu öffnen: In der Karte des aktiven Kanals, unten rechts, gibt es dasselbe Ausklappmenü, und es öffnet dieselbe Palette.</span></p>
+      <p><span class="tr">Ein Instrument zu wählen bewirkt drei Dinge: Es gibt dem Kanal seinen Namen, seinen Platz im Orchester (von welcher Seite er klingt und wie laut) und es kann den <a href="#pop-clef">Schlüssel</a> ändern. Ein Kontrabass zum Beispiel wird im Bassschlüssel geschrieben.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Der Name des Instruments erscheint in der Zeile des Kanals und in der Karte unten, und wenn du das Stück abspielst, klingt dieses Notensystem mit dem neuen Instrument.</span></p>
+      <p><span class="tr"><b>Vorsicht:</b> Wenn du mit der Maus darüberfährst, kann das Ausklappmenü «Instrument (cosmetic)» anzeigen. Das ist ein alter Hinweis: Das Instrument ändert den Klang sehr wohl. Mit <b>List</b>, unten in der Liste, lädst du statt der Werksbank eine Instrumentenbank, die im Register gebaut wurde.</span></p>
     </div>
 
     <div class="spec">
@@ -1213,13 +1492,34 @@
     </div>
   <p class="lead"><span class="tr"><b>SELECT</b> — einen Abschnitt oder eine Handvoll Noten markieren.</span></p>
     <div class="spec">
-      <h3 id="sc-select-modo"><span class="tr">Der SELECT-Modus · hinein, hinaus und das Tastenkürzel</span></h3>
-      <p><span class="tr">Der Button <b>◻ SELECT</b> schaltet den Modus ein und wird zu <b>◼</b>, damit kein Zweifel bleibt. Die Taste unter Escape — <b>`</b> — tut dasselbe, ohne die Tastatur zu verlassen, und <b>Esc</b> verlässt den Modus und löscht die Auswahl. Innerhalb des Modus führt auch ein Klick <b>außerhalb aller Notenzeilen</b> hinaus: der natürliche Ausweg, wenn du es dir anders überlegt hast. Der <b>Rechtsklick</b> auf den Button öffnet sein kleines Aktionspanel — aber nur, wenn du <i>nicht</i> im Modus bist.</span></p>
+      <h3 id="sc-select-modo"><span class="tr">Auswählen · den Modus SELECT ein- und ausschalten</span></h3>
+      <p><span class="tr">Um mit mehreren Noten zugleich zu arbeiten (sie verschieben, kopieren, etwas an ihnen ändern), musst du sie zuerst <b>auswählen</b>. Das geht im Modus <b>SELECT</b>.</span></p>
+      <p><span class="tr"><b>Zum Einschalten:</b> Drück <b>◻ SELECT</b> ①, in der zweiten Tastenreihe. Die Taste wird dunkel (◼), solange der Modus an ist. Tastenkürzel: die Taste <b>`</b>, die unter Esc.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-select.png" alt="El botón SELECT encendido, el interruptor CURSOR CH / ALL y dos compases seleccionados con el recuadro verde" width="917" height="287" loading="lazy" style="display:block;width:100%;height:auto;max-width:917px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① SELECT · ② CH oder ALL · ③ die Auswahl, geschlossen.</span></figcaption></figure>
+      <p><span class="tr"><b>Zum Ausschalten:</b> Drück <b>Esc</b> (schaltet aus und löscht die Auswahl), drück noch einmal SELECT oder klick außerhalb der Notensysteme.</span></p>
+      <p><span class="tr">Wie du die Stelle markierst, steht unter <a href="#sc-select-area">Eine Stelle auswählen</a>.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Taste zeigt ◼ SELECT mit dunklem Hintergrund.</span></p>
+      <p><span class="tr">Ein Rechtsklick auf die Taste SELECT öffnet ein kleines Feld mit Aktionen, aber nur, wenn der Modus aus ist.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-select-area"><span class="tr">Einen Abschnitt auswählen und verschieben</span></h3>
-      <p><span class="tr">Im Modus <b>ziehst du über die Notenzeile</b>, und der Abschnitt wird markiert: Während du ziehst, ist der Rahmen golden und gepunktet — er ist offen —, und beim Loslassen <b>schließt er sich</b> und wechselt die Farbe. Mit <b>Shift + Klick</b> verschiebst du das Ende, statt neu anzufangen. Und einmal geschlossen, <b>lässt sich die Auswahl greifen</b>: Der Cursor wird zur Hand, du ziehst sie, und die Musik wandert mit, eingerastet im Schritt von <b>SUBDIV</b>. Das Paar <b>CURSOR · CH | ALL</b> entscheidet, ob all das in einem Kanal oder über das ganze Orchester geschieht.</span></p>
+      <h3 id="sc-select-area"><span class="tr">Eine Stelle auswählen · und verschieben</span></h3>
+      <p><span class="tr">Eine <b>Auswahl</b> ist eine Stelle der Partitur, die mit einem Rahmen markiert ist. Alles, was du danach machst (verschieben, kopieren, die Dynamik ändern…), passiert mit dem, was darin ist.</span></p>
+      <p><span class="tr"><b>So wählst du aus:</b></span></p>
+      <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Schalte den Modus <a href="#sc-select-modo">SELECT</a> ein ①.</span></li>
+        <li style="margin:2px 0"><span class="tr">Wähl <b>CH</b> oder <b>ALL</b> ②: Mit CH wählst du in einem einzigen Notensystem aus; mit ALL in allen zugleich.</span></li>
+        <li style="margin:2px 0"><span class="tr">Drück die Maustaste auf dem Notensystem, wo die Stelle beginnt, und zieh bis dorthin, wo sie endet. Während du ziehst, ist der Rahmen golden und gestrichelt.</span></li>
+        <li style="margin:2px 0"><span class="tr">Lass die Taste los. Der Rahmen schließt sich und wird grün ③.</span></li>
+      </ol>
+      <p><span class="tr">Das Bild ist bei <a href="#sc-select-modo">dem Modus SELECT</a>, gleich oben.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Zum Vergrößern oder Verkleinern:</b> Umschalt + Klick verschiebt den Rand, ohne neu anzufangen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Zum Verschieben:</b> Geh mit der Maus auf den geschlossenen Rahmen (der Zeiger wird zur Hand) und zieh ihn. Die Musik bewegt sich mit, Schritt für Schritt nach <a href="#sc-subdiv">SUBDIV</a>.</span></li>
+      </ul>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Du siehst den grünen Rahmen um die Noten, die du wolltest.</span></p>
+      <p><span class="tr"><b>Vorsicht:</b> Wenn du auf die Nummer eines Takts klickst statt auf das Notensystem, geht die Information zu diesem Takt auf. Fang das Ziehen zwischen den Linien an.</span></p>
     </div>
 
     <div class="spec">
@@ -1239,8 +1539,8 @@
   <p class="lead"><span class="tr"><b>Die Partitur</b> — das Mausrad, die Hand, der Ziffernblock und das Ziehen.</span></p>
     <div class="spec">
       <h3 id="sc-cursor"><span class="tr">Der Cursor · wo landet, was du schreibst</span></h3>
-      <p><span class="tr">Der <b>Cursor</b> ist der kleine gelbe senkrechte Strich auf dem System ①. Er zeigt, wo die nächste Note landet, die du schreibst, und wo die Popups hinsetzen, was du einfügst: ein Tempo, einen Schlüssel, einen Text.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-cursor.png" alt="El pentagrama con el cursor amarillo en el compás 2, el interruptor CURSOR CH / ALL y el display CURSOR de la barra de abajo" width="1000" height="310" loading="lazy" style="display:block;width:100%;height:auto;max-width:1000px;border:1px solid var(--border);border-radius:var(--rad)">
+      <p><span class="tr">Der <b>Cursor</b> ist der kleine farbige senkrechte Strich auf dem System ①: grün im hellen Thema, gelb im dunklen. Er zeigt, wo die nächste Note landet, die du schreibst, und wo die Popups hinsetzen, was du einfügst: ein Tempo, einen Schlüssel, einen Text.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-cursor.png" alt="El pentagrama con el cursor en el compás 2, el interruptor CURSOR CH / ALL y el display CURSOR de la barra de abajo" width="1000" height="271" loading="lazy" style="display:block;width:100%;height:auto;max-width:1000px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① der Cursor · ② CH oder ALL · ③ auf welchem Instrument er steht, in der unteren Leiste.</span></figcaption></figure>
       <p><span class="tr"><b>So bewegst du ihn:</b></span></p>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1391,7 +1691,7 @@
     <div class="spec">
       <h3 id="pop-file"><span class="tr">Datei · öffnen, speichern und das Stück mitnehmen</span></h3>
       <p><span class="tr">In <b>MENU FILES</b> speicherst und öffnest du deine Arbeit. Ein Music-Motion-Stück wird in einer <b>.mmf</b>-Datei gespeichert: Sie enthält die Noten und auch, wie sie gespielt werden (Dynamik, Tempi, der Klang jedes Instruments).</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-file.png" alt="El menú File: NEW, SAVE AS, EXPORT MMF, EXPORT XML, IMPORT MMF, IMPORT XML, PRINT / PDF y SAVE AS WAV" width="308" height="307" loading="lazy" style="display:block;width:100%;height:auto;max-width:308px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-file.png" alt="El menú File: NEW, SAVE AS, EXPORT MMF, EXPORT XML, IMPORT MMF, IMPORT XML, PRINT / PDF y SAVE AS WAV" width="308" height="460" loading="lazy" style="display:block;width:100%;height:auto;max-width:308px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Das Menü, das sich mit MENU FILES öffnet.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>🆕 NEW</b>: eine neue, leere Partitur.</span></li>
@@ -1412,7 +1712,7 @@
         <li style="margin:2px 0"><span class="tr">Schreib <b>Title</b>, <b>Subtitle</b>, <b>Composer</b> (wer es komponiert hat), <b>Author</b> (wer es bearbeitet oder abgeschrieben hat) und <b>Copyright</b>.</span></li>
         <li style="margin:2px 0"><span class="tr">Drück <b>Apply</b>.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-score-info.png" alt="El popup Score Info: Title, Subtitle, Composer, Author, Copyright, File, Orchestra, work card y Apply" width="349" height="480" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-score-info.png" alt="El popup Score Info: Title, Subtitle, Composer, Author, Copyright, File, Orchestra, work card y Apply" width="349" height="633" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Die Nummern sind die Schritte 2 und 3.</span></figcaption></figure>
       <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> in der Ansicht <a href="#sc-page"><b>PAGE</b></a> siehst du oben den großen Titel und rechts den Komponisten.</span></p>
       <p><span class="tr"><b>Orchestra</b> sagt, für welche Orchestergröße das Stück ist, vom Kammerorchester bis zum großen romantischen Orchester. Damit weiß die Suite, wie viele Spieler jede Streichergruppe hat.</span></p>
@@ -1428,7 +1728,7 @@
         <li style="margin:2px 0"><span class="tr">Stell bei <b>BPM</b> die Zahl ein, mit <b>−</b> und <b>+</b>.</span></li>
         <li style="margin:2px 0"><span class="tr">Drück <b>Insert Marking</b>.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tempo.png" alt="El popup Tempo: Term, Beat, BPM, Scope, Show, SHOW HIDDEN e Insert Marking" width="369" height="327" loading="lazy" style="display:block;width:100%;height:auto;max-width:369px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tempo.png" alt="El popup Tempo: Term, Beat, BPM, Scope, Show, SHOW HIDDEN e Insert Marking" width="369" height="480" loading="lazy" style="display:block;width:100%;height:auto;max-width:369px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Die Nummern sind die Schritte 3, 4 und 5.</span></figcaption></figure>
       <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> über dem System steht zum Beispiel „Allegro ♩ = 120“, und die Musik spielt in dieser Geschwindigkeit.</span></p>
       <p><span class="tr"><b>Damit die Musik mitten im Stück schneller oder langsamer wird:</b> Setz den Cursor auf den Takt, in dem es sich ändert, und wiederhol die Schritte.</span></p>
@@ -1448,7 +1748,7 @@
         <li style="margin:2px 0"><span class="tr">Wähl bei <b>Scope</b>, wie weit er gilt (siehe unten).</span></li>
         <li style="margin:2px 0"><span class="tr">Klick auf den Schlüssel, den du willst. Den C-Schlüssel ziehst du nach oben oder unten, um ihn auf eine andere Linie zu setzen.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-clef.png" alt="El popup Select Clef: Treble, Bass y C Clef, Scope, Octave y Nudge" width="429" height="333" loading="lazy" style="display:block;width:100%;height:auto;max-width:429px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-clef.png" alt="El popup Select Clef: Treble, Bass y C Clef, Scope, Octave y Nudge" width="429" height="486" loading="lazy" style="display:block;width:100%;height:auto;max-width:429px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Die Nummern sind die Schritte 3 und 4.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>All channels</b>: alle Instrumente, das ganze Stück. <b>This channel</b>: <a href="#kb-canal-activo">das aktive Instrument</a>, das ganze Stück.</span></li>
@@ -1467,7 +1767,7 @@
         <li style="margin:2px 0"><span class="tr">Schreib <b>Numerator</b> (oben) und <b>Denominator</b> (unten), oder wähl eine aus <b>Quick Select</b>: 3/4, 2/4, 6/8…</span></li>
         <li style="margin:2px 0"><span class="tr">Wähl eine der beiden Tasten (siehe unten).</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-time.png" alt="El popup Time Signature: Numerator, Denominator, Quick Select, Apply to All Channels, Re-bar the music y Cancel" width="349" height="332" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-time.png" alt="El popup Time Signature: Numerator, Denominator, Quick Select, Apply to All Channels, Re-bar the music y Cancel" width="349" height="486" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Die Nummern sind die Schritte 2 und 3.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>Apply to All Channels</b> ändert nur die Zahlen. Die Noten bleiben, wo sie sind. Nimm es, wenn du noch nichts geschrieben hast, oder wenn die Taktart falsch war, die Noten aber stimmen.</span></li>
@@ -1486,7 +1786,7 @@
         <li style="margin:2px 0"><span class="tr">Wähl <b>Major</b> oder <a href="#pop-minor"><b>Minor</b></a>.</span></li>
         <li style="margin:2px 0"><span class="tr">Geh mit <b>▶</b> und <b>◀</b> durch die Tonarten: Jeder Klick auf ▶ fügt ein ♯ hinzu (oder nimmt ein ♭ weg), jeder Klick auf ◀ fügt ein ♭ hinzu (oder nimmt ein ♯ weg). Die Vorzeichnung ändert sich sofort.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-key.png" alt="El popup Key Signature: ◀ C Major ▶, Major, Minor, All CH, This CH, This Bar, Selection y Transpose music to key" width="329" height="234" loading="lazy" style="display:block;width:100%;height:auto;max-width:329px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-key.png" alt="El popup Key Signature: ◀ C Major ▶, Major, Minor, All CH, This CH, This Bar, Selection y Transpose music to key" width="329" height="388" loading="lazy" style="display:block;width:100%;height:auto;max-width:329px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Die Nummern sind die Schritte 2, 3 und 4.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>All CH</b>: alle Instrumente, das ganze Stück. <b>This CH</b>: nur <a href="#kb-canal-activo">das aktive Instrument</a>.</span></li>
@@ -1506,7 +1806,7 @@
         <li style="margin:2px 0"><span class="tr">Wähl <b>Before</b> (vor) oder <b>After</b> (nach) dem Takt des Cursors. In der Mitte siehst du seine Nummer (M1 ist Takt 1).</span></li>
         <li style="margin:2px 0"><span class="tr">Drück <b>Apply</b>.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-bars.png" alt="El popup Bar Structure: Upbeat, BAR NUM, Add, Before, After, Apply, Barline, GROUP, Respiro y Beat" width="409" height="326" loading="lazy" style="display:block;width:100%;height:auto;max-width:409px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-bars.png" alt="El popup Bar Structure: Upbeat, BAR NUM, Add, Before, After, Apply, Barline, GROUP, Respiro y Beat" width="409" height="480" loading="lazy" style="display:block;width:100%;height:auto;max-width:409px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Die Nummern sind die Schritte 2, 3 und 4.</span></figcaption></figure>
       <p><span class="tr">Alles, was danach kommt, rückt mit der Musik mit: Noten, Dynamik, Tempi, Wiederholungen und Wechsel von Taktart oder Tonart.</span></p>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1530,10 +1830,10 @@
         <li style="margin:2px 0"><span class="tr">Schau auf die Zeile <b>Plays</b> ⑤: Sie sagt, in welcher Reihenfolge die Takte gespielt werden.</span></li>
         <li style="margin:2px 0"><span class="tr">Drück <b>Create</b> ⑥.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-repeats.png" alt="El popup Repeats: I WANT TO, From bar, To bar, Beat, Times, Endings, Fold, Unfold, Plays, Create y Cancel" width="366" height="413" loading="lazy" style="display:block;width:100%;height:auto;max-width:366px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-repeats.png" alt="El popup Repeats: I WANT TO, From bar, To bar, Beat, Times, Endings, Fold, Unfold, Plays, Create y Cancel" width="366" height="574" loading="lazy" style="display:block;width:100%;height:auto;max-width:366px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① was du willst · ② von welchem Takt bis zu welchem Takt · ③ die Klammern · ④ falten und entfalten · ⑤ wie es klingt · ⑥ erstellen.</span></figcaption></figure>
       <p><span class="tr"><b>So springst du mit D.C. oder D.S. zurück:</b> Wähl bei <b>I WANT TO</b> <b>Jump back</b>.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-repeats-jump.png" alt="El popup Repeats con Jump back: D.C. o D.S., el compás del salto y simple, al Fine o al Coda" width="366" height="350" loading="lazy" style="display:block;width:100%;height:auto;max-width:366px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-repeats-jump.png" alt="El popup Repeats con Jump back: D.C. o D.S., el compás del salto y simple, al Fine o al Coda" width="366" height="511" loading="lazy" style="display:block;width:100%;height:auto;max-width:366px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① D.C. oder D.S. · ② in welchem Takt der Sprung ist · ③ wie es endet.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>D.C.</b> geht zurück zum Anfang; <b>D.S.</b> geht zurück zum Zeichen 𝄋, das du bei <b>Segno at</b> ① setzt.</span></li>
@@ -1575,7 +1875,7 @@
         <li style="margin:2px 0"><span class="tr">Schreib den Text ① oder klick auf einen der schnellen Texte ②.</span></li>
         <li style="margin:2px 0"><span class="tr">Drück <b>Insert Text</b> ⑤.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-text.png" alt="El popup Text: el campo de texto, las marcas rápidas, las marcas automáticas, LYRICS, SCOPE e Insert Text" width="305" height="583" loading="lazy" style="display:block;width:100%;height:auto;max-width:305px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-text.png" alt="El popup Text: el campo de texto, las marcas rápidas, las marcas automáticas, LYRICS, SCOPE e Insert Text" width="305" height="700" loading="lazy" style="display:block;width:100%;height:auto;max-width:305px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① schreiben · ② die schnellen Texte · ③ automatische Studierbuchstaben · ④ Generate · ⑤ einfügen.</span></figcaption></figure>
       <p><span class="tr"><b>So setzt du Studierbuchstaben im ganzen Stück auf einmal:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1600,12 +1900,12 @@
       <p id="pop-lyrics-type"><span class="tr"><b>Den Liedtext schreiben.</b> Setze den Cursor auf die Note, an der der Text beginnt —oder wähle sie aus— und drücke <b>LYRICS</b>. Über der Note erscheint ein Feld: Du schreibst die Silbe, und <b>Leertaste</b> (oder <b>Tab</b>) geht zur nächsten Note. Geht das Wort weiter, schreibst du statt des Leerzeichens den Bindestrich <b>-</b>: Die Silbe behält ihren Bindestrich, und du gehst zur nächsten Note. <b>Shift+Tab</b> geht zur vorigen Note zurück, <b>Enter</b> beendet und <b>Esc</b> beendet, ohne das zuletzt Geschriebene zu speichern. Pausen und übergebundene Noten werden von selbst übersprungen.</span></p>
       <p><span class="tr">Ein Beispiel: Für „Funkel, funkel, kleiner Stern“ schreibst du <b>Fun - kel</b> Leertaste <b>fun - kel</b> Leertaste <b>klei - ner</b> Leertaste <b>Stern</b>. Wenn eine Silbe mehrere Noten dauert (ein Melisma), drücke auf den folgenden Noten die Leertaste, ohne etwas zu schreiben: Sie bleiben ohne Silbe, und die vorige Silbe wird verlängert. Um eine Silbe zu korrigieren, setze den Cursor auf ihre Note und drücke <b>LYRICS</b>: Das Feld zeigt, was sie enthält; du löschst es und schreibst die neue.</span></p>
       <figure style="margin:14px 0 2px;overflow-x:auto">
-        <img src="../../suite/ug-lyrics-typing.webp" alt="El campo de LYRICS abierto sobre una nota, con la sílaba escrita" style="display:block;width:100%;max-width:360px;border:1px solid var(--border);border-radius:var(--rad)">
+        <img src="../../suite/ug-lyrics-typing.png" alt="«Estrellita» con su letra Es-tre-lli-ta y el campo de LYRICS abierto sobre la nota siguiente, con «dón» escrito" width="580" height="120" loading="lazy" style="display:block;width:100%;height:auto;max-width:580px;border:1px solid var(--border);border-radius:var(--rad)">
         <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Das Feld LYRICS über der Note: Dort wird die Silbe geschrieben, und die Leertaste geht zur nächsten Note.</span></figcaption>
       </figure>
       <p id="pop-lyrics-look"><span class="tr"><b>Wie es aussieht.</b> Zwischen den Silben eines Wortes zeichnet der Score den Bindestrich, zentriert im verbleibenden Raum; wenn die letzte Silbe eines Wortes mehrere Noten dauert, zeichnet er die Verlängerungslinie bis zur letzten Note des Melismas. <b>Size</b> ändert die Größe des Liedtextes des Kanals, und <b>Y</b> setzt ihn tiefer oder höher gegenüber dem Notensystem, zum Beispiel bei sehr tiefen Noten; mit <b>Line 2</b> oder <b>3</b> ausgewählt verschiebt <b>Y</b> die Übersetzung. Jeder Kanal hat seinen eigenen Liedtext: Ein vierstimmiger Chor hat auf jedem Notensystem einen Text.</span></p>
       <figure style="margin:14px 0 2px;overflow-x:auto">
-        <img src="../../suite/ug-lyrics-popup.webp" alt="El bloque Lyrics del popup TEXT" style="display:block;width:100%;max-width:276px;border:1px solid var(--border);border-radius:var(--rad)">
+        <img src="../../suite/ug-lyrics-popup.png" alt="El botón TEXT y su popup; en el bloque Lyrics, el botón LYRICS" width="305" height="700" loading="lazy" style="display:block;width:100%;height:auto;max-width:305px;border:1px solid var(--border);border-radius:var(--rad)">
         <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Der Block Lyrics des Popups TEXT: LYRICS, TEXTS → LYRICS, CLEAR sowie Größe und Höhe des Liedtextes.</span></figcaption>
       </figure>
       <p id="pop-lyrics-translation"><span class="tr"><b>Die Übersetzung.</b> Unter dem Liedtext ist Platz für zwei weitere Zeilen Übersetzung. Wähle <b>Line 2</b> (oder <b>3</b>) und drücke <b>LYRICS</b> auf der ersten Note eines Satzes: Schreibe dort den ganzen Satz, mit Leerzeichen, und <b>Tab</b> geht zur nächsten Note (Tab auf Noten, an denen kein Satz beginnt, lässt sie leer). Jeder Satz bleibt an seine Note gebunden und wird kursiv gezeichnet, ab dieser Note ausgerichtet und <b>unter dem System</b>, auch wenn der Liedtext zum oberen Notensystem gehört. <b>Line 1</b> führt zum gesungenen Text zurück. <b>CLEAR</b> und <b>TEXTS → LYRICS</b> wirken auf die gewählte Zeile.</span></p>
@@ -1628,7 +1928,7 @@
     <div class="spec">
       <h3 id="pop-dyn"><span class="tr">Dynamik · ein Zeichen oder ein Crescendo über zwei Takte</span></h3>
       <p><span class="tr">Die <b>Dynamik</b> sagt, wie laut oder leise man spielt: <b>pp</b> sehr leise, <b>p</b> leise, <b>mf</b> halblaut, <b>f</b> laut, <b>ff</b> sehr laut. Die <b>Gabeln</b> (Crescendo und Diminuendo) sagen, dass der Klang nach und nach wächst oder verklingt.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-dyn.png" alt="El popup Dynamics: crescendo, diminuendo, SPAN, cresc. y dim. en texto, SCOPE, los matices de fff a sfz y el campo de palabras" width="368" height="494" loading="lazy" style="display:block;width:100%;height:auto;max-width:368px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-dyn.png" alt="El popup Dynamics: crescendo, diminuendo, SPAN, cresc. y dim. en texto, SCOPE, los matices de fff a sfz y el campo de palabras" width="358" height="648" loading="lazy" style="display:block;width:100%;height:auto;max-width:358px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① die Gabeln · ② cresc. und dim. in Worten · ③ für wen es gilt · ④ die Dynamikzeichen · ⑤ ein Wort neben dem Zeichen.</span></figcaption></figure>
       <p><span class="tr"><b>So setzt du ein Dynamikzeichen:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1658,7 +1958,7 @@
         <li style="margin:2px 0"><span class="tr">Drück die Taste <b>ART</b>.</span></li>
         <li style="margin:2px 0"><span class="tr">Klick auf das Zeichen ③.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-art.png" alt="El popup Articulations: la línea del canal y el cursor, SIDE, y los signos TOUCH, EMPHASIS, TIME y PEDAL" width="338" height="468" loading="lazy" style="display:block;width:100%;height:auto;max-width:338px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-art.png" alt="El popup Articulations: la línea del canal y el cursor, SIDE, y los signos TOUCH, EMPHASIS, TIME y PEDAL" width="328" height="622" loading="lazy" style="display:block;width:100%;height:auto;max-width:328px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① zu welchen Noten es geht · ② oben oder unten · ③ die Zeichen.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr">Die obere Zeile ① sagt, wo es landet: der Kanal, der Cursor oder die Auswahl, und wie viele Noten (zum Beispiel „1 note“).</span></li>
@@ -1677,7 +1977,7 @@
         <li style="margin:2px 0"><span class="tr">Klick auf den Notenwert ②: 1/1 ist die Ganze, 1/2 die Halbe, 1/4 die Viertel, 1/8 die Achtel, und so weiter bis 1/64.</span></li>
         <li style="margin:2px 0"><span class="tr">Schreib die Noten.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-dur.png" alt="El popup Duration: las figuras de 1/1 a 1/64 y los botones DOT, GRACE, REST y TUPLET" width="368" height="302" loading="lazy" style="display:block;width:100%;height:auto;max-width:368px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-dur.png" alt="El popup Duration: las figuras de 1/1 a 1/64 y los botones DOT, GRACE, REST y TUPLET" width="358" height="456" loading="lazy" style="display:block;width:100%;height:auto;max-width:358px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">② die Notenwerte · ③ die vier Tasten unten.</span></figcaption></figure>
       <p><span class="tr"><b>Abkürzung:</b> Du kannst den Notenwert auch mit dem <a href="#sc-numpad">Numpad</a> wählen, ohne das Popup zu öffnen.</span></p>
       <p><span class="tr"><b>So schreibst du Pausen:</b> Klick noch einmal auf den Notenwert, der schon leuchtet. Jetzt wird jede Note eine Pause. Noch ein Klick, oder ein anderer Notenwert, und du bist wieder bei den Noten.</span></p>
@@ -1700,7 +2000,7 @@
         <li style="margin:2px 0"><span class="tr">Schreib das Wort ① oder klick auf eines der schnellen Wörter ②.</span></li>
         <li style="margin:2px 0"><span class="tr">Drück <b>Insert Expression</b> ④.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-expr.png" alt="El popup Expression: el campo de texto, las palabras rápidas, SCOPE, Show e Insert Expression" width="348" height="361" loading="lazy" style="display:block;width:100%;height:auto;max-width:348px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-expr.png" alt="El popup Expression: el campo de texto, las palabras rápidas, SCOPE, Show e Insert Expression" width="348" height="478" loading="lazy" style="display:block;width:100%;height:auto;max-width:348px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① schreiben · ② die schnellen Wörter · ③ für wen es gilt · ④ einfügen.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr">Das Wort gilt von dort bis zur nächsten Ausdrucksbezeichnung desselben Instruments.</span></li>
@@ -1713,7 +2013,7 @@
     <div class="spec">
       <h3 id="pop-agog"><span class="tr">AGOG · wer über das Rubato entscheidet</span></h3>
       <p><span class="tr"><b>Agogik</b> ist die Freiheit der Zeit: eine Note oder eine Phrase ein wenig dehnen, so wie ein Musiker es tut, wenn er atmet (das <i>Rubato</i>). Dieses Popup ist die <b>Karte</b> der Agogik deines Stücks: Es sagt dir, wo es welche gibt, und bringt dich dorthin.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-agog.png" alt="El popup AGOG: la lista de la agógica de la obra, el botón Phrase from selection y el interruptor Show all" width="348" height="241" loading="lazy" style="display:block;width:100%;height:auto;max-width:348px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-agog.png" alt="El popup AGOG: la lista de la agógica de la obra, el botón Phrase from selection y el interruptor Show all" width="349" height="358" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① die Agogik im Stück · ② eine neue Phrase · ③ zeigen oder verbergen.</span></figcaption></figure>
       <p><span class="tr"><b>So siehst du die Agogik deines Stücks:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1736,7 +2036,7 @@
     <div class="spec">
       <h3 id="pop-tools"><span class="tr">Werkzeuge · wenn sich der Bildschirm mit Panels füllt</span></h3>
       <p><span class="tr">Während du arbeitest, öffnest du viele Popups, und der Bildschirm füllt sich. <b>TOOLS</b> dient dazu, sie zu ordnen und die Einstellungen zu öffnen.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tools.png" alt="El popup Tools: Top y Bottom, Free, Cascade, Grouped y Stack, la lista de popups abiertos, Hide all, Reset positions, Score Options y Preferences" width="309" height="386" loading="lazy" style="display:block;width:100%;height:auto;max-width:309px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tools.png" alt="El popup Tools: Top y Bottom, Free, Cascade, Grouped y Stack, la lista de popups abiertos, Hide all, Reset positions, Score Options y Preferences" width="309" height="458" loading="lazy" style="display:block;width:100%;height:auto;max-width:309px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① wo sie sich öffnen · ② wie sie angeordnet werden · ③ die offenen · ④ sie verbergen · ⑤ die Einstellungen.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>Open popups</b> ①: <b>Top</b> öffnet sie unter der oberen Leiste; <b>Bottom</b>, über der Tastatur.</span></li>
@@ -1784,7 +2084,7 @@
         <li style="margin:2px 0"><span class="tr">Wähl einen der historischen ②, oder schieb den Regler ① für einen genauen Wert.</span></li>
         <li style="margin:2px 0"><span class="tr"><b>Reset</b> ③ geht zurück auf 440.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-a4.png" alt="El popup Reference Pitch: el deslizador, Reset y los botones 415 baroque, 430 classical, 432 natural, 440 modern, 442 bright y 466 renaissance" width="225" height="278" loading="lazy" style="display:block;width:100%;height:auto;max-width:225px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-a4.png" alt="El popup Reference Pitch: el deslizador, Reset y los botones 415 baroque, 430 classical, 432 natural, 440 modern, 442 bright y 466 renaissance" width="225" height="350" loading="lazy" style="display:block;width:100%;height:auto;max-width:225px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① der Regler · ② die historischen Stimmtöne · ③ zurück auf 440.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr">Es transponiert nicht: Das ganze Stück klingt etwas tiefer oder höher, aber die geschriebenen Noten ändern sich nicht.</span></li>
@@ -1795,14 +2095,15 @@
     <div class="spec">
       <h3 id="pop-undo"><span class="tr">Rückgängig und Löschen · zurückgehen oder einen Kanal leeren</span></h3>
       <p><span class="tr"><b>Rückgängig</b> nimmt das Letzte zurück, was du getan hast. Die Abkürzung ist <b>Strg+Z</b> (oder die Taste <b>Backspace ←</b>), und <b>Strg+Y</b> stellt es wieder her. Dieses Popup dient dazu, mehrere Schritte auf einmal zurückzugehen, und zum Löschen.</span></p>
+      <p><span class="tr">Für einen einzigen Schritt musst du das Popup nicht öffnen: Die Pfeile links und rechts der Taste machen dasselbe wie die Tastenkürzel. <b>↩</b> ④ macht einen Schritt rückgängig (wie Ctrl+Z) und <b>↪</b> ⑤ stellt ihn wieder her (wie Ctrl+Y).</span></p>
       <p><span class="tr"><b>So machst du mehrere Schritte rückgängig:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr">Drück die Taste <b>↩ UNDO</b>.</span></li>
         <li style="margin:2px 0"><span class="tr">Wähl, wie viele Schritte ①: 1, 3, 5 oder 10.</span></li>
         <li style="margin:2px 0"><span class="tr">Drück <b>↩ Undo</b> ②.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-undo.png" alt="El popup Undo · Erase: los pasos 1, 3, 5 y 10, el botón Undo y los cuatro botones de borrar" width="289" height="296" loading="lazy" style="display:block;width:100%;height:auto;max-width:289px;border:1px solid var(--border);border-radius:var(--rad)">
-      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① wie viele Schritte · ② rückgängig · ③ löschen.</span></figcaption></figure>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-undo.png" alt="Las flechas de deshacer y rehacer junto al botón UNDO, y el popup Undo · Erase: los pasos 1, 3, 5 y 10, el botón Undo y los cuatro botones de borrar" width="311" height="453" loading="lazy" style="display:block;width:100%;height:auto;max-width:311px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① wie viele Schritte · ② rückgängig · ③ löschen · ④ einen Schritt rückgängig · ⑤ einen Schritt wiederholen.</span></figcaption></figure>
       <p><span class="tr"><b>Zum Löschen</b> ③:</span></p>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>At cursor</b>: die Noten des aktiven Instruments, die genau am <a href="#sc-cursor">Cursor</a> stehen.</span></li>
@@ -1821,7 +2122,7 @@
         <li style="margin:2px 0"><span class="tr">Drück <b>+ ADD CHANNEL</b> ④: Der nächste Kanal geht an und sein System erscheint.</span></li>
         <li style="margin:2px 0"><span class="tr">Öffne in seiner Zeile die Liste ② und wähl das Instrument.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-channels.png" alt="El panel Channels: las filas CH1 a CH8 con su casillero, instrumento, clave, ojo, silencio, FX y menú, el botón ADD CHANNEL y List" width="349" height="468" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-channels.png" alt="El panel Channels: las filas CH1 a CH8 con su casillero, instrumento, clave, ojo, silencio, FX y menú, el botón ADD CHANNEL y List" width="349" height="622" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① sichtbar oder nicht · ② das Instrument · ③ 👁, stumm und FX · ④ einen Kanal hinzufügen · ⑤ Instrumentenlisten.</span></figcaption></figure>
       <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Das neue System erscheint mit dem Namen des Instruments, und beim Spielen klingt es mit seiner eigenen Klangfarbe.</span></p>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1847,64 +2148,219 @@
   <p class="lead"><span class="tr"><b>Auf der Partitur, über dem, was du schon geschrieben hast</b> — Rechtsklick auf die Note, den Bogen oder die Verzierung, die korrigiert werden muss.</span></p>
     <div class="spec">
       <h3 id="pop-note-editor"><span class="tr">Noteneditor · eine Note korrigieren, ohne sie neu zu schreiben</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf die Note</b>. Das ist die Tür zu allem, was du mit einer bereits geschriebenen Note tun kannst: ihre Velocity erhöhen oder senken, den Hals umdrehen, sie in eine Pause verwandeln, ein Vorzeichen hinzufügen oder entfernen, sie mit der vorherigen oder nächsten per Haltebogen verbinden, sie in den Balken einbinden, sie verschieben, ihr <b>Präsenz</b> geben (PRES: das Gewicht des Anschlags, von −2 bis +2, mit feinen Schritten von 0,25 auf ◂ ▸ — um eine Mittelstimme eines Akkords hervorzuheben, gib ein wenig Velocity und PRES +1 dazu). Die Editoren für Bogen, Hals und Balken öffnen sich von hier aus, und die Zeile <b>³ TUPLET</b> öffnet das <a href="#pop-tuplet-desde-nota">N-tolen-Popup</a>.</span></p>
-      <p><span class="tr"><b>So findest du die Noten mit Präsenz oder fester Velocity:</b> Sie hinterlassen kein Zeichen in der Partitur. Schalte <b>SHOW HIDDEN</b> in der Zeile <b>Hidden</b> dieses Editors ein (es ist derselbe Schalter wie im Popup Tempo): Neben jeder erscheint in Grau ihre Spur, ∨∨ ∨ ⊓ ⊓⊓ für die Präsenz und zum Beispiel „v96“ für die Velocity. Rechtsklick auf die Note, und du korrigierst sie. Das Grau ist nur auf dem Bildschirm zu sehen: Es kommt nie aufs gedruckte Blatt.</span></p>
+      <p><span class="tr">Der <b>Noteneditor</b> dient dazu, eine schon geschriebene Note zu ändern: lauter oder leiser, mit einem anderen Vorzeichen, mit dem Hals auf der anderen Seite, in eine Pause verwandelt…</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf die Note ①. Oben steht, welche Note es ist und wo, zum Beispiel «DN5 · M1 B2» (D5, Takt 1, Zählzeit 2).</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-note-editor.png" alt="El editor de nota abierto junto a la nota: VEL, Hide note, Flip stem, Select chord, Rest, Dot, ACC, CRT, GESTURE, PRES, HIDDEN y NUDGE" width="637" height="552" loading="lazy" style="display:block;width:100%;height:auto;max-width:637px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① die Note · ② VEL · ③ ACC · ④ PRES · ⑤ SHOW HIDDEN.</span></figcaption></figure>
+      <p><span class="tr">Was du am meisten brauchst:</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>VEL</b> ②: wie laut diese eine Note klingt. <b>+</b> und <b>−</b> ändern sie um 1, <b>+5</b> und <b>−5</b> um 5. <b>N</b> gibt sie an das zurück, was das Dynamik-<a href="#sc-banda">Band</a> sagt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Hide note</b> versteckt die Note: Sie klingt weiter, wird aber nicht gedruckt. <b>Flip stem</b> dreht den Hals um. <b>→ Rest</b> macht eine Pause daraus. <b>Dot</b> setzt den Punkt oder nimmt ihn weg.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>ACC</b> ③: das Vorzeichen. Doppel-b, b, Auflösungszeichen, Kreuz, Doppelkreuz.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PRES</b> ④: die Präsenz, das Gewicht des Anschlags, von −2 bis +2. Damit eine Mittelstimme eines Akkords mehr heraustritt, gib ihr PRES +1.</span></li>
+      </ul>
+      <p><span class="tr">Eine Note mit geänderter VEL oder PRES trägt kein Zeichen in der Partitur. Um sie zu finden, schalte <b>SHOW HIDDEN</b> ⑤ ein: Neben jeder erscheint in Grau, was sie hat (zum Beispiel «v96»), und ihr Kopf wird lavendelfarben. Das sieht man nur auf dem Bildschirm, nie auf dem gedruckten Blatt.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Änderung siehst (oder hörst) du sofort an der Note, und die oberste Zeile des Editors zeigt den neuen Wert. Wenn du dich vertan hast, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
+      <p><span class="tr">Von hier aus öffnest du auch die Editoren für den <a href="#pop-slur-editor">Bogen</a>, den <a href="#pop-stem-editor">Hals</a> und den <a href="#pop-beam-editor">Balken</a>, und mit der Zeile ³ TUPLET den für die <a href="#editar-un-tresillo">Triole</a>.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-slur-editor"><span class="tr">Bogeneditor · den Bogen so bekommen, wie du ihn gemeint hast</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf den Bogen</b>. Die Enden bewegen sich Note für Note, nicht freihändig. Du wählst die Form des Bogens — wachsend, abklingend, wachsend und dann abklingend — und wie weit sein Gipfel oder Tal reicht, und das ist nicht nur Zeichnung: So wird die Phrase gespielt. Dann stellst du Höhe und Krümmung ein, damit er mit nichts kollidiert.</span></p>
-      <p><span class="tr"><b>Griffe (2026-09-25).</b> Bei offenem Editor zeigt der Bogen drei Punkte — Anfang, Ende und Bauch —, die du mit der Maus ziehst; sie rasten auf <b>¼ eines Abstands</b> ein (Shift = ½). Die Zeile <b>Arrastre</b> des Editors zeigt es in Abständen an („+¾ · +½“), und <b>↺ Arrastre</b> macht nur das rückgängig; die üblichen Buttons bleiben für die Feineinstellung und sind nicht betroffen. Und seit demselben Tag setzt ein Bogen über <b>drei oder mehr Takte</b> jedes Ende auf seiner eigenen Seite an: am Kopf, wenn der Bogen auf der Seite des Notenkopfs liegt, an der Halsspitze oder am Balken, wenn er auf der Seite des Halses liegt.</span></p>
-      <figure style="margin:10px 0 2px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start">
-        <img src="../../suite/media/score-slur-handles.webp" alt="Un ligado con sus tres handles" loading="lazy" style="display:block;width:min(100%,371px);border:1px solid var(--border);border-radius:var(--rad)">
-        <img src="../../suite/media/score-slur-arrastre.webp" alt="La fila Arrastre del Slur editor" loading="lazy" style="display:block;width:min(100%,405px);border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="flex-basis:100%;font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:2px"><span class="tr">Die drei Punkte auf dem Bogen und die Zeile „Arrastre“ des Editors.</span></figcaption>
-      </figure>
+      <h3 id="pop-slur-editor"><span class="tr">Bogeneditor · damit der Bogen so wird, wie du ihn gedacht hast</span></h3>
+      <p><span class="tr">Ein <b>Bogen</b> verbindet mehrere Noten: Sie werden zusammen gespielt, in einer einzigen Phrase. Mit dem Bogeneditor änderst du, wo er beginnt und endet, wie er aussieht und wie er gespielt wird.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf den Bogen ①. Der Bogen zeigt drei Punkte, und daneben geht der Editor auf.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-slur-editor.png" alt="Un ligado con sus tres puntos y, a su lado, el editor de ligado: Anchors, Slur shape, Dynamics, Vertical, Horizontal, Curva, Arrastre, Flip, Mirror, Reset y Delete slur" width="440" height="786" loading="lazy" style="display:block;width:100%;height:auto;max-width:440px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf den Bogen · ② die Form · ③ wie viel er steigt oder fällt · ④ Höhe · ⑤ zur Seite · ⑥ die Krümmung · ⑦ das Ziehen · ⑧ umdrehen, spiegeln, zurück auf automatisch.</span></figcaption></figure>
+      <p><span class="tr">Oben, <b>Anchors</b>: Die Pfeile ◀ ▶ von <b>Start</b> und <b>End</b> verschieben den Anfang oder das Ende des Bogens auf die vorige oder die nächste Note.</span></p>
+      <p><span class="tr"><b>Die Form des Bogens</b> ② ändert die Zeichnung des Bogens nicht: Sie ändert, wie die Phrase gespielt wird. Die grüne Linie im Editor zeigt sie dir, und in der Partitur siehst du sie an der Farbe des Bogens: grün, wo die Phrase lauter ist, golden, wo sie leiser ist.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-slur-formas.png" alt="Cuatro formas de ligado: a la izquierda la línea del editor, a la derecha el mismo arco en la partitura con su color" width="610" height="550" loading="lazy" style="display:block;width:100%;height:auto;max-width:610px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Links die Form im Editor, rechts derselbe Bogen in der Partitur: Der Bogen bleibt gleich, seine Farbe ändert sich. &gt; nimmt ab · &lt; wächst · &lt;&gt; öffnet sich in der Mitte und schließt · &gt;º&lt; sinkt in der Mitte und kommt zurück (mit Peak +2).</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>&gt;</b> nimmt ab: beginnt stark und endet leise. <b>&lt;</b> wächst: umgekehrt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>&lt;&gt;</b> öffnet sich in der Mitte und schließt. <b>&gt;º&lt;</b> sinkt in der Mitte und kommt zurück.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>—</b> flach: gehalten, ohne Veränderung. Mit dieser Form entsteht der Bogen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>∩∪∩</b> und <b>∪∩∪</b>: Noten paarweise, stark-schwach oder schwach-stark. Der Bogen sieht gleich aus.</span></li>
+      </ul>
+      <p><span class="tr"><b>Wie viel</b> er steigt oder fällt, wählst du unter <b>Dynamics</b> ③: <b>Peak</b> ist, wie viel lauter der höchste Punkt wird (+1 bis +4), und <b>Valley</b>, wie viel leiser der tiefste (−1 bis −4), immer bezogen auf die geschriebene Dynamik.</span></p>
+      <p><span class="tr"><b>Die Tasten, die die Zeichnung des Bogens ändern</b>, damit er nirgends anstößt:</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Vertical</b> ④: hebt oder senkt den ganzen Bogen (<b>All</b>) oder nur ein Ende (<b>Left</b>, <b>Right</b>).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Horizontal</b> ⑤: verschiebt den Anfang oder das Ende zur Seite.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Curva</b> ⑥: wie stark sich der Bogen krümmt, links, in der Mitte oder rechts.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Arrastre</b> ⑦: Die drei Punkte des Bogens kannst du auch mit der Maus ziehen; sie rasten auf ¼ Zwischenraum ein (mit Umschalt auf ½). Diese Zeile zeigt, wie weit du sie verschoben hast, und <b>↺ Arrastre</b> macht nur das rückgängig.</span></li>
+        <li style="margin:2px 0"><span class="tr">⑧ <b>↕ Flip</b> setzt den Bogen auf die andere Seite der Noten. <b>↔ Mirror</b> spiegelt ihn von links nach rechts. <b>↺ Reset</b> gibt ihm seine automatische Zeichnung zurück. <b>✕ Delete slur</b> löscht den Bogen.</span></li>
+      </ul>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Der Bogen ändert sich in der Partitur, sobald du eine Taste drückst, und beim Anhören folgt die Phrase der Form, die du gewählt hast. Wenn es dir nicht gefällt, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
+      <p><span class="tr">Ein Bogen über <b>drei Takte oder mehr</b> heftet jedes Ende von selbst an die richtige Seite: an den Notenkopf, wenn der Bogen auf der Kopfseite liegt, an die Spitze des Halses oder an den Balken, wenn er auf der Halsseite liegt.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-stem-editor"><span class="tr">Halseditor · wenn der Hals kollidiert oder zu kurz ist</span></h3>
-      <p><span class="tr">Aus dem Noteneditor. Nach oben, nach unten oder automatisch; Länge und Verlängerung, damit er den Balken erreicht; und ein horizontaler Versatz für Sekunden, bei denen sich zwei Noten den Hals teilen.</span></p>
+      <p><span class="tr">Der <b>Hals</b> ist der kleine senkrechte Strich der Note. Das Score zeichnet ihn von selbst, nach oben oder nach unten, je nachdem, wie hoch die Note ist. Mit dem Hals-Editor änderst du ihn, wenn er irgendwo anstößt oder zu kurz ist.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf die Note; im <a href="#pop-note-editor">Noteneditor</a>, der aufgeht, wählst du <b>STEM EDITOR</b> ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-stem-editor.png" alt="El editor de nota con STEM EDITOR marcado y, al lado, el editor de plica: Direction, Extension, X offset y Reset" width="514" height="265" loading="lazy" style="display:block;width:100%;height:auto;max-width:514px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① STEM EDITOR, im Noteneditor · ② Richtung · ③ Länge · ④ Position · ⑤ zurück auf automatisch.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Direction</b> ②: <b>↑ Up</b> stellt den Hals nach oben, <b>↓ Down</b> nach unten, und <b>⟳ Auto</b> lässt das Score wählen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Extension</b> ③: <b>+</b> macht den Hals länger und <b>−</b> kürzer, zum Beispiel damit er bis zum Balken reicht.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>X offset</b> ④: verschiebt den Hals zur Seite. Hilft bei Sekunden, wenn sich zwei benachbarte Noten den Hals teilen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>↺ Reset</b> ⑤: gibt dem Hals die Zeichnung des Scores zurück.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-stem-antes-despues.png" alt="La misma corchea tres veces: con la plica hacia abajo, hacia arriba, y hacia arriba más larga" width="830" height="154" loading="lazy" style="display:block;width:100%;height:auto;max-width:830px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① so, wie das Score ihn zeichnet · ② mit ↑ Up · ③ mit ↑ Up und Extension +8.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Der Hals ändert sich in der Partitur, sobald du die Taste drückst. Es ist nur Zeichnung: Die Note klingt gleich.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-beam-editor"><span class="tr">Balkeneditor · verbinden, trennen und entscheiden, wie die Gruppe klingt</span></h3>
-      <p><span class="tr">Aus dem Noteneditor. <b>Join</b> und <b>Break</b> bauen die Notengruppe so, wie du sie lesen willst — und das ist auch das, was die Engine spielt, denn sie liest den gezeichneten Balken. <b>Left</b>, <b>Right</b> und <b>Both</b> heben oder senken ein Ende oder den ganzen Balken: Der Score setzt den Balken auf normale Halslänge, und deine Anpassung kommt obendrauf. Im selben Panel befindet sich das <b>Int·Beams</b> der Gruppe: wie stark jede Position innerhalb des Balkens abfällt, von 0 (gleichmäßig) bis 4.</span></p>
+      <p><span class="tr">Der <b>Balken</b> ist die dicke Linie, die Achtel und Sechzehntel zu Gruppen verbindet, damit sie leicht zu lesen sind. Das Score bildet die Gruppen von selbst; mit dem Balken-Editor verbindest, trennst oder verschiebst du sie.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf eine Note der Gruppe; im <a href="#pop-note-editor">Noteneditor</a> wählst du <b>BEAM EDITOR</b> ①. Tastenkürzel: Wähl eine Note aus und drück <b>Umschalt+B</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-beam-editor.png" alt="El editor de nota con BEAM EDITOR marcado y, al lado, el editor de barra: Join, Break, Auto, Left, Right, Both, Stems e Int·Beams" width="514" height="319" loading="lazy" style="display:block;width:100%;height:auto;max-width:514px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① BEAM EDITOR, im Noteneditor · ② verbinden oder trennen · ③ den Balken heben oder senken · ④ die Hälse der Gruppe · ⑤ wie die Gruppe klingt.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Join</b> ② verbindet die ausgewählten Noten zu einer Gruppe; <b>Break</b> trennt sie, jede mit ihrem eigenen Fähnchen; <b>Auto</b> geht zurück zu den Gruppen des Scores. Was du zeichnest, hörst du auch: Das Score spielt die Gruppe so, wie sie aussieht.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Left</b>, <b>Right</b> und <b>Both</b> ③ heben (↑) oder senken (↓) das linke Ende, das rechte Ende oder den ganzen Balken. <b>Reset angle</b>, unten, gibt dem Balken seine automatische Neigung zurück.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Stems</b> ④: alle Hälse der Gruppe nach oben, nach unten, umgedreht (⇅) oder automatisch.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Int·Beams</b> ⑤: wie viel lauter die wichtigen Noten der Gruppe klingen als die anderen, von <b>0</b> (alle gleich) bis <b>4</b> (sehr betont). <b>G</b> nimmt die Einstellung des ganzen Stücks. Mehr unter <a href="#intelligent-beams-las-notas-buenas-y-malas-solas">Intelligent Beams</a>.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-beam-antes-despues.png" alt="El mismo grupo de cuatro semicorcheas tres veces: unido, cortado con Break, y con la barra más arriba" width="830" height="145" loading="lazy" style="display:block;width:100%;height:auto;max-width:830px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① so, wie das Score sie zeichnet · ② mit Break: jede Note mit ihrem Fähnchen · ③ mit Both ↑: Der Balken geht nach oben.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Du siehst den Balken sofort verbunden, getrennt oder verschoben, und beim Anhören klingt die Gruppe so, wie du sie gezeichnet hast. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-tuplet-editor"><span class="tr">N-tolen-Editor · die Klammer und die Zahl</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf den Bereich der N-tole</b>. Ob sie eine Klammer, einen Bogen oder nichts trägt, ob die Zahl angezeigt wird, und Winkel und Position, damit sie nicht auf den Noten sitzt. <b>Untuplet</b> macht sie rückgängig und kehrt zu einfachen Notenwerten zurück.</span></p>
+      <p><span class="tr">Eine <b>Triole</b> sind drei Noten, die den Platz von zweien einnehmen. Darüber steht eine <b>3</b>, manchmal mit einer Klammer. Der Triolen-Editor ändert, wie diese Klammer und diese Zahl aussehen.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf die Klammer oder die Zahl der Triole ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tuplet-editor.png" alt="Un tresillo con su corchete y, al lado, el editor de tresillo: Size, Ratio, Bracket, Number, Angle, Move y Untuplet" width="412" height="243" loading="lazy" style="display:block;width:100%;height:auto;max-width:412px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf die Klammer · ② die Form der Klammer · ③ die Zahl · ④ die Neigung · ⑤ die Triole auflösen.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Bracket</b> ②: <b>Slur</b> zeichnet einen Bogen, <b>Straight</b> eine gerade Klammer und <b>None</b> nichts, nur die Zahl.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Number</b> ③: <b>On</b> zeigt die Zahl und <b>Off</b> versteckt sie.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Angle</b> ④ neigt die Klammer (↻ gibt ihr die automatische Neigung zurück), und <b>Move</b> verschiebt sie, damit sie die Noten nicht verdeckt. <b>Size</b> ändert die Größe der Zahl.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>✕ Untuplet</b> ⑤ löst die Triole auf: Die Noten bekommen ihre normalen Werte zurück. Es ist das Einzige in diesem Editor, das den Klang ändert.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-tuplet-antes-despues.png" alt="El mismo tresillo tres veces: con corchete y número, solo con el número, y con el corchete sin número" width="425" height="158" loading="lazy" style="display:block;width:100%;height:auto;max-width:425px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① so, wie das Score sie zeichnet · ② mit Bracket None: nur die Zahl · ③ mit Number Off: die Klammer ohne Zahl.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Klammer und Zahl ändern sich, sobald du die Taste drückst; die Triole klingt gleich. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-tie-editor"><span class="tr">Haltebogeneditor · ihn von den Notenköpfen fernhalten</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf den Haltebogen</b>. Höhe jedes Endes, Krümmung und Wölbung, auf die andere Seite umdrehen oder entfernen. Das ist Tinte: Der Haltebogen klingt bereits als eine einzige Note, ohne dass du etwas anfassen musst.</span></p>
+      <h3 id="pop-tie-editor"><span class="tr">Haltebogen-Editor · damit er die Köpfe nicht berührt</span></h3>
+      <p><span class="tr">Ein <b>Haltebogen</b> ist der Bogen, der zwei gleiche Noten verbindet: Sie klingen wie eine einzige lange Note. Er ist etwas anderes als der <a href="#pop-slur-editor">Bogen</a> der Phrasierung, der verschiedene Noten verbindet.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf den Haltebogen ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tie-editor.png" alt="Dos notas unidas por una ligadura y, al lado, el editor de ligadura: Vertical, Horizontal, Curve, Flip, Reset y Remove tie" width="444" height="309" loading="lazy" style="display:block;width:100%;height:auto;max-width:444px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf den Bogen · ② Höhe · ③ die Enden · ④ die Krümmung · ⑤ umdrehen.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Vertical</b> ②: <b>All</b> hebt oder senkt den ganzen Bogen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Horizontal</b> ③: <b>Left</b> und <b>Right</b> verschieben jedes Ende zur Seite.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Curve</b> ④: <b>Bow</b> krümmt den Bogen mehr oder weniger.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>↕ Flip</b> ⑤ setzt den Bogen auf die andere Seite der Noten. <b>↺ Reset</b> gibt ihm seine automatische Zeichnung zurück, und <b>✕ Remove tie</b> entfernt ihn.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-tie-antes-despues.png" alt="Dos notas iguales unidas por la ligadura: abajo y, con Flip, arriba" width="385" height="172" loading="lazy" style="display:block;width:100%;height:auto;max-width:385px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① so, wie das Score ihn zeichnet · ② mit ↕ Flip: Der Bogen geht nach oben.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Der Bogen ändert sich sofort in der Partitur. Es ist nur Zeichnung: Die beiden Noten klingen schon wie eine, ohne dass du etwas anfasst. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-hairpin-editor"><span class="tr">Gabeleditor · das Crescendo bis dorthin ziehen, wo es hingehört</span></h3>
-      <p><span class="tr">Aus dem Dynamikmenü oder per Doppelklick auf die Gabel. Du änderst ihre Länge in Takten, ihren Winkel, ihre Höhe und ob sie gepunktet ist. Das Panel sagt dir auch, welche Dynamik am Ende herauskommt, und das ist es, was du hören wirst.</span></p>
+      <h3 id="pop-hairpin-editor"><span class="tr">Gabel-Editor · das Crescendo dehnen, so weit es geht</span></h3>
+      <p><span class="tr">Eine <b>Gabel</b> ist der offene Keil unter dem Notensystem: <b>&lt;</b> ist Crescendo (die Musik wird lauter) und <b>&gt;</b> Diminuendo (sie wird leiser). Mit dem Editor bestimmst du, wo sie beginnt, wo sie endet und wie sie aussieht.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf die Gabel ①. Im Dynamik-Menü drückst du <b>Edit hairpin…</b> (Tastenkürzel: <b>E</b>). Ein Doppelklick auf die Gabel öffnet ihn auch.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-hairpin-editor.png" alt="Un regulador debajo del pentagrama, el menú de la dinámica con Edit hairpin marcado y el editor de regulador" width="860" height="274" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf die Gabel · ② in der Länge · ③ Höhe · ④ was du hören wirst.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Horizontal</b> ②: <b>Start</b> und <b>End</b> verschieben Anfang und Ende; <b>Span</b> sagt, von welchem Takt bis zu welchem Takt sie geht; <b>Angle</b> öffnet oder schließt den Keil.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Vertical</b> ③: <b>Y offset</b> hebt oder senkt die Gabel.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Dinámica · lectura</b> ④ sagt dir, was du hören wirst: die Lautstärke am Anfang, die Lautstärke, die sie erreicht, und über wie viele Noten. Zum Beispiel «26 → 53 · 7 notes»: Sie wächst über sieben Noten.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-hairpin-antes-despues.png" alt="El mismo crescendo tres veces: como estaba, más largo y más abierto" width="860" height="72" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① so, wie du sie geschrieben hast · ② mit End +: Sie reicht weiter · ③ mit Angle +: Sie öffnet sich weiter.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Gabel ändert sich sofort in der Partitur, und beim Anhören reicht das Crescendo so weit, wie du es gedehnt hast. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-interp-editor"><span class="tr">Editor für Interpretationszeichen · die Geste der Phrase</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf das Zeichen</b>. Wähle die Geste — wachsend, abklingend, wachsend und dann abklingend oder die, die sich öffnet und schließt — und wie stark: Gipfel oder Tal reichen von 1 bis 4. Das ist ein Zeichen, das klingt, kein Hinweis für den Leser. Es hat sein eigenes <b>?</b> mit der Erklärung.</span></p>
-      <p id="ayuda-gesto"><span class="tr"><b>Was die Geste der Note ist.</b> Sie ist, wie die Note wächst oder verklingt, <i>während sie dauert</i>. Sie dient vor allem bei einer einzelnen Note: einer langen Note, einer Fermate, dem Ende einer Phrase. Die Formen: <b>&lt;</b> blüht auf (wächst) · <b>&gt;</b> verklingt · <b>&lt;&gt;</b> messa di voce (wächst und verklingt) · <b>&gt;º&lt;</b> umgekehrt (sinkt in der Mitte und kommt zurück) · <b>—</b> sostenuto (gleichmäßig). <b>Peak</b> und <b>Valley</b> werden von der Dynamik aus gemessen, die auf dieser Note gilt: Ein Schritt ist ungefähr eine Dynamikstufe. <b>Das ist nicht dasselbe wie Pres:</b> Pres ändert den Anfang der Note (den Anschlag); die Geste ändert, was danach passiert.</span></p>
+      <h3 id="pop-interp-editor"><span class="tr">Editor des Vortragszeichens · die Geste der Note</span></h3>
+      <p id="ayuda-gesto"><span class="tr">Die <b>Geste der Note</b> ist, wie eine Note wächst oder verklingt, während sie dauert. Sie dient vor allem auf einer einzelnen Note: einer langen Note, einer Fermate, dem Ende einer Phrase. Sie wird mit einem Zeichen über der Note geschrieben, und dieses Zeichen <b>klingt</b>: Es ist nicht nur ein Hinweis für den Lesenden.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf das Zeichen ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-interp-editor.png" alt="Un signo de interpretación sobre una nota y, al lado, su editor: la curva, Gesture, Placement, Size y Value" width="424" height="525" loading="lazy" style="display:block;width:100%;height:auto;max-width:424px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf das Zeichen · ② die Geste · ③ wo es gezeichnet wird · ④ die Größe · ⑤ wie viel.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Gesture</b> ②: <b>&lt;</b> blüht auf (wächst) · <b>&gt;</b> verklingt · <b>&lt;&gt;</b> messa di voce (wächst und verklingt) · <b>&gt;º&lt;</b> sinkt in der Mitte und kommt zurück · <b>—</b> sostenuto (gleichmäßig). <b>º</b> fügt das Niente hinzu: aus dem Nichts beginnen oder ins Nichts enden. Die grüne Linie oben zeichnet die Geste.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Placement</b> ③: verschiebt das Zeichen (↑ ↓ ← →), setzt es oben oder unten (<b>Above</b>, <b>Below</b>) oder versteckt es (<b>Show</b>): Versteckt klingt es gleich.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Size</b> ④: die Größe des Zeichens.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Value</b> ⑤: <b>Peak</b> (+1 bis +4) ist, wie viel es steigt, und <b>Valley</b> (−1 bis −4), wie viel es fällt, gemessen an der Dynamik, die auf dieser Note gilt. Ein Schritt ist ungefähr eine Dynamikstufe.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-interp-antes-despues.png" alt="La misma nota con tres gestos: crece, crece y se apaga, decae" width="492" height="172" loading="lazy" style="display:block;width:100%;height:auto;max-width:492px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① &lt; blüht auf · ② &lt;&gt; wächst und verklingt · ③ &gt; verklingt.</span></figcaption></figure>
+      <p><span class="tr">Es ist nicht dasselbe wie <b>PRES</b> im <a href="#pop-note-editor">Noteneditor</a>: PRES ändert den Anfang der Note (den Anschlag); die Geste ändert, was danach passiert.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Das Zeichen über der Note ändert sich, die grüne Linie des Editors zeigt die Form, und beim Anhören wächst oder verklingt die Note so, wie du es gewählt hast. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-trill-editor"><span class="tr">Trillereditor · wie lange er dauert und wie er beschleunigt</span></h3>
-      <p><span class="tr">Aus dem Artikulationsmenü oder per Rechtsklick auf den Triller-Button. Länge und Schläge sagen, wie lange er dauert; die Kurve sagt, wie er beginnt, wo er sich einpendelt, wo der Höhepunkt liegt und wie er sich löst. Und du wählst die Hilfsnote, die nicht immer die der Tonartvorzeichnung ist.</span></p>
+      <p><span class="tr">Ein <b>Triller</b> (<b>tr</b> mit einer Wellenlinie) ist eine Note, die sehr schnell mit ihrer oberen Nachbarnote wechselt. Der Editor bestimmt, wie lange er dauert, wie schnell er geht und welche Nachbarnote er nimmt.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf das Zeichen ①. Im Menü, das erscheint, drückst du <b>✎ TRILL EDITOR</b>, die orange umrahmte Taste.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-trill-editor.png" alt="Un trino sobre una nota, el menú de la articulación con TRILL EDITOR marcado y el editor de trino" width="860" height="411" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf den Triller · ② wie lange er dauert · ③ wie er beschleunigt · ④ die Nachbarnote.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Span</b> ②: <b>Beats</b> sagt, wie viele Schläge der Triller dauert. <b>↺ Auto</b> lässt ihn so lange dauern wie die Note mit ihren Haltebögen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Tempo curve</b> ③: wie viele Wechsel pro Schlag. <b>Start</b> ist die Geschwindigkeit am Anfang, <b>Stable</b> die Geschwindigkeit, wenn er sich eingependelt hat, und <b>Stable pos</b>, wo das passiert; <b>Release pos</b> ist, wo er loszulassen beginnt, und <b>End</b> die Geschwindigkeit am Ende. Die Linie darunter zeichnet diese Kurve.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Aux note</b> ④: die Nachbarnote. <b>auto</b> folgt der Tonartvorzeichnung; ♮ ♯ ♭ 𝄪 𝄫 ändern sie, denn die Nachbarnote ist nicht immer die der Vorzeichnung.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-trill-antes-despues.png" alt="El mismo trino con un tiempo y con dos tiempos: la línea ondulada llega más lejos" width="470" height="105" loading="lazy" style="display:block;width:100%;height:auto;max-width:470px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Beats 1 · ② Beats 2: Die Wellenlinie reicht weiter.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Wellenlinie ändert ihre Länge in der Partitur, und beim Anhören dauert und läuft der Triller so, wie du ihn eingestellt hast. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-turn-editor"><span class="tr">Doppelschlageditor · direkt oder umgekehrt, auf dem Schlag oder verzögert</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf den Doppelschlag</b>. Direkt oder umgekehrt, ob er auf die Note fällt oder verzögert, welche Nachbarn er oben und unten verwendet — jeder mit ♮ ♯ ♭ oder doppeltem 𝄪 𝄫: Ein Doppelschlag auf Ais braucht unten Gisis — und wie schnell er läuft.</span></p>
+      <h3 id="pop-turn-editor"><span class="tr">Doppelschlag-Editor · normal oder umgekehrt, pünktlich oder verzögert</span></h3>
+      <p><span class="tr">Ein <b>Doppelschlag</b> (das Zeichen <b>∾</b>) ist eine Verzierung aus vier kleinen Noten, die um die Note herumgehen: die obere, die Note, die untere und wieder die Note.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf das Zeichen ①. Im Menü, das erscheint, drückst du <b>✎ TURN EDITOR</b>, die orange umrahmte Taste.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-turn-editor.png" alt="Un grupeto sobre una nota, el menú de la articulación con TURN EDITOR marcado y el editor de grupeto" width="860" height="347" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf den Doppelschlag · ② wo er beginnt · ③ wann er fällt · ④ die Nachbarnoten · ⑤ die Geschwindigkeit.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Face</b> ②: <b>direct</b> beginnt mit der oberen Nachbarnote; <b>inverted</b> mit der unteren. Das Zeichen dreht sich um.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Place</b> ③: <b>on the note</b> spielt den Doppelschlag am Anfang der Note; <b>delayed</b> spielt ihn später, gegen Ende.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Upper / Lower neighbour</b> ④: das Vorzeichen jeder Nachbarnote, mit ♮ ♯ ♭ oder doppelten 𝄪 𝄫. Ein Doppelschlag auf Ais verlangt Fisis darunter.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Speed</b> ⑤: der Wert jeder kleinen Note; mit <b>auto</b> wählt das Score.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-turn-antes-despues.png" alt="El mismo grupeto: directo, invertido y retardado" width="425" height="165" loading="lazy" style="display:block;width:100%;height:auto;max-width:425px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① normal · ② umgekehrt: Das Zeichen dreht sich um · ③ verzögert: Das Zeichen rückt nach rechts.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Das Zeichen über der Note ändert sich, und beim Anhören beginnt und fällt der Doppelschlag dort, wo du es gewählt hast. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-mordent-editor"><span class="tr">Mordenteditor · oben oder unten</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf den Mordent</b>. In welche Richtung er geht, welche Nachbarnote er nimmt und wie schnell.</span></p>
-      <p><span class="tr"><b>Sign · ~ · tr</b> bestimmt, was gedruckt wird, ohne den Klang zu ändern: Mit <b>tr</b> wird der obere Mordent als „tr“ geschrieben, ohne Wellenlinie, wie der kurze Triller aus drei Tönen bei Mozart oder Haydn (H–C–H und weiter).</span></p>
+      <h3 id="pop-mordent-editor"><span class="tr">Mordent-Editor · nach oben oder nach unten</span></h3>
+      <p><span class="tr">Ein <b>Mordent</b> ist eine sehr kurze Verzierung: die Note, ihre Nachbarnote und wieder die Note, sehr schnell.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf das Zeichen ①. Im Menü, das erscheint, drückst du <b>✎ MORDENT EDITOR</b>, die orange umrahmte Taste.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-mordent-editor.png" alt="Un mordente sobre una nota, el menú de la articulación con MORDENT EDITOR marcado y el editor de mordente" width="860" height="333" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf den Mordent · ② in welche Richtung · ③ was gedruckt wird · ④ die Nachbarnote · ⑤ die Geschwindigkeit.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Face</b> ②: <b>upper</b> geht zur oberen Nachbarnote; <b>lower</b> zur unteren. Der untere hat einen kleinen Strich durch das Zeichen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Sign</b> ③: bestimmt, was gedruckt wird, ohne den Klang zu ändern. Mit <b>tr</b> wird der obere Mordent als «tr» geschrieben, ohne Wellenlinie, wie der kurze Dreinoten-Triller bei Mozart oder Haydn (H–C–H und weiter).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Neighbour</b> ④: das Vorzeichen der Nachbarnote; <b>auto</b> folgt der Tonartvorzeichnung.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Speed</b> ⑤: der Wert jeder kleinen Note; mit <b>auto</b> wählt das Score.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-mordent-antes-despues.png" alt="El mismo mordente: hacia arriba, hacia abajo con su rayita, y escrito como tr" width="358" height="165" loading="lazy" style="display:block;width:100%;height:auto;max-width:358px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① upper · ② lower: mit dem kleinen Strich · ③ Sign tr: «tr» wird gedruckt und klingt wie ①.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Das Zeichen über der Note ändert sich, und beim Anhören geht die kleine Note in die Richtung, die du gewählt hast. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-tremolo-editor"><span class="tr">Tremoloeditor · gemessen oder frei</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf das Tremolo</b>. Wie viele Striche es trägt — das ist es, was gelesen wird — und ob die Engine es gemessen oder frei spielt, was den Unterschied zwischen einem Streichertremolo und einer ausgeschriebenen Wiederholung ausmacht.</span></p>
+      <p><span class="tr">Ein <b>Tremolo</b> sind kleine Striche quer durch den Hals: Die Note wird viele Male schnell wiederholt. Je mehr Striche, desto schneller die Wiederholungen.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf das Zeichen ①. Im Menü, das erscheint, drückst du <b>✎ TREMOLO EDITOR</b>, die orange umrahmte Taste.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tremolo-editor.png" alt="Un trémolo sobre una nota, el menú de la articulación con TREMOLO EDITOR marcado y el editor de trémolo" width="860" height="260" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf das Tremolo · ② wie viele Striche · ③ gemessen oder frei.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Divisions</b> ②: <b>1</b>, <b>2</b> oder <b>3</b> Striche, also Achtel, Sechzehntel oder Zweiunddreißigstel des Schlags. Das ist, was man liest.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Measure</b> ③: <b>measured</b> spielt genau diese Wiederholungen, wie eine ausgeschriebene Wiederholung; <b>free</b> wiederholt schnell, ohne zu zählen, wie das Tremolo der Streicher.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-tremolo-antes-despues.png" alt="La misma nota con una, dos y tres rayitas de trémolo" width="358" height="173" loading="lazy" style="display:block;width:100%;height:auto;max-width:358px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① 1 Strich: Achtel · ② 2: Sechzehntel · ③ 3: Zweiunddreißigstel.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Zahl der Striche am Hals ändert sich, und beim Anhören wiederholt sich die Note in diesem Tempo. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-arp-editor"><span class="tr">Arpeggioeditor · wie lange es zum Entfalten braucht</span></h3>
-      <p><span class="tr"><b>Rechtsklick auf das Arpeggio</b>. Ob es nach oben oder nach unten geht und über wie viele Millisekunden sich der Akkord öffnet. Das ist der Unterschied zwischen einem Harfen- und einem Klavierarpeggio.</span></p>
+      <p><span class="tr">Ein <b>Arpeggio</b> ist die senkrechte Wellenlinie vor einem Akkord: Die Noten klingen nicht zusammen, sondern nacheinander, sehr schnell.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Rechtsklick auf das Zeichen ①. Im Menü, das erscheint, drückst du <b>✎ ARPEGGIO EDITOR</b>, die orange umrahmte Taste.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-arp-editor.png" alt="Un acorde con su arpegio, el menú de la articulación con ARPEGGIO EDITOR marcado y el editor de arpegio" width="860" height="283" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Rechtsklick auf das Arpeggio · ② in welche Richtung · ③ wie lange es dauert.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Direction</b> ②: <b>↑ up</b> beginnt mit der tiefsten Note; <b>↓ down</b> mit der höchsten. Der Pfeil am Zeichen zeigt es.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Spread</b> ③: wie viele Millisekunden von einer Note zur nächsten vergehen. Darunter steht die Summe, zum Beispiel «3 notes · 90 ms in total». Das ist der Unterschied zwischen einem Harfen-Arpeggio, langsam, und einem Klavier-Arpeggio, fast zusammen.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-arp-antes-despues.png" alt="El mismo acorde con el arpegio hacia arriba y hacia abajo" width="280" height="120" loading="lazy" style="display:block;width:100%;height:auto;max-width:280px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① ↑ up: Der Pfeil zeigt nach oben · ② ↓ down: Der Pfeil zeigt nach unten.</span></figcaption></figure>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Der Pfeil am Zeichen ändert sich, und beim Anhören öffnet sich der Akkord in diese Richtung und in diesem Tempo. Wenn du dich vertust, macht <a href="#pop-undo">UNDO</a> es rückgängig.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-barlines"><span class="tr">Gruppentaktstriche · die Streicher mit einem Taktstrich verbinden</span></h3>
@@ -1963,7 +2419,7 @@
     </div>
     <div class="spec">
       <h3 id="pop-ctx-region"><span class="tr">⠿ Asymmetrische Region · die Phrase, die nicht auf dem Raster sitzt</span></h3>
-      <p><span class="tr"><b>Right-click on the region’s edge or body</b> —on a note, the note editor wins, so look for a gap: just above the top staff line, or the edge itself—. Give it a <b>name</b>, hide it or delete it, and its editor opens from here: this is the phrase where time stretches and shrinks while the grid stays put. With a name, the region is a <b>pattern</b>: <b>Take</b> carries it from bar M to bar M' (repeating every so many bars as it is long) and reports how many copies it made; <b>Hide all</b> and <b>Delete all “name”</b> act on all of them at once. Careful: a <b>hidden region does not play</b> and does not answer the right-click either. To bring it back, put the yellow cursor inside its span and press <b>Alt+H</b>: this same menu opens, with <b>Show region</b> and <b>Show all</b> (the shortcut is in the menu title, in brackets). The edges can be dragged; when you create it from a selection, check the left edge and take it to where the phrase really starts (for example, after a rest). <b>Example:</b> bar 226 holds an Inhale · Extreme region over all the voices and you want it in 227, 230 and 231. Right-click the region, <i>Take</i> 227 to 227 ✓; again, <i>Take</i> 230 to 231 ✓. The bars that should not get it (228–229) are skipped by doing two passes, and where a copy already exists it is not duplicated.</span></p>
+      <p><span class="tr"><b>Right-click on the region’s edge or body</b> —on a note, the note editor wins, so look for a gap: just above the top staff line, or the edge itself—. Give it a <b>name</b>, hide it or delete it, and its editor opens from here: this is the phrase where time stretches and shrinks while the grid stays put. With a name, the region is a <b>pattern</b>: <b>Take</b> carries it from bar M to bar M' (repeating every so many bars as it is long) and reports how many copies it made; <b>Hide all</b> and <b>Delete all “name”</b> act on all of them at once. Careful: a <b>hidden region does not play</b> and does not answer the right-click either. To bring it back, put the cursor inside its span and press <b>Alt+H</b>: this same menu opens, with <b>Show region</b> and <b>Show all</b> (the shortcut is in the menu title, in brackets). The edges can be dragged; when you create it from a selection, check the left edge and take it to where the phrase really starts (for example, after a rest). <b>Example:</b> bar 226 holds an Inhale · Extreme region over all the voices and you want it in 227, 230 and 231. Right-click the region, <i>Take</i> 227 to 227 ✓; again, <i>Take</i> 230 to 231 ✓. The bars that should not get it (228–229) are skipped by doing two passes, and where a copy already exists it is not duplicated.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-ctx-system"><span class="tr">⠿ System · die Seite vor dem Drucken aufräumen</span></h3>
@@ -1992,7 +2448,18 @@
     </div>
     <div class="spec">
       <h3 id="pop-sound-fx"><span class="tr">Sound FX · Hall und Echo, in die Passage geschrieben</span></h3>
-      <p><span class="tr">Zeile <b>Sound FX…</b> im Menü des Kanaletiketts. Bewege die Regler — Hall, Echo mit Zeit und Rückkopplung, Portamento, Vibrato — und wähle, worauf sie geschrieben werden: den ganzen Kanal, diese Stelle oder die Auswahl. Es wird im Stück gespeichert, nicht am Mischpult.</span></p>
+      <p><span class="tr"><b>Klangeffekte</b> ändern, wie ein Kanal klingt: <b>Hall</b> (der Nachklang eines großen Saals), <b>Echo</b> (die Note, die sich wiederholt, jedes Mal leiser), <b>Porta</b> (in die Note hineingleiten) und <b>Vibrato</b> (die Note, die schwingt).</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Drück <b>FX</b> ① in der Zeile des Kanals, in der Liste <b>⚙ CHANNELS</b>. Es öffnet sich auch mit einem Rechtsklick auf den Namen des Kanals, links vom Notensystem, und dann <b>Sound FX…</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-sound-fx.png" alt="La lista CHANNELS con el botón FX de CH1 marcado y, al lado, el popup Sound FX: This channel, This place, Selection y las seis perillas" width="690" height="225" loading="lazy" style="display:block;width:100%;height:auto;max-width:690px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① FX in der Kanalliste · ② wo es geschrieben wird · ③ die Drehknöpfe · ④ löschen.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Wo es geschrieben wird</b> ②: <b>This channel</b> (der ganze Kanal), <b>This place</b> (die ausgewählte Note) oder <b>Selection</b> (die ausgewählte Stelle). Ein Kanal kann alle drei zugleich haben.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Die Drehknöpfe</b> ③: <b>Reverb</b> (wie viel Saal) · <b>Echo wet</b> (wie viel Echo hinzukommt) · <b>Echo FB</b> (wie viele Wiederholungen) · <b>Echo time</b> (der Abstand zwischen den Echos, von 80 bis 900 ms; neutral ist 400) · <b>Porta</b> (das Gleiten in die Note, bis 400 ms) · <b>Vibrato</b> (die Tiefe, bis 50 Cent). Du drehst sie, indem du die Maus nach oben oder unten ziehst; ein Doppelklick setzt den Knopf auf neutral zurück.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>CLEAN</b> ④ löscht den Effekt des gewählten Bereichs. Wenn dieser Bereich nichts hat, löscht es den ganzen Kanal.</span></li>
+      </ul>
+      <p><span class="tr"><b>Tipp:</b> Besser eine kurze Stelle, sogar eine einzige Note. Dort geben Echo und Hall einer Melodie Charakter, und Porta das Gleiten in die Note. Ein Effekt auf dem ganzen Stück ist ein Mischpult; ein Effekt auf einer Note ist Interpretation.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Die Taste <b>FX</b> dieses Kanals wird grün, und wenn du das Stück mit ▶ abspielst, hörst du den Effekt. Während du am Knopf drehst, hörst du ihn noch nicht: Du hörst ihn bei der Wiedergabe. Jede Bewegung eines Knopfs machst du mit <a href="#pop-undo">UNDO</a> (Strg+Z) rückgängig.</span></p>
+      <p><span class="tr">Der Effekt wird im Stück gespeichert (in der .mmf-Datei). Das Keyboard hat eine eigene Taste <b>⊕ FX</b> für das, was du live spielst: siehe <a href="#fx-por-canal-en-vivo">⊕ FX live</a>. Die beiden addieren sich nicht und überschreiben sich nicht. Mehr Details unter <a href="#sound-fx-por-canal-y-area">Sound FX nach Kanal und Bereich</a>.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-asym-agog"><span class="tr">Phrasenagogik · der Solist atmet, und das Orchester bleibt stehen</span></h3>
@@ -2005,7 +2472,7 @@
     <div class="spec">
       <h3 id="pop-sequences"><span class="tr">Sequenzen · das Ostinato einmal schreiben</span></h3>
       <p><span class="tr">Eine <b>Sequenz</b> wiederholt den Zustand eines Takts über einen Abschnitt. Der typische Fall ist das Pedal: Du schreibst, wie man <b>einen</b> Takt pedalisiert, und sagst „und so weiter bis Takt 61“.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-sequences.png" alt="La ventana Sequences: la lista de secuencias, simile o written marks, Pattern, From, Through y el botón para aplicar" width="399" height="288" loading="lazy" style="display:block;width:100%;height:auto;max-width:399px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-sequences.png" alt="La ventana Sequences: la lista de secuencias, simile o written marks, Pattern, From, Through y el botón para aplicar" width="399" height="318" loading="lazy" style="display:block;width:100%;height:auto;max-width:399px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① die Sequenzen im Stück · ② wie sie sich wiederholt · ③ Muster, ab und bis · ④ anwenden.</span></figcaption></figure>
       <p><span class="tr"><b>So machst du eine Sequenz:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -2050,7 +2517,18 @@
     </div>
     <div class="spec">
       <h3 id="pop-pulse"><span class="tr">Pulse · das Metronom, um mit laufendem Schlag zu schreiben</span></h3>
-      <p><span class="tr">Button <b>♩ PULSE</b>. Er schlägt im Tempo des Stücks, mit seiner Unterteilung und seinem Licht. Verwende ihn zum Schreiben oder um zu hören, ob die Passage dort sitzt, wo sie sollte.</span></p>
+      <p><span class="tr">Der <b>Puls</b> ist der gleichmäßige Herzschlag der Musik, den du mit dem Fuß mitklopfst. <b>PULSE</b> zeigt ihn dir mit einem Licht, während du schreibst, damit du spürst, wo jeder Schlag fällt.</span></p>
+      <p><span class="tr"><b>Zum Öffnen:</b> Drück <b>♩ PULSE</b> ①, unten rechts.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-pulse.png" alt="El botón PULSE de la barra de abajo y su ventana: la luz, start, el tempo y SUBDIV" width="833" height="124" loading="lazy" style="display:block;width:100%;height:auto;max-width:833px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① PULSE · ② das Licht · ③ starten und anhalten · ④ das Tempo des Stücks · ⑤ wie oft es pro Schlag blinkt.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Das Licht</b> ②: Es schlägt mit dem Puls. Jeder Schlag wird stärker markiert als seine Unterteilungen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>▶ start</b> ③ schaltet es ein; dieselbe Taste zeigt <b>■ stop</b> zum Ausschalten.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Tempo</b> ④: Es wird hier nicht gewählt. Es wird aus der Partitur gelesen, in dem Takt, in dem der Cursor steht. Zum Ändern nimm <a href="#pop-tempo">TEMPO</a> oder den BPM-Chip in der unteren Leiste.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Subdiv</b> ⑤: Das Licht blinkt so oft pro Schlag, wie <a href="#sc-subdiv">SUBDIV</a> sagt, und daneben siehst du den Notenwert. Mit 4 blinkt es in Sechzehnteln.</span></li>
+      </ul>
+      <p><span class="tr">Das PULSE des Scores ist nur Licht, ohne Ton. Wenn du einen Klick hören oder das Tempo selbst wählen willst, nimm das <a href="#pulse-el-metronomo">Pulse des Keyboards</a>.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Das Licht blinkt und die Taste zeigt ■ stop. Wenn du den Cursor in einen Takt mit einem anderen Tempo setzt, ändert das Licht seine Geschwindigkeit.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-grace"><span class="tr">Nächste Note · eine Appoggiatura schreiben</span></h3>

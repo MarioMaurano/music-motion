@@ -58,12 +58,93 @@
   </h1>
   <p class="lead">
     
-    <span class="tr">Wat elke bediening van elke app doet, geschreven voor een musicus. Ze groeit app per app mee met de suite: de Console, en nu de Coach.</span>
+    <span class="tr">Elk gekleurd woord is een link naar de uitleg ervan: klik om die te lezen, en om terug te gaan naar waar je was, gebruik je de pijl <b>←</b> van je browser (of <b>Alt + ←</b>). Zo verlies je nooit de draad. Hier staat wat elke bediening van elke app doet, geschreven voor een musicus; de gids groeit mee met de suite.</span>
   </p>
   <div class="note">
     
     <span class="tr">De technische en architecturale kant staat in de <b>handleiding</b> van de suite. De apps draaien in de browser —<b>overal waar je een internetverbinding hebt</b>, op computer, tablet of telefoon— en zijn met elkaar verbonden via <b>mm-sync</b>.</span>
   </div>
+<!-- 2026-11-20 (Mario: «es difícil de encontrar print»): BUSCADOR + ÍNDICE de la guía. Se arma solo desde los h3 y
+     las secciones que ya existen, así que sale traducido en cada idioma sin segmentos nuevos; las pocas palabras de la
+     interfaz van en el diccionario T (es · en · fr · nl · de). Busca en todo el texto de la sección —en la página
+     ES/EN, en los dos idiomas a la vez— sin distinguir tildes ni mayúsculas. -->
+<style>
+#ugFind{margin:22px 0 4px}
+#ugFind .ugq{display:flex;gap:8px;align-items:center}
+#ugFind input{flex:1;font:inherit;font-size:1rem;padding:9px 12px;border:1px solid var(--border);border-radius:var(--rad);background:var(--panel2,var(--panel));color:var(--text);outline:none}
+#ugFind input:focus{border-color:var(--gold)}
+#ugFind .ugn{font-family:var(--ff-mono);font-size:.72rem;color:var(--textd);min-width:7em;text-align:right}
+#ugFind .ugres{margin:8px 0 0;padding:0;list-style:none;max-height:60vh;overflow-y:auto}
+#ugFind .ugres li{padding:7px 10px;border-bottom:1px solid var(--border)}
+#ugFind .ugres a{font-weight:600;color:var(--gold);text-decoration:none}
+#ugFind .ugres a:hover{text-decoration:underline}
+#ugFind .ugres .ugp{font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.5px;color:var(--textd);margin-left:6px}
+#ugFind .ugres .ugs{display:block;font-size:.85rem;color:var(--textm,var(--textd));margin-top:2px;line-height:1.4}
+#ugFind .ugres mark{background:rgba(242,140,40,.35);color:inherit;border-radius:2px}
+#ugFind details{margin:6px 0 0;border:1px solid var(--border);border-radius:var(--rad);padding:6px 12px}
+#ugFind summary{cursor:pointer;font-weight:600;color:var(--text)}
+#ugFind .ugidx{columns:2 260px;column-gap:28px;margin:8px 0 4px}
+#ugFind .ugpart{break-inside:avoid;margin:0 0 6px}
+#ugFind .ugpart>summary{font-family:var(--ff-mono);font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
+#ugFind .ugpart ul{margin:4px 0 6px 16px;padding:0;font-size:.88rem;line-height:1.5}
+#ugFind .ugpart a{color:var(--text);text-decoration:none}
+#ugFind .ugpart a:hover{color:var(--gold);text-decoration:underline}
+#ugTop{position:fixed;right:18px;bottom:18px;z-index:50;font-family:var(--ff-mono);font-size:.78rem;letter-spacing:1px;padding:8px 12px;border:1px solid var(--gold);border-radius:var(--rad);background:var(--panel);color:var(--gold);cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);display:none}
+#ugTop:hover{background:var(--gold);color:var(--bg)}
+</style>
+<div id="ugFind"></div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var T={es:{ph:'Buscar en la guía… (por ejemplo: imprimir, pulse, wav)',idx:'Índice de la guía',n1:'1 sección',nn:' secciones',none:'Sin resultados',top:'↑ Buscar'},
+         en:{ph:'Search the guide… (for example: print, pulse, wav)',idx:'Contents of the guide',n1:'1 section',nn:' sections',none:'No results',top:'↑ Search'},
+         fr:{ph:'Chercher dans le guide… (par exemple : imprimer, pulse, wav)',idx:'Sommaire du guide',n1:'1 section',nn:' sections',none:'Aucun résultat',top:'↑ Chercher'},
+         nl:{ph:'Zoeken in de handleiding… (bijvoorbeeld: afdrukken, pulse, wav)',idx:'Inhoud van de handleiding',n1:'1 onderdeel',nn:' onderdelen',none:'Geen resultaten',top:'↑ Zoeken'},
+         de:{ph:'In der Anleitung suchen… (zum Beispiel: drucken, pulse, wav)',idx:'Inhalt der Anleitung',n1:'1 Abschnitt',nn:' Abschnitte',none:'Keine Ergebnisse',top:'↑ Suchen'}};
+  var root=document.getElementById('ugFind'); if(!root) return;   // corre al terminar de cargar: las secciones están más abajo
+  function lang(){ var l=(document.documentElement.getAttribute('data-lang')||document.documentElement.lang||'es').slice(0,2); return T[l]?l:'en'; }
+  function txt(el){ if(!el) return ''; var l=lang(), s=el.querySelector(':scope > .'+l); if((l==='es'||l==='en')&&s) return s.textContent.replace(/\s+/g,' ').trim(); return el.textContent.replace(/\s+/g,' ').trim(); }
+  function norm(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
+  // las partes: cada <section> con su rótulo (.app-eyebrow), y sus secciones (h3 con id)
+  var parts=[], items=[];
+  [].forEach.call(document.querySelectorAll('main > section'), function(sec){
+    var hs=sec.querySelectorAll('h3[id]'); if(!hs.length) return;
+    var p={el:sec, eb:sec.querySelector('.app-eyebrow'), items:[]}; parts.push(p);
+    [].forEach.call(hs, function(h){ var box=h.closest('.spec')||h.parentNode; var it={h:h,box:box,part:p,all:norm(box.textContent.replace(/\s+/g,' '))}; p.items.push(it); items.push(it); });
+  });
+  root.innerHTML='<div class="ugq"><input type="search" id="ugQ" autocomplete="off"><span class="ugn" id="ugN"></span></div><ul class="ugres" id="ugR"></ul><details id="ugIdx"><summary></summary><div class="ugidx"></div></details>';
+  var q=document.getElementById('ugQ'), R=document.getElementById('ugR'), N=document.getElementById('ugN'), D=document.getElementById('ugIdx');
+  var top=document.createElement('button'); top.id='ugTop'; document.body.appendChild(top);
+  top.addEventListener('click',function(){ root.scrollIntoView({behavior:'smooth',block:'start'}); setTimeout(function(){ q.focus(); },400); });
+  window.addEventListener('scroll',function(){ top.style.display = window.scrollY>900 ? 'block' : 'none'; },{passive:true});
+  function esc(s){ return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function partName(p){ return p.eb ? txt(p.eb).replace(/^[▸⊞\s]+/,'') : ''; }
+  function snippet(it,w){ // una línea de contexto, en el idioma visible si la palabra aparece ahí
+    var paras=it.box.querySelectorAll('p,li,figcaption'), l=lang();
+    for(var i=0;i<paras.length;i++){ var t=txt(paras[i]); var k=norm(t).indexOf(w); if(k>=0){ var a=Math.max(0,k-50), b=Math.min(t.length,k+w.length+70);
+      return (a>0?'…':'')+esc(t.slice(a,k))+'<mark>'+esc(t.slice(k,k+w.length))+'</mark>'+esc(t.slice(k+w.length,b))+(b<t.length?'…':''); } }
+    var t0=paras.length?txt(paras[0]):''; return esc(t0.slice(0,120))+(t0.length>120?'…':''); }
+  function buscar(){
+    var raw=q.value.trim(), w=norm(raw); R.innerHTML=''; N.textContent='';
+    if(w.length<2){ return; }
+    var ws=w.split(/\s+/).filter(Boolean);
+    var hits=items.filter(function(it){ return ws.every(function(x){ return it.all.indexOf(x)>=0; }); });
+    // primero los que lo tienen en el título
+    hits.sort(function(a,b){ var ta=norm(txt(a.h)).indexOf(ws[0])>=0?0:1, tb=norm(txt(b.h)).indexOf(ws[0])>=0?0:1; return ta-tb; });
+    var t=T[lang()]; N.textContent = hits.length ? (hits.length===1?t.n1:hits.length+t.nn) : t.none;
+    R.innerHTML=hits.slice(0,60).map(function(it){ return '<li><a href="#'+it.h.id+'">'+esc(txt(it.h))+'</a><span class="ugp">'+esc(partName(it.part))+'</span><span class="ugs">'+snippet(it,ws[0])+'</span></li>'; }).join('');
+  }
+  function indice(){
+    var t=T[lang()]; D.querySelector('summary').textContent=t.idx; q.placeholder=t.ph; top.textContent=t.top;
+    D.querySelector('.ugidx').innerHTML=parts.map(function(p){ return '<details class="ugpart"><summary>'+esc(partName(p))+' <span class="ugp">'+p.items.length+'</span></summary><ul>'+
+      p.items.map(function(it){ return '<li><a href="#'+it.h.id+'">'+esc(txt(it.h))+'</a></li>'; }).join('')+'</ul></details>'; }).join('');
+    buscar();
+  }
+  q.addEventListener('input',buscar);
+  q.addEventListener('keydown',function(e){ if(e.key==='Enter'){ var a=R.querySelector('a'); if(a) a.click(); } if(e.key==='Escape'){ q.value=''; buscar(); } });
+  new MutationObserver(indice).observe(document.documentElement,{attributes:true,attributeFilter:['data-lang']});
+  indice();
+});
+</script>
 </section>
 
 <section id="primeros-pasos" style="--c:var(--teal)">
@@ -83,7 +164,7 @@
     <div class="spec">
       <h3 id="pp-escribir"><span class="tr">2 · Schrijf vier noten</span></h3>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
-        <li style="margin:2px 0"><span class="tr">Klik aan het begin van de eerste maat van de bovenste notenbalk. De <a href="#sc-cursor">cursor</a>, het gele streepje, komt daar te staan: daar komt de noot terecht.</span></li>
+        <li style="margin:2px 0"><span class="tr">Klik aan het begin van de eerste maat van de bovenste notenbalk. De <a href="#sc-cursor">cursor</a>, het gekleurde verticale streepje, komt daar te staan: daar komt de noot terecht.</span></li>
         <li style="margin:2px 0"><span class="tr">De nootwaarde is al de kwartnoot. Voor een andere gebruik je het <a href="#sc-numpad">numerieke klavier</a>: 4 = achtste, 5 = kwart, 6 = halve.</span></li>
         <li style="margin:2px 0"><span class="tr">Klik op het klavier onderaan op <b>C4</b>, <b>D4</b>, <b>E4</b> en <b>F4</b>, de ene na de andere. Elke toets klinkt en schrijft haar noot.</span></li>
       </ol>
@@ -287,48 +368,132 @@
   <div class="specs">
 
     <div class="spec">
-      <h3 id="tres-maneras-de-tocar"><span class="tr">Drie manieren van spelen</span></h3>
-      <p><span class="tr"><b>Axiomatic</b>: het zuivere pythagorese systeem — toetsen met hun namen. <b><a href="https://musicmotionsuite.com/faq.html?lang=nl#12-tet" title="Veelgestelde vragen">12 TET</a></b>: het QWERTY-toetsenbord neemt de klassieke pianoindeling over en klinkt getempereerd op de cyaan stroken. <b>Tonal</b>: kies toonaard, alteratie en modus, en het computertoetsenbord speelt per trap — je kunt correct componeren in elke toonaard zonder piano te kennen. Groepen die niet van toepassing zijn, worden gedimd; ze lichten op wanneer je naar Tonal gaat.</span></p>
+      <h3 id="tres-maneras-de-tocar"><span class="tr">Hoe het Keyboard stemt · SYSTEM, KEY, MODE en SENS</span></h3>
+      <p><span class="tr">De eerste rij knoppen bepaalt <b>hoe</b> elke toets <b>klinkt</b>: in welke stemming, en in welke toonsoort.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-sistema.png" alt="La primera línea del Keyboard: SYSTEM, KEY, ALTERATION, MODE, SENS y el rótulo de la tonalidad" width="1040" height="70" loading="lazy" style="display:block;width:100%;height:auto;max-width:1040px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① SYSTEM · ② KEY · ③ ALTERATION · ④ MODE · ⑤ SENS · ⑥ waar je bent.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>SYSTEM</b> ① kiest tussen drie manieren van spelen. <b>12 TET</b> is de gewone getemperde piano, en klinkt op de cyaanblauwe strepen van de toetsen. <b>Axiomatic</b> is de zuivere pythagorische stemming: elke toets bij zijn naam. <b>Tonal</b> speelt per trap van een toonsoort: wie geen piano kan spelen, speelt en componeert juist in elke toonsoort.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>KEY</b> ② en <b>ALTERATION</b> ③ kiezen de grondtoon: Sol en ♮ is Sol, Si en ♭ is Si♭. Ze gaan alleen aan in Tonal.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>MODE</b> ④: <b>M</b> is groot en <b>m</b> klein.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>SENS</b> ⑤ is hoeveel de leidtoon stijgt, de noot die naar de grondtoon «trekt»: <b>0</b> helemaal niet, <b>+1</b> normaal (daar begint hij) en <b>+2</b> een sterker effect, ook op de chromatische noten.</span></li>
+        <li style="margin:2px 0"><span class="tr">Het label ⑥ zegt waar je bent: AXIOMATIC, of de toonsoort, zoals <b>G♮ MAJOR</b>.</span></li>
+      </ul>
+      <p><span class="tr">De toetsen van je computer spelen ook: welke toets welke noot geeft in elk systeem, staat in <a href="keyboard-shortcuts.html">de sneltoetsen van het Keyboard</a>.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het label ⑥ toont wat je koos, en in Tonal speelt de onderste rij van het computertoetsenbord (Z X C V B N M) de toonladder van die toonsoort.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="acord-lab-oir-acordes-con-el-mouse"><span class="tr">Chord Lab — akkoorden horen met de muis</span></h3>
-      <p><span class="tr">Je speelt een noot met de linkermuisknop. Een <b>rechtsklik</b> op het klavier laat haar doorklinken met haar lampje aan (Hold); elke nieuwe noot die je speelt, stapelt zich erbovenop, zodat je het hele akkoord hoort. Nog een <b>rechtsklik</b> zet alles uit. Om complexe akkoorden te horen zonder meerdere toetsen ingedrukt te houden.</span></p>
+      <h3 id="acord-lab-oir-acordes-con-el-mouse"><span class="tr">Acord Lab — akkoorden horen met de muis</span></h3>
+      <p><span class="tr">Met de <b>linkermuisknop</b> speel je een noot. Een <b>rechtermuisklik</b> op het klavier zet het aanhouden aan: de noot die je speelt blijft klinken met zijn lampje aan, en elke noot die je daarna met de linkerknop speelt, komt erbij. Zo hoor je het hele akkoord zonder meerdere toetsen ingedrukt te houden. Nog een <b>rechtermuisklik</b> zet alles uit.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de toetsen van het akkoord blijven verlicht en klinken samen.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="la-salida-hifi"><span class="tr">De HiFi-uitgang</span></h3>
-      <p><span class="tr">Op de tweede regel de uitgangsketen: VOL (het volume van <b>wat je op de toetsen speelt</b> — de Score heeft zijn eigen volume en het totale niveau staat in de MASTER van de Console) · REV (galm) · TONE (donker ↔ helder — het lampje wordt blauw of geel, als een vlag) · WARM (warmte, verzadiging met consonante boventonen) · BAL (jouw positie vóór de luidsprekers). Elke knop met zijn gekleurde lampje, en dubbelklik zet hem terug op neutraal.</span></p>
+      <h3 id="la-salida-hifi"><span class="tr">De HiFi-uitgang · het volume en de kleur van de klank</span></h3>
+      <p><span class="tr">Op de tweede rij zes draaiknoppen. Je draait ze door naar boven of naar beneden te slepen, en met een dubbelklik gaan ze terug naar neutraal. Het lampje ernaast gaat aan als de knop in gebruik is.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-salida.png" alt="Las perillas VOL, REV, ECHO, TONE, WARM y BAL del Keyboard" width="610" height="66" loading="lazy" style="display:block;width:100%;height:auto;max-width:610px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① VOL · ② REV · ③ ECHO · ④ TONE · ⑤ WARM · ⑥ BAL.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>VOL</b> ①: het volume van <b>wat je op het klavier speelt</b>. Het Score heeft zijn eigen volume, en het totaal is de MASTER van de Console.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>REV</b> ②: de galm, alsof je in een grote zaal speelt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>ECHO</b> ③: de echo, de noot die zich steeds zachter herhaalt. Hij begint uit.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>TONE</b> ④: donkerder of helderder.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>WARM</b> ⑤: warmer, met wat meer boventonen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>BAL</b> ⑥: de balans, meer naar links of meer naar rechts.</span></li>
+      </ul>
+      <p><span class="tr">VOL is alleen voor het klavier; de andere vijf veranderen <b>alles wat je hoort</b>, ook het Score, en het zijn dezelfde als in de Console: verschuif je er hier een, dan schuift hij daar mee.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je aan de knop draait, verandert de klank en gaat het lampje aan; met een dubbelklik staat hij weer zoals eerst.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="el-cofre-de-grabaciones"><span class="tr">De kist met opnames</span></h3>
-      <p><span class="tr">⏺ neemt op wat je speelt — exacte frequenties, geen <a href="https://musicmotionsuite.com/faq.html?lang=nl#midi" title="Veelgestelde vragen">MIDI</a>, geen kwantisering. De knop „☰ recs” opent de lijst: hernoemen, ▶, .mmf exporteren, .mmf of .mid laden (MIDI komt binnen als getempereerde laag, in cyaan). De knop PLAYBACK TEMPO speelt elke opname af op halve tot dubbele snelheid: neem langzaam op, luister op tempo. Het transport heeft ⏪ ⏸ ⏩: pauzeer waar je bent en spring tien seconden terug of vooruit, met de klok tot op de milliseconde (00.00.000). Spring je in een andere dans, dan komt het klavier binnen gestemd op de toonaard van dat deel. Wat je net hebt opgenomen, verschijnt bovenaan in de kist, met „keep in list” en „save as .mmf” binnen handbereik. En je kunt opnemen terwijl de Score speelt: de opname komt er zuiver uit, alleen wat jij speelde.</span></p>
+      <h3 id="el-cofre-de-grabaciones"><span class="tr">Opnemen en de opnamekoffer</span></h3>
+      <p><span class="tr">Het Keyboard neemt op wat je speelt en bewaart het zodat je het later kunt horen. Het bewaart elke noot met zijn exacte stemming, zonder <a href="https://musicmotionsuite.com/faq.html?lang=nl#midi" title="Veelgestelde vragen">MIDI</a> en zonder kwantisering: wat terugklinkt is precies wat je speelde.</span></p>
+      <p><span class="tr"><b>Om op te nemen:</b> druk op <b>⏺</b> ① in de balk <b>Rec</b>, speel, en druk op <b>⏹</b> om te stoppen. <b>▶</b> ② speelt de opname af en pauzeert haar als je opnieuw drukt; <b>⏪</b> en <b>⏩</b> springen tien seconden terug of vooruit, en de klok toont de tijd tot op de milliseconde (00.00.000).</span></p>
+      <p><span class="tr"><b>Om de koffer te openen:</b> druk op <b>☰ recs</b> ③, naast <b>♩ pulse</b> en <b>⊕ FX</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-cofre.png" alt="La barra Rec y el botón recs del Keyboard, y el cofre Recordings abierto con una grabación nueva, la perilla PLAYBACK TEMPO y la lista" width="1088" height="218" loading="lazy" style="display:block;width:100%;height:auto;max-width:1088px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① opnemen · ② afspelen · ③ de koffer openen · ④ .mmf of .mid laden · ⑤ de nieuwe opname · ⑥ PLAYBACK TEMPO · ⑦ je opnamen.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>load mmf</b> en <b>load mid</b> ④ halen een opname van je computer. MIDI komt binnen als een getemperde laag, in cyaan.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De nieuwe opname</b> ⑤ verschijnt bovenaan, binnen handbereik: <b>keep in list</b> bewaart haar in de lijst en <b>save as .mmf</b> downloadt haar als bestand.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De lijst</b> ⑦: typ over de naam om hem te veranderen; <b>▶</b> speelt haar af, <b>⬇</b> bewaart haar als .mmf en <b>✕</b> wist haar.</span></li>
+        <li style="margin:2px 0"><span class="tr">Onderaan de koffer staan de demo’s van Bartók en Bach, om uit te proberen.</span></li>
+      </ul>
+      <p><span class="tr"><b>PLAYBACK TEMPO</b> ⑥ verandert de snelheid waarmee een opname klinkt, zonder de noten te veranderen: ze blijven even zuiver, alleen langzamer of sneller. Sleep de draaiknop naar beneden om langzamer te gaan, tot <b>×0.50</b> (de helft), of naar boven om sneller te gaan, tot <b>×2.00</b> (het dubbele). Met <b>Shift</b> beweegt hij fijn, en met een dubbelklik gaat hij terug naar <b>×1.00</b>, de oorspronkelijke snelheid.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-playback-tempo.png" alt="La perilla PLAYBACK TEMPO en tres posiciones: ×0.50, ×1.00 y ×2.00" width="260" height="160" loading="lazy" style="display:block;width:100%;height:auto;max-width:260px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Boven ×0.50, half zo snel · midden ×1.00, zoals je het opnam · onder ×2.00, twee keer zo snel.</span></figcaption></figure>
+      <p><span class="tr">Het is handig voor twee dingen: een moeilijke passage langzaam opnemen en op tempo horen, of een stuk langzaam beluisteren om elke noot te volgen. Het geldt voor de ▶ van elke opname in de koffer, ook de .mmf- en .mid-bestanden die je laadt. Als je op ▶ drukt, gaat de koffer dicht; wil je de snelheid veranderen terwijl het speelt, open hem dan opnieuw met <b>☰ recs</b>, beweeg de draaiknop en laat los: het stuk gaat verder waar het was, op de nieuwe snelheid.</span></p>
+      <p><span class="tr">Als je naar een andere dans springt, komt het klavier binnen gestemd in de toonsoort van dat stuk. En je kunt opnemen terwijl het Score speelt: de opname komt er schoon uit, alleen met wat jij speelde. Om de klank als audiobestand te bewaren, gebruik je <a href="#wav-guardar-lo-que-estas-oyendo">⬤ wav</a>.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> na ⏹ verschijnt „NEW RECORDING READY”, en met ▶ hoor je wat je speelde. Met de draaiknop op ×0.50 klinkt het op halve snelheid, met dezelfde stemming.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="pulse-el-metronomo"><span class="tr">♩ Pulse — de metronoom</span></h3>
-      <p><span class="tr">De knop ♩ opent een kleine console: een kloppend lampje, ▶, tikken om het tempo in te stellen, een BPM-knop, het klassieke menu van Largo tot Presto, en een optionele klik met volume en klankkleur. Vastgezet met ⊗ blijft hij doorgaan; losgemaakt stopt hij wanneer je hem sluit — niets blijft per ongeluk klinken. En hij slaat mee met de muziek: wanneer je een mmf uit de kist afspeelt, of terwijl de Score speelt — ook binnen een A–B-loop — volgt het lampje de maat en toont de display het tempo van dat deel. Het werk leidt: zodra zijn puls binnenkomt, stopt de vrije metronoom vanzelf.</span></p>
+      <h3 id="pulse-el-metronomo"><span class="tr">♩ Pulse — de metronoom van het Keyboard</span></h3>
+      <p><span class="tr">Het Keyboard heeft een eigen metronoom, uitgebreider dan die van het Score: hier kies je zelf het tempo, en je kunt een klik horen naast het lampje.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> druk op <b>♩ pulse</b> ① in de balk van het Keyboard.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-pulse.png" alt="El botón pulse del Keyboard y su consola: la luz, start, tap, la perilla de BPM, el menú de Largo a Presto, click y tone" width="806" height="117" loading="lazy" style="display:block;width:100%;height:auto;max-width:806px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① pulse · ② het lampje · ③ starten · ④ tap · ⑤ BPM · ⑥ van Largo tot Presto · ⑦ de klik en zijn volume · ⑧ de toon van de klik.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Het lampje</b> ② knippert op de puls, en <b>▶ start</b> ③ zet het aan en uit.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>tap</b> ④: druk een paar keer op deze knop, in het tempo dat je in je hoofd hebt, en de metronoom neemt dat tempo over. De tikken moeten elkaar snel opvolgen: als er meer dan 2 seconden voorbijgaan, begint hij opnieuw te tellen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>BPM</b> ⑤: de draaiknop en het getal; BPM betekent slagen per minuut.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Het menu</b> ⑥: de klassieke tempi, van <b>Largo · 50</b> tot <b>Presto · 184</b>. De draaiknop, het menu en tap horen bij elkaar: verander je er één, dan bewegen de andere mee.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>click</b> ⑦ zet het geluid aan; het begint uit, alleen met het lampje. De draaiknop ernaast is het volume, en <b>tone</b> ⑧ de toon van de klik, lager of hoger.</span></li>
+      </ul>
+      <p><span class="tr">Met de <b>⊗</b> vastgezet blijft de metronoom lopen, ook als je iets anders doet; niet vastgezet stopt hij als je hem sluit, zodat er niets per ongeluk blijft klinken. En hij slaat mee met het stuk: als er een .mmf uit de koffer of het Score speelt —ook in een A–B-lus—, volgt het lampje de maat en toont het getal het tempo van dat stuk. Het stuk heeft het laatste woord: als zijn puls begint, stopt de vrije metronoom vanzelf.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het lampje knippert op het tempo dat je koos, en met <b>click</b> aan hoor je het. De PULSE van het Score is een andere: alleen licht, met het tempo van de partituur (zie <a href="#pop-pulse">de Pulse van het Score</a>).</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="la-nota-y-el-horizonte"><span class="tr">De noot en de horizon</span></h3>
-      <p><span class="tr">Onder het instrument toont de display de noot en haar exacte Hz. Ernaast de kunstmatige horizon: lijn in het midden = axiomatisch; ze stijgt wanneer de noot naar boven trekt (leidtoon), en daalt wanneer ze naar beneden oplost. A= stelt de referentie in (415–466 plus fijnregeling) voor de hele suite.</span></p>
+      <h3 id="la-nota-y-el-horizonte"><span class="tr">De noot en de horizon · wat er klinkt</span></h3>
+      <p><span class="tr">Onder het instrument vertelt het Keyboard je welke noot je net speelde.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-nota.png" alt="La nota Fa sostenido 3, sus 185,625 Hz y el horizonte, con la línea por encima del centro" width="405" height="81" loading="lazy" style="display:block;width:100%;height:auto;max-width:405px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① de noot · ② haar frequentie · ③ de horizon.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>De noot</b> ①: haar naam en haar octaaf, zoals <b>F♯ 3</b>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De frequentie</b> ②: hoeveel trillingen per seconde (Hz) ze heeft, precies, en in welk systeem je zit.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De horizon</b> ③, zoals die van een vliegtuig: met de lijn in het midden staat de noot op haar pythagorische plaats; hij stijgt als de noot omhoog trekt (de leidtoon) en zakt als ze omlaag trekt.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je in Tonal de leidtoon speelt —Fa♯ in Sol groot—, stijgt de lijn van de horizon.</span></p>
     </div>
 
+    <div class="spec">
+      <h3 id="kb-instrument"><span class="tr">Instrument — hoe de toetsen van het Keyboard klinken</span></h3>
+      <p><span class="tr">Het Keyboard laat de hele suite klinken: ook het Score klinkt via het Keyboard. <b>Instrument</b> kiest hoe de toetsen klinken als jij ze speelt, met de muis of met het toetsenbord van de computer: piano, viool, fluit…</span></p>
+      <p><span class="tr"><b>Om het te openen:</b> druk op het veld <b>Instrument</b> ①, op de tweede regel van de balk. De lijst met alle instrumenten gaat open.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-instrument.png" alt="El campo Instrument del Keyboard y la lista de instrumentos abierta, con Violin elegido" width="1078" height="552" loading="lazy" style="display:block;width:100%;height:auto;max-width:1078px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Instrument · ② filter · ③ de familie · ④ het instrument dat klinkt.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>filter</b> ②: typ een paar letters („vio”, „flu”) en alleen de instrumenten met die letters in hun naam blijven over.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De families</b> ③: elke kolom groepeert gelijksoortige instrumenten: houtblazers, koperblazers, slagwerk, strijkers, stemmen…</span></li>
+        <li style="margin:2px 0"><span class="tr">Klik op een instrument ④ en het is gekozen: de lijst sluit en het veld toont de naam. Het instrument dat klinkt, is gemarkeerd met een streepje links.</span></li>
+      </ul>
+      <p><span class="tr">Wat je hier kiest, verandert de partituur niet. Als het Score speelt, komt elke noot bij het Keyboard aan met het instrument van zijn kanaal, en dat is wat je hoort (zie <a href="#sc-instrumentos">Het instrument van een kanaal</a>). Bijvoorbeeld: je zet hier <b>Violin</b> en drukt op ▶ bij een stuk voor piano. Je hoort de piano, en als je er met de toetsen overheen speelt, klinkt dat als een viool. Je keuze wordt ook doorgegeven aan het Register, dat hetzelfde instrument laadt.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het veld toont de naam die je koos, en als je een toets speelt, hoor je dat instrument.</span></p>
+    </div>
     <div class="spec">
       <h3 id="kb-a-ref"><span class="tr">A= · de referentietoonhoogte van de hele suite</span></h3>
-      <p><span class="tr">De knop <b>A= 440</b>, rechtsboven. Hij opent <b>Tuning Reference</b>: zes referentietoonhoogtes op één klik —415 barok, 430 klassiek, 432 natuurlijk, 440 modern, 442 helder, 466 renaissance— en de schuifregelaar <b>fine</b>, van 380 tot 480 Hz in stappen van een halve hertz. Wanneer de A verschuift, verschuift de hele kwintenketen mee: de 35 toonhoogtes stijgen of dalen samen en de intervallen blijven zuiver pythagorees. Het transponeert de muziek niet: het stemt het geheel lager of hoger.</span></p>
-      <p><span class="tr"><b>Terwijl de Score speelt.</b> De A= van het Keyboard en die van de Score zijn één en dezelfde: wat je in de ene verandert, neemt de andere over. Zo kun je een partituur laten spelen vanuit de Score en op het Keyboard je referentie zoeken terwijl je luistert: die van je instrument, van je orkest, of die van een historisch repertoire. De noot die al klinkt, eindigt zoals ze begon; de volgende komt binnen op de nieuwe A. Als je daarna vanuit de Score opslaat, onthoudt het .mmf-bestand de referentietoonhoogte en gaat het stuk ermee weer open. De <b>Pythagorean Tuner</b> heeft dezelfde regelaar (<i>Reference pitch A4</i>), maar het is een aparte toepassing: als je je instrument daarmee op 442 stemt, zet hier ook 442 in. <a href="https://musicmotionsuite.com/faq.html?lang=nl#diapason" title="Veelgestelde vragen">Meer in de FAQ</a>.</span></p>
-      <figure style="margin:14px 0 2px;overflow-x:auto;max-width:68ch">
-        <img src="../../suite/ug-keyboard-aref.png" alt="El Cosmic Keyboard con el popup Tuning Reference abierto: botones 415 baroque, 430 classical, 432 natural, 440 modern, 442 bright, 466 renaissance y el deslizador fine en 440.0 Hz" loading="lazy" style="display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">De pop-up Tuning Reference geopend boven het Keyboard: de zes referentietoonhoogtes en de schuifregelaar fine, op 440,0 Hz.</span></figcaption>
-      </figure>
+      <p><span class="tr">De <b>stemtoon</b> is de La waarop alles gestemd wordt. Vandaag is dat bijna altijd 440 Hz, maar in andere tijden en orkesten lag hij lager of hoger.</span></p>
+      <p><span class="tr"><b>Om het te openen:</b> druk op <b>A= 440</b> ①, rechtsboven. <b>Tuning Reference</b> gaat open.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-aref.png" alt="El botón A= 440 y el popup Tuning Reference: seis diapasones y el deslizador fine" width="325" height="238" loading="lazy" style="display:block;width:100%;height:auto;max-width:325px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① A= · ② de zes stemtonen · ③ fine.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>De zes stemtonen</b> ②, met één klik: 415 barok, 430 klassiek, 432 natuurlijk, 440 modern, 442 helder en 466 renaissance.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>fine</b> ③: voor een exacte waarde, van 380 tot 480 Hz, per halve hertz.</span></li>
+      </ul>
+      <p><span class="tr">Als je de La verandert, wordt de muziek niet getransponeerd: het hele stuk klinkt iets lager of hoger, en de intervallen blijven dezelfde. Het is dezelfde A= als in het Score: je kunt een stuk laten spelen in het Score en hier, terwijl je luistert, de stemtoon van je instrument of je orkest zoeken. Als je daarna vanuit het Score opslaat, onthoudt het .mmf hem. De <b>Pythagorean Tuner</b> heeft zijn eigen regeling (<i>Reference pitch A4</i>): stem je je instrument daarmee op 442, zet dan hier ook 442. <a href="https://musicmotionsuite.com/faq.html?lang=nl#diapason" title="Veelgestelde vragen">Meer in de veelgestelde vragen</a>.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de knop toont de nieuwe La (bijvoorbeeld <b>A= 415</b>), en de volgende noot die je speelt, klinkt er al mee.</span></p>
     </div>
 
     <div class="spec">
       <h3 id="octavas-y-panico"><span class="tr">Octaven en paniek</span></h3>
-      <p><span class="tr">OCTAVE SHIFT onderaan (◀ ▶ of de pijltjestoetsen ← →) verschuift het octaafvenster — je hand verlaat de toetsen nooit. In Tonal stemmen ↑/↓ de aangehouden noot live een apotome om. Escape onderbreekt alle klank. De rijen van het computertoetsenbord tellen volgens <b>positie</b>, niet volgens letter: op een AZERTY- of QWERTZ-toetsenbord speelt de toets die op de plaats van de QWERTY-toets ligt.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>OCTAVE SHIFT</b>, onderaan het scherm (◀ ▶, of de pijltjes ← → van het computertoetsenbord), schuift de toetsen een octaaf lager of hoger, zonder je hand te verplaatsen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Escape</b> zet alle geluid in één keer stil.</span></li>
+        <li style="margin:2px 0"><span class="tr">In Tonal stemmen ↑ en ↓ de noot die je aanhoudt hoger of lager, live.</span></li>
+        <li style="margin:2px 0"><span class="tr">De computertoetsen tellen volgens hun <b>plaats</b>, niet volgens hun letter: op een AZERTY- of QWERTZ-toetsenbord klinkt de toets die op dezelfde plek staat als op QWERTY.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je op ▶ drukt, verandert het getal van OCTAVE SHIFT en klinkt dezelfde toets een octaaf hoger.</span></p>
     </div>
 
     <div class="spec">
@@ -347,13 +512,27 @@
     </div>
 
     <div class="spec">
-      <h3 id="la-tonalidad-del-keyboard-sigue-a-la-pieza"><span class="tr">De toonaard van het Keyboard volgt het stuk</span></h3>
-      <p><span class="tr">Wat de Score naar het Keyboard stuurt, is de <b>voortekening</b>, niet de toonaard: f klein komt binnen als As en g klein als Bes (dezelfde voortekening, een andere grondtoon). De echte toonaard —grondtoon en modus— bestaat alleen als het werk een <b>gegevensblad</b> heeft met zijn tonale centrum aangegeven; met het gegevensblad toont de badge van het Keyboard „F minor” en verandert hij vanzelf naarmate elk stuk van het bestand voorbijkomt. Het gegevensblad kan nu de maat aangeven waarop elk deel begint: vroeger kwam dat alleen uit de deeltitels die op de partituur geschreven stonden, zodat een werk waarvan de titels anders geschreven waren zonder kaart bleef en het Keyboard terugviel op de voortekening. En als een aangegeven centrum op geen enkele maat valt, wordt de hele kaart verworpen en geldt de geschreven voortekening (de melding blijft in de console): een halve kaart is erger dan geen — ze drukte de toonaard van het eerste deel op het hele werk, 544 maten aangekondigd in C groot.</span></p>
+      <h3 id="la-tonalidad-del-keyboard-sigue-a-la-pieza"><span class="tr">De toonsoort van het Keyboard volgt het stuk</span></h3>
+      <p><span class="tr">Als er een stuk speelt vanuit het Score of vanuit de koffer, verandert het Keyboard vanzelf van toonsoort om mee te spelen, en het label bovenaan zegt welke het is. Heeft het stuk meerdere delen in verschillende toonsoorten, dan verandert het bij de overgang van het ene naar het andere.</span></p>
+      <p><span class="tr">Een detail: de partituur geeft alleen de <b>voortekening</b>, en dezelfde voortekening hoort bij twee toonsoorten (Si♭ groot en sol klein hebben dezelfde mollen). Zegt het stuk niet welke het is, dan neemt het Keyboard de grote. De stukken van de suite met hun fiche die de toonsoort van elk deel geeft, tonen de juiste toonsoort, zoals «fa klein».</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> terwijl het stuk speelt, verandert het label van de toonsoort als het deel verandert.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="wav-guardar-lo-que-estas-oyendo"><span class="tr">⬤ wav — opslaan wat je hoort</span></h3>
-      <p><span class="tr">De opnamebalk heeft een knop <b>⬤ wav</b>. Eén klik start de opname —de knop wordt rood en telt de seconden— en een tweede klik sluit de opname af en downloadt het bestand, stereo en <b>24-bit</b>. Het is geen offline render: het neemt <b>live</b> op wat de master verlaat, op de echte audiothread, en daarom is het geschikt om artefacten te horen —een klik, een kras— die een ideale mix nooit zou hebben. De opname wordt afgetakt <i>na</i> klankkleur, warmte, galm, balans en de <b>MASTER</b> van de Console: staat de MASTER op 20 %, dan komt het bestand uit op 20 %. Met opzet: wat bewaard wordt, is wat klinkt — en daarom komt alles wat je in de Console verschuift terwijl hij opneemt (faders, pan, mute, master, reverb) in het bestand terecht. De audio moet al lopen — speel een noot voordat je erop drukt. Vanuit de Score vraag je dezelfde opname aan met <b>File → SAVE AS WAV</b>: hij speelt het stuk of de SELECT-regio en downloadt het bestand met de naam van het stuk.</span></p>
+      <h3 id="wav-guardar-lo-que-estas-oyendo"><span class="tr">⬤ wav — wat je hoort als audio bewaren</span></h3>
+      <p><span class="tr"><b>⬤ wav</b> bewaart alles wat er in de suite klinkt in een audiobestand (.wav): wat je op het Keyboard speelt, een opname uit de koffer of een stuk uit het Score. Het bestand gaat open op elke computer of telefoon, en je kunt het doorsturen of bewaren als herinnering aan een les.</span></p>
+      <p><span class="tr"><b>Om op te nemen:</b> speel eerst een noot, want de audio moet lopen (anders vraagt het Keyboard het je). De knop staat naast <b>♩ pulse</b>, <b>⊕ FX</b> en <b>☰ recs</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-wav.png" alt="El botón wav del Keyboard, primero listo y después grabando: rojo y contando los segundos" width="695" height="72" loading="lazy" style="display:block;width:100%;height:auto;max-width:695px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① ⬤ wav, klaar · ② aan het opnemen: rood en de seconden tellend.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Druk op <b>⬤ wav</b> ①. Vanaf dat moment neemt hij alles op wat klinkt.</span></li>
+        <li style="margin:2px 0"><span class="tr">Speel, of laat een opname of het stuk klinken. De knop ② wordt rood en telt de seconden.</span></li>
+        <li style="margin:2px 0"><span class="tr">Druk opnieuw op de knop om te stoppen. Het bestand wordt vanzelf gedownload in de downloadmap van je browser (<b>Downloads</b>), met een naam als <b>mm-capture-153012.wav</b>: het uur waarop je stopte.</span></li>
+      </ul>
+      <p><span class="tr">Hij neemt op wat je hoort, zoals je het hoort. Als je iets verschuift in de Console terwijl hij opneemt —de <b>MASTER</b>, de faders, de pan, de galm—, komt dat in het bestand; staat de MASTER op 20 %, dan komt het bestand uit op 20 %. Zet het volume vóór de opname zoals je het wilt horen.</span></p>
+      <p><span class="tr">Vanuit het Score doe je hetzelfde met <b>File → SAVE AS WAV</b>: het speelt het stuk, of het stuk dat met SELECT is gemarkeerd, en downloadt het bestand met de naam van het stuk.</span></p>
+      <p><span class="tr">Voor wie het wil weten: het is geen mix die achteraf wordt berekend, maar wat op dat moment naar de luidsprekers gaat, in stereo en op 24 bit. Daarom bewaart hij ook een klik of een kras, als die er was.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> tijdens de opname is de knop rood en lopen de seconden op; als je stopt, verschijnt het .wav-bestand in <b>Downloads</b>, en als je het opent, hoor je wat er klonk.</span></p>
     </div>
 
     <div class="spec">
@@ -367,9 +546,18 @@
     </div>
 
     <div class="spec">
-      <h3 id="fx-por-canal-en-vivo"><span class="tr">⊕ FX: reverb, echo, porta en rotary per kanaal, live</span></h3>
-      <p><span class="tr">De knop <b>⊕ FX</b> in de werkbalk opent een pop-up per kanaal met zes knoppen —<b>Reverb · Echo wet · Echo fb · Echo time · Porta · Rotary</b>—, met de naam van het instrument van het kanaal en in de taal van de Coach. Ze beïnvloeden <b>alleen wat je live speelt</b>. <b>Vibrato</b> staat hier niet: het is de zesde knop van de pop-up van de Score, want daar wordt het geschreven als een gebied van het stuk en live spelen heeft geen plek om het te bewaren. <b>Rotary</b> is de draaiende luidspreker van het jazzorgel (Leslie): op 0 staat hij uit; draai eraan en hij gaat aan, van Slow (0,8 Hz) tot Fast (6,7 Hz), en hij versnelt en vertraagt zoals de echte. Dubbelklik: Off.</span></p>
-      <p><span class="tr">De twee pop-ups verdelen het werk: deze is voor <b>live</b> spelen en die van de Score voor <b>afspelen</b>. Ze delen dezelfde echolijn en dezelfde galm, maar elke noot draagt haar eigen send, dus de echo hier hoger zetten maakt het afspelen van een partituur niet natter, en omgekeerd evenmin. De pop-up opent <b>vastgezet</b> (⊗) net onder de knop en sluit met een klik op het slotje; je sleept hem aan zijn kop, en zijn breedte kun je aanpassen.</span></p>
+      <h3 id="fx-por-canal-en-vivo"><span class="tr">⊕ FX · galm, echo, porta en rotary voor wat je speelt</span></h3>
+      <p><span class="tr"><b>Om het te openen:</b> druk op <b>⊕ FX</b> ①, naast ♩ pulse. Bovenaan staat het instrument van het kanaal waarop je speelt: de effecten horen bij dat kanaal.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-kb-fx.png" alt="El botón FX y el popup Sound FX del Keyboard con sus seis perillas" width="524" height="163" loading="lazy" style="display:block;width:100%;height:auto;max-width:524px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① ⊕ FX · ② Reverb · ③ Echo wet · ④ Echo fb · ⑤ Echo time · ⑥ Porta · ⑦ Rotary.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Reverb</b> ②: de galm van een grote zaal.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Echo wet</b> ③: hoeveel echo je hoort; <b>Echo fb</b> ④: hoe vaak hij zich herhaalt; <b>Echo time</b> ⑤: hoe lang elke herhaling duurt, in milliseconden.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Porta</b> ⑥: de noot glijdt naar de volgende, zoals een viool of een stem.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Rotary</b> ⑦: de draaiende luidspreker van het jazzorgel. Op 0 staat hij uit; als je eraan draait, gaat hij van traag naar snel. Dubbelklik: Off.</span></li>
+      </ul>
+      <p><span class="tr">Deze effecten veranderen <b>alleen wat je live speelt</b>. Wil je dat de partituur met galm of echo klinkt, dan schrijf je ze in het Score, in zijn eigen Sound FX (zie <a href="#pop-sound-fx">Sound FX</a>). En ze zijn niet hetzelfde als REV en ECHO op de balk, die gelden voor alles wat klinkt. Het popup blijft open (⊗) tot je het sluit, en je sleept het aan zijn kop.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je speelt met Reverb of Echo wet hoger, hoor je de zaal of de echo; de partituur verandert niet als ze speelt.</span></p>
     </div>
 
   </div>
@@ -419,12 +607,12 @@
 
     <div class="spec">
       <h3 id="modo-pagina-editar-sobre-la-hoja"><span class="tr">Paginamodus: bewerken op het blad</span></h3>
-      <p><span class="tr">De knop <b>PAGE</b> in de werkbalk schakelt tussen de doorlopende strook en de weergave als <b>blad</b>: de partituur verschijnt als A4-pagina's in hetzelfde venster, met dezelfde gravure als de afdruk, maar erbovenop bewerkbaar. Een tweede keuzelijst kiest de weergave (Whole page · Fit width · Side by side). Op het blad kun je al <b>een noot selecteren</b> en daar de cursor plaatsen, <b>een markering selecteren</b> (dynamiek, expressie, articulatie, tempo, agogiek) om haar met de zoomknoppen van grootte te veranderen, of op een lege plek klikken om de cursor te plaatsen (die vastklikt op het raster). Een <b>rechtsklik</b> opent dezelfde contextmenu's als op de strook (noot, overbinding, boog, tekst, markering, kanaal), en bij het aanwijzen verandert de aanwijzer in een hand boven alles wat aanklikbaar is. Tijdens het afspelen lichten de rode lijn en de klinkende noten op het blad op. Het blad heeft een eigen zoom en scroll (scrollwiel; Shift+scrollwiel zijwaarts; Ctrl+scrollwiel zoom). Het is omkeerbaar en laat de strook onaangeroerd. <b>Nog niet</b>: noten verslepen of nieuwe noten met de muis op het blad schrijven — gebruik daarvoor de strook of de zwevende strook.</span></p>
+      <p><span class="tr">De knop <b>📄 PAGE</b> in de werkbalk schakelt tussen de doorlopende strook en de weergave als <b>blad</b>: de partituur verschijnt als A4-pagina's in hetzelfde venster, met dezelfde gravure als de afdruk, maar erbovenop bewerkbaar. Een tweede keuzelijst kiest de weergave (Whole page · Fit width · Side by side). Op het blad kun je al <b>een noot selecteren</b> en daar de cursor plaatsen, <b>een markering selecteren</b> (dynamiek, expressie, articulatie, tempo, agogiek) om haar met de zoomknoppen van grootte te veranderen, of op een lege plek klikken om de cursor te plaatsen (die vastklikt op het raster). Een <b>rechtsklik</b> opent dezelfde contextmenu's als op de strook (noot, overbinding, boog, tekst, markering, kanaal), en bij het aanwijzen verandert de aanwijzer in een hand boven alles wat aanklikbaar is. Tijdens het afspelen lichten de rode lijn en de klinkende noten op het blad op. Het blad heeft een eigen zoom en scroll (scrollwiel; Shift+scrollwiel zijwaarts; Ctrl+scrollwiel zoom). Het is omkeerbaar en laat de strook onaangeroerd. Op het blad kun je ook noten en markeringen verslepen; om veel te schrijven is de strook handiger.</span></p>
     </div>
 
     <div class="spec">
       <h3 id="modo-pagina-ajustes-de-hoja-en-la-barra"><span class="tr">Paginamodus: bladinstellingen in de werkbalk</span></h3>
-      <p><span class="tr">In paginamodus (de knop <b>📄 PAGE / ▦ SCROLL</b> wisselt tussen blad en strook) staan naast de weergavekeuze (Full page · Fit width · Side by side) twee nieuwe uitklapmenu's om het blad <b>live</b> bij te stellen, zonder 🖨 PRINT VIEW te openen. <b>„Bars/system”</b> bepaalt hoeveel maten per systeem (Auto, of 1 tot 6) en <b>„Staff space”</b> de grootte van de notenbalk (3 tot 9 mm); het blad wordt meteen opnieuw opgemaakt terwijl je ze verandert. Ze blijven <b>gesynchroniseerd</b> met het venster 🖨 PRINT, in beide richtingen. Standaard: Auto · Staff 5 mm.</span></p>
+      <p><span class="tr">In paginamodus (de knop <b>📄 PAGE / ▦ SCROLL</b> wisselt tussen blad en strook) staan naast de weergavekeuze (Full page · Fit width · Side by side) twee nieuwe uitklapmenu's om het blad <b>live</b> bij te stellen, zonder 🖨 PRINT VIEW te openen. <b>„Bars/system”</b> bepaalt hoeveel maten per systeem (Auto, of 1 tot 9) en <b>„Staff space”</b> de grootte van de notenbalk (3 tot 9 mm); het blad wordt meteen opnieuw opgemaakt terwijl je ze verandert. Ze blijven <b>gesynchroniseerd</b> met het venster 🖨 PRINT, in beide richtingen. Standaard: Auto · Staff 5 mm.</span></p>
     </div>
 
     <div class="spec">
@@ -546,7 +734,7 @@
 
     <div class="spec">
       <h3 id="ajustes-de-la-hoja-impresa"><span class="tr">Instellingen van het afgedrukte blad</span></h3>
-      <p><span class="tr">De voettekst van de afdruk is nu één regel (auteur · ©). In het venster PRINT kiest <b>„Bars/system”</b> hoeveel maten per systeem (Auto, of 1 tot 6 — standaard 4) en stelt <b>„Staff space”</b> de grootte van de notenbalk in, van 3 tot 9 mm, in de modus Auto.</span></p>
+      <p><span class="tr">De voettekst van de afdruk is nu één regel (auteur · ©). In het venster PRINT kiest <b>„Bars/system”</b> hoeveel maten per systeem (Auto, of 1 tot 9) en stelt <b>„Staff space”</b> de grootte van de notenbalk in, van 3 tot 9 mm, in de modus Auto.</span></p>
     </div>
 
     <div class="spec">
@@ -1106,13 +1294,41 @@
     </div>
   <p class="lead"><span class="tr"><b>Het blad</b> — eraan werken, of het op papier krijgen.</span></p>
     <div class="spec">
-      <h3 id="sc-page"><span class="tr">📄 PAGE · werken op het blad</span></h3>
-      <p><span class="tr">De knop <b>📄 PAGE</b> verwisselt de doorlopende strook voor het <b>gepagineerde blad</b>, in hetzelfde venster — en daar blijf je <b>bewerken</b>: noten en markeringen laten zich slepen, gebiedsselectie werkt, een klik plaatst de cursor. De balk ervan bevat wat de opmaak bepaalt: <b>maten per systeem</b> (Auto, of 1 tot 9), de <b>notenbalk in millimeters</b>, de <b>lucht tussen systemen</b> en <b>Pages</b>, dat het stuk vraagt om in zoveel bladen te passen. De zoom van het blad is <b>Ctrl + scrollwiel</b>. De doorlopende strook blijft er intact achter: de knop brengt je terug.</span></p>
+      <h3 id="sc-page"><span class="tr">📄 PAGE / ▦ SCROLL · de strook of het blad</span></h3>
+      <p><span class="tr">Het Score toont je de muziek op twee manieren. In <b>SCROLL</b> is het een lange strook die naar rechts loopt: de handigste om in te schrijven. In <b>PAGE</b> zie je haar op bladen, zoals ze afgedrukt wordt, en daar beslis je hoe ze over de pagina’s verdeeld wordt.</span></p>
+      <p><span class="tr"><b>Om het te openen:</b> druk op <b>📄 PAGE</b> ①. Dezelfde knop zegt dan <b>▦ SCROLL</b>: druk erop om terug te gaan naar de strook. De strook verandert niet: ze wacht op je zoals ze was.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-page.png" alt="El botón PAGE del Score y, en la vista de hoja, el botón SCROLL con los menús de vista, compases por sistema, pauta, espacio y páginas" width="830" height="272" loading="lazy" style="display:block;width:100%;height:auto;max-width:830px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① 📄 PAGE · ② de weergave · ③ maten per regel · ④ grootte van de notenbalk · ⑤ ruimte tussen de regels · ⑥ hoeveel pagina’s.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>De weergave</b> ②: <b>Full page</b> (het hele blad), <b>Fit width</b> (op de breedte van het scherm) of <b>Side by side</b> (twee bladen, zoals een open boek).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Bars/sys</b> ③: hoeveel maten er op elke regel passen (in muziek een <i>systeem</i>). <b>Auto</b> past ze aan de breedte aan; of je kiest van 1 tot 9.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Staff</b> ④: de grootte van de notenbalk, in millimeter papier, van 3 tot 9. Voor een partij die je op de lessenaar speelt 7 mm; voor een partituur met veel instrumenten 4 of 5.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Gap</b> ⑤: de ruimte tussen de ene regel en de volgende.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Pages</b> ⑥: op hoeveel bladen je het stuk wilt. Het Score schikt het vanzelf; past het niet, dan zegt het je wat het kleinst mogelijke aantal is.</span></li>
+      </ul>
+      <p><span class="tr">Op het blad werk je gewoon verder: een klik plaatst de cursor of selecteert een noot, noten en markeringen versleep je, je selecteert een gebied, en de rechtermuisklik opent dezelfde menu’s als op de strook. Als je op ▶ drukt, lichten de klinkende noten op het blad op. Zoomen gaat met <b>Ctrl + scrollwiel</b>. Om veel te schrijven is de strook handiger.</span></p>
+      <p><span class="tr">Deze instellingen worden met het stuk bewaard en zijn dezelfde als op het afdrukblad (<a href="#sc-print-pdf">PRINT / PDF</a>): wat je hier schikt, komt zo op papier. Heeft een regel een maat te veel of te weinig, dan kun je met een rechtermuisklik op die regel hem verschuiven of er een maat aan doorgeven (zie <a href="#pop-ctx-system">⠿ Systeem</a>).</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> je ziet het stuk op witte bladen, zoals een boek, en als je ③ of ⑥ verandert, wordt het blad meteen opnieuw geschikt.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-print-pdf"><span class="tr">🖨 PRINT / PDF · het blad naar buiten brengen</span></h3>
-      <p><span class="tr">In <b>MENU FILES</b>, en het is iets anders dan PAGE: je bewerkt niet, je <b>drukt af</b>. Het voegt alles toe wat bij papier hoort — <b>papier</b> A4, Letter of A3; <b>Show</b> de volledige partituur of alleen de gekozen kanalen; de <b>weergave</b> als volledige pagina, passend in de breedte, of als dubbele pagina; de voettekst en het paginanummer. De <b>notenbalk in millimeters</b> is de professionele beslissing: <b>7 mm voor een partij</b>, <b>4 of 5 voor een partituur</b>. En het heeft een <b>paginakopbalk alleen voor het blad</b>: titel, ondertitel, componist, partijnaam en ©, elk met zijn grootte, die <b>Score Info alleen op papier overschrijven</b> —een leeg veld valt terug op Score Info—; en op pagina 1 kan het kopblok <b>met de muis worden vastgepakt en verplaatst</b>, met de verschuiving in millimeters in het stuk bewaard. <b>Print / PDF</b> geeft de browser <b>alleen de bladen</b>, op papierformaat: wat je ziet, is wat eruit komt.</span></p>
+      <h3 id="sc-print-pdf"><span class="tr">🖨 PRINT / PDF · de partituur afdrukken of als PDF bewaren</span></h3>
+      <p><span class="tr"><b>Om het te openen:</b> druk op <b>MENU FILES</b> ① en daarna op <b>🖨 PRINT / PDF</b> ②. Het afdrukblad gaat open: de pagina’s zoals ze eruit zullen komen, met hun instellingenbalk bovenaan.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-print-menu.png" alt="El botón MENU FILES del Score y su menú, con PRINT / PDF marcado" width="309" height="461" loading="lazy" style="display:block;width:100%;height:auto;max-width:309px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① MENU FILES · ② 🖨 PRINT / PDF.</span></figcaption></figure>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-print.png" alt="La barra de la hoja de impresión: Show, Paper, los sistemas, Print / PDF, Close y la cabecera de la página" width="1430" height="198" loading="lazy" style="display:block;width:100%;height:auto;max-width:1430px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">③ wat er afgedrukt wordt · ④ het papier · ⑤ hoe het verdeeld wordt · ⑥ afdrukken · ⑦ sluiten · ⑧ de titel van het blad.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Show</b> ③: <b>Full score</b>, de volledige partituur, of <b>Selected CH</b>, alleen de gekozen kanalen (de partij van één instrument; zie verder).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Paper</b> ④: A4, Letter of A3.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Bars/system, Staff mm, Sys gap en Pages</b> ⑤: dezelfde instellingen als in <a href="#sc-page">PAGE</a>, en ze horen bij elkaar: wat je hier verandert, verandert daar ook.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Print / PDF</b> ⑥ opent het afdrukvenster van je browser. Kies je printer, of kies bij <b>Destination</b> voor <b>Save as PDF</b> om een PDF-bestand te bewaren.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Close</b> ⑦ gaat terug naar de partituur.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PAGE HEADER · print only</b> ⑧: de titel, de ondertitel, de componist, de naam van de partij en het ©, elk met zijn grootte. Ze veranderen alleen het papier: laat je een veld leeg, dan wordt dat van <a href="#pop-score-info">Score Info</a> gebruikt. Op pagina 1 kun je de kop met de muis vastpakken en verschuiven.</span></li>
+      </ul>
+      <p><span class="tr">Wat je op het afdrukblad ziet, komt eruit: zonder de cyaanblauwe selectie, zonder de knoppen en zonder verborgen noten. Onder de balk zetten <b>Footer</b> en <b>Page #</b> de voettekst en het paginanummer aan of uit.</span></p>
+      <p><span class="tr">Heb je het stuk vanuit een les geopend, in <a href="#score-demo">demomodus</a>, dan gaat het sneller: de knop <b>🖨 PRINT</b> bovenaan, naast de titel, maakt het blad klaar en opent meteen het afdrukvenster.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het afdrukvenster van de browser gaat open met je bladen; met <b>Save as PDF</b> komt het bestand in <b>Downloads</b>.</span></p>
     </div>
 
     <div class="spec">
@@ -1121,12 +1337,18 @@
     </div>
   <p class="lead"><span class="tr"><b>De onderste balk</b> — het transport en de getallen van het stuk.</span></p>
     <div class="spec">
-      <h3 id="sc-transporte"><span class="tr">De onderste balk · plat is informatie, omkaderd is om te veranderen</span></h3>
-      <p><span class="tr">De transportbalk volgt een visuele regel die het weten waard is, omdat hij je het raden bespaart: wat <b>plat</b> is, is een <b>weergave</b> — het informeert je en is niet om aan te raken; wat <b>omkaderd</b> is in een vakje dat onder de muis opkomt, is een <b>bedieningselement</b>, en verandert met een klik. Het transport links, de vier chips en de drie weergaven in het midden, de puls en de loop rechts.</span></p>
-      <figure style="margin:14px 0 2px;overflow-x:auto;max-width:68ch">
-        <img src="../../suite/ug-transport-3.png" alt="La barra del transporte del Score: los botones de transporte, TIME, los chips MEASURE, BEAT, SUBDIV y BPM, los displays PITCH y CURSOR, y los botones PULSE y LOOP" style="display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Omkaderd: MEASURE · BEAT · SUBDIV · BPM. Plat: TIME, PITCH en CURSOR. TOTAL verschijnt pas wanneer het stuk speelt.</span></figcaption>
-      </figure>
+      <h3 id="sc-transporte"><span class="tr">De onderste balk · wat hij je vertelt en wat je kunt veranderen</span></h3>
+      <p><span class="tr">Helemaal onderaan staat de <b>transportbalk</b>. Hij vertelt je waar je in het stuk bent, terwijl je schrijft en terwijl het speelt.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-transporte.png" alt="La barra de abajo del Score: TIME, los chips MEASURE, BEAT, SUBDIV y BPM, y los displays PITCH y CURSOR" width="995" height="51" loading="lazy" style="display:block;width:100%;height:auto;max-width:995px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① TIME · ② de vier chips · ③ PITCH · ④ CURSOR.</span></figcaption></figure>
+      <p><span class="tr">Een eenvoudige regel om hem te lezen: wat in een <b>kadertje</b> staat, verander je met een klik; wat geen kadertje heeft, geeft alleen informatie.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>TIME</b> ①: hoeveel tijd er verstreken is sinds het begin, in minuten, seconden en duizendsten.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>MEASURE · BEAT · SUBDIV · BPM</b> ②: de maat, de tel binnen de maat, de grootte van de cursorstap en de snelheid. Ze hebben een kadertje: je kunt ze veranderen. Hoe, lees je in <a href="#sc-transporte-chips">de vier chips</a>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PITCH</b> ③: de toonhoogte van de laatste toets die je speelde.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>CURSOR</b> ④: op welk instrument de <a href="#sc-cursor">cursor</a> staat.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> druk op ▶ en kijk naar TIME: de cijfers lopen. Terwijl het stuk speelt, verschijnt ernaast <b>TOTAL</b>: hoe lang het hele stuk duurt.</span></p>
     </div>
 
     <div class="spec">
@@ -1145,8 +1367,23 @@
     </div>
 
     <div class="spec">
-      <h3 id="sc-transporte-botones"><span class="tr">Het transport, en de twee knoppen rechts</span></h3>
-      <p><span class="tr"><b>⏮</b> naar het begin, <b>⏪</b> en <b>⏩</b> maat per maat, <b>▶ ⏸ ⏹</b>, <b>⏭</b> naar het einde. Met de loop aan <b>brengt ⏮ je naar het begin van de loop</b> en niet naar maat 1, en dat wil je wanneer je aan een passage werkt. Rechts opent <b>♩ PULSE</b> de metronoom van de Score, die het tempo niet kiest: hij <b>leest het uit de partituur</b>, uit de maat waar de cursor staat, en slaat volgens SUBDIV — de eerste slag van elke groep licht feller op, zodat de tel leesbaar is binnen de achtsten, en ernaast wordt de waarde genoemd die slaat. <i>(En hij is met opzet kleiner dan die van het Keyboard: daar krijg je een BPM-knop, <b>tap</b>, Italiaanse termen, klik en toonhoogte, omdat die metronoom het tempo <b>kiest</b>; hier is het tempo dat van het stuk, en een knop zou een tweede klok zijn die tegen de eerste vecht. De hoorbare slag komt ook van het Keyboard, want dat is de klankmotor: die van de Score is licht.)</i> En <b>🔁 LOOP</b> zet de loop aan en uit; de rechtsklik erop opent het paneeltje met “play the loop”, de zoom op het traject en het wissen.</span></p>
+      <h3 id="sc-transporte-botones"><span class="tr">De knoppen om te luisteren · spelen, stoppen en verplaatsen</span></h3>
+      <p><span class="tr">Links op de onderste balk staan de knoppen om naar het stuk te luisteren, zoals op elke muziekspeler.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-transporte-botones.png" alt="Los botones del transporte del Score y los botones PULSE y LOOP" width="413" height="51" loading="lazy" style="display:block;width:100%;height:auto;max-width:413px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">De nummers zijn die van de lijst hieronder.</span></figcaption></figure>
+      <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>⏮</b> gaat terug naar het begin van het stuk. Als je een <a href="#pop-work-range">werkbereik</a> hebt gemarkeerd, naar het begin van dat bereik.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏪</b> gaat één maat terug.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>▶</b> speelt het stuk vanaf waar je bent. Sneltoets: de spatiebalk.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏸</b> pauzeert. Nog een klik gaat verder vanaf hetzelfde punt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏹</b> stopt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏩</b> gaat één maat vooruit.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏭</b> gaat naar het einde van het stuk.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>♩ PULSE</b> zet de <a href="#pop-pulse">metronoom</a> aan. Hij kiest het tempo niet: hij leest het uit de partituur.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>🔁 LOOP</b> herhaalt een passage telkens opnieuw. Hoe je de passage markeert, lees je in <a href="#sc-loop-ab">de loop</a>.</span></li>
+      </ol>
+      <p><span class="tr"><b>Let op:</b> het geluid wordt gemaakt door het <b>Keyboard</b>. Als dat niet open is, beweegt ▶ de afspeellijn, maar hoor je niets.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je op ▶ drukt, hoor je de muziek, loopt er een lijn over de partituur en loopt TIME in de onderste balk.</span></p>
     </div>
   <p class="lead"><span class="tr"><b>De navigatiestrook</b> — een passage vinden, en je erin opsluiten.</span></p>
     <div class="spec">
@@ -1170,23 +1407,65 @@
     </div>
   <p class="lead"><span class="tr"><b>De kanalen</b> — zien, horen, en wie wat beheert.</span></p>
     <div class="spec">
-      <h3 id="sc-canal-vista"><span class="tr">Zien en niet zien · het vinkje en het 👁 zijn twee verschillende dingen</span></h3>
-      <p><span class="tr">Het <b>vinkje</b> in de kanaallijst staat voor <b>zichtbaar</b>: zet je het uit, dan <b>verdwijnt</b> die notenbalk van het scherm en schuift de partituur in elkaar — en omdat het kanaal nog bestaat, <b>klinkt het nog steeds</b>. Het <b>👁</b> is iets anders: het laat de notenbalk <b>als schim</b> staan, nauwelijks zichtbaar, zodat je hem als referentie kunt houden zonder dat hij concurreert met wat je schrijft. Een detail dat verwarring bespaart: is het kanaal <b>onzichtbaar</b>, dan doen het oog en de mute op die rij niets — je moet het eerst weer zichtbaar maken.</span></p>
+      <h3 id="sc-canal-vista"><span class="tr">Een kanaal zien of niet · het vakje en het oog</span></h3>
+      <p><span class="tr">In de lijst met kanalen (knop <b>⚙ CHANNELS</b>) heeft elke rij twee bedieningen voor wat je ziet. Ze doen verschillende dingen.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-canales.png" alt="El botón CHANNELS y la lista de canales: en cada fila la casilla, el número de canal, el instrumento, la clave, el ojo, el botón de silencio, FX y el menú" width="500" height="746" loading="lazy" style="display:block;width:100%;height:auto;max-width:500px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① het vakje · ② het oog · ③ de knop om te dempen · ④ FX, de effecten.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Het vakje</b> ①: uitgevinkt verdwijnt de notenbalk van het scherm en schuiven de andere tegen elkaar. Het kanaal bestaat nog, dus het <b>klinkt nog</b>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Het oog 👁</b> ②: maakt de notenbalk heel bleek, bijna doorzichtig. Handig om hem als referentie in beeld te houden terwijl je op een andere schrijft.</span></li>
+              <li style="margin:2px 0"><span class="tr"><b>FX</b> ④ opent de geluidseffecten van het kanaal: galm, echo en meer. Ze worden uitgelegd in <a href="#pop-sound-fx">Sound FX</a>. Als het kanaal al effecten heeft, is FX groen.</span></li>
+      </ul>
+      <p><span class="tr">Om een kanaal te dempen is er ③: dat wordt uitgelegd in <a href="#sc-canal-sonido">Een kanaal horen of niet</a>.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> met het vakje uit zie je die notenbalk niet meer; met het oog zie je hem bleek. Nog een klik en hij komt terug zoals hij was.</span></p>
+      <p><span class="tr"><b>Let op:</b> met het vakje uit doen het oog en het dempen van die rij niets. Vink het vakje eerst weer aan.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-canal-sonido"><span class="tr">Horen en niet horen · mute verbergt niets</span></h3>
-      <p><span class="tr">De <b>mute</b> —de ◉ op de kaart van het actieve kanaal, de luidspreker in de lijst, de rij in het labelmenu— <b>legt het kanaal het zwijgen op en laat het in beeld</b>: het enige teken is dat de naam grijs wordt. Twee assen die elkaar niet raken: de weergave uitzetten dempt niet, en dempen verbergt niet. En de mute <b>reist mee in het stuk</b>: het bestand wordt bewaard met de kanalen die je stil liet.</span></p>
+      <h3 id="sc-canal-sonido"><span class="tr">Een kanaal horen of niet · dempen verbergt niets</span></h3>
+      <p><span class="tr"><b>Dempen</b> (in het Engels <b>mute</b>) maakt een kanaal stil, maar laat het zichtbaar. Handig om bijvoorbeeld de piano te horen zonder de linkerhand.</span></p>
+      <p><span class="tr"><b>Om een kanaal te dempen</b> gebruik je een van deze drie:</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">de knop <b>◉</b> in zijn rij van de lijst <b>⚙ CHANNELS</b> (③ in de afbeelding <a href="#sc-canal-vista">hierboven</a>);</span></li>
+        <li style="margin:2px 0"><span class="tr">de <b>◉</b> in de kaart van het actieve kanaal, rechtsonder;</span></li>
+        <li style="margin:2px 0"><span class="tr">rechtsklik op de naam van het kanaal, links van de notenbalk, en dan <b>Mute</b> (zie <a href="#sc-canal-solo">de afbeelding bij solo</a>).</span></li>
+      </ul>
+      <p><span class="tr">Zien en horen zijn twee aparte dingen: een notenbalk verbergen maakt hem niet stil, en hem stil maken verbergt hem niet.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de naam van het kanaal wordt grijs, en als je het stuk speelt, klinkt die notenbalk niet. Dezelfde knop zet hem weer aan.</span></p>
+      <p><span class="tr">Dempen wordt met het stuk bewaard: als je het bestand opnieuw opent, blijven de kanalen die je stil liet ook stil.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-canal-solo"><span class="tr">De solo van de Score is „de anderen dempen”, en de mix komt precies terug</span></h3>
-      <p><span class="tr">De <b>solo</b> in het labelmenu is geen aparte schakelaar: hij maakt een momentopname van de mix, <b>dempt alles wat niet die rij is</b> en <b>geeft bij het uitzetten de mix terug zoals hij was</b>, mute per mute. Hij werkt per hele rij, zodat een duo of een trio volledig klinkt. Het is sessiegeheugen: het wordt niet in het stuk bewaard.</span></p>
+      <h3 id="sc-canal-solo"><span class="tr">Eén kanaal alleen horen · Solo</span></h3>
+      <p><span class="tr"><b>Solo</b> doet het omgekeerde van dempen: het maakt alle andere kanalen stil en laat alleen dat ene spelen. Handig om één stem zonder de rest te horen.</span></p>
+      <p><span class="tr"><b>Om het te gebruiken:</b></span></p>
+      <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Rechtsklik op de naam van het kanaal, links van de notenbalk (bijvoorbeeld «CH1 · R.H.»). Het menu gaat open.</span></li>
+        <li style="margin:2px 0"><span class="tr">Kies <b>Solo</b> ②.</span></li>
+        <li style="margin:2px 0"><span class="tr">Om alles weer te horen, open je hetzelfde menu en zet je Solo uit.</span></li>
+      </ol>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-canal-solo.png" alt="El menú del nombre de un canal: Mute, Solo, Sound FX, Name y Hide" width="280" height="252" loading="lazy" style="display:block;width:100%;height:auto;max-width:280px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Mute · ② Solo · ③ Hide: in hetzelfde menu staan ook dempen en verbergen.</span></figcaption></figure>
+      <p><span class="tr">Als de notenbalk twee kanalen tegelijk draagt (bijvoorbeeld twee stemmen), laat Solo ze allebei spelen: daarom kan er in het menu «Solo CH1+CH3» staan.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je het stuk speelt, hoor je alleen die notenbalk. Als je Solo uitzet, komt elk kanaal precies terug zoals het was, ook de kanalen die je al had gedempt.</span></p>
+      <p><span class="tr">Solo wordt niet met het stuk bewaard: het is een hulp terwijl je werkt.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-instrumentos"><span class="tr">Het instrument van een kanaal · en wat echt beslist</span></h3>
-      <p><span class="tr">De keuzelijst op elke rij opent geen lange lijst: ze opent het <b>kolommenpalet</b>, met de hele bank in beeld. Een instrument kiezen doet drie dingen: het geeft het kanaal een naam, het geeft het zijn <b>plaats in het orkest</b> —zijn positie in het panorama en zijn sectievolume— en het kan de notatie veranderen, zoals de sleutel. De oude tooltips zeggen dat het label „cosmetisch” is: dat klopt niet meer. Het label stuurt geen MIDI-programmawissel, maar het <b>is wat de klankkleur bepaalt</b>: de Score stuurt het instrument noot per noot naar het Keyboard. Met <b>List</b> laad je een bank die in het Register is opgebouwd in plaats van de fabrieksbank.</span></p>
+      <h3 id="sc-instrumentos"><span class="tr">Het instrument van een kanaal · kiezen wie er speelt</span></h3>
+      <p><span class="tr">Elke notenbalk van de partituur is een <b>kanaal</b>, en elk kanaal heeft zijn <b>instrument</b>: piano, viool, fluit… Het instrument bepaalt hoe die notenbalk klinkt.</span></p>
+      <p><span class="tr"><b>Om het te kiezen:</b></span></p>
+      <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Druk bovenaan op de knop <b>⚙ CHANNELS</b>. De lijst met kanalen gaat open.</span></li>
+        <li style="margin:2px 0"><span class="tr">Klik in de rij van het kanaal op het uitklapmenu van het instrument ①. Het palet gaat open met alle instrumenten, per familie.</span></li>
+        <li style="margin:2px 0"><span class="tr">Klik op het instrument dat je wilt ②. Ken je de naam, typ die dan in <b>filter</b> en het palet toont alleen de instrumenten die erbij passen.</span></li>
+      </ol>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-instrumentos.png" alt="La lista CHANNELS con la paleta de instrumentos abierta: Woodwinds, Brass, Percussion, Harp &amp; Keyboards, Strings, Voice, Synths" width="1016" height="624" loading="lazy" style="display:block;width:100%;height:auto;max-width:1016px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">De nummers zijn de stappen 2 en 3.</span></figcaption></figure>
+      <p><span class="tr">Je kunt het ook kiezen zonder CHANNELS te openen: in de kaart van het actieve kanaal, rechtsonder, staat hetzelfde uitklapmenu en dat opent hetzelfde palet.</span></p>
+      <p><span class="tr">Een instrument kiezen doet drie dingen: het geeft het kanaal zijn naam, geeft het zijn plaats in het orkest (aan welke kant het klinkt en hoe luid) en het kan de <a href="#pop-clef">sleutel</a> veranderen. Een contrabas bijvoorbeeld wordt in de fa-sleutel geschreven.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de naam van het instrument verschijnt in de rij van het kanaal en in de kaart onderaan, en als je het stuk speelt, klinkt die notenbalk met het nieuwe instrument.</span></p>
+      <p><span class="tr"><b>Let op:</b> als je met de muis over het uitklapmenu gaat, kan er «Instrument (cosmetic)» staan. Dat is een oude melding: het instrument verandert de klank wel degelijk. Met <b>List</b>, onderaan de lijst, laad je een instrumentenbank die in de Register is gemaakt in plaats van de standaardbank.</span></p>
     </div>
 
     <div class="spec">
@@ -1213,13 +1492,34 @@
     </div>
   <p class="lead"><span class="tr"><b>SELECT</b> — een traject markeren, of een handvol noten.</span></p>
     <div class="spec">
-      <h3 id="sc-select-modo"><span class="tr">De SELECT-modus · erin, eruit, en de sneltoets</span></h3>
-      <p><span class="tr">De knop <b>◻ SELECT</b> zet de modus aan en verandert in <b>◼</b>, zodat er geen twijfel is. De toets onder Escape —<b>`</b>— doet hetzelfde zonder het toetsenbord te verlaten, en <b>Esc</b> verlaat de modus en wist de selectie. Binnen de modus verlaat je hem ook met een klik <b>buiten elke notenbalk</b>: de natuurlijke uitweg als je van gedachten bent veranderd. De <b>rechtsklik</b> op de knop opent zijn kleine actiepaneel — maar alleen wanneer je <i>niet</i> in de modus bent.</span></p>
+      <h3 id="sc-select-modo"><span class="tr">Selecteren · de modus SELECT in- en uitgaan</span></h3>
+      <p><span class="tr">Om met meerdere noten tegelijk te werken (ze verplaatsen, kopiëren, er iets aan veranderen) moet je ze eerst <b>selecteren</b>. Dat doe je in de modus <b>SELECT</b>.</span></p>
+      <p><span class="tr"><b>Om erin te gaan:</b> druk op <b>◻ SELECT</b> ①, in de tweede rij knoppen. De knop wordt donker (◼) zolang de modus aan staat. Sneltoets: de toets <b>`</b>, die onder Esc.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sc-select.png" alt="El botón SELECT encendido, el interruptor CURSOR CH / ALL y dos compases seleccionados con el recuadro verde" width="917" height="287" loading="lazy" style="display:block;width:100%;height:auto;max-width:917px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① SELECT · ② CH of ALL · ③ de selectie, gesloten.</span></figcaption></figure>
+      <p><span class="tr"><b>Om eruit te gaan:</b> druk op <b>Esc</b> (dat sluit de modus en wist de selectie), druk nog eens op SELECT, of klik buiten de notenbalken.</span></p>
+      <p><span class="tr">Hoe je het stuk markeert, lees je in <a href="#sc-select-area">Een stuk selecteren</a>.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de knop zegt ◼ SELECT met een donkere achtergrond.</span></p>
+      <p><span class="tr">Een rechtsklik op de knop SELECT opent een paneeltje met acties, maar alleen als de modus uit staat.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="sc-select-area"><span class="tr">Een traject selecteren, en het verplaatsen</span></h3>
-      <p><span class="tr">In de modus <b>sleep je over de notenbalk</b> en wordt het traject gemarkeerd: terwijl je sleept, is het kader goud en gestippeld —het is open— en bij het loslaten <b>sluit het</b> en verandert het van kleur. Met <b>Shift + klik</b> verplaats je het uiteinde in plaats van opnieuw te beginnen. En eenmaal gesloten <b>kun je de selectie vastpakken</b>: de cursor wordt een hand, je sleept haar en de muziek beweegt mee, vastgeklikt op de stap van <b>SUBDIV</b>. Het paar <b>CURSOR · CH | ALL</b> bepaalt of dat allemaal in één kanaal gebeurt of over het hele orkest.</span></p>
+      <h3 id="sc-select-area"><span class="tr">Een stuk selecteren · en het verplaatsen</span></h3>
+      <p><span class="tr">Een <b>selectie</b> is een stuk van de partituur dat met een kader gemarkeerd is. Alles wat je daarna doet (verplaatsen, kopiëren, de dynamiek veranderen…) gebeurt met wat erin staat.</span></p>
+      <p><span class="tr"><b>Om te selecteren:</b></span></p>
+      <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Ga in de modus <a href="#sc-select-modo">SELECT</a> ①.</span></li>
+        <li style="margin:2px 0"><span class="tr">Kies <b>CH</b> of <b>ALL</b> ②: met CH selecteer je op één notenbalk; met ALL op alle tegelijk.</span></li>
+        <li style="margin:2px 0"><span class="tr">Druk de muisknop in op de notenbalk, waar het stuk begint, en sleep tot waar het eindigt. Terwijl je sleept, is het kader goudkleurig en gestippeld.</span></li>
+        <li style="margin:2px 0"><span class="tr">Laat de knop los. Het kader sluit en wordt groen ③.</span></li>
+      </ol>
+      <p><span class="tr">De afbeelding staat bij <a href="#sc-select-modo">de modus SELECT</a>, net hierboven.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Om ze groter of kleiner te maken:</b> Shift + klik verschuift de rand, zonder opnieuw te beginnen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Om ze te verplaatsen:</b> zet de muis op het gesloten kader (de aanwijzer wordt een hand) en sleep het. De muziek beweegt mee, stap voor stap volgens <a href="#sc-subdiv">SUBDIV</a>.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> je ziet het groene kader rond de noten die je wilde.</span></p>
+      <p><span class="tr"><b>Let op:</b> als je op het nummer van een maat klikt in plaats van op de notenbalk, gaat de informatie over die maat open. Begin het slepen tussen de lijnen.</span></p>
     </div>
 
     <div class="spec">
@@ -1239,8 +1539,8 @@
   <p class="lead"><span class="tr"><b>De partituur</b> — het scrollwiel, de hand, het numerieke toetsenblok en het slepen.</span></p>
     <div class="spec">
       <h3 id="sc-cursor"><span class="tr">De cursor · waar komt wat je schrijft</span></h3>
-      <p><span class="tr">De <b>cursor</b> is het gele verticale streepje op de notenbalk ①. Het toont waar de volgende noot die je schrijft terechtkomt, en waar de popups zetten wat je invoegt: een tempo, een sleutel, een tekst.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-cursor.png" alt="El pentagrama con el cursor amarillo en el compás 2, el interruptor CURSOR CH / ALL y el display CURSOR de la barra de abajo" width="1000" height="310" loading="lazy" style="display:block;width:100%;height:auto;max-width:1000px;border:1px solid var(--border);border-radius:var(--rad)">
+      <p><span class="tr">De <b>cursor</b> is het gekleurde verticale streepje op de notenbalk ①: groen in het lichte thema, geel in het donkere. Het toont waar de volgende noot die je schrijft terechtkomt, en waar de popups zetten wat je invoegt: een tempo, een sleutel, een tekst.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-cursor.png" alt="El pentagrama con el cursor en el compás 2, el interruptor CURSOR CH / ALL y el display CURSOR de la barra de abajo" width="1000" height="271" loading="lazy" style="display:block;width:100%;height:auto;max-width:1000px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① de cursor · ② CH of ALL · ③ op welk instrument hij staat, in de onderste balk.</span></figcaption></figure>
       <p><span class="tr"><b>Hem verplaatsen:</b></span></p>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1391,7 +1691,7 @@
     <div class="spec">
       <h3 id="pop-file"><span class="tr">File · openen, opslaan en het stuk meenemen</span></h3>
       <p><span class="tr">In <b>MENU FILES</b> bewaar en open je je werk. Een werk van Music Motion wordt bewaard in een <b>.mmf</b>-bestand: daarin zitten de noten en ook hoe ze gespeeld worden (dynamiek, tempo’s, de klank van elk instrument).</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-file.png" alt="El menú File: NEW, SAVE AS, EXPORT MMF, EXPORT XML, IMPORT MMF, IMPORT XML, PRINT / PDF y SAVE AS WAV" width="308" height="307" loading="lazy" style="display:block;width:100%;height:auto;max-width:308px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-file.png" alt="El menú File: NEW, SAVE AS, EXPORT MMF, EXPORT XML, IMPORT MMF, IMPORT XML, PRINT / PDF y SAVE AS WAV" width="308" height="460" loading="lazy" style="display:block;width:100%;height:auto;max-width:308px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Het menu dat opengaat met MENU FILES.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>🆕 NEW</b>: een nieuwe, lege partituur.</span></li>
@@ -1412,7 +1712,7 @@
         <li style="margin:2px 0"><span class="tr">Typ <b>Title</b>, <b>Subtitle</b>, <b>Composer</b> (wie het componeerde), <b>Author</b> (wie het bewerkte of overschreef) en <b>Copyright</b>.</span></li>
         <li style="margin:2px 0"><span class="tr">Druk op <b>Apply</b>.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-score-info.png" alt="El popup Score Info: Title, Subtitle, Composer, Author, Copyright, File, Orchestra, work card y Apply" width="349" height="480" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-score-info.png" alt="El popup Score Info: Title, Subtitle, Composer, Author, Copyright, File, Orchestra, work card y Apply" width="349" height="633" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">De nummers zijn de stappen 2 en 3.</span></figcaption></figure>
       <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> in de weergave <a href="#sc-page"><b>PAGE</b></a> zie je de grote titel bovenaan en de componist rechts.</span></p>
       <p><span class="tr"><b>Orchestra</b> zegt voor welke orkestgrootte het werk is, van kamerorkest tot groot romantisch orkest. Daarmee weet de suite hoeveel spelers elke strijkerssectie heeft.</span></p>
@@ -1428,7 +1728,7 @@
         <li style="margin:2px 0"><span class="tr">Stel bij <b>BPM</b> het getal in, met <b>−</b> en <b>+</b>.</span></li>
         <li style="margin:2px 0"><span class="tr">Druk op <b>Insert Marking</b>.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tempo.png" alt="El popup Tempo: Term, Beat, BPM, Scope, Show, SHOW HIDDEN e Insert Marking" width="369" height="327" loading="lazy" style="display:block;width:100%;height:auto;max-width:369px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tempo.png" alt="El popup Tempo: Term, Beat, BPM, Scope, Show, SHOW HIDDEN e Insert Marking" width="369" height="480" loading="lazy" style="display:block;width:100%;height:auto;max-width:369px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">De nummers zijn de stappen 3, 4 en 5.</span></figcaption></figure>
       <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> boven de notenbalk staat bijvoorbeeld “Allegro ♩ = 120”, en de muziek speelt op die snelheid.</span></p>
       <p><span class="tr"><b>Om de muziek halverwege sneller of trager te laten gaan:</b> zet de cursor op de maat waar het verandert en herhaal de stappen.</span></p>
@@ -1448,7 +1748,7 @@
         <li style="margin:2px 0"><span class="tr">Kies bij <b>Scope</b> tot waar hij geldt (zie hieronder).</span></li>
         <li style="margin:2px 0"><span class="tr">Klik op de sleutel die je wilt. De C-sleutel sleep je omhoog of omlaag om hem op een andere lijn te zetten.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-clef.png" alt="El popup Select Clef: Treble, Bass y C Clef, Scope, Octave y Nudge" width="429" height="333" loading="lazy" style="display:block;width:100%;height:auto;max-width:429px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-clef.png" alt="El popup Select Clef: Treble, Bass y C Clef, Scope, Octave y Nudge" width="429" height="486" loading="lazy" style="display:block;width:100%;height:auto;max-width:429px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">De nummers zijn de stappen 3 en 4.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>All channels</b>: alle instrumenten, het hele werk. <b>This channel</b>: <a href="#kb-canal-activo">het actieve instrument</a>, het hele werk.</span></li>
@@ -1467,7 +1767,7 @@
         <li style="margin:2px 0"><span class="tr">Typ <b>Numerator</b> (boven) en <b>Denominator</b> (onder), of kies er een uit <b>Quick Select</b>: 3/4, 2/4, 6/8…</span></li>
         <li style="margin:2px 0"><span class="tr">Kies een van de twee knoppen (zie hieronder).</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-time.png" alt="El popup Time Signature: Numerator, Denominator, Quick Select, Apply to All Channels, Re-bar the music y Cancel" width="349" height="332" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-time.png" alt="El popup Time Signature: Numerator, Denominator, Quick Select, Apply to All Channels, Re-bar the music y Cancel" width="349" height="486" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">De nummers zijn de stappen 2 en 3.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>Apply to All Channels</b> verandert alleen de getallen. De noten blijven waar ze staan. Gebruik het als je nog niets geschreven hebt, of als de maatsoort fout was maar de noten juist zijn.</span></li>
@@ -1486,7 +1786,7 @@
         <li style="margin:2px 0"><span class="tr">Kies <b>Major</b> of <a href="#pop-minor"><b>Minor</b></a>.</span></li>
         <li style="margin:2px 0"><span class="tr">Loop met <b>▶</b> en <b>◀</b> door de toonaarden: elke klik op ▶ voegt een ♯ toe (of haalt een ♭ weg), elke klik op ◀ voegt een ♭ toe (of haalt een ♯ weg). De voortekening verandert meteen.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-key.png" alt="El popup Key Signature: ◀ C Major ▶, Major, Minor, All CH, This CH, This Bar, Selection y Transpose music to key" width="329" height="234" loading="lazy" style="display:block;width:100%;height:auto;max-width:329px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-key.png" alt="El popup Key Signature: ◀ C Major ▶, Major, Minor, All CH, This CH, This Bar, Selection y Transpose music to key" width="329" height="388" loading="lazy" style="display:block;width:100%;height:auto;max-width:329px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">De nummers zijn de stappen 2, 3 en 4.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>All CH</b>: alle instrumenten, het hele werk. <b>This CH</b>: alleen <a href="#kb-canal-activo">het actieve instrument</a>.</span></li>
@@ -1506,7 +1806,7 @@
         <li style="margin:2px 0"><span class="tr">Kies <b>Before</b> (vóór) of <b>After</b> (na) de maat van de cursor. In het midden zie je haar nummer (M1 is maat 1).</span></li>
         <li style="margin:2px 0"><span class="tr">Druk op <b>Apply</b>.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-bars.png" alt="El popup Bar Structure: Upbeat, BAR NUM, Add, Before, After, Apply, Barline, GROUP, Respiro y Beat" width="409" height="326" loading="lazy" style="display:block;width:100%;height:auto;max-width:409px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-bars.png" alt="El popup Bar Structure: Upbeat, BAR NUM, Add, Before, After, Apply, Barline, GROUP, Respiro y Beat" width="409" height="480" loading="lazy" style="display:block;width:100%;height:auto;max-width:409px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">De nummers zijn de stappen 2, 3 en 4.</span></figcaption></figure>
       <p><span class="tr">Alles wat erna komt, schuift mee met de muziek: noten, dynamiek, tempo’s, herhalingen en wisselingen van maatsoort of voortekening.</span></p>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1530,10 +1830,10 @@
         <li style="margin:2px 0"><span class="tr">Kijk naar de regel <b>Plays</b> ⑤: die zegt in welke volgorde de maten gespeeld worden.</span></li>
         <li style="margin:2px 0"><span class="tr">Druk op <b>Create</b> ⑥.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-repeats.png" alt="El popup Repeats: I WANT TO, From bar, To bar, Beat, Times, Endings, Fold, Unfold, Plays, Create y Cancel" width="366" height="413" loading="lazy" style="display:block;width:100%;height:auto;max-width:366px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-repeats.png" alt="El popup Repeats: I WANT TO, From bar, To bar, Beat, Times, Endings, Fold, Unfold, Plays, Create y Cancel" width="366" height="574" loading="lazy" style="display:block;width:100%;height:auto;max-width:366px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① wat je wilt · ② van welke maat tot welke maat · ③ de volta’s · ④ inklappen en uitvouwen · ⑤ hoe het klinkt · ⑥ maken.</span></figcaption></figure>
       <p><span class="tr"><b>Terugspringen met D.C. of D.S.:</b> kies bij <b>I WANT TO</b> voor <b>Jump back</b>.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-repeats-jump.png" alt="El popup Repeats con Jump back: D.C. o D.S., el compás del salto y simple, al Fine o al Coda" width="366" height="350" loading="lazy" style="display:block;width:100%;height:auto;max-width:366px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-repeats-jump.png" alt="El popup Repeats con Jump back: D.C. o D.S., el compás del salto y simple, al Fine o al Coda" width="366" height="511" loading="lazy" style="display:block;width:100%;height:auto;max-width:366px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① D.C. of D.S. · ② bij welke maat de sprong is · ③ hoe het eindigt.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>D.C.</b> gaat terug naar het begin; <b>D.S.</b> gaat terug naar het teken 𝄋, dat je bij <b>Segno at</b> ① zet.</span></li>
@@ -1575,7 +1875,7 @@
         <li style="margin:2px 0"><span class="tr">Typ de tekst ① of klik op een van de snelle teksten ②.</span></li>
         <li style="margin:2px 0"><span class="tr">Druk op <b>Insert Text</b> ⑤.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-text.png" alt="El popup Text: el campo de texto, las marcas rápidas, las marcas automáticas, LYRICS, SCOPE e Insert Text" width="305" height="583" loading="lazy" style="display:block;width:100%;height:auto;max-width:305px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-text.png" alt="El popup Text: el campo de texto, las marcas rápidas, las marcas automáticas, LYRICS, SCOPE e Insert Text" width="305" height="700" loading="lazy" style="display:block;width:100%;height:auto;max-width:305px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① typen · ② de snelle teksten · ③ automatische repetitieletters · ④ Generate · ⑤ invoegen.</span></figcaption></figure>
       <p><span class="tr"><b>Repetitieletters in het hele werk in één keer zetten:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1600,12 +1900,12 @@
       <p id="pop-lyrics-type"><span class="tr"><b>De liedtekst typen.</b> Zet de cursor op de noot waar de tekst begint —of selecteer ze— en druk op <b>LYRICS</b>. Er verschijnt een veld boven de noot: je typt de lettergreep en <b>Spatie</b> (of <b>Tab</b>) gaat naar de volgende noot. Loopt het woord door, dan typ je in plaats van de spatie het koppelteken <b>-</b>: de lettergreep houdt haar koppelteken en je gaat naar de volgende noot. <b>Shift+Tab</b> gaat terug naar de vorige noot, <b>Enter</b> sluit af en <b>Esc</b> stopt zonder op te slaan wat je het laatst typte. Rusten en overgebonden noten worden vanzelf overgeslagen.</span></p>
       <p><span class="tr">Een voorbeeld: voor „Twinkel twinkel kleine ster” typ je <b>Twin - kel</b> Spatie <b>twin - kel</b> Spatie <b>klei - ne</b> Spatie <b>ster</b>. Duurt een lettergreep meerdere noten (een melisme), druk dan op Spatie op de volgende noten zonder iets te typen: ze blijven zonder lettergreep en de vorige lettergreep wordt verlengd. Om een lettergreep te verbeteren zet je de cursor op haar noot en druk je op <b>LYRICS</b>: het veld toont wat erin staat; je wist het en typt de nieuwe.</span></p>
       <figure style="margin:14px 0 2px;overflow-x:auto">
-        <img src="../../suite/ug-lyrics-typing.webp" alt="El campo de LYRICS abierto sobre una nota, con la sílaba escrita" style="display:block;width:100%;max-width:360px;border:1px solid var(--border);border-radius:var(--rad)">
+        <img src="../../suite/ug-lyrics-typing.png" alt="«Estrellita» con su letra Es-tre-lli-ta y el campo de LYRICS abierto sobre la nota siguiente, con «dón» escrito" width="580" height="120" loading="lazy" style="display:block;width:100%;height:auto;max-width:580px;border:1px solid var(--border);border-radius:var(--rad)">
         <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Het veld LYRICS boven de noot: daar typ je de lettergreep en Spatie gaat naar de volgende noot.</span></figcaption>
       </figure>
       <p id="pop-lyrics-look"><span class="tr"><b>Hoe het eruitziet.</b> Tussen de lettergrepen van één woord tekent de Score het koppelteken, gecentreerd in de vrije ruimte; als de laatste lettergreep van een woord meerdere noten duurt, tekent hij de verlengingslijn tot de laatste noot van het melisme. <b>Size</b> verandert de grootte van de liedtekst van het kanaal en <b>Y</b> zet hem lager of hoger ten opzichte van de notenbalk, bijvoorbeeld bij heel lage noten; met <b>Line 2</b> of <b>3</b> gekozen verschuift <b>Y</b> de vertaling. Elk kanaal heeft zijn eigen liedtekst: een vierstemmig koor heeft een tekst op elke notenbalk.</span></p>
       <figure style="margin:14px 0 2px;overflow-x:auto">
-        <img src="../../suite/ug-lyrics-popup.webp" alt="El bloque Lyrics del popup TEXT" style="display:block;width:100%;max-width:276px;border:1px solid var(--border);border-radius:var(--rad)">
+        <img src="../../suite/ug-lyrics-popup.png" alt="El botón TEXT y su popup; en el bloque Lyrics, el botón LYRICS" width="305" height="700" loading="lazy" style="display:block;width:100%;height:auto;max-width:305px;border:1px solid var(--border);border-radius:var(--rad)">
         <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Het blok Lyrics van de popup TEXT: LYRICS, TEXTS → LYRICS, CLEAR, en de grootte en hoogte van de liedtekst.</span></figcaption>
       </figure>
       <p id="pop-lyrics-translation"><span class="tr"><b>De vertaling.</b> Onder de liedtekst is plaats voor nog twee regels vertaling. Kies <b>Line 2</b> (of <b>3</b>) en druk op <b>LYRICS</b> op de eerste noot van een zin: typ daar de hele zin, met spaties, en <b>Tab</b> gaat naar de volgende noot (Tab op noten waar geen zin begint laat ze leeg). Elke zin blijft aan zijn noot vast en wordt cursief getekend, uitgelijnd vanaf die noot en <b>onder het systeem</b>, ook als de liedtekst bij de bovenste notenbalk hoort. <b>Line 1</b> gaat terug naar de gezongen tekst. <b>CLEAR</b> en <b>TEXTS → LYRICS</b> werken op de gekozen regel.</span></p>
@@ -1628,7 +1928,7 @@
     <div class="spec">
       <h3 id="pop-dyn"><span class="tr">Dynamiek · een aanduiding, of een crescendo over twee maten</span></h3>
       <p><span class="tr">De <b>dynamiek</b> zegt hoe luid of zacht je speelt: <b>pp</b> heel zacht, <b>p</b> zacht, <b>mf</b> half luid, <b>f</b> luid, <b>ff</b> heel luid. De <b>vorken</b> (crescendo en diminuendo) zeggen dat de klank beetje bij beetje groeit of wegsterft.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-dyn.png" alt="El popup Dynamics: crescendo, diminuendo, SPAN, cresc. y dim. en texto, SCOPE, los matices de fff a sfz y el campo de palabras" width="368" height="494" loading="lazy" style="display:block;width:100%;height:auto;max-width:368px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-dyn.png" alt="El popup Dynamics: crescendo, diminuendo, SPAN, cresc. y dim. en texto, SCOPE, los matices de fff a sfz y el campo de palabras" width="358" height="648" loading="lazy" style="display:block;width:100%;height:auto;max-width:358px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① de vorken · ② cresc. en dim. in woorden · ③ voor wie het geldt · ④ de dynamiektekens · ⑤ een woord naast het teken.</span></figcaption></figure>
       <p><span class="tr"><b>Een dynamiekteken zetten:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1658,7 +1958,7 @@
         <li style="margin:2px 0"><span class="tr">Druk op de knop <b>ART</b>.</span></li>
         <li style="margin:2px 0"><span class="tr">Klik op het teken ③.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-art.png" alt="El popup Articulations: la línea del canal y el cursor, SIDE, y los signos TOUCH, EMPHASIS, TIME y PEDAL" width="338" height="468" loading="lazy" style="display:block;width:100%;height:auto;max-width:338px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-art.png" alt="El popup Articulations: la línea del canal y el cursor, SIDE, y los signos TOUCH, EMPHASIS, TIME y PEDAL" width="328" height="622" loading="lazy" style="display:block;width:100%;height:auto;max-width:328px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① naar welke noten het gaat · ② boven of onder · ③ de tekens.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr">De bovenste regel ① zegt waar het terechtkomt: het kanaal, de cursor of de selectie, en hoeveel noten (bijvoorbeeld “1 note”).</span></li>
@@ -1677,7 +1977,7 @@
         <li style="margin:2px 0"><span class="tr">Klik op de nootwaarde ②: 1/1 is de hele noot, 1/2 de halve, 1/4 de kwartnoot, 1/8 de achtste noot, en zo verder tot 1/64.</span></li>
         <li style="margin:2px 0"><span class="tr">Schrijf de noten.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-dur.png" alt="El popup Duration: las figuras de 1/1 a 1/64 y los botones DOT, GRACE, REST y TUPLET" width="368" height="302" loading="lazy" style="display:block;width:100%;height:auto;max-width:368px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-dur.png" alt="El popup Duration: las figuras de 1/1 a 1/64 y los botones DOT, GRACE, REST y TUPLET" width="358" height="456" loading="lazy" style="display:block;width:100%;height:auto;max-width:358px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">② de nootwaarden · ③ de vier knoppen onderaan.</span></figcaption></figure>
       <p><span class="tr"><b>Sneltoets:</b> je kunt de nootwaarde ook kiezen met de <a href="#sc-numpad">numpad</a>, zonder de popup te openen.</span></p>
       <p><span class="tr"><b>Rusten schrijven:</b> klik nog eens op de nootwaarde die al oplicht. Nu wordt elke noot een rust. Nog een klik, of een andere nootwaarde, en je bent terug bij de noten.</span></p>
@@ -1700,7 +2000,7 @@
         <li style="margin:2px 0"><span class="tr">Typ het woord ① of klik op een van de snelle woorden ②.</span></li>
         <li style="margin:2px 0"><span class="tr">Druk op <b>Insert Expression</b> ④.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-expr.png" alt="El popup Expression: el campo de texto, las palabras rápidas, SCOPE, Show e Insert Expression" width="348" height="361" loading="lazy" style="display:block;width:100%;height:auto;max-width:348px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-expr.png" alt="El popup Expression: el campo de texto, las palabras rápidas, SCOPE, Show e Insert Expression" width="348" height="478" loading="lazy" style="display:block;width:100%;height:auto;max-width:348px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① typen · ② de snelle woorden · ③ voor wie het geldt · ④ invoegen.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr">Het woord geldt vanaf daar tot de volgende expressie van hetzelfde instrument.</span></li>
@@ -1713,7 +2013,7 @@
     <div class="spec">
       <h3 id="pop-agog"><span class="tr">AGOG · wie beslist over het rubato</span></h3>
       <p><span class="tr"><b>Agogiek</b> is de vrijheid van de tijd: een noot of een frase een beetje rekken, zoals een muzikant doet als hij ademt (het <i>rubato</i>). Deze popup is de <b>kaart</b> van de agogiek in je werk: hij zegt waar er is en brengt je erheen.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-agog.png" alt="El popup AGOG: la lista de la agógica de la obra, el botón Phrase from selection y el interruptor Show all" width="348" height="241" loading="lazy" style="display:block;width:100%;height:auto;max-width:348px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-agog.png" alt="El popup AGOG: la lista de la agógica de la obra, el botón Phrase from selection y el interruptor Show all" width="349" height="358" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① de agogiek in het werk · ② een nieuwe frase · ③ tonen of verbergen.</span></figcaption></figure>
       <p><span class="tr"><b>De agogiek in je werk bekijken:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1736,7 +2036,7 @@
     <div class="spec">
       <h3 id="pop-tools"><span class="tr">Tools · wanneer het scherm volloopt met panelen</span></h3>
       <p><span class="tr">Terwijl je werkt, open je veel popups en het scherm loopt vol. <b>TOOLS</b> dient om ze te ordenen en om de instellingen te openen.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tools.png" alt="El popup Tools: Top y Bottom, Free, Cascade, Grouped y Stack, la lista de popups abiertos, Hide all, Reset positions, Score Options y Preferences" width="309" height="386" loading="lazy" style="display:block;width:100%;height:auto;max-width:309px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tools.png" alt="El popup Tools: Top y Bottom, Free, Cascade, Grouped y Stack, la lista de popups abiertos, Hide all, Reset positions, Score Options y Preferences" width="309" height="458" loading="lazy" style="display:block;width:100%;height:auto;max-width:309px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① waar ze opengaan · ② hoe ze geordend worden · ③ de open popups · ④ ze verbergen · ⑤ de instellingen.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>Open popups</b> ①: <b>Top</b> opent ze onder de bovenste balk; <b>Bottom</b>, boven het klavier.</span></li>
@@ -1784,7 +2084,7 @@
         <li style="margin:2px 0"><span class="tr">Kies een van de historische ②, of verschuif de schuifregelaar ① voor een precieze waarde.</span></li>
         <li style="margin:2px 0"><span class="tr"><b>Reset</b> ③ gaat terug naar 440.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-a4.png" alt="El popup Reference Pitch: el deslizador, Reset y los botones 415 baroque, 430 classical, 432 natural, 440 modern, 442 bright y 466 renaissance" width="225" height="278" loading="lazy" style="display:block;width:100%;height:auto;max-width:225px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-a4.png" alt="El popup Reference Pitch: el deslizador, Reset y los botones 415 baroque, 430 classical, 432 natural, 440 modern, 442 bright y 466 renaissance" width="225" height="350" loading="lazy" style="display:block;width:100%;height:auto;max-width:225px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① de schuifregelaar · ② de historische stemtonen · ③ terug naar 440.</span></figcaption></figure>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr">Het transponeert niet: het hele werk klinkt iets lager of hoger, maar de geschreven noten veranderen niet.</span></li>
@@ -1795,14 +2095,15 @@
     <div class="spec">
       <h3 id="pop-undo"><span class="tr">Ongedaan maken en wissen · teruggaan, of een kanaal leegmaken</span></h3>
       <p><span class="tr"><b>Ongedaan maken</b> draait het laatste terug wat je deed. De sneltoets is <b>Ctrl+Z</b> (of de toets <b>Backspace ←</b>), en <b>Ctrl+Y</b> doet het opnieuw. Deze popup dient om meerdere stappen in één keer terug te gaan, en om te wissen.</span></p>
+      <p><span class="tr">Voor één stap hoef je de popup niet te openen: de pijlen aan weerszijden van de knop doen hetzelfde als de sneltoetsen. <b>↩</b> ④ maakt één stap ongedaan (zoals Ctrl+Z) en <b>↪</b> ⑤ doet hem opnieuw (zoals Ctrl+Y).</span></p>
       <p><span class="tr"><b>Meerdere stappen ongedaan maken:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr">Druk op de knop <b>↩ UNDO</b>.</span></li>
         <li style="margin:2px 0"><span class="tr">Kies hoeveel stappen ①: 1, 3, 5 of 10.</span></li>
         <li style="margin:2px 0"><span class="tr">Druk op <b>↩ Undo</b> ②.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-undo.png" alt="El popup Undo · Erase: los pasos 1, 3, 5 y 10, el botón Undo y los cuatro botones de borrar" width="289" height="296" loading="lazy" style="display:block;width:100%;height:auto;max-width:289px;border:1px solid var(--border);border-radius:var(--rad)">
-      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① hoeveel stappen · ② ongedaan maken · ③ wissen.</span></figcaption></figure>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-undo.png" alt="Las flechas de deshacer y rehacer junto al botón UNDO, y el popup Undo · Erase: los pasos 1, 3, 5 y 10, el botón Undo y los cuatro botones de borrar" width="311" height="453" loading="lazy" style="display:block;width:100%;height:auto;max-width:311px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① hoeveel stappen · ② ongedaan maken · ③ wissen · ④ één stap ongedaan maken · ⑤ één stap opnieuw doen.</span></figcaption></figure>
       <p><span class="tr"><b>Wissen</b> ③:</span></p>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
         <li style="margin:2px 0"><span class="tr"><b>At cursor</b>: de noten van het actieve instrument die precies op <a href="#sc-cursor">de cursor</a> staan.</span></li>
@@ -1821,7 +2122,7 @@
         <li style="margin:2px 0"><span class="tr">Druk op <b>+ ADD CHANNEL</b> ④: het volgende kanaal gaat aan en zijn notenbalk verschijnt.</span></li>
         <li style="margin:2px 0"><span class="tr">Open in zijn rij de lijst ② en kies het instrument.</span></li>
       </ol>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-channels.png" alt="El panel Channels: las filas CH1 a CH8 con su casillero, instrumento, clave, ojo, silencio, FX y menú, el botón ADD CHANNEL y List" width="349" height="468" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-channels.png" alt="El panel Channels: las filas CH1 a CH8 con su casillero, instrumento, clave, ojo, silencio, FX y menú, el botón ADD CHANNEL y List" width="349" height="622" loading="lazy" style="display:block;width:100%;height:auto;max-width:349px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① zichtbaar of niet · ② het instrument · ③ 👁, demper en FX · ④ een kanaal toevoegen · ⑤ instrumentenlijsten.</span></figcaption></figure>
       <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de nieuwe notenbalk verschijnt met de naam van het instrument, en bij het spelen klinkt hij met zijn eigen klankkleur.</span></p>
       <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -1847,64 +2148,219 @@
   <p class="lead"><span class="tr"><b>Op de partituur, over wat je al schreef</b> — rechtsklik op de noot, de boog of de versiering die verbeterd moet worden.</span></p>
     <div class="spec">
       <h3 id="pop-note-editor"><span class="tr">Noteneditor · een noot verbeteren zonder ze opnieuw te schrijven</span></h3>
-      <p><span class="tr"><b>Rechtsklik op de noot</b>. Dit is de deur naar alles wat je met een al geschreven noot kunt doen: de velocity verhogen of verlagen, de stok omdraaien, er een rust van maken, een voorteken toevoegen of weghalen, haar overbinden met de vorige of de volgende, de waardestreep verbinden, haar verschuiven, haar <b>aanwezigheid</b> geven (PRES: het gewicht van de aanzet, van −2 tot +2, met fijne stappen van 0,25 op ◂ ▸ — om een middenstem van een akkoord te laten uitkomen, geef je wat meer velocity en PRES +1). De editors voor boog, stok en waardestreep openen van hieruit, en de rij <b>³ TUPLET</b> opent de <a href="#pop-tuplet-desde-nota">tuplet-pop-up</a>.</span></p>
-      <p><span class="tr"><b>De noten met presence of een vaste velocity vinden:</b> ze laten geen teken achter in de partituur. Zet <b>SHOW HIDDEN</b> aan in de rij <b>Hidden</b> van deze editor (het is dezelfde schakelaar als in de popup Tempo): naast elke noot verschijnt in het grijs haar spoor, ∨∨ ∨ ⊓ ⊓⊓ voor de presence en bijvoorbeeld “v96” voor de velocity. Rechtsklik op de noot en je verbetert ze. Het grijs is alleen op het scherm te zien: het komt nooit op het afgedrukte blad.</span></p>
+      <p><span class="tr">De <b>noteneditor</b> dient om een noot te veranderen die je al geschreven hebt: luider of zachter, met een ander voorteken, met de stok naar de andere kant, veranderd in een rust…</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op de noot ①. Bovenaan staat welke noot het is en waar, bijvoorbeeld «DN5 · M1 B2» (D5, maat 1, tel 2).</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-note-editor.png" alt="El editor de nota abierto junto a la nota: VEL, Hide note, Flip stem, Select chord, Rest, Dot, ACC, CRT, GESTURE, PRES, HIDDEN y NUDGE" width="637" height="552" loading="lazy" style="display:block;width:100%;height:auto;max-width:637px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① de noot · ② VEL · ③ ACC · ④ PRES · ⑤ SHOW HIDDEN.</span></figcaption></figure>
+      <p><span class="tr">Wat je het meest gebruikt:</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>VEL</b> ②: hoe luid deze ene noot klinkt. <b>+</b> en <b>−</b> veranderen ze met 1, <b>+5</b> en <b>−5</b> met 5. <b>N</b> geeft ze terug aan wat de dynamiek<a href="#sc-banda">band</a> zegt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Hide note</b> verbergt de noot: ze klinkt nog, maar wordt niet afgedrukt. <b>Flip stem</b> draait de stok om. <b>→ Rest</b> maakt er een rust van. <b>Dot</b> zet de punt erbij of haalt hem weg.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>ACC</b> ③: het voorteken. Dubbelmol, mol, herstellingsteken, kruis, dubbelkruis.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PRES</b> ④: de aanwezigheid, het gewicht van de aanslag, van −2 tot +2. Om een binnenstem van een akkoord meer te laten horen, geef je ze PRES +1.</span></li>
+      </ul>
+      <p><span class="tr">Een noot met een veranderde VEL of PRES draagt geen enkel teken in de partituur. Om ze te vinden zet je <b>SHOW HIDDEN</b> ⑤ aan: naast elke noot verschijnt in het grijs wat ze heeft (bijvoorbeeld «v96»), en haar kop wordt lavendelkleurig. Dat zie je alleen op het scherm, nooit op het afgedrukte blad.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de verandering zie (of hoor) je meteen aan de noot, en de bovenste regel van de editor toont de nieuwe waarde. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
+      <p><span class="tr">Van hieruit open je ook de editors van de <a href="#pop-slur-editor">legatoboog</a>, de <a href="#pop-stem-editor">stok</a> en de <a href="#pop-beam-editor">waardestreep</a>, en met de rij ³ TUPLET die van de <a href="#editar-un-tresillo">triool</a>.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-slur-editor"><span class="tr">Boogeditor · de boog krijgen zoals je hem bedoelde</span></h3>
-      <p><span class="tr"><b>Rechtsklik op de boog</b>. De uiteinden verschuiven van noot naar noot, niet uit de vrije hand. Je kiest de vorm van de boog —aanzwellend, afnemend, aanzwellend en dan afnemend— en hoe ver zijn top of dal gaat, en dat is niet alleen tekenen: zo wordt de frase gespeeld. Daarna stel je hoogte en kromming bij, zodat hij nergens mee botst.</span></p>
-      <p><span class="tr"><b>Handgrepen (2026-09-25).</b> Met de editor open toont de boog drie punten — begin, einde en buik — die je met de muis versleept; ze klikken vast op <b>¼ tussenruimte</b> (Shift = ½). De rij <b>Arrastre</b> van de editor toont het in tussenruimten ("+¾ · +½") en <b>↺ Arrastre</b> maakt alleen dat ongedaan; de gewone knoppen blijven voor de fijnafstelling en worden niet beïnvloed. En sinds dezelfde dag hecht een boog van <b>drie maten of meer</b> elk uiteinde aan zijn eigen kant vast: aan de kop wanneer de boog aan de kant van de nootkop ligt, aan het uiteinde van de stok of aan de waardestreep wanneer hij aan de kant van de stok ligt.</span></p>
-      <figure style="margin:10px 0 2px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start">
-        <img src="../../suite/media/score-slur-handles.webp" alt="Un ligado con sus tres handles" loading="lazy" style="display:block;width:min(100%,371px);border:1px solid var(--border);border-radius:var(--rad)">
-        <img src="../../suite/media/score-slur-arrastre.webp" alt="La fila Arrastre del Slur editor" loading="lazy" style="display:block;width:min(100%,405px);border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="flex-basis:100%;font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:2px"><span class="tr">De drie punten op de boog, en de rij „Arrastre” van de editor.</span></figcaption>
-      </figure>
+      <h3 id="pop-slur-editor"><span class="tr">Legatoboog-editor · zodat de boog wordt zoals je hem bedoelde</span></h3>
+      <p><span class="tr">Een <b>legatoboog</b> is de boog die meerdere noten verbindt: ze worden samen gespeeld, in één frase. De legatoboog-editor dient om te veranderen waar hij begint en eindigt, hoe hij eruitziet en hoe hij gespeeld wordt.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op de boog ①. De boog toont drie punten en de editor gaat ernaast open.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-slur-editor.png" alt="Un ligado con sus tres puntos y, a su lado, el editor de ligado: Anchors, Slur shape, Dynamics, Vertical, Horizontal, Curva, Arrastre, Flip, Mirror, Reset y Delete slur" width="440" height="786" loading="lazy" style="display:block;width:100%;height:auto;max-width:440px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op de boog · ② de vorm · ③ hoeveel hij stijgt of daalt · ④ hoogte · ⑤ opzij · ⑥ de kromming · ⑦ het slepen · ⑧ omdraaien, spiegelen, terug naar automatisch.</span></figcaption></figure>
+      <p><span class="tr">Bovenaan, <b>Anchors</b>: de pijlen ◀ ▶ van <b>Start</b> en <b>End</b> verschuiven het begin of het einde van de boog naar de vorige of de volgende noot.</span></p>
+      <p><span class="tr"><b>De vorm van de boog</b> ② verandert de tekening van de boog niet: ze verandert hoe de frase gespeeld wordt. De groene lijn in de editor toont het je, en in de partituur zie je het aan de kleur van de boog: groen waar de frase luider is, goudkleurig waar ze zachter is.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-slur-formas.png" alt="Cuatro formas de ligado: a la izquierda la línea del editor, a la derecha el mismo arco en la partitura con su color" width="610" height="550" loading="lazy" style="display:block;width:100%;height:auto;max-width:610px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Links de vorm in de editor; rechts dezelfde boog in de partituur: de boog blijft gelijk, zijn kleur verandert. &gt; neemt af · &lt; groeit · &lt;&gt; opent in het midden en sluit · &gt;º&lt; zakt in het midden en komt terug (met Peak +2).</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>&gt;</b> neemt af: begint sterk en eindigt zacht. <b>&lt;</b> groeit: omgekeerd.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>&lt;&gt;</b> opent in het midden en sluit. <b>&gt;º&lt;</b> zakt in het midden en komt terug.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>—</b> vlak: aangehouden, zonder verandering. Met die vorm wordt de boog geboren.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>∩∪∩</b> en <b>∪∩∪</b>: noten per twee, sterk-zwak of zwak-sterk. De boog ziet er hetzelfde uit.</span></li>
+      </ul>
+      <p><span class="tr"><b>Hoeveel</b> hij stijgt of daalt, kies je in <b>Dynamics</b> ③: <b>Peak</b> is hoeveel luider het hoogste punt wordt (+1 tot +4), en <b>Valley</b> hoeveel zachter het laagste (−1 tot −4), altijd ten opzichte van de geschreven dynamiek.</span></p>
+      <p><span class="tr"><b>De knoppen die de tekening van de boog veranderen</b>, zodat hij nergens tegenaan botst:</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Vertical</b> ④: zet de hele boog hoger of lager (<b>All</b>) of alleen één uiteinde (<b>Left</b>, <b>Right</b>).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Horizontal</b> ⑤: verschuift het begin of het einde opzij.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Curva</b> ⑥: hoeveel de boog krom loopt, links, in het midden of rechts.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Arrastre</b> ⑦: de drie punten van de boog kun je ook met de muis slepen; ze klikken vast op ¼ van een tussenruimte (met Shift op ½). Deze rij toont hoeveel je ze verschoof, en <b>↺ Arrastre</b> maakt alleen dat ongedaan.</span></li>
+        <li style="margin:2px 0"><span class="tr">⑧ <b>↕ Flip</b> zet de boog aan de andere kant van de noten. <b>↔ Mirror</b> spiegelt hem van links naar rechts. <b>↺ Reset</b> geeft hem zijn automatische tekening terug. <b>✕ Delete slur</b> wist de boog.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de boog verandert in de partituur zodra je op een knop drukt, en als je luistert, volgt de frase de vorm die je koos. Bevalt het je niet, dan maakt <a href="#pop-undo">UNDO</a> het ongedaan.</span></p>
+      <p><span class="tr">Een boog van <b>drie maten of meer</b> hecht elk uiteinde vanzelf aan de juiste kant: aan de notenkop als de boog aan de kant van de kop ligt, aan het eind van de stok of aan de waardestreep als hij aan de kant van de stok ligt.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-stem-editor"><span class="tr">Stokeditor · wanneer de stok botst of te kort schiet</span></h3>
-      <p><span class="tr">Vanuit de noteneditor. Omhoog, omlaag of automatisch; lengte en verlenging zodat hij tot de waardestreep reikt; en een horizontale verschuiving voor secunden, waar twee noten de stok delen.</span></p>
+      <p><span class="tr">De <b>stok</b> is het verticale streepje van de noot. Het Score tekent hem vanzelf, naar boven of naar beneden, afhankelijk van hoe hoog de noot is. De stok-editor dient om hem te veranderen als hij ergens tegenaan botst of te kort is.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op de noot; kies in de <a href="#pop-note-editor">noteneditor</a> die opengaat <b>STEM EDITOR</b> ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-stem-editor.png" alt="El editor de nota con STEM EDITOR marcado y, al lado, el editor de plica: Direction, Extension, X offset y Reset" width="514" height="265" loading="lazy" style="display:block;width:100%;height:auto;max-width:514px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① STEM EDITOR, in de noteneditor · ② richting · ③ lengte · ④ positie · ⑤ terug naar automatisch.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Direction</b> ②: <b>↑ Up</b> zet de stok naar boven, <b>↓ Down</b> naar beneden en <b>⟳ Auto</b> laat het Score kiezen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Extension</b> ③: <b>+</b> maakt de stok langer en <b>−</b> korter, bijvoorbeeld zodat hij tot aan de waardestreep komt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>X offset</b> ④: verschuift de stok opzij. Handig bij secunden, als twee naburige noten de stok delen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>↺ Reset</b> ⑤: geeft de stok terug zoals het Score hem tekent.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-stem-antes-despues.png" alt="La misma corchea tres veces: con la plica hacia abajo, hacia arriba, y hacia arriba más larga" width="830" height="154" loading="lazy" style="display:block;width:100%;height:auto;max-width:830px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① zoals het Score hem tekent · ② met ↑ Up · ③ met ↑ Up en Extension +8.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de stok verandert in de partituur zodra je op de knop drukt. Het is alleen tekening: de noot klinkt hetzelfde.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-beam-editor"><span class="tr">Waardestreepeditor · verbinden, onderbreken en bepalen hoe de groep klinkt</span></h3>
-      <p><span class="tr">Vanuit de noteneditor. <b>Join</b> en <b>Break</b> bouwen de reeks zoals je ze wilt lezen — en dat is ook wat de motor speelt, want hij leest de getekende waardestreep. <b>Left</b>, <b>Right</b> en <b>Both</b> verhogen of verlagen één uiteinde of de hele waardestreep: de Score plaatst de waardestreep op de normale stoklengte en jouw aanpassing komt daarbovenop. In hetzelfde paneel staat <b>Int·Beams</b> van de groep: hoeveel elke positie binnen de waardestreep zakt, van 0 (gelijk) tot 4.</span></p>
+      <p><span class="tr">De <b>waardestreep</b> is de dikke lijn die achtsten en zestienden in groepen verbindt, zodat ze makkelijk te lezen zijn. Het Score maakt de groepen vanzelf; de waardestreep-editor dient om ze te verbinden, te breken of te verschuiven.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op een noot van de groep; kies in de <a href="#pop-note-editor">noteneditor</a> <b>BEAM EDITOR</b> ①. Sneltoets: selecteer een noot en druk op <b>Shift+B</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-beam-editor.png" alt="El editor de nota con BEAM EDITOR marcado y, al lado, el editor de barra: Join, Break, Auto, Left, Right, Both, Stems e Int·Beams" width="514" height="319" loading="lazy" style="display:block;width:100%;height:auto;max-width:514px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① BEAM EDITOR, in de noteneditor · ② verbinden of breken · ③ de streep hoger of lager · ④ de stokken van de groep · ⑤ hoe de groep klinkt.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Join</b> ② verbindt de geselecteerde noten tot één groep; <b>Break</b> scheidt ze, elk met een eigen vlaggetje; <b>Auto</b> gaat terug naar de groepen van het Score. Wat je tekent is ook wat je hoort: het Score speelt de groep zoals hij eruitziet.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Left</b>, <b>Right</b> en <b>Both</b> ③ zetten het linker uiteinde, het rechter of de hele streep hoger (↑) of lager (↓). <b>Reset angle</b>, onderaan, geeft de streep haar automatische helling terug.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Stems</b> ④: alle stokken van de groep naar boven, naar beneden, omgedraaid (⇅) of automatisch.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Int·Beams</b> ⑤: hoeveel luider de belangrijke noten van de groep klinken dan de andere, van <b>0</b> (allemaal gelijk) tot <b>4</b> (heel duidelijk). <b>G</b> gebruikt de instelling van het hele stuk. Meer in <a href="#intelligent-beams-las-notas-buenas-y-malas-solas">Intelligent Beams</a>.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-beam-antes-despues.png" alt="El mismo grupo de cuatro semicorcheas tres veces: unido, cortado con Break, y con la barra más arriba" width="830" height="145" loading="lazy" style="display:block;width:100%;height:auto;max-width:830px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① zoals het Score hem tekent · ② met Break: elke noot met een eigen vlaggetje · ③ met Both ↑: de streep gaat omhoog.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> je ziet de streep meteen verbonden, gebroken of verschoven, en als je luistert, klinkt de groep zoals je hem tekende. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-tuplet-editor"><span class="tr">Tupleteditor · de haak en het getal</span></h3>
-      <p><span class="tr"><b>Rechtsklik op het tupletgebied</b>. Of hij een haak, een boog of niets draagt, of het getal zichtbaar is, en de hoek en de positie zodat hij niet op de noten zit. <b>Untuplet</b> maakt hem ongedaan en keert terug naar gewone waarden.</span></p>
+      <p><span class="tr">Een <b>triool</b> zijn drie noten die de plaats van twee innemen. Erboven staat een <b>3</b>, soms met een haak. De triool-editor verandert hoe die haak en dat cijfer eruitzien.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op de haak of het cijfer van de triool ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tuplet-editor.png" alt="Un tresillo con su corchete y, al lado, el editor de tresillo: Size, Ratio, Bracket, Number, Angle, Move y Untuplet" width="412" height="243" loading="lazy" style="display:block;width:100%;height:auto;max-width:412px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op de haak · ② de vorm van de haak · ③ het cijfer · ④ de helling · ⑤ de triool ongedaan maken.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Bracket</b> ②: <b>Slur</b> tekent een boog, <b>Straight</b> een rechte haak en <b>None</b> niets, alleen het cijfer.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Number</b> ③: <b>On</b> toont het cijfer en <b>Off</b> verbergt het.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Angle</b> ④ laat de haak hellen (↻ geeft hem zijn automatische helling terug) en <b>Move</b> verschuift hem zodat hij de noten niet bedekt. <b>Size</b> verandert de grootte van het cijfer.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>✕ Untuplet</b> ⑤ maakt de triool ongedaan: de noten krijgen hun gewone waarden terug. Het is het enige in deze editor dat de klank verandert.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-tuplet-antes-despues.png" alt="El mismo tresillo tres veces: con corchete y número, solo con el número, y con el corchete sin número" width="425" height="158" loading="lazy" style="display:block;width:100%;height:auto;max-width:425px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① zoals het Score hem tekent · ② met Bracket None: alleen het cijfer · ③ met Number Off: de haak zonder cijfer.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de haak en het cijfer veranderen zodra je op de knop drukt; de triool klinkt hetzelfde. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-tie-editor"><span class="tr">Overbindingseditor · weg van de nootkoppen houden</span></h3>
-      <p><span class="tr"><b>Rechtsklik op de overbinding</b>. Hoogte van elk uiteinde, kromming en welving, omdraaien naar de andere kant, of verwijderen. Dit is inkt: de overbinding klinkt al als één noot zonder dat je iets hoeft aan te raken.</span></p>
+      <h3 id="pop-tie-editor"><span class="tr">Overbindingsboog-editor · zodat hij de koppen niet raakt</span></h3>
+      <p><span class="tr">Een <b>overbindingsboog</b> is de boog die twee gelijke noten verbindt: ze klinken als één lange noot. Hij is anders dan de <a href="#pop-slur-editor">legatoboog</a>, die verschillende noten verbindt.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op de overbindingsboog ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tie-editor.png" alt="Dos notas unidas por una ligadura y, al lado, el editor de ligadura: Vertical, Horizontal, Curve, Flip, Reset y Remove tie" width="444" height="309" loading="lazy" style="display:block;width:100%;height:auto;max-width:444px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op de boog · ② hoogte · ③ de uiteinden · ④ de kromming · ⑤ omdraaien.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Vertical</b> ②: <b>All</b> zet de hele boog hoger of lager.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Horizontal</b> ③: <b>Left</b> en <b>Right</b> verschuiven elk uiteinde opzij.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Curve</b> ④: <b>Bow</b> maakt de boog meer of minder krom.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>↕ Flip</b> ⑤ zet de boog aan de andere kant van de noten. <b>↺ Reset</b> geeft hem zijn automatische tekening terug en <b>✕ Remove tie</b> haalt hem weg.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-tie-antes-despues.png" alt="Dos notas iguales unidas por la ligadura: abajo y, con Flip, arriba" width="385" height="172" loading="lazy" style="display:block;width:100%;height:auto;max-width:385px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① zoals het Score hem tekent · ② met ↕ Flip: de boog gaat naar boven.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de boog verandert meteen in de partituur. Het is alleen tekening: de twee noten klinken al als één, zonder dat je iets aanraakt. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-hairpin-editor"><span class="tr">Vorkeditor · het crescendo uitrekken tot waar het hoort</span></h3>
-      <p><span class="tr">Vanuit het dynamiekmenu, of met een dubbelklik op de vork. Je verandert de lengte in maten, de hoek, de hoogte, en of ze gestippeld is. Het paneel zegt je ook welke dynamiek er aan het eind uitkomt, en dat is wat je zult horen.</span></p>
+      <h3 id="pop-hairpin-editor"><span class="tr">Crescendoteken-editor · het crescendo uitrekken tot waar het gaat</span></h3>
+      <p><span class="tr">Een <b>crescendoteken</b> is de open wig onder de notenbalk: <b>&lt;</b> is crescendo (de muziek groeit) en <b>&gt;</b> diminuendo (ze dooft uit). Met de editor bepaal je waar het begint, waar het eindigt en hoe het eruitziet.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op het teken ①. Druk in het menu van de dynamiek op <b>Edit hairpin…</b> (sneltoets: <b>E</b>). Dubbelklikken op het teken opent hem ook.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-hairpin-editor.png" alt="Un regulador debajo del pentagrama, el menú de la dinámica con Edit hairpin marcado y el editor de regulador" width="860" height="274" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op het teken · ② in de lengte · ③ hoogte · ④ wat je zult horen.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Horizontal</b> ②: <b>Start</b> en <b>End</b> verschuiven het begin en het einde; <b>Span</b> zegt van welke maat tot welke maat het gaat; <b>Angle</b> opent of sluit de wig.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Vertical</b> ③: <b>Y offset</b> zet het teken hoger of lager.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Dinámica · lectura</b> ④ zegt je wat je zult horen: de sterkte waarmee het begint, de sterkte die het bereikt en over hoeveel noten. Bijvoorbeeld «26 → 53 · 7 notes»: het groeit over zeven noten.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-hairpin-antes-despues.png" alt="El mismo crescendo tres veces: como estaba, más largo y más abierto" width="860" height="72" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① zoals je het schreef · ② met End +: het gaat verder · ③ met Angle +: het gaat wijder open.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het teken verandert meteen in de partituur, en als je luistert, gaat het crescendo tot waar je het uitrekte. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-interp-editor"><span class="tr">Editor voor interpretatietekens · het gebaar van de frase</span></h3>
-      <p><span class="tr"><b>Rechtsklik op het teken</b>. Kies het gebaar —aanzwellend, afnemend, aanzwellend en dan afnemend, of het gebaar dat opengaat en sluit— en hoeveel: top of dal gaan van 1 tot 4. Dit is een teken dat klinkt, geen hint voor de lezer. Het heeft een eigen <b>?</b> met de uitleg.</span></p>
-      <p id="ayuda-gesto"><span class="tr"><b>Wat het gebaar van de noot is.</b> Het is hoe de noot groeit of wegsterft <i>terwijl ze duurt</i>. Het dient vooral bij een losse noot: een lange noot, een fermate, het einde van een frase. De vormen: <b>&lt;</b> bloeit (groeit) · <b>&gt;</b> sterft af · <b>&lt;&gt;</b> messa di voce (groeit en sterft af) · <b>&gt;º&lt;</b> omgekeerd (zakt in het midden en komt terug) · <b>—</b> sostenuto (gelijk). <b>Peak</b> en <b>Valley</b> worden gemeten vanaf de dynamiek die op die noot geldt: één stap is ongeveer één dynamiek. <b>Het is niet hetzelfde als Pres:</b> Pres verandert het begin van de noot (de aanslag); het gebaar verandert wat daarna gebeurt.</span></p>
+      <h3 id="pop-interp-editor"><span class="tr">Editor van het interpretatieteken · het gebaar van de noot</span></h3>
+      <p id="ayuda-gesto"><span class="tr">Het <b>gebaar van de noot</b> is hoe een noot groeit of uitdooft terwijl ze duurt. Het dient vooral op één noot: een lange noot, een fermate, het einde van een frase. Het wordt geschreven met een teken boven de noot, en dat teken <b>klinkt</b>: het is niet alleen een aanwijzing voor wie leest.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op het teken ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-interp-editor.png" alt="Un signo de interpretación sobre una nota y, al lado, su editor: la curva, Gesture, Placement, Size y Value" width="424" height="525" loading="lazy" style="display:block;width:100%;height:auto;max-width:424px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op het teken · ② het gebaar · ③ waar het getekend wordt · ④ de grootte · ⑤ hoeveel.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Gesture</b> ②: <b>&lt;</b> bloeit open (groeit) · <b>&gt;</b> neemt af · <b>&lt;&gt;</b> messa di voce (groeit en dooft uit) · <b>&gt;º&lt;</b> zakt in het midden en komt terug · <b>—</b> sostenuto (gelijk). <b>º</b> voegt de niente toe: beginnen of eindigen vanuit het niets. De groene lijn bovenaan tekent het gebaar.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Placement</b> ③: verplaatst het teken (↑ ↓ ← →), zet het boven of onder (<b>Above</b>, <b>Below</b>) of verbergt het (<b>Show</b>): verborgen klinkt het hetzelfde.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Size</b> ④: de grootte van het teken.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Value</b> ⑤: <b>Peak</b> (+1 tot +4) is hoeveel het stijgt en <b>Valley</b> (−1 tot −4) hoeveel het daalt, gemeten vanaf de dynamiek die op die noot geldt. Eén stap is ongeveer één dynamiekniveau.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-interp-antes-despues.png" alt="La misma nota con tres gestos: crece, crece y se apaga, decae" width="492" height="172" loading="lazy" style="display:block;width:100%;height:auto;max-width:492px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① &lt; bloeit open · ② &lt;&gt; groeit en dooft uit · ③ &gt; neemt af.</span></figcaption></figure>
+      <p><span class="tr">Het is niet hetzelfde als <b>PRES</b>, in de <a href="#pop-note-editor">noteneditor</a>: PRES verandert het begin van de noot (de aanslag); het gebaar verandert wat daarna gebeurt.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het teken boven de noot verandert, de groene lijn van de editor toont de vorm, en als je luistert, groeit of dooft de noot zoals je koos. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-trill-editor"><span class="tr">Trillereditor · hoe lang hij duurt en hoe hij versnelt</span></h3>
-      <p><span class="tr">Vanuit het articulatiemenu, of met een rechtsklik op de trillerknop. Lengte en tellen zeggen hoe lang hij duurt; de curve zegt hoe hij begint, waar hij zich stabiliseert, waar het hoogtepunt ligt en hoe hij loslaat. En je kiest de hulpnoot, die niet altijd die van de voortekening is.</span></p>
+      <p><span class="tr">Een <b>triller</b> (<b>tr</b> met een golvende lijn) is een noot die heel snel afwisselt met haar bovenbuur. De editor bepaalt hoe lang hij duurt, hoe snel hij gaat en welke buurnoot hij gebruikt.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op het teken ①. Druk in het menu dat verschijnt op <b>✎ TRILL EDITOR</b>, de knop met het oranje kader.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-trill-editor.png" alt="Un trino sobre una nota, el menú de la articulación con TRILL EDITOR marcado y el editor de trino" width="860" height="411" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op de triller · ② hoe lang hij duurt · ③ hoe hij versnelt · ④ de buurnoot.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Span</b> ②: <b>Beats</b> zegt hoeveel tellen de triller duurt. <b>↺ Auto</b> laat hem duren zolang de noot met haar overbindingen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Tempo curve</b> ③: hoeveel afwisselingen per tel. <b>Start</b> is de snelheid bij het begin, <b>Stable</b> de snelheid als hij stabiel is en <b>Stable pos</b> waar hij stabiel wordt; <b>Release pos</b> is waar hij begint los te laten en <b>End</b> de snelheid aan het einde. De lijn eronder tekent die curve.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Aux note</b> ④: de buurnoot. <b>auto</b> volgt de voortekening; ♮ ♯ ♭ 𝄪 𝄫 veranderen ze, want de buurnoot is niet altijd die van de voortekening.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-trill-antes-despues.png" alt="El mismo trino con un tiempo y con dos tiempos: la línea ondulada llega más lejos" width="470" height="105" loading="lazy" style="display:block;width:100%;height:auto;max-width:470px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① Beats 1 · ② Beats 2: de golvende lijn gaat verder.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de golvende lijn verandert van lengte in de partituur, en als je luistert, duurt en loopt de triller zoals je hem instelde. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-turn-editor"><span class="tr">Dubbelslageditor · direct of omgekeerd, op tijd of vertraagd</span></h3>
-      <p><span class="tr"><b>Rechtsklik op de dubbelslag</b>. Direct of omgekeerd, of hij op de noot valt of vertraagd, welke buren hij boven en onder gebruikt —elk met ♮ ♯ ♭ of dubbel 𝄪 𝄫: een dubbelslag op ais vraagt onder een gisis— en hoe snel hij loopt.</span></p>
+      <h3 id="pop-turn-editor"><span class="tr">Dubbelslag-editor · gewoon of omgekeerd, op tijd of vertraagd</span></h3>
+      <p><span class="tr">Een <b>dubbelslag</b> (het teken <b>∾</b>) is een versiering van vier noten die rond de noot draaien: de bovenste, de noot, de onderste en de noot opnieuw.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op het teken ①. Druk in het menu dat verschijnt op <b>✎ TURN EDITOR</b>, de knop met het oranje kader.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-turn-editor.png" alt="Un grupeto sobre una nota, el menú de la articulación con TURN EDITOR marcado y el editor de grupeto" width="860" height="347" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op de dubbelslag · ② waar hij begint · ③ wanneer hij valt · ④ de buurnoten · ⑤ de snelheid.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Face</b> ②: <b>direct</b> begint bij de bovenbuur; <b>inverted</b> bij de onderbuur. Het teken draait om.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Place</b> ③: <b>on the note</b> speelt de dubbelslag aan het begin van de noot; <b>delayed</b> speelt hem later, tegen het einde.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Upper / Lower neighbour</b> ④: het voorteken van elke buurnoot, met ♮ ♯ ♭ of dubbele 𝄪 𝄫. Een dubbelslag op ais vraagt fisis eronder.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Speed</b> ⑤: de waarde van elk notje; met <b>auto</b> kiest het Score.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-turn-antes-despues.png" alt="El mismo grupeto: directo, invertido y retardado" width="425" height="165" loading="lazy" style="display:block;width:100%;height:auto;max-width:425px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① gewoon · ② omgekeerd: het teken draait om · ③ vertraagd: het teken schuift naar rechts.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het teken boven de noot verandert, en als je luistert, begint en valt de dubbelslag waar je koos. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
-      <h3 id="pop-mordent-editor"><span class="tr">Mordenteditor · boven of onder</span></h3>
-      <p><span class="tr"><b>Rechtsklik op de mordent</b>. Welke kant hij op gaat, welke buurnoot hij neemt en hoe snel.</span></p>
-      <p><span class="tr"><b>Sign · ~ · tr</b> bepaalt wat er wordt afgedrukt, zonder de klank te veranderen: met <b>tr</b> wordt de bovenmordent als „tr” geschreven, zonder golflijn, zoals de korte triller van drie noten bij Mozart of Haydn (si–do–si en verder).</span></p>
+      <h3 id="pop-mordent-editor"><span class="tr">Mordent-editor · naar boven of naar beneden</span></h3>
+      <p><span class="tr">Een <b>mordent</b> is een heel korte versiering: de noot, haar buurnoot en de noot opnieuw, heel snel.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op het teken ①. Druk in het menu dat verschijnt op <b>✎ MORDENT EDITOR</b>, de knop met het oranje kader.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-mordent-editor.png" alt="Un mordente sobre una nota, el menú de la articulación con MORDENT EDITOR marcado y el editor de mordente" width="860" height="333" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op de mordent · ② naar welke kant · ③ wat er gedrukt wordt · ④ de buurnoot · ⑤ de snelheid.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Face</b> ②: <b>upper</b> gaat naar de bovenbuur; <b>lower</b> naar de onderbuur. De onderste heeft een streepje door het teken.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Sign</b> ③: bepaalt wat er gedrukt wordt, zonder de klank te veranderen. Met <b>tr</b> wordt de bovenste mordent als «tr» geschreven, zonder golvende lijn, zoals de korte triller van drie noten bij Mozart of Haydn (si–do–si en verder).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Neighbour</b> ④: het voorteken van de buurnoot; <b>auto</b> volgt de voortekening.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Speed</b> ⑤: de waarde van elk notje; met <b>auto</b> kiest het Score.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-mordent-antes-despues.png" alt="El mismo mordente: hacia arriba, hacia abajo con su rayita, y escrito como tr" width="358" height="165" loading="lazy" style="display:block;width:100%;height:auto;max-width:358px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① upper · ② lower: met het streepje · ③ Sign tr: er wordt «tr» gedrukt en het klinkt als ①.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het teken boven de noot verandert, en als je luistert, gaat het notje naar de kant die je koos. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-tremolo-editor"><span class="tr">Tremolo-editor · afgemeten of vrij</span></h3>
-      <p><span class="tr"><b>Rechtsklik op het tremolo</b>. Hoeveel strepen het draagt —dat is wat gelezen wordt— en of de motor het afgemeten of vrij speelt, en dat is het verschil tussen een strijkerstremolo en een uitgeschreven herhaling.</span></p>
+      <p><span class="tr">Een <b>tremolo</b> zijn streepjes dwars door de stok: de noot wordt heel vaak en snel herhaald. Hoe meer streepjes, hoe sneller de herhalingen.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op het teken ①. Druk in het menu dat verschijnt op <b>✎ TREMOLO EDITOR</b>, de knop met het oranje kader.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-tremolo-editor.png" alt="Un trémolo sobre una nota, el menú de la articulación con TREMOLO EDITOR marcado y el editor de trémolo" width="860" height="260" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op het tremolo · ② hoeveel streepjes · ③ afgemeten of vrij.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Divisions</b> ②: <b>1</b>, <b>2</b> of <b>3</b> streepjes, dat zijn achtsten, zestienden of tweeëndertigsten van de tel. Dat is wat je leest.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Measure</b> ③: <b>measured</b> speelt precies die herhalingen, als een uitgeschreven herhaling; <b>free</b> herhaalt snel zonder te tellen, zoals het tremolo van de strijkers.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-tremolo-antes-despues.png" alt="La misma nota con una, dos y tres rayitas de trémolo" width="358" height="173" loading="lazy" style="display:block;width:100%;height:auto;max-width:358px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① 1 streepje: achtsten · ② 2: zestienden · ③ 3: tweeëndertigsten.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het aantal streepjes op de stok verandert, en als je luistert, herhaalt de noot zich op die snelheid. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-arp-editor"><span class="tr">Arpeggio-editor · hoe lang het duurt om zich te ontvouwen</span></h3>
-      <p><span class="tr"><b>Rechtsklik op het arpeggio</b>. Of het omhoog of omlaag gaat, en over hoeveel milliseconden het akkoord opengaat. Dat is het verschil tussen een harparpeggio en een pianoarpeggio.</span></p>
+      <p><span class="tr">Een <b>arpeggio</b> is de verticale golvende lijn voor een akkoord: de noten klinken niet samen maar na elkaar, heel snel.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> rechtsklik op het teken ①. Druk in het menu dat verschijnt op <b>✎ ARPEGGIO EDITOR</b>, de knop met het oranje kader.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-arp-editor.png" alt="Un acorde con su arpegio, el menú de la articulación con ARPEGGIO EDITOR marcado y el editor de arpegio" width="860" height="283" loading="lazy" style="display:block;width:100%;height:auto;max-width:860px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op het arpeggio · ② welke richting · ③ hoe lang het duurt.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Direction</b> ②: <b>↑ up</b> begint bij de laagste noot; <b>↓ down</b> bij de hoogste. De pijl van het teken toont het.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Spread</b> ③: hoeveel milliseconden er tussen twee noten zitten. Eronder staat het totaal, bijvoorbeeld «3 notes · 90 ms in total». Daar zit het verschil tussen een harparpeggio, traag, en een piano-arpeggio, bijna samen.</span></li>
+      </ul>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-arp-antes-despues.png" alt="El mismo acorde con el arpegio hacia arriba y hacia abajo" width="280" height="120" loading="lazy" style="display:block;width:100%;height:auto;max-width:280px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① ↑ up: de pijl wijst naar boven · ② ↓ down: de pijl wijst naar beneden.</span></figcaption></figure>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de pijl van het teken verandert, en als je luistert, opent het akkoord zich in die richting en op die snelheid. Vergist? <a href="#pop-undo">UNDO</a> maakt het ongedaan.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-barlines"><span class="tr">Groepsmaatstrepen · de strijkers met één maatstreep verbinden</span></h3>
@@ -1963,7 +2419,7 @@
     </div>
     <div class="spec">
       <h3 id="pop-ctx-region"><span class="tr">⠿ Asymmetrische regio · de frase die niet op het raster zit</span></h3>
-      <p><span class="tr"><b>Right-click on the region’s edge or body</b> —on a note, the note editor wins, so look for a gap: just above the top staff line, or the edge itself—. Give it a <b>name</b>, hide it or delete it, and its editor opens from here: this is the phrase where time stretches and shrinks while the grid stays put. With a name, the region is a <b>pattern</b>: <b>Take</b> carries it from bar M to bar M' (repeating every so many bars as it is long) and reports how many copies it made; <b>Hide all</b> and <b>Delete all “name”</b> act on all of them at once. Careful: a <b>hidden region does not play</b> and does not answer the right-click either. To bring it back, put the yellow cursor inside its span and press <b>Alt+H</b>: this same menu opens, with <b>Show region</b> and <b>Show all</b> (the shortcut is in the menu title, in brackets). The edges can be dragged; when you create it from a selection, check the left edge and take it to where the phrase really starts (for example, after a rest). <b>Example:</b> bar 226 holds an Inhale · Extreme region over all the voices and you want it in 227, 230 and 231. Right-click the region, <i>Take</i> 227 to 227 ✓; again, <i>Take</i> 230 to 231 ✓. The bars that should not get it (228–229) are skipped by doing two passes, and where a copy already exists it is not duplicated.</span></p>
+      <p><span class="tr"><b>Right-click on the region’s edge or body</b> —on a note, the note editor wins, so look for a gap: just above the top staff line, or the edge itself—. Give it a <b>name</b>, hide it or delete it, and its editor opens from here: this is the phrase where time stretches and shrinks while the grid stays put. With a name, the region is a <b>pattern</b>: <b>Take</b> carries it from bar M to bar M' (repeating every so many bars as it is long) and reports how many copies it made; <b>Hide all</b> and <b>Delete all “name”</b> act on all of them at once. Careful: a <b>hidden region does not play</b> and does not answer the right-click either. To bring it back, put the cursor inside its span and press <b>Alt+H</b>: this same menu opens, with <b>Show region</b> and <b>Show all</b> (the shortcut is in the menu title, in brackets). The edges can be dragged; when you create it from a selection, check the left edge and take it to where the phrase really starts (for example, after a rest). <b>Example:</b> bar 226 holds an Inhale · Extreme region over all the voices and you want it in 227, 230 and 231. Right-click the region, <i>Take</i> 227 to 227 ✓; again, <i>Take</i> 230 to 231 ✓. The bars that should not get it (228–229) are skipped by doing two passes, and where a copy already exists it is not duplicated.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-ctx-system"><span class="tr">⠿ Systeem · de pagina opruimen voor het afdrukken</span></h3>
@@ -1992,7 +2448,18 @@
     </div>
     <div class="spec">
       <h3 id="pop-sound-fx"><span class="tr">Sound FX · reverb en echo in de passage geschreven</span></h3>
-      <p><span class="tr">Rij <b>Sound FX…</b> in het menu van het kanaallabel. Verschuif de knoppen —reverb, echo met zijn tijd en feedback, portamento, vibrato— en kies waarop ze geschreven worden: het hele kanaal, deze plaats, of de selectie. Het wordt in het stuk bewaard, niet op de mengtafel.</span></p>
+      <p><span class="tr"><b>Geluidseffecten</b> veranderen hoe een kanaal klinkt: <b>galm</b> (de nagalm van een grote zaal), <b>echo</b> (de noot die zich herhaalt, telkens zachter), <b>porta</b> (naar de noot glijden) en <b>vibrato</b> (de noot die golft).</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> druk op <b>FX</b> ① in de rij van het kanaal, in de lijst <b>⚙ CHANNELS</b>. Hij opent ook met een rechtsklik op de naam van het kanaal, links van de notenbalk, en dan <b>Sound FX…</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-sound-fx.png" alt="La lista CHANNELS con el botón FX de CH1 marcado y, al lado, el popup Sound FX: This channel, This place, Selection y las seis perillas" width="690" height="225" loading="lazy" style="display:block;width:100%;height:auto;max-width:690px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① FX in de kanalenlijst · ② waar het geschreven wordt · ③ de draaiknoppen · ④ wissen.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Waar het geschreven wordt</b> ②: <b>This channel</b> (het hele kanaal), <b>This place</b> (de geselecteerde noot) of <b>Selection</b> (het geselecteerde stuk). Een kanaal kan ze alle drie tegelijk hebben.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De draaiknoppen</b> ③: <b>Reverb</b> (hoeveel zaal) · <b>Echo wet</b> (hoeveel echo erbij komt) · <b>Echo FB</b> (hoeveel herhalingen) · <b>Echo time</b> (de afstand tussen de echo’s, van 80 tot 900 ms; neutraal is 400) · <b>Porta</b> (het glijden naar de noot, tot 400 ms) · <b>Vibrato</b> (de diepte, tot 50 cent). Je draait ze door de muis omhoog of omlaag te slepen; dubbelklikken zet de knop terug op neutraal.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>CLEAN</b> ④ wist het effect van het gekozen gebied. Heeft dat gebied niets, dan wist hij het hele kanaal.</span></li>
+      </ul>
+      <p><span class="tr"><b>Tip:</b> liever een kort stuk, zelfs één noot. Daar geven echo en galm karakter aan een melodie, en porta het glijden naar de noot. Een effect op het hele stuk is een mengtafel; een effect op één noot is interpretatie.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> de knop <b>FX</b> van dat kanaal wordt groen, en als je het stuk met ▶ speelt, hoor je het effect. Terwijl je aan de knop draait, hoor je het nog niet: je hoort het bij het afspelen. Elke draai aan een knop maak je ongedaan met <a href="#pop-undo">UNDO</a> (Ctrl+Z).</span></p>
+      <p><span class="tr">Het effect wordt in het stuk bewaard (het .mmf-bestand). Het Keyboard heeft een eigen knop <b>⊕ FX</b>, voor wat je live speelt: zie <a href="#fx-por-canal-en-vivo">⊕ FX live</a>. De twee tellen niet op en overschrijven elkaar niet. Meer details in <a href="#sound-fx-por-canal-y-area">Sound FX per kanaal en per gebied</a>.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-asym-agog"><span class="tr">Frase-agogiek · de solist ademt en het orkest blijft staan</span></h3>
@@ -2005,7 +2472,7 @@
     <div class="spec">
       <h3 id="pop-sequences"><span class="tr">Sequenties · het ostinato één keer schrijven</span></h3>
       <p><span class="tr">Een <b>sequentie</b> herhaalt de toestand van één maat over een heel stuk. Het typische geval is het pedaal: je schrijft hoe je <b>één</b> maat pedaleert en zegt “en zo verder tot maat 61”.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-sequences.png" alt="La ventana Sequences: la lista de secuencias, simile o written marks, Pattern, From, Through y el botón para aplicar" width="399" height="288" loading="lazy" style="display:block;width:100%;height:auto;max-width:399px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-sequences.png" alt="La ventana Sequences: la lista de secuencias, simile o written marks, Pattern, From, Through y el botón para aplicar" width="399" height="318" loading="lazy" style="display:block;width:100%;height:auto;max-width:399px;border:1px solid var(--border);border-radius:var(--rad)">
       <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① de sequenties in het werk · ② hoe ze herhaalt · ③ patroon, vanaf en tot · ④ toepassen.</span></figcaption></figure>
       <p><span class="tr"><b>Een sequentie maken:</b></span></p>
       <ol style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
@@ -2050,7 +2517,18 @@
     </div>
     <div class="spec">
       <h3 id="pop-pulse"><span class="tr">Pulse · de metronoom om met de tel erbij te schrijven</span></h3>
-      <p><span class="tr">Knop <b>♩ PULSE</b>. Hij slaat in het tempo van het stuk, met zijn onderverdeling en zijn licht. Gebruik hem om te schrijven, of om te horen of de passage zit waar ze moet zitten.</span></p>
+      <p><span class="tr">De <b>puls</b> is de regelmatige hartslag van de muziek, die je met je voet meetikt. <b>PULSE</b> toont hem met een lampje terwijl je schrijft, zodat je voelt waar elke tel valt.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> druk op <b>♩ PULSE</b> ①, rechtsonder.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pop-pulse.png" alt="El botón PULSE de la barra de abajo y su ventana: la luz, start, el tempo y SUBDIV" width="833" height="124" loading="lazy" style="display:block;width:100%;height:auto;max-width:833px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① PULSE · ② het lampje · ③ starten en stoppen · ④ het tempo van het stuk · ⑤ hoe vaak het per tel knippert.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Het lampje</b> ②: het knippert op de puls. Elke tel wordt sterker aangegeven dan de onderverdelingen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>▶ start</b> ③ zet het aan; dezelfde knop toont <b>■ stop</b> om het uit te zetten.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Tempo</b> ④: dat kies je hier niet. Het wordt uit de partituur gelezen, in de maat waar de cursor staat. Om het te veranderen gebruik je <a href="#pop-tempo">TEMPO</a> of de BPM-chip in de onderste balk.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Subdiv</b> ⑤: het lampje knippert zo vaak per tel als <a href="#sc-subdiv">SUBDIV</a> zegt, en ernaast zie je de nootwaarde. Met 4 knippert het in zestienden.</span></li>
+      </ul>
+      <p><span class="tr">De PULSE van het Score is alleen licht, zonder geluid. Wil je een klik horen, of zelf het tempo kiezen, gebruik dan de <a href="#pulse-el-metronomo">pulse van het Keyboard</a>.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het lampje knippert en de knop toont ■ stop. Als je de cursor naar een maat met een ander tempo zet, verandert het lampje van snelheid.</span></p>
     </div>
     <div class="spec">
       <h3 id="pop-grace"><span class="tr">Volgende noot · een appoggiatura schrijven</span></h3>
