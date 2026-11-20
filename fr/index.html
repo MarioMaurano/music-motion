@@ -44,6 +44,7 @@
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
 .puertas .app.ninos{grid-column:1/-1;background:linear-gradient(120deg,rgba(255,111,145,.14),rgba(94,200,255,.12));display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center}
+.puertas .app.ancho{grid-column:1/-1}
 .puertas .app.ninos img{grid-row:1/span 4;width:96px;height:96px;border-radius:22px}
 @media(max-width:640px){.puertas .app.ninos{grid-template-columns:1fr}.puertas .app.ninos img{grid-row:auto;width:72px;height:72px}}
 .caminos{grid-template-columns:repeat(3,1fr)}
@@ -111,7 +112,7 @@
   <div class="hero-links">
     <a class="btn-main" id="btn-demo" href="../apps/mmk-demo.html" data-local="../_BASE/mmk-scorekeyboard.html"><span class="tr">▶ L’écouter maintenant — gratuit</span></a>
     <a class="btn-launch" href="#empezar" style="--c:var(--teal)"><span class="tr">Que souhaitez-vous faire ? ↓</span></a>
-    <a class="btn-launch" href="../suite/ejercicios/#suite" data-local="../website/ejercicios/index.html#suite" style="--c:var(--gold)"><span class="tr">Learn what you can do →</span></a>
+    <a class="btn-launch" href="../suite/ejercicios/#suite" data-local="../website/ejercicios/index.html#suite" style="--c:var(--gold)"><span class="tr">Découvrez ce que vous pouvez faire →</span></a>
   </div>
   <p class="tranquilo"><span class="tr">Si vous savez lire la musique, vous savez déjà l’utiliser. Le clavier de votre ordinateur est l’instrument.</span></p>
 </section>
@@ -136,6 +137,13 @@
       <p><span class="tr">L’accordeur affiche chaque note avec son vrai nom : Do♯ n’est pas Ré♭. Il utilise le microphone, sur l’ordinateur ou sur le téléphone.</span></p>
       <div class="launch"><a class="btn-launch" href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener"><span class="tr">▶ Ouvrir l’accordeur</span></a></div>
     </div>
+    <!-- 2026-11-20 (Mario): Pulse, el metrónomo gratis, junto al afinador -->
+    <div class="app prod" style="--c:var(--rose)">
+      <div class="tag"><span class="tr">Garder le pulse</span></div>
+      <h3><span class="tr">Pulse, le métronome</span></h3>
+      <p><span class="tr">Touchez le cercle au rythme que vous avez en tête : Pulse trouve le tempo et continue tout seul, avec lumière et clic. Gratuit, et il s’installe sur le téléphone comme une application.</span></p>
+      <div class="launch"><a class="btn-launch" href="../pulse/" data-local="../website/pulse.html"><span class="tr">▶ Ouvrir Pulse</span></a></div>
+    </div>
     <div class="app prod" style="--c:var(--gold)">
       <div class="tag"><span class="tr">Jouer</span></div>
       <h3><span class="tr">Jouer et écouter</span></h3>
@@ -148,7 +156,8 @@
       <p><span class="tr">Chantez ou jouez votre partie avec le piano qui sonne. Changez la tonalité ou l’instrument, et enregistrez-vous pour vous réécouter. Pour les chanteurs et les instrumentistes.</span></p>
       <div class="launch"><a class="btn-launch" href="../suite/ejercicios/" data-local="../website/ejercicios/index.html"><span class="tr">▶ Exercice : l’Ave Maria</span></a></div>
     </div>
-    <div class="app prod" style="--c:var(--blue)">
+    <!-- 2026-11-20 (Mario): con Pulse son cinco puertas; Enseñar va a lo ancho, abajo, para no dejar un hueco -->
+    <div class="app prod ancho" style="--c:var(--blue)">
       <div class="tag"><span class="tr">Enseigner</span></div>
       <h3><span class="tr">Enseigner</span></h3>
       <p><span class="tr">Écrivez vos exercices dans une partition qui sonne et partagez-les avec vos élèves. Pour les académies et les écoles : une licence par an pour toute l’école, à partir de 99 €.</span></p>
@@ -218,13 +227,13 @@
   <p><span class="tr">On apprend par <b>immersion progressive</b> : l’accord, l’écriture, l’interprétation, l’accompagnement et l’orchestration, pas à pas, au rythme de celui qui apprend ou de celui qui enseigne.</span></p>
   <div class="hero-links">
     <a class="btn-launch" href="music-motion.html" style="--c:var(--violet)"><span class="tr">Ce qu’est Music Motion →</span></a>
-    <a class="btn-launch" href="#productos" style="--c:var(--gold)"><span class="tr">Voir les produits ↓</span></a>
+    <a class="btn-launch" href="#productos" style="--c:var(--gold)"><span class="tr">Voir les applications ↓</span></a>
   </div>
 </section>
 
 <!-- ───────────── PRODUCTOS ───────────── -->
 <section id="productos">
-  <div class="eyebrow"><span class="tr">Les produits</span></div>
+  <div class="eyebrow"><span class="tr">Les applications</span></div>
   <h2><span class="tr">Deux outils, un seul accord</span></h2>
   <p><span class="tr">Ce que vous accordez dans l’un sonne de la même façon dans l’autre : sous les deux se trouve la même table de hauteurs, écrite en rapports exacts.</span></p>
 
@@ -301,6 +310,7 @@
   <a href="index.html" class="foot-brand" title="Music Motion"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
   <div class="foot-links">
     <a href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener">Pythagorean Tuner</a>
+    <a href="../pulse/" data-local="../website/pulse.html">Pulse</a>
     <a href="suite/index.html" data-local="../website/index.html">ScoreSuite</a>
     <a href="../apps/mmk-scorekeyboard.html" data-local="../_BASE/mmk-scorekeyboard.html">Cosmic Keyboard</a>
     <a href="colegios.html" class="nav-hi"><span class="tr">Écoles</span></a>

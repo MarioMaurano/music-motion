@@ -44,6 +44,7 @@
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
 .puertas .app.ninos{grid-column:1/-1;background:linear-gradient(120deg,rgba(255,111,145,.14),rgba(94,200,255,.12));display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center}
+.puertas .app.ancho{grid-column:1/-1}
 .puertas .app.ninos img{grid-row:1/span 4;width:96px;height:96px;border-radius:22px}
 @media(max-width:640px){.puertas .app.ninos{grid-template-columns:1fr}.puertas .app.ninos img{grid-row:auto;width:72px;height:72px}}
 .caminos{grid-template-columns:repeat(3,1fr)}
@@ -136,6 +137,13 @@
       <p><span class="es">El afinador te muestra cada nota con su nombre verdadero: Do♯ no es Re♭. Usa el micrófono, en la computadora o en el teléfono.</span><span class="en">The tuner shows each note with its true name: C♯ is not D♭. It uses the microphone, on your computer or your phone.</span></p>
       <div class="launch"><a class="btn-launch" href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener"><span class="es">▶ Abrir el afinador</span><span class="en">▶ Open the tuner</span></a></div>
     </div>
+    <!-- 2026-11-20 (Mario): Pulse, el metrónomo gratis, junto al afinador -->
+    <div class="app prod" style="--c:var(--rose)">
+      <div class="tag"><span class="es">Llevar el pulso</span><span class="en">Keep the beat</span></div>
+      <h3><span class="es">Pulse, el metrónomo</span><span class="en">Pulse, the metronome</span></h3>
+      <p><span class="es">Toca el círculo al ritmo que tienes en la cabeza: Pulse encuentra el tempo y sigue solo, con luz y click. Gratis, y se instala en el teléfono como una aplicación.</span><span class="en">Tap the circle at the speed you have in mind: Pulse finds the tempo and keeps going by itself, with light and click. Free, and it installs on your phone like an app.</span></p>
+      <div class="launch"><a class="btn-launch" href="pulse/" data-local="../website/pulse.html"><span class="es">▶ Abrir Pulse</span><span class="en">▶ Open Pulse</span></a></div>
+    </div>
     <div class="app prod" style="--c:var(--gold)">
       <div class="tag"><span class="es">Tocar</span><span class="en">Play</span></div>
       <h3><span class="es">Tocar y escuchar</span><span class="en">Play and listen</span></h3>
@@ -148,7 +156,8 @@
       <p><span class="es">Canta o toca tu parte con el piano sonando. Cambia la tonalidad o el instrumento y grábate para escucharte. Para cantantes e instrumentistas.</span><span class="en">Sing or play your part with the piano sounding. Change the key or the instrument and record yourself to listen back. For singers and instrumentalists.</span></p>
       <div class="launch"><a class="btn-launch" href="suite/ejercicios/" data-local="../website/ejercicios/index.html"><span class="es">▶ Ejercicio: el Ave Maria</span><span class="en">▶ Exercise: the Ave Maria</span></a></div>
     </div>
-    <div class="app prod" style="--c:var(--blue)">
+    <!-- 2026-11-20 (Mario): con Pulse son cinco puertas; Enseñar va a lo ancho, abajo, para no dejar un hueco -->
+    <div class="app prod ancho" style="--c:var(--blue)">
       <div class="tag"><span class="es">Enseñar</span><span class="en">Teach</span></div>
       <h3><span class="es">Enseñar</span><span class="en">Teach</span></h3>
       <p><span class="es">Escribe tus ejercicios en una partitura que suena y compártelos con tus alumnos. Para academias y colegios: una licencia por año para todo el colegio, desde 99 €.</span><span class="en">Write your exercises in a score that sounds and share them with your students. For academies and schools: one licence per year for the whole school, from €99.</span></p>
@@ -218,13 +227,13 @@
   <p><span class="es">Se aprende por <b>inmersión gradual</b>: la afinación, la escritura, la interpretación, el acompañamiento y la orquestación, paso a paso, al ritmo de quien aprende o de quien enseña.</span><span class="en">You learn by <b>gradual immersion</b>: tuning, writing, interpretation, accompaniment and orchestration, step by step, at the pace of the learner or the teacher.</span></p>
   <div class="hero-links">
     <a class="btn-launch" href="music-motion.html" style="--c:var(--violet)"><span class="es">Qué es Music Motion →</span><span class="en">What Music Motion is →</span></a>
-    <a class="btn-launch" href="#productos" style="--c:var(--gold)"><span class="es">Ver los productos ↓</span><span class="en">See the products ↓</span></a>
+    <a class="btn-launch" href="#productos" style="--c:var(--gold)"><span class="es">Ver las aplicaciones ↓</span><span class="en">See the apps ↓</span></a>
   </div>
 </section>
 
 <!-- ───────────── PRODUCTOS ───────────── -->
 <section id="productos">
-  <div class="eyebrow"><span class="es">Los productos</span><span class="en">The products</span></div>
+  <div class="eyebrow"><span class="es">Las aplicaciones</span><span class="en">The apps</span></div>
   <h2><span class="es">Dos herramientas, una sola afinación</span><span class="en">Two tools, one tuning</span></h2>
   <p><span class="es">Lo que afinas en una suena igual en la otra: debajo de las dos está la misma tabla de alturas, escrita en proporciones exactas.</span><span class="en">What you tune in one sounds the same in the other: under both sits the same table of pitches, written in exact ratios.</span></p>
 
@@ -301,6 +310,7 @@
   <a href="index.html" class="foot-brand" title="Music Motion"><img class="brand-logo-img logo-ondark" src="mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
   <div class="foot-links">
     <a href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener">Pythagorean Tuner</a>
+    <a href="pulse/" data-local="../website/pulse.html">Pulse</a>
     <a href="suite/index.html" data-local="../website/index.html">ScoreSuite</a>
     <a href="apps/mmk-scorekeyboard.html" data-local="../_BASE/mmk-scorekeyboard.html">Cosmic Keyboard</a>
     <a href="colegios.html" class="nav-hi"><span class="es">Colegios</span><span class="en">Schools</span></a>

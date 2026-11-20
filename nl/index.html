@@ -44,6 +44,7 @@
 .puertas{grid-template-columns:repeat(2,1fr)}
 @media(max-width:640px){.puertas{grid-template-columns:1fr}}
 .puertas .app.ninos{grid-column:1/-1;background:linear-gradient(120deg,rgba(255,111,145,.14),rgba(94,200,255,.12));display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:center}
+.puertas .app.ancho{grid-column:1/-1}
 .puertas .app.ninos img{grid-row:1/span 4;width:96px;height:96px;border-radius:22px}
 @media(max-width:640px){.puertas .app.ninos{grid-template-columns:1fr}.puertas .app.ninos img{grid-row:auto;width:72px;height:72px}}
 .caminos{grid-template-columns:repeat(3,1fr)}
@@ -111,7 +112,7 @@
   <div class="hero-links">
     <a class="btn-main" id="btn-demo" href="../apps/mmk-demo.html" data-local="../_BASE/mmk-scorekeyboard.html"><span class="tr">▶ Nu beluisteren — gratis</span></a>
     <a class="btn-launch" href="#empezar" style="--c:var(--teal)"><span class="tr">Wat wil je doen? ↓</span></a>
-    <a class="btn-launch" href="../suite/ejercicios/#suite" data-local="../website/ejercicios/index.html#suite" style="--c:var(--gold)"><span class="tr">Learn what you can do →</span></a>
+    <a class="btn-launch" href="../suite/ejercicios/#suite" data-local="../website/ejercicios/index.html#suite" style="--c:var(--gold)"><span class="tr">Ontdek wat je kunt doen →</span></a>
   </div>
   <p class="tranquilo"><span class="tr">Kun je noten lezen, dan kun je het al gebruiken. Het toetsenbord van je computer is het instrument.</span></p>
 </section>
@@ -136,6 +137,13 @@
       <p><span class="tr">Het stemapparaat toont elke noot met haar echte naam: cis is geen des. Het gebruikt de microfoon, op de computer of op de telefoon.</span></p>
       <div class="launch"><a class="btn-launch" href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener"><span class="tr">▶ Het stemapparaat openen</span></a></div>
     </div>
+    <!-- 2026-11-20 (Mario): Pulse, el metrónomo gratis, junto al afinador -->
+    <div class="app prod" style="--c:var(--rose)">
+      <div class="tag"><span class="tr">De maat houden</span></div>
+      <h3><span class="tr">Pulse, de metronoom</span></h3>
+      <p><span class="tr">Tik op de cirkel in het tempo dat je in je hoofd hebt: Pulse vindt het tempo en loopt vanzelf verder, met licht en klik. Gratis, en hij installeert zich op je telefoon als een app.</span></p>
+      <div class="launch"><a class="btn-launch" href="../pulse/" data-local="../website/pulse.html"><span class="tr">▶ Pulse openen</span></a></div>
+    </div>
     <div class="app prod" style="--c:var(--gold)">
       <div class="tag"><span class="tr">Spelen</span></div>
       <h3><span class="tr">Spelen en luisteren</span></h3>
@@ -148,7 +156,8 @@
       <p><span class="tr">Zing of speel je partij terwijl de piano meespeelt. Verander de toonsoort of het instrument en neem jezelf op om terug te luisteren. Voor zangers en instrumentalisten.</span></p>
       <div class="launch"><a class="btn-launch" href="../suite/ejercicios/" data-local="../website/ejercicios/index.html"><span class="tr">▶ Oefening: het Ave Maria</span></a></div>
     </div>
-    <div class="app prod" style="--c:var(--blue)">
+    <!-- 2026-11-20 (Mario): con Pulse son cinco puertas; Enseñar va a lo ancho, abajo, para no dejar un hueco -->
+    <div class="app prod ancho" style="--c:var(--blue)">
       <div class="tag"><span class="tr">Lesgeven</span></div>
       <h3><span class="tr">Lesgeven</span></h3>
       <p><span class="tr">Schrijf je oefeningen in een partituur die klinkt en deel ze met je leerlingen. Voor academies en scholen: één licentie per jaar voor de hele school, vanaf € 99.</span></p>
@@ -218,13 +227,13 @@
   <p><span class="tr">Je leert door <b>geleidelijke onderdompeling</b>: stemmen, schrijven, interpreteren, begeleiden en orkestreren, stap voor stap, in het tempo van wie leert of van wie lesgeeft.</span></p>
   <div class="hero-links">
     <a class="btn-launch" href="music-motion.html" style="--c:var(--violet)"><span class="tr">Wat Music Motion is →</span></a>
-    <a class="btn-launch" href="#productos" style="--c:var(--gold)"><span class="tr">Bekijk de producten ↓</span></a>
+    <a class="btn-launch" href="#productos" style="--c:var(--gold)"><span class="tr">Bekijk de apps ↓</span></a>
   </div>
 </section>
 
 <!-- ───────────── PRODUCTOS ───────────── -->
 <section id="productos">
-  <div class="eyebrow"><span class="tr">De producten</span></div>
+  <div class="eyebrow"><span class="tr">De apps</span></div>
   <h2><span class="tr">Twee tools, één stemming</span></h2>
   <p><span class="tr">Wat je in het ene stemt, klinkt in het andere precies hetzelfde: onder allebei ligt dezelfde tabel van toonhoogtes, geschreven in exacte verhoudingen.</span></p>
 
@@ -301,6 +310,7 @@
   <a href="index.html" class="foot-brand" title="Music Motion"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
   <div class="foot-links">
     <a href="https://tuner.mariomaurano.com/" target="_blank" rel="noopener">Pythagorean Tuner</a>
+    <a href="../pulse/" data-local="../website/pulse.html">Pulse</a>
     <a href="suite/index.html" data-local="../website/index.html">ScoreSuite</a>
     <a href="../apps/mmk-scorekeyboard.html" data-local="../_BASE/mmk-scorekeyboard.html">Cosmic Keyboard</a>
     <a href="colegios.html" class="nav-hi"><span class="tr">Scholen</span></a>

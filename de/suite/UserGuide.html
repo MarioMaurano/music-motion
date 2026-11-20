@@ -209,28 +209,66 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="specs">
 
     <div class="spec">
-      <h3 id="el-canal-tira"><span class="tr">Der Kanal (Kanalzug)</span></h3>
-      <p><span class="tr">Jedes Instrument ist ein Kanalzug: Punkt und Streifen in der Farbe des Kanals (sie leuchten, wenn er aktiv ist), eine mit dem Score synchronisierte Instrumentenauswahl, eine Live-Pegelanzeige, ein Lautstärkefader mit dB-Angabe und M (Mute) / S (Solo). Unbenutzte Kanäle sind abgedunkelt.</span></p>
+      <h3 id="el-canal-tira"><span class="tr">Die Streifen · in jedem ein Instrument</span></h3>
+      <p><span class="tr">Jedes Instrument des Stücks hat seinen <b>Streifen</b>, von oben nach unten: wer es ist, wo es klingt, wie laut es klingt.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-tira.png" alt="Dos tiras de la Console y, a la derecha, la sección CHANNEL con AGÓG, PRES y ART" width="320" height="682" loading="lazy" style="display:block;width:100%;height:auto;max-width:320px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① der Kanal · ② das Instrument · ③ PAN · ④ die Anzeige · ⑤ der Fader · ⑥ M und S · ⑦ AGÓG · ⑧ PRES · ⑨ ART.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>CH</b> ①: Nummer und Farbe des Kanals. Ein Klick wählt ihn, und er erscheint rechts im Bereich <b>CHANNEL</b>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Das Instrument</b> ②: dasselbe, das der Kanal im Score hat; änderst du es hier, ändert es sich dort.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PAN</b> ③: wo es klingt, mehr links oder mehr rechts (siehe unten).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Die Anzeige</b> ④: Sie bewegt sich live mit dem, was klingt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Der Fader</b> ⑤: die Lautstärke des Kanals. Darunter steht, wie viel, in dB und in Prozent.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>M</b> ⑥ schaltet ihn stumm (mute), und <b>S</b> lässt ihn allein spielen (solo).</span></li>
+      </ul>
+      <p><span class="tr">Oben zeigt <b>IN USE</b> nur die Kanäle, die das Stück benutzt, oder alle 32, und <b>NEUTRO</b> setzt alles auf den Anfang zurück: die Fader auf 0 dB, kein M oder S, und den Master auf 40 %.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Während das Stück spielt, wird ein Instrument leiser, wenn du den Fader seines Kanals senkst, und mit <b>S</b> hörst du nur es.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="pan-posicion"><span class="tr">PAN — Position</span></h3>
-      <p><span class="tr">Der Regler stellt das Instrument vor die Lautsprecher. Die LED ist nach links rot und nach rechts grün, wie die Positionslichter eines Flugzeugs. C = Mitte.</span></p>
+      <h3 id="pan-posicion"><span class="tr">PAN · wo das Instrument klingt</span></h3>
+      <p><span class="tr">Der Drehknopf <b>PAN</b> ③ stellt das Instrument vor die Lautsprecher, wie in einem Orchester: die Geigen links, die Celli rechts. <b>C</b> ist die Mitte. Das Licht wird nach links rot und nach rechts grün, wie die Lichter eines Flugzeugs.</span></p>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Mit Kopfhörern hörst du das Instrument auf der Seite, zu der du den Knopf gedreht hast.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="effects-ch"><span class="tr">EFFECTS/CH</span></h3>
-      <p><span class="tr">Vier Effekte pro Kanal in einem 2×2-Raster: AGOG (Agogik), ASYM (Asymmetrie), PRES (Präsenz des Anschlags) und ART (Artikulation). Jeder mit einem Regler und einem beleuchteten Button; Klick = Bypass.</span></p>
+      <h3 id="effects-ch"><span class="tr">CHANNEL · wie der gewählte Kanal spielt</span></h3>
+      <p><span class="tr">Der Bereich <b>CHANNEL</b> zeigt den Kanal, den du mit einem Klick auf sein <b>CH</b> ① gewählt hast, mit seinem Instrument oben. Die drei Drehknöpfe verändern, wie dieser Kanal spielt. Die leuchtende Taste unter jedem schaltet ihn ein oder aus, und ein Doppelklick bringt den Knopf zurück auf normal.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>AGÓG</b> ⑦: das automatische Atmen des Kanals, das kleine Rubato eines Musikers: <b>OFF</b>, <b>L1</b> oder <b>L2</b>. Es ist das Einzige, was mit dem Stück gespeichert wird.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PRES</b> ⑧: der Anschlag des Kanals, von −2 bis +2: ein weicherer oder ein festerer Einsatz.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>ART</b> ⑨: wie stark die Artikulationen des Kanals hervortreten; 100 ist normal.</span></li>
+      </ul>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du PRES bewegst, während das Stück spielt, setzen die Noten dieses Kanals weicher oder fester ein.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="el-master"><span class="tr">Der Master</span></h3>
-      <p><span class="tr">Feste Spalte rechts, immer sichtbar: der „Stereo Out“. L/R ist die Lautsprecherbalance der ganzen Suite (dasselbe wie BAL am Keyboard); der goldene Fader ist die <b>Master-Lautstärke</b> der Suite — das Ganze, das, was ⬤ wav und SAVE AS WAV aufnehmen; VOL am Keyboard und Vol im Score sind etwas anderes: Jeder regelt seinen eigenen Bereich —; Pegelanzeigen L und R und ein Master-MUTE.</span></p>
+      <h3 id="el-master"><span class="tr">MIC und MASTER · dein Mikrofon und die Lautstärke von allem</span></h3>
+      <p><span class="tr">Rechts zwei feste Spalten: <b>MIC</b> für dein Mikrofon und <b>MASTER</b>, der Ausgang der ganzen Suite.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-master.png" alt="Las columnas MIC y MASTER de la Console" width="294" height="682" loading="lazy" style="display:block;width:100%;height:auto;max-width:294px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">MIC: ① ON · ② Pan und Low cut · ③ Bässe und Höhen · ④ Hall und Echo · ⑤ Lautstärke · ⑥ Kopfhörer · ⑦ CAL — MASTER: ⑧ L·R · ⑨ REV, ECHO, TONE, WARM · ⑩ Gesamtlautstärke · ⑪ MUTE.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>ON</b> ① schaltet das Mikrofon ein; beim ersten Mal fragt der Browser um Erlaubnis. <b>Low cut</b> ② nimmt das Dröhnen der Bässe weg (unter 90 Hz), <b>LOW</b> und <b>HIGH</b> ③ heben oder senken Bässe und Höhen, und <b>REV</b> und <b>ECHO</b> ④ geben ihm Raum und Echo.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>🎧</b> ⑥ lässt dich dich selbst hören, während du spielst, <b>nur mit Kopfhörern</b>: Mit Lautsprechern hört sich das Mikrofon selbst und pfeift. <b>CAL</b> ⑦ misst, wie lange dein Klang braucht, um zurückzukommen, damit die Aufnahme genau passt. Wie du dich mit der Begleitung aufnimmst: <a href="#sc-console-mic">MIC und ⏺ REC</a>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>L·R</b> ⑧ ist die Balance der Lautsprecher, und <b>REV · ECHO · TONE · WARM</b> ⑨ sind dieselben Drehknöpfe wie im Keyboard: Was du hier bewegst, bewegt sich dort mit.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Der goldene Fader</b> ⑩ ist die Gesamtlautstärke der Suite; auch die Aufnahmen von <a href="#wav-guardar-lo-que-estas-oyendo">⬤ wav</a> kommen mit diesem Pegel heraus. <b>MUTE</b> ⑪ schaltet alles stumm.</span></li>
+      </ul>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du den goldenen Fader hochziehst, wird alles, was klingt, lauter, und die Zahl darunter ändert sich.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="el-transporte"><span class="tr">Der Transport</span></h3>
-      <p><span class="tr">▶ ⏸ ⏹ steuern den Score aus der Ferne; TIME zeigt die Position, mit Measure/Beat/SubDiv und BPM/Pitch des Stücks. Die Spul-Buttons funktionieren über die Synchronisation noch nicht.</span></p>
+      <h3 id="el-transporte"><span class="tr">Der Transport · spielen und springen aus der Console</span></h3>
+      <p><span class="tr">Die untere Leiste steuert das Stück des Scores aus der Ferne, ohne in sein Fenster zu gehen.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-transporte.png" alt="La barra de transporte de la Console" width="1385" height="86" loading="lazy" style="display:block;width:100%;height:auto;max-width:1385px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① zum Anfang · vorheriger Takt · ② abspielen, Pause, Stopp · ③ aufnehmen · ④ nächster Takt · zum Ende · ⑤ TIME · ⑥ GO · ⑦ LOOP A–B · ⑧ Takt, Schlag und BPM.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>⏮ ⏪</b> ① gehen zum ersten oder zum vorherigen Takt, und <b>⏩ ⏭</b> ④ zum nächsten oder zum letzten. <b>▶ ⏸ ⏹</b> ② spielen, pausieren und stoppen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏺</b> ③ zählt 3 · 2 · 1 und nimmt dich mit dem Mikrofon über die Begleitung auf, in eine WAV; <b>⏹</b> beendet und speichert.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>GO</b> ⑥: Tipp eine Taktnummer ein und drück Enter.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>LOOP</b> ⑦: <b>◉</b> nimmt den Takt, an dem das Stück gerade ist, für <b>A</b> (wo sie beginnt) und für <b>B</b> (wo sie endet); <b>🔁</b> schaltet die Schleife ein oder aus, und <b>✕</b> löscht sie. Es ist dieselbe Schleife wie in der Partitur.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>TIME</b> ⑤ und <b>MEASURE · BEAT · BPM</b> ⑧ zeigen, wo das Stück ist und in welchem Tempo.</span></li>
+      </ul>
+      <p><span class="tr"><b>So siehst du, dass es geklappt hat:</b> Wenn du hier ▶ drückst, beginnt das Stück im Score zu spielen, und TIME läuft weiter.</span></p>
     </div>
 
     <div class="spec">

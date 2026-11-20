@@ -209,28 +209,66 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="specs">
 
     <div class="spec">
-      <h3 id="el-canal-tira"><span class="tr">Het kanaal (kanaalstrook)</span></h3>
-      <p><span class="tr">Elk instrument is een kanaalstrook: stip en streep in de kleur van het kanaal (ze lichten op wanneer het actief is), een instrumentkeuze die gesynchroniseerd is met de Score, een live niveaumeter, een volumefader met dB, en M (mute) / S (solo). Ongebruikte kanalen worden gedimd.</span></p>
+      <h3 id="el-canal-tira"><span class="tr">De stroken · één instrument in elke strook</span></h3>
+      <p><span class="tr">Elk instrument van het stuk heeft zijn <b>strook</b>, van boven naar beneden: wie het is, waar het klinkt, hoe luid het klinkt.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-tira.png" alt="Dos tiras de la Console y, a la derecha, la sección CHANNEL con AGÓG, PRES y ART" width="320" height="682" loading="lazy" style="display:block;width:100%;height:auto;max-width:320px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① het kanaal · ② het instrument · ③ PAN · ④ de meter · ⑤ de fader · ⑥ M en S · ⑦ AGÓG · ⑧ PRES · ⑨ ART.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>CH</b> ①: het nummer en de kleur van het kanaal. Eén klik kiest het, en het verschijnt in het onderdeel <b>CHANNEL</b> rechts.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Het instrument</b> ②: hetzelfde als dat van het kanaal in het Score; verander je het hier, dan verandert het daar.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PAN</b> ③: waar het klinkt, meer links of meer rechts (zie verder).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De meter</b> ④: beweegt mee met wat er klinkt, live.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De fader</b> ⑤: het volume van het kanaal. Eronder staat hoeveel, in dB en in procent.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>M</b> ⑥ zet het stil (mute) en <b>S</b> laat het alleen spelen (solo).</span></li>
+      </ul>
+      <p><span class="tr">Bovenaan toont <b>IN USE</b> alleen de kanalen die het stuk gebruikt, of alle 32, en <b>NEUTRO</b> zet alles terug op het beginpunt: de faders op 0 dB, geen M of S, en de master op 40 %.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> terwijl het stuk speelt, wordt een instrument zachter als je de fader van zijn kanaal omlaag zet, en met <b>S</b> hoor je alleen dat instrument.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="pan-posicion"><span class="tr">PAN — positie</span></h3>
-      <p><span class="tr">De knop plaatst het instrument vóór de luidsprekers. De led is rood naar links en groen naar rechts, zoals de lichten van een vliegtuig. C = midden.</span></p>
+      <h3 id="pan-posicion"><span class="tr">PAN · waar het instrument klinkt</span></h3>
+      <p><span class="tr">De draaiknop <b>PAN</b> ③ zet het instrument voor de luidsprekers, zoals in een orkest: de violen links, de cello’s rechts. <b>C</b> is het midden. Het lampje wordt rood naar links en groen naar rechts, zoals de lichten van een vliegtuig.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> met een koptelefoon hoor je het instrument aan de kant waar je de knop naartoe draaide.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="effects-ch"><span class="tr">EFFECTS/CH</span></h3>
-      <p><span class="tr">Vier effecten per kanaal in een raster van 2×2: AGOG (agogiek), ASYM (asymmetrie), PRES (aanwezigheid van de aanzet) en ART (articulatie). Elk met een knop en een verlichte toets; klik = bypass.</span></p>
+      <h3 id="effects-ch"><span class="tr">CHANNEL · hoe het gekozen kanaal speelt</span></h3>
+      <p><span class="tr">Het onderdeel <b>CHANNEL</b> toont het kanaal dat je koos met een klik op zijn <b>CH</b> ①, met zijn instrument bovenaan. De drie draaiknoppen veranderen hoe dat kanaal speelt. De verlichte knop onder elke draaiknop zet hem aan of uit, en met een dubbelklik gaat de draaiknop terug naar normaal.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>AGÓG</b> ⑦: de automatische ademhaling van het kanaal, de kleine rubato van een muzikant: <b>OFF</b>, <b>L1</b> of <b>L2</b>. Het is de enige die met het stuk wordt bewaard.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>PRES</b> ⑧: de aanslag van het kanaal, van −2 tot +2: een zachtere of een stevigere aanzet.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>ART</b> ⑨: hoe sterk de articulaties van het kanaal uitkomen; 100 is normaal.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je PRES verschuift terwijl het stuk speelt, komen de noten van dat kanaal zachter of steviger binnen.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="el-master"><span class="tr">De master</span></h3>
-      <p><span class="tr">Vaste kolom rechts, altijd in beeld: de „Stereo Out”. L/R is de luidsprekerbalans van de hele suite (hetzelfde als BAL van het Keyboard); de gouden fader is het <b>mastervolume</b> van de suite —het geheel, wat ⬤ wav en SAVE AS WAV opnemen; de VOL van het Keyboard en de Vol van de Score zijn iets anders: elk regelt zijn eigen deel—; L- en R-meters en een master-MUTE.</span></p>
+      <h3 id="el-master"><span class="tr">MIC en MASTER · je microfoon en het volume van alles</span></h3>
+      <p><span class="tr">Rechts twee vaste kolommen: <b>MIC</b>, voor je microfoon, en <b>MASTER</b>, de uitgang van de hele suite.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-master.png" alt="Las columnas MIC y MASTER de la Console" width="294" height="682" loading="lazy" style="display:block;width:100%;height:auto;max-width:294px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">MIC: ① ON · ② pan en Low cut · ③ lage en hoge tonen · ④ galm en echo · ⑤ volume · ⑥ koptelefoon · ⑦ CAL — MASTER: ⑧ L·R · ⑨ REV, ECHO, TONE, WARM · ⑩ totaal volume · ⑪ MUTE.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>ON</b> ① zet de microfoon aan; de eerste keer vraagt de browser toestemming. <b>Low cut</b> ② haalt het gedreun van de lage tonen weg (onder 90 Hz), <b>LOW</b> en <b>HIGH</b> ③ zetten lage en hoge tonen hoger of lager, en <b>REV</b> en <b>ECHO</b> ④ geven hem zaal en echo.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>🎧</b> ⑥ laat je jezelf horen terwijl je speelt, <b>alleen met een koptelefoon</b>: met luidsprekers hoort de microfoon zichzelf en fluit hij. <b>CAL</b> ⑦ meet hoe lang je klank erover doet om terug te komen, zodat de opname gelijk uitkomt. Hoe je jezelf opneemt met de begeleiding: <a href="#sc-console-mic">MIC en ⏺ REC</a>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>L·R</b> ⑧ is de balans van de luidsprekers, en <b>REV · ECHO · TONE · WARM</b> ⑨ zijn dezelfde draaiknoppen als op het Keyboard: wat je hier verschuift, schuift daar mee.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De gouden fader</b> ⑩ is het totale volume van de suite; ook de opnamen van <a href="#wav-guardar-lo-que-estas-oyendo">⬤ wav</a> komen op dat niveau uit. <b>MUTE</b> ⑪ zet alles stil.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je de gouden fader hoger zet, wordt alles wat klinkt luider, en het getal eronder verandert.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="el-transporte"><span class="tr">Het transport</span></h3>
-      <p><span class="tr">▶ ⏸ ⏹ bedienen de Score op afstand; TIME toont de positie, met Measure/Beat/SubDiv en de BPM/Pitch van het stuk. De zoekknoppen werken nog niet via sync.</span></p>
+      <h3 id="el-transporte"><span class="tr">Het transport · spelen en verspringen vanuit de Console</span></h3>
+      <p><span class="tr">De onderste balk bedient het stuk van het Score op afstand, zonder naar zijn venster te gaan.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-transporte.png" alt="La barra de transporte de la Console" width="1385" height="86" loading="lazy" style="display:block;width:100%;height:auto;max-width:1385px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① naar het begin · vorige maat · ② afspelen, pauze, stop · ③ opnemen · ④ volgende maat · naar het einde · ⑤ TIME · ⑥ GO · ⑦ LOOP A–B · ⑧ maat, tel en BPM.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>⏮ ⏪</b> ① gaan naar de eerste maat of de vorige, en <b>⏩ ⏭</b> ④ naar de volgende of de laatste. <b>▶ ⏸ ⏹</b> ② spelen af, pauzeren en stoppen.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⏺</b> ③ telt 3 · 2 · 1 en neemt je met de microfoon op over de begeleiding, in een WAV; <b>⏹</b> stopt en bewaart.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>GO</b> ⑥: typ een maatnummer en druk op Enter.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>LOOP</b> ⑦: <b>◉</b> neemt de maat waar het stuk is, voor <b>A</b> (waar hij begint) en voor <b>B</b> (waar hij eindigt); <b>🔁</b> zet de lus aan of uit en <b>✕</b> wist hem. Het is dezelfde lus als in de partituur.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>TIME</b> ⑤ en <b>MEASURE · BEAT · BPM</b> ⑧ tonen waar het stuk is en in welk tempo.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je hier op ▶ drukt, begint het stuk te spelen in het Score en loopt TIME verder.</span></p>
     </div>
 
     <div class="spec">
