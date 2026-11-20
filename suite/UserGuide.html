@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded',function(){
          nl:{ph:'Zoeken in de handleiding… (bijvoorbeeld: afdrukken, pulse, wav)',idx:'Inhoud van de handleiding',n1:'1 onderdeel',nn:' onderdelen',none:'Geen resultaten',top:'↑ Zoeken'},
          de:{ph:'In der Anleitung suchen… (zum Beispiel: drucken, pulse, wav)',idx:'Inhalt der Anleitung',n1:'1 Abschnitt',nn:' Abschnitte',none:'Keine Ergebnisse',top:'↑ Suchen'}};
   var root=document.getElementById('ugFind'); if(!root) return;   // corre al terminar de cargar: las secciones están más abajo
-  function lang(){ var l=(document.documentElement.getAttribute('data-lang')||document.documentElement.lang||'es').slice(0,2); return T[l]?l:'en'; }
+  function lang(){ var l=(document.documentElement.lang||document.documentElement.getAttribute('data-lang')||'es').slice(0,2); return T[l]?l:'en'; }   // 2026-11-20 (Mario): en /fr/ /nl/ /de/ manda lang (data-lang queda en es|en por site.js)
   function txt(el){ if(!el) return ''; var l=lang(), s=el.querySelector(':scope > .'+l); if((l==='es'||l==='en')&&s) return s.textContent.replace(/\s+/g,' ').trim(); return el.textContent.replace(/\s+/g,' ').trim(); }
   function norm(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
   // las partes: cada <section> con su rótulo (.app-eyebrow), y sus secciones (h3 con id)
