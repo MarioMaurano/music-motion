@@ -245,15 +245,20 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="spec">
       <h3 id="el-master"><span class="tr">MIC et MASTER · votre micro et le volume de tout</span></h3>
       <p><span class="tr">À droite, deux colonnes fixes : <b>MIC</b>, pour votre micro, et <b>MASTER</b>, la sortie de toute la suite.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-master.png" alt="Las columnas MIC y MASTER de la Console" width="294" height="682" loading="lazy" style="display:block;width:100%;height:auto;max-width:294px;border:1px solid var(--border);border-radius:var(--rad)">
-      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">MIC : ① ON · ② pan et Low cut · ③ graves et aigus · ④ réverbération et écho · ⑤ volume · ⑥ écouteurs · ⑦ CAL — MASTER : ⑧ L·R · ⑨ REV, ECHO, TONE, WARM · ⑩ volume total · ⑪ MUTE.</span></figcaption></figure>
-      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
-        <li style="margin:2px 0"><span class="tr"><b>ON</b> ① ouvre le micro ; la première fois, le navigateur demande l’autorisation. <b>Low cut</b> ② enlève le grondement des graves (sous 90 Hz), <b>LOW</b> et <b>HIGH</b> ③ montent ou baissent graves et aigus, et <b>REV</b> et <b>ECHO</b> ④ lui donnent de la salle et de l’écho.</span></li>
-        <li style="margin:2px 0"><span class="tr"><b>🎧</b> ⑥ vous permet de vous entendre pendant que vous jouez, <b>seulement avec des écouteurs</b> : avec des haut-parleurs, le micro s’entend lui-même et siffle. <b>CAL</b> ⑦ mesure combien de temps met votre son à revenir, pour que l’enregistrement sorte aligné. Comment vous enregistrer avec l’accompagnement : <a href="#sc-console-mic">MIC et ⏺ REC</a>.</span></li>
-        <li style="margin:2px 0"><span class="tr"><b>L·R</b> ⑧ est la balance des haut-parleurs, et <b>REV · ECHO · TONE · WARM</b> ⑨ sont les mêmes boutons que sur le Keyboard : ce que vous bougez ici bouge là-bas.</span></li>
-        <li style="margin:2px 0"><span class="tr"><b>Le fader doré</b> ⑩ est le volume total de la suite ; les enregistrements <a href="#wav-guardar-lo-que-estas-oyendo">⬤ wav</a> sortent aussi à ce niveau. <b>MUTE</b> ⑪ coupe tout.</span></li>
+      <!-- 2026-11-20 (Mario): la imagen es alta y angosta; la lista va a su lado para no dejar el espacio vacío (en el teléfono se apilan) -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px 26px;align-items:flex-start;margin:10px 0 12px">
+      <figure style="margin:0;flex:none"><img src="../../suite/ug-co-master.png" alt="Las columnas MIC y MASTER de la Console" width="294" height="682" loading="lazy" style="display:block;width:100%;height:auto;max-width:294px;border:1px solid var(--border);border-radius:var(--rad)"></figure>
+      <div style="flex:1 1 260px;min-width:0">
+      <ul style="margin:6px 0 22px 22px;padding:0;line-height:1.75">
+        <li style="margin:0 0 18px"><span class="tr"><b>ON</b> ① ouvre le micro ; la première fois, le navigateur demande l’autorisation. <b>Low cut</b> ② enlève le grondement des graves (sous 90 Hz), <b>LOW</b> et <b>HIGH</b> ③ montent ou baissent graves et aigus, et <b>REV</b> et <b>ECHO</b> ④ lui donnent de la salle et de l’écho.</span></li>
+        <li style="margin:0 0 18px"><span class="tr"><b>🎧</b> ⑥ vous permet de vous entendre pendant que vous jouez, <b>seulement avec des écouteurs</b> : avec des haut-parleurs, le micro s’entend lui-même et siffle. <b>CAL</b> ⑦ mesure combien de temps met votre son à revenir, pour que l’enregistrement sorte aligné. Comment vous enregistrer avec l’accompagnement : <a href="#sc-console-mic">MIC et ⏺ REC</a>.</span></li>
+        <li style="margin:0 0 18px"><span class="tr"><b>L·R</b> ⑧ est la balance des haut-parleurs, et <b>REV · ECHO · TONE · WARM</b> ⑨ sont les mêmes boutons que sur le Keyboard : ce que vous bougez ici bouge là-bas.</span></li>
+        <li style="margin:0 0 18px"><span class="tr"><b>Le fader doré</b> ⑩ est le volume total de la suite ; les enregistrements <a href="#wav-guardar-lo-que-estas-oyendo">⬤ wav</a> sortent aussi à ce niveau. <b>MUTE</b> ⑪ coupe tout.</span></li>
       </ul>
       <p><span class="tr"><b>Comment savoir que c’est réussi :</b> quand vous montez le fader doré, tout ce qui sonne monte, et le chiffre en dessous change.</span></p>
+      </div>
+      </div>
+      <p style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin:-2px 0 12px"><span class="tr">MIC : ① ON · ② pan et Low cut · ③ graves et aigus · ④ réverbération et écho · ⑤ volume · ⑥ écouteurs · ⑦ CAL — MASTER : ⑧ L·R · ⑨ REV, ECHO, TONE, WARM · ⑩ volume total · ⑪ MUTE.</span></p>
     </div>
 
     <div class="spec">
@@ -310,56 +315,35 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="specs">
 
     <div class="spec">
-      <h3 id="la-oreja"><span class="tr">L’oreille 🎓</span></h3>
-      <p><span class="tr">À côté du titre de chaque application se trouve un 🎓. Un clic le réveille (il pulse doucement en violet : le coach écoute) ou l’endort — un seul état pour toute la suite. Le clic droit choisit le coach qui vous accompagne : aujourd’hui le Suite Coach ; Salieri arrivera avec son propre caractère.</span></p>
+      <h3 id="la-oreja"><span class="tr">Ouvrir le Coach · l’oreille 🎓 et le bouton ⊞ coach</span></h3>
+      <p><span class="tr">Le Coach a deux parties : le <b>petit message</b>, qui apparaît là où vous travaillez, et la <b>fenêtre Coach</b>, où l’on lit tranquillement. Les deux se commandent depuis la barre du haut de chaque application.</span></p>
+      <p><span class="tr"><b>Pour l’ouvrir :</b> appuyez sur <b>⊞ coach</b> ② dans la barre du haut du Score, du Keyboard, de la Console ou du Player. La fenêtre Coach s’ouvre à part.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-abrir.png" alt="La barra de arriba del Score con la oreja 🎓 y el botón ⊞ coach marcados" width="2074" height="160" loading="lazy" style="display:block;width:100%;height:auto;max-width:1037px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① l’oreille 🎓 · ② ⊞ coach.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>L’oreille 🎓</b> ① : un clic la réveille ou l’endort. Réveillée, elle bat doucement en violet : le Coach écoute et vous prévient. Endormie, il ne dit rien. Ce que vous choisissez dans une application vaut pour toutes.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⊞ coach</b> ② : ouvre la fenêtre Coach, avec ses onglets (voir <a href="coach.html#la-ventana">La fenêtre Coach</a>).</span></li>
+      </ul>
+      <p><span class="tr"><b>Comment savoir que c’est réussi :</b> l’oreille bat en violet et la fenêtre Coach s’ouvre avec le salut du Coach.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="el-mensajito"><span class="tr">Le petit message</span></h3>
-      <p><span class="tr">Quand il se passe quelque chose qui mérite d’être dit (par exemple, vous avez écrit une note après le début et le Score a complété la mesure avec des silences), un message compact apparaît à l’endroit même où vous avez déposé la note. Il reste jusqu’à ce que vous le fermiez : ✕, un clic à l’extérieur, ou son 🎓 — qui ouvre la mini-leçon complète dans l’application Coach.</span></p>
+      <h3 id="coach-idioma"><span class="tr">Qui vous accompagne et la langue · clic droit sur 🎓</span></h3>
+      <p><span class="tr">Un <b>clic droit</b> sur l’oreille 🎓 ouvre un petit menu avec deux choses : qui vous accompagne et dans quelle langue parle toute la suite.</span></p>
+      <p><span class="tr"><b>Pour l’ouvrir :</b> faites un clic droit sur 🎓 ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-menu.png" alt="El menú del clic derecho en la oreja 🎓: ELEGIR COACH con Suite Coach y Salieri, e IDIOMA con los cinco idiomas" width="560" height="504" loading="lazy" style="display:block;width:100%;height:auto;max-width:280px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① clic droit sur 🎓 · ② CHOISIR LE COACH · ③ LANGUE.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>CHOISIR LE COACH</b> ② : le <b>Suite Coach</b> est patient et vous guide pas à pas même si vous ne connaissez pas la musique. <b>Salieri</b> est le maître exigeant, pour ceux qui savent déjà (voir <a href="coach.html#avanzado">Étude avancée</a>).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>LANGUE</b> ③ : Español, English, Français, Nederlands ou Deutsch. Elle vaut pour toutes les applications, et les <b>?</b> ouvrent le guide dans cette langue.</span></li>
+      </ul>
+      <p><span class="tr"><b>Comment savoir que c’est réussi :</b> la coche ✓ reste sur ce que vous avez choisi, et les textes des applications changent de langue.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="la-app-tres-pestanas"><span class="tr">L’application : trois onglets</span></h3>
-      <p><span class="tr"><b>🎓 Coach</b> : le journal de la session (ce qu’il vous a dit, avec l’heure) et les fiches des coachs parmi lesquels choisir. <b>🎻 Orchestration</b> : la bibliothèque d’instruments de la suite, avec les familles, les tessitures et les registres. <b>📖 Classroom</b> : les mini-leçons à lire tranquillement — elle s’enrichit à chaque nouveau conseil.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="el-primer-consejo"><span class="tr">Le premier conseil</span></h3>
-      <p><span class="tr">« La mesure est toujours complète » : si votre note entre sur le temps 3, les temps précédents sont complétés par des silences — le coach vous montre lesquels il a placés et pourquoi les silences comptent aussi. Lisez-le en entier dans la Classroom ou dans la <a href="index.html#aula">leçon du site</a>.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="el-juego-de-composicion"><span class="tr">Le jeu de composition</span></h3>
-      <p><span class="tr">La Classe du Coach propose une fiche par niveau. Vous l’ouvrez, elle vous demande votre nom une seule fois — tous les exercices suivants en héritent — et vous remet votre propre fichier. À partir de là, vous écrivez : le jeu consiste à composer une pièce entière, une voix à la fois.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="una-etapa-por-vez"><span class="tr">Une étape à la fois</span></h3>
-      <p><span class="tr">La mélodie du haut est le modèle et elle est verrouillée : c’est la référence, elle n’est pas faite pour être modifiée. Lorsque vous complétez les voix d’une étape, le Coach vous le dit et le travail s’agrandit de lui-même vers la partie suivante. Rien à chercher dans un menu.</span></p>
-    </div>
-
-    <figure style="grid-column:1/-1;margin:6px 0 4px">
-      <video src="../../suite/media/coach-ejercicio-melodias.mp4" autoplay muted loop playsinline preload="metadata" style="width:100%;max-width:720px;display:block;border:1px solid var(--border);border-radius:var(--rad)"></video>
-      <figcaption class="small" style="color:var(--textm);margin-top:8px;max-width:720px">
-        
-        <span class="tr">Le jeu de composition en action : la mélodie modèle en haut (verrouillée), votre canal en dessous, où vous écrivez note par note. Ouvrez-le depuis 🎓 → <b>Classroom</b> → <i>Open the lesson in the Score</i>. Il est facultatif ; la suite fonctionne de la même façon sans lui.</span>
-      </figcaption>
-    </figure>
-
-    <div class="spec">
-      <h3 id="lo-que-el-coach-te-avisa"><span class="tr">Ce que signale le Coach</span></h3>
-      <p><span class="tr">Pendant que vous écrivez des mélodies, il signale les sauts difficiles — le triton, la septième, le grand saut laissé sans compensation — et indique si la phrase revient à la tonique. À partir des duos, il surveille aussi ce qui se passe entre les voix : <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">quintes</a> et <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Le livre — pour aller plus loin">octaves</a> parallèles, croisements. Ce sont des avertissements : ils ne vous empêchent jamais d’écrire.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="guardar-y-volver"><span class="tr">Enregistrer et reprendre</span></h3>
-      <p><span class="tr">Votre progression voyage à l’intérieur du fichier, si bien que vous enregistrez et reprenez quand vous le souhaitez : à la réouverture, le Coach sait à quelle étape vous étiez et ne répète pas ce que vous avez déjà entendu. À chaque jalon, un Save as en vaut la peine — il vous laisse un point de retour pour chaque partie du parcours.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="la-estrella"><span class="tr">L’étoile</span></h3>
-      <p><span class="tr">Quand la dernière étape se termine, le Coach fait le bilan de tout le parcours et vous décerne une ★ à côté de votre nom, dans le fichier lui-même. Elles s’accumulent d’un exercice à l’autre.</span></p>
+      <h3 id="coach-pagina"><span class="tr">Tout le reste, sur la page du Coach</span></h3>
+      <p><span class="tr">La fenêtre Coach et ses onglets, ce que le Coach vous signale pendant que vous écrivez, le jeu de composition du Niveau 1 et l’étude avancée — contrepoint, harmonie, orchestration et composition — se trouvent sur la <a href="coach.html">page du Coach</a>, qui grandit à chaque version.</span></p>
+      <p><a class="card-link" href="coach.html"><span class="tr">Aller à la page du Coach →</span></a></p>
     </div>
 
     <div class="spec">
@@ -2645,11 +2629,38 @@ document.addEventListener('DOMContentLoaded',function(){
 
     <div class="spec">
       <h3 id="player-roll"><span class="tr">Comment lire le Score Roll</span></h3>
-      <p><span class="tr">Chaque <b>tiret est une note jouée</b> : sa longueur est sa durée, sa hauteur est la hauteur du son et sa <b>couleur</b> est la piste (sur un piano, une main par couleur). Quand une note se répète — les croches d’un accompagnement —, elle apparaît comme une <b>rangée de tirets</b>, un par attaque ; le petit espace entre eux est la respiration que le fichier MIDI laisse entre une note et la suivante, et non un silence écrit. Les <b>fines lignes verticales</b> sont les barres de mesure, numérotées en bas comme dans la partition : l’anacrouse est la mesure <b>0</b>. L’horloge du bas affiche toujours le temps et <b>mesure:temps</b>.</span></p>
-      <figure style="margin:14px 0 2px;overflow-x:auto">
-        <img src="../../suite/ug-player-roll-copista.webp" alt="El Score Roll del Player con la mano izquierda en corcheas repetidas (filas de rayitas), las barras de compás numeradas y el copista abierto sobre un Re4" style="display:block;width:100%;max-width:720px;border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Les rangées de tirets sont des croches répétées ; la ligne marquée 15 est la barre de mesure de la mesure 15. Le copiste est ouvert sur l’une de ces croches.</span></figcaption>
-      </figure>
+      <p><span class="tr">Le Score Roll, c’est l’œuvre dessinée : chaque note est un petit trait. Le temps va de gauche à droite ; de bas en haut, les notes vont du grave à l’aigu. Et chaque trait peut être cliqué avec la souris pour savoir quelle note c’est et la corriger.</span></p>
+      <p><span class="tr"><b>Pour le voir :</b> ouvrez le Player avec le bouton <b>⊞ player</b> (il se trouve dans le Score, le Keyboard, la Console et la fenêtre Coach) et chargez un <b>.mid</b> ou un <b>.mmf</b> dans <b>LOAD</b>. Le Score Roll le dessine aussitôt.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pl-roll.png" alt="El Score Roll del Player con el Minueto en Sol: las rayitas de las notas, las barras de compás numeradas, el cursor, el reloj y los botones OBRA, MOVIMIENTO y EXPORTAR" width="1818" height="816" loading="lazy" style="display:block;width:100%;height:auto;max-width:909px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① une note · ② la barre de mesure et son numéro · ③ le curseur · ④ l’horloge · ⑤ ŒUVRE et MOUVEMENT · ⑥ EXPORTER.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Un trait est une note</b> ① : sa longueur est sa durée, sa hauteur est la note jouée et sa couleur est la piste (au piano, une main par couleur). Une note répétée — les croches d’un accompagnement — apparaît comme une rangée de traits, un par attaque.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Les lignes verticales</b> ② sont les barres de mesure, numérotées en bas comme dans la partition. Si l’œuvre commence par une anacrouse, cette mesure est la mesure <b>0</b>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Le curseur</b> ③ indique où en est la musique. Un clic sur un endroit vide l’y amène ; faites glisser son <b>▼</b> pour parcourir l’œuvre.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>L’horloge</b> ④ indique le temps, la <b>mesure:temps</b> et la durée totale.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>ŒUVRE</b> et <b>MOUVEMENT</b> ⑤ choisissent ce que vous voyez : toute l’œuvre ou un seul mouvement. <b>EXPORTER</b> ⑥ enregistre une partie (voir <a href="#player-export">⭳ export</a>).</span></li>
+      </ul>
+      <p><span class="tr">Les traits sont petits : pour en cliquer un avec la souris, agrandissez d’abord avec <b>Ctrl + molette</b> sur le roll (voir <a href="#player-navegar">Se déplacer dans le rouleau</a>).</span></p>
+      <p><span class="tr"><b>Comment savoir que c’est réussi :</b> quand vous appuyez sur ▶, le curseur avance et les traits qu’il croise sont les notes que vous entendez.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="player-copista"><span class="tr">Le copiste · cliquer une note pour savoir ce qu’elle est et la corriger</span></h3>
+      <p><span class="tr">Un fichier MIDI garde comment la musique a sonné, pas comment elle s’écrit. Le copiste est la fenêtre qui vous dit quelle note est chaque trait et vous permet de la corriger : son nom, sa hauteur, sa durée et la force avec laquelle elle sonne.</span></p>
+      <p><span class="tr"><b>Pour l’ouvrir :</b> cliquez sur un trait ① du Score Roll. La fenêtre <b>NOTE · CORRECTION DU COPISTE</b> s’ouvre et le trait est entouré d’un cadre.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pl-copista.png" alt="El copista abierto sobre un Re4 del Minueto en Sol, con la rayita marcada en el Score Roll y los botones Altura, Octava, Deletreo, escuchar, borrar, Duración y Velocity" width="1170" height="764" loading="lazy" style="display:block;width:100%;height:auto;max-width:585px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① la note cliquée · ② son nom · ③ HAUTEUR · ④ OCTAVE · ⑤ ORTHOGRAPHE · ⑥ écouter et supprimer · ⑦ DURÉE · ⑧ VELOCITY.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Le nom</b> ② : la note avec son octave (Ré4 est le Ré juste au-dessus du Do central du piano). À côté, sa place dans le réseau pythagoricien <b>[quintes, octaves]</b> et sa fréquence en Hz. En dessous : la piste, l’instrument, quand elle sonne et combien de temps.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>HAUTEUR</b> ③ : les <b>+</b> montent et les <b>−</b> descendent. <b>T</b> = un ton. <b>L</b> = limma, le demi-ton qui <b>change la lettre</b> (Do → Si). <b>A</b> = apotome, le demi-ton qui <b>garde la lettre</b> et ajoute l’altération (Ré → Ré♯). <b>K</b> = un comma : la note voisine par comma (La♭ +K = Sol♯).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>OCTAVE</b> ④ : <b>−8va</b> et <b>+8va</b> déplacent la note d’une octave vers le bas ou vers le haut.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>ORTHOGRAPHE</b> ⑤ : <b>♯↔♭</b> échange La♯ contre Si♭ (ou l’inverse). En accord pythagoricien ce sont deux notes différentes, séparées d’un comma : choisissez celle que la musique demande.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>♪ écouter</b> ⑥ joue la note seule. <b>✕ supprimer</b> la retire de la copie (un MIDI apporte parfois des notes en trop).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>DURÉE</b> ⑦ : <b>÷2</b> la moitié, <b>×2</b> le double, <b>−10%</b> et <b>+10%</b> pour les réglages fins. <b>l.v.</b> = laisser vibrer : la note ne s’éteint pas.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>VELOCITY</b> ⑧ : la force avec laquelle la note sonne, de 1 (très doux) à 127 (très fort).</span></li>
+      </ul>
+      <p><span class="tr">Pour corriger beaucoup de notes à la fois : <b>Maj + glisser</b> sur le roll prend tout un passage et lui applique la même chose. La fenêtre se ferme avec <b>⊗</b>.</span></p>
+      <p><span class="tr"><b>Comment savoir que c’est réussi :</b> chaque changement sonne aussitôt, le nom se met à jour et le mot <b>modifié</b> apparaît. La correction voyage dans le MMF quand vous l’enregistrez.</span></p>
     </div>
 
     <div class="spec">
@@ -2665,11 +2676,6 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="spec">
       <h3 id="player-export"><span class="tr">⭳ export · enregistrer par parties</span></h3>
       <p><span class="tr">Le bouton <b>⭳ export</b> de l’en-tête du rouleau ouvre trois chemins. <b>Export by instrument…</b> : cochez les pistes voulues (par exemple, une seule main) et l’<b>étendue</b> : <b>Work</b>, <b>Visible range</b> ou <b>A–B section</b> (affichée lorsque des repères A et B existent). <b>Export selection</b> : les notes choisies avec Shift + glisser. <b>Export A–B section</b> : toutes les pistes entre A et B. <b>split voices</b> sépare un canal polyphonique en voix aiguë, médiane et grave. Chaque chemin télécharge un .mmf.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="player-copista"><span class="tr">Le copiste · corriger une note</span></h3>
-      <p><span class="tr">Un <b>clic sur une note</b> ouvre le copiste : son nom, sa place dans le réseau <b>[quintes, octaves]</b> et sa fréquence. Les boutons de hauteur sont sur deux rangées, <b>+</b> en haut et <b>−</b> en bas : <b>T</b> = ton · <b>L</b> = limma, le demi-ton diatonique, <b>la lettre change</b> (Do → Si) · <b>A</b> = apotome, le demi-ton chromatique, <b>la lettre reste</b> (Ré → Ré♯) · <b>K</b> = comma : le <b>voisin de comma</b> (La♭ +K = Sol♯). Ce sont deux notes différentes ; la limite est une double altération. <b>♯↔♭</b> passe au voisin de comma selon l’altération. Aussi : <b>±8va</b>, <b>♪ listen</b>, <b>delete</b>, la <b>durée</b> (÷2, ±10 %, ×2, l.v.) et la <b>vélocité</b>. <b>Shift + glisser</b> prend tout un passage et lui applique la même chose. Ce que vous touchez est marqué comme <i>édité</i> et voyage dans le MMF.</span></p>
     </div>
 </section>
 

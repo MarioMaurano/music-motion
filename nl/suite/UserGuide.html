@@ -245,15 +245,20 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="spec">
       <h3 id="el-master"><span class="tr">MIC en MASTER · je microfoon en het volume van alles</span></h3>
       <p><span class="tr">Rechts twee vaste kolommen: <b>MIC</b>, voor je microfoon, en <b>MASTER</b>, de uitgang van de hele suite.</span></p>
-      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-master.png" alt="Las columnas MIC y MASTER de la Console" width="294" height="682" loading="lazy" style="display:block;width:100%;height:auto;max-width:294px;border:1px solid var(--border);border-radius:var(--rad)">
-      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">MIC: ① ON · ② pan en Low cut · ③ lage en hoge tonen · ④ galm en echo · ⑤ volume · ⑥ koptelefoon · ⑦ CAL — MASTER: ⑧ L·R · ⑨ REV, ECHO, TONE, WARM · ⑩ totaal volume · ⑪ MUTE.</span></figcaption></figure>
-      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
-        <li style="margin:2px 0"><span class="tr"><b>ON</b> ① zet de microfoon aan; de eerste keer vraagt de browser toestemming. <b>Low cut</b> ② haalt het gedreun van de lage tonen weg (onder 90 Hz), <b>LOW</b> en <b>HIGH</b> ③ zetten lage en hoge tonen hoger of lager, en <b>REV</b> en <b>ECHO</b> ④ geven hem zaal en echo.</span></li>
-        <li style="margin:2px 0"><span class="tr"><b>🎧</b> ⑥ laat je jezelf horen terwijl je speelt, <b>alleen met een koptelefoon</b>: met luidsprekers hoort de microfoon zichzelf en fluit hij. <b>CAL</b> ⑦ meet hoe lang je klank erover doet om terug te komen, zodat de opname gelijk uitkomt. Hoe je jezelf opneemt met de begeleiding: <a href="#sc-console-mic">MIC en ⏺ REC</a>.</span></li>
-        <li style="margin:2px 0"><span class="tr"><b>L·R</b> ⑧ is de balans van de luidsprekers, en <b>REV · ECHO · TONE · WARM</b> ⑨ zijn dezelfde draaiknoppen als op het Keyboard: wat je hier verschuift, schuift daar mee.</span></li>
-        <li style="margin:2px 0"><span class="tr"><b>De gouden fader</b> ⑩ is het totale volume van de suite; ook de opnamen van <a href="#wav-guardar-lo-que-estas-oyendo">⬤ wav</a> komen op dat niveau uit. <b>MUTE</b> ⑪ zet alles stil.</span></li>
+      <!-- 2026-11-20 (Mario): la imagen es alta y angosta; la lista va a su lado para no dejar el espacio vacío (en el teléfono se apilan) -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px 26px;align-items:flex-start;margin:10px 0 12px">
+      <figure style="margin:0;flex:none"><img src="../../suite/ug-co-master.png" alt="Las columnas MIC y MASTER de la Console" width="294" height="682" loading="lazy" style="display:block;width:100%;height:auto;max-width:294px;border:1px solid var(--border);border-radius:var(--rad)"></figure>
+      <div style="flex:1 1 260px;min-width:0">
+      <ul style="margin:6px 0 22px 22px;padding:0;line-height:1.75">
+        <li style="margin:0 0 18px"><span class="tr"><b>ON</b> ① zet de microfoon aan; de eerste keer vraagt de browser toestemming. <b>Low cut</b> ② haalt het gedreun van de lage tonen weg (onder 90 Hz), <b>LOW</b> en <b>HIGH</b> ③ zetten lage en hoge tonen hoger of lager, en <b>REV</b> en <b>ECHO</b> ④ geven hem zaal en echo.</span></li>
+        <li style="margin:0 0 18px"><span class="tr"><b>🎧</b> ⑥ laat je jezelf horen terwijl je speelt, <b>alleen met een koptelefoon</b>: met luidsprekers hoort de microfoon zichzelf en fluit hij. <b>CAL</b> ⑦ meet hoe lang je klank erover doet om terug te komen, zodat de opname gelijk uitkomt. Hoe je jezelf opneemt met de begeleiding: <a href="#sc-console-mic">MIC en ⏺ REC</a>.</span></li>
+        <li style="margin:0 0 18px"><span class="tr"><b>L·R</b> ⑧ is de balans van de luidsprekers, en <b>REV · ECHO · TONE · WARM</b> ⑨ zijn dezelfde draaiknoppen als op het Keyboard: wat je hier verschuift, schuift daar mee.</span></li>
+        <li style="margin:0 0 18px"><span class="tr"><b>De gouden fader</b> ⑩ is het totale volume van de suite; ook de opnamen van <a href="#wav-guardar-lo-que-estas-oyendo">⬤ wav</a> komen op dat niveau uit. <b>MUTE</b> ⑪ zet alles stil.</span></li>
       </ul>
       <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je de gouden fader hoger zet, wordt alles wat klinkt luider, en het getal eronder verandert.</span></p>
+      </div>
+      </div>
+      <p style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin:-2px 0 12px"><span class="tr">MIC: ① ON · ② pan en Low cut · ③ lage en hoge tonen · ④ galm en echo · ⑤ volume · ⑥ koptelefoon · ⑦ CAL — MASTER: ⑧ L·R · ⑨ REV, ECHO, TONE, WARM · ⑩ totaal volume · ⑪ MUTE.</span></p>
     </div>
 
     <div class="spec">
@@ -310,56 +315,35 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="specs">
 
     <div class="spec">
-      <h3 id="la-oreja"><span class="tr">Het oor 🎓</span></h3>
-      <p><span class="tr">Naast de titel van elke app staat een 🎓. Eén klik wekt hem (hij pulseert zacht in violet: de coach luistert) of laat hem slapen — één toestand voor de hele suite. Met een rechtsklik kies je welke coach je vergezelt: vandaag de Suite Coach; Salieri komt later met zijn eigen karakter.</span></p>
+      <h3 id="la-oreja"><span class="tr">De Coach openen · het oor 🎓 en de knop ⊞ coach</span></h3>
+      <p><span class="tr">De Coach heeft twee delen: het <b>berichtje</b>, dat verschijnt waar je aan het werk bent, en het <b>Coach-venster</b>, waar je rustig leest. Je bedient ze allebei vanuit de bovenste balk van elke app.</span></p>
+      <p><span class="tr"><b>Om hem te openen:</b> druk op <b>⊞ coach</b> ② in de bovenste balk van de Score, het Keyboard, de Console of de Player. Het Coach-venster opent apart.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-abrir.png" alt="La barra de arriba del Score con la oreja 🎓 y el botón ⊞ coach marcados" width="2074" height="160" loading="lazy" style="display:block;width:100%;height:auto;max-width:1037px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① het oor 🎓 · ② ⊞ coach.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Het oor 🎓</b> ①: één klik maakt het wakker of laat het slapen. Wakker klopt het zacht in violet: de Coach luistert en meldt je dingen. In slaap zegt hij niets. Wat je in één app kiest, geldt voor alle.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>⊞ coach</b> ②: opent het Coach-venster, met zijn tabbladen (zie <a href="coach.html#la-ventana">Het Coach-venster</a>).</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het oor klopt in violet en het Coach-venster opent met de begroeting van de Coach.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="el-mensajito"><span class="tr">Het berichtje</span></h3>
-      <p><span class="tr">Wanneer er iets gebeurt dat het vertellen waard is (bijvoorbeeld: je schreef een noot na het begin en de Score vulde de maat aan met rusten), verschijnt er een compact bericht precies waar je de noot neerzette. Het blijft staan tot je het sluit: ✕, een klik erbuiten, of zijn 🎓 — dat de volledige miniles in de Coach-app opent.</span></p>
+      <h3 id="coach-idioma"><span class="tr">Wie je begeleidt en de taal · rechtsklik op 🎓</span></h3>
+      <p><span class="tr">Een <b>rechtsklik</b> op het oor 🎓 opent een kort menu met twee dingen: wie je begeleidt en in welke taal de hele suite spreekt.</span></p>
+      <p><span class="tr"><b>Om het te openen:</b> rechtsklik op 🎓 ①.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-co-menu.png" alt="El menú del clic derecho en la oreja 🎓: ELEGIR COACH con Suite Coach y Salieri, e IDIOMA con los cinco idiomas" width="560" height="504" loading="lazy" style="display:block;width:100%;height:auto;max-width:280px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① rechtsklik op 🎓 · ② COACH KIEZEN · ③ TAAL.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>COACH KIEZEN</b> ②: de <b>Suite Coach</b> is geduldig en begeleidt je stap voor stap, ook als je geen muziek kent. <b>Salieri</b> is de veeleisende meester, voor wie al weet (zie <a href="coach.html#avanzado">Gevorderde studie</a>).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>TAAL</b> ③: Español, English, Français, Nederlands of Deutsch. Ze geldt voor alle apps, en de <b>?</b> openen de handleiding in die taal.</span></li>
+      </ul>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> het vinkje ✓ blijft staan bij wat je koos, en de teksten van de apps veranderen van taal.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="la-app-tres-pestanas"><span class="tr">De app: drie tabbladen</span></h3>
-      <p><span class="tr"><b>🎓 Coach</b>: het sessielogboek (wat hij je vertelde, met tijdstip) en de coachkaarten om uit te kiezen. <b>🎻 Orchestration</b>: de instrumentenbibliotheek van de suite, met families, omvang en regimes. <b>📖 Classroom</b>: de minilessen om rustig te lezen — ze groeit met elk nieuw advies.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="el-primer-consejo"><span class="tr">Het eerste advies</span></h3>
-      <p><span class="tr">„De maat klopt altijd”: als je noot op tel 3 inzet, worden de vorige tellen aangevuld met rusten — de coach toont je welke hij plaatste en waarom ook rusten meetellen. Lees het volledig in de Classroom of in de <a href="index.html#aula">les op de site</a>.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="el-juego-de-composicion"><span class="tr">Het compositiespel</span></h3>
-      <p><span class="tr">De Klas van de Coach heeft één kaart per niveau. Je opent ze, ze vraagt één keer je naam — elke latere oefening neemt die over — en geeft je je eigen bestand. Van daaruit schrijf je: het spel is een heel stuk componeren, één stem tegelijk.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="una-etapa-por-vez"><span class="tr">Eén fase tegelijk</span></h3>
-      <p><span class="tr">De melodie bovenaan is het model en is vergrendeld: ze is de referentie, niet om te bewerken. Wanneer je de stemmen van een fase voltooit, zegt de Coach het je en groeit het werk vanzelf naar het volgende deel. Je hoeft niets in een menu te zoeken.</span></p>
-    </div>
-
-    <figure style="grid-column:1/-1;margin:6px 0 4px">
-      <video src="../../suite/media/coach-ejercicio-melodias.mp4" autoplay muted loop playsinline preload="metadata" style="width:100%;max-width:720px;display:block;border:1px solid var(--border);border-radius:var(--rad)"></video>
-      <figcaption class="small" style="color:var(--textm);margin-top:8px;max-width:720px">
-        
-        <span class="tr">Het compositiespel in actie: de modelmelodie bovenaan (vergrendeld), jouw kanaal eronder, waar je noot voor noot schrijft. Open het via 🎓 → <b>Classroom</b> → <i>Open the lesson in the Score</i>. Het is optioneel; de suite werkt zonder net zo goed.</span>
-      </figcaption>
-    </figure>
-
-    <div class="spec">
-      <h3 id="lo-que-el-coach-te-avisa"><span class="tr">Wat de Coach signaleert</span></h3>
-      <p><span class="tr">Terwijl je melodieën schrijft, signaleert hij de moeilijke sprongen — de tritonus, de septiem, de grote sprong die niet wordt opgevangen — en of de frase terugkeert naar de tonica. Vanaf de duo's let hij ook op wat er tussen de stemmen gebeurt: parallelle <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-fifth" target="_blank" rel="noopener" title="Het boek — om verder te gaan">kwinten</a> en <a href="https://sites.google.com/view/when-sound-becomes-music/english/natural-sound/the-geometry-of-sound/the-octave" target="_blank" rel="noopener" title="Het boek — om verder te gaan">octaven</a>, kruisingen. Het zijn waarschuwingen: ze houden je nooit tegen bij het schrijven.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="guardar-y-volver"><span class="tr">Opslaan en terugkomen</span></h3>
-      <p><span class="tr">Je vorderingen reizen mee in het bestand, dus je slaat op en gaat verder wanneer je wilt: bij het heropenen weet de Coach in welke fase je was en herhaalt hij niet wat je al gehoord hebt. Bij elke mijlpaal loont een Save as — het geeft je een terugkeerpunt voor elk deel van de tocht.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="la-estrella"><span class="tr">De ster</span></h3>
-      <p><span class="tr">Wanneer de laatste fase afsluit, maakt de Coach de rekensom van de hele tocht en tekent hij je met een ★ naast je naam, in het bestand zelf. De sterren stapelen zich op over de oefeningen heen.</span></p>
+      <h3 id="coach-pagina"><span class="tr">Al de rest, op de Coach-pagina</span></h3>
+      <p><span class="tr">Het Coach-venster en zijn tabbladen, wat de Coach je meldt terwijl je schrijft, het compositiespel van Niveau 1 en de gevorderde studie — contrapunt, harmonie, orkestratie en compositie — staan op de <a href="coach.html">Coach-pagina</a>, die groeit met elke versie.</span></p>
+      <p><a class="card-link" href="coach.html"><span class="tr">Naar de Coach-pagina →</span></a></p>
     </div>
 
     <div class="spec">
@@ -2645,11 +2629,38 @@ document.addEventListener('DOMContentLoaded',function(){
 
     <div class="spec">
       <h3 id="player-roll"><span class="tr">Hoe je de Score Roll leest</span></h3>
-      <p><span class="tr">Elk <b>streepje is een gespeelde noot</b>: de lengte is hoe lang ze duurt, de hoogte is de toonhoogte en de <b>kleur</b> is de track (bij een piano één hand per kleur). Wanneer een noot zich herhaalt — de achtsten van een begeleiding — verschijnt ze als een <b>rij streepjes</b>, één per aanslag; het kleine gat ertussen is de adem die het MIDI-bestand tussen de ene noot en de volgende laat, geen geschreven rust. De <b>dunne verticale lijnen</b> zijn de maatstrepen, onderaan genummerd zoals in de partituur: de opmaat is maat <b>0</b>. De klok onderaan toont altijd de tijd en <b>maat:tel</b>.</span></p>
-      <figure style="margin:14px 0 2px;overflow-x:auto">
-        <img src="../../suite/ug-player-roll-copista.webp" alt="El Score Roll del Player con la mano izquierda en corcheas repetidas (filas de rayitas), las barras de compás numeradas y el copista abierto sobre un Re4" style="display:block;width:100%;max-width:720px;border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">De rijen streepjes zijn herhaalde achtsten; de lijn met 15 is de maatstreep van maat 15. De kopiist staat open op een van die achtsten.</span></figcaption>
-      </figure>
+      <p><span class="tr">De Score Roll is het stuk als tekening: elke noot is een streepje. De tijd loopt van links naar rechts; van onder naar boven gaan de noten van laag naar hoog. En op elk streepje kun je met de muis klikken om te zien welke noot het is en om ze te verbeteren.</span></p>
+      <p><span class="tr"><b>Om hem te zien:</b> open de Player met de knop <b>⊞ player</b> (die staat in de Score, het Keyboard, de Console en het Coach-venster) en laad een <b>.mid</b> of een <b>.mmf</b> in <b>LOAD</b>. De Score Roll tekent het meteen.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pl-roll.png" alt="El Score Roll del Player con el Minueto en Sol: las rayitas de las notas, las barras de compás numeradas, el cursor, el reloj y los botones OBRA, MOVIMIENTO y EXPORTAR" width="1818" height="816" loading="lazy" style="display:block;width:100%;height:auto;max-width:909px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① een noot · ② de maatstreep en haar nummer · ③ de cursor · ④ de klok · ⑤ WERK en DEEL · ⑥ EXPORTEREN.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Een streepje is een noot</b> ①: de lengte is hoe lang ze duurt, de hoogte is de toonhoogte en de kleur is de track (bij piano één hand per kleur). Een herhaalde noot — de achtsten van een begeleiding — verschijnt als een rij streepjes, één per aanslag.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De verticale lijnen</b> ② zijn de maatstrepen, onderaan genummerd zoals in de partituur. Begint het stuk met een opmaat, dan is die maat maat <b>0</b>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De cursor</b> ③ toont waar de muziek is. Een klik op een lege plek brengt hem daarheen; sleep zijn <b>▼</b> om door het stuk te gaan.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>De klok</b> ④ toont de tijd, de <b>maat:tel</b> en de totale duur.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>WERK</b> en <b>DEEL</b> ⑤ kiezen wat je ziet: het hele stuk of één deel. <b>EXPORTEREN</b> ⑥ bewaart een stuk ervan (zie <a href="#player-export">⭳ export</a>).</span></li>
+      </ul>
+      <p><span class="tr">De streepjes zijn klein: om er een met de muis aan te klikken, zoom je eerst in met <b>Ctrl + scrollwiel</b> boven de roll (zie <a href="#player-navegar">Bewegen over de rol</a>).</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> als je op ▶ drukt, beweegt de cursor en de streepjes die hij kruist zijn de noten die je hoort.</span></p>
+    </div>
+
+    <div class="spec">
+      <h3 id="player-copista"><span class="tr">De kopiist · klik op een noot om te zien wat ze is en ze te verbeteren</span></h3>
+      <p><span class="tr">Een MIDI-bestand bewaart hoe de muziek klonk, niet hoe ze geschreven wordt. De kopiist is het venster dat je zegt welke noot elk streepje is en waarmee je ze kunt verbeteren: haar naam, haar hoogte, hoe lang ze duurt en hoe luid ze klinkt.</span></p>
+      <p><span class="tr"><b>Om het te openen:</b> klik op een streepje ① in de Score Roll. Het venster <b>NOOT · CORRECTIE VAN DE KOPIIST</b> gaat open en het streepje krijgt een kader.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-pl-copista.png" alt="El copista abierto sobre un Re4 del Minueto en Sol, con la rayita marcada en el Score Roll y los botones Altura, Octava, Deletreo, escuchar, borrar, Duración y Velocity" width="1170" height="764" loading="lazy" style="display:block;width:100%;height:auto;max-width:585px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① de aangeklikte noot · ② haar naam · ③ TOONHOOGTE · ④ OCTAAF · ⑤ SPELLING · ⑥ beluisteren en verwijderen · ⑦ DUUR · ⑧ VELOCITY.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>De naam</b> ②: de noot met haar octaaf (D4 is de D net boven de centrale C van de piano). Ernaast haar plaats in het Pythagoreïsche rooster <b>[kwinten, octaven]</b> en haar frequentie in Hz. Eronder: de track, het instrument, wanneer ze klinkt en hoe lang.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>TOONHOOGTE</b> ③: de <b>+</b> gaan omhoog en de <b>−</b> omlaag. <b>T</b> = een hele toon. <b>L</b> = limma, de halve toon die <b>de letter verandert</b> (C → B). <b>A</b> = apotome, de halve toon die <b>de letter houdt</b> en het voorteken toevoegt (D → D♯). <b>K</b> = een komma: de buurnoot op een komma (A♭ +K = G♯).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>OCTAAF</b> ④: <b>−8va</b> en <b>+8va</b> verplaatsen de noot een octaaf omlaag of omhoog.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>SPELLING</b> ⑤: <b>♯↔♭</b> wisselt A♯ voor B♭ (of omgekeerd). In de Pythagoreïsche stemming zijn dat twee verschillende noten, een komma uit elkaar: kies degene die de muziek vraagt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>♪ beluisteren</b> ⑥ speelt de noot alleen. <b>✕ verwijderen</b> haalt ze uit de kopie (een MIDI-bestand brengt soms noten te veel mee).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>DUUR</b> ⑦: <b>÷2</b> de helft, <b>×2</b> het dubbele, <b>−10%</b> en <b>+10%</b> voor fijne aanpassingen. <b>l.v.</b> = laten klinken: de noot wordt niet gedempt.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>VELOCITY</b> ⑧: hoe luid de noot klinkt, van 1 (heel zacht) tot 127 (heel luid).</span></li>
+      </ul>
+      <p><span class="tr">Om veel noten tegelijk te verbeteren: <b>Shift + slepen</b> over de roll neemt een hele passage en past er hetzelfde op toe. Het venster sluit je met <b>⊗</b>.</span></p>
+      <p><span class="tr"><b>Zo weet je dat het gelukt is:</b> elke wijziging klinkt meteen, de naam wordt bijgewerkt en het woord <b>bewerkt</b> verschijnt. De correctie gaat mee in het MMF als je het bewaart.</span></p>
     </div>
 
     <div class="spec">
@@ -2665,11 +2676,6 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="spec">
       <h3 id="player-export"><span class="tr">⭳ export · in delen opslaan</span></h3>
       <p><span class="tr">De knop <b>⭳ export</b> in de kop van de rol opent drie wegen. <b>Export by instrument…</b>: vink de tracks aan die je wilt (bijvoorbeeld maar één hand) en het <b>bereik</b>: <b>Work</b>, <b>Visible range</b> of <b>A–B section</b> (zichtbaar wanneer er A- en B-pinnen zijn). <b>Export selection</b>: de noten die je met Shift + slepen hebt gekozen. <b>Export A–B section</b>: elke track tussen A en B. <b>split voices</b> splitst een polyfoon kanaal in hoge, middelste en lage stemmen. Elke weg downloadt een .mmf.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="player-copista"><span class="tr">De kopiist · een noot verbeteren</span></h3>
-      <p><span class="tr">Een <b>klik op een noot</b> opent de kopiist: haar naam, haar plaats in het rooster <b>[kwinten, octaven]</b> en haar frequentie. De toonhoogteknoppen staan in twee rijen, <b>+</b> boven en <b>−</b> onder: <b>T</b> = hele toon · <b>L</b> = limma, de diatonische halve toon, <b>de letter verandert</b> (c → b) · <b>A</b> = apotome, de chromatische halve toon, <b>de letter blijft</b> (d → dis) · <b>K</b> = komma: de <b>kommabuur</b> (as +K = gis). Het zijn twee verschillende noten; de grens is een dubbel voorteken. <b>♯↔♭</b> wisselt naar de kommabuur volgens het voorteken. Verder: <b>±8va</b>, <b>♪ listen</b>, <b>delete</b>, de <b>duur</b> (÷2, ±10 %, ×2, l.v.) en de <b>velocity</b>. <b>Shift + slepen</b> neemt een hele passage en past daar hetzelfde op toe. Wat je aanraakt, wordt als <i>bewerkt</i> gemarkeerd en reist mee in de MMF.</span></p>
     </div>
 </section>
 
