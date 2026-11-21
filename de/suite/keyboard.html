@@ -16,13 +16,14 @@
 <link rel="manifest" href="/icons/web.webmanifest">
 <meta name="theme-color" content="#07070e">
 <meta name="apple-mobile-web-app-title" content="Music Motion">
-<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/keyboard.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/keyboard.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/keyboard.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/keyboard.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/keyboard.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/keyboard.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/keyboard.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/keyboard.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style><link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/suite/keyboard.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/suite/keyboard.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/suite/keyboard.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/suite/keyboard.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/suite/keyboard.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
 <body>
 
 <header>
   <a href="../index.html" class="brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"> Music Motion <small>v.2</small></a>
   <nav>
-    <a href="index.html#inicio"><span class="tr">Start</span></a>
+    <a href="../index.html"><span class="tr">Start</span></a>
+    <a href="index.html#inicio"><span class="tr">Die Suite</span></a>
     <a href="index.html#apps"><span class="tr">Die Apps</span></a>
     <a href="index.html#howto"><span class="tr">Erste Schritte</span></a>
     <a href="instruments.html"><span class="tr">Instrumente</span></a>
@@ -182,12 +183,14 @@
 <footer class="foot-bar">
   <a href="../index.html" class="foot-brand" title="Music Motion — inicio del sitio / site home"><img class="brand-logo-img logo-ondark" src="../../suite/mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../../suite/mm-logo-dark.svg" alt="m Δ° m"><b>Music Motion</b></a>
   <span class="foot-id"><span class="tr">Suite in pythagoreischer Stimmung · v.2</span></span>
+  <span class="foot-id foot-nov"><a href="novedades.html" style="color:inherit"><span class="tr">Neuigkeiten</span></a></span>
   <span class="foot-rights">© 2001–2026 Music Motion · <span class="tr">alle Rechte vorbehalten</span></span>
 </footer>
 
 <script src="../../suite/mm-theme.js"></script>
 <script src="../../suite/site.js"></script>
 
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
 <script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','de');</script>
 </body>
 </html>

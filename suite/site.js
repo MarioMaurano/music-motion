@@ -44,8 +44,11 @@ try{ var ql=(/[?&]lang=(es|en)(?:&|$)/.exec(location.search)||[])[1]; var sl=ql|
     var i = href.indexOf('#');
     var ruta = i < 0 ? href : href.slice(0, i);
     var ancla = i < 0 ? ''   : href.slice(i);
-    var archivo = (ruta.split('/').pop() || '').toLowerCase();
-    var estaPagina = (ruta === '' || archivo === aqui);
+    // 2026-11-21 (un solo «Inicio» en todo el sitio): se compara la RUTA entera, no solo el nombre del archivo —
+    // «suite/index.html» desde la entrada, o «../index.html» desde la suite, son OTRA página aunque se llamen index.html.
+    var estaPagina = (ruta === '');
+    if(!estaPagina){ try{ var n1 = function(p){ p = p.toLowerCase(); return p.slice(-1) === '/' ? p + 'index.html' : p; };
+      estaPagina = n1(new URL(ruta, location.href).pathname) === n1(location.pathname); }catch(e){ estaPagina = ((ruta.split('/').pop() || '').toLowerCase() === aqui); } }
     if(!estaPagina) return;                       // enlace a otra pagina: no se toca
     var sec = null;
     try{ sec = document.querySelector(ancla || '#inicio'); }catch(e){}

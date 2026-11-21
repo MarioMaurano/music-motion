@@ -31,13 +31,14 @@
 <link rel="manifest" href="/icons/web.webmanifest">
 <meta name="theme-color" content="#07070e">
 <meta name="apple-mobile-web-app-title" content="Music Motion">
-<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/contacto.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/contacto.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/contacto.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/contacto.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/contacto.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/contacto.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
+<link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/contacto.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/contacto.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/contacto.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/contacto.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/contacto.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/contacto.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style><link rel="alternate" hreflang="es" href="https://musicmotionsuite.com/contacto.html"><link rel="alternate" hreflang="en" href="https://musicmotionsuite.com/contacto.html"><link rel="alternate" hreflang="fr" href="https://musicmotionsuite.com/fr/contacto.html"><link rel="alternate" hreflang="nl" href="https://musicmotionsuite.com/nl/contacto.html"><link rel="alternate" hreflang="de" href="https://musicmotionsuite.com/de/contacto.html"><link rel="alternate" hreflang="x-default" href="https://musicmotionsuite.com/contacto.html"><style>/* armar-idiomas: enlaces del selector con el aspecto de los botones */.langtog a{display:inline-block;color:var(--textm);font-family:var(--ff-mono);font-size:.72rem;letter-spacing:1px;padding:5px 9px;text-decoration:none;transition:all .15s}.langtog a:hover{color:var(--gold)}.langtog a.on{background:var(--gold);color:#0a0a10;font-weight:500}[data-lang="fr"] .es,[data-lang="nl"] .es,[data-lang="de"] .es{display:none}</style></head>
 <body>
 
 <header>
   <a href="index.html" class="brand" title="Music Motion"><img class="brand-logo-img logo-ondark" src="../mm-logo.svg" alt="m Δ° m"><img class="brand-logo-img logo-onlight" src="../mm-logo-dark.svg" alt="m Δ° m"> Music Motion</a>
   <nav>
     <a href="index.html"><span class="tr">Home</span></a>
+    <a href="suite/index.html" data-local="../website/index.html"><span class="tr">De Suite</span></a>
     <a href="index.html#productos"><span class="tr">Producten</span></a>
     <a href="music-motion.html"><span class="tr">Wat Music Motion is</span></a>
     <a href="colegios.html" class="nav-hi"><span class="tr">Scholen</span></a>
@@ -151,6 +152,7 @@
 // Vista local del PORTAL fuente (file://, carpeta portal\): la suite vive en ../website/.
 if(location.protocol==='file:'&&/\/portal\//i.test(location.pathname)){document.querySelectorAll('a[data-local]').forEach(function(a){a.href=a.getAttribute('data-local');});}
 </script>
+<script>/* armar-idiomas: ?lang=es|en elige el idioma al llegar desde /fr/ /nl/ /de/ */(function(){var m=location.search.match(/[?&]lang=(es|en)\b/);if(m&&window.setLang)setLang(m[1]);})();</script>
 <script>/* armar-idiomas: site.js pone lang=es|en; aqui manda el idioma de la pagina */document.documentElement.setAttribute('lang','nl');</script>
 </body>
 </html>
