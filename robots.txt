@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /rollos/
 
 Sitemap: https://musicmotionsuite.com/sitemap.xml

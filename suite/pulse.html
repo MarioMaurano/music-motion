@@ -276,6 +276,33 @@ dotsBuild(); ui();
 window._pulse={S:S,tap:tap,start:start,stop:stop,get on(){return on;}};   // para las pruebas
 })();
 </script>
+<script>
+/* 2026-11-21 (Mario, con foto del teléfono: «en el computador se ve en toda la página, pero en el teléfono ocupa más o
+   menos la mitad superior»): hay teléfonos que le dan a la página un ancho de pantalla grande (800–1000 puntos, por el
+   tamaño de pantalla elegido o por «Desktop site»); el círculo tiene tope de 380 y todo quedaba chico, arriba. En
+   pantalla táctil y vertical, si el ancho pasa de 520, la página entera se amplía hasta llenar el ancho (como en un
+   teléfono de 430) sin pasarse del alto. En la computadora y en un teléfono normal no cambia nada. */
+(function(){
+  function ajusta(){
+    var W=window.innerWidth,H=window.innerHeight,z=1;
+    var tactil=(window.matchMedia&&matchMedia('(pointer:coarse)').matches)||('ontouchstart' in window);
+    if(tactil&&H>W&&W>520&&!document.body.classList.contains('fs')&&!document.fullscreenElement) z=Math.max(1,Math.min(W/430,H/800,3));
+    var P=['.top','#iosHint','.wrap'].map(function(q){ return document.querySelector(q); }).filter(Boolean);
+    // …y al revés (Mario: «¿se puede zoom en caso que es más pequeño el teléfono?»): en un teléfono chico los mandos de
+    // abajo quedaban fuera de la pantalla. Se achica lo justo para que entren, nunca a menos de 0,8 (el círculo y los
+    // botones tienen que seguir siendo cómodos para el dedo).
+    if(z===1&&tactil&&H>W&&!document.body.classList.contains('fs')&&!document.fullscreenElement){
+      P.forEach(function(e){ e.style.zoom=''; });
+      var t=document.getElementById('tone'), fin=t?t.getBoundingClientRect().bottom+window.scrollY+10:0;
+      if(fin>H) z=Math.max(0.8,H/fin);
+    }
+    P.forEach(function(e){ e.style.zoom=(z===1?'':z); });
+    window._pulseZoom=z;   // para las pruebas
+  }
+  ajusta(); window.addEventListener('resize',ajusta); window.addEventListener('orientationchange',ajusta); document.addEventListener('fullscreenchange',ajusta);
+  var f=document.getElementById('fs'); if(f) f.addEventListener('click',function(){ setTimeout(ajusta,60); });
+})();
+</script>
 <script>(function(){/* contador de visitas: Cloudflare Web Analytics (sin cookies, sin datos personales). Solo en el sitio publicado. */if(!/(^|\.)musicmotionsuite\.com$/.test(location.hostname))return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "ba1d6f58ae754b96862a9b11c409976a"}');document.head.appendChild(s);})();</script>
 </body>
 </html>
