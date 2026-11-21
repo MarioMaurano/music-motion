@@ -60,11 +60,11 @@
   </h1>
   <p class="lead">
     
-    <span class="tr">Chaque mot en couleur est un lien vers son explication : cliquez pour la lire, et pour revenir là où vous étiez, utilisez la flèche <b>←</b> de votre navigateur (ou <b>Alt + ←</b>). Ainsi, vous ne perdez jamais le fil. Voici ce que fait chaque commande de chaque application, écrit pour un musicien ; le guide s’enrichit au rythme de la suite.</span>
+    <span class="tr">Chaque mot en couleur est un lien vers son explication : cliquez pour la lire, et pour revenir là où vous étiez, utilisez la flèche <b>←</b> de votre navigateur (ou <b>Alt + ←</b>). Ainsi, vous ne perdez jamais le fil. Voici ce que fait chaque commande de chaque application, expliqué pas à pas pour qui n’a jamais utilisé un programme de musique ; le guide s’enrichit au rythme de la suite.</span>
   </p>
   <div class="note">
     
-    <span class="tr">L’aspect technique et architectural se trouve dans le <b>Manuel</b> de la suite. Les applications fonctionnent dans le navigateur — <b>depuis n’importe quel endroit disposant d’une connexion Internet</b>, sur ordinateur, tablette ou téléphone — et se connectent entre elles par <b>mm-sync</b>.</span>
+    <span class="tr">Les applications s’ouvrent dans le navigateur — <b>depuis n’importe quel endroit disposant d’une connexion Internet</b>, sur ordinateur, tablette ou téléphone — et se connectent toutes seules entre elles. L’aspect technique se trouve dans le <b>Manuel</b> de la suite.</span>
   </div>
   <p><!-- 2026-11-21: las notas de cambios pasaron a novedades.html --><span class="tr">Les changements de chaque version — ce qui est nouveau et ce qui a été corrigé — se trouvent à part, sur la page <a href="novedades.html">Nouveautés</a>.</span></p>
 <!-- 2026-11-20 (Mario: «es difícil de encontrar print»): BUSCADOR + ÍNDICE de la guía. Se arma solo desde los h3 y
@@ -586,43 +586,6 @@ document.addEventListener('DOMContentLoaded',function(){
     </div>
 </section>
 
-<section style="--c:#b23a48">
-  <div class="app-eyebrow">⊞ Banco de cuerda</div>
-  <h1 style="font-size:1.6em">
-    
-    <span class="tr">La corde frottée.</span>
-  </h1>
-  <p class="lead">
-    
-    <span class="tr">Un laboratoire, pas encore une application de la suite : une corde physique que l’archet accroche et relâche. Il s’ouvre, se mesure lui-même (le test de contrôle) et ensuite vous écoutez. Un seul fichier, rien à installer.</span>
-  </p>
-
-  <div class="specs">
-
-    <div class="spec">
-      <h3 id="banco-las-perillas"><span class="tr">Les réglages</span></h3>
-      <p><span class="tr"><b>Bow speed</b> en cm/s : positive vers la pointe (⊓), négative vers le talon (V). <b>Weight</b> en N sur la corde (1 N ≈ 100 g), et non le poids propre de l’archet. <b>Contact point</b> β, fraction de la longueur depuis le chevalet, avec sa zone écrite en toutes lettres (ponticello · ordinario · tasto) et les cm. <b>Angle of attack</b>, l’horloge des crins : 12:00 à plat ; 11:30 et 12:30, selon le sens, donnent l’entrée sans attaque ou la morsure. <b>Knobs: run</b> laisse sonner ce que vous avez réglé ; chaque bouton de coup d’archet les déplace de lui-même pendant qu’il sonne.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="banco-la-cuerda"><span class="tr">La corde</span></h3>
-      <p><span class="tr">Sélecteur <b>Instrument</b> (violon · alto · violoncelle · contrebasse) et <b>string</b> ; au-dessus, vous lisez la note, les Hz et le rapport pythagoricien par rapport au La 440 (ré du violoncelle = 1/3, do = 4/27). <b>Provisional body</b> : sept résonances fixes pour ne pas entendre le chevalet nu ; désactivez-le pour entendre la corde seule. <b>Mute</b> : aucune, orchestre (~3 g) ou étude (~30 g).</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="banco-las-arcadas"><span class="tr">Les boutons de coup d’archet</span></h3>
-      <p><span class="tr">Par famille. <b>Strokes:</b> Détaché · No attack · Martelé · Staccato · Spiccato · Sautillé 3+1 · Tremolo. <b>Colour:</b> Flautato · Tasto · Ponticello · Light bow. <b>Finger:</b> Pizz · Fast pizz (là, les réglages s’appellent vitesse du doigt, force et point). Sous les boutons, une ligne indique ce que fait le geste ; le graphique montre les quatre courbes et l’enveloppe du son. <b>Clear</b> efface le graphique.</span></p>
-    </div>
-
-    <div class="spec">
-      <h3 id="banco-simulador-y-guardia"><span class="tr">Le simulateur et le test de contrôle</span></h3>
-      <p><span class="tr">Le <b>simulateur de toucher</b> montre la corde vue d’en haut, l’archet selon son angle et les crins qui passent ; l’anneau est le son (rayon = niveau, rugosité = brillance) et sa couleur indique le régime : sarcelle, son propre ; violet, sifflements ; rose, grincements ; doré, la corde sonne d’elle-même. Avec un son propre, il écrit la f₀ qui sonne et son écart en cents. La <b>fiche de verdict</b> résume le test de contrôle — "16/23 green · 7 pending" — : vert, c’est respecté ; rouge, c’est enfreint ; en attente, c’est une physique qui manque encore et qui est déclarée. Le tableau en dessous contient chaque ligne avec sa mesure et son seuil.</span></p>
-    </div>
-
-  </div>
-</section>
-
-
 <section style="--c:var(--blue)">
   <div class="app-eyebrow">⊞ <span class="tr">L’écran du Score</span></div>
   <h1 style="font-size:1.6em">
@@ -966,75 +929,172 @@ document.addEventListener('DOMContentLoaded',function(){
 
     <div class="spec">
       <h3 id="kb-tres-zonas"><span class="tr">Les trois zones du clavier</span></h3>
-      <p><span class="tr">Il s’ouvre et se ferme avec <b>🎹 KEYBOARD</b>, et c’est une seule bande à trois zones. À <b>gauche</b>, la manière dont vous jouez : WRITE ou LISTEN, et l’accord (System · Mode · Sens). Au <b>centre</b>, les touches, avec les flèches d’octave de part et d’autre. À <b>droite</b>, la fiche du canal dans lequel vous écrivez. Deux choses à savoir : tant que le clavier est ouvert, la <b>bande flottante</b> n’est pas disponible — elles font le même travail —, et avec le clavier fermé, le QWERTY ne doit pas écrire, si bien que le Score passe de lui-même en LISTEN.</span></p>
-      <figure style="margin:14px 0 2px;overflow-x:auto;max-width:68ch">
-        <img src="../../suite/ug-minikeyboard.png" alt="El teclado del Score: zona izquierda con WRITE/LISTEN, System, Mode y Sens; las teclas al centro; la ficha del canal activo a la derecha" style="display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">Au chargement : WRITE, système Axiom, et à droite le canal actif avec sa couleur, son volume et la grille des 32.</span></figcaption>
-      </figure>
+      <p><span class="tr">The Score’s keyboard is a strip of piano keys at the bottom of the screen. With it you write the notes into the score, or try them out before writing them.</span></p>
+      <p><span class="tr"><b>To open it:</b> press <b>🎹 KEYBOARD</b> ① on the Score bar. The same button closes it.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sk-teclado.png" alt="El botón KEYBOARD de la barra del Score y, debajo, el teclado abierto: WRITE y LISTEN a la izquierda, las teclas de C3 a C6 al centro y la ficha del canal a la derecha" width="3120" height="532" loading="lazy" style="display:block;width:100%;height:auto;max-width:1560px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① KEYBOARD · ② WRITE and LISTEN · ③ the tuning · ④ the octave arrows · ⑤ the keys · ⑥ the active channel.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>On the left</b> ② ③: how you play. <b>WRITE</b> writes and <b>LISTEN</b> only sounds; below is the tuning (SYSTEM, MODE and SENS).</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>In the centre</b> ⑤: the keys, each with the name of its note. The arrows ④ at the sides move the keyboard by an octave.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>On the right</b> ⑥: the card of the channel —the instrument— you are writing in.</span></li>
+      </ul>
+      <p><span class="tr">Two things worth knowing. With the keyboard open, the <a href="#sc-banda">floating band</a> is not available, because it does the same job. And with the keyboard closed, the computer keys do not write: the Score switches to LISTEN by itself.</span></p>
+      <p><span class="tr"><b>How you know it worked:</b> the strip of keys appears below the score and the KEYBOARD button stays lit.</span></p>
     </div>
 
     <div class="spec">
       <h3 id="kb-write-listen"><span class="tr">WRITE et LISTEN · écrire, ou simplement essayer</span></h3>
-      <p><span class="tr">En <b>WRITE</b>, les touches et le QWERTY écrivent à l’emplacement du curseur : c’est le mode de travail. En <b>LISTEN</b>, ils ne font que sonner — rien ne s’écrit —, et le clavier se recadre sur les octaves qu’utilise la pièce, avec la pastille de cadrage (Auto · 5 · 6 · 7 · 9) et la barre <b>Octave Shift</b> sous les touches. C’est le mode pour essayer un accord ou chercher une note sans toucher à la partition. De retour en WRITE, la fenêtre repart de Do3–Do6.</span></p>
+      <p><span class="tr">The two buttons on the left decide what happens when you play a key. In <b>WRITE</b> the note is written into the score, where the <a href="#sc-cursor">cursor</a> is. In <b>LISTEN</b> the note only sounds: nothing is written.</span></p>
+      <p><span class="tr"><b>To use it:</b> press <b>◉ LISTEN</b> ①. To go back to writing, press <b>WRITE</b>.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sk-listen.png" alt="El teclado en LISTEN: más octavas a la vista, el botón 8VA en Auto y la barra OCTAVE SHIFT debajo de las teclas" width="3120" height="472" loading="lazy" style="display:block;width:100%;height:auto;max-width:1560px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① LISTEN · ② 8VA, how many octaves you see · ③ OCTAVE SHIFT.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>WRITE</b> is the working mode: the on-screen keys write, and so do the computer keys.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>LISTEN</b> is for trying a chord or looking for a note without touching the score.</span></li>
+        <li style="margin:2px 0"><span class="tr">In LISTEN the keyboard shows the octaves the piece uses. The <b>8VA</b> button ② chooses how many you see: <b>Auto</b>, 5, 6, 7 or 9.</span></li>
+        <li style="margin:2px 0"><span class="tr">The <b>OCTAVE SHIFT</b> bar ③, below the keys, moves the keyboard towards the low or the high notes.</span></li>
+      </ul>
+      <p><span class="tr">When you go back to WRITE, the keyboard starts again from C3 to C6.</span></p>
+      <p><span class="tr"><b>How you know it worked:</b> in LISTEN you play a key, it sounds, and no note appears in the score.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="kb-todal"><span class="tr">TODAL · jouer par degrés, et le cycle du bouton</span></h3>
-      <p><span class="tr">Le bouton WRITE <b>passe en cycle</b> : ✏ WRITE → TODAL PLAY → TODAL WRITE → ✏ WRITE, et l’étiquette indique toujours où vous êtes. En TODAL, les touches sont étiquetées par <b>degré</b> — de I à VII dans chaque octave — et le même degré donne toujours la bonne note de la tonalité : c’est ce qui vous permet d’écrire correctement dans n’importe quelle tonalité sans savoir jouer du piano. <b>TODAL PLAY</b> ne fait que sonner, <b>TODAL WRITE</b> écrit. <b>Verr Maj</b> est un accélérateur facultatif : il active et désactive TODAL, en entrant en PLAY. Et si le Cosmic Keyboard envoie une nouvelle tonique, le Score passe de lui-même en TODAL PLAY et attend : il n’écrit pas tant que vous ne passez pas en WRITE.</span></p>
-      <figure style="margin:14px 0 2px;overflow-x:auto;max-width:68ch">
-        <img src="../../suite/ug-minikeyboard-todal.png" alt="El teclado en TODAL WRITE: las teclas rotuladas por grado, I a VII en cada octava, con el sistema Tonal activo" style="display:block;width:100%;border:1px solid var(--border);border-radius:var(--rad)">
-        <figcaption style="font-family:var(--ff-mono);font-size:.64rem;letter-spacing:.5px;color:var(--textd);margin-top:6px"><span class="tr">TODAL WRITE en Do : chaque touche porte son degré et son octave (I 3, II 3, III 3…). Changez de tonalité et les degrés restent au même endroit.</span></figcaption>
-      </figure>
+      <h3 id="kb-todal"><span class="tr">TODAL · playing by degrees</span></h3>
+      <p><span class="tr">TODAL is a way of playing <b>by degrees</b>: instead of looking for each note, you play the first degree, the second, the third… of the key of the piece. The same key always gives the right note of that key, so you can write correctly in any key without knowing how to play the piano.</span></p>
+      <p><span class="tr"><b>To open it:</b> press the <b>WRITE</b> button ① several times. Each click changes mode: ✏ WRITE → TODAL PLAY → TODAL WRITE → ✏ WRITE. The button always says which one you are in.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sk-todal.png" alt="El teclado en TODAL WRITE con el sistema Tonal: las teclas blancas rotuladas I 3, II 3, III 3 y así hasta VII, y a la izquierda SYSTEM, MODE y SENS encendidos" width="1760" height="426" loading="lazy" style="display:block;width:100%;height:auto;max-width:880px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① the button, in TODAL WRITE · ② the keys with their degree · ③ SYSTEM · ④ MODE · ⑤ SENS.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">The keys ② carry the <b>degree</b> in Roman numerals, from I to VII, and the octave number: I 3, II 3, III 3…</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>TODAL PLAY</b> only sounds. <b>TODAL WRITE</b> writes.</span></li>
+        <li style="margin:2px 0"><span class="tr">The <b>CapsLock</b> key of the computer turns TODAL on and off; it comes in as TODAL PLAY.</span></li>
+        <li style="margin:2px 0"><span class="tr">If the Cosmic Keyboard changes tonic, the Score goes into TODAL PLAY by itself and waits: it does not write until you switch to WRITE.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> the button says TODAL WRITE and each white key shows a Roman numeral. If you change key, the degrees stay in the same place.</span></p>
     </div>
 
     <div class="spec">
       <h3 id="kb-system"><span class="tr">SYSTEM · Axiom ou Tonal</span></h3>
-      <p><span class="tr"><b>Axiom</b> est l’accord pythagoricien pur, sans positions : chaque note à sa place arithmétique. <b>Tonal</b> active le système des positions — une note s’accorde selon sa fonction dans la tonalité — et c’est ce qui fait parler l’harmonie. Tant que vous êtes en Axiom, MODE et SENS restent désactivés, car ils n’ont aucun sens sans tonalité ; en passant à Tonal, SENS entre à +1.</span></p>
+      <p><span class="tr">SYSTEM chooses how the notes are tuned. They are the two buttons marked ③ in the <a href="#kb-todal">TODAL picture</a>.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Axiom</b>: pure Pythagorean tuning. Each note has its fixed place, whatever the key.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>Tonal</b>: each note is tuned according to the role it plays in the key. It is the system that makes the harmony speak.</span></li>
+      </ul>
+      <p><span class="tr">With Axiom, MODE and SENS stay off, because they only make sense when there is a key. When you switch to Tonal they come on, and SENS starts at +1.</span></p>
+      <p><span class="tr"><b>How you know it worked:</b> when you press Tonal, the MAJ and MIN buttons and the three SENS buttons are no longer greyed out.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="kb-mode-sens"><span class="tr">MODE et SENS · le mode, et à quel point la sensible est haussée</span></h3>
-      <p><span class="tr"><b>Maj</b> et <b>min</b> changent le mode de la tonalité active ; <b>min</b> ouvre aussi une petite fenêtre pour choisir le mineur <i>naturel</i>, <i>harmonique</i> ou <i>mélodique</i>. <b>SENS</b> indique de combien le degré sensible est haussé : <b>0</b> ne hausse pas la sensible, <b>+1</b> hausse le VII de son apotome — la valeur par défaut — et <b>+2</b> ajoute le comma sur les chromatiques, un effet plus marqué. La valeur voyage dans l’état tonal jusqu’au Cosmic Keyboard, qui est celui qui sonne.</span></p>
+      <h3 id="kb-mode-sens"><span class="tr">MODE and SENS · major or minor, and how far the leading note rises</span></h3>
+      <p><span class="tr">These buttons only work with SYSTEM on <b>Tonal</b>. <b>MODE</b> (④ in the <a href="#kb-todal">TODAL picture</a>) chooses whether the key is major or minor. <b>SENS</b> ⑤ chooses how far the <b>leading note</b> is raised: the seventh degree, the note that asks to reach the tonic.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sk-menor.png" alt="Al pulsar MIN se abre la ventanita MINOR con tres botones: Natural, Harmonic y Melodic" width="660" height="330" loading="lazy" style="display:block;width:100%;height:auto;max-width:330px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">Pressing MIN opens this little window with the three minor scales.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>MAJ</b>: major mode. <b>MIN</b>: minor mode; pressing it opens a little window to choose the <a href="#pop-minor">minor scale</a>: Natural, Harmonic or Melodic.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>SENS 0</b>: the leading note is not raised.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>SENS +1</b>: the leading note rises a little. This is the usual setting, and the one it starts with.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>SENS +2</b>: it rises even more, on the chromatic notes too. The effect is more marked.</span></li>
+      </ul>
+      <p><span class="tr">The sound is produced by the Cosmic Keyboard: the Score sends it these settings and it plays them.</span></p>
+      <p><span class="tr"><b>How you know it worked:</b> the button you chose stays lit.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="kb-ventana-octavas"><span class="tr">La fenêtre d’octaves</span></h3>
-      <p><span class="tr">Les flèches <b>◀ ▶</b> sur les côtés déplacent la fenêtre d’une octave, et les étiquettes à chaque extrémité indiquent où elle est arrivée (Do3 · Do6). En LISTEN, la pastille de cadrage fixe aussi 5, 6, 7 ou 9 octaves, ou revient à <b>Auto</b>, c’est-à-dire l’étendue que la pièce utilise réellement.</span></p>
+      <h3 id="kb-ventana-octavas"><span class="tr">The octave window · reaching lower or higher notes</span></h3>
+      <p><span class="tr">The keyboard shows only part of all the notes: at the start, from C3 to C6. To reach lower or higher notes you move that “window”.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">The <b>◀ ▶</b> arrows at the sides (④ in the <a href="#kb-tres-zonas">first picture</a>) move the window one octave towards the low or the high notes.</span></li>
+        <li style="margin:2px 0"><span class="tr">The names of the first and the last key tell you where it ended up: for example, C3 and C6.</span></li>
+        <li style="margin:2px 0"><span class="tr">In <a href="#kb-write-listen">LISTEN</a>, the <b>8VA</b> button sets 5, 6, 7 or 9 octaves, or goes back to <b>Auto</b>: the octaves the piece really uses.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> you press ▶ and the first key changes from C3 to C4.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="kb-canal-activo"><span class="tr">La fiche du canal actif · changer d’instrument sans rien ouvrir</span></h3>
-      <p><span class="tr">La zone de droite est le canal dans lequel vous écrivez. En haut, le <b>rail</b> : chaque canal dans sa couleur, et une touche change de canal. En dessous, la fiche : le numéro <b>CH</b>, l’<b>👁</b> qui affiche ou masque sa portée, le <b>◉</b> qui le rend muet, le nom, l’étiquette de l’instrument — cosmétique : c’est le moteur qui gouverne le patch — et le bouton rotatif <b>VOL</b>, qui se fait glisser ↕ et indique le pourcentage. Et la <b>grille des 32</b> : un clic et vous écrivez dans un autre canal, sans ouvrir CHANNELS.</span></p>
+      <h3 id="kb-canal-activo"><span class="tr">The active-channel card · which instrument you are writing for</span></h3>
+      <p><span class="tr">Each instrument of the piece has its <b>channel</b>. The right-hand zone of the keyboard shows the channel you are writing in, and lets you move to another with one click.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sk-canal.png" alt="La ficha del canal activo: la fila de colores, CH 1, el ojo, FX, el botón de silencio, el nombre Violin, el menú de instrumento, la perilla VOL en 79 % y los números del 1 al 32" width="398" height="426" loading="lazy" style="display:block;width:100%;height:auto;max-width:300px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① the row of channels · ② the number · ③ show · ④ FX · ⑤ mute · ⑥ the name · ⑦ the instrument · ⑧ the volume · ⑨ the 32 channels.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>The row of colours</b> ①: all the channels, each in its colour. One click changes channel.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>CH</b> ② is the channel number, and below it is its name ⑥.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>The eye 👁</b> ③ <a href="#sc-canal-vista">shows or hides</a> the staff of that channel.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>FX</b> ④ opens the channel’s <a href="#pop-sound-fx">Sound FX</a>: reverb, echo and other effects.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>◉</b> ⑤ <a href="#sc-canal-sonido">mutes</a> the channel, or gives it its sound back.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>The menu</b> ⑦ shows the instrument. How to choose who plays in each channel is in <a href="#sc-instrumentos">The instrument of a channel</a>.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>VOL</b> ⑧: drag the knob up or down; the number shows the percentage.</span></li>
+        <li style="margin:2px 0"><span class="tr"><b>The numbers 1 to 32</b> ⑨: one click and you are writing in that channel, without opening <a href="#pop-channels">CHANNELS</a>.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> the CH number changes and the colour stripe of the card takes the colour of the new channel.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="panel-que-es"><span class="tr">Le Panel · une seconde portée en dessous</span></h3>
-      <p><span class="tr">Bouton <b>▭ PANEL</b>. Il ouvre une seconde vue sous la partition pour que vous puissiez suivre deux choses à la fois : le soliste et la basse, la voix que vous recopiez et celle que vous écrivez. Il est mutuellement exclusif avec le clavier : ouvrir le Panel masque le clavier, et comme le QWERTY ne doit pas écrire à l’aveugle, le mode passe en LISTEN. Il naît avec le canal où se trouve le curseur, la barre qui le sépare se fait glisser pour l’agrandir ou le réduire en hauteur, et <b>✕</b> le masque.</span></p>
+      <h3 id="panel-que-es"><span class="tr">The Panel · a second view of the score</span></h3>
+      <p><span class="tr">The Panel is a second view of the score, below the first. It is for looking at two things at once: for example, the soloist above and the bass below, or the voice you are copying and the voice you are writing.</span></p>
+      <p><span class="tr"><b>To open it:</b> press <b>▭ PANEL</b> ① on the Score bar.</span></p>
+      <figure style="margin:10px 0 12px"><img src="../../suite/ug-sk-panel.png" alt="El botón PANEL de la barra y el Panel abierto debajo de la partitura del Rondo alla Turca, con su cabecera: los canales, SOLO, PRINT VIEW, el zoom y la X de cerrar" width="3120" height="1258" loading="lazy" style="display:block;width:100%;height:auto;max-width:1560px;border:1px solid var(--border);border-radius:var(--rad)">
+      <figcaption style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.5px;color:var(--teal);margin-top:4px"><span class="tr">① PANEL · ② the Panel’s channels · ③ SOLO · ④ PRINT VIEW · ⑤ the zoom · ⑥ close · ⑦ the line you can drag.</span></figcaption></figure>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">The Panel and the keyboard are never shown together: opening one hides the other. With the Panel open the Score switches to LISTEN, so that the computer keys do not write without your seeing it.</span></li>
+        <li style="margin:2px 0"><span class="tr">When it opens it shows the channel where the cursor is.</span></li>
+        <li style="margin:2px 0"><span class="tr">The line ⑦ that separates it from the score can be dragged to make it taller or shorter.</span></li>
+        <li style="margin:2px 0"><span class="tr">The <b>✕</b> ⑥ hides it.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> below the score the “PANEL VIEW · CHANNELS” row appears and, further down, the same music again.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="panel-chips"><span class="tr">Les pastilles CH · quels canaux le Panel reflète</span></h3>
-      <p><span class="tr">Chaque pastille de l’en-tête est un canal, peint dans sa propre couleur ; un clic le fait entrer dans le Panel ou l’en retire, et vous pouvez en avoir plusieurs à la fois. Vous n’avez pas à penser à les ajouter : si vous écrivez dans un canal qui n’y était pas, le Panel l’ajoute de lui-même, pour que la note que vous venez de saisir soit visible.</span></p>
+      <h3 id="panel-chips"><span class="tr">The CH buttons · which instruments show in the Panel</span></h3>
+      <p><span class="tr">In the Panel’s header there is a small button for each channel (② in the <a href="#panel-que-es">Panel picture</a>), in that channel’s colour. With them you choose which instruments show in the Panel.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">One click puts the channel in the Panel; another click takes it out. You can have several at once.</span></li>
+        <li style="margin:2px 0"><span class="tr">If you write in a channel that was not there, the Panel adds it by itself, so that you see the note you have just placed.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> the small button is highlighted and that channel’s staff appears in the Panel.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="panel-zoom"><span class="tr">Son propre zoom et son propre défilement</span></h3>
-      <p><span class="tr"><b>Ctrl + molette</b> sur le Panel change uniquement le zoom du Panel — la molette seule le fait défiler —, et le pourcentage s’affiche dans l’en-tête. La première fois qu’il s’ouvre, il reprend le zoom de la partition ; ensuite, il garde le sien, pour que vous puissiez avoir le Panel en grand au-dessus d’une petite feuille.</span></p>
+      <h3 id="panel-zoom"><span class="tr">The Panel’s zoom and scrolling</span></h3>
+      <p><span class="tr">The Panel has its own size, separate from that of the score above: you can have the Panel large and the sheet small.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Ctrl + wheel</b>, with the pointer over the Panel, changes only the Panel’s zoom. The percentage shows in the header (⑤ in the <a href="#panel-que-es">Panel picture</a>).</span></li>
+        <li style="margin:2px 0"><span class="tr">The wheel alone scrolls the Panel.</span></li>
+        <li style="margin:2px 0"><span class="tr">The first time it opens it takes the score’s zoom; after that it remembers its own.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> the percentage in the header changes and the score above does not move.</span></p>
     </div>
 
     <div class="spec">
       <h3 id="panel-solo"><span class="tr">🎧 SOLO · n’entendre que ce que vous regardez</span></h3>
-      <p><span class="tr">Le bouton demande à la Console d’isoler les canaux du Panel : S sur ceux-ci, M sur les autres. À la désactivation — ou à la fermeture du Panel — la table de mixage revient à l’état qu’elle avait, et rien de cela ne s’enregistre dans la pièce. Si vous changez les pastilles avec SOLO activé, la Console redistribue.</span></p>
+      <p><span class="tr"><b>🎧 SOLO</b> (③ in the <a href="#panel-que-es">Panel picture</a>) makes only the channels in the Panel sound. The others are silent while it is on.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">It does this through the Console, the mixing desk: it puts <b>S</b> (solo) on the Panel’s channels and <b>M</b> (mute) on the rest.</span></li>
+        <li style="margin:2px 0"><span class="tr">When you turn it off, or close the Panel, everything goes back to how it was. None of this is saved in the piece.</span></li>
+        <li style="margin:2px 0"><span class="tr">If you change the Panel’s channels with SOLO on, it adjusts by itself.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> you press play and you hear only the instruments in the Panel.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="panel-print-view"><span class="tr">🖨 PRINT VIEW · la partie de cet instrument</span></h3>
-      <p><span class="tr">Il ouvre les canaux choisis dans la vue d’impression, en lecture seule : la partie d’un instrument — ou d’un groupe — prête pour le papier ou le PDF. C’est le chemin court vers les parties : choisissez les pastilles et imprimez ce qui reste.</span></p>
+      <h3 id="panel-print-view"><span class="tr">🖨 PRINT VIEW · one instrument’s part</span></h3>
+      <p><span class="tr"><b>🖨 PRINT VIEW</b> (④ in the <a href="#panel-que-es">Panel picture</a>) shows the Panel’s channels as a sheet ready to print. It is the short way to get one instrument’s part, or a group’s.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr">Choose the channels you want with the CH buttons and press PRINT VIEW.</span></li>
+        <li style="margin:2px 0"><span class="tr">The view is read-only: you cannot edit there.</span></li>
+        <li style="margin:2px 0"><span class="tr">From there you <a href="#sc-print-pdf">print it on paper or save it as a PDF</a>.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> the sheet opens with only the instruments you chose.</span></p>
     </div>
 
     <div class="spec">
-      <h3 id="panel-editar"><span class="tr">Vous pouvez éditer dans le Panel</span></h3>
-      <p><span class="tr">Le Panel était au départ fait pour regarder, et ne l’est plus : le <b>clic droit</b> y fonctionne, avec les mêmes éditeurs — note, liaison de prolongation, nuance, geste, n-olet, tempo —, en retrouvant le vrai canal de la ligne et en s’ouvrant sous le pointeur, là où vous regardez. La sélection multiple s’y affiche aussi, avec ses cadres.</span></p>
+      <h3 id="panel-editar"><span class="tr">You can also make corrections inside the Panel</span></h3>
+      <p><span class="tr">In the Panel you can make corrections too, not only look.</span></p>
+      <ul style="margin:4px 0 12px 22px;padding:0;line-height:1.55">
+        <li style="margin:2px 0"><span class="tr"><b>Right-click</b> a note or a sign inside the Panel: the same editors as in the score open —note, slur, dynamic, tuplet, tempo—, next to the pointer.</span></li>
+        <li style="margin:2px 0"><span class="tr">The change is made in the real channel: you see it in the score above as well.</span></li>
+        <li style="margin:2px 0"><span class="tr">If you select several notes, their boxes show in the Panel too.</span></li>
+      </ul>
+      <p><span class="tr"><b>How you know it worked:</b> the change you made in the Panel appears at the same time in the score above.</span></p>
     </div>
   </div>
 </section>
