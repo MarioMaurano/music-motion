@@ -93,7 +93,7 @@
   var C=null, lang='es', libre=false, UI=null;   // 2026-10-25 (Mario): un caso libre; los demás abren con el pase de Salieri
   function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}
   function $(i){return document.getElementById(i);}
-  function scoreUrl(){return '../../apps/mm-score-page.html?demo&file=../suite/conductor/'+encodeURIComponent(C.mmf[lang]||C.mmf.es)+'&page';}
+  function scoreUrl(){return '../../apps/mm-score-page.html?demo&file=../suite/conductor/'+encodeURIComponent(C.mmf[lang]||C.mmf.es);}   // 2026-11-22 (Mario): abre en Scroll, con todas las voces a la vista; PAGE queda en el botón
   function render(){
     var T=C.text[lang], U=T.ui;
     document.documentElement.lang=lang;

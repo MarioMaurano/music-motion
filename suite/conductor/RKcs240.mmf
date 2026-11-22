@@ -12,11 +12,11 @@
  "octaveLines": [],
  "spacing": {
   "h": 1,
-  "v": 1,
+  "v": 0.8,
   "byM": {}
  },
  "view": {
-  "zoom": 125,
+  "zoom": 50,
   "barNums": "continuous",
   "listenOct": {
    "fit": "auto",
@@ -24,7 +24,7 @@
   },
   "page": {
    "fit": "auto",
-   "staff": "7",
+   "staff": "5",
    "sysGap": "4",
    "pages": "0",
    "mode": "ancho",
