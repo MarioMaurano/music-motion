@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El rollo de contrapunto y fuga de Bach — cómo funciona · Music Motion</title>
+<!-- 2026-11-26 (Mario: «los mismos cambios para los otros rollos», con el «?» y su hoja): la hoja del rollo de contrapunto y fuga (V3), dos caras A4, hecha sobre la del rollo de corales (V2). -->
+<style>
+@page{size:A4;margin:14mm 14mm 12mm}
+:root{--acc:#2f6f62;--wine:#501828;--text:#22252b;--muted:#6b6f78;--line:#d8d5cc;--paper:#fffdf8}
+*{box-sizing:border-box}
+body{margin:0;background:#e9e7e1;color:var(--text);font:13px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.hoja{width:210mm;min-height:297mm;margin:16px auto;background:#fff;padding:14mm;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+h1{font-size:21px;margin:0 0 2px;color:var(--text)}
+.sub{color:var(--muted);margin:0 0 12px;font-size:13px}
+.linea{height:2px;background:var(--wine);margin:0 0 14px}
+h2{font-size:14px;margin:16px 0 6px;color:var(--acc);text-transform:uppercase;letter-spacing:.8px}
+p{margin:0 0 7px}
+.fila{display:flex;gap:14px;align-items:center}
+.fila svg{flex:none}
+.pasos{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:4px}
+.paso{border:1px solid var(--line);border-top:3px solid var(--acc);border-radius:6px;padding:8px 10px;background:var(--paper)}
+.paso h3{margin:0 0 4px;font-size:13.5px}
+.paso p{font-size:12px;margin:0}
+.paso svg{display:block;margin:6px auto 4px}
+b.btn{display:inline-block;font-size:10.5px;font-weight:600;border:1px solid #b9b5aa;border-radius:4px;padding:0 4px;background:#fff;white-space:nowrap}
+.pie{margin-top:16px;padding-top:8px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+.imprimir{display:block;width:210mm;margin:16px auto 0;text-align:right}
+.imprimir button{font:600 13px system-ui,sans-serif;padding:7px 14px;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:6px;cursor:pointer}
+@media print{body{background:#fff}.hoja{margin:0;padding:0;box-shadow:none;width:auto;min-height:0}.imprimir{display:none}}
+.hoja+.hoja{margin-top:16px}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.caja{border:1px solid var(--line);border-radius:6px;padding:9px 11px;background:var(--paper)}
+.caja h3{margin:0 0 4px;font-size:13.5px}
+.caja p{font-size:12px;margin:0 0 4px}
+.caja svg{display:block;margin:4px auto 6px}
+@media print{.hoja+.hoja{break-before:page;margin-top:0}}
+</style>
+</head>
+<body>
+<div class="imprimir"><button type="button" onclick="window.print()">Imprimir · guardar como PDF</button></div>
+<div class="hoja">
+  <h1>El rollo de contrapunto y fuga de Bach</h1>
+  <p class="sub">Cómo funciona — Music Motion · Music School Coach</p>
+  <div class="linea"></div>
+
+  <h2>¿Qué es?</h2>
+  <div class="fila">
+    <svg width="250" height="118" viewBox="0 0 250 118" aria-hidden="true">
+      <!-- los corales (libros) → el rollo (tira de compases) -->
+      <g fill="#fff" stroke="#2f6f62" stroke-width="1.4">
+        <rect x="6" y="20" width="26" height="36" rx="2"/><rect x="12" y="14" width="26" height="36" rx="2"/><rect x="18" y="8" width="26" height="36" rx="2"/>
+      </g>
+      <g stroke="#2f6f62" stroke-width="1"><line x1="23" y1="18" x2="39" y2="18"/><line x1="23" y1="24" x2="39" y2="24"/><line x1="23" y1="30" x2="39" y2="30"/></g>
+      <text x="25" y="72" text-anchor="middle" font-size="11" font-weight="700" fill="#22252b">96</text>
+      <text x="25" y="85" text-anchor="middle" font-size="10" fill="#6b6f78">piezas</text>
+      <path d="M52 34h30" stroke="#501828" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+      <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#501828"/></marker></defs>
+      <!-- la tira -->
+      <g transform="translate(92,8)">
+        <rect x="0" y="0" width="150" height="54" rx="4" fill="#fffdf8" stroke="#d8d5cc"/>
+        <g stroke="#22252b" stroke-width=".6">
+          <line x1="6" y1="10" x2="144" y2="10"/><line x1="6" y1="22" x2="144" y2="22"/><line x1="6" y1="34" x2="144" y2="34"/><line x1="6" y1="46" x2="144" y2="46"/>
+        </g>
+        <g stroke="#22252b" stroke-width="1"><line x1="40" y1="6" x2="40" y2="50"/><line x1="74" y1="6" x2="74" y2="50"/><line x1="108" y1="6" x2="108" y2="50"/></g>
+        <g fill="#22252b"><circle cx="18" cy="8" r="2.6"/><circle cx="30" cy="10" r="2.6"/><circle cx="52" cy="6" r="2.6"/><circle cx="64" cy="8" r="2.6"/><circle cx="86" cy="10" r="2.6"/><circle cx="98" cy="8" r="2.6"/><circle cx="120" cy="6" r="2.6"/><circle cx="132" cy="10" r="2.6"/>
+          <circle cx="18" cy="21" r="2.4"/><circle cx="52" cy="20" r="2.4"/><circle cx="86" cy="22" r="2.4"/><circle cx="120" cy="20" r="2.4"/>
+          <circle cx="18" cy="33" r="2.4"/><circle cx="52" cy="35" r="2.4"/><circle cx="86" cy="33" r="2.4"/><circle cx="120" cy="34" r="2.4"/>
+          <circle cx="18" cy="47" r="2.4"/><circle cx="52" cy="44" r="2.4"/><circle cx="86" cy="47" r="2.4"/><circle cx="120" cy="45" r="2.4"/></g>
+        <path d="M150 27h0" stroke="none"/>
+        <text x="75" y="70" text-anchor="middle" font-size="10" fill="#6b6f78">miles de compases, ordenados</text>
+      </g>
+      <text x="168" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="#2f6f62">el rollo</text>
+    </svg>
+    <div>
+      <p>Bach escribió fugas, sinfonías e invenciones: piezas en que dos, tres o cuatro voces cantan <b>el mismo tema</b> por turnos y se entrelazan. El rollo toma los compases de <b>96 piezas</b> (las fugas del Clave bien temperado, las sinfonías, las invenciones y El arte de la fuga) y los pone en una sola hoja larga.</p>
+      <p>Con esos compases, como con fichas, se arman <b>frases nuevas en contrapunto</b> que suenan a Bach, porque cada compás es de Bach. Así se escucha y se aprende cómo una voz responde a otra.</p>
+    </div>
+  </div>
+
+  <h2>Las voces</h2>
+  <div class="fila">
+    <svg width="250" height="112" viewBox="0 0 250 112" aria-hidden="true">
+      <g font-size="10.5" font-weight="700">
+        <text x="0" y="16" fill="#b03a48">Soprano</text><text x="0" y="42" fill="#c98a1a">Contralto</text><text x="0" y="68" fill="#2f6f62">Tenor</text><text x="0" y="94" fill="#3b5ba5">Bajo</text></g>
+      <g stroke="#22252b" stroke-width=".6">
+        <line x1="64" y1="12" x2="246" y2="12"/><line x1="64" y1="38" x2="246" y2="38"/><line x1="64" y1="64" x2="246" y2="64"/><line x1="64" y1="90" x2="246" y2="90"/></g>
+      <g stroke="#22252b" stroke-width="1"><line x1="64" y1="6" x2="64" y2="96"/><line x1="155" y1="6" x2="155" y2="96"/><line x1="246" y1="6" x2="246" y2="96"/></g>
+      <g><circle cx="90" cy="9" r="4" fill="#b03a48"/><circle cx="125" cy="12" r="4" fill="#b03a48"/><circle cx="180" cy="6" r="4" fill="#b03a48"/><circle cx="215" cy="9" r="4" fill="#b03a48"/>
+        <circle cx="90" cy="38" r="4" fill="#c98a1a"/><circle cx="125" cy="36" r="4" fill="#c98a1a"/><circle cx="180" cy="38" r="4" fill="#c98a1a"/><circle cx="215" cy="40" r="4" fill="#c98a1a"/>
+        <circle cx="90" cy="64" r="4" fill="#2f6f62"/><circle cx="125" cy="67" r="4" fill="#2f6f62"/><circle cx="180" cy="62" r="4" fill="#2f6f62"/><circle cx="215" cy="64" r="4" fill="#2f6f62"/>
+        <circle cx="90" cy="93" r="4" fill="#3b5ba5"/><circle cx="125" cy="88" r="4" fill="#3b5ba5"/><circle cx="180" cy="94" r="4" fill="#3b5ba5"/><circle cx="215" cy="90" r="4" fill="#3b5ba5"/></g>
+      <text x="155" y="110" text-anchor="middle" font-size="10" fill="#6b6f78">cada compás trae todas las voces juntas</text>
+    </svg>
+    <div>
+      <p>Cada compás del rollo tiene un pentagrama por voz: <b>soprano</b>, <b>contralto</b>, <b>tenor</b> y <b>bajo</b>. En las piezas a tres voces calla el tenor; a dos voces, suenan la soprano y el bajo.</p>
+      <p>En el contrapunto ninguna voz acompaña: todas cantan. Al tocar, el compás que suena se ilumina y se puede seguir qué voz lleva el tema.</p>
+    </div>
+  </div>
+
+  <h2>Tres pasos</h2>
+  <div class="pasos">
+    <div class="paso">
+      <h3>1 · Escoger</h3>
+      <svg width="150" height="52" viewBox="0 0 150 52" aria-hidden="true">
+        <g font-size="10" font-weight="700" text-anchor="middle">
+          <rect x="2" y="4" width="22" height="18" rx="4" fill="#2f6f62"/><text x="13" y="17" fill="#fff">M</text>
+          <rect x="28" y="4" width="22" height="18" rx="4" fill="#fff" stroke="#b9b5aa"/><text x="39" y="17" fill="#22252b">m</text>
+          <rect x="58" y="4" width="30" height="18" rx="4" fill="#2f6f62"/><text x="73" y="17" fill="#fff">4/4</text>
+          <rect x="92" y="4" width="30" height="18" rx="4" fill="#fff" stroke="#b9b5aa"/><text x="107" y="17" fill="#22252b">3/4</text>
+          <rect x="2" y="28" width="22" height="18" rx="4" fill="#fff" stroke="#b9b5aa"/><text x="13" y="41" fill="#22252b">C</text>
+          <rect x="28" y="28" width="22" height="18" rx="4" fill="#2f6f62"/><text x="39" y="41" fill="#fff">G</text>
+          <rect x="54" y="28" width="22" height="18" rx="4" fill="#fff" stroke="#b9b5aa"/><text x="65" y="41" fill="#22252b">D</text>
+          <rect x="80" y="28" width="22" height="18" rx="4" fill="#fff" stroke="#b9b5aa"/><text x="91" y="41" fill="#22252b">F</text></g>
+      </svg>
+      <p>El modo (<b class="btn">M</b> mayor · <b class="btn">m</b> menor), el compás (<b class="btn">4/4</b> · <b class="btn">3/4</b>), cuántos compases y la tonalidad. Con <b class="btn">SIGNATURE</b> se escribe la armadura.</p>
+    </div>
+    <div class="paso">
+      <h3>2 · Armar</h3>
+      <svg width="150" height="52" viewBox="0 0 150 52" aria-hidden="true">
+        <g fill="#fffdf8" stroke="#22252b" stroke-width="1"><rect x="4" y="10" width="34" height="30" rx="3"/><rect x="58" y="10" width="34" height="30" rx="3"/><rect x="112" y="10" width="34" height="30" rx="3" stroke-dasharray="3 2"/></g>
+        <text x="48" y="31" text-anchor="middle" font-size="16" font-weight="700" fill="#2f6f62">+</text>
+        <text x="102" y="31" text-anchor="middle" font-size="16" font-weight="700" fill="#2f6f62">+</text>
+        <text x="129" y="31" text-anchor="middle" font-size="15" fill="#501828">↻</text>
+      </svg>
+      <p><b class="btn">+</b> suma compases (o frases) que encajan con los anteriores. <b class="btn">↻</b> sobre un compás lo cambia por otro. <b class="btn">REPLICATE</b> repite los últimos compases, como hace Bach en una secuencia.</p>
+    </div>
+    <div class="paso">
+      <h3>3 · Escuchar y llevar</h3>
+      <svg width="150" height="52" viewBox="0 0 150 52" aria-hidden="true">
+        <rect x="2" y="12" width="46" height="24" rx="4" fill="#fff" stroke="#b9b5aa"/><text x="25" y="28" text-anchor="middle" font-size="10" font-weight="700" fill="#22252b">▶ PLAY</text>
+        <path d="M54 24h22" stroke="#501828" stroke-width="2" marker-end="url(#fl)"/>
+        <rect x="84" y="2" width="38" height="48" rx="2" fill="#fff" stroke="#22252b"/>
+        <g stroke="#22252b" stroke-width=".6"><line x1="89" y1="12" x2="117" y2="12"/><line x1="89" y1="18" x2="117" y2="18"/><line x1="89" y1="28" x2="117" y2="28"/><line x1="89" y1="34" x2="117" y2="34"/></g>
+        <text x="103" y="46" text-anchor="middle" font-size="7.5" fill="#6b6f78">Score</text>
+        <text x="138" y="30" text-anchor="middle" font-size="14">🖨</text>
+      </svg>
+      <p><b class="btn">PLAY</b> (o la barra espaciadora) toca lo armado. <b class="btn">OPEN IN SCORE</b> lo abre en el Score: ahí se cambia, se guarda o se imprime.</p>
+    </div>
+  </div>
+
+  <h2>Las piezas completas</h2>
+  <p>A la derecha de la barra, <b class="btn">◀</b> <b class="btn">001</b> <b class="btn">▶</b> muestran cada pieza entera, tal como la escribió Bach. <b class="btn">FUGA BACH</b> la abre en el Score para cambiarla, guardarla o imprimirla. <b class="btn">BANK</b> la muestra como está en el banco, en do mayor o la menor, con la armonía debajo de cada compás.</p>
+
+  <h2>Una idea para la clase</h2>
+  <p>Abran la Fuga n.º 1 y escúchenla siguiendo el tema: cada vez que entra, levanten la mano y digan qué voz lo canta. Pongan el pin en una entrada y escuchen acorde por acorde. Después armen cuatro compases en la hoja y comparen: ¿se oye una voz que responde a otra?</p>
+
+  <div class="pie"><span>Music Motion · musicmotionsuite.com</span><span>El rollo de contrapunto y fuga de Bach · Music School Coach · 1/2</span></div>
+</div>
+<div class="hoja">
+  <h1>El rollo de contrapunto y fuga de Bach</h1>
+  <p class="sub">Con el ratón y la barra espaciadora — lo que hace cada gesto</p>
+  <div class="linea"></div>
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <marker id="fl2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#501828"/></marker>
+    <g id="compas"><rect x="0" y="0" width="90" height="62" rx="3" fill="#fffdf8" stroke="#d8d5cc"/>
+      <g stroke="#22252b" stroke-width=".6"><line x1="4" y1="12" x2="86" y2="12"/><line x1="4" y1="26" x2="86" y2="26"/><line x1="4" y1="40" x2="86" y2="40"/><line x1="4" y1="54" x2="86" y2="54"/></g>
+      <g fill="#22252b"><circle cx="20" cy="9" r="2.6"/><circle cx="44" cy="12" r="2.6"/><circle cx="68" cy="7" r="2.6"/>
+        <circle cx="20" cy="26" r="2.4"/><circle cx="44" cy="24" r="2.4"/><circle cx="68" cy="26" r="2.4"/>
+        <circle cx="20" cy="39" r="2.4"/><circle cx="44" cy="41" r="2.4"/><circle cx="68" cy="38" r="2.4"/>
+        <circle cx="20" cy="55" r="2.4"/><circle cx="44" cy="52" r="2.4"/><circle cx="68" cy="54" r="2.4"/></g></g>
+    <g id="raton"><rect x="0" y="0" width="22" height="32" rx="11" fill="#fff" stroke="#22252b" stroke-width="1.2"/><line x1="11" y1="0" x2="11" y2="13" stroke="#22252b" stroke-width="1"/></g>
+  </defs></svg>
+
+  <h2>Cambiar un compás</h2>
+  <div class="dos">
+    <div class="caja">
+      <h3>Clic en ↻ · otro al azar</h3>
+      <svg width="250" height="92" viewBox="0 0 250 92" aria-hidden="true">
+        <use href="#compas" x="10" y="22"/><text x="55" y="14" text-anchor="middle" font-size="13" fill="#2f6f62">↻</text>
+        <path d="M108 53h32" stroke="#501828" stroke-width="2" marker-end="url(#fl2)"/>
+        <g transform="translate(150,22)"><use href="#compas"/><rect x="0" y="0" width="90" height="62" rx="3" fill="rgba(79,179,156,.15)"/></g>
+        <text x="195" y="14" text-anchor="middle" font-size="10" fill="#6b6f78">otro que encaja</text>
+      </svg>
+      <p>Encima de cada compás hay un <b class="btn">↻</b>. Un clic lo cambia por otro compás de Bach que <b>se une bien</b> con el de antes y el de después.</p>
+    </div>
+    <div class="caja">
+      <h3>Clic derecho en ↻ · escoger a mano</h3>
+      <svg width="250" height="92" viewBox="0 0 250 92" aria-hidden="true">
+        <use href="#raton" x="8" y="30"/><rect x="19" y="30" width="11" height="13" rx="3" fill="#2f6f62" opacity=".8"/>
+        <text x="44" y="50" font-size="13" fill="#2f6f62">↻</text>
+        <g transform="translate(64,6)"><rect x="0" y="0" width="180" height="80" rx="3" fill="#fff" stroke="#d8d5cc"/><rect x="0" y="0" width="180" height="3" fill="#501828"/>
+          <text x="8" y="16" font-size="9" fill="#22252b">Compás 3 · 12 opciones</text><text x="170" y="16" font-size="9" text-anchor="end" fill="#2f6f62">⊗</text>
+          <g transform="translate(8,24) scale(.5)"><use href="#compas"/></g><g transform="translate(60,24) scale(.5)"><use href="#compas"/></g><g transform="translate(112,24) scale(.5)"><use href="#compas"/></g>
+          <g transform="translate(8,52) scale(.5)"><use href="#compas"/></g><g transform="translate(60,52) scale(.5)"><use href="#compas"/><rect x="0" y="0" width="90" height="62" fill="none" stroke="#2f6f62" stroke-width="4"/></g></g>
+      </svg>
+      <p>Abre una ventana con <b>los compases que pueden ir ahí</b>, dibujados. Un clic en uno lo pone en el rollo. Si hay más de 24, <b class="btn">↻</b> muestra otros; <b class="btn">⊗</b> deja la ventana abierta para probar varios.</p>
+    </div>
+  </div>
+
+  <h2>Escuchar una parte</h2>
+  <div class="dos">
+    <div class="caja">
+      <h3>Clic derecho en el compás · solo ese</h3>
+      <svg width="250" height="92" viewBox="0 0 250 92" aria-hidden="true">
+        <use href="#compas" x="10" y="20"/><use href="#compas" x="102" y="20"/>
+        <rect x="102" y="20" width="90" height="62" rx="3" fill="rgba(79,179,156,.22)" stroke="#2f6f62" stroke-width="2"/>
+        <use href="#raton" x="205" y="36"/><rect x="216" y="36" width="11" height="13" rx="3" fill="#2f6f62" opacity=".8"/>
+        <text x="147" y="13" text-anchor="middle" font-size="12">♪ ♪</text>
+      </svg>
+      <p>Un clic derecho sobre las notas de un compás (no sobre el ↻) hace sonar <b>solo ese compás</b>, con todas sus voces. Sirve para oír un lugar sin tocar toda la pieza.</p>
+    </div>
+    <div class="caja">
+      <h3>El pin · apretar y arrastrar</h3>
+      <svg width="250" height="92" viewBox="0 0 250 92" aria-hidden="true">
+        <use href="#compas" x="10" y="20"/><use href="#compas" x="102" y="20"/>
+        <line x1="128" y1="16" x2="128" y2="86" stroke="#c0392b" stroke-width="2.4"/>
+        <path d="M134 10h44" stroke="#501828" stroke-width="1.6" marker-end="url(#fl2)"/>
+        <g fill="#c0392b"><circle cx="146" cy="27" r="3"/><circle cx="146" cy="46" r="3"/><circle cx="146" cy="59" r="3"/><circle cx="146" cy="73" r="3"/></g>
+        <use href="#raton" x="205" y="36"/><rect x="205" y="36" width="11" height="13" rx="3" fill="#c0392b" opacity=".8"/>
+      </svg>
+      <p>Aprieta el botón izquierdo sobre un compás y, sin soltar, mueve el ratón: la <b style="color:#c0392b">línea roja</b> lo sigue y suena <b>el acorde que está debajo</b>, todas las voces. El sonido se queda mientras el pin no pase a otro acorde y se apaga al soltar. Así se estudia <b>nota a nota</b>, a la velocidad de cada uno.</p>
+    </div>
+  </div>
+
+  <h2>Tocar, parar y seguir</h2>
+  <div class="caja">
+    <svg width="660" height="110" viewBox="0 0 660 110" aria-hidden="true">
+      <g stroke="#d8d5cc"><rect x="20" y="40" width="620" height="26" rx="4" fill="#fffdf8"/></g>
+      <g stroke="#b9b5aa"><line x1="144" y1="40" x2="144" y2="66"/><line x1="268" y1="40" x2="268" y2="66"/><line x1="392" y1="40" x2="392" y2="66"/><line x1="516" y1="40" x2="516" y2="66"/></g>
+      <g font-size="10" fill="#6b6f78" text-anchor="middle"><text x="82" y="57">compás 1</text><text x="206" y="57">2</text><text x="330" y="57">3</text><text x="454" y="57">4</text><text x="578" y="57">5</text></g>
+      <rect x="20" y="40" width="124" height="26" rx="4" fill="rgba(79,179,156,.22)" stroke="#2f6f62" stroke-width="2"/>
+      <!-- 1: espacio suena -->
+      <path d="M24 30H300" stroke="#2f6f62" stroke-width="2.2" marker-end="url(#fl2)"/>
+      <g font-size="10.5" font-weight="700"><rect x="30" y="8" width="64" height="16" rx="3" fill="#fff" stroke="#22252b"/><text x="62" y="20" text-anchor="middle">espacio</text></g>
+      <text x="104" y="20" font-size="10.5" fill="#22252b">suena…</text>
+      <!-- 2: espacio para, el pin queda -->
+      <line x1="306" y1="24" x2="306" y2="74" stroke="#c0392b" stroke-width="2.4"/>
+      <g font-size="10.5" font-weight="700"><rect x="274" y="80" width="64" height="16" rx="3" fill="#fff" stroke="#22252b"/><text x="306" y="92" text-anchor="middle">espacio</text></g>
+      <text x="306" y="107" text-anchor="middle" font-size="10" fill="#c0392b">para · el pin queda aquí</text>
+      <!-- 3: espacio sigue -->
+      <path d="M312 30H630" stroke="#2f6f62" stroke-width="2.2" stroke-dasharray="6 3" marker-end="url(#fl2)"/>
+      <g font-size="10.5" font-weight="700"><rect x="420" y="8" width="64" height="16" rx="3" fill="#fff" stroke="#22252b"/><text x="452" y="20" text-anchor="middle">espacio</text></g>
+      <text x="494" y="20" font-size="10.5" fill="#22252b">sigue desde el pin</text>
+    </svg>
+    <p><b>La barra espaciadora</b> toca desde el pin (si no hay pin, desde el principio). Otra vez espacio: <b>para</b>, y el pin queda donde paró la música. Otra vez: <b>sigue</b> desde ahí. Para empezar en otro lugar, pon el pin con el ratón y luego espacio.</p>
+    <p><b class="btn">▶ PLAY</b> toca siempre <b>desde el compás 1</b>; mientras suena se vuelve <b class="btn">■ STOP</b>. El compás que suena se ilumina en verde y la página lo sigue si sale de la pantalla.</p>
+  </div>
+
+  <div class="pie"><span>Music Motion · musicmotionsuite.com</span><span>El rollo de contrapunto y fuga de Bach · Music School Coach · 2/2</span></div>
+</div>
+</body>
+</html>
