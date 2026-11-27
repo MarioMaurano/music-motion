@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>mm Rollo V4.0.3 · cuartetos</title>
-<!-- mm Rollo V4.0.3 (cuartetos: Haydn · Mozart · Beethoven) · 🔒 LOCKED 2026-11-26 · V4.0.3: la puerta de Salieri con la MUESTRA (el movimiento 001), el título y los pasos, el «?» con su hoja, el compás corto, la viola en clave de do en 3.ª; la pieza abierta sólo con sus 4 pentagramas y en orden de cuarteto; las 357 piezas con Pages 1, bracket, nombres y claves en su lugar, el violonchelo en clave de tenor y sin los datos de dibujo del Score · antes V4.0.2, 2026-11-23 · V4.0.2: el compás que suena se ve, el pin y la barra espaciadora sigue desde el pin · antes V4.0.1, 2026-11-01 · _Coach/maquina-composicionV4 · desde el 2026-11-22 esta página se edita directamente: las fuentes de _V4-TRABAJO/fuentes-pagina no llevan lo hecho desde entonces (no reconstruir con build.py) -->
+<title>mm Rollo V4.0.5 · cuartetos</title>
+<!-- mm Rollo V4.0.5 (cuartetos: Haydn · Mozart · Beethoven) · 🔒 LOCKED 2026-11-27 · V4.0.5: OPEN IN SCORE abre la pieza que se ve · V4.0.4: la cabecera con el logo m∆°m (verde del rollo, enlace a musicmotionsuite.com), el título en verde y el subtítulo en una segunda línea; el «?» con el pie al final de la hoja y m∆°m® · V4.0.3: la puerta de Salieri con la MUESTRA (el movimiento 001), el título y los pasos, el «?» con su hoja, el compás corto, la viola en clave de do en 3.ª; la pieza abierta sólo con sus 4 pentagramas y en orden de cuarteto; las 357 piezas con Pages 1, bracket, nombres y claves en su lugar, el violonchelo en clave de tenor y sin los datos de dibujo del Score · antes V4.0.2, 2026-11-23 · V4.0.2: el compás que suena se ve, el pin y la barra espaciadora sigue desde el pin · antes V4.0.1, 2026-11-01 · _Coach/maquina-composicionV4 · desde el 2026-11-22 esta página se edita directamente: las fuentes de _V4-TRABAJO/fuentes-pagina no llevan lo hecho desde entonces (no reconstruir con build.py) -->
 <style>
 :root{--bg:#f4f3ef;--panel:#ffffff;--line:#d8d5cc;--line2:#b9b5aa;--text:#22252b;--muted:#6b6f78;--acc:#2f6f62;--acc-t:#ffffff;--paper:#fffdf8;color-scheme:light;--border:var(--line);--kb-border:#501828;--textm:var(--muted);--gold:var(--acc);--panel2:var(--bg)}   /* --border … --panel2: lo que lee la paleta de instrumentos del banco (mm-presets.js) */
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181b;--panel:#202226;--line:#34373d;--line2:#4a4e56;--text:#e6e6e6;--muted:#9a9ea6;--acc:#4fb39c;--acc-t:#0b1f1a;--paper:#fbf9f3;color-scheme:dark}}
@@ -86,6 +86,12 @@ html.mm-cerrado #mmCandado{display:grid}
 #mmCandado button{justify-self:start}
 .titulo{max-width:1280px;margin:0 auto 6px;font-size:15px;font-weight:600;color:var(--text)}
 .titulo small{font-weight:400;color:var(--muted);font-size:13px}
+/* 2026-11-27 (Mario): la cabecera lleva el logo m∆°m y el título en el verde del rollo; el subtítulo, en una segunda línea */
+.titulo{display:flex;align-items:center;gap:12px;font-size:19px;font-weight:700;color:var(--acc);line-height:1.2}
+.titulo small{display:block;margin-top:3px;font-size:13px;font-weight:400;color:var(--muted)}
+.titulo .tit-logo{flex:none;display:inline-flex;color:var(--acc);border-radius:4px}
+.titulo .tit-logo svg{display:block;height:24px;width:auto;fill:currentColor}
+.titulo .tit-logo:hover{opacity:.8}.titulo .tit-logo:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 /* EL «?» (2026-11-26, Mario: «un signo ? entre un botoncito circular verde, con ? en blanco adentro»): abre #mmAyuda, la ventana de la casa
    (borde wine arriba, pin ⊗ ON al abrir, header arrastrable, clic afuera cierra si no está fijado), con un párrafo y el enlace a la hoja imprimible. */
 .mmq{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:8px;vertical-align:2px;border:none;border-radius:50%;background:var(--acc);color:#fff;font:700 13px/1 system-ui,sans-serif;cursor:pointer;padding:0}
@@ -751,7 +757,10 @@ function rest(ch,m,x,c,cf){ const [dn,dot]=QD[c]||['quarter',false]; return {mea
 function save(){ if(state.spinning||state.bars.length<state.T) return; const d=mmf(); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'}));
   a.download=d.scoreInfo.file+'.mmf'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1000); }
 const blobs=[];
-function openScore(){ if(state.spinning||state.bars.length<state.T) return; const d=mmf(); const u=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'})); blobs.push(u);
+// 2026-11-27 (Mario: «cuando trato de abrir el coral 001 en Score aparecen 4 compases de la máquina»): con una pieza completa a la vista, OPEN IN SCORE
+// abre esa pieza —lo mismo que su botón de al lado—; con la hoja de la máquina (o la maqueta), la hoja, como siempre, con su vuelta ↩ MACHINE.
+function openScore(){ if(VISTA&&VISTA.coral&&!VISTA.maq){ const s=$('coral'); if(s) s.value=VISTA.coral; $('corAbre').click(); return; }
+  if(state.spinning||state.bars.length<state.T) return; const d=mmf(); const u=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'})); blobs.push(u);
   const w=window.open(APPS+'mm-score-page.html?file='+encodeURIComponent(u)+'&from=maquina&coach=salieri','_blank');
   $('banner').textContent=w?'Abierto en el Score. Cambia lo que quieras y vuelve con ↩ MACHINE.':'El navegador bloqueó la ventana del Score: permite las ventanas emergentes.'; }
 $('save').onclick=save; $('open').onclick=openScore;
@@ -820,19 +829,19 @@ window.__maq={state,B,une,cierra,nuevos,mmf,importMMF,cambia,N0,tonDe,candidatos
 (function(){ var L='en'; try{ var c=localStorage.getItem('mmCoachLang'), w=localStorage.getItem('mmSiteLang');
     L=['es','en','fr','nl','de'].indexOf(c)>=0?c:(['es','en'].indexOf(w)>=0?w:'en'); }catch(e){}
   var T={
-    es:{tit:'Rollo de cuartetos clásicos <small>— escuche, recorra y estudie los cuartetos de cuerda de Haydn, Mozart y Beethoven, y arme frases a cuatro voces con sus compases</small>',
+    es:{tit:'Rollo de cuartetos clásicos <small>escuche, recorra y estudie los cuartetos de cuerda de Haydn, Mozart y Beethoven, y arme frases a cuatro voces con sus compases</small>',
         p:['1 · Escoger','2 · Armar','3 · Escuchar y llevar','Cuartetos completos'],
         m:'Muestra: el movimiento n.º 1 (Haydn), para escuchar (PLAY o barra espaciadora), recorrer con el pin y abrir en el Score con OPEN IN SCORE o CUARTETO. Armar frases, cambiar de tonalidad y los 357 movimientos son parte del Music School Coach.'},
-    en:{tit:'Classical quartet roll <small>— listen to, walk through and study the string quartets of Haydn, Mozart and Beethoven, and build four-part phrases from their bars</small>',
+    en:{tit:'Classical quartet roll <small>listen to, walk through and study the string quartets of Haydn, Mozart and Beethoven, and build four-part phrases from their bars</small>',
         p:['1 · Choose','2 · Build','3 · Listen and take','Full quartets'],
         m:'Sample: movement no. 1 (Haydn), to listen to (PLAY or the space bar), walk through with the pin and open in the Score with OPEN IN SCORE or CUARTETO. Building phrases, changing key and all 357 movements are part of the Music School Coach.'},
-    fr:{tit:'Rouleau des quatuors classiques <small>— écoutez, parcourez et étudiez les quatuors à cordes de Haydn, Mozart et Beethoven, et construisez des phrases à quatre voix avec leurs mesures</small>',
+    fr:{tit:'Rouleau des quatuors classiques <small>écoutez, parcourez et étudiez les quatuors à cordes de Haydn, Mozart et Beethoven, et construisez des phrases à quatre voix avec leurs mesures</small>',
         p:['1 · Choisir','2 · Construire','3 · Écouter et emporter','Quatuors complets'],
         m:'Échantillon : le mouvement n° 1 (Haydn), à écouter (PLAY ou la barre d\'espace), à parcourir avec l\'épingle et à ouvrir dans le Score avec OPEN IN SCORE ou CUARTETO. Construire des phrases, changer de tonalité et les 357 mouvements font partie du Music School Coach.'},
-    nl:{tit:'Rol van de klassieke kwartetten <small>— beluister, doorloop en bestudeer de strijkkwartetten van Haydn, Mozart en Beethoven, en bouw vierstemmige zinnen met hun maten</small>',
+    nl:{tit:'Rol van de klassieke kwartetten <small>beluister, doorloop en bestudeer de strijkkwartetten van Haydn, Mozart en Beethoven, en bouw vierstemmige zinnen met hun maten</small>',
         p:['1 · Kiezen','2 · Bouwen','3 · Beluisteren en meenemen','Volledige kwartetten'],
         m:'Voorbeeld: deel nr. 1 (Haydn), om te beluisteren (PLAY of de spatiebalk), te doorlopen met de speld en te openen in de Score met OPEN IN SCORE of CUARTETO. Zinnen bouwen, van toonaard wisselen en alle 357 delen horen bij de Music School Coach.'},
-    de:{tit:'Rolle der klassischen Quartette <small>— die Streichquartette von Haydn, Mozart und Beethoven hören, durchgehen und studieren und aus ihren Takten vierstimmige Phrasen bauen</small>',
+    de:{tit:'Rolle der klassischen Quartette <small>die Streichquartette von Haydn, Mozart und Beethoven hören, durchgehen und studieren und aus ihren Takten vierstimmige Phrasen bauen</small>',
         p:['1 · Wählen','2 · Bauen','3 · Hören und mitnehmen','Vollständige Quartette'],
         m:'Probe: der Satz Nr. 1 (Haydn) zum Anhören (PLAY oder Leertaste), zum Durchgehen mit der Nadel und zum Öffnen im Score mit OPEN IN SCORE oder CUARTETO. Phrasen bauen, die Tonart wechseln und alle 357 Sätze gehören zum Music School Coach.'}}[L];
   var A={
@@ -846,7 +855,7 @@ window.__maq={state,B,une,cierra,nuevos,mmf,importMMF,cambia,N0,tonDe,candidatos
         p:'<p>De rol is een blad gemaakt van de maten van 357 delen uit de strijkkwartetten van Haydn, Mozart en Beethoven, met één notenbalk per instrument: viool I, viool II, altviool en cello.</p><p><b>1 · Kiezen:</b> de toonsoort (majeur of mineur), de maatsoort en hoeveel maten. <b>2 · Bouwen:</b> <b>+</b> voegt maten toe die aansluiten; <b>↻</b> vervangt er één door een andere; <b>HARMONIZE</b> zet de andere stemmen onder een melodie; <b>REPLICATE</b> herhaalt de laatste, zoals in een sequens. <b>3 · Beluisteren en meenemen:</b> <b>PLAY</b> (of de spatiebalk) speelt wat je bouwde; daar kies je ook de toonaard, en <b>OPEN IN SCORE</b> opent het in de Score om het te wijzigen, te bewaren of af te drukken. ◀ ▶ tonen de volledige delen; <b>CUARTETO</b> opent het deel in de Score.</p>'},
     de:{t:'Wie funktioniert es?',pin:'Anheften (Klick daneben schließt nicht)',l:'Druckblatt, mit Zeichnungen (PDF)',
         p:'<p>Die Rolle ist ein Blatt aus den Takten von 357 Sätzen aus den Streichquartetten von Haydn, Mozart und Beethoven, mit einem Notensystem pro Instrument: Violine I, Violine II, Bratsche und Violoncello.</p><p><b>1 · Wählen:</b> das Tongeschlecht (Dur oder Moll), die Taktart und wie viele Takte. <b>2 · Bauen:</b> <b>+</b> fügt passende Takte hinzu; <b>↻</b> tauscht einen gegen einen anderen; <b>HARMONIZE</b> setzt die anderen Stimmen unter eine Melodie; <b>REPLICATE</b> wiederholt die letzten, wie in einer Sequenz. <b>3 · Hören und mitnehmen:</b> <b>PLAY</b> (oder die Leertaste) spielt das Gebaute; dort wählt man auch die Tonart, und <b>OPEN IN SCORE</b> öffnet es im Score zum Ändern, Speichern oder Drucken. ◀ ▶ zeigen die vollständigen Sätze; <b>CUARTETO</b> öffnet den Satz im Score.</p>'}}[L];
-  document.getElementById('rolloTit').innerHTML=T.tit+'<button class="mmq" id="mmQ" type="button" aria-label="?" title="'+A.t+'">?</button>';
+  document.getElementById('rolloTit').innerHTML='<a class="tit-logo" href="https://musicmotionsuite.com/" target="_blank" rel="noopener" title="Music Motion" aria-label="Music Motion"><svg viewBox="180 95 1145 305" aria-hidden="true" focusable="false"><path d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg></a><span class="tit-txt">'+T.tit.replace('<small>','<button class="mmq" id="mmQ" type="button" aria-label="?" title="'+A.t+'">?</button><small>')+'</span>';
   // la ventana del «?»: el mismo patrón de las ventanas de la casa (mm-salieri.js · #mm-salieri-pase)
   (function(){ var w=document.createElement('div'); w.id='mmAyuda'; w._pinned=true;
     w.innerHTML='<div class="hd" id="mmAyudaHd"><h3>'+A.t+'</h3><button class="pin on" id="mmAyudaPin" type="button" title="'+A.pin+'">⊗</button></div><div class="bd">'+A.p+

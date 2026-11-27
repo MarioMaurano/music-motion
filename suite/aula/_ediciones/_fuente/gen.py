@@ -128,6 +128,9 @@ def familia_pages(pdf):
     return []
 
 AZ = {'Z': 'W', 'W': 'Z', 'A': 'Q', 'Q': 'A', 'M': ','}
+ICON_TXT = {'en': {'qué nota está abajo': 'which note is at the bottom'}, 'fr': {'qué nota está abajo': 'quelle note est en bas'},
+            'nl': {'qué nota está abajo': 'welke noot onderaan staat'}, 'de': {'qué nota está abajo': 'welcher Ton unten liegt'}}
+
 def build(key, lang='es'):
     global ANOT
     import i18n
@@ -144,6 +147,7 @@ def build(key, lang='es'):
     ANOT = U['anot']
     tmp = os.path.join(OUT, f'_tmp_{key}_{lang}'); os.makedirs(tmp, exist_ok=True)
     eh = os.path.join(tmp, 'edicion.html'); h = html_edicion(d, tmp)
+    for x, y in ICON_TXT.get(lang, {}).items(): h = h.replace(x, y)   # los textos dentro de los dibujos (2026-11-27: «qué nota está abajo» salía en español)
     if U.get('azerty'): h = re.sub(r'(<span class="k">)([A-Z])(</span>)', lambda m: m.group(1) + AZ.get(m.group(2), m.group(2)) + m.group(3), h)
     open(eh, 'w', encoding='utf-8').write(h)
     ep = os.path.join(tmp, 'edicion.pdf'); chrome_pdf(eh, ep)

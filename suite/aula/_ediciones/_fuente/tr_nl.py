@@ -165,7 +165,7 @@ T['n1c9'] = dict(titulo='Onze melodie', lema='Componeren, er tekst bij schrijven
    ('De componist', 'Wie de muziek schrijft. Vandaag elke leerling.'), ('Het concert', 'Het lied voorstellen aan anderen, met de families erbij.')])
 
 # ═════════ NIVEAU 2 ═════════
-ALLA = a(SC + 'alla-turca.mmf&page', '„Alla Turca”'); ODA = a(SC + 'oda-a-la-alegria.mmf&page', '„Ode an die Freude”')
+ALLA = a(SC + 'alla-turca.mmf&page', '„Alla Turca”'); ODA = a(SC + 'oda-a-la-alegria.mmf&page', '„Ode aan de vreugde”')
 AVE = a(SC + 'ave-maria.mmf&page', 'het „Ave Maria”'); B9 = a(SC + 'bach-sinfonia-9.mmf&page', 'Sinfonia nr. 9 van Bach')
 BART = a(SC + 'bartok-danzas-rumanas.mmf&page', 'de Roemeense volksdansen van Bartók'); RAV = a(SC + 'ravel-concierto-sol-2mov.mmf&page', 'het Pianoconcerto in G van Ravel')
 SEI2 = a(SC + 'seikilos.mmf&page', 'het lied van Seikilos'); ODAM = a(SC + 'oda-a-la-alegria-matices.mmf&page', 'de „Ode” met dynamiek')
@@ -483,3 +483,23 @@ T['n2c13'] = dict(titulo='De dobbelstenen van de muziek', lema='7, de machine en
    ('De berg van de sommen', 'De staven van elke som: ze stijgen tot 7 en dalen weer.'), ('Afstand tot 7', 'Hoe ver van 7 de som viel: d = | a + b − 7 |.'),
    ('Hemiool', 'De maat van drie die in twee breekt: „HOEM……HOEM……”, de verrassing.'), ('Het spel van Mozart', 'Componeren door elke maat met dobbelstenen te kiezen (1792).'),
    ('1296 melodieën', '6 mogelijkheden in elk van de 4 maten: 6 × 6 × 6 × 6.'), ('De muziek van de sferen', 'Het idee van Pythagoras: de planeten maken muziek terwijl ze draaien.')])
+
+# ── 2026-11-27: Les 1 van Niveau 1 (de les zelf: nl/suite/ejercicios/in-de-klas-les-1-nl.html, door gen.py gelezen als aula-n1-clase-1-nl.html)
+T['n1c1'] = dict(titulo='De zingende trap', lema='Luisteren, zingen en de tel voelen', edad=E1, gram_ref='hfst. 1, blz. 6–7',
+  gram_desc='de gekleurde trap, het matje van Canelo, „Spelen!” (de treden kleuren en de ontbrekende namen schrijven) en „Thuis”.',
+  meta='Elke leerling, eerst in de groep en daarna in tweetallen, <b>zingt dezelfde noot als het klavier</b>, en het stemapparaat toont dezelfde naam. Daarnaast: met de hand laten zien of de muziek stijgt of daalt, en de tel volhouden met klappen.',
+  necesita='Een computer met luidspreker (en een projector, als het kan). Geen muziekkennis nodig: het klavier en het stemapparaat doen het werk; jij begeleidt.',
+  antes=[f'Open de {KB} en speel {k("Z X C V B N M")}: van C tot B.', 'Zet in <b>RECORDINGS</b> „Sinfonia nr. 1” van Bach op.', 'Open <b>pulse</b>, druk op <b>tap</b> tot ongeveer 60 BPM, dan <b>start</b> en <b>click</b>.', f'Open het {AF}, speel een noot en zing hem.'],
+  etapas_t=[('Het doel', '<i>„Vandaag laten we onze stem precies zo klinken als een noot van het klavier.”</i> Op het bord: <b>Mijn stem zingt de noot van het klavier.</b>'),
+   ('Wat ze al weten', '<i>„Kan je stem hoger en lager klinken?”</i> Zing een „oe” die stijgt terwijl de hand omhooggaat en daalt als de hand zakt; de klas doet het na.'),
+   ('Het nieuwe: luisteren met het lichaam, en de trap', f'De „Sinfonia” van Bach, drie keer: <b>marcheren</b> op de tel · <b>de melodie tekenen</b> met de hand · <b>opstaan</b> als ze „thuiskomt”. Daarna de trap {k("Z")}…{k("M")} langzaam, elke noot op een lange „a”: eerst jij, dan samen met de klas, dan de klas alleen.'),
+   ('Toepassing: de noot van het klavier', 'Open het stemapparaat (geprojecteerd). <b>Luisteren</b> naar een noot in stilte → <b>samen bijstellen</b> op een zachte „a”, de hand wijst hoger of lager, tot het stemapparaat dezelfde naam toont → steeds kleinere groepen: de hele klas, de helft, tweetallen, vrijwilligers. <b>De echo</b>: twee noten, dan drie. Laatste 5 min: <b>klappen op de tel</b> (60 BPM) terwijl de trap klinkt.'),
+   ('Terugblik op het doel', 'Elk tweetal zingt de noot die jij speelt; de klas kijkt naar het stemapparaat en steekt de duim op als het klopt. <i>„Wat hielp ons om de stem dichter bij de noot te brengen?”</i>')],
+  cuesta='De klas haalt de noot niet: speel hem opnieuw en vraag <b>zachter</b> te zingen. Een kind zingt ver ernaast: dat is normaal; laat het in de groep meedoen, naast een klasgenoot, zonder het voor iedereen te verbeteren. Het stemapparaat springt: een lange, rustige „a”, dicht bij de microfoon. De tel raakt kwijt: trager, en eerst marcheren en dan pas klappen.',
+  funciono='Minstens <b>3 op de 4 tweetallen</b> zingen de noot en het stemapparaat toont dezelfde naam; de meesten laten met de hand zien of de muziek stijgt of daalt, en de klas houdt de tel vol.',
+  final_t='Op het einde, om te spelen', final=f'De {MM}: SPIN en PLAY, en de klas kiest de melodie die ze het mooist vindt.',
+  eval_que='Tweetallen die het konden', eval_si_no='begin Les 2 door „de noot van het klavier” te herhalen (5 min).',
+  palabras=[('De noot', 'Elke klank van de trap. Hij heeft een naam: C, D, E, F, G, A, B.'), ('De trap (de toonladder)', 'De zeven noten op volgorde, van de laagste tot de hoogste. Op het klavier: Z X C V B N M.'),
+   ('Hoog en laag', 'Hoog is dun, zoals een vogeltje. Laag is dik, zoals de donder.'), ('De melodie', 'De noten na elkaar. Gaat ze omhoog, dan gaat de hand omhoog; gaat ze omlaag, dan gaat de hand omlaag.'),
+   ('De tel', 'De regelmatige hartslag van de muziek, zoals het tiktak van een klok of de stappen als je wandelt.'), ('De metronoom en BPM', 'Het toestel dat de tel aangeeft. BPM = tellen per minuut: 60 BPM, één tel per seconde.'),
+   ('Het stemapparaat', 'Het luistert naar de stem en toont de naam van de gezongen noot.'), ('Stemmen', 'De stem bijstellen, een beetje hoger of lager, tot je dezelfde noot zingt.')])

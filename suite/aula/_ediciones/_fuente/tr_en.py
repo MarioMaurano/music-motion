@@ -463,3 +463,45 @@ T['n2c14'] = dict(titulo='The lost line', lema='The Seikilos stone and the sums 
    ('Multiplying melodies', 'With 7 notes, each new note multiplies the possible melodies by 7.'), ('Power', '7 × 7 × 7… is written 7³, 7⁴: the number grows very fast.'),
    ('Greek notation', 'The notes written with letters above each syllable.'), ('The lost line', 'The end of the inscription, which the saw took away in 1883.'),
    ('Unique', 'A melody that almost certainly nobody has written yet.'), ('Writing music down', 'What saved the song: it was written down.')])
+
+# ── 2026-11-27: Lesson 1 of each level (Mario: «poner al día la Clase 1 … con su edición A4»). The lessons themselves are
+#    suite/ejercicios/classroom-lesson-1-en.html and classroom-lesson-2-en.html; gen.py reads them as aula-n1-clase-1-en.html / aula-n2-clase-1-en.html.
+T['n1c1'] = dict(titulo='The singing staircase', lema='Listening, singing and feeling the beat', edad=E1, gram_ref='ch. 1, pp. 6–7',
+  gram_desc='the staircase of colours, Canelo’s mat, “Let’s play!” (colour the steps and write the missing names) and “At home”.',
+  meta='Each pupil, first in a group and then in pairs, <b>sings the same note the keyboard plays</b>, and the tuner shows the same name. Also: show with the hand whether the music goes up or down, and keep the beat with claps.',
+  necesita='A computer with a speaker (and a projector, if possible). No musical knowledge needed: the keyboard and the tuner do the work; you guide.',
+  antes=[f'Open the {KB} and play {k("Z X C V B N M")}: from C to B.', 'In <b>RECORDINGS</b> put on Bach’s “Sinfonia No. 1”.', 'Open <b>pulse</b>, press <b>tap</b> up to about 60 BPM, then <b>start</b> and <b>click</b>.', f'Open the {AF}, play a note and sing it.'],
+  etapas_t=[('The goal', '<i>“Today we are going to make our voice sound exactly like a note on the keyboard.”</i> On the board: <b>My voice sings the keyboard’s note.</b>'),
+   ('What they already know', '<i>“Can your voice sound higher and lower?”</i> Sing an “oo” that goes up as your hand rises and down as it falls; the class repeats it.'),
+   ('New material: listening with the body, and the staircase', f'Bach’s “Sinfonia”, three times: <b>march</b> with the beat · <b>draw the melody</b> with the hand · <b>stand up</b> when it “comes home”. Then the staircase {k("Z")}…{k("M")} slowly, singing each note on a long “ah”: you, then with the class, then the class alone.'),
+   ('Application: the keyboard’s note', 'Open the tuner (projected). <b>Listen</b> to a note in silence → <b>adjust together</b> on a soft “ah”, the hand shows higher or lower, until the tuner shows the same name → smaller and smaller groups: the whole class, half, pairs, volunteers. <b>The echo</b>: two notes, then three. Last 5 min: <b>clapping with the beat</b> (60 BPM) while the staircase plays.'),
+   ('Reviewing the goal', 'Each pair sings the note you play; the class watches the tuner and gives a thumbs-up if it matches. <i>“What helped us bring our voice closer to the note?”</i>')],
+  cuesta='The class doesn’t reach the note: play it again and ask them to sing <b>more softly</b>. A child sings far off: that is normal; let them carry on in the group, next to a classmate, without correcting them in front of everyone. The tuner jumps: a long, steady “ah”, close to the microphone. The beat gets lost: slower, and march before clapping.',
+  funciono='At least <b>3 out of 4 pairs</b> sing the note and the tuner shows the same name; most show with the hand whether the music goes up or down, and the class keeps the beat.',
+  final_t='At the end, for fun', final=f'The {MM}: SPIN and PLAY, and the class votes for the melody it likes best.',
+  eval_que='Pairs who managed it', eval_si_no='start Lesson 2 by repeating “the keyboard’s note” (5 min).',
+  palabras=[('Note', 'Each sound of the staircase. It has its name: C, D, E, F, G, A, B.'), ('The staircase (the scale)', 'The seven notes in order, from the lowest to the highest. On the keyboard: Z X C V B N M.'),
+   ('High and low', 'High is thin, like a bird. Low is thick, like thunder.'), ('The melody', 'The notes one after another. If it goes up, the hand goes up; if it goes down, the hand goes down.'),
+   ('The beat', 'The steady heartbeat of the music, like the tick-tock of a clock or footsteps when walking.'), ('The metronome and BPM', 'The machine that marks the beat. BPM = beats per minute: 60 BPM, one beat per second.'),
+   ('The tuner', 'It listens to the voice and shows the name of the note it sings.'), ('Tuning', 'Adjusting the voice, a little higher or lower, until it sings the same note.')])
+
+ALLA = a(SC + 'alla-turca.mmf&page', '“Alla Turca”'); ODA = a(SC + 'oda-a-la-alegria.mmf&page', '“Ode to Joy”')
+T['n2c1'] = dict(titulo='The route through a piece of music', lema='Level 1 revision and the signs in the score', edad=E2,
+  gram_ref='“The journey of sounds”, pp. 5–6, and ch. 1, pp. 7–10',
+  gram_desc='“The journey of sounds” (pp. 5 and 6) and “The route through a piece of music” (pp. 7 to 10): the upbeat, the repeat bars, the double bars and the Coda.',
+  meta=f'While listening to Mozart’s {ALLA} with the score projected, the pupils <b>point out the upbeat, the repeat bars, the double bars and the Coda</b>, and say how many times each part sounds. Also: read the “Ode to Joy” with syllables and names, and write down a four-beat rhythm they hear.',
+  necesita='A computer with a speaker and internet, the board and, if possible, a projector. It helps to have done Level 1. No musical knowledge needed: the score lights up as it plays.',
+  antes=[f'Open {ALLA} in the Score and listen to all of it: the four quick notes before the first bar line are the upbeat; in bar 8, the repeat bar.', f'Also open the {ODA}, and the {KB} with <b>pulse</b> at about 60 BPM for the dictation.', 'Remember ⛶ FULL, − / + and the ♩ PULSE knob.'],
+  etapas_t=[('The goal', '<i>“A score is not always read straight through: it has signs that tell you where to go.”</i> On the board: <b>I can follow the route through a piece in the score.</b>'),
+   ('What they already know: reading and writing', f'<b>Reading</b>: the “Ode to Joy”, the clef, the time signature, the rhythm with syllables and the names; ▶ to check. <b>The dictation</b>: you play a four-beat rhythm on {k("Z")} and write it down; then you play another and the pupils write it.'),
+   ('New material: the signs of the route', '<b>Vienna, 1783</b>: where “Alla Turca” comes from. <b>The upbeat</b>: four quick notes lasting one beat; the piece starts on two. <b>Repeating and ending</b>: the repeat bar (“go back and play it again”), the double bars, the Coda and the rit. at the end.'),
+   ('Application: following the route', 'You show the first 8 bars with your finger and say “again!” at the repeat. Then three groups: one raises a hand at each repeat bar, another at each double bar, another at the Coda; the whole piece plays and the class rebuilds the route on the board.'),
+   ('Reviewing the goal', '<i>“What is an upbeat? What do the two dots of a bar line say? Why is the ending called the Coda?”</i> And: <i>“What makes it sound like a march?”</i>')],
+  cuesta='They don’t see the upbeat: count the bars from the first bar line; the note before it stays “outside the house”. They get lost at the repeats: the piece slower with the knob, and say “again” aloud. They confuse double bar and final bar: the final one has a thick line. The dictation is hard: first with syllables and claps, then written.',
+  funciono='While listening to “Alla Turca”, <b>most groups</b> make their sign in the right place and the class rebuilds the route through the piece; most read the “Ode” with syllables and write at least one dictation correctly.',
+  final_t='To carry on', final='The pupil’s sheet, at the end of the guide, and the workbook: “The journey of sounds” and “The route through a piece of music”.',
+  eval_que='Groups who made their sign in the right place', eval_si_no='start Lesson 2 by following the first 8 bars of “Alla Turca” again (5 min).',
+  palabras=[('Upbeat', 'The notes that come before the first complete bar, like a little hop before starting.'), ('Repeat bars', 'Two little dots next to the bar line: what lies between them is played twice.'),
+   ('Double bar', 'Two thin bar lines: a part ends. The final bar has a thick one.'), ('Coda', 'Italian for “tail”: the special ending of the piece.'),
+   ('Rit.', 'Ritardando: the beat gradually gets slower.'), ('Allegretto', 'A tempo word: fairly quick and cheerful.'),
+   ('Dictation', 'Writing down in note values what you hear.'), ('Score', 'The written music, with its route of signs.')])

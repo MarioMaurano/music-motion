@@ -35,6 +35,13 @@ b.btn{display:inline-block;font-size:10.5px;font-weight:600;border:1px solid #b9
 .caja p{font-size:12px;margin:0 0 4px}
 .caja svg{display:block;margin:4px auto 6px}
 @media print{.hoja+.hoja{break-before:page;margin-top:0}}
+/* 2026-11-27 (Mario): el pie va al final de la hoja (antes quedaba debajo del texto, «muy alto»), y lleva el logo m∆°m® */
+.hoja{position:relative;padding-bottom:calc(14mm + 30px)}
+.hoja>.pie{position:absolute;left:14mm;right:14mm;bottom:14mm;margin:0;align-items:center}
+.pie-marca{display:inline-flex;align-items:center;gap:5px}
+.pie-marca svg{height:11px;width:auto;fill:var(--acc);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pie-marca sup{font-size:8px;line-height:1;color:var(--acc);margin:-6px 3px 0 -4px}
+@media print{.hoja{min-height:270mm;padding:0 0 30px}.hoja>.pie{left:0;right:0;bottom:0}}
 </style>
 </head>
 <body>
@@ -145,7 +152,7 @@ b.btn{display:inline-block;font-size:10.5px;font-weight:600;border:1px solid #b9
   <h2>Una idea para la clase</h2>
   <p>Abran el cuarteto n.º 1 y escúchenlo siguiendo la melodía: cada vez que pasa a otro instrumento, levanten la mano y digan cuál la toca. Pongan el pin en un compás y escuchen acorde por acorde. Después armen cuatro compases en la hoja y comparen: ¿quién lleva la melodía?</p>
 
-  <div class="pie"><span>Music Motion · musicmotionsuite.com</span><span>El rollo de cuartetos románticos · Music School Coach · 1/2</span></div>
+  <div class="pie"><span class="pie-marca"><svg viewBox="180 95 1145 305" aria-label="m Δ° m"><path d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg><sup>®</sup>Music Motion · musicmotionsuite.com</span><span>El rollo de cuartetos románticos · Music School Coach · 1/2</span></div>
 </div>
 <div class="hoja">
   <h1>El rollo de cuartetos románticos</h1>
@@ -237,7 +244,7 @@ b.btn{display:inline-block;font-size:10.5px;font-weight:600;border:1px solid #b9
     <p><b class="btn">▶ PLAY</b> toca siempre <b>desde el compás 1</b>; mientras suena se vuelve <b class="btn">■ STOP</b>. El compás que suena se ilumina en verde y la página lo sigue si sale de la pantalla.</p>
   </div>
 
-  <div class="pie"><span>Music Motion · musicmotionsuite.com</span><span>El rollo de cuartetos románticos · Music School Coach · 2/2</span></div>
+  <div class="pie"><span class="pie-marca"><svg viewBox="180 95 1145 305" aria-label="m Δ° m"><path d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg><sup>®</sup>Music Motion · musicmotionsuite.com</span><span>El rollo de cuartetos románticos · Music School Coach · 2/2</span></div>
 </div>
 </body>
 </html>
