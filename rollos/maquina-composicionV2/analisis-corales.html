@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mm Corales de Bach · mapas y fichas</title>
+<!-- mm Corales de Bach · mapas y fichas · 2026-11-27 · _Coach/maquina-composicionV2 · acompaña al rollo V2 (MAP, junto a CORAL BACH).
+     Mario: «¿podríamos hacer algo similar [al mapa de las fugas] para los corales?» · «procede».
+     Datos: rollo-barroco/corales-mapa.js, que escribe _V2-TRABAJO/scripts/cifrar-corales.py desde rollo-bach.json con el cifrado de las fugas
+     (maquina-composicionV3/_V3-TRABAJO/scripts/cifrar-banco.py, reglas de _PLANES/_REGLAS-cifrado-armonico.md). Lo propio del coral: las frases,
+     cada una cerrada por su calderón, y la cadencia que se lee en él. Es una LECTURA DE LA MÁQUINA: lo dudoso va marcado y lo mal leído se corrige.
+     Los ayudantes de grados, tonalidades y progresiones son los de analisis-fugas.html (V3). Cada compás citado lleva al rollo (irA en rollo.html). -->
+<style>
+:root{--bg:#f4f3ef;--panel:#ffffff;--line:#d8d5cc;--line2:#b9b5aa;--text:#22252b;--muted:#6b6f78;--acc:#2f6f62;--acc-t:#ffffff;--paper:#fffdf8;color-scheme:light;--kb-border:#501828}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181b;--panel:#202226;--line:#34373d;--line2:#4a4e56;--text:#e6e6e6;--muted:#9a9ea6;--acc:#4fb39c;--acc-t:#0b1f1a;--paper:#fbf9f3;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:12px max(12px,env(safe-area-inset-left,0px)) 28px max(12px,env(safe-area-inset-right,0px));min-height:100vh}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 8px;max-width:1280px;margin:0 auto}
+.grp{display:flex;align-items:center;gap:3px}
+.sep{width:1px;align-self:stretch;background:var(--line)}
+.lbl{font-size:11px;letter-spacing:.08em;color:var(--muted);margin:0 3px 0 2px}
+.btn{font:inherit;font-size:12.5px;min-height:32px;min-width:30px;padding:4px 8px;border:1px solid var(--line2);border-radius:7px;background:transparent;color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;touch-action:manipulation}
+.btn:hover{border-color:var(--acc)}
+.btn.on{background:var(--acc);border-color:var(--acc);color:var(--acc-t)}
+.btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.num{font-weight:600;font-variant-numeric:tabular-nums;min-width:34px;text-align:center}
+.vinfo{max-width:1280px;margin:12px auto 0;font-size:16px;font-weight:600;text-align:center}
+.vinfo span{font-weight:400;color:var(--muted)}
+.banner{max-width:1280px;margin:6px auto 0;min-height:18px;font-size:12.5px;color:var(--muted);text-align:center}
+.banner.duda{color:#8a4b12;background:#fbefd9;border:1px solid #ecd3a4;border-radius:8px;padding:6px 10px}
+main{max-width:1280px;margin:0 auto}
+.hoja{margin-top:8px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 10px 6px;overflow-x:auto;color:#22252b}
+.hoja svg{display:block}
+.sc{cursor:pointer}
+.sc .col{fill:transparent}
+.sc.gris .col{fill:rgba(0,0,0,.045)}
+.sc:hover .col{fill:rgba(47,111,98,.07)}
+.sc.sel .col{fill:rgba(47,111,98,.12);stroke:#2f6f62;stroke-width:1.5}
+.en{cursor:pointer}
+.ley{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 2px 0;font-size:12px;color:var(--muted)}
+.ley i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.ley i.ray{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.5) 0 2px,transparent 2px 5px)}
+h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:18px 2px 6px}
+.maq{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.chip{font:inherit;font-size:12.5px;border:1px solid transparent;border-radius:7px;padding:4px 8px;cursor:pointer;color:#22252b;line-height:1.2}
+.chip b{font-weight:600;margin-left:4px}
+.chip.sel{border-color:#2f6f62;box-shadow:0 0 0 2px rgba(47,111,98,.25)}
+.flecha{color:var(--muted);font-size:12px}
+.t-expo{background:#cfe5de}.t-ent{background:#f1e2c3}.t-epi{background:#e7e5de}.t-coda{background:#d9d6cc}
+.cols{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:14px;align-items:start}
+@media (max-width:820px){.cols{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.ficha dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 10px}
+.ficha dt{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.ficha dd{margin:0}
+.ficha svg{display:block;width:100%;max-width:250px;height:auto;margin:4px 0 2px;background:var(--paper);border:1px solid var(--line);border-radius:6px}
+.secs{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:8px}
+.sec{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer}
+.sec.sel{border-color:var(--acc);box-shadow:0 0 0 2px rgba(47,111,98,.25)}
+.sec header{padding:5px 10px;font-weight:600;color:#22252b;display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.sec header span{font-weight:400;font-size:12px;white-space:nowrap}
+.sec .cu{padding:7px 10px 9px;font-size:13px}
+.sec .cu p{margin:0 0 5px}
+.sec .cu p:last-child{margin-bottom:0}
+.sec .cu small{display:block;color:var(--muted);font-size:12px}
+.pt{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.res{margin-top:14px}
+.res table{border-collapse:collapse;width:100%;font-size:13px}
+.res td{padding:3px 8px 3px 0;vertical-align:top}
+.res td:first-child{color:var(--muted);white-space:nowrap;width:1%}
+.fila{display:grid;grid-template-columns:150px minmax(200px,1fr) minmax(280px,38%);gap:10px;align-items:center;padding:4px 6px;border-radius:7px;cursor:pointer}
+.fila:hover{background:rgba(47,111,98,.09)}
+.fila .n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.fila .n b{font-weight:600}
+.fila .d{font-size:12px;color:var(--muted)}
+.fila svg{display:block;width:100%;background:var(--paper);border:1px solid var(--line);border-radius:4px}
+@media (max-width:820px){.fila{grid-template-columns:1fr}}
+a.ir{color:inherit;text-decoration:underline dotted;text-underline-offset:2px;cursor:pointer}
+a.ir:hover{color:var(--acc);text-decoration:underline}
+.hoja svg a.ir,.hoja svg a.ir:hover{text-decoration:none;cursor:pointer}
+.gr{line-height:1.8}
+.gr .cg{display:inline-block;white-space:nowrap;margin-right:8px}
+.gr .cg a.ir{text-decoration:none}
+.gr .cg i{font-style:normal;font-size:10.5px;color:var(--muted);margin-right:3px;font-variant-numeric:tabular-nums}
+.gr .cg a.ir:hover i{color:var(--acc);text-decoration:underline}
+.gr .du{opacity:.5}
+.gr .so{color:var(--muted);font-size:12px}
+.gr .mo{color:#8a4b12;font-weight:600;margin-left:3px}
+footer{max-width:1280px;margin:22px auto 0;font-size:12px;color:var(--muted)}
+[hidden]{display:none!important}
+/* 2026-11-27 (Mario): el mapa del coral se imprime — A4 apaisado, sin la barra, con los colores del mapa y fondo blanco */
+.print-cab{display:none}
+.pie-marca{display:inline-flex;align-items:center;gap:5px}
+.pie-marca svg{height:12px;width:auto;fill:#2f6f62}
+.pie-marca sup{font-size:8px;line-height:1;color:#2f6f62;margin:-6px 3px 0 -4px}
+@page{size:A4 landscape;margin:10mm}
+@media print{
+  :root,:root:not([data-theme="light"]){--bg:#fff;--panel:#fff;--line:#d8d5cc;--line2:#b9b5aa;--text:#22252b;--muted:#6b6f78;--acc:#2f6f62;--paper:#fffdf8;color-scheme:light}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff!important;color:#22252b;margin:0}
+  .bar,#banner{display:none!important}
+  .print-cab{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#6b6f78;border-bottom:1px solid #d8d5cc;padding-bottom:4px;margin-bottom:4px}
+  .vinfo{margin-top:4px}
+  main,.vinfo,footer{max-width:none}
+  .hoja{overflow:visible;break-inside:avoid}
+  .hoja svg{width:100%;height:auto}
+  .ley,.maq{break-inside:avoid}
+  h2{break-after:avoid}
+  .cols{display:block}
+  .cols>div+div{margin-top:10px}
+  .secs{display:block;columns:4;column-gap:8px}
+  .sec{break-inside:avoid;margin-bottom:8px}
+  .sec header{break-after:avoid}
+  .sec.sel{box-shadow:none}
+  a{color:inherit;text-decoration:none}
+}
+/* (de las fugas) «la última página sale con un párrafo y mucho espacio libre… ¿se puede llenar con un análisis del map?» → la lectura del mapa, en prosa */
+.lectura{font-size:13.5px;line-height:1.55;padding:12px 16px}
+.lectura p{margin:0 0 8px}.lectura p:last-child{margin-bottom:0}
+.lectura b.l{color:var(--acc)}
+.lectura .dudosa{color:#8a4b12;font-size:12.5px}
+@media print{.lectura{font-size:12px;line-height:1.5}.lectura p{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="bar" role="toolbar" aria-label="Corales">
+  <a class="btn" id="volver" href="rollo.html" title="Back to the roll">←</a>
+  <span class="sep"></span>
+  <span class="grp"><button class="btn" id="prev" title="Previous chorale">◀</button><span class="num" id="num">001</span><button class="btn" id="next" title="Next chorale">▶</button></span>
+  <span class="sep"></span>
+  <button class="btn" id="imprimir" type="button" title="Print this page (A4 landscape)" onclick="window.print()">PRINT</button>
+</div>
+<div class="print-cab"><span class="pie-marca"><svg viewBox="180 95 1145 305" aria-label="m Δ° m"><path d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg><sup>®</sup>Music Motion · musicmotionsuite.com</span><span id="cabTxt">Corales de Bach · mapas y fichas · Music School Coach</span></div>
+<div class="vinfo" id="vinfo"></div>
+<div class="banner" id="banner"></div>
+
+<main id="uno">
+  <div class="hoja" id="mapa"></div>
+  <div class="ley" id="ley"></div>
+  <h2 id="maqT">Las frases del coral</h2>
+  <div class="maq" id="maq"></div>
+  <div class="cols">
+    <div><h2 id="fichaT">Ficha</h2><div class="card ficha" id="ficha"></div></div>
+    <div><h2 id="secsT">Cada frase y su cadencia</h2><div class="secs" id="secs"></div></div>
+  </div>
+  <h2 id="lecT">Lectura del mapa</h2>
+  <div class="card lectura" id="lectura"></div>
+</main>
+
+<footer id="pie"></footer>
+
+<script src="rollo-barroco/corales-mapa.js"></script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const D=window.CORALES_MAPA||{}, NUMS=Object.keys(D).sort();
+const state={i:0,sel:-1};
+// ── EL IDIOMA (2026-11-27, Mario: paso 3, los mapas en en · fr · nl · de · «procede»): el de la suite (mmCoachLang), si no el del sitio (mmSiteLang:
+// es · en), si no inglés —como el título del rollo—; ?lang= manda. Los botones siguen en inglés. Las tonalidades de los datos («Sol mayor») y las
+// notas de la máquina se traducen aquí, al mostrarlas; los datos no se tocan. Lo que falte en un idioma sale en inglés.
+const QLANG=(()=>{ try{ return new URLSearchParams(location.search).get('lang'); }catch(e){ return null; } })();
+const LANG=(()=>{ const ok=x=>['es','en','fr','nl','de'].indexOf(x)>=0; if(ok(QLANG)) return QLANG; let L='en';
+  try{ const c=localStorage.getItem('mmCoachLang'), w=localStorage.getItem('mmSiteLang'); L=ok(c)?c:(['es','en'].indexOf(w)>=0?w:'en'); }catch(e){} return L; })();
+document.documentElement.lang=LANG;
+const NOTA={do:0,re:1,mi:2,fa:3,sol:4,la:5,si:6}, LETRA='CDEFGAB';
+// «Sol mayor», «fa# menor», «Si♭ mayor» → G major · sol majeur · G majeur · G-Dur (nl y de: Fis, Bes, Es, As; en alemán si♭ = B y si = H; el menor con minúscula)
+function tonN(s){ if(LANG==='es') return s; const m=String(s).match(/^(do|re|mi|fa|sol|la|si)(b|#|♭|♯)?\s+(mayor|menor)$/i); if(!m) return s;
+  const i=NOTA[m[1].toLowerCase()], ac=m[2]?(/[b♭]/.test(m[2])?'b':'#'):'', may=m[3].toLowerCase()==='mayor', sg=ac==='b'?'♭':ac==='#'?'♯':'';
+  if(LANG==='en') return LETRA[i]+sg+(may?' major':' minor');
+  if(LANG==='fr') return m[1].toLowerCase()+sg+(may?' majeur':' mineur');
+  const l=LETRA[i]; let n=ac==='#'?(LANG==='de'&&l==='B'?'His':l+'is'):ac==='b'?(l==='E'?'Es':l==='A'?'As':l==='B'?(LANG==='de'?'B':'Bes'):l+'es'):(LANG==='de'&&l==='B'?'H':l);
+  if(!may) n=n.toLowerCase(); return LANG==='de'?n+(may?'-Dur':'-Moll'):n+(may?' majeur':' mineur'); }
+// las notas de la máquina (lo dudoso), con sus números
+const MAQ=[
+  [/^la lectura no vuelve a la tonalidad principal al final$/,{en:'the reading does not return to the main key at the end',fr:'la lecture ne revient pas à la tonalité principale à la fin',nl:'de lezing keert aan het eind niet terug naar de hoofdtoonsoort',de:'die Lesart kehrt am Ende nicht zur Haupttonart zurück'}],
+  [/^sujeto muy corto \((\d+) notas\): la máquina puede contar entradas de más$/,{en:'very short subject ($1 notes): the machine may count too many entries',fr:'sujet très court ($1 notes) : la machine peut compter des entrées en trop',nl:'zeer kort onderwerp ($1 noten): de machine kan te veel inzetten tellen',de:'sehr kurzes Thema ($1 Töne): die Maschine kann zu viele Einsätze zählen'}],
+  [/^no todas las voces entran con el sujeto al comienzo: la exposición puede estar mal leída$/,{en:'not every voice enters with the subject at the start: the exposition may be misread',fr:'toutes les voix n’entrent pas avec le sujet au début : l’exposition peut être mal lue',nl:'niet alle stemmen zetten in het begin in met het onderwerp: de expositie kan verkeerd gelezen zijn',de:'nicht alle Stimmen setzen zu Beginn mit dem Thema ein: die Exposition kann falsch gelesen sein'}],
+  [/^el sujeto leído es mucho más corto que lo que canta la primera voz antes de la respuesta$/,{en:'the subject read is much shorter than what the first voice sings before the answer',fr:'le sujet lu est bien plus court que ce que chante la première voix avant la réponse',nl:'het gelezen onderwerp is veel korter dan wat de eerste stem zingt vóór het antwoord',de:'das gelesene Thema ist viel kürzer als das, was die erste Stimme vor der Antwort singt'}],
+  [/^muy pocas entradas completas \((\d+)\): revisar el sujeto$/,{en:'very few complete entries ($1): check the subject',fr:'très peu d’entrées complètes ($1) : vérifier le sujet',nl:'zeer weinig volledige inzetten ($1): het onderwerp nakijken',de:'sehr wenige vollständige Einsätze ($1): das Thema prüfen'}]];
+function maqN(s){ if(LANG==='es') return s; for(const [re,t] of MAQ){ if(re.test(s)) return s.replace(re,t[LANG]||t.en); } return s; }
+
+// lo que comparten las dos páginas (tonalidades, cadencias, progresiones, grados)
+const T0={
+  es:{c:'c.',tonLbl:'ton',tonTit:'Tonalidad: las regiones confirmadas y las cadencias',cadEn:(g,c)=>'Cadencia en '+g+' · c. '+c,dud:'lectura dudosa',Dud:'Lectura dudosa',en:' en ',
+    mas:n=>' · y '+n+' más (en el mapa, ▾)',progLbl:'prog',progTit:'Progresiones: dónde están y cómo se arman',
+    PASO_C:{3:'por quintas',4:'por quintas ascendentes',5:'por terceras descendentes',2:'por terceras ascendentes',1:'por grados ascendentes',6:'por grados descendentes'},
+    PASO_AB:{3:'5ª',4:'5ª↑',5:'3ª↓',2:'3ª↑',1:'2ª↑',6:'2ª↓'},PASO_M:{1:'un grado más arriba',6:'un grado más abajo',2:'una tercera más arriba',5:'una tercera más abajo',3:'una cuarta más arriba',4:'una cuarta más abajo'},
+    modelo:'por modelo',prog:k=>'Progresión '+k,progMin:k=>'progresión '+k,arma:(n,cf)=>n+' acordes: '+cf,armaM:(x,m,n,cf)=>'modelo de '+x+' acordes, cada vez '+m+', '+n+' veces: '+cf,
+    hacia:(k,e,inl,VZ)=>{ const s=(k?' · lleva a la cadencia en '+k.g+' (c. '+k.c+')':'')+(e?(k?', donde entra ':' · lleva a ')+(e.cab?'la cabeza del tema':k?'el tema':'la entrada del tema')+' en '+VZ(e.v)+(k?'':' (c. '+e.c+')'):''); return inl?s.replace(/^ · lleva/,', que lleva'):s; },
+    dudProg:'Lectura dudosa: la mitad o más de sus acordes lo son.',ninguna:'ninguna de cuatro acordes o más',tonalidad:'Tonalidad: ',sola:'(sola)',solaT:'sola',y:' y ',coma:','},
+  en:{c:'b.',tonLbl:'key',tonTit:'Key: the confirmed regions and the cadences',cadEn:(g,c)=>'Cadence on '+g+' · b. '+c,dud:'uncertain reading',Dud:'Uncertain reading',en:' on ',
+    mas:n=>' · and '+n+' more (on the map, ▾)',progLbl:'prog',progTit:'Progressions: where they are and how they are built',
+    PASO_C:{3:'by fifths',4:'by rising fifths',5:'by falling thirds',2:'by rising thirds',1:'by rising steps',6:'by falling steps'},
+    PASO_AB:{3:'5th',4:'5th↑',5:'3rd↓',2:'3rd↑',1:'2nd↑',6:'2nd↓'},PASO_M:{1:'one step higher',6:'one step lower',2:'a third higher',5:'a third lower',3:'a fourth higher',4:'a fourth lower'},
+    modelo:'by model',prog:k=>'Progression '+k,progMin:k=>'progression '+k,arma:(n,cf)=>n+' chords: '+cf,armaM:(x,m,n,cf)=>'a model of '+x+' chords, each time '+m+', '+n+' times: '+cf,
+    hacia:(k,e,inl,VZ)=>{ const s=(k?' · leads to the cadence on '+k.g+' (b. '+k.c+')':'')+(e?(k?', where '+(e.cab?'the head of the theme':'the theme')+' enters '+VZ(e.v):' · leads to '+(e.cab?'the head of the theme':'the entry of the theme')+' '+VZ(e.v)+' (b. '+e.c+')'):''); return inl?s.replace(/^ · leads/,', which leads'):s; },
+    dudProg:'Uncertain reading: half or more of its chords are uncertain.',ninguna:'none of four chords or more',tonalidad:'Key: ',sola:'(alone)',solaT:'alone',y:' and ',coma:'.'},
+  fr:{c:'m.',tonLbl:'ton',tonTit:'Tonalité : les régions confirmées et les cadences',cadEn:(g,c)=>'Cadence sur '+g+' · m. '+c,dud:'lecture incertaine',Dud:'Lecture incertaine',en:' sur ',
+    mas:n=>' · et '+n+' de plus (sur la carte, ▾)',progLbl:'prog',progTit:'Progressions : où elles sont et comment elles se construisent',
+    PASO_C:{3:'par quintes',4:'par quintes ascendantes',5:'par tierces descendantes',2:'par tierces ascendantes',1:'par degrés ascendants',6:'par degrés descendants'},
+    PASO_AB:{3:'5te',4:'5te↑',5:'3ce↓',2:'3ce↑',1:'2de↑',6:'2de↓'},PASO_M:{1:'un degré plus haut',6:'un degré plus bas',2:'une tierce plus haut',5:'une tierce plus bas',3:'une quarte plus haut',4:'une quarte plus bas'},
+    modelo:'par modèle',prog:k=>'Progression '+k,progMin:k=>'progression '+k,arma:(n,cf)=>n+' accords : '+cf,armaM:(x,m,n,cf)=>'un modèle de '+x+' accords, chaque fois '+m+', '+n+' fois : '+cf,
+    hacia:(k,e,inl,VZ)=>{ const s=(k?' · mène à la cadence sur '+k.g+' (m. '+k.c+')':'')+(e?(k?', où entre '+(e.cab?'la tête du thème':'le thème')+' '+VZ(e.v):' · mène à '+(e.cab?'la tête du thème':'l’entrée du thème')+' '+VZ(e.v)+' (m. '+e.c+')'):''); return inl?s.replace(/^ · mène/,', qui mène'):s; },
+    dudProg:'Lecture incertaine : la moitié de ses accords ou plus sont incertains.',ninguna:'aucune de quatre accords ou plus',tonalidad:'Tonalité : ',sola:'(seule)',solaT:'seule',y:' et ',coma:','},
+  nl:{c:'m.',tonLbl:'toon',tonTit:'Toonsoort: de bevestigde gebieden en de cadensen',cadEn:(g,c)=>'Cadens op '+g+' · m. '+c,dud:'onzekere lezing',Dud:'Onzekere lezing',en:' op ',
+    mas:n=>' · en nog '+n+' (op de kaart, ▾)',progLbl:'prog',progTit:'Progressies: waar ze staan en hoe ze gebouwd zijn',
+    PASO_C:{3:'in kwinten',4:'in stijgende kwinten',5:'in dalende tertsen',2:'in stijgende tertsen',1:'in stijgende secunden',6:'in dalende secunden'},
+    PASO_AB:{3:'5e',4:'5e↑',5:'3e↓',2:'3e↑',1:'2e↑',6:'2e↓'},PASO_M:{1:'een trap hoger',6:'een trap lager',2:'een terts hoger',5:'een terts lager',3:'een kwart hoger',4:'een kwart lager'},
+    modelo:'volgens model',prog:k=>'Progressie '+k,progMin:k=>'progressie '+k,arma:(n,cf)=>n+' akkoorden: '+cf,armaM:(x,m,n,cf)=>'een model van '+x+' akkoorden, telkens '+m+', '+n+' keer: '+cf,
+    hacia:(k,e,inl,VZ)=>{ const s=(k?' · leidt naar de cadens op '+k.g+' (m. '+k.c+')':'')+(e?(k?', waar '+(e.cab?'de kop van het thema':'het thema')+' '+VZ(e.v)+' inzet':' · leidt naar '+(e.cab?'de kop van het thema':'de inzet van het thema')+' '+VZ(e.v)+' (m. '+e.c+')'):''); return inl?s.replace(/^ · leidt/,', die leidt'):s; },
+    dudProg:'Onzekere lezing: de helft of meer van de akkoorden is onzeker.',ninguna:'geen van vier akkoorden of meer',tonalidad:'Toonsoort: ',sola:'(alleen)',solaT:'alleen',y:' en ',coma:','},
+  de:{c:'T.',tonLbl:'Ton',tonTit:'Tonart: die bestätigten Bereiche und die Kadenzen',cadEn:(g,c)=>'Kadenz auf '+g+' · T. '+c,dud:'unsichere Lesart',Dud:'Unsichere Lesart',en:' auf ',
+    mas:n=>' · und '+n+' weitere (in der Karte, ▾)',progLbl:'Prog',progTit:'Progressionen: wo sie stehen und wie sie gebaut sind',
+    PASO_C:{3:'in Quinten',4:'in steigenden Quinten',5:'in fallenden Terzen',2:'in steigenden Terzen',1:'in steigenden Sekunden',6:'in fallenden Sekunden'},
+    PASO_AB:{3:'5.',4:'5.↑',5:'3.↓',2:'3.↑',1:'2.↑',6:'2.↓'},PASO_M:{1:'eine Stufe höher',6:'eine Stufe tiefer',2:'eine Terz höher',5:'eine Terz tiefer',3:'eine Quarte höher',4:'eine Quarte tiefer'},
+    modelo:'nach Modell',prog:k=>'Progression '+k,progMin:k=>'Progression '+k,arma:(n,cf)=>n+' Akkorde: '+cf,armaM:(x,m,n,cf)=>'ein Modell aus '+x+' Akkorden, jedes Mal '+m+', '+n+'-mal: '+cf,
+    hacia:(k,e,inl,VZ)=>{ if(inl) return (k?', die zur Kadenz auf '+k.g+' (T. '+k.c+') führt':'')+(e?(k?', wo '+(e.cab?'der Themenkopf':'das Thema')+' '+VZ(e.v)+' einsetzt':', die zum '+(e.cab?'Themenkopf':'Einsatz des Themas')+' '+VZ(e.v)+' (T. '+e.c+') führt'):'');
+      return (k?' · führt zur Kadenz auf '+k.g+' (T. '+k.c+')':'')+(e?(k?', wo '+(e.cab?'der Themenkopf':'das Thema')+' '+VZ(e.v)+' einsetzt':' · führt zum '+(e.cab?'Themenkopf':'Einsatz des Themas')+' '+VZ(e.v)+' (T. '+e.c+')'):''); },
+    dudProg:'Unsichere Lesart: die Hälfte der Akkorde oder mehr ist unsicher.',ninguna:'keine mit vier Akkorden oder mehr',tonalidad:'Tonart: ',sola:'(allein)',solaT:'allein',y:' und ',coma:','}};
+const TC=T0[LANG]||T0.en;
+
+// lo propio de los corales, en cada idioma: CAD = [abreviatura, nombre, en la leyenda, en la cuenta de finales] por tipo de cadencia
+const TX={
+  es:{title:'mm Corales de Bach · mapas y fichas',cab:'Corales de Bach · mapas y fichas · Music School Coach',hMaq:'Las frases del coral',hFicha:'Ficha',hSecs:'Cada frase y su cadencia',hLec:'Lectura del mapa',
+    aria:'Mapa del coral: las frases, sus cadencias y las tonalidades',frTit:'Las frases: cada una termina en su calderón',frLbl:'frases',grLbl:'gr.',grTit:'Los grados de cada compás, en la tonalidad del momento',solaS:'(s)',Frase:'Frase',
+    CAD:{'auténtica perfecta':['AP','cadencia auténtica perfecta','auténtica perfecta','auténtica perfecta'],'auténtica imperfecta':['AI','cadencia auténtica imperfecta','auténtica imperfecta','auténtica imperfecta'],
+      'semicadencia':['SC','semicadencia','semicadencia','semicadencia'],'semicadencia frigia':['SF','semicadencia frigia','semicadencia frigia','semicadencia frigia'],'plagal':['Pl','cadencia plagal','plagal','plagal'],
+      'rota':['R','cadencia rota','rota','rota'],'auténtica en otro grado':['→','cadencia auténtica en otro grado','auténtica en otro grado (dice cuál)',''],'conclusiva':['C','final en I sin dominante antes','I sin V antes','conclusiva'],'otra':['?','un final sin clasificar','otra','sin clasificar']},
+    autEn:g=>'cadencia auténtica en '+g,autEnC:g=>'auténtica en '+g,
+    ley:['𝄐 calderón','tonalidad principal','dominante','relativo','otra tonalidad','▾ cadencia V → I','progresión'],
+    ORD:['1.º','2.º','3.º','4.º','5.º','6.º','7.º'],compas:['compás','compases'],frase:['frase','frases'],
+    fCoral:'Coral',fTon:'Tonalidad',fFrases:'Frases',fTons:'Tonalidades',fMods:'Modulaciones',fProgs:'Progresiones',fCierre:'Cierre',
+    enPrinc:p=>' · en la principal el '+p+' % del coral',sopTermina:o=>' · la soprano termina en el '+o+' grado',
+    enReg:(g,k)=>'En '+g+' ('+k+') · ',sopCal:(c,o)=>'en el calderón (c. '+c+') la soprano está en el '+o+' grado',
+    cadSin:n=>(n===1?'1 cadencia':n+' cadencias')+' sin leer con seguridad (más claras en el mapa)',
+    L:{forma:'Forma',ton:'Recorrido tonal',frases:'Las frases',est:'Para estudiar',cierre:'Cierre'},
+    forma:(o)=>'Coral de '+o.n+' '+(o.n===1?'compás':'compases')+' en '+o.cifra+', '+o.ton+'. Tiene '+o.nf+' '+(o.nf===1?'frase':'frases')+', cada una cerrada por su calderón. Sus finales: '+o.fin+'. '+
+      (o.aut&&o.semi?'Las frases se responden como pregunta y respuesta: '+(o.semi===1?'una queda abierta':o.semi+' quedan abiertas')+' en la dominante y '+(o.aut===1?'una cierra':o.aut+' cierran')+' en la tónica. ':''),
+    todo:'Todo el coral queda en ',modula:(n,ms)=>'Modula '+(n===1?'una vez':n+' veces')+': '+ms.map(m=>'en el '+m.c+' a '+m.k).join('; ')+'. ',
+    noModOt:l=>'No modula: las cadencias en otro grado ('+l+') son tonicizaciones de una frase, no tonalidades nuevas. ',noMod:'No modula. ',otEn:(n,g)=>'frase '+n+' en '+g,
+    fraseL:o=>'la '+o.n+'.ª ('+o.c+') termina en '+o.cad+' ('+o.gg+'), la soprano en el '+o.ord+' grado'+(o.dud?' <span class="dudosa">(dudosa)</span>':''),
+    estCad:(cad,n,c)=>'la '+cad+' de la frase '+n+' ('+c+')',estProg:(pr,c,cf,h)=>'la '+pr+' en '+c+' ('+cf+')'+h,estMas:n=>'; y '+n+' progresiones más, en las frases',
+    cierre:(cad,gg,ord,pic)=>'El coral termina con '+cad+' ('+gg+'), con la soprano en el '+ord+' grado'+(pic?'; el acorde final es mayor: tercera de picardía':'')+'.',
+    dudFr:n=>n===1?'1 frase con la cadencia dudosa':n+' frases con la cadencia dudosa',
+    pie:(n,fe)=>'Lectura de la máquina sobre los '+n+' corales del rollo'+fe+'. No es un análisis de libro: lo dudoso va marcado y lo que esté mal leído se corrige. La cadencia de cada frase se lee en su calderón, en la tonalidad del momento; los grados siguen las reglas del cifrado de la casa (una tonalidad nueva necesita su cadencia y durar cuatro compases). Cada compás citado lleva al rollo.'},
+  en:{title:'mm Bach chorales · maps and cards',cab:'Bach chorales · maps and cards · Music School Coach',hMaq:'The phrases of the chorale',hFicha:'Card',hSecs:'Each phrase and its cadence',hLec:'Reading the map',
+    aria:'Map of the chorale: the phrases, their cadences and the keys',frTit:'The phrases: each one ends at its fermata',frLbl:'phr.',grLbl:'deg.',grTit:'The degrees of each bar, in the key of the moment',solaS:'(a)',Frase:'Phrase',
+    CAD:{'auténtica perfecta':['PAC','perfect authentic cadence','perfect authentic','perfect authentic'],'auténtica imperfecta':['IAC','imperfect authentic cadence','imperfect authentic','imperfect authentic'],
+      'semicadencia':['HC','half cadence','half cadence','half cadence'],'semicadencia frigia':['PHC','Phrygian half cadence','Phrygian half cadence','Phrygian half cadence'],'plagal':['PC','plagal cadence','plagal','plagal'],
+      'rota':['DC','deceptive cadence','deceptive','deceptive'],'auténtica en otro grado':['→','authentic cadence on another degree','authentic on another degree (says which)',''],'conclusiva':['C','ending on I with no dominant before','I with no V before','conclusive'],'otra':['?','unclassified ending','other','unclassified']},
+    autEn:g=>'authentic cadence on '+g,autEnC:g=>'authentic on '+g,
+    ley:['𝄐 fermata','main key','dominant','relative','other key','▾ cadence V → I','progression'],
+    ORD:['1st','2nd','3rd','4th','5th','6th','7th'],compas:['bar','bars'],frase:['phrase','phrases'],
+    fCoral:'Chorale',fTon:'Key',fFrases:'Phrases',fTons:'Keys',fMods:'Modulations',fProgs:'Progressions',fCierre:'Close',
+    enPrinc:p=>' · '+p+' % of the chorale in the main key',sopTermina:o=>' · the soprano ends on the '+o+' degree',
+    enReg:(g,k)=>'In '+g+' ('+k+') · ',sopCal:(c,o)=>'at the fermata (b. '+c+') the soprano is on the '+o+' degree',
+    cadSin:n=>(n===1?'1 cadence':n+' cadences')+' not read with certainty (lighter on the map)',
+    L:{forma:'Form',ton:'Tonal path',frases:'The phrases',est:'To study',cierre:'Close'},
+    forma:(o)=>'Chorale of '+o.n+' '+(o.n===1?'bar':'bars')+' in '+o.cifra+', '+o.ton+'. It has '+o.nf+' '+(o.nf===1?'phrase':'phrases')+', each closed by its fermata. Its endings: '+o.fin+'. '+
+      (o.aut&&o.semi?'The phrases answer each other as question and answer: '+(o.semi===1?'one stays open':o.semi+' stay open')+' on the dominant and '+(o.aut===1?'one closes':o.aut+' close')+' on the tonic. ':''),
+    todo:'The whole chorale stays in ',modula:(n,ms)=>'It modulates '+(n===1?'once':n===2?'twice':n+' times')+': '+ms.map(m=>'in '+m.c+' to '+m.k).join('; ')+'. ',
+    noModOt:l=>'It does not modulate: the cadences on other degrees ('+l+') are tonicizations within a phrase, not new keys. ',noMod:'It does not modulate. ',otEn:(n,g)=>'phrase '+n+' on '+g,
+    fraseL:o=>'phrase '+o.n+' ('+o.c+'): '+o.cad+' ('+o.gg+'), the soprano on the '+o.ord+' degree'+(o.dud?' <span class="dudosa">(uncertain)</span>':''),
+    estCad:(cad,n,c)=>'the '+cad+' of phrase '+n+' ('+c+')',estProg:(pr,c,cf,h)=>'the '+pr+' in '+c+' ('+cf+')'+h,estMas:n=>'; and '+n+' more progressions, in the phrases',
+    cierre:(cad,gg,ord,pic)=>'The chorale ends with '+(/^[aeiou]/i.test(cad)?'an ':'a ')+cad+' ('+gg+'), with the soprano on the '+ord+' degree'+(pic?'; the final chord is major: a Picardy third':'')+'.',
+    dudFr:n=>n===1?'1 phrase with an uncertain cadence':n+' phrases with an uncertain cadence',
+    pie:(n,fe)=>'Machine reading of the '+n+' chorales of the roll'+fe+'. It is not a textbook analysis: what is uncertain is marked, and whatever is misread gets corrected. The cadence of each phrase is read at its fermata, in the key of the moment; the degrees follow the house rules for harmonic figuring (a new key needs its cadence and must last four bars). Every bar cited leads to the roll.'},
+  fr:{title:'mm Chorals de Bach · cartes et fiches',cab:'Chorals de Bach · cartes et fiches · Music School Coach',hMaq:'Les phrases du choral',hFicha:'Fiche',hSecs:'Chaque phrase et sa cadence',hLec:'Lecture de la carte',
+    aria:'Carte du choral : les phrases, leurs cadences et les tonalités',frTit:'Les phrases : chacune se termine sur son point d’orgue',frLbl:'phr.',grLbl:'deg.',grTit:'Les degrés de chaque mesure, dans la tonalité du moment',solaS:'(s)',Frase:'Phrase',
+    CAD:{'auténtica perfecta':['CP','cadence parfaite','parfaite','parfaite'],'auténtica imperfecta':['CI','cadence imparfaite','imparfaite','imparfaite'],
+      'semicadencia':['DC','demi-cadence','demi-cadence','demi-cadence'],'semicadencia frigia':['DCP','demi-cadence phrygienne','demi-cadence phrygienne','demi-cadence phrygienne'],'plagal':['Pl','cadence plagale','plagale','plagale'],
+      'rota':['R','cadence rompue','rompue','rompue'],'auténtica en otro grado':['→','cadence parfaite sur un autre degré','parfaite sur un autre degré (indique lequel)',''],'conclusiva':['C','fin sur I sans dominante avant','I sans V avant','conclusive'],'otra':['?','fin non classée','autre','non classée']},
+    autEn:g=>'cadence parfaite sur '+g,autEnC:g=>'parfaite sur '+g,
+    ley:['𝄐 point d’orgue','tonalité principale','dominante','relatif','autre tonalité','▾ cadence V → I','progression'],
+    ORD:['1er','2e','3e','4e','5e','6e','7e'],compas:['mesure','mesures'],frase:['phrase','phrases'],
+    fCoral:'Choral',fTon:'Tonalité',fFrases:'Phrases',fTons:'Tonalités',fMods:'Modulations',fProgs:'Progressions',fCierre:'Fin',
+    enPrinc:p=>' · '+p+' % du choral dans la tonalité principale',sopTermina:o=>' · le soprano finit sur le '+o+' degré',
+    enReg:(g,k)=>'En '+g+' ('+k+') · ',sopCal:(c,o)=>'au point d’orgue (m. '+c+') le soprano est sur le '+o+' degré',
+    cadSin:n=>(n===1?'1 cadence':n+' cadences')+' pas lues avec certitude (plus claires sur la carte)',
+    L:{forma:'Forme',ton:'Parcours tonal',frases:'Les phrases',est:'À étudier',cierre:'Fin'},
+    forma:(o)=>'Choral de '+o.n+' '+(o.n===1?'mesure':'mesures')+' en '+o.cifra+', '+o.ton+'. Il a '+o.nf+' '+(o.nf===1?'phrase':'phrases')+', chacune fermée par son point d’orgue. Ses fins : '+o.fin+'. '+
+      (o.aut&&o.semi?'Les phrases se répondent comme question et réponse : '+(o.semi===1?'une reste ouverte':o.semi+' restent ouvertes')+' sur la dominante et '+(o.aut===1?'une se ferme':o.aut+' se ferment')+' sur la tonique. ':''),
+    todo:'Tout le choral reste en ',modula:(n,ms)=>'Il module '+(n===1?'une fois':n+' fois')+' : '+ms.map(m=>'à la '+m.c+' vers '+m.k).join(' ; ')+'. ',
+    noModOt:l=>'Il ne module pas : les cadences sur d’autres degrés ('+l+') sont des tonicisations à l’intérieur d’une phrase, pas de nouvelles tonalités. ',noMod:'Il ne module pas. ',otEn:(n,g)=>'phrase '+n+' sur '+g,
+    fraseL:o=>'phrase '+o.n+' ('+o.c+') : '+o.cad+' ('+o.gg+'), le soprano sur le '+o.ord+' degré'+(o.dud?' <span class="dudosa">(incertaine)</span>':''),
+    estCad:(cad,n,c)=>'la '+cad+' de la phrase '+n+' ('+c+')',estProg:(pr,c,cf,h)=>'la '+pr+' à la '+c+' ('+cf+')'+h,estMas:n=>' ; et '+n+' progressions de plus, dans les phrases',
+    cierre:(cad,gg,ord,pic)=>'Le choral se termine par une '+cad+' ('+gg+'), avec le soprano sur le '+ord+' degré'+(pic?' ; l’accord final est majeur : tierce picarde':'')+'.',
+    dudFr:n=>n===1?'1 phrase à la cadence incertaine':n+' phrases à la cadence incertaine',
+    pie:(n,fe)=>'Lecture de la machine sur les '+n+' chorals du rouleau'+fe+'. Ce n’est pas une analyse de manuel : ce qui est incertain est marqué et ce qui est mal lu se corrige. La cadence de chaque phrase se lit sur son point d’orgue, dans la tonalité du moment ; les degrés suivent les règles du chiffrage de la maison (une nouvelle tonalité a besoin de sa cadence et de durer quatre mesures). Chaque mesure citée mène au rouleau.'},
+  nl:{title:'mm Koralen van Bach · kaarten en fiches',cab:'Koralen van Bach · kaarten en fiches · Music School Coach',hMaq:'De frasen van het koraal',hFicha:'Fiche',hSecs:'Elke frase en haar cadens',hLec:'De kaart lezen',
+    aria:'Kaart van het koraal: de frasen, hun cadensen en de toonsoorten',frTit:'De frasen: elke frase eindigt op haar fermate',frLbl:'fr.',grLbl:'trap',grTit:'De trappen van elke maat, in de toonsoort van het moment',solaS:'(a)',Frase:'Frase',
+    CAD:{'auténtica perfecta':['VC','volkomen cadens','volkomen','volkomen'],'auténtica imperfecta':['OVC','onvolkomen cadens','onvolkomen','onvolkomen'],
+      'semicadencia':['HC','halve cadens','halve cadens','halve cadens'],'semicadencia frigia':['FHC','Frygische halve cadens','Frygische halve cadens','Frygische halve cadens'],'plagal':['PC','plagale cadens','plagaal','plagaal'],
+      'rota':['OC','onderbroken cadens','onderbroken','onderbroken'],'auténtica en otro grado':['→','volkomen cadens op een andere trap','volkomen op een andere trap (zegt welke)',''],'conclusiva':['S','slot op I zonder dominant ervoor','I zonder V ervoor','slot'],'otra':['?','niet ingedeeld slot','ander','niet ingedeeld']},
+    autEn:g=>'volkomen cadens op '+g,autEnC:g=>'volkomen op '+g,
+    ley:['𝄐 fermate','hoofdtoonsoort','dominant','parallel','andere toonsoort','▾ cadens V → I','progressie'],
+    ORD:['1e','2e','3e','4e','5e','6e','7e'],compas:['maat','maten'],frase:['frase','frasen'],
+    fCoral:'Koraal',fTon:'Toonsoort',fFrases:'Frasen',fTons:'Toonsoorten',fMods:'Modulaties',fProgs:'Progressies',fCierre:'Slot',
+    enPrinc:p=>' · '+p+' % van het koraal in de hoofdtoonsoort',sopTermina:o=>' · de sopraan eindigt op de '+o+' trap',
+    enReg:(g,k)=>'In '+g+' ('+k+') · ',sopCal:(c,o)=>'op de fermate (m. '+c+') staat de sopraan op de '+o+' trap',
+    cadSin:n=>(n===1?'1 cadens':n+' cadensen')+' niet met zekerheid gelezen (lichter op de kaart)',
+    L:{forma:'Vorm',ton:'Tonaal verloop',frases:'De frasen',est:'Om te bestuderen',cierre:'Slot'},
+    forma:(o)=>'Koraal van '+o.n+' '+(o.n===1?'maat':'maten')+' in '+o.cifra+', '+o.ton+'. Het heeft '+o.nf+' '+(o.nf===1?'frase':'frasen')+', elk afgesloten door een fermate. De slotten: '+o.fin+'. '+
+      (o.aut&&o.semi?'De frasen beantwoorden elkaar als vraag en antwoord: '+(o.semi===1?'één blijft open':o.semi+' blijven open')+' op de dominant en '+(o.aut===1?'één sluit':o.aut+' sluiten')+' op de tonica. ':''),
+    todo:'Het hele koraal blijft in ',modula:(n,ms)=>'Het moduleert '+(n===1?'één keer':n+' keer')+': '+ms.map(m=>'in '+m.c+' naar '+m.k).join('; ')+'. ',
+    noModOt:l=>'Het moduleert niet: de cadensen op andere trappen ('+l+') zijn tonicalisaties binnen een frase, geen nieuwe toonsoorten. ',noMod:'Het moduleert niet. ',otEn:(n,g)=>'frase '+n+' op '+g,
+    fraseL:o=>'frase '+o.n+' ('+o.c+'): '+o.cad+' ('+o.gg+'), de sopraan op de '+o.ord+' trap'+(o.dud?' <span class="dudosa">(onzeker)</span>':''),
+    estCad:(cad,n,c)=>'de '+cad+' van frase '+n+' ('+c+')',estProg:(pr,c,cf,h)=>'de '+pr+' in '+c+' ('+cf+')'+h,estMas:n=>'; en nog '+n+' progressies, in de frasen',
+    cierre:(cad,gg,ord,pic)=>'Het koraal eindigt met een '+cad+' ('+gg+'), met de sopraan op de '+ord+' trap'+(pic?'; het slotakkoord is groot: Picardische terts':'')+'.',
+    dudFr:n=>n===1?'1 frase met een onzekere cadens':n+' frasen met een onzekere cadens',
+    pie:(n,fe)=>'Lezing door de machine van de '+n+' koralen van de rol'+fe+'. Het is geen analyse uit een handboek: wat onzeker is, wordt gemarkeerd en wat verkeerd gelezen is, wordt verbeterd. De cadens van elke frase wordt gelezen op haar fermate, in de toonsoort van het moment; de trappen volgen de regels van de becijfering van het huis (een nieuwe toonsoort heeft haar cadens nodig en moet vier maten duren). Elke genoemde maat leidt naar de rol.'},
+  de:{title:'mm Bach-Choräle · Karten und Steckbriefe',cab:'Bach-Choräle · Karten und Steckbriefe · Music School Coach',hMaq:'Die Phrasen des Chorals',hFicha:'Steckbrief',hSecs:'Jede Phrase und ihre Kadenz',hLec:'Die Karte lesen',
+    aria:'Karte des Chorals: die Phrasen, ihre Kadenzen und die Tonarten',frTit:'Die Phrasen: jede endet auf ihrer Fermate',frLbl:'Phr.',grLbl:'Stufe',grTit:'Die Stufen jedes Takts, in der jeweiligen Tonart',solaS:'(a)',Frase:'Phrase',
+    CAD:{'auténtica perfecta':['GS','vollkommener Ganzschluss','vollkommener Ganzschluss','vollkommener Ganzschluss'],'auténtica imperfecta':['uGS','unvollkommener Ganzschluss','unvollkommener Ganzschluss','unvollkommener Ganzschluss'],
+      'semicadencia':['HS','Halbschluss','Halbschluss','Halbschluss'],'semicadencia frigia':['pHS','phrygischer Halbschluss','phrygischer Halbschluss','phrygischer Halbschluss'],'plagal':['PS','Plagalschluss','Plagalschluss','Plagalschluss'],
+      'rota':['TS','Trugschluss','Trugschluss','Trugschluss'],'auténtica en otro grado':['→','Ganzschluss auf einer anderen Stufe','Ganzschluss auf einer anderen Stufe (nennt welche)',''],'conclusiva':['S','Schluss auf I ohne Dominante davor','I ohne V davor','Schluss ohne Dominante'],'otra':['?','nicht eingeordneter Schluss','anderer','nicht eingeordnet']},
+    autEn:g=>'Ganzschluss auf '+g,autEnC:g=>'Ganzschluss auf '+g,
+    ley:['𝄐 Fermate','Haupttonart','Dominante','Parallele','andere Tonart','▾ Kadenz V → I','Progression'],
+    ORD:['1.','2.','3.','4.','5.','6.','7.'],compas:['Takt','Takte'],frase:['Phrase','Phrasen'],
+    fCoral:'Choral',fTon:'Tonart',fFrases:'Phrasen',fTons:'Tonarten',fMods:'Modulationen',fProgs:'Progressionen',fCierre:'Schluss',
+    enPrinc:p=>' · '+p+' % des Chorals in der Haupttonart',sopTermina:o=>' · der Sopran endet auf der '+o+' Stufe',
+    enReg:(g,k)=>'In '+g+' ('+k+') · ',sopCal:(c,o)=>'auf der Fermate (T. '+c+') liegt der Sopran auf der '+o+' Stufe',
+    cadSin:n=>(n===1?'1 Kadenz':n+' Kadenzen')+' nicht sicher gelesen (heller in der Karte)',
+    L:{forma:'Form',ton:'Tonartenverlauf',frases:'Die Phrasen',est:'Zum Studieren',cierre:'Schluss'},
+    forma:(o)=>'Choral mit '+o.n+' '+(o.n===1?'Takt':'Takten')+' im '+o.cifra+'-Takt, '+o.ton+'. Er hat '+o.nf+' '+(o.nf===1?'Phrase':'Phrasen')+', jede durch ihre Fermate abgeschlossen. Die Schlüsse: '+o.fin+'. '+
+      (o.aut&&o.semi?'Die Phrasen antworten einander wie Frage und Antwort: '+(o.semi===1?'eine bleibt offen':o.semi+' bleiben offen')+' auf der Dominante und '+(o.aut===1?'eine schließt':o.aut+' schließen')+' auf der Tonika. ':''),
+    todo:'Der ganze Choral bleibt in ',modula:(n,ms)=>'Er moduliert '+(n===1?'einmal':n===2?'zweimal':n+'-mal')+': '+ms.map(m=>'in '+m.c+' nach '+m.k).join('; ')+'. ',
+    noModOt:l=>'Er moduliert nicht: die Kadenzen auf anderen Stufen ('+l+') sind Tonikalisierungen innerhalb einer Phrase, keine neuen Tonarten. ',noMod:'Er moduliert nicht. ',otEn:(n,g)=>'Phrase '+n+' auf '+g,
+    fraseL:o=>'Phrase '+o.n+' ('+o.c+'): '+o.cad+' ('+o.gg+'), der Sopran auf der '+o.ord+' Stufe'+(o.dud?' <span class="dudosa">(unsicher)</span>':''),
+    estCad:(cad,n,c)=>'der '+cad+' in Phrase '+n+' ('+c+')',estProg:(pr,c,cf,h)=>'die '+pr+' in '+c+' ('+cf+')'+h,estMas:n=>'; und '+n+' weitere Progressionen, in den Phrasen',
+    cierre:(cad,gg,ord,pic)=>'Der Choral endet mit einem '+cad.replace(/^vollkommener/,'vollkommenen').replace(/^unvollkommener/,'unvollkommenen').replace(/^phrygischer/,'phrygischen').replace(/^nicht eingeordneter/,'nicht eingeordneten')+' ('+gg+'), mit dem Sopran auf der '+ord+' Stufe'+(pic?'; der Schlussakkord ist Dur: pikardische Terz':'')+'.',
+    dudFr:n=>n===1?'1 Phrase mit unsicherer Kadenz':n+' Phrasen mit unsicherer Kadenz',
+    pie:(n,fe)=>'Lesart der Maschine zu den '+n+' Chorälen der Rolle'+fe+'. Es ist keine Lehrbuchanalyse: Unsicheres ist markiert, und was falsch gelesen ist, wird korrigiert. Die Kadenz jeder Phrase wird auf ihrer Fermate gelesen, in der jeweiligen Tonart; die Stufen folgen den Regeln der hauseigenen Bezifferung (eine neue Tonart braucht ihre Kadenz und muss vier Takte dauern). Jeder genannte Takt führt zur Rolle.'}};
+const TT=TX[LANG]||TX.en;
+// cada coral, con lo que piden los ayudantes de la página de las fugas: f.cif (el cifrado), f.bars [comienzo, compás], f.BL, f.T
+const piezaDe=n=>{ const c=D[n]; if(!c) return null; const [a,b]=String(c.cifra||'4/4').split('/').map(Number), BL=a*4/b, bars=c.c.map(x=>[x[1],x[0]]);
+  const T=Math.max(bars.length?bars[bars.length-1][0]+BL:BL, ...(c.f||[]).map(x=>x[3]));
+  return {num:n,cif:c,BL,bars,T,t:c.t,bwv:c.bwv,o:tonN(c.o),cifra:c.cifra,n:c.n,fr:c.f||[]}; };
+const cifDe=f=>f&&f.cif||null;
+// las cadencias de las frases: [abreviatura, nombre, color]; la clave es la de los datos (en español)
+const CADC={'auténtica perfecta':'#2f6f62','auténtica imperfecta':'#6fa596','semicadencia':'#4f7fae','semicadencia frigia':'#7a6aa8','plagal':'#b0613a','rota':'#8a4b12','auténtica en otro grado':'#c4973a','conclusiva':'#8f8b80','otra':'#b9b5aa'};
+const CAD=Object.fromEntries(Object.keys(CADC).map(k=>[k,[TT.CAD[k][0],TT.CAD[k][1],CADC[k]]]));
+const cadDe=x=>CAD[x[4]]||CAD.otra;
+const cadNom=x=>x[4]==='auténtica en otro grado'?TT.autEn(gradoS(x[6])):cadDe(x)[1];
+const cadAb=x=>x[4]==='auténtica en otro grado'?gradoS(x[6]):cadDe(x)[0];
+const tramoF=(f,j)=>{ const x=f.fr[j]; return x[1]===x[2]?TC.c+' '+x[1]:TC.c+' '+x[1]+'–'+x[2]; };
+const t0F=(f,j)=>j?f.fr[j-1][3]:0;
+const regionEn=(f,t)=>{ const c=cifDe(f); if(!c) return null; return c.r.find(r=>r[2]<=t+1e-6&&t<r[3]+1e-6)||c.r[c.r.length-1]; };
+const ORD=TT.ORD;
+const bem=s=>s==='sola'?TC.solaT:String(s).replace(/b(?=[ivIV])/g,'♭').replace(/#/g,'♯');
+// la cifra entera (V65/V) se queda en el title; a la vista va el grado: V/V
+function gradoS(g){ if(!g||g==='sola'||g==='?') return g; g=g.split(' = ')[0]; const m=g.match(/^([b#]*)([ivIV]+)([oø+]?)(M7|7|65|43|42|64|6)?(\/.+)?$/); return m?bem(m[1]+m[2])+(m[3]==='o'||m[3]==='ø'?'°':m[3])+(m[5]?bem(m[5]):''):bem(g); }
+const REGC=(g,h)=>g===h?'#cfe5de':/^(V|v)$/.test(g)?'#d5e2f0':/^(vi|III)$/.test(g)?'#f1e2c3':'#ead9e6';
+// ── ir al rollo (Mario: «¿es posible tratar QUÉ CONTIENE CADA SECCIÓN como enlaces que te llevan directamente al sitio en cuestión en el rollo?»)
+const irL=(f,c,html)=>'<a class="ir" href="rollo.html?pieza='+f.num+'&c='+c+'" target="mm-rollo" data-n="'+f.num+'" data-c="'+c+'" title="Open this bar in the roll">'+html+'</a>';
+function tiraTonal(f,x,y){ const c=cifDe(f); if(!c) return ''; let s='<text x="4" y="'+(y+12)+'" font-size="10.5" fill="#6b6f78"><title>'+TC.tonTit+'</title>'+TC.tonLbl+'</text>';
+  c.r.forEach(r=>{ const r1=tonN(r[1]), a=x(r[2]), w=Math.max(2,x(r[3])-a-1), t=w>(r[0].length+r1.length)*6.3+18?r[0]+' · '+r1:w>r[0].length*7+6?r[0]:'';
+    s+='<rect x="'+a.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="16" rx="3" fill="'+REGC(r[0],c.h)+'"><title>'+esc(r[0]+' · '+r1+' · '+tramo(f,r[2],r[3]))+'</title></rect>';
+    if(t) s+='<text x="'+(a+w/2).toFixed(1)+'" y="'+(y+12)+'" text-anchor="middle" font-size="11" fill="#22252b" pointer-events="none">'+esc(t)+'</text>'; });
+  c.k.forEach(k=>{ const xx=x(k[2]); s+='<path d="M'+(xx-3.5).toFixed(1)+' '+(y-6)+'h7l-3.5 5z" fill="#22252b"><title>'+esc(TC.cadEn(k[1],k[0]))+'</title></path>'; });
+  return s; }
+function tonTxt(f){ const c=cifDe(f); return c?c.r.map(r=>'<b>'+esc(r[0])+'</b> '+esc(tonN(r[1]))+' ('+irL(f,r[4],tramo(f,r[2],r[3]))+')').join(' → ')+(c.d&&c.d.length?' <small style="color:#8a4b12">· '+TC.dud+': '+esc(c.d.map(maqN).join(' · '))+'</small>':''):''; }
+function cadTxt(f){ const c=cifDe(f); if(!c||!c.k.length) return ''; const N=24; return c.k.slice(0,N).map(k=>irL(f,k[0],TC.c+' '+k[0])+TC.en+esc(k[1])).join(' · ')+(c.k.length>N?TC.mas(c.k.length-N):''); }
+// ── las progresiones (2026-11-23, Mario: «¿podemos ver cómo se arman las progresiones y dónde están, para ponerlas en los map?»): CIFRADO[num].p =
+// [clase, de, a, compás, compás, paso, veces, cifras, acordes dudosos, cuándo empieza su último acorde]; «c» = cadena (la fundamental se mueve siempre igual), «m» = un modelo que se repite
+const PRC={c:'#22252b',m:'#8a4b12'}, PASO_C=TC.PASO_C, PASO_AB=TC.PASO_AB, PASO_M=TC.PASO_M;
+const progK=p=>p[0]==='c'?PASO_C[p[5]]:TC.modelo;
+const progDe=f=>{ const c=cifDe(f); return c&&c.p?c.p:[]; }, progTit=p=>TC.prog(progK(p)), progN=p=>p[7].split(/–| \| /).length, progDud=p=>p[8]*2>=progN(p);
+const progArma=p=>p[0]==='c'?TC.arma(p[6],p[7].replace(/–/g,' – ')):TC.armaM(progN(p)/p[6],PASO_M[p[5]],p[6],p[7].replace(/–/g,' – '));
+// a dónde lleva: la cadencia con que termina
+const VZ=v=>v;
+function progHacia(f,p,inl){ const c=cifDe(f), ks=c.k.filter(k=>k[2]>=p[9]-1e-6&&k[2]<=p[2]+1e-6), k=ks[0], t=k?k[2]:p[2];   // la cadencia cuenta si cae en su último acorde o en el que sigue
+  const cerca=e=>e.t>=t-f.BL/2-1e-6&&e.t<=t+f.BL/2+1e-6, en=(f.ent||[]).find(cerca), ca=en?null:(f.cab||[]).find(cerca), e=en||ca;
+  return TC.hacia(k?{g:k[1],c:k[0]}:null,e?{cab:!!ca,v:e.v,c:compasDe(f,e.t)}:null,inl,VZ); }
+// la fila «prog» del mapa: dientes para la cadena, escalones (que suben o bajan) para el modelo; cada marca lleva a su compás en el rollo
+function tiraProg(f,x,y){ const ps=progDe(f); if(!ps.length) return ''; let s='<text x="4" y="'+(y+9)+'" font-size="10.5" fill="#6b6f78"><title>'+TC.progTit+'</title>'+TC.progLbl+'</text>';
+  ps.forEach(p=>{ const a=x(p[1]), w=Math.max(8,x(p[2])-a-1); let d;
+    if(p[0]==='c'){ const n=Math.max(2,Math.round(w/7)), q=w/n; d='M'+a.toFixed(1)+' '+(y+10); for(let i=0;i<n;i++) d+='l'+(q/2).toFixed(2)+' -8l'+(q/2).toFixed(2)+' 8'; }
+    else{ const n=p[6], q=w/n, sube=p[5]<=3, dy=8/Math.max(1,n-1); d='M'+a.toFixed(1)+' '+(sube?y+10:y+2); for(let i=0;i<n;i++) d+='h'+q.toFixed(2)+(i<n-1?'v'+(sube?-dy:dy).toFixed(2):''); }
+    s+='<a class="ir" href="rollo.html?pieza='+f.num+'&c='+p[3]+'" target="mm-rollo" data-n="'+f.num+'" data-c="'+p[3]+'"><title>'+esc(progTit(p)+' · '+tramo(f,p[1],p[2])+' · '+progArma(p)+progHacia(f,p)+(progDud(p)?' · '+TC.dud:''))+'</title><rect x="'+a.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="22" fill="transparent"/><path d="'+d+'" fill="none" stroke="'+PRC[p[0]]+'" stroke-width="1.6" stroke-linejoin="round"'+(progDud(p)?' opacity=".45"':'')+'/>'+(w>=20?'<text x="'+(a+w/2).toFixed(1)+'" y="'+(y+21)+'" text-anchor="middle" font-size="9.5" fill="'+PRC[p[0]]+'"'+(progDud(p)?' opacity=".55"':'')+'>'+(p[0]==='c'?PASO_AB[p[5]]:'mod')+'</text>':'')+'</a>'; });
+  return s; }
+function progHTML(f,c){ return progDe(f).filter(p=>p[1]>=c.t0-1e-6&&p[1]<c.t1-1e-6).map(p=>'<p><span class="pt" style="background:'+PRC[p[0]]+'"></span>'+irL(f,p[3],tramo(f,p[1],p[2]))+' · <b>'+esc(progTit(p))+'</b> · '+esc(progArma(p)+progHacia(f,p))+(progDud(p)?'<small>'+TC.dudProg+'</small>':'')+'</p>').join(''); }
+function progTxt(f){ const ps=progDe(f); if(!ps.length) return TC.ninguna; const m=new Map(); ps.forEach(p=>{ const k=progK(p); m.set(k,(m.get(k)||0)+1); });
+  return '<b>'+ps.length+'</b> · '+[...m.entries()].sort((a,b)=>b[1]-a[1]).map(x=>esc(x[0])+' '+x[1]).join(' · '); }
+const enCasa=f=>{ const c=cifDe(f); return c&&f.T?Math.round(100*c.r.filter(r=>r[0]===c.h).reduce((a,r)=>a+r[3]-r[2],0)/f.T):0; };
+// los cambios de armonía de una sección, compás por compás: sólo donde cambia el grado; lo dudoso, más claro; la voz sola, entre paréntesis
+function gradosHTML(f,c){ const cf=cifDe(f); if(!cf) return ''; const bs=cf.c.filter(b=>b[1]>=c.t0-1e-6&&b[1]<c.t1-1e-6); if(!bs.length) return '';
+  const rg=cf.r.filter(r=>r[2]<c.t1-1e-6&&r[3]>c.t0+1e-6).map(r=>r[0]+' ('+tonN(r[1])+')').join(' → '); let prev=null, h='<p class="gr"><small>'+TC.tonalidad+esc(rg)+'</small>';
+  bs.forEach(b=>{ const gs=b[2].split('|'), t=[]; gs.forEach((g,i)=>{ const x=gradoS(g), mo=g.includes(' = ')?bem(g.split(' = ')[1].split(':')[0]):''; if(!x||(x===prev&&!mo)) return; prev=x;
+      t.push('<span class="'+(x==='sola'?'so':b[3][i]==='1'?'du':'')+'" title="'+esc(bem(g))+'">'+esc(x==='sola'?TC.sola:x)+(mo?'<span class="mo">→ '+esc(mo)+'</span>':'')+'</span>'); });
+    if(t.length) h+='<span class="cg">'+irL(f,b[0],'<i>'+b[0]+'</i>')+t.join(' · ')+'</span>'; });
+  return h+'</p>'; }
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dec=(x,n)=>{ const k=Math.pow(10,n==null?1:n); return String(Math.round(x*k)/k).replace('.',TC.coma); };
+function frac(x){ const q=Math.round(x*4)/4, e=Math.floor(q), r=q-e, f=r===.25?'¼':r===.5?'½':r===.75?'¾':''; return (e||!f?String(e):'')+f; }
+const plural=(n,uno,varios)=>n+' '+(n===1?uno:varios), pl=(n,w)=>plural(n,w[0],w[1]);
+function compasDe(f,t){ let c=f.bars[0][1]; for(const b of f.bars){ if(b[0]<=t+1e-6) c=b[1]; else break; } return c; }
+const tramo=(f,a,b)=>{ const x=compasDe(f,a), y=compasDe(f,Math.max(a,b-0.01)); return x===y?TC.c+' '+x:TC.c+' '+x+'–'+y; };
+
+// ── EL MAPA DEL CORAL: las frases (cada una hasta su calderón) con su cadencia, los compases, los grados, las tonalidades y las progresiones ──
+function mapaSVG(f,W){
+  const X0=40, x=t=>X0+t*(W-X0-8)/f.T, c=cifDe(f); let y=6, s='';
+  s+='<text x="4" y="'+(y+17)+'" font-size="10.5" fill="#6b6f78"><title>'+TT.frTit+'</title>'+TT.frLbl+'</text>';
+  f.fr.forEach((p,j)=>{ const a=x(t0F(f,j)), b=x(p[3]), w=Math.max(4,b-a-1), cd=cadDe(p), lab=w>62?TT.Frase+' '+p[0]:w>22?String(p[0]):'';
+    s+='<g class="sc" data-k="'+j+'"><a class="ir" href="rollo.html?pieza='+f.num+'&c='+p[1]+'" target="mm-rollo" data-n="'+f.num+'" data-c="'+p[1]+'"><title>'+esc(TT.Frase+' '+p[0]+' · '+tramoF(f,j)+' · '+cadNom(p)+' ('+gradoS(p[5])+' → '+gradoS(p[6])+')'+(p[9]?' · '+TC.dud:''))+'</title>'+
+      '<rect x="'+a.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="24" rx="4" fill="'+(j%2?'#efede6':'#e4e1d8')+'" stroke="'+(state.sel===j?'#2f6f62':'none')+'" stroke-width="2"/>'+
+      (lab?'<text x="'+(a+w/2-12).toFixed(1)+'" y="'+(y+16)+'" text-anchor="middle" font-size="11" fill="#22252b">'+lab+'</text>':'')+'</a></g>';
+    const ab=cadAb(p), bw=Math.max(18,ab.length*7+8);
+    s+='<g><title>'+esc(cadNom(p)+' · '+TC.c+' '+p[2]+(p[9]?' · '+TC.dud:''))+'</title><rect x="'+(b-bw-1).toFixed(1)+'" y="'+(y+3)+'" width="'+bw+'" height="18" rx="9" fill="'+cd[2]+'"'+(p[9]?' opacity=".5"':'')+'/><text x="'+(b-1-bw/2).toFixed(1)+'" y="'+(y+16)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">'+esc(ab)+'</text>'+
+      '<text x="'+(b-1).toFixed(1)+'" y="'+(y-0.5)+'" text-anchor="end" font-size="11" fill="#22252b">𝄐</text></g>'; });
+  y+=34;
+  // los compases
+  s+='<text x="4" y="'+(y+9)+'" font-size="10.5" fill="#6b6f78">'+TC.c+'</text>';
+  f.bars.forEach(([t,n],k)=>{ const a=x(t); s+='<line x1="'+a.toFixed(1)+'" y1="'+(y-2)+'" x2="'+a.toFixed(1)+'" y2="'+(y+28)+'" stroke="#d8d5cc"/><a class="ir" href="rollo.html?pieza='+f.num+'&c='+n+'" target="mm-rollo" data-n="'+f.num+'" data-c="'+n+'"><text x="'+(a+3).toFixed(1)+'" y="'+(y+9)+'" font-size="10" fill="#6b6f78">'+n+'</text></a>'; });
+  y+=13;
+  // los grados de cada compás (sólo donde cambia)
+  if(c){ s+='<text x="4" y="'+(y+10)+'" font-size="10.5" fill="#6b6f78"><title>'+TT.grTit+'</title>'+TT.grLbl+'</text>'; let prev=null;
+    c.c.forEach(b=>{ const gs=b[2].split('|'), t=[]; gs.forEach((g,i)=>{ const v=gradoS(g); if(!v||v===prev) return; prev=v; t.push(v==='sola'?TT.solaS:v); });
+      if(t.length) s+='<text x="'+(x(b[1])+3).toFixed(1)+'" y="'+(y+10)+'" font-size="9.5" fill="#22252b"><title>'+esc(TC.c+' '+b[0]+': '+gs.map(g=>bem(g)).join(' · '))+'</title>'+esc(t.join(' '))+'</text>'; }); }
+  y+=24;
+  s+=tiraTonal(f,x,y); y+=24;
+  const tp=tiraProg(f,x,y); if(tp){ s+=tp; y+=26; }
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+y+'" viewBox="0 0 '+W+' '+y+'" role="img" aria-label="'+TT.aria+'">'+s+'</svg>'; }
+
+function leyendaHTML(){ const l=TT.ley; return Object.keys(CAD).map(k=>'<span><i style="background:'+CAD[k][2]+'"></i>'+CAD[k][0]+' · '+esc(TT.CAD[k][2])+'</span>').join('')+
+  '<span>'+l[0]+'</span><span><i style="background:#cfe5de"></i>'+l[1]+'</span><span><i style="background:#d5e2f0"></i>'+l[2]+'</span><span><i style="background:#f1e2c3"></i>'+l[3]+'</span><span><i style="background:#ead9e6"></i>'+l[4]+'</span><span>'+l[5]+'</span><span><i style="background:#22252b;height:3px;vertical-align:3px"></i>'+l[6]+'</span>'; }
+
+// ── la ficha ──
+const yLista=a=>a.length<=1?(a[0]||''):a.slice(0,-1).join(', ')+TC.y+a[a.length-1];
+function cuentaCad(f){ const m=new Map(); f.fr.forEach(p=>{ const k=p[4]==='auténtica en otro grado'?TT.autEnC(gradoS(p[6])):(TT.CAD[p[4]]||TT.CAD.otra)[3]; m.set(k,(m.get(k)||0)+1); }); return [...m.entries()].sort((a,b)=>b[1]-a[1]); }
+const finales=f=>cuentaCad(f).map(x=>x[0]+(x[1]>1?' ('+x[1]+')':''));
+function fichaHTML(f){ const c=cifDe(f), fila=(k,v)=>'<dt>'+k+'</dt><dd>'+v+'</dd>', ult=f.fr[f.fr.length-1]; let h='<dl>';
+  h+=fila(TT.fCoral,esc(f.t)+' · '+esc(f.bwv));
+  h+=fila(TT.fTon,esc(f.o)+' · '+esc(f.cifra)+' · '+pl(f.n,TT.compas));
+  h+=fila(TT.fFrases,'<b>'+f.fr.length+'</b> · '+esc(finales(f).join(' · ')));
+  if(c){ h+=fila(TT.fTons,tonTxt(f)+(c.r.length>1?TT.enPrinc(enCasa(f)):''));
+    if(c.m&&c.m.length) h+=fila(TT.fMods,c.m.map(m=>irL(f,m[0],TC.c+' '+m[0])+' → '+esc(tonN(m[3]))+' ('+esc(m[2])+')').join(' · '));
+    h+=fila(TT.fProgs,progTxt(f)); }
+  if(ult) h+=fila(TT.fCierre,esc(cadNom(ult))+' ('+esc(gradoS(ult[5])+' → '+gradoS(ult[6]))+')'+TT.sopTermina(ORD[ult[8]-1]||'?'));
+  return h+'</dl>'; }
+
+// ── cada frase ──
+function fraseHTML(f,p,j){ const cd=cadDe(p), t0=t0F(f,j), t1=p[3], rg=regionEn(f,t1-0.01), c=cifDe(f);
+  let h='<article class="sec'+(j===state.sel?' sel':'')+'" data-k="'+j+'"><header style="background:'+cd[2]+'22;border-bottom:2px solid '+cd[2]+'">'+TT.Frase+' '+p[0]+'<span>'+irL(f,p[1],tramoF(f,j))+'</span></header><div class="cu">';
+  h+='<p><span class="pt" style="background:'+cd[2]+'"></span><b>'+esc(cap(cadNom(p)))+'</b> · '+esc(gradoS(p[5])+' → '+gradoS(p[6]))+'</p>';
+  h+='<p><small>'+(rg&&c&&rg[0]!==c.h?esc(TT.enReg(rg[0],tonN(rg[1]))):'')+TT.sopCal(p[2],ORD[p[8]-1]||'?')+(p[9]?' · <span style="color:#8a4b12">'+TC.dud+'</span>':'')+'</small></p>';
+  return h+progHTML(f,{t0,t1})+gradosHTML(f,{t0,t1})+'</div></article>'; }
+const cap=x=>x.charAt(0).toUpperCase()+x.slice(1);
+
+// ── LA LECTURA DEL MAPA: lo mismo que dicen el mapa, la ficha y las frases, contado en prosa ──
+const hacia=(f,p)=>progHacia(f,p,true);
+function lecturaHTML(f){ const c=cifDe(f), L=(t,x)=>'<p><b class="l">'+t+'.</b> '+x+'</p>', fr=f.fr, ult=fr[fr.length-1]; let h='';
+  const aut=fr.filter(p=>/^auténtica (perfecta|imperfecta)$/.test(p[4])).length, semi=fr.filter(p=>/^semicadencia/.test(p[4])).length;
+  h+=L(TT.L.forma,TT.forma({n:f.n,cifra:esc(f.cifra),ton:esc(f.o),nf:fr.length,fin:esc(yLista(finales(f))),aut,semi}));
+  if(c){ let to=(c.r.length===1?TT.todo:'')+tonTxt(f)+'. ';
+    if(c.m&&c.m.length) to+=TT.modula(c.m.length,c.m.map(m=>({c:irL(f,m[0],TC.c+' '+m[0]),k:esc(tonN(m[3]))})));
+    else{ const ot=fr.filter(p=>p[4]==='auténtica en otro grado'); to+=ot.length?TT.noModOt(yLista(ot.map(p=>TT.otEn(p[0],gradoS(p[6]))))):TT.noMod; }
+    h+=L(TT.L.ton,to); }
+  h+=L(TT.L.frases,cap(fr.map((p,j)=>TT.fraseL({n:p[0],c:irL(f,p[1],tramoF(f,j)),cad:esc(cadNom(p)),gg:esc(gradoS(p[5])+' → '+gradoS(p[6])),ord:ORD[p[8]-1]||'?',dud:p[9]})).join('; '))+'.');
+  const nota=fr.filter(p=>/rota|frigia|plagal/.test(p[4])), ps=progDe(f), est=[];
+  nota.forEach(p=>est.push(TT.estCad(esc(cadNom(p)),p[0],irL(f,p[2],TC.c+' '+p[2]))));
+  ps.slice(0,3).forEach(p=>est.push(TT.estProg(esc(TC.progMin(progK(p))),irL(f,p[3],tramo(f,p[1],p[2])),esc(p[7].replace(/–/g,' – ')),esc(hacia(f,p)))));
+  if(est.length) h+=L(TT.L.est,cap(est.join('; '))+(ps.length>3?TT.estMas(ps.length-3):'')+'.');
+  if(ult){ const pic=/menor/.test(D[f.num].o)&&/^I(?![IV])/.test(ult[6]); h+=L(TT.L.cierre,TT.cierre(esc(cadNom(ult)),esc(gradoS(ult[5])+' → '+gradoS(ult[6])),ORD[ult[8]-1]||'?',pic)); }
+  const dud=[...(c&&c.d||[]).map(maqN)]; const nd=fr.filter(p=>p[9]).length; if(nd) dud.push(TT.dudFr(nd));
+  if(dud.length) h+='<p class="dudosa">'+TC.Dud+': '+esc(dud.join(' · '))+'.</p>';
+  return h; }
+
+function selecciona(k){ state.sel=state.sel===k?-1:k; render(); }
+function pintaMapa(){ const f=actual(), W=Math.max(640,$('mapa').clientWidth-22); $('mapa').innerHTML=mapaSVG(f,W);
+  document.querySelectorAll('#mapa .sc').forEach(g=>{ g.addEventListener('click',e=>{ if(!e.target.closest('a')) selecciona(+g.dataset.k); }); }); }
+const actual=()=>piezaDe(NUMS[state.i]);
+function render(){ const f=actual(); if(!f) return;
+  $('num').textContent=f.num;
+  $('vinfo').innerHTML=esc(f.num+' · '+f.t+' · '+f.o)+' <span>· '+esc(f.bwv)+' · '+esc(f.cifra)+' · '+f.n+' '+TT.compas[1]+' · '+pl(f.fr.length,TT.frase)+'</span>';
+  const c=cifDe(f), nd=f.fr.filter(p=>p[9]).length, b=$('banner'); b.className='banner'+(nd||(c&&c.d&&c.d.length)?' duda':'');
+  b.textContent=nd||(c&&c.d&&c.d.length)?TC.Dud+': '+[...(c&&c.d||[]).map(maqN),...(nd?[TT.cadSin(nd)]:[])].join(' · ')+'.':'';
+  $('ley').innerHTML=leyendaHTML(); pintaMapa();
+  $('maq').innerHTML=f.fr.map((p,j)=>(j?'<span class="flecha">→</span>':'')+'<button class="chip'+(j===state.sel?' sel':'')+'" data-k="'+j+'" style="background:'+cadDe(p)[2]+'33" title="'+esc(cadNom(p))+'">'+TT.Frase+' '+p[0]+'<b>· '+esc(cadAb(p))+'</b></button>').join('');
+  document.querySelectorAll('#maq .chip').forEach(g=>{ g.onclick=()=>selecciona(+g.dataset.k); });
+  $('ficha').innerHTML=fichaHTML(f);
+  $('secs').innerHTML=f.fr.map((p,j)=>fraseHTML(f,p,j)).join('');
+  $('lectura').innerHTML=lecturaHTML(f);
+  try{ history.replaceState(null,'','?n='+f.num+(QLANG?'&lang='+LANG:'')); }catch(e){} }
+function paso(d){ state.i=(state.i+d+NUMS.length)%NUMS.length; state.sel=-1; render(); }
+function arranca(){
+  // los textos fijos de la página, en su idioma
+  document.title=TT.title; $('cabTxt').textContent=TT.cab; $('maqT').textContent=TT.hMaq; $('fichaT').textContent=TT.hFicha; $('secsT').textContent=TT.hSecs; $('lecT').textContent=TT.hLec;
+  const q=new URLSearchParams(location.search);
+  if(q.has('n')){ const k=NUMS.indexOf(String(q.get('n')).padStart(3,'0')); if(k>=0) state.i=k; }
+  // ← : si esta ventana la abrió el rollo (MAP), se cierra y queda el rollo como estaba; si se abrió sola, va a rollo.html
+  $('volver').onclick=e=>{ let op=null; try{ op=window.opener&&!window.opener.closed?window.opener:null; }catch(x){} if(!op) return; e.preventDefault(); try{ op.focus(); }catch(x){} window.close(); };
+  // los enlaces de compás: si el rollo abrió esta ventana, el rollo abre el coral en ese compás (irA) y pasa adelante; si no, rollo.html?pieza=NNN&c=N en «mm-rollo»
+  document.addEventListener('click',e=>{ const a=e.target.closest&&e.target.closest('a.ir'); if(!a) return; e.stopPropagation();
+    let op=null; try{ op=window.opener&&!window.opener.closed&&typeof window.opener.irA==='function'?window.opener:null; }catch(x){} if(!op) return;
+    e.preventDefault(); try{ op.irA(a.dataset.n,+a.dataset.c); op.focus(); }catch(x){} setTimeout(()=>{ if(document.hasFocus()) window.close(); },450); },true);
+  $('prev').onclick=()=>paso(-1); $('next').onclick=()=>paso(1);
+  document.addEventListener('keydown',e=>{ if(e.target.closest('input,textarea,select')) return; if(e.key==='ArrowLeft'){ paso(-1); e.preventDefault(); } else if(e.key==='ArrowRight'){ paso(1); e.preventDefault(); } });
+  let rz=null; window.addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(pintaMapa,120); });
+  $('pie').innerHTML=TT.pie(NUMS.length,window.CORALES_FECHA?' ('+esc(window.CORALES_FECHA)+')':'');
+  render(); }
+arranca();
+</script>
+</body>
+</html>

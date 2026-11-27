@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mm Fugas de Bach · mapas y fichas</title>
+<!-- mm Fugas de Bach · mapas y fichas · 2026-11-23 · _Coach/maquina-composicionV3 · acompaña al rollo V3 (no lo toca).
+     Datos: rollo-fugas/analisis-fugas-datos.js, que escribe _V3-TRABAJO/scripts/analiza-fugas.py a partir del banco (rollo-fugas.json).
+     Es una LECTURA DE LA MÁQUINA: lo que Mario corrija va en rollo-fugas/analisis-fugas-correcciones.json y se vuelve a correr el script.
+     Los cánones (tipo: 'canon', de canones.py) tienen su propio mapa: quién guía, quién sigue y con qué regla, dónde entra el tema.
+     Las sinfonías y las invenciones (tipo: 'sinfonia' / 'invencion', 049–078) se leen como las fugas; su tema puede empezar acompañado.
+     Los grados: rollo-fugas/cifrado-grados.js (cifrar-banco.py, con las reglas de _PLANES/_REGLAS-cifrado-armonico.md) da, bajo cada mapa, la franja de
+     tonalidades y cadencias, y en cada sección los cambios de armonía por grados. Cada compás citado es un enlace al rollo (irA en rollo.html).
+     Las progresiones (CIFRADO[num].p): una fila «prog» en el mapa y, en cada sección, cómo se arma cada una y a dónde lleva. -->
+<style>
+:root{--bg:#f4f3ef;--panel:#ffffff;--line:#d8d5cc;--line2:#b9b5aa;--text:#22252b;--muted:#6b6f78;--acc:#2f6f62;--acc-t:#ffffff;--paper:#fffdf8;color-scheme:light;--kb-border:#501828}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181b;--panel:#202226;--line:#34373d;--line2:#4a4e56;--text:#e6e6e6;--muted:#9a9ea6;--acc:#4fb39c;--acc-t:#0b1f1a;--paper:#fbf9f3;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:12px max(12px,env(safe-area-inset-left,0px)) 28px max(12px,env(safe-area-inset-right,0px));min-height:100vh}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 8px;max-width:1280px;margin:0 auto}
+.grp{display:flex;align-items:center;gap:3px}
+.sep{width:1px;align-self:stretch;background:var(--line)}
+.lbl{font-size:11px;letter-spacing:.08em;color:var(--muted);margin:0 3px 0 2px}
+.btn{font:inherit;font-size:12.5px;min-height:32px;min-width:30px;padding:4px 8px;border:1px solid var(--line2);border-radius:7px;background:transparent;color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;touch-action:manipulation}
+.btn:hover{border-color:var(--acc)}
+.btn.on{background:var(--acc);border-color:var(--acc);color:var(--acc-t)}
+.btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.num{font-weight:600;font-variant-numeric:tabular-nums;min-width:34px;text-align:center}
+.vinfo{max-width:1280px;margin:12px auto 0;font-size:16px;font-weight:600;text-align:center}
+.vinfo span{font-weight:400;color:var(--muted)}
+.banner{max-width:1280px;margin:6px auto 0;min-height:18px;font-size:12.5px;color:var(--muted);text-align:center}
+.banner.duda{color:#8a4b12;background:#fbefd9;border:1px solid #ecd3a4;border-radius:8px;padding:6px 10px}
+main{max-width:1280px;margin:0 auto}
+.hoja{margin-top:8px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 10px 6px;overflow-x:auto;color:#22252b}
+.hoja svg{display:block}
+.sc{cursor:pointer}
+.sc .col{fill:transparent}
+.sc.gris .col{fill:rgba(0,0,0,.045)}
+.sc:hover .col{fill:rgba(47,111,98,.07)}
+.sc.sel .col{fill:rgba(47,111,98,.12);stroke:#2f6f62;stroke-width:1.5}
+.en{cursor:pointer}
+.ley{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 2px 0;font-size:12px;color:var(--muted)}
+.ley i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.ley i.ray{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.5) 0 2px,transparent 2px 5px)}
+h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:18px 2px 6px}
+.maq{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.chip{font:inherit;font-size:12.5px;border:1px solid transparent;border-radius:7px;padding:4px 8px;cursor:pointer;color:#22252b;line-height:1.2}
+.chip b{font-weight:600;margin-left:4px}
+.chip.sel{border-color:#2f6f62;box-shadow:0 0 0 2px rgba(47,111,98,.25)}
+.flecha{color:var(--muted);font-size:12px}
+.t-expo{background:#cfe5de}.t-ent{background:#f1e2c3}.t-epi{background:#e7e5de}.t-coda{background:#d9d6cc}
+.cols{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:14px;align-items:start}
+@media (max-width:820px){.cols{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.ficha dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 10px}
+.ficha dt{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.ficha dd{margin:0}
+.ficha svg{display:block;width:100%;max-width:250px;height:auto;margin:4px 0 2px;background:var(--paper);border:1px solid var(--line);border-radius:6px}
+.secs{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:8px}
+.sec{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer}
+.sec.sel{border-color:var(--acc);box-shadow:0 0 0 2px rgba(47,111,98,.25)}
+.sec header{padding:5px 10px;font-weight:600;color:#22252b;display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.sec header span{font-weight:400;font-size:12px;white-space:nowrap}
+.sec .cu{padding:7px 10px 9px;font-size:13px}
+.sec .cu p{margin:0 0 5px}
+.sec .cu p:last-child{margin-bottom:0}
+.sec .cu small{display:block;color:var(--muted);font-size:12px}
+.pt{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.res{margin-top:14px}
+.res table{border-collapse:collapse;width:100%;font-size:13px}
+.res td{padding:3px 8px 3px 0;vertical-align:top}
+.res td:first-child{color:var(--muted);white-space:nowrap;width:1%}
+.fila{display:grid;grid-template-columns:150px minmax(200px,1fr) minmax(280px,38%);gap:10px;align-items:center;padding:4px 6px;border-radius:7px;cursor:pointer}
+.fila:hover{background:rgba(47,111,98,.09)}
+.fila .n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.fila .n b{font-weight:600}
+.fila .d{font-size:12px;color:var(--muted)}
+.fila svg{display:block;width:100%;background:var(--paper);border:1px solid var(--line);border-radius:4px}
+@media (max-width:820px){.fila{grid-template-columns:1fr}}
+a.ir{color:inherit;text-decoration:underline dotted;text-underline-offset:2px;cursor:pointer}
+a.ir:hover{color:var(--acc);text-decoration:underline}
+.hoja svg a.ir,.hoja svg a.ir:hover{text-decoration:none;cursor:pointer}
+.gr{line-height:1.8}
+.gr .cg{display:inline-block;white-space:nowrap;margin-right:8px}
+.gr .cg a.ir{text-decoration:none}
+.gr .cg i{font-style:normal;font-size:10.5px;color:var(--muted);margin-right:3px;font-variant-numeric:tabular-nums}
+.gr .cg a.ir:hover i{color:var(--acc);text-decoration:underline}
+.gr .du{opacity:.5}
+.gr .so{color:var(--muted);font-size:12px}
+.gr .mo{color:#8a4b12;font-weight:600;margin-left:3px}
+footer{max-width:1280px;margin:22px auto 0;font-size:12px;color:var(--muted)}
+[hidden]{display:none!important}
+/* 2026-11-27 (Mario): MAP y COMPARE se pueden imprimir — A4 apaisado, sin la barra, con los colores del mapa y fondo blanco */
+.print-cab{display:none}
+.pie-marca{display:inline-flex;align-items:center;gap:5px}
+.pie-marca svg{height:12px;width:auto;fill:#2f6f62}
+.pie-marca sup{font-size:8px;line-height:1;color:#2f6f62;margin:-6px 3px 0 -4px}
+@page{size:A4 landscape;margin:10mm}
+@media print{
+  :root,:root:not([data-theme="light"]){--bg:#fff;--panel:#fff;--line:#d8d5cc;--line2:#b9b5aa;--text:#22252b;--muted:#6b6f78;--acc:#2f6f62;--paper:#fffdf8;color-scheme:light}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff!important;color:#22252b;margin:0}
+  .bar,#banner{display:none!important}
+  .print-cab{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#6b6f78;border-bottom:1px solid #d8d5cc;padding-bottom:4px;margin-bottom:4px}
+  .vinfo{margin-top:4px}
+  main,.vinfo,footer{max-width:none}
+  .hoja{overflow:visible;break-inside:avoid}
+  .hoja svg{width:100%;height:auto}
+  .ley,.maq{break-inside:avoid}
+  h2{break-after:avoid}
+  .cols{display:block}
+  .cols>div+div{margin-top:10px}
+  .secs{display:block;columns:4;column-gap:8px}
+  .sec{break-inside:avoid;margin-bottom:8px}
+  .sec header{break-after:avoid}
+  .sec.sel{box-shadow:none}
+  a{color:inherit;text-decoration:none}
+}
+/* 2026-11-27 (Mario): «la última página sale con un párrafo y mucho espacio libre… ¿se puede llenar con un análisis del map?» → la lectura del mapa, en prosa */
+.lectura{font-size:13.5px;line-height:1.55;padding:12px 16px}
+.lectura p{margin:0 0 8px}.lectura p:last-child{margin-bottom:0}
+.lectura b.l{color:var(--acc)}
+.lectura .dudosa{color:#8a4b12;font-size:12.5px}
+@media print{.lectura{font-size:12px;line-height:1.5}.lectura p{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="bar" role="toolbar" aria-label="Fugas">
+  <a class="btn" id="volver" href="rollo.html" title="Back to the roll">←</a>
+  <span class="sep"></span>
+  <span class="grp"><button class="btn" id="prev" title="Previous piece">◀</button><span class="num" id="num">001</span><button class="btn" id="next" title="Next piece">▶</button></span>
+  <span class="sep"></span>
+  <span class="grp" id="vocs"><span class="lbl">VOICES</span><button class="btn" data-v="0">ALL</button><button class="btn" data-v="2">2</button><button class="btn" data-v="3">3</button><button class="btn" data-v="4">4</button></span>
+  <span class="sep"></span>
+  <span class="grp" id="vistas"><button class="btn" data-v="uno" title="One fugue: its map, its model and its sections">MAP</button><button class="btn" data-v="cmp" title="All the fugues side by side">COMPARE</button></span>
+  <span class="sep"></span>
+  <button class="btn" id="imprimir" type="button" title="Print this page (A4 landscape)" onclick="window.print()">PRINT</button>
+</div>
+<div class="print-cab"><span class="pie-marca"><svg viewBox="180 95 1145 305" aria-label="m Δ° m"><path d="M533.07,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M1315.47,274.61v118.1h-59.82v-108.9c0-33.36-14.95-48.69-39.11-48.69-26.84,0-45.63,17.25-45.63,54.06v103.53h-59.81v-108.9c0-33.36-14.19-48.69-39.11-48.69-26.46,0-45.24,17.25-45.24,54.06v103.53h-59.82v-206.29h57.13v23.77c15.34-17.64,38.34-26.84,64.8-26.84,28.76,0,53.3,11.12,67.87,33.74,16.49-21.09,43.33-33.74,74.39-33.74,49.08,0,84.36,28.37,84.36,91.26Z"/><path d="M873.84,392.7h-247.69v-19.17l110.81-234.66h32.59l104.29,234.66v19.17ZM737.73,186.04l-77.45,170.24h148.38l-69.4-170.24h-1.53Z"/><path d="M859.7,170.45c-6.11,0-11.56-1.29-16.34-3.89-4.78-2.59-8.57-6.24-11.36-10.96-2.79-4.71-4.18-10.39-4.18-17.03s1.46-11.92,4.38-16.64c2.92-4.71,6.81-8.33,11.65-10.86,4.85-2.52,10.26-3.78,16.24-3.78s10.92,1.29,15.64,3.89c4.71,2.59,8.47,6.24,11.26,10.96,2.79,4.72,4.18,10.26,4.18,16.64s-1.39,12.29-4.18,16.94c-2.79,4.65-6.57,8.27-11.36,10.86-4.78,2.59-10.1,3.89-15.94,3.89ZM859.7,158.5c5.31,0,9.6-1.83,12.85-5.48,3.25-3.65,4.88-8.47,4.88-14.44s-1.69-10.69-5.08-14.15c-3.39-3.45-7.74-5.18-13.05-5.18s-9.6,1.76-12.85,5.28c-3.26,3.52-4.88,8.27-4.88,14.25s1.66,10.59,4.98,14.25c3.32,3.65,7.7,5.48,13.15,5.48Z"/></svg><sup>®</sup>Music Motion · musicmotionsuite.com</span><span id="cabTxt">Fugas de Bach · mapas y fichas · Music School Coach</span></div>
+<div class="vinfo" id="vinfo"></div>
+<div class="banner" id="banner"></div>
+
+<main id="uno">
+  <div class="hoja" id="mapa"></div>
+  <div class="ley" id="ley">
+    <span><i style="background:#2f6f62"></i>tema en la tónica</span>
+    <span><i style="background:#4f7fae"></i>en la dominante</span>
+    <span><i style="background:#b0613a"></i>en otro grado</span>
+    <span><i class="ray" style="background-color:#7a6aa8"></i>invertido</span>
+    <span><i style="background:#aab4bf"></i>contrasujeto</span>
+    <span><i style="background:#2f6f62;opacity:.35"></i>solo la cabeza del tema</span>
+    <span><i style="background:#8a5a2b;height:4px;vertical-align:2px"></i>pedal</span>
+    <span><i style="background:#b9b5aa;height:3px;vertical-align:3px"></i>la voz suena</span>
+    <span><i style="background:#cfe5de"></i>tonalidad principal</span>
+    <span><i style="background:#d5e2f0"></i>dominante</span>
+    <span><i style="background:#f1e2c3"></i>relativo</span>
+    <span><i style="background:#ead9e6"></i>otra tonalidad</span>
+    <span>▾ cadencia</span>
+    <span><i style="background:#22252b;height:3px;vertical-align:3px"></i>progresión: por quintas (5ª), por terceras (3ª), por grados (2ª)</span>
+    <span><i style="background:#8a4b12;height:3px;vertical-align:3px"></i>progresión por modelo (mod)</span>
+  </div>
+  <h2 id="maqT">La maqueta de esta fuga</h2>
+  <div class="maq" id="maq"></div>
+  <div class="cols">
+    <div><h2 id="fichaT">Ficha</h2><div class="card ficha" id="ficha"></div></div>
+    <div><h2 id="secsT">Qué contiene cada sección</h2><div class="secs" id="secs"></div></div>
+  </div>
+  <h2 id="lecT">Lectura del mapa</h2>
+  <div class="card lectura" id="lectura"></div>
+</main>
+
+<main id="cmp" hidden></main>
+
+<footer id="pie"></footer>
+
+<script src="rollo-fugas/analisis-fugas-datos.js"></script>
+<script src="rollo-fugas/cifrado-grados.js"></script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const F=window.FUGAS||[];
+// ── EL IDIOMA (2026-11-27, Mario: paso 3, los mapas en en · fr · nl · de · «procede»): el de la suite (mmCoachLang), si no el del sitio (mmSiteLang:
+// es · en), si no inglés —como el título del rollo—; ?lang= manda. Los botones siguen en inglés. Las tonalidades de los datos («Sol mayor») y las
+// notas de la máquina se traducen aquí, al mostrarlas; los datos no se tocan. Lo que falte en un idioma sale en inglés.
+const QLANG=(()=>{ try{ return new URLSearchParams(location.search).get('lang'); }catch(e){ return null; } })();
+const LANG=(()=>{ const ok=x=>['es','en','fr','nl','de'].indexOf(x)>=0; if(ok(QLANG)) return QLANG; let L='en';
+  try{ const c=localStorage.getItem('mmCoachLang'), w=localStorage.getItem('mmSiteLang'); L=ok(c)?c:(['es','en'].indexOf(w)>=0?w:'en'); }catch(e){} return L; })();
+document.documentElement.lang=LANG;
+const NOTA={do:0,re:1,mi:2,fa:3,sol:4,la:5,si:6}, LETRA='CDEFGAB';
+// «Sol mayor», «fa# menor», «Si♭ mayor» → G major · sol majeur · G majeur · G-Dur (nl y de: Fis, Bes, Es, As; en alemán si♭ = B y si = H; el menor con minúscula)
+function tonN(s){ if(LANG==='es') return s; const m=String(s).match(/^(do|re|mi|fa|sol|la|si)(b|#|♭|♯)?\s+(mayor|menor)$/i); if(!m) return s;
+  const i=NOTA[m[1].toLowerCase()], ac=m[2]?(/[b♭]/.test(m[2])?'b':'#'):'', may=m[3].toLowerCase()==='mayor', sg=ac==='b'?'♭':ac==='#'?'♯':'';
+  if(LANG==='en') return LETRA[i]+sg+(may?' major':' minor');
+  if(LANG==='fr') return m[1].toLowerCase()+sg+(may?' majeur':' mineur');
+  const l=LETRA[i]; let n=ac==='#'?(LANG==='de'&&l==='B'?'His':l+'is'):ac==='b'?(l==='E'?'Es':l==='A'?'As':l==='B'?(LANG==='de'?'B':'Bes'):l+'es'):(LANG==='de'&&l==='B'?'H':l);
+  if(!may) n=n.toLowerCase(); return LANG==='de'?n+(may?'-Dur':'-Moll'):n+(may?' majeur':' mineur'); }
+// las notas de la máquina (lo dudoso), con sus números
+const MAQ=[
+  [/^la lectura no vuelve a la tonalidad principal al final$/,{en:'the reading does not return to the main key at the end',fr:'la lecture ne revient pas à la tonalité principale à la fin',nl:'de lezing keert aan het eind niet terug naar de hoofdtoonsoort',de:'die Lesart kehrt am Ende nicht zur Haupttonart zurück'}],
+  [/^sujeto muy corto \((\d+) notas\): la máquina puede contar entradas de más$/,{en:'very short subject ($1 notes): the machine may count too many entries',fr:'sujet très court ($1 notes) : la machine peut compter des entrées en trop',nl:'zeer kort onderwerp ($1 noten): de machine kan te veel inzetten tellen',de:'sehr kurzes Thema ($1 Töne): die Maschine kann zu viele Einsätze zählen'}],
+  [/^no todas las voces entran con el sujeto al comienzo: la exposición puede estar mal leída$/,{en:'not every voice enters with the subject at the start: the exposition may be misread',fr:'toutes les voix n’entrent pas avec le sujet au début : l’exposition peut être mal lue',nl:'niet alle stemmen zetten in het begin in met het onderwerp: de expositie kan verkeerd gelezen zijn',de:'nicht alle Stimmen setzen zu Beginn mit dem Thema ein: die Exposition kann falsch gelesen sein'}],
+  [/^el sujeto leído es mucho más corto que lo que canta la primera voz antes de la respuesta$/,{en:'the subject read is much shorter than what the first voice sings before the answer',fr:'le sujet lu est bien plus court que ce que chante la première voix avant la réponse',nl:'het gelezen onderwerp is veel korter dan wat de eerste stem zingt vóór het antwoord',de:'das gelesene Thema ist viel kürzer als das, was die erste Stimme vor der Antwort singt'}],
+  [/^muy pocas entradas completas \((\d+)\): revisar el sujeto$/,{en:'very few complete entries ($1): check the subject',fr:'très peu d’entrées complètes ($1) : vérifier le sujet',nl:'zeer weinig volledige inzetten ($1): het onderwerp nakijken',de:'sehr wenige vollständige Einsätze ($1): das Thema prüfen'}]];
+function maqN(s){ if(LANG==='es') return s; for(const [re,t] of MAQ){ if(re.test(s)) return s.replace(re,t[LANG]||t.en); } return s; }
+
+// lo que comparten las dos páginas (tonalidades, cadencias, progresiones, grados)
+const T0={
+  es:{c:'c.',tonLbl:'ton',tonTit:'Tonalidad: las regiones confirmadas y las cadencias',cadEn:(g,c)=>'Cadencia en '+g+' · c. '+c,dud:'lectura dudosa',Dud:'Lectura dudosa',en:' en ',
+    mas:n=>' · y '+n+' más (en el mapa, ▾)',progLbl:'prog',progTit:'Progresiones: dónde están y cómo se arman',
+    PASO_C:{3:'por quintas',4:'por quintas ascendentes',5:'por terceras descendentes',2:'por terceras ascendentes',1:'por grados ascendentes',6:'por grados descendentes'},
+    PASO_AB:{3:'5ª',4:'5ª↑',5:'3ª↓',2:'3ª↑',1:'2ª↑',6:'2ª↓'},PASO_M:{1:'un grado más arriba',6:'un grado más abajo',2:'una tercera más arriba',5:'una tercera más abajo',3:'una cuarta más arriba',4:'una cuarta más abajo'},
+    modelo:'por modelo',prog:k=>'Progresión '+k,progMin:k=>'progresión '+k,arma:(n,cf)=>n+' acordes: '+cf,armaM:(x,m,n,cf)=>'modelo de '+x+' acordes, cada vez '+m+', '+n+' veces: '+cf,
+    hacia:(k,e,inl,VZ)=>{ const s=(k?' · lleva a la cadencia en '+k.g+' (c. '+k.c+')':'')+(e?(k?', donde entra ':' · lleva a ')+(e.cab?'la cabeza del tema':k?'el tema':'la entrada del tema')+' en '+VZ(e.v)+(k?'':' (c. '+e.c+')'):''); return inl?s.replace(/^ · lleva/,', que lleva'):s; },
+    dudProg:'Lectura dudosa: la mitad o más de sus acordes lo son.',ninguna:'ninguna de cuatro acordes o más',tonalidad:'Tonalidad: ',sola:'(sola)',solaT:'sola',y:' y ',coma:','},
+  en:{c:'b.',tonLbl:'key',tonTit:'Key: the confirmed regions and the cadences',cadEn:(g,c)=>'Cadence on '+g+' · b. '+c,dud:'uncertain reading',Dud:'Uncertain reading',en:' on ',
+    mas:n=>' · and '+n+' more (on the map, ▾)',progLbl:'prog',progTit:'Progressions: where they are and how they are built',
+    PASO_C:{3:'by fifths',4:'by rising fifths',5:'by falling thirds',2:'by rising thirds',1:'by rising steps',6:'by falling steps'},
+    PASO_AB:{3:'5th',4:'5th↑',5:'3rd↓',2:'3rd↑',1:'2nd↑',6:'2nd↓'},PASO_M:{1:'one step higher',6:'one step lower',2:'a third higher',5:'a third lower',3:'a fourth higher',4:'a fourth lower'},
+    modelo:'by model',prog:k=>'Progression '+k,progMin:k=>'progression '+k,arma:(n,cf)=>n+' chords: '+cf,armaM:(x,m,n,cf)=>'a model of '+x+' chords, each time '+m+', '+n+' times: '+cf,
+    hacia:(k,e,inl,VZ)=>{ const s=(k?' · leads to the cadence on '+k.g+' (b. '+k.c+')':'')+(e?(k?', where '+(e.cab?'the head of the theme':'the theme')+' enters '+VZ(e.v):' · leads to '+(e.cab?'the head of the theme':'the entry of the theme')+' '+VZ(e.v)+' (b. '+e.c+')'):''); return inl?s.replace(/^ · leads/,', which leads'):s; },
+    dudProg:'Uncertain reading: half or more of its chords are uncertain.',ninguna:'none of four chords or more',tonalidad:'Key: ',sola:'(alone)',solaT:'alone',y:' and ',coma:'.'},
+  fr:{c:'m.',tonLbl:'ton',tonTit:'Tonalité : les régions confirmées et les cadences',cadEn:(g,c)=>'Cadence sur '+g+' · m. '+c,dud:'lecture incertaine',Dud:'Lecture incertaine',en:' sur ',
+    mas:n=>' · et '+n+' de plus (sur la carte, ▾)',progLbl:'prog',progTit:'Progressions : où elles sont et comment elles se construisent',
+    PASO_C:{3:'par quintes',4:'par quintes ascendantes',5:'par tierces descendantes',2:'par tierces ascendantes',1:'par degrés ascendants',6:'par degrés descendants'},
+    PASO_AB:{3:'5te',4:'5te↑',5:'3ce↓',2:'3ce↑',1:'2de↑',6:'2de↓'},PASO_M:{1:'un degré plus haut',6:'un degré plus bas',2:'une tierce plus haut',5:'une tierce plus bas',3:'une quarte plus haut',4:'une quarte plus bas'},
+    modelo:'par modèle',prog:k=>'Progression '+k,progMin:k=>'progression '+k,arma:(n,cf)=>n+' accords : '+cf,armaM:(x,m,n,cf)=>'un modèle de '+x+' accords, chaque fois '+m+', '+n+' fois : '+cf,
+    hacia:(k,e,inl,VZ)=>{ const s=(k?' · mène à la cadence sur '+k.g+' (m. '+k.c+')':'')+(e?(k?', où entre '+(e.cab?'la tête du thème':'le thème')+' '+VZ(e.v):' · mène à '+(e.cab?'la tête du thème':'l’entrée du thème')+' '+VZ(e.v)+' (m. '+e.c+')'):''); return inl?s.replace(/^ · mène/,', qui mène'):s; },
+    dudProg:'Lecture incertaine : la moitié de ses accords ou plus sont incertains.',ninguna:'aucune de quatre accords ou plus',tonalidad:'Tonalité : ',sola:'(seule)',solaT:'seule',y:' et ',coma:','},
+  nl:{c:'m.',tonLbl:'toon',tonTit:'Toonsoort: de bevestigde gebieden en de cadensen',cadEn:(g,c)=>'Cadens op '+g+' · m. '+c,dud:'onzekere lezing',Dud:'Onzekere lezing',en:' op ',
+    mas:n=>' · en nog '+n+' (op de kaart, ▾)',progLbl:'prog',progTit:'Progressies: waar ze staan en hoe ze gebouwd zijn',
+    PASO_C:{3:'in kwinten',4:'in stijgende kwinten',5:'in dalende tertsen',2:'in stijgende tertsen',1:'in stijgende secunden',6:'in dalende secunden'},
+    PASO_AB:{3:'5e',4:'5e↑',5:'3e↓',2:'3e↑',1:'2e↑',6:'2e↓'},PASO_M:{1:'een trap hoger',6:'een trap lager',2:'een terts hoger',5:'een terts lager',3:'een kwart hoger',4:'een kwart lager'},
+    modelo:'volgens model',prog:k=>'Progressie '+k,progMin:k=>'progressie '+k,arma:(n,cf)=>n+' akkoorden: '+cf,armaM:(x,m,n,cf)=>'een model van '+x+' akkoorden, telkens '+m+', '+n+' keer: '+cf,
+    hacia:(k,e,inl,VZ)=>{ const s=(k?' · leidt naar de cadens op '+k.g+' (m. '+k.c+')':'')+(e?(k?', waar '+(e.cab?'de kop van het thema':'het thema')+' '+VZ(e.v)+' inzet':' · leidt naar '+(e.cab?'de kop van het thema':'de inzet van het thema')+' '+VZ(e.v)+' (m. '+e.c+')'):''); return inl?s.replace(/^ · leidt/,', die leidt'):s; },
+    dudProg:'Onzekere lezing: de helft of meer van de akkoorden is onzeker.',ninguna:'geen van vier akkoorden of meer',tonalidad:'Toonsoort: ',sola:'(alleen)',solaT:'alleen',y:' en ',coma:','},
+  de:{c:'T.',tonLbl:'Ton',tonTit:'Tonart: die bestätigten Bereiche und die Kadenzen',cadEn:(g,c)=>'Kadenz auf '+g+' · T. '+c,dud:'unsichere Lesart',Dud:'Unsichere Lesart',en:' auf ',
+    mas:n=>' · und '+n+' weitere (in der Karte, ▾)',progLbl:'Prog',progTit:'Progressionen: wo sie stehen und wie sie gebaut sind',
+    PASO_C:{3:'in Quinten',4:'in steigenden Quinten',5:'in fallenden Terzen',2:'in steigenden Terzen',1:'in steigenden Sekunden',6:'in fallenden Sekunden'},
+    PASO_AB:{3:'5.',4:'5.↑',5:'3.↓',2:'3.↑',1:'2.↑',6:'2.↓'},PASO_M:{1:'eine Stufe höher',6:'eine Stufe tiefer',2:'eine Terz höher',5:'eine Terz tiefer',3:'eine Quarte höher',4:'eine Quarte tiefer'},
+    modelo:'nach Modell',prog:k=>'Progression '+k,progMin:k=>'Progression '+k,arma:(n,cf)=>n+' Akkorde: '+cf,armaM:(x,m,n,cf)=>'ein Modell aus '+x+' Akkorden, jedes Mal '+m+', '+n+'-mal: '+cf,
+    hacia:(k,e,inl,VZ)=>{ if(inl) return (k?', die zur Kadenz auf '+k.g+' (T. '+k.c+') führt':'')+(e?(k?', wo '+(e.cab?'der Themenkopf':'das Thema')+' '+VZ(e.v)+' einsetzt':', die zum '+(e.cab?'Themenkopf':'Einsatz des Themas')+' '+VZ(e.v)+' (T. '+e.c+') führt'):'');
+      return (k?' · führt zur Kadenz auf '+k.g+' (T. '+k.c+')':'')+(e?(k?', wo '+(e.cab?'der Themenkopf':'das Thema')+' '+VZ(e.v)+' einsetzt':' · führt zum '+(e.cab?'Themenkopf':'Einsatz des Themas')+' '+VZ(e.v)+' (T. '+e.c+')'):''); },
+    dudProg:'Unsichere Lesart: die Hälfte der Akkorde oder mehr ist unsicher.',ninguna:'keine mit vier Akkorden oder mehr',tonalidad:'Tonart: ',sola:'(allein)',solaT:'allein',y:' und ',coma:','}};
+const TC=T0[LANG]||T0.en;
+// lo propio de las fugas, en cada idioma (los nombres de los datos —«Exposición», «tónica», «real»— se traducen al mostrarlos)
+const ORD_EN=n=>n+(n%10===1&&n%100!==11?'st':n%10===2&&n%100!==12?'nd':n%10===3&&n%100!==13?'rd':'th');
+const TXF={
+  es:{title:'mm Fugas de Bach · mapas y fichas',cab:'Fugas de Bach · mapas y fichas · Music School Coach',hFicha:'Ficha',hSecs:'Qué contiene cada sección',hLec:'Lectura del mapa',
+    VOZ:{S:'Soprano',A:'Alto',T:'Tenor',B:'Bajo'},el:v=>'el '+TXF.es.VOZ[v].toLowerCase(),enEl:v=>'en el '+TXF.es.VOZ[v].toLowerCase(),akk:v=>'al '+TXF.es.VOZ[v].toLowerCase(),
+    pieza:{canon:'canon',sinfonia:'sinfonía',invencion:'invención',fuga:'fuga'},tit:t=>t.replace('WTC','Clave bien temperado'),sec:n=>n,
+    gn:g=>g,resp:t=>t,ped:g=>g,cs:t=>t,dir:d=>d,paso:p=>p,
+    inv:'invertido',fo:{dir:'directo',aum:'aumentado (×2)',dis:'disminuido (×½)',str:'en stretto',aj:'con ajuste tonal'},
+    OTRA:{cs:'contrasujeto',tema:'también lleva el tema',espera:'todavía no ha entrado',calla:'calla',libre:'contrapunto libre'},
+    FUENTE:{cabeza:'de la cabeza del sujeto',centro:'del centro del sujeto',cola:'de la cola del sujeto',cs:'del contrasujeto'},
+    ab:{expo:'Expo',coda:'Coda',epi:'E',str:'Str',ent:'Ent'},canAb:n=>n.replace('Cambio: guía el ','Guía ').replace('Guía el ','Guía ').replace('El tema, invertido','Invertido').replace('Vuelve el tema','Tema'),
+    leyF:null,ariaF:'Mapa de la fuga: dónde entra el tema en cada voz',ariaSuj:'El dibujo del sujeto: la altura de cada nota en el tiempo',csAb:'cs',pedT:(g,v)=>'Pedal de '+g+' · '+TXF.es.VOZ[v],
+    nota:['nota','notas'],compas:['compás','compases'],tema:['tema','temas'],
+    // la ficha
+    F:{tema:'Tema',suj:'Sujeto',entran:'Entran',resp:'Respuesta',cs:'Contrasujeto',ents:'Entradas',suena:'El tema suena',epis:'Episodios',largo:'Largo',tons:'Tonalidades',cads:'Cadencias',progs:'Progresiones',cierre:'Cierre',
+      empieza:g=>' · empieza en el grado '+g,respV:(t,g)=>t+', en '+g,
+      csT:(t,v,d)=>t==='fijo'?'fijo: vuelve con '+v+' de las '+d+' entradas siguientes':t==='a veces'?'a veces: vuelve con '+v+' de las '+d+' entradas siguientes':'no hay: contrapunto libre cada vez',
+      entsV:r=>'<b>'+r.ent+'</b> · en la tónica '+r.I+' ('+r.pI+' %) · dominante '+r.V+' · otros grados '+r.otra+(r.inv?' · invertidas '+r.inv:'')+(r.aum?' · aumentadas o disminuidas '+r.aum:'')+(r.stretti?' · en stretto '+r.stretti:''),
+      suenaV:p=>'el '+p+' % de la pieza',episV:(n,m,mt)=>n?n+' · largo típico '+mt+' '+(m===1?'tema':'temas'):'ninguno',largoV:(c,t)=>c+' compases = '+t+' temas',enPrinc:p=>' · en la principal el '+p+' % de la pieza',
+      ultima:(tr,v,g)=>'última entrada en '+tr+', '+TXF.es.VOZ[v]+', '+g,pedal:(g,v,tr)=>' · pedal de '+g+' en '+TXF.es.VOZ[v]+' ('+tr+')'},
+    // cada sección
+    S:{temas:(t,n)=>t+' '+(n===1?'tema':'temas'),sinEnt:'Sin entradas completas.',invP:' (invertido)',pct:p=>' ('+p+' % de las notas)',sale:l=>'Sale '+l,y:' y ',libre:'Material libre: no reconozco en él trozos del sujeto ni del contrasujeto',
+      secu:(v,dir,paso,mf,m,n)=>'Secuencia en '+TXF.es.VOZ[v]+': '+dir+' por '+paso+' · modelo de '+mf+' '+(m<=1.12?'compás':'compases')+', '+n+' veces.',sinSecu:'Sin secuencia reconocida.',
+      voces:n=>n+' '+(n===1?'voz suena':'voces suenan'),pedal:(g,v)=>'Pedal de '+g+' en '+TXF.es.VOZ[v]+'.'},
+    // la lectura
+    Lb:{forma:'Forma',tema:'El tema',suj:'El sujeto',ton:'Recorrido tonal',est:'Para estudiar',cierre:'Cierre',regla:'La regla'},
+    nTxt:n=>['cero','una','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez'][n]||String(n),
+    secCount:(k,n)=>{ const nom={episodio:['un episodio','episodios'],stretto:['un stretto','strettos'],entrada:['una sección de entradas','secciones de entradas'],coda:['una coda','codas']}; return n===1?nom[k][0]:TXF.es.nTxt(n)+' '+nom[k][1]; },
+    forma1:o=>{ const P=o.P[0].toUpperCase()+o.P.slice(1), tema=o.inv?'el tema':'el sujeto'; return P+' de '+o.comp+' compases ('+o.temas+' largos de tema), a '+o.voces+' voces, en '+o.cifra+'. '+tema[0].toUpperCase()+tema.slice(1)+' suena el '+o.cubre+' % del tiempo'+(o.cubre>=75?': casi todo es tema':o.cubre<45?': hay mucho material entre entrada y entrada':'')+'. '; },
+    forma2:(ex,l)=>(ex?'Después de la exposición ':'La pieza ')+(l?'vienen '+l:'no tiene más secciones')+'. ',
+    epis:o=>'Los episodios son '+(o.med<1?'cortos':o.med>2?'largos':'de largo mediano')+' (largo típico '+o.medT+' temas)'+(o.deTema?'; '+(o.deTema===o.n?'todos':o.deTema+' de '+o.n)+' salen de trozos del '+(o.inv?'tema':'sujeto')+' o del contrasujeto':'; su material es libre')+(o.conSec?', y '+(o.conSec===1?'uno se arma':o.conSec+' se arman')+' como secuencia':'')+'. ',
+    te1:(n,cf,c,g)=>n+' '+(n===1?'nota':'notas')+' en '+cf+' '+(c<=1.12?'compás':'compases')+'; empieza en el grado '+g+'. ',
+    te2:(v,ord)=>'Entra primero en el '+TXF.es.VOZ[v].toLowerCase()+(ord?' (orden de entrada: '+ord+')':'')+'. ',te3:(t,g)=>'La respuesta es '+t+', en '+g+'. ',
+    te4:r=>'En toda la pieza entra '+r.ent+' veces: '+r.lista+(r.inv?'; '+r.inv+' invertidas':'')+(r.aum?'; '+r.aum+' aumentadas o disminuidas':'')+(r.stretti?'; '+r.stretti+' de ellas en stretto':'')+'. ',
+    te4l:(I,V,o)=>[I+' en la tónica',V+' en la dominante',o+' en otros grados'],
+    te5:(t,v,d)=>t==='fijo'?'Hay contrasujeto fijo: vuelve con '+v+' de las '+d+' entradas siguientes.':t==='a veces'?'El contrasujeto vuelve a veces ('+v+' de las '+d+' entradas siguientes).':'No hay contrasujeto fijo: el contrapunto es libre cada vez.',
+    toTodo:'Toda la pieza queda en ',toCasa:p=>'En la tonalidad principal está el '+p+' % de la pieza. ',toSin:'Sin modulación confirmada: los pasos por otros grados no duran ni cadencian lo bastante. ',
+    toCads:(n,l,mas)=>(n===1?'Una cadencia: ':n+' '+(n===1?'cadencia':'cadencias')+': ')+l+(mas?' y '+mas+' más (▾ en el mapa)':'')+'.',
+    est:(n,l,mas)=>(n===1?'Una progresión: ':n+' '+(n===1?'progresión':'progresiones')+': ')+l+(mas?'; y '+mas+' más, en las secciones':'')+'.',estI:(pr,c,cf,h,d)=>'la '+pr+' en '+c+' ('+cf+')'+h+(d?' <span class="dudosa">(dudosa)</span>':''),
+    ci1:(inv,c,v,g,fs)=>'La última entrada '+(inv?'del tema':'del sujeto')+' es en '+c+', en el '+TXF.es.VOZ[v].toLowerCase()+', sobre '+g+(fs?', '+fs:'')+'. ',ci2:(g,v,tr)=>'Debajo, pedal de '+g+' en el '+TXF.es.VOZ[v].toLowerCase()+' ('+tr+'). ',
+    ci3:(tr,suj)=>tr?'La coda ('+tr+') cierra'+(suj?' con material del sujeto':' con material libre')+'.':'No hay coda: termina con la última sección.',
+    maqT:(p,cf,c)=>'La maqueta de esta '+p+', en largos de tema (t) · 1 tema = '+cf+' '+(c<=1.12?'compás':'compases'),
+    vinfo:(v,cif,c)=>v+' voces · '+cif+' · '+c+' compases',
+    // el canon
+    regNom:r=>({t:'tónica',d:'dominante'}[r.tipo]||({I:'tónica mayor',i:'tónica menor',III:'relativo mayor',iv:'subdominante',IV:'subdominante',VI:'sexto grado',VII:'séptimo grado',ii:'segundo grado',vi:'relativo menor'}[r.g]||'otra región')),
+    intervalo:k=>{ const a=Math.abs(k), N=['unísono','segunda','tercera','cuarta','quinta','sexta','séptima','octava','novena','décima','undécima','duodécima']; if(!a) return 'al unísono';
+      const t=a<N.length?'una '+N[a]:a%7===0?(a/7===2?'dos':String(a/7))+' octavas':(a<14?'una octava':'dos octavas')+' y una '+N[a%7]; return t+(k>0?' arriba':' abajo'); },
+    corto:k=>(Math.abs(k)+1)+'.ª '+(k>0?'↑':'↓'),
+    regla:(s,g,cf,c,esp,iv,r2,iv0)=>'El '+TXF.es.VOZ[s].toLowerCase()+' repite al '+TXF.es.VOZ[g].toLowerCase()+' '+cf+' '+(c===1?'compás':'compases')+' después, '+(esp?'en espejo':iv)+(r2?', al doble de lento':'')+(esp?' (empieza '+iv0+')':''),
+    ariaC:'Mapa del canon: qué voz guía, cuál la sigue y con qué regla',guia:'guía',sigue:'sigue',espejo:' · espejo',guiaV:v=>TXF.es.VOZ[v]+' guía',sigueV:v=>TXF.es.VOZ[v]+' sigue',libreV:v=>TXF.es.VOZ[v]+' libre',
+    entraT:(c,v,inv,r2)=>'Entra el tema · c. '+c+' · '+TXF.es.VOZ[v]+(inv?' · invertido':'')+(r2?' · al doble de lento':''),ariaTema:'El dibujo del tema del canon: la altura de cada nota en el tiempo',
+    entTxt:(c,v,inv,r2)=>'c. '+c+' '+TXF.es.VOZ[v].toLowerCase()+(inv||r2?' ('+[inv?'invertido':'',r2?'×2':''].filter(Boolean).join(', ')+')':''),
+    FC:{tema:'Tema',regla:'Regla',cambio:'Cambio de papeles',copia:'Copia exacta',entra:'El tema entra',regs:'Regiones',
+      temaV:(n,cf,c,v)=>n+' '+(n===1?'nota':'notas')+' · '+cf+' '+(c<=1.12?'compás':'compases')+' · lo canta primero el '+TXF.es.VOZ[v].toLowerCase(),
+      cambioI:(c,v,r)=>'c. '+c+': guía el '+TXF.es.VOZ[v].toLowerCase()+'. '+r,noCambio:v=>'no hay: el '+(v?TXF.es.VOZ[v].toLowerCase():'—')+' guía hasta el final',
+      copiaV:(e,c)=>'el <b>'+e+' %</b> de las notas de la voz que sigue · el canon ocupa el '+c+' % de la pieza',regsV:(t,p)=>t+' · en la tónica el '+p+' % de la pieza',largoV:(c,tr)=>c+' compases'+(tr?' · coda en '+tr:' · sin coda')},
+    SC:{guia:'Guía: ',sigue:'Sigue: ',libreEn:(v,tr)=>TXF.es.VOZ[v]+' libre en '+tr,acomp:': acompaña a la copia, no se imita.',yaNo:'Ya no hay copia exacta: las dos voces cierran libres.',entra:'El tema entra: ',regs:'Regiones: '},
+    LC:{forma:(c,cif,n,cf,cc,v,can,tr)=>'Canon a 2 voces de '+c+' compases, en '+cif+'. El tema ('+n+' '+(n===1?'nota':'notas')+', '+cf+' '+(cc<=1.12?'compás':'compases')+') lo canta primero el '+TXF.es.VOZ[v].toLowerCase()+'. El canon ocupa el '+can+' % de la pieza'+(tr?', y la coda ('+tr+') cierra libre':', sin coda')+'.',
+      copia:e=>'. La voz que sigue copia exactamente el '+e+' % de las notas. ',cambian:l=>'Los papeles cambian: '+l+'.',cambI:(c,v)=>'en el c. '+c+' guía el '+TXF.es.VOZ[v].toLowerCase(),hasta:v=>'El '+TXF.es.VOZ[v].toLowerCase()+' guía hasta el final.',
+      entra:(n,l)=>(n===1?'Entra una vez: ':'Entra '+n+' veces: ')+l+'.',cads:(n,l,mas)=>n+' '+(n===1?'cadencia':'cadencias')+': '+l+(mas?' y '+mas+' más':'')+'.',tonica:p=>'. En la tónica el '+p+' % de la pieza.',
+      est:(n,l,mas)=>(n===1?'Una progresión: ':n+' '+(n===1?'progresión':'progresiones')+': ')+l+(mas?'; y '+mas+' más':'')+'.'},
+    vinfoC:(cif,c)=>'canon a 2 voces · '+cif+' · '+c+' compases',
+    leyC:['guía','sigue: la misma música, después','sigue en espejo','libre','entra el tema','de cada punto del guía a su copia','tonalidad principal','dominante','relativo','otra tonalidad','▾ cadencia','progresión','progresión por modelo'],
+    maqTC:'Las partes de este canon, en compases (c.)',chipC:n=>n+' c.',ariaTC:'Mapa resumido del canon',
+    filaC:(c,e)=>(c?' · cambian los papeles en el c. '+c:'')+' · copia exacta '+e+' %',
+    // comparar
+    R:{h:(n,k)=>n+' voces · '+k+' '+(k===1?'fuga':'fugas'),orden:'Orden de entrada',resp:'Respuesta',cs:'Contrasujeto',ents:'Entradas por fuga',ton:'En la tónica',suena:'El tema suena',epis:'Episodios',largo:'Largo',
+      sinCs:'sin contrasujeto',conCs:t=>'contrasujeto '+t,deA:(a,b,m)=>'de '+a+' a '+b+' · típico, '+m,deAp:(a,b,m)=>'de '+a+' % a '+b+' % de las entradas · típico, '+m+' %',deApz:(a,b,m)=>'de '+a+' % a '+b+' % de la pieza · típico, '+m+' %',deAt:(a,b,m)=>'de '+a+' a '+b+' temas · típico, '+m},
+    fila:(r,e,pt,cs,t)=>' · resp. '+r+' · '+e+' entradas · tónica '+pt+' % · '+cs+' · '+t+' temas',sinCsC:'sin cs',csC:t=>'cs '+t,dudC:'(dudosa)',
+    sinf:'Sinfonías',inven:'Invenciones',canones:'Cánones',vocesG:n=>n+' voces',leyCmp:['tema en la tónica','en la dominante','en otro grado','invertido','episodio','Cada tira es la pieza entera, de su primer compás al último.'],
+    cmpV:'Las fugas, una debajo de otra',todas:'todas',toca:'Toca una pieza para abrir su mapa.',sinDatos:'No encuentro los datos (rollo-fugas/analisis-fugas-datos.js).',
+    pie:(nC,nI,nA,nK,fe)=>'Lectura de la máquina sobre el banco del rollo ('+nC+' fugas del Clave bien temperado'+(nI?', '+nI+' sinfonías e invenciones':'')+(nA?', '+nA+' fugas de El arte de la fuga':'')+(nK?' y sus '+nK+' cánones':'')+fe+'). No es un análisis de libro: lo dudoso va marcado y lo que esté mal leído se corrige. Los grados siguen las reglas del cifrado de la casa: una tonalidad nueva necesita su cadencia y durar cuatro compases; las cifras más claras son las dudosas. Cada compás citado lleva al rollo.'}
+};
+TXF.en={title:'mm Bach fugues · maps and cards',cab:'Bach fugues · maps and cards · Music School Coach',hFicha:'Card',hSecs:'What each section contains',hLec:'Reading the map',
+  VOZ:{S:'Soprano',A:'Alto',T:'Tenor',B:'Bass'},el:v=>'the '+TXF.en.VOZ[v].toLowerCase(),enEl:v=>'in the '+TXF.en.VOZ[v].toLowerCase(),
+  nota:['note','notes'],compas:['bar','bars'],tema:['theme','themes'],
+  pieza:{canon:'canon',sinfonia:'sinfonia',invencion:'invention',fuga:'fugue'},
+  tit:t=>t.replace('WTC','Well-Tempered Clavier').replace('Arte de la fuga','The Art of Fugue').replace(/· Fuga /,'· Fugue ').replace('Sinfonía','Sinfonia').replace('Invención','Invention').replace('inconclusa','unfinished'),
+  sec:n=>n==='Exposición'?'Exposition':n==='Entrada'?'Entry':n==='Entradas'?'Entries':/^Episodio /.test(n)?n.replace('Episodio','Episode'):n==='El tema, invertido'?'The theme, inverted':n==='Vuelve el tema'?'The theme returns':
+    /^(Cambio: )?[Gg]uía el /.test(n)?n.replace(/^Cambio: guía el (\w+)$/,(m,v)=>'Change: the '+VOZN(v)+' leads').replace(/^Guía el (\w+)$/,(m,v)=>'The '+VOZN(v)+' leads'):n,
+  gn:g=>({tónica:'tonic',dominante:'dominant',supertónica:'supertonic',mediante:'mediant',relativa:'relative',subdominante:'subdominant',subtónica:'subtonic',submediante:'submediant'}[g]||g),
+  resp:t=>t,ped:g=>({tónica:'tonic',dominante:'dominant','otro grado':'another degree'}[g]||g),cs:t=>({fijo:'fixed','a veces':'at times',libre:'free'}[t]||t),dir:d=>({baja:'falls',sube:'rises'}[d]||d),paso:p=>({grados:'steps',terceras:'thirds',cuartas:'fourths'}[p]||p),
+  inv:'inverted',fo:{dir:'direct',aum:'augmented (×2)',dis:'diminished (×½)',str:'in stretto',aj:'with tonal adjustment'},
+  OTRA:{cs:'countersubject',tema:'also has the theme',espera:'has not entered yet',calla:'is silent',libre:'free counterpoint'},
+  FUENTE:{cabeza:'from the head of the subject',centro:'from the middle of the subject',cola:'from the tail of the subject',cs:'from the countersubject'},
+  ab:{expo:'Expo',coda:'Coda',epi:'E',str:'Str',ent:'Ent'},canAb:n=>n==='El tema, invertido'?'Inverted':n==='Vuelve el tema'?'Theme':n.replace(/^(Cambio: g|G)uía el (\w+)$/,(m,a,v)=>'Lead: '+VOZN(v)),
+  leyF:['theme on the tonic','on the dominant','on another degree','inverted','countersubject','only the head of the theme','pedal','the voice sounds','main key','dominant','relative','other key','▾ cadence','progression: by fifths (5th), by thirds (3rd), by steps (2nd)','progression by model (mod)'],
+  ariaF:'Map of the fugue: where the theme enters in each voice',ariaSuj:'The shape of the subject: the pitch of each note over time',csAb:'cs',pedT:(g,v)=>(g==='another degree'?'Pedal on another degree':g[0].toUpperCase()+g.slice(1)+' pedal')+' · '+TXF.en.VOZ[v],
+  F:{tema:'Theme',suj:'Subject',entran:'Order of entry',resp:'Answer',cs:'Countersubject',ents:'Entries',suena:'The theme sounds',epis:'Episodes',largo:'Length',tons:'Keys',cads:'Cadences',progs:'Progressions',cierre:'Close',
+    empieza:g=>' · starts on degree '+g,respV:(t,g)=>t+', on '+g,
+    csT:(t,v,d)=>t==='fijo'?'fixed: returns with '+v+' of the '+d+' following entries':t==='a veces'?'at times: returns with '+v+' of the '+d+' following entries':'none: free counterpoint each time',
+    entsV:r=>'<b>'+r.ent+'</b> · on the tonic '+r.I+' ('+r.pI+' %) · dominant '+r.V+' · other degrees '+r.otra+(r.inv?' · inverted '+r.inv:'')+(r.aum?' · augmented or diminished '+r.aum:'')+(r.stretti?' · in stretto '+r.stretti:''),
+    suenaV:p=>p+' % of the piece',episV:(n,m,mt)=>n?n+' · typical length '+mt+' '+(m===1?'theme':'themes'):'none',largoV:(c,t)=>c+' bars = '+t+' themes',enPrinc:p=>' · '+p+' % of the piece in the main key',
+    ultima:(tr,v,g)=>'last entry in '+tr+', '+TXF.en.VOZ[v]+', '+g,pedal:(g,v,tr)=>' · '+(g==='another degree'?'pedal on another degree':g+' pedal')+' in the '+TXF.en.VOZ[v].toLowerCase()+' ('+tr+')'},
+  S:{temas:(t,n)=>t+' '+(n===1?'theme':'themes'),sinEnt:'No complete entries.',invP:' (inverted)',pct:p=>' ('+p+' % of the notes)',sale:l=>'It comes '+l,y:' and ',libre:'Free material: I do not recognize pieces of the subject or the countersubject in it',
+    secu:(v,dir,paso,mf,m,n)=>'Sequence in the '+TXF.en.VOZ[v].toLowerCase()+': it '+dir+' by '+paso+' · a model of '+mf+' '+(m<=1.12?'bar':'bars')+', '+n+' times.',sinSecu:'No sequence recognized.',
+    voces:n=>n+' '+(n===1?'voice sounds':'voices sound'),pedal:(g,v)=>(g==='another degree'?'Pedal on another degree':g[0].toUpperCase()+g.slice(1)+' pedal')+' in the '+TXF.en.VOZ[v].toLowerCase()+'.'},
+  Lb:{forma:'Form',tema:'The theme',suj:'The subject',ton:'Tonal path',est:'To study',cierre:'Close',regla:'The rule'},
+  nTxt:n=>['zero','one','two','three','four','five','six','seven','eight','nine','ten'][n]||String(n),
+  secCount:(k,n)=>{ const nom={episodio:['an episode','episodes'],stretto:['a stretto','strettos'],entrada:['a section of entries','sections of entries'],coda:['a coda','codas']}; return n===1?nom[k][0]:TXF.en.nTxt(n)+' '+nom[k][1]; },
+  forma1:o=>{ const P=o.P[0].toUpperCase()+o.P.slice(1); return P+' of '+o.comp+' bars ('+o.temas+' theme lengths), in '+o.voces+' voices, in '+o.cifra+'. The '+(o.inv?'theme':'subject')+' sounds '+o.cubre+' % of the time'+(o.cubre>=75?': almost everything is theme':o.cubre<45?': there is a lot of material between one entry and the next':'')+'. '; },
+  forma2:(ex,l)=>(ex?'After the exposition ':'The piece ')+(l?(ex?'come ':'has ')+l:(ex?'there are no more sections':'has no more sections'))+'. ',
+  epis:o=>'The episodes are '+(o.med<1?'short':o.med>2?'long':'of medium length')+' (typical length '+o.medT+' themes)'+(o.deTema?'; '+(o.deTema===o.n?'all of them':o.deTema+' of '+o.n)+' come from pieces of the '+(o.inv?'theme':'subject')+' or the countersubject':'; their material is free')+(o.conSec?', and '+(o.conSec===1?'one is built':o.conSec+' are built')+' as a sequence':'')+'. ',
+  te1:(n,cf,c,g)=>n+' '+(n===1?'note':'notes')+' in '+cf+' '+(c<=1.12?'bar':'bars')+'; it starts on degree '+g+'. ',
+  te2:(v,ord)=>'It enters first in the '+TXF.en.VOZ[v].toLowerCase()+(ord?' (order of entry: '+ord+')':'')+'. ',te3:(t,g)=>'The answer is '+t+', on '+g+'. ',
+  te4:r=>'In the whole piece it enters '+r.ent+' times: '+r.lista+(r.inv?'; '+r.inv+' inverted':'')+(r.aum?'; '+r.aum+' augmented or diminished':'')+(r.stretti?'; '+r.stretti+' of them in stretto':'')+'. ',
+  te4l:(I,V,o)=>[I+' on the tonic',V+' on the dominant',o+' on other degrees'],
+  te5:(t,v,d)=>t==='fijo'?'There is a fixed countersubject: it returns with '+v+' of the '+d+' following entries.':t==='a veces'?'The countersubject returns at times ('+v+' of the '+d+' following entries).':'There is no fixed countersubject: the counterpoint is free each time.',
+  toTodo:'The whole piece stays in ',toCasa:p=>p+' % of the piece is in the main key. ',toSin:'No confirmed modulation: the passages through other degrees do not last or cadence enough. ',
+  toCads:(n,l,mas)=>(n===1?'One cadence: ':n+' cadences: ')+l+(mas?' and '+mas+' more (▾ on the map)':'')+'.',
+  est:(n,l,mas)=>(n===1?'One progression: ':n+' progressions: ')+l+(mas?'; and '+mas+' more, in the sections':'')+'.',estI:(pr,c,cf,h,d)=>'the '+pr+' in '+c+' ('+cf+')'+h+(d?' <span class="dudosa">(uncertain)</span>':''),
+  ci1:(inv,c,v,g,fs)=>'The last entry of the '+(inv?'theme':'subject')+' is in '+c+', in the '+TXF.en.VOZ[v].toLowerCase()+', on '+g+(fs?', '+fs:'')+'. ',ci2:(g,v,tr)=>'Below it, '+(g==='another degree'?'a pedal on another degree':'a '+g+' pedal')+' in the '+TXF.en.VOZ[v].toLowerCase()+' ('+tr+'). ',
+  ci3:(tr,suj)=>tr?'The coda ('+tr+') closes'+(suj?' with material from the subject':' with free material')+'.':'There is no coda: it ends with the last section.',
+  maqT:(p,cf,c)=>'The layout of this '+p+', in theme lengths (t) · 1 theme = '+cf+' '+(c<=1.12?'bar':'bars'),
+  vinfo:(v,cif,c)=>v+' voices · '+cif+' · '+c+' bars',
+  regNom:r=>({t:'tonic',d:'dominant'}[r.tipo]||({I:'major tonic',i:'minor tonic',III:'relative major',iv:'subdominant',IV:'subdominant',VI:'sixth degree',VII:'seventh degree',ii:'second degree',vi:'relative minor'}[r.g]||'other region')),
+  intervalo:k=>{ const a=Math.abs(k), N=['unison','second','third','fourth','fifth','sixth','seventh','octave','ninth','tenth','eleventh','twelfth'], un=w=>(/^[aeiou]/.test(w)?'an ':'a ')+w; if(!a) return 'at the unison';
+    const t=a<N.length?un(N[a]):a%7===0?(a/7===2?'two':String(a/7))+' octaves':(a<14?'an octave':'two octaves')+' and '+un(N[a%7]); return t+(k>0?' above':' below'); },
+  corto:k=>ORD_EN(Math.abs(k)+1)+' '+(k>0?'↑':'↓'),
+  regla:(s,g,cf,c,esp,iv,r2,iv0)=>'The '+TXF.en.VOZ[s].toLowerCase()+' repeats the '+TXF.en.VOZ[g].toLowerCase()+' '+cf+' '+(c===1?'bar':'bars')+' later, '+(esp?'in mirror':iv)+(r2?', twice as slow':'')+(esp?' (it starts '+iv0+')':''),
+  ariaC:'Map of the canon: which voice leads, which one follows and with what rule',guia:'leads',sigue:'follows',espejo:' · mirror',guiaV:v=>TXF.en.VOZ[v]+' leads',sigueV:v=>TXF.en.VOZ[v]+' follows',libreV:v=>TXF.en.VOZ[v]+' free',
+  entraT:(c,v,inv,r2)=>'The theme enters · b. '+c+' · '+TXF.en.VOZ[v]+(inv?' · inverted':'')+(r2?' · twice as slow':''),ariaTema:'The shape of the canon theme: the pitch of each note over time',
+  entTxt:(c,v,inv,r2)=>'b. '+c+' '+TXF.en.VOZ[v].toLowerCase()+(inv||r2?' ('+[inv?'inverted':'',r2?'×2':''].filter(Boolean).join(', ')+')':''),
+  FC:{tema:'Theme',regla:'Rule',cambio:'Change of roles',copia:'Exact copy',entra:'The theme enters',regs:'Regions',
+    temaV:(n,cf,c,v)=>n+' '+(n===1?'note':'notes')+' · '+cf+' '+(c<=1.12?'bar':'bars')+' · first sung by the '+TXF.en.VOZ[v].toLowerCase(),
+    cambioI:(c,v,r)=>'b. '+c+': the '+TXF.en.VOZ[v].toLowerCase()+' leads. '+r,noCambio:v=>'none: the '+(v?TXF.en.VOZ[v].toLowerCase():'—')+' leads to the end',
+    copiaV:(e,c)=>'<b>'+e+' %</b> of the notes of the following voice · the canon takes up '+c+' % of the piece',regsV:(t,p)=>t+' · '+p+' % of the piece on the tonic',largoV:(c,tr)=>c+' bars'+(tr?' · coda in '+tr:' · no coda')},
+  SC:{guia:'Leads: ',sigue:'Follows: ',libreEn:(v,tr)=>TXF.en.VOZ[v]+' free in '+tr,acomp:': it accompanies the copy, it is not imitated.',yaNo:'No more exact copy: both voices close freely.',entra:'The theme enters: ',regs:'Regions: '},
+  LC:{forma:(c,cif,n,cf,cc,v,can,tr)=>'Canon in 2 voices of '+c+' bars, in '+cif+'. The theme ('+n+' '+(n===1?'note':'notes')+', '+cf+' '+(cc<=1.12?'bar':'bars')+') is first sung by the '+TXF.en.VOZ[v].toLowerCase()+'. The canon takes up '+can+' % of the piece'+(tr?', and the coda ('+tr+') closes freely':', with no coda')+'.',
+    copia:e=>'. The following voice copies '+e+' % of the notes exactly. ',cambian:l=>'The roles change: '+l+'.',cambI:(c,v)=>'in b. '+c+' the '+TXF.en.VOZ[v].toLowerCase()+' leads',hasta:v=>'The '+TXF.en.VOZ[v].toLowerCase()+' leads to the end.',
+    entra:(n,l)=>(n===1?'It enters once: ':'It enters '+n+' times: ')+l+'.',cads:(n,l,mas)=>n+' '+(n===1?'cadence':'cadences')+': '+l+(mas?' and '+mas+' more':'')+'.',tonica:p=>'. '+p+' % of the piece on the tonic.',
+    est:(n,l,mas)=>(n===1?'One progression: ':n+' progressions: ')+l+(mas?'; and '+mas+' more':'')+'.'},
+  vinfoC:(cif,c)=>'canon in 2 voices · '+cif+' · '+c+' bars',
+  leyC:['leads','follows: the same music, later','follows in mirror','free','the theme enters','from each point of the leader to its copy','main key','dominant','relative','other key','▾ cadence','progression','progression by model'],
+  maqTC:'The parts of this canon, in bars (b.)',chipC:n=>n+' b.',ariaTC:'Summary map of the canon',
+  filaC:(c,e)=>(c?' · the roles change in b. '+c:'')+' · exact copy '+e+' %',
+  R:{h:(n,k)=>n+' voices · '+k+' '+(k===1?'fugue':'fugues'),orden:'Order of entry',resp:'Answer',cs:'Countersubject',ents:'Entries per fugue',ton:'On the tonic',suena:'The theme sounds',epis:'Episodes',largo:'Length',
+    sinCs:'no countersubject',conCs:t=>t+' countersubject',deA:(a,b,m)=>'from '+a+' to '+b+' · typical, '+m,deAp:(a,b,m)=>'from '+a+' % to '+b+' % of the entries · typical, '+m+' %',deApz:(a,b,m)=>'from '+a+' % to '+b+' % of the piece · typical, '+m+' %',deAt:(a,b,m)=>'from '+a+' to '+b+' themes · typical, '+m},
+  fila:(r,e,pt,cs,t)=>' · ans. '+r+' · '+e+' entries · tonic '+pt+' % · '+cs+' · '+t+' themes',sinCsC:'no cs',csC:t=>'cs '+t,dudC:'(uncertain)',
+  sinf:'Sinfonias',inven:'Inventions',canones:'Canons',vocesG:n=>n+' voices',leyCmp:['theme on the tonic','on the dominant','on another degree','inverted','episode','Each strip is the whole piece, from its first bar to its last.'],
+  cmpV:'The fugues, one below the other',todas:'all',toca:'Tap a piece to open its map.',sinDatos:'I cannot find the data (rollo-fugas/analisis-fugas-datos.js).',
+  pie:(nC,nI,nA,nK,fe)=>'Machine reading of the bank of the roll ('+nC+' fugues of the Well-Tempered Clavier'+(nI?', '+nI+' sinfonias and inventions':'')+(nA?', '+nA+' fugues of The Art of Fugue':'')+(nK?' and its '+nK+' canons':'')+fe+'). It is not a textbook analysis: what is uncertain is marked, and whatever is misread gets corrected. The degrees follow the house rules for harmonic figuring: a new key needs its cadence and must last four bars; the lighter figures are the uncertain ones. Every bar cited leads to the roll.'};
+TXF.fr={title:'mm Fugues de Bach · cartes et fiches',cab:'Fugues de Bach · cartes et fiches · Music School Coach',hFicha:'Fiche',hSecs:'Ce que contient chaque section',hLec:'Lecture de la carte',
+  VOZ:{S:'Soprano',A:'Alto',T:'Ténor',B:'Basse'},el:v=>({S:'le soprano',A:'l’alto',T:'le ténor',B:'la basse'}[v]),enEl:v=>({S:'au soprano',A:'à l’alto',T:'au ténor',B:'à la basse'}[v]),
+  nota:['note','notes'],compas:['mesure','mesures'],tema:['thème','thèmes'],
+  pieza:{canon:'canon',sinfonia:'sinfonia',invencion:'invention',fuga:'fugue'},
+  tit:t=>t.replace('WTC','Clavier bien tempéré').replace('Arte de la fuga','L’Art de la fugue').replace(/· Fuga /,'· Fugue ').replace('Sinfonía','Sinfonia').replace('Invención','Invention').replace('inconclusa','inachevé'),
+  sec:n=>n==='Exposición'?'Exposition':n==='Entrada'?'Entrée':n==='Entradas'?'Entrées':/^Episodio /.test(n)?n.replace('Episodio','Épisode'):n==='Stretto'?'Strette':n==='El tema, invertido'?'Le thème, renversé':n==='Vuelve el tema'?'Le thème revient':
+    n.replace(/^Cambio: guía el (\w+)$/,(m,v)=>'Changement : '+TXF.fr.el(VOZK(v))+' guide').replace(/^Guía el (\w+)$/,(m,v)=>cap1(TXF.fr.el(VOZK(v)))+' guide'),
+  gn:g=>({tónica:'tonique',dominante:'dominante',supertónica:'sus-tonique',mediante:'médiante',relativa:'relatif',subdominante:'sous-dominante',subtónica:'sous-tonique',submediante:'sus-dominante'}[g]||g),
+  resp:t=>({real:'réelle',tonal:'tonale'}[t]||t),ped:g=>({tónica:'tonique',dominante:'dominante','otro grado':'un autre degré'}[g]||g),cs:t=>({fijo:'fixe','a veces':'parfois',libre:'libre'}[t]||t),dir:d=>({baja:'descend',sube:'monte'}[d]||d),paso:p=>({grados:'degrés',terceras:'tierces',cuartas:'quartes'}[p]||p),
+  inv:'renversé',fo:{dir:'direct',aum:'augmenté (×2)',dis:'diminué (×½)',str:'en strette',aj:'avec ajustement tonal'},
+  OTRA:{cs:'contre-sujet',tema:'porte aussi le thème',espera:'n’est pas encore entrée',calla:'se tait',libre:'contrepoint libre'},
+  FUENTE:{cabeza:'de la tête du sujet',centro:'du centre du sujet',cola:'de la queue du sujet',cs:'du contre-sujet'},
+  ab:{expo:'Expo',coda:'Coda',epi:'É',str:'Str',ent:'Ent'},canAb:n=>n==='El tema, invertido'?'Renversé':n==='Vuelve el tema'?'Thème':n.replace(/^(Cambio: g|G)uía el (\w+)$/,(m,a,v)=>'Guide : '+VOZN(v)),
+  leyF:['thème sur la tonique','sur la dominante','sur un autre degré','renversé','contre-sujet','seulement la tête du thème','pédale','la voix sonne','tonalité principale','dominante','relatif','autre tonalité','▾ cadence','progression : par quintes (5te), par tierces (3ce), par degrés (2de)','progression par modèle (mod)'],
+  ariaF:'Carte de la fugue : où entre le thème dans chaque voix',ariaSuj:'Le dessin du sujet : la hauteur de chaque note dans le temps',csAb:'cs',pedT:(g,v)=>'Pédale de '+g+' · '+TXF.fr.VOZ[v],
+  F:{tema:'Thème',suj:'Sujet',entran:'Ordre d’entrée',resp:'Réponse',cs:'Contre-sujet',ents:'Entrées',suena:'Le thème sonne',epis:'Épisodes',largo:'Longueur',tons:'Tonalités',cads:'Cadences',progs:'Progressions',cierre:'Fin',
+    empieza:g=>' · commence sur le degré '+g,respV:(t,g)=>t+', sur '+g,
+    csT:(t,v,d)=>t==='fijo'?'fixe : revient avec '+v+' des '+d+' entrées suivantes':t==='a veces'?'parfois : revient avec '+v+' des '+d+' entrées suivantes':'aucun : contrepoint libre à chaque fois',
+    entsV:r=>'<b>'+r.ent+'</b> · sur la tonique '+r.I+' ('+r.pI+' %) · dominante '+r.V+' · autres degrés '+r.otra+(r.inv?' · renversées '+r.inv:'')+(r.aum?' · augmentées ou diminuées '+r.aum:'')+(r.stretti?' · en strette '+r.stretti:''),
+    suenaV:p=>p+' % de la pièce',episV:(n,m,mt)=>n?n+' · longueur typique '+mt+' '+(m===1?'thème':'thèmes'):'aucun',largoV:(c,t)=>c+' mesures = '+t+' thèmes',enPrinc:p=>' · '+p+' % de la pièce dans la tonalité principale',
+    ultima:(tr,v,g)=>'dernière entrée à la '+tr+', '+TXF.fr.VOZ[v]+', '+g,pedal:(g,v,tr)=>' · pédale de '+g+' '+TXF.fr.enEl(v)+' ('+tr+')'},
+  S:{temas:(t,n)=>t+' '+(n===1?'thème':'thèmes'),sinEnt:'Pas d’entrée complète.',invP:' (renversé)',pct:p=>' ('+p+' % des notes)',sale:l=>'Il vient '+l,y:' et ',libre:'Matériau libre : je n’y reconnais pas de fragments du sujet ni du contre-sujet',
+    secu:(v,dir,paso,mf,m,n)=>'Séquence '+TXF.fr.enEl(v)+' : elle '+dir+' par '+paso+' · modèle de '+mf+' '+(m<=1.12?'mesure':'mesures')+', '+n+' fois.',sinSecu:'Pas de séquence reconnue.',
+    voces:n=>n+' '+(n===1?'voix sonne':'voix sonnent'),pedal:(g,v)=>'Pédale de '+g+' '+TXF.fr.enEl(v)+'.'},
+  Lb:{forma:'Forme',tema:'Le thème',suj:'Le sujet',ton:'Parcours tonal',est:'À étudier',cierre:'Fin',regla:'La règle'},
+  nTxt:n=>['zéro','une','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][n]||String(n),
+  secCount:(k,n)=>{ const nom={episodio:['un épisode','épisodes'],stretto:['une strette','strettes'],entrada:['une section d’entrées','sections d’entrées'],coda:['une coda','codas']}, nb=['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'][n]||String(n); return n===1?nom[k][0]:((k==='episodio'?nb:TXF.fr.nTxt(n))+' '+nom[k][1]); },
+  forma1:o=>{ const P=o.P[0].toUpperCase()+o.P.slice(1); return P+' de '+o.comp+' mesures ('+o.temas+' longueurs de thème), à '+o.voces+' voix, en '+o.cifra+'. Le '+(o.inv?'thème':'sujet')+' sonne '+o.cubre+' % du temps'+(o.cubre>=75?' : presque tout est thème':o.cubre<45?' : il y a beaucoup de matériau d’une entrée à l’autre':'')+'. '; },
+  forma2:(ex,l)=>(ex?'Après l’exposition ':'La pièce ')+(l?(ex?'viennent ':'a ')+l:(ex?'il n’y a plus de sections':'n’a pas d’autres sections'))+'. ',
+  epis:o=>'Les épisodes sont '+(o.med<1?'courts':o.med>2?'longs':'de longueur moyenne')+' (longueur typique '+o.medT+' thèmes)'+(o.deTema?' ; '+(o.deTema===o.n?'tous':o.deTema+' sur '+o.n)+' viennent de fragments du '+(o.inv?'thème':'sujet')+' ou du contre-sujet':' ; leur matériau est libre')+(o.conSec?', et '+(o.conSec===1?'l’un se construit':o.conSec+' se construisent')+' en séquence':'')+'. ',
+  te1:(n,cf,c,g)=>n+' '+(n===1?'note':'notes')+' en '+cf+' '+(c<=1.12?'mesure':'mesures')+' ; il commence sur le degré '+g+'. ',
+  te2:(v,ord)=>'Il entre d’abord '+TXF.fr.enEl(v)+(ord?' (ordre d’entrée : '+ord+')':'')+'. ',te3:(t,g)=>'La réponse est '+t+', sur '+g+'. ',
+  te4:r=>'Dans toute la pièce il entre '+r.ent+' fois : '+r.lista+(r.inv?' ; '+r.inv+' renversées':'')+(r.aum?' ; '+r.aum+' augmentées ou diminuées':'')+(r.stretti?' ; '+r.stretti+' d’entre elles en strette':'')+'. ',
+  te4l:(I,V,o)=>[I+' sur la tonique',V+' sur la dominante',o+' sur d’autres degrés'],
+  te5:(t,v,d)=>t==='fijo'?'Il y a un contre-sujet fixe : il revient avec '+v+' des '+d+' entrées suivantes.':t==='a veces'?'Le contre-sujet revient parfois ('+v+' des '+d+' entrées suivantes).':'Il n’y a pas de contre-sujet fixe : le contrepoint est libre à chaque fois.',
+  toTodo:'Toute la pièce reste en ',toCasa:p=>'La tonalité principale occupe '+p+' % de la pièce. ',toSin:'Pas de modulation confirmée : les passages par d’autres degrés ne durent pas ou ne cadencent pas assez. ',
+  toCads:(n,l,mas)=>(n===1?'Une cadence : ':n+' cadences : ')+l+(mas?' et '+mas+' de plus (▾ sur la carte)':'')+'.',
+  est:(n,l,mas)=>(n===1?'Une progression : ':n+' progressions : ')+l+(mas?' ; et '+mas+' de plus, dans les sections':'')+'.',estI:(pr,c,cf,h,d)=>'la '+pr+' à la '+c+' ('+cf+')'+h+(d?' <span class="dudosa">(incertaine)</span>':''),
+  ci1:(inv,c,v,g,fs)=>'La dernière entrée du '+(inv?'thème':'sujet')+' est à la '+c+', '+TXF.fr.enEl(v)+', sur '+g+(fs?', '+fs:'')+'. ',ci2:(g,v,tr)=>'En dessous, pédale de '+g+' '+TXF.fr.enEl(v)+' ('+tr+'). ',
+  ci3:(tr,suj)=>tr?'La coda ('+tr+') conclut'+(suj?' avec du matériau du sujet':' avec du matériau libre')+'.':'Il n’y a pas de coda : elle se termine avec la dernière section.',
+  maqT:(p,cf,c)=>'Le plan de cette '+p+', en longueurs de thème (t) · 1 thème = '+cf+' '+(c<=1.12?'mesure':'mesures'),
+  vinfo:(v,cif,c)=>v+' voix · '+cif+' · '+c+' mesures',
+  regNom:r=>({t:'tonique',d:'dominante'}[r.tipo]||({I:'tonique majeure',i:'tonique mineure',III:'relatif majeur',iv:'sous-dominante',IV:'sous-dominante',VI:'sixième degré',VII:'septième degré',ii:'deuxième degré',vi:'relatif mineur'}[r.g]||'autre région')),
+  intervalo:k=>{ const a=Math.abs(k), N=['unisson','seconde','tierce','quarte','quinte','sixte','septième','octave','neuvième','dixième','onzième','douzième'], la=w=>(/^[aeiouo]/.test(w)?'à l’':'à la ')+w; if(!a) return 'à l’unisson';
+    const t=a<N.length?la(N[a]):a%7===0?'à '+(a/7===2?'deux':String(a/7))+' octaves':'à '+(a<14?'une octave':'deux octaves')+' et une '+N[a%7]; return t+(k>0?' au-dessus':' en dessous'); },
+  corto:k=>(Math.abs(k)+1)+'e '+(k>0?'↑':'↓'),
+  regla:(s,g,cf,c,esp,iv,r2,iv0)=>cap1(TXF.fr.el(s))+' répète '+TXF.fr.el(g)+' '+cf+' '+(c===1?'mesure':'mesures')+' plus tard, '+(esp?'en miroir':iv)+(r2?', deux fois plus lentement':'')+(esp?' (en commençant '+iv0+')':''),
+  ariaC:'Carte du canon : quelle voix guide, laquelle suit et avec quelle règle',guia:'guide',sigue:'suit',espejo:' · miroir',guiaV:v=>TXF.fr.VOZ[v]+' guide',sigueV:v=>TXF.fr.VOZ[v]+' suit',libreV:v=>TXF.fr.VOZ[v]+' libre',
+  entraT:(c,v,inv,r2)=>'Le thème entre · m. '+c+' · '+TXF.fr.VOZ[v]+(inv?' · renversé':'')+(r2?' · deux fois plus lent':''),ariaTema:'Le dessin du thème du canon : la hauteur de chaque note dans le temps',
+  entTxt:(c,v,inv,r2)=>'m. '+c+' '+TXF.fr.VOZ[v].toLowerCase()+(inv||r2?' ('+[inv?'renversé':'',r2?'×2':''].filter(Boolean).join(', ')+')':''),
+  FC:{tema:'Thème',regla:'Règle',cambio:'Changement de rôles',copia:'Copie exacte',entra:'Le thème entre',regs:'Régions',
+    temaV:(n,cf,c,v)=>n+' '+(n===1?'note':'notes')+' · '+cf+' '+(c<=1.12?'mesure':'mesures')+' · chanté d’abord par '+TXF.fr.el(v).replace(/^le /,'le ').replace(/^l’/,'l’'),
+    cambioI:(c,v,r)=>'m. '+c+' : '+TXF.fr.el(v)+' guide. '+r,noCambio:v=>'aucun : '+(v?TXF.fr.el(v):'—')+' guide jusqu’à la fin',
+    copiaV:(e,c)=>'<b>'+e+' %</b> des notes de la voix qui suit · le canon occupe '+c+' % de la pièce',regsV:(t,p)=>t+' · '+p+' % de la pièce sur la tonique',largoV:(c,tr)=>c+' mesures'+(tr?' · coda à la '+tr:' · sans coda')},
+  SC:{guia:'Guide : ',sigue:'Suit : ',libreEn:(v,tr)=>TXF.fr.VOZ[v]+' libre à la '+tr,acomp:' : accompagne la copie, n’est pas imité.',yaNo:'Plus de copie exacte : les deux voix concluent librement.',entra:'Le thème entre : ',regs:'Régions : '},
+  LC:{forma:(c,cif,n,cf,cc,v,can,tr)=>'Canon à 2 voix de '+c+' mesures, en '+cif+'. Le thème ('+n+' '+(n===1?'note':'notes')+', '+cf+' '+(cc<=1.12?'mesure':'mesures')+') est chanté d’abord par '+TXF.fr.el(v)+'. Le canon occupe '+can+' % de la pièce'+(tr?', et la coda ('+tr+') conclut librement':', sans coda')+'.',
+    copia:e=>'. La voix qui suit copie exactement '+e+' % des notes. ',cambian:l=>'Les rôles changent : '+l+'.',cambI:(c,v)=>'à la m. '+c+' '+TXF.fr.el(v)+' guide',hasta:v=>cap1(TXF.fr.el(v))+' guide jusqu’à la fin.',
+    entra:(n,l)=>(n===1?'Il entre une fois : ':'Il entre '+n+' fois : ')+l+'.',cads:(n,l,mas)=>n+' '+(n===1?'cadence':'cadences')+' : '+l+(mas?' et '+mas+' de plus':'')+'.',tonica:p=>'. '+p+' % de la pièce sur la tonique.',
+    est:(n,l,mas)=>(n===1?'Une progression : ':n+' progressions : ')+l+(mas?' ; et '+mas+' de plus':'')+'.'},
+  vinfoC:(cif,c)=>'canon à 2 voix · '+cif+' · '+c+' mesures',
+  leyC:['guide','suit : la même musique, plus tard','suit en miroir','libre','le thème entre','de chaque point du guide à sa copie','tonalité principale','dominante','relatif','autre tonalité','▾ cadence','progression','progression par modèle'],
+  maqTC:'Les parties de ce canon, en mesures (m.)',chipC:n=>n+' m.',ariaTC:'Carte résumée du canon',
+  filaC:(c,e)=>(c?' · les rôles changent à la m. '+c:'')+' · copie exacte '+e+' %',
+  R:{h:(n,k)=>n+' voix · '+k+' '+(k===1?'fugue':'fugues'),orden:'Ordre d’entrée',resp:'Réponse',cs:'Contre-sujet',ents:'Entrées par fugue',ton:'Sur la tonique',suena:'Le thème sonne',epis:'Épisodes',largo:'Longueur',
+    sinCs:'sans contre-sujet',conCs:t=>'contre-sujet '+t,deA:(a,b,m)=>'de '+a+' à '+b+' · typique, '+m,deAp:(a,b,m)=>'de '+a+' % à '+b+' % des entrées · typique, '+m+' %',deApz:(a,b,m)=>'de '+a+' % à '+b+' % de la pièce · typique, '+m+' %',deAt:(a,b,m)=>'de '+a+' à '+b+' thèmes · typique, '+m},
+  fila:(r,e,pt,cs,t)=>' · rép. '+r+' · '+e+' entrées · tonique '+pt+' % · '+cs+' · '+t+' thèmes',sinCsC:'sans cs',csC:t=>'cs '+t,dudC:'(incertaine)',
+  sinf:'Sinfonias',inven:'Inventions',canones:'Canons',vocesG:n=>n+' voix',leyCmp:['thème sur la tonique','sur la dominante','sur un autre degré','renversé','épisode','Chaque bande est la pièce entière, de sa première mesure à la dernière.'],
+  cmpV:'Les fugues, l’une sous l’autre',todas:'toutes',toca:'Touchez une pièce pour ouvrir sa carte.',sinDatos:'Je ne trouve pas les données (rollo-fugas/analisis-fugas-datos.js).',
+  pie:(nC,nI,nA,nK,fe)=>'Lecture de la machine sur la banque du rouleau ('+nC+' fugues du Clavier bien tempéré'+(nI?', '+nI+' sinfonias et inventions':'')+(nA?', '+nA+' fugues de L’Art de la fugue':'')+(nK?' et ses '+nK+' canons':'')+fe+'). Ce n’est pas une analyse de manuel : ce qui est incertain est marqué et ce qui est mal lu se corrige. Les degrés suivent les règles du chiffrage de la maison : une nouvelle tonalité a besoin de sa cadence et de durer quatre mesures ; les chiffres plus clairs sont les incertains. Chaque mesure citée mène au rouleau.'};
+TXF.nl={title:'mm Fuga’s van Bach · kaarten en fiches',cab:'Fuga’s van Bach · kaarten en fiches · Music School Coach',hFicha:'Fiche',hSecs:'Wat elke sectie bevat',hLec:'De kaart lezen',
+  VOZ:{S:'Sopraan',A:'Alt',T:'Tenor',B:'Bas'},el:v=>'de '+TXF.nl.VOZ[v].toLowerCase(),enEl:v=>'in de '+TXF.nl.VOZ[v].toLowerCase(),
+  nota:['noot','noten'],compas:['maat','maten'],tema:['thema','thema’s'],
+  pieza:{canon:'canon',sinfonia:'sinfonia',invencion:'inventie',fuga:'fuga'},
+  tit:t=>t.replace('WTC','Das Wohltemperierte Klavier').replace('Arte de la fuga','Die Kunst der Fuge').replace('Sinfonía','Sinfonia').replace('Invención','Inventie').replace('inconclusa','onvoltooid'),
+  sec:n=>n==='Exposición'?'Expositie':n==='Entrada'?'Inzet':n==='Entradas'?'Inzetten':/^Episodio /.test(n)?n.replace('Episodio','Episode'):n==='El tema, invertido'?'Het thema, omgekeerd':n==='Vuelve el tema'?'Het thema keert terug':
+    n.replace(/^Cambio: guía el (\w+)$/,(m,v)=>'Wissel: de '+VOZN(v)+' leidt').replace(/^Guía el (\w+)$/,(m,v)=>'De '+VOZN(v)+' leidt'),
+  gn:g=>({tónica:'tonica',dominante:'dominant',supertónica:'supertonica',mediante:'mediant',relativa:'parallel',subdominante:'subdominant',subtónica:'subtonica',submediante:'submediant'}[g]||g),
+  resp:t=>({real:'reëel',tonal:'tonaal'}[t]||t),ped:g=>({tónica:'tonica',dominante:'dominant','otro grado':'een andere trap'}[g]||g),cs:t=>({fijo:'vast','a veces':'soms',libre:'vrij'}[t]||t),dir:d=>({baja:'daalt',sube:'stijgt'}[d]||d),paso:p=>({grados:'secunden',terceras:'tertsen',cuartas:'kwarten'}[p]||p),
+  inv:'omgekeerd',fo:{dir:'recht',aum:'vergroot (×2)',dis:'verkleind (×½)',str:'in stretto',aj:'met tonale aanpassing'},
+  OTRA:{cs:'contrasubject',tema:'heeft ook het thema',espera:'is nog niet ingezet',calla:'zwijgt',libre:'vrij contrapunt'},
+  FUENTE:{cabeza:'uit de kop van het thema',centro:'uit het midden van het thema',cola:'uit de staart van het thema',cs:'uit het contrasubject'},
+  ab:{expo:'Expo',coda:'Coda',epi:'E',str:'Str',ent:'Inz'},canAb:n=>n==='El tema, invertido'?'Omgekeerd':n==='Vuelve el tema'?'Thema':n.replace(/^(Cambio: g|G)uía el (\w+)$/,(m,a,v)=>'Leidt: '+VOZN(v)),
+  leyF:['thema op de tonica','op de dominant','op een andere trap','omgekeerd','contrasubject','alleen de kop van het thema','orgelpunt','de stem klinkt','hoofdtoonsoort','dominant','parallel','andere toonsoort','▾ cadens','progressie: in kwinten (5e), in tertsen (3e), in secunden (2e)','progressie volgens model (mod)'],
+  ariaF:'Kaart van de fuga: waar het thema in elke stem inzet',ariaSuj:'De vorm van het thema: de hoogte van elke noot in de tijd',csAb:'cs',pedT:(g,v)=>'Orgelpunt op '+(g==='een andere trap'?g:'de '+g)+' · '+TXF.nl.VOZ[v],
+  F:{tema:'Thema',suj:'Thema',entran:'Volgorde',resp:'Antwoord',cs:'Contrasubject',ents:'Inzetten',suena:'Het thema klinkt',epis:'Episodes',largo:'Lengte',tons:'Toonsoorten',cads:'Cadensen',progs:'Progressies',cierre:'Slot',
+    empieza:g=>' · begint op trap '+g,respV:(t,g)=>t+', op '+g,
+    csT:(t,v,d)=>t==='fijo'?'vast: komt terug bij '+v+' van de '+d+' volgende inzetten':t==='a veces'?'soms: komt terug bij '+v+' van de '+d+' volgende inzetten':'geen: telkens vrij contrapunt',
+    entsV:r=>'<b>'+r.ent+'</b> · op de tonica '+r.I+' ('+r.pI+' %) · dominant '+r.V+' · andere trappen '+r.otra+(r.inv?' · omgekeerd '+r.inv:'')+(r.aum?' · vergroot of verkleind '+r.aum:'')+(r.stretti?' · in stretto '+r.stretti:''),
+    suenaV:p=>p+' % van het stuk',episV:(n,m,mt)=>n?n+' · gewone lengte '+mt+' '+(m===1?'thema':'thema’s'):'geen',largoV:(c,t)=>c+' maten = '+t+' thema’s',enPrinc:p=>' · '+p+' % van het stuk in de hoofdtoonsoort',
+    ultima:(tr,v,g)=>'laatste inzet in '+tr+', '+TXF.nl.VOZ[v]+', '+g,pedal:(g,v,tr)=>' · orgelpunt op '+(g==='een andere trap'?g:'de '+g)+' in de '+TXF.nl.VOZ[v].toLowerCase()+' ('+tr+')'},
+  S:{temas:(t,n)=>t+' '+(n===1?'thema':'thema’s'),sinEnt:'Geen volledige inzetten.',invP:' (omgekeerd)',pct:p=>' ('+p+' % van de noten)',sale:l=>'Het komt '+l,y:' en ',libre:'Vrij materiaal: ik herken er geen stukken van het thema of het contrasubject in',
+    secu:(v,dir,paso,mf,m,n)=>'Sequens in de '+TXF.nl.VOZ[v].toLowerCase()+': '+dir+' in '+paso+' · model van '+mf+' '+(m<=1.12?'maat':'maten')+', '+n+' keer.',sinSecu:'Geen sequens herkend.',
+    voces:n=>n+' '+(n===1?'stem klinkt':'stemmen klinken'),pedal:(g,v)=>'Orgelpunt op '+(g==='een andere trap'?g:'de '+g)+' in de '+TXF.nl.VOZ[v].toLowerCase()+'.'},
+  Lb:{forma:'Vorm',tema:'Het thema',suj:'Het thema',ton:'Tonaal verloop',est:'Om te bestuderen',cierre:'Slot',regla:'De regel'},
+  nTxt:n=>['nul','een','twee','drie','vier','vijf','zes','zeven','acht','negen','tien'][n]||String(n),
+  secCount:(k,n)=>{ const nom={episodio:['een episode','episodes'],stretto:['een stretto','stretto’s'],entrada:['een sectie met inzetten','secties met inzetten'],coda:['een coda','coda’s']}; return n===1?nom[k][0]:TXF.nl.nTxt(n)+' '+nom[k][1]; },
+  forma1:o=>{ const P=o.P[0].toUpperCase()+o.P.slice(1); return P+' van '+o.comp+' maten ('+o.temas+' themalengtes), voor '+o.voces+' stemmen, in '+o.cifra+'. Het thema klinkt '+o.cubre+' % van de tijd'+(o.cubre>=75?': bijna alles is thema':o.cubre<45?': er is veel materiaal tussen de inzetten':'')+'. '; },
+  forma2:(ex,l)=>(ex?'Na de expositie ':'Het stuk ')+(l?(ex?'volgen ':'heeft ')+l:(ex?'volgen geen secties meer':'heeft geen andere secties'))+'. ',
+  epis:o=>'De episodes zijn '+(o.med<1?'kort':o.med>2?'lang':'middellang')+' (gewone lengte '+o.medT+' thema’s)'+(o.deTema?'; '+(o.deTema===o.n?'ze komen allemaal':o.deTema+' van de '+o.n+' komen')+' uit stukken van het thema of het contrasubject':'; hun materiaal is vrij')+(o.conSec?', en '+(o.conSec===1?'één is':o.conSec+' zijn')+' als sequens gebouwd':'')+'. ',
+  te1:(n,cf,c,g)=>n+' '+(n===1?'noot':'noten')+' in '+cf+' '+(c<=1.12?'maat':'maten')+'; het begint op trap '+g+'. ',
+  te2:(v,ord)=>'Het zet eerst in in de '+TXF.nl.VOZ[v].toLowerCase()+(ord?' (volgorde van inzet: '+ord+')':'')+'. ',te3:(t,g)=>'Het antwoord is '+t+', op '+g+'. ',
+  te4:r=>'In het hele stuk zet het '+r.ent+' keer in: '+r.lista+(r.inv?'; '+r.inv+' omgekeerd':'')+(r.aum?'; '+r.aum+' vergroot of verkleind':'')+(r.stretti?'; '+r.stretti+' daarvan in stretto':'')+'. ',
+  te4l:(I,V,o)=>[I+' op de tonica',V+' op de dominant',o+' op andere trappen'],
+  te5:(t,v,d)=>t==='fijo'?'Er is een vast contrasubject: het komt terug bij '+v+' van de '+d+' volgende inzetten.':t==='a veces'?'Het contrasubject komt soms terug ('+v+' van de '+d+' volgende inzetten).':'Er is geen vast contrasubject: het contrapunt is telkens vrij.',
+  toTodo:'Het hele stuk blijft in ',toCasa:p=>p+' % van het stuk staat in de hoofdtoonsoort. ',toSin:'Geen bevestigde modulatie: de uitstapjes naar andere trappen duren niet lang genoeg of hebben geen cadens. ',
+  toCads:(n,l,mas)=>(n===1?'Eén cadens: ':n+' cadensen: ')+l+(mas?' en nog '+mas+' (▾ op de kaart)':'')+'.',
+  est:(n,l,mas)=>(n===1?'Eén progressie: ':n+' progressies: ')+l+(mas?'; en nog '+mas+', in de secties':'')+'.',estI:(pr,c,cf,h,d)=>'de '+pr+' in '+c+' ('+cf+')'+h+(d?' <span class="dudosa">(onzeker)</span>':''),
+  ci1:(inv,c,v,g,fs)=>'De laatste inzet van het thema is in '+c+', in de '+TXF.nl.VOZ[v].toLowerCase()+', op '+g+(fs?', '+fs:'')+'. ',ci2:(g,v,tr)=>'Daaronder een orgelpunt op '+(g==='een andere trap'?g:'de '+g)+' in de '+TXF.nl.VOZ[v].toLowerCase()+' ('+tr+'). ',
+  ci3:(tr,suj)=>tr?'De coda ('+tr+') sluit af'+(suj?' met materiaal uit het thema':' met vrij materiaal')+'.':'Er is geen coda: het stuk eindigt met de laatste sectie.',
+  maqT:(p,cf,c)=>'De opbouw van deze '+p+', in themalengtes (t) · 1 thema = '+cf+' '+(c<=1.12?'maat':'maten'),
+  vinfo:(v,cif,c)=>v+' stemmen · '+cif+' · '+c+' maten',
+  regNom:r=>({t:'tonica',d:'dominant'}[r.tipo]||({I:'grote tonica',i:'kleine tonica',III:'parallel groot',iv:'subdominant',IV:'subdominant',VI:'zesde trap',VII:'zevende trap',ii:'tweede trap',vi:'parallel klein'}[r.g]||'ander gebied')),
+  intervalo:k=>{ const a=Math.abs(k), N=['unisono','secunde','terts','kwart','kwint','sext','septiem','octaaf','none','decime','undecime','duodecime']; if(!a) return 'in unisono';
+    const t=a<N.length?'een '+N[a]:a%7===0?(a/7===2?'twee':String(a/7))+' octaven':(a<14?'een octaaf':'twee octaven')+' en een '+N[a%7]; return t+(k>0?' hoger':' lager'); },
+  corto:k=>(Math.abs(k)+1)+'e '+(k>0?'↑':'↓'),
+  regla:(s,g,cf,c,esp,iv,r2,iv0)=>'De '+TXF.nl.VOZ[s].toLowerCase()+' herhaalt de '+TXF.nl.VOZ[g].toLowerCase()+' '+cf+' '+(c===1?'maat':'maten')+' later, '+(esp?'in spiegelbeeld':iv)+(r2?', twee keer zo langzaam':'')+(esp?' (begint '+iv0+')':''),
+  ariaC:'Kaart van de canon: welke stem leidt, welke volgt en met welke regel',guia:'leidt',sigue:'volgt',espejo:' · spiegel',guiaV:v=>TXF.nl.VOZ[v]+' leidt',sigueV:v=>TXF.nl.VOZ[v]+' volgt',libreV:v=>TXF.nl.VOZ[v]+' vrij',
+  entraT:(c,v,inv,r2)=>'Het thema zet in · m. '+c+' · '+TXF.nl.VOZ[v]+(inv?' · omgekeerd':'')+(r2?' · twee keer zo langzaam':''),ariaTema:'De vorm van het thema van de canon: de hoogte van elke noot in de tijd',
+  entTxt:(c,v,inv,r2)=>'m. '+c+' '+TXF.nl.VOZ[v].toLowerCase()+(inv||r2?' ('+[inv?'omgekeerd':'',r2?'×2':''].filter(Boolean).join(', ')+')':''),
+  FC:{tema:'Thema',regla:'Regel',cambio:'Wissel van rollen',copia:'Exacte kopie',entra:'Het thema zet in',regs:'Gebieden',
+    temaV:(n,cf,c,v)=>n+' '+(n===1?'noot':'noten')+' · '+cf+' '+(c<=1.12?'maat':'maten')+' · eerst gezongen door de '+TXF.nl.VOZ[v].toLowerCase(),
+    cambioI:(c,v,r)=>'m. '+c+': de '+TXF.nl.VOZ[v].toLowerCase()+' leidt. '+r,noCambio:v=>'geen: de '+(v?TXF.nl.VOZ[v].toLowerCase():'—')+' leidt tot het einde',
+    copiaV:(e,c)=>'<b>'+e+' %</b> van de noten van de volgende stem · de canon beslaat '+c+' % van het stuk',regsV:(t,p)=>t+' · '+p+' % van het stuk op de tonica',largoV:(c,tr)=>c+' maten'+(tr?' · coda in '+tr:' · zonder coda')},
+  SC:{guia:'Leidt: ',sigue:'Volgt: ',libreEn:(v,tr)=>TXF.nl.VOZ[v]+' vrij in '+tr,acomp:': begeleidt de kopie, wordt niet geïmiteerd.',yaNo:'Geen exacte kopie meer: beide stemmen sluiten vrij af.',entra:'Het thema zet in: ',regs:'Gebieden: '},
+  LC:{forma:(c,cif,n,cf,cc,v,can,tr)=>'Canon voor 2 stemmen van '+c+' maten, in '+cif+'. Het thema ('+n+' '+(n===1?'noot':'noten')+', '+cf+' '+(cc<=1.12?'maat':'maten')+') wordt eerst gezongen door de '+TXF.nl.VOZ[v].toLowerCase()+'. De canon beslaat '+can+' % van het stuk'+(tr?', en de coda ('+tr+') sluit vrij af':', zonder coda')+'.',
+    copia:e=>'. De volgende stem kopieert '+e+' % van de noten exact. ',cambian:l=>'De rollen wisselen: '+l+'.',cambI:(c,v)=>'in m. '+c+' leidt de '+TXF.nl.VOZ[v].toLowerCase(),hasta:v=>'De '+TXF.nl.VOZ[v].toLowerCase()+' leidt tot het einde.',
+    entra:(n,l)=>(n===1?'Het zet één keer in: ':'Het zet '+n+' keer in: ')+l+'.',cads:(n,l,mas)=>n+' '+(n===1?'cadens':'cadensen')+': '+l+(mas?' en nog '+mas:'')+'.',tonica:p=>'. '+p+' % van het stuk op de tonica.',
+    est:(n,l,mas)=>(n===1?'Eén progressie: ':n+' progressies: ')+l+(mas?'; en nog '+mas:'')+'.'},
+  vinfoC:(cif,c)=>'canon voor 2 stemmen · '+cif+' · '+c+' maten',
+  leyC:['leidt','volgt: dezelfde muziek, later','volgt in spiegelbeeld','vrij','het thema zet in','van elk punt van de leider naar zijn kopie','hoofdtoonsoort','dominant','parallel','andere toonsoort','▾ cadens','progressie','progressie volgens model'],
+  maqTC:'De delen van deze canon, in maten (m.)',chipC:n=>n+' m.',ariaTC:'Beknopte kaart van de canon',
+  filaC:(c,e)=>(c?' · de rollen wisselen in m. '+c:'')+' · exacte kopie '+e+' %',
+  R:{h:(n,k)=>n+' stemmen · '+k+' '+(k===1?'fuga':'fuga’s'),orden:'Volgorde van inzet',resp:'Antwoord',cs:'Contrasubject',ents:'Inzetten per fuga',ton:'Op de tonica',suena:'Het thema klinkt',epis:'Episodes',largo:'Lengte',
+    sinCs:'zonder contrasubject',conCs:t=>t+' contrasubject',deA:(a,b,m)=>'van '+a+' tot '+b+' · gewoonlijk '+m,deAp:(a,b,m)=>'van '+a+' % tot '+b+' % van de inzetten · gewoonlijk '+m+' %',deApz:(a,b,m)=>'van '+a+' % tot '+b+' % van het stuk · gewoonlijk '+m+' %',deAt:(a,b,m)=>'van '+a+' tot '+b+' thema’s · gewoonlijk '+m},
+  fila:(r,e,pt,cs,t)=>' · antw. '+r+' · '+e+' inzetten · tonica '+pt+' % · '+cs+' · '+t+' thema’s',sinCsC:'zonder cs',csC:t=>'cs '+t,dudC:'(onzeker)',
+  sinf:'Sinfonia’s',inven:'Inventies',canones:'Canons',vocesG:n=>n+' stemmen',leyCmp:['thema op de tonica','op de dominant','op een andere trap','omgekeerd','episode','Elke strook is het hele stuk, van de eerste tot de laatste maat.'],
+  cmpV:'De fuga’s, onder elkaar',todas:'alle',toca:'Tik op een stuk om de kaart te openen.',sinDatos:'Ik vind de gegevens niet (rollo-fugas/analisis-fugas-datos.js).',
+  pie:(nC,nI,nA,nK,fe)=>'Lezing door de machine van de bank van de rol ('+nC+' fuga’s uit Das Wohltemperierte Klavier'+(nI?', '+nI+' sinfonia’s en inventies':'')+(nA?', '+nA+' fuga’s uit Die Kunst der Fuge':'')+(nK?' en de '+nK+' canons':'')+fe+'). Het is geen analyse uit een handboek: wat onzeker is, wordt gemarkeerd en wat verkeerd gelezen is, wordt verbeterd. De trappen volgen de regels van de becijfering van het huis: een nieuwe toonsoort heeft haar cadens nodig en moet vier maten duren; de lichtere cijfers zijn de onzekere. Elke genoemde maat leidt naar de rol.'};
+TXF.de={title:'mm Bach-Fugen · Karten und Steckbriefe',cab:'Bach-Fugen · Karten und Steckbriefe · Music School Coach',hFicha:'Steckbrief',hSecs:'Was jeder Abschnitt enthält',hLec:'Die Karte lesen',
+  VOZ:{S:'Sopran',A:'Alt',T:'Tenor',B:'Bass'},el:v=>'der '+TXF.de.VOZ[v],enEl:v=>'im '+TXF.de.VOZ[v],
+  nota:['Ton','Töne'],compas:['Takt','Takte'],tema:['Thema','Themen'],
+  pieza:{canon:'Kanon',sinfonia:'Sinfonia',invencion:'Invention',fuga:'Fuge'},
+  tit:t=>t.replace('WTC','Das Wohltemperierte Klavier').replace('Arte de la fuga','Die Kunst der Fuge').replace(/· Fuga /,'· Fuge ').replace('Sinfonía','Sinfonia').replace('Invención','Invention').replace('inconclusa','unvollendet'),
+  sec:n=>n==='Exposición'?'Exposition':n==='Entrada'?'Einsatz':n==='Entradas'?'Einsätze':/^Episodio /.test(n)?n.replace('Episodio','Zwischenspiel'):n==='Stretto'?'Engführung':n==='El tema, invertido'?'Das Thema, umgekehrt':n==='Vuelve el tema'?'Das Thema kehrt zurück':
+    n.replace(/^Cambio: guía el (\w+)$/,(m,v)=>'Wechsel: der '+VOZN(v,1)+' führt').replace(/^Guía el (\w+)$/,(m,v)=>'Der '+VOZN(v,1)+' führt'),
+  gn:g=>({tónica:'Tonika',dominante:'Dominante',supertónica:'Supertonika',mediante:'Mediante',relativa:'Parallele',subdominante:'Subdominante',subtónica:'Subtonika',submediante:'Submediante'}[g]||g),
+  resp:t=>t,ped:g=>({tónica:'Tonika',dominante:'Dominante','otro grado':'einer anderen Stufe'}[g]||g),cs:t=>({fijo:'fest','a veces':'manchmal',libre:'frei'}[t]||t),dir:d=>({baja:'fällt',sube:'steigt'}[d]||d),paso:p=>({grados:'Sekunden',terceras:'Terzen',cuartas:'Quarten'}[p]||p),
+  inv:'umgekehrt',fo:{dir:'gerade',aum:'vergrößert (×2)',dis:'verkleinert (×½)',str:'in Engführung',aj:'mit tonaler Anpassung'},
+  OTRA:{cs:'Kontrasubjekt',tema:'hat auch das Thema',espera:'hat noch nicht eingesetzt',calla:'pausiert',libre:'freier Kontrapunkt'},
+  FUENTE:{cabeza:'aus dem Kopf des Themas',centro:'aus der Mitte des Themas',cola:'aus dem Schluss des Themas',cs:'aus dem Kontrasubjekt'},
+  ab:{expo:'Expo',coda:'Coda',epi:'Z',str:'Eng',ent:'Ein'},canAb:n=>n==='El tema, invertido'?'Umgekehrt':n==='Vuelve el tema'?'Thema':n.replace(/^(Cambio: g|G)uía el (\w+)$/,(m,a,v)=>'Führt: '+VOZN(v,1)),
+  leyF:['Thema auf der Tonika','auf der Dominante','auf einer anderen Stufe','umgekehrt','Kontrasubjekt','nur der Themenkopf','Orgelpunkt','die Stimme klingt','Haupttonart','Dominante','Parallele','andere Tonart','▾ Kadenz','Progression: in Quinten (5.), in Terzen (3.), in Sekunden (2.)','Progression nach Modell (mod)'],
+  ariaF:'Karte der Fuge: wo das Thema in jeder Stimme einsetzt',ariaSuj:'Die Gestalt des Themas: die Höhe jedes Tons in der Zeit',csAb:'KS',pedT:(g,v)=>'Orgelpunkt auf '+(g==='einer anderen Stufe'?g:'der '+g)+' · '+TXF.de.VOZ[v],
+  F:{tema:'Thema',suj:'Thema',entran:'Reihenfolge',resp:'Antwort',cs:'Kontrasubjekt',ents:'Einsätze',suena:'Das Thema klingt',epis:'Zwischenspiele',largo:'Länge',tons:'Tonarten',cads:'Kadenzen',progs:'Progressionen',cierre:'Schluss',
+    empieza:g=>' · beginnt auf Stufe '+g,respV:(t,g)=>t+', auf '+g,
+    csT:(t,v,d)=>t==='fijo'?'fest: kehrt bei '+v+' der '+d+' folgenden Einsätze wieder':t==='a veces'?'manchmal: kehrt bei '+v+' der '+d+' folgenden Einsätze wieder':'keines: jedes Mal freier Kontrapunkt',
+    entsV:r=>'<b>'+r.ent+'</b> · auf der Tonika '+r.I+' ('+r.pI+' %) · Dominante '+r.V+' · andere Stufen '+r.otra+(r.inv?' · umgekehrt '+r.inv:'')+(r.aum?' · vergrößert oder verkleinert '+r.aum:'')+(r.stretti?' · in Engführung '+r.stretti:''),
+    suenaV:p=>p+' % des Stücks',episV:(n,m,mt)=>n?n+' · übliche Länge '+mt+' '+(m===1?'Thema':'Themen'):'keine',largoV:(c,t)=>c+' Takte = '+t+' Themen',enPrinc:p=>' · '+p+' % des Stücks in der Haupttonart',
+    ultima:(tr,v,g)=>'letzter Einsatz in '+tr+', '+TXF.de.VOZ[v]+', '+g,pedal:(g,v,tr)=>' · Orgelpunkt auf '+(g==='einer anderen Stufe'?g:'der '+g)+' im '+TXF.de.VOZ[v]+' ('+tr+')'},
+  S:{temas:(t,n)=>t+' '+(n===1?'Thema':'Themen'),sinEnt:'Keine vollständigen Einsätze.',invP:' (umgekehrt)',pct:p=>' ('+p+' % der Töne)',sale:l=>'Es stammt '+l,y:' und ',libre:'Freies Material: ich erkenne darin keine Stücke des Themas oder des Kontrasubjekts',
+    secu:(v,dir,paso,mf,m,n)=>'Sequenz im '+TXF.de.VOZ[v]+': '+dir+' in '+paso+' · Modell von '+mf+' '+(m<=1.12?'Takt':'Takten')+', '+n+'-mal.',sinSecu:'Keine Sequenz erkannt.',
+    voces:n=>n+' '+(n===1?'Stimme klingt':'Stimmen klingen'),pedal:(g,v)=>'Orgelpunkt auf '+(g==='einer anderen Stufe'?g:'der '+g)+' im '+TXF.de.VOZ[v]+'.'},
+  Lb:{forma:'Form',tema:'Das Thema',suj:'Das Thema',ton:'Tonartenverlauf',est:'Zum Studieren',cierre:'Schluss',regla:'Die Regel'},
+  nTxt:n=>['null','eine','zwei','drei','vier','fünf','sechs','sieben','acht','neun','zehn'][n]||String(n),
+  secCount:(k,n)=>{ const nom={episodio:['ein Zwischenspiel','Zwischenspiele'],stretto:['eine Engführung','Engführungen'],entrada:['ein Abschnitt mit Einsätzen','Abschnitte mit Einsätzen'],coda:['eine Coda','Codas']}; return n===1?nom[k][0]:TXF.de.nTxt(n)+' '+nom[k][1]; },
+  forma1:o=>{ const P=o.P[0].toUpperCase()+o.P.slice(1); return P+' mit '+o.comp+' Takten ('+o.temas+' Themenlängen), '+o.voces+'-stimmig, im '+o.cifra+'-Takt. Das Thema klingt '+o.cubre+' % der Zeit'+(o.cubre>=75?': fast alles ist Thema':o.cubre<45?': zwischen den Einsätzen gibt es viel Material':'')+'. '; },
+  forma2:(ex,l)=>(ex?'Nach der Exposition ':'Das Stück ')+(l?(ex?'folgen ':'hat ')+l:(ex?'folgen keine weiteren Abschnitte':'hat keine weiteren Abschnitte'))+'. ',
+  epis:o=>'Die Zwischenspiele sind '+(o.med<1?'kurz':o.med>2?'lang':'mittellang')+' (übliche Länge '+o.medT+' Themen)'+(o.deTema?'; '+(o.deTema===o.n?'alle':o.deTema+' von '+o.n)+' stammen aus Stücken des Themas oder des Kontrasubjekts':'; ihr Material ist frei')+(o.conSec?', und '+(o.conSec===1?'eines ist':o.conSec+' sind')+' als Sequenz gebaut':'')+'. ',
+  te1:(n,cf,c,g)=>n+' '+(n===1?'Ton':'Töne')+' in '+cf+' '+(c<=1.12?'Takt':'Takten')+'; es beginnt auf Stufe '+g+'. ',
+  te2:(v,ord)=>'Es setzt zuerst im '+TXF.de.VOZ[v]+' ein'+(ord?' (Reihenfolge der Einsätze: '+ord+')':'')+'. ',te3:(t,g)=>'Die Antwort ist '+t+', auf '+g+'. ',
+  te4:r=>'Im ganzen Stück setzt es '+r.ent+'-mal ein: '+r.lista+(r.inv?'; '+r.inv+' umgekehrt':'')+(r.aum?'; '+r.aum+' vergrößert oder verkleinert':'')+(r.stretti?'; '+r.stretti+' davon in Engführung':'')+'. ',
+  te4l:(I,V,o)=>[I+' auf der Tonika',V+' auf der Dominante',o+' auf anderen Stufen'],
+  te5:(t,v,d)=>t==='fijo'?'Es gibt ein festes Kontrasubjekt: es kehrt bei '+v+' der '+d+' folgenden Einsätze wieder.':t==='a veces'?'Das Kontrasubjekt kehrt manchmal wieder ('+v+' der '+d+' folgenden Einsätze).':'Es gibt kein festes Kontrasubjekt: der Kontrapunkt ist jedes Mal frei.',
+  toTodo:'Das ganze Stück bleibt in ',toCasa:p=>p+' % des Stücks stehen in der Haupttonart. ',toSin:'Keine bestätigte Modulation: die Ausflüge zu anderen Stufen dauern nicht lang genug oder haben keine Kadenz. ',
+  toCads:(n,l,mas)=>(n===1?'Eine Kadenz: ':n+' Kadenzen: ')+l+(mas?' und '+mas+' weitere (▾ in der Karte)':'')+'.',
+  est:(n,l,mas)=>(n===1?'Eine Progression: ':n+' Progressionen: ')+l+(mas?'; und '+mas+' weitere, in den Abschnitten':'')+'.',estI:(pr,c,cf,h,d)=>'die '+pr+' in '+c+' ('+cf+')'+h+(d?' <span class="dudosa">(unsicher)</span>':''),
+  ci1:(inv,c,v,g,fs)=>'Der letzte Einsatz des Themas steht in '+c+', im '+TXF.de.VOZ[v]+', auf '+g+(fs?', '+fs:'')+'. ',ci2:(g,v,tr)=>'Darunter ein Orgelpunkt auf '+(g==='einer anderen Stufe'?g:'der '+g)+' im '+TXF.de.VOZ[v]+' ('+tr+'). ',
+  ci3:(tr,suj)=>tr?'Die Coda ('+tr+') schließt'+(suj?' mit Material aus dem Thema':' mit freiem Material')+'.':'Es gibt keine Coda: das Stück endet mit dem letzten Abschnitt.',
+  maqT:(p,cf,c)=>'Der Aufbau '+(p==='Kanon'?'dieses Kanons':'dieser '+p)+', in Themenlängen (t) · 1 Thema = '+cf+' '+(c<=1.12?'Takt':'Takte'),
+  vinfo:(v,cif,c)=>v+' Stimmen · '+cif+' · '+c+' Takte',
+  regNom:r=>({t:'Tonika',d:'Dominante'}[r.tipo]||({I:'Dur-Tonika',i:'Moll-Tonika',III:'Dur-Parallele',iv:'Subdominante',IV:'Subdominante',VI:'sechste Stufe',VII:'siebte Stufe',ii:'zweite Stufe',vi:'Moll-Parallele'}[r.g]||'anderer Bereich')),
+  intervalo:k=>{ const a=Math.abs(k), N=['Prime','Sekunde','Terz','Quarte','Quinte','Sexte','Septime','Oktave','None','Dezime','Undezime','Duodezime']; if(!a) return 'im Einklang';
+    const t=a<N.length?'eine '+N[a]:a%7===0?(a/7===2?'zwei':String(a/7))+' Oktaven':(a<14?'eine Oktave':'zwei Oktaven')+' und eine '+N[a%7]; return t+(k>0?' höher':' tiefer'); },
+  corto:k=>(Math.abs(k)+1)+'. '+(k>0?'↑':'↓'),
+  regla:(s,g,cf,c,esp,iv,r2,iv0)=>'Der '+TXF.de.VOZ[s]+' wiederholt den '+TXF.de.VOZ[g]+' '+cf+' '+(c===1?'Takt':'Takte')+' später, '+(esp?'gespiegelt':iv)+(r2?', doppelt so langsam':'')+(esp?' (beginnt '+iv0+')':''),
+  ariaC:'Karte des Kanons: welche Stimme führt, welche folgt und nach welcher Regel',guia:'führt',sigue:'folgt',espejo:' · Spiegel',guiaV:v=>TXF.de.VOZ[v]+' führt',sigueV:v=>TXF.de.VOZ[v]+' folgt',libreV:v=>TXF.de.VOZ[v]+' frei',
+  entraT:(c,v,inv,r2)=>'Das Thema setzt ein · T. '+c+' · '+TXF.de.VOZ[v]+(inv?' · umgekehrt':'')+(r2?' · doppelt so langsam':''),ariaTema:'Die Gestalt des Kanonthemas: die Höhe jedes Tons in der Zeit',
+  entTxt:(c,v,inv,r2)=>'T. '+c+' '+TXF.de.VOZ[v]+(inv||r2?' ('+[inv?'umgekehrt':'',r2?'×2':''].filter(Boolean).join(', ')+')':''),
+  FC:{tema:'Thema',regla:'Regel',cambio:'Rollenwechsel',copia:'Genaue Kopie',entra:'Das Thema setzt ein',regs:'Bereiche',
+    temaV:(n,cf,c,v)=>n+' '+(n===1?'Ton':'Töne')+' · '+cf+' '+(c<=1.12?'Takt':'Takte')+' · zuerst gesungen vom '+TXF.de.VOZ[v],
+    cambioI:(c,v,r)=>'T. '+c+': der '+TXF.de.VOZ[v]+' führt. '+r,noCambio:v=>'keiner: der '+(v?TXF.de.VOZ[v]:'—')+' führt bis zum Ende',
+    copiaV:(e,c)=>'<b>'+e+' %</b> der Töne der folgenden Stimme · der Kanon nimmt '+c+' % des Stücks ein',regsV:(t,p)=>t+' · '+p+' % des Stücks auf der Tonika',largoV:(c,tr)=>c+' Takte'+(tr?' · Coda in '+tr:' · ohne Coda')},
+  SC:{guia:'Führt: ',sigue:'Folgt: ',libreEn:(v,tr)=>TXF.de.VOZ[v]+' frei in '+tr,acomp:': begleitet die Kopie, wird nicht imitiert.',yaNo:'Keine genaue Kopie mehr: beide Stimmen schließen frei.',entra:'Das Thema setzt ein: ',regs:'Bereiche: '},
+  LC:{forma:(c,cif,n,cf,cc,v,can,tr)=>'Kanon für 2 Stimmen mit '+c+' Takten, im '+cif+'-Takt. Das Thema ('+n+' '+(n===1?'Ton':'Töne')+', '+cf+' '+(cc<=1.12?'Takt':'Takte')+') singt zuerst der '+TXF.de.VOZ[v]+'. Der Kanon nimmt '+can+' % des Stücks ein'+(tr?', und die Coda ('+tr+') schließt frei':', ohne Coda')+'.',
+    copia:e=>'. Die folgende Stimme kopiert '+e+' % der Töne genau. ',cambian:l=>'Die Rollen wechseln: '+l+'.',cambI:(c,v)=>'in T. '+c+' führt der '+TXF.de.VOZ[v],hasta:v=>'Der '+TXF.de.VOZ[v]+' führt bis zum Ende.',
+    entra:(n,l)=>(n===1?'Es setzt einmal ein: ':'Es setzt '+n+'-mal ein: ')+l+'.',cads:(n,l,mas)=>n+' '+(n===1?'Kadenz':'Kadenzen')+': '+l+(mas?' und '+mas+' weitere':'')+'.',tonica:p=>'. '+p+' % des Stücks auf der Tonika.',
+    est:(n,l,mas)=>(n===1?'Eine Progression: ':n+' Progressionen: ')+l+(mas?'; und '+mas+' weitere':'')+'.'},
+  vinfoC:(cif,c)=>'Kanon für 2 Stimmen · '+cif+' · '+c+' Takte',
+  leyC:['führt','folgt: dieselbe Musik, später','folgt gespiegelt','frei','das Thema setzt ein','von jedem Punkt der führenden Stimme zu ihrer Kopie','Haupttonart','Dominante','Parallele','andere Tonart','▾ Kadenz','Progression','Progression nach Modell'],
+  maqTC:'Die Teile dieses Kanons, in Takten (T.)',chipC:n=>n+' T.',ariaTC:'Kurzkarte des Kanons',
+  filaC:(c,e)=>(c?' · Rollenwechsel in T. '+c:'')+' · genaue Kopie '+e+' %',
+  R:{h:(n,k)=>n+' Stimmen · '+k+' '+(k===1?'Fuge':'Fugen'),orden:'Reihenfolge der Einsätze',resp:'Antwort',cs:'Kontrasubjekt',ents:'Einsätze pro Fuge',ton:'Auf der Tonika',suena:'Das Thema klingt',epis:'Zwischenspiele',largo:'Länge',
+    sinCs:'ohne Kontrasubjekt',conCs:t=>'Kontrasubjekt '+t,deA:(a,b,m)=>'von '+a+' bis '+b+' · üblich '+m,deAp:(a,b,m)=>'von '+a+' % bis '+b+' % der Einsätze · üblich '+m+' %',deApz:(a,b,m)=>'von '+a+' % bis '+b+' % des Stücks · üblich '+m+' %',deAt:(a,b,m)=>'von '+a+' bis '+b+' Themen · üblich '+m},
+  fila:(r,e,pt,cs,t)=>' · Antw. '+r+' · '+e+' Einsätze · Tonika '+pt+' % · '+cs+' · '+t+' Themen',sinCsC:'ohne KS',csC:t=>'KS '+t,dudC:'(unsicher)',
+  sinf:'Sinfonien',inven:'Inventionen',canones:'Kanons',vocesG:n=>n+' Stimmen',leyCmp:['Thema auf der Tonika','auf der Dominante','auf einer anderen Stufe','umgekehrt','Zwischenspiel','Jeder Streifen ist das ganze Stück, vom ersten bis zum letzten Takt.'],
+  cmpV:'Die Fugen, untereinander',todas:'alle',toca:'Tippen Sie auf ein Stück, um seine Karte zu öffnen.',sinDatos:'Ich finde die Daten nicht (rollo-fugas/analisis-fugas-datos.js).',
+  pie:(nC,nI,nA,nK,fe)=>'Lesart der Maschine zur Bank der Rolle ('+nC+' Fugen aus dem Wohltemperierten Klavier'+(nI?', '+nI+' Sinfonien und Inventionen':'')+(nA?', '+nA+' Fugen aus der Kunst der Fuge':'')+(nK?' und ihre '+nK+' Kanons':'')+fe+'). Es ist keine Lehrbuchanalyse: Unsicheres ist markiert, und was falsch gelesen ist, wird korrigiert. Die Stufen folgen den Regeln der hauseigenen Bezifferung: eine neue Tonart braucht ihre Kadenz und muss vier Takte dauern; die helleren Ziffern sind die unsicheren. Jeder genannte Takt führt zur Rolle.'};
+const TF=TXF[LANG]||TXF.en;
+const cap1=x=>x.charAt(0).toUpperCase()+x.slice(1);
+// las voces de los datos («Guía el bajo») → la clave y el nombre del idioma
+const VOZK=w=>({soprano:'S',alto:'A',tenor:'T',bajo:'B'}[w]||'S'), VOZN=(w,may)=>{ const n=TF.VOZ[VOZK(w)]; return may?n:n.toLowerCase(); };
+const VOZ=TF.VOZ;
+// los textos fijos de la página, en su idioma (en español quedan como están en el HTML)
+document.title=TF.title; $('cabTxt').textContent=TF.cab; $('fichaT').textContent=TF.hFicha; $('secsT').textContent=TF.hSecs; $('lecT').textContent=TF.hLec;
+if(TF.leyF) [...$('ley').querySelectorAll('span')].forEach((sp,i)=>{ if(TF.leyF[i]!=null) sp.lastChild.textContent=TF.leyF[i]; });
+const COL={ton:'#2f6f62',dom:'#4f7fae',otro:'#b0613a',inv:'#7a6aa8',cs:'#aab4bf',ped:'#8a5a2b'};
+const SEC={expo:['#cfe5de','#1f5348'],ent:['#f1e2c3','#6b4a10'],epi:['#e7e5de','#55585e'],coda:['#d9d6cc','#44474d']};
+const state={i:0,voces:0,vista:'uno',sel:-1};
+const esCanon=f=>!!f&&f.tipo==='canon', LEY_FUGA=$('ley').innerHTML;
+// las sinfonías (a 3) y las invenciones (a 2), 049–078: se leen como las fugas; el tema puede empezar acompañado
+const esInv=f=>!!f&&(f.tipo==='sinfonia'||f.tipo==='invencion'), esFuga=f=>!!f&&!f.tipo;
+const pieza=f=>TF.pieza[esCanon(f)?'canon':f.tipo==='sinfonia'?'sinfonia':f.tipo==='invencion'?'invencion':'fuga'];
+// ── los grados (2026-11-23, Mario: «¿es posible una identificación de los cambios por grados de la escala?»): CIFRADO[num] = { h: el grado de la
+// tonalidad principal, c: cada compás [número, comienzo, cifras de sus tiempos, dudas], r: regiones, m: modulaciones confirmadas, k: cadencias }
+const CIF=window.CIFRADO||{}, cifDe=f=>CIF[f.num]||null;
+const bem=s=>s==='sola'?TC.solaT:String(s).replace(/b(?=[ivIV])/g,'♭').replace(/#/g,'♯');
+// la cifra entera (V65/V) se queda en el title; a la vista va el grado: V/V
+function gradoS(g){ if(!g||g==='sola'||g==='?') return g; g=g.split(' = ')[0]; const m=g.match(/^([b#]*)([ivIV]+)([oø+]?)(M7|7|65|43|42|64|6)?(\/.+)?$/); return m?bem(m[1]+m[2])+(m[3]==='o'||m[3]==='ø'?'°':m[3])+(m[5]?bem(m[5]):''):bem(g); }
+const REGC=(g,h)=>g===h?'#cfe5de':/^(V|v)$/.test(g)?'#d5e2f0':/^(vi|III)$/.test(g)?'#f1e2c3':'#ead9e6';
+// ── ir al rollo (Mario: «¿es posible tratar QUÉ CONTIENE CADA SECCIÓN como enlaces que te llevan directamente al sitio en cuestión en el rollo?»)
+const irL=(f,c,html)=>'<a class="ir" href="rollo.html?pieza='+f.num+'&c='+c+'" target="mm-rollo" data-n="'+f.num+'" data-c="'+c+'" title="Open this bar in the roll">'+html+'</a>';
+function tiraTonal(f,x,y){ const c=cifDe(f); if(!c) return ''; let s='<text x="4" y="'+(y+12)+'" font-size="10.5" fill="#6b6f78"><title>'+TC.tonTit+'</title>'+TC.tonLbl+'</text>';
+  c.r.forEach(r=>{ const r1=tonN(r[1]), a=x(r[2]), w=Math.max(2,x(r[3])-a-1), t=w>(r[0].length+r1.length)*6.3+18?r[0]+' · '+r1:w>r[0].length*7+6?r[0]:'';
+    s+='<rect x="'+a.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="16" rx="3" fill="'+REGC(r[0],c.h)+'"><title>'+esc(r[0]+' · '+r1+' · '+tramo(f,r[2],r[3]))+'</title></rect>';
+    if(t) s+='<text x="'+(a+w/2).toFixed(1)+'" y="'+(y+12)+'" text-anchor="middle" font-size="11" fill="#22252b" pointer-events="none">'+esc(t)+'</text>'; });
+  c.k.forEach(k=>{ const xx=x(k[2]); s+='<path d="M'+(xx-3.5).toFixed(1)+' '+(y-6)+'h7l-3.5 5z" fill="#22252b"><title>'+esc(TC.cadEn(k[1],k[0]))+'</title></path>'; });
+  return s; }
+function tonTxt(f){ const c=cifDe(f); return c?c.r.map(r=>'<b>'+esc(r[0])+'</b> '+esc(tonN(r[1]))+' ('+irL(f,r[4],tramo(f,r[2],r[3]))+')').join(' → ')+(c.d&&c.d.length?' <small style="color:#8a4b12">· '+TC.dud+': '+esc(c.d.map(maqN).join(' · '))+'</small>':''):''; }
+function cadTxt(f){ const c=cifDe(f); if(!c||!c.k.length) return ''; const N=24; return c.k.slice(0,N).map(k=>irL(f,k[0],TC.c+' '+k[0])+TC.en+esc(k[1])).join(' · ')+(c.k.length>N?TC.mas(c.k.length-N):''); }
+// ── las progresiones (2026-11-23, Mario: «¿podemos ver cómo se arman las progresiones y dónde están, para ponerlas en los map?»): CIFRADO[num].p =
+// [clase, de, a, compás, compás, paso, veces, cifras, acordes dudosos, cuándo empieza su último acorde]; «c» = cadena (la fundamental se mueve siempre igual), «m» = un modelo que se repite
+const PRC={c:'#22252b',m:'#8a4b12'}, PASO_C=TC.PASO_C, PASO_AB=TC.PASO_AB, PASO_M=TC.PASO_M;
+const progK=p=>p[0]==='c'?PASO_C[p[5]]:TC.modelo;
+const progDe=f=>{ const c=cifDe(f); return c&&c.p?c.p:[]; }, progTit=p=>TC.prog(progK(p)), progN=p=>p[7].split(/–| \| /).length, progDud=p=>p[8]*2>=progN(p);
+const progArma=p=>p[0]==='c'?TC.arma(p[6],p[7].replace(/–/g,' – ')):TC.armaM(progN(p)/p[6],PASO_M[p[5]],p[6],p[7].replace(/–/g,' – '));
+// a dónde lleva: la cadencia con que termina y, si ahí entra el tema (entero o su cabeza), quién lo canta
+const VZ=v=>LANG==='es'?VOZ[v]:TF.enEl(v);
+function progHacia(f,p,inl){ const c=cifDe(f), ks=c.k.filter(k=>k[2]>=p[9]-1e-6&&k[2]<=p[2]+1e-6), k=ks[0], t=k?k[2]:p[2];   // la cadencia cuenta si cae en su último acorde o en el que sigue
+  const cerca=e=>e.t>=t-f.BL/2-1e-6&&e.t<=t+f.BL/2+1e-6, en=(f.ent||[]).find(cerca), ca=en?null:(f.cab||[]).find(cerca), e=en||ca;
+  return TC.hacia(k?{g:k[1],c:k[0]}:null,e?{cab:!!ca,v:e.v,c:compasDe(f,e.t)}:null,inl,VZ); }
+// la fila «prog» del mapa: dientes para la cadena, escalones (que suben o bajan) para el modelo; cada marca lleva a su compás en el rollo
+function tiraProg(f,x,y){ const ps=progDe(f); if(!ps.length) return ''; let s='<text x="4" y="'+(y+9)+'" font-size="10.5" fill="#6b6f78"><title>'+TC.progTit+'</title>'+TC.progLbl+'</text>';
+  ps.forEach(p=>{ const a=x(p[1]), w=Math.max(8,x(p[2])-a-1); let d;
+    if(p[0]==='c'){ const n=Math.max(2,Math.round(w/7)), q=w/n; d='M'+a.toFixed(1)+' '+(y+10); for(let i=0;i<n;i++) d+='l'+(q/2).toFixed(2)+' -8l'+(q/2).toFixed(2)+' 8'; }
+    else{ const n=p[6], q=w/n, sube=p[5]<=3, dy=8/Math.max(1,n-1); d='M'+a.toFixed(1)+' '+(sube?y+10:y+2); for(let i=0;i<n;i++) d+='h'+q.toFixed(2)+(i<n-1?'v'+(sube?-dy:dy).toFixed(2):''); }
+    s+='<a class="ir" href="rollo.html?pieza='+f.num+'&c='+p[3]+'" target="mm-rollo" data-n="'+f.num+'" data-c="'+p[3]+'"><title>'+esc(progTit(p)+' · '+tramo(f,p[1],p[2])+' · '+progArma(p)+progHacia(f,p)+(progDud(p)?' · '+TC.dud:''))+'</title><rect x="'+a.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="22" fill="transparent"/><path d="'+d+'" fill="none" stroke="'+PRC[p[0]]+'" stroke-width="1.6" stroke-linejoin="round"'+(progDud(p)?' opacity=".45"':'')+'/>'+(w>=20?'<text x="'+(a+w/2).toFixed(1)+'" y="'+(y+21)+'" text-anchor="middle" font-size="9.5" fill="'+PRC[p[0]]+'"'+(progDud(p)?' opacity=".55"':'')+'>'+(p[0]==='c'?PASO_AB[p[5]]:'mod')+'</text>':'')+'</a>'; });
+  return s; }
+function progHTML(f,c){ return progDe(f).filter(p=>p[1]>=c.t0-1e-6&&p[1]<c.t1-1e-6).map(p=>'<p><span class="pt" style="background:'+PRC[p[0]]+'"></span>'+irL(f,p[3],tramo(f,p[1],p[2]))+' · <b>'+esc(progTit(p))+'</b> · '+esc(progArma(p)+progHacia(f,p))+(progDud(p)?'<small>'+TC.dudProg+'</small>':'')+'</p>').join(''); }
+function progTxt(f){ const ps=progDe(f); if(!ps.length) return TC.ninguna; const m=new Map(); ps.forEach(p=>{ const k=progK(p); m.set(k,(m.get(k)||0)+1); });
+  return '<b>'+ps.length+'</b> · '+[...m.entries()].sort((a,b)=>b[1]-a[1]).map(x=>esc(x[0])+' '+x[1]).join(' · '); }
+const enCasa=f=>{ const c=cifDe(f); return c&&f.T?Math.round(100*c.r.filter(r=>r[0]===c.h).reduce((a,r)=>a+r[3]-r[2],0)/f.T):0; };
+// los cambios de armonía de una sección, compás por compás: sólo donde cambia el grado; lo dudoso, más claro; la voz sola, entre paréntesis
+function gradosHTML(f,c){ const cf=cifDe(f); if(!cf) return ''; const bs=cf.c.filter(b=>b[1]>=c.t0-1e-6&&b[1]<c.t1-1e-6); if(!bs.length) return '';
+  const rg=cf.r.filter(r=>r[2]<c.t1-1e-6&&r[3]>c.t0+1e-6).map(r=>r[0]+' ('+tonN(r[1])+')').join(' → '); let prev=null, h='<p class="gr"><small>'+TC.tonalidad+esc(rg)+'</small>';
+  bs.forEach(b=>{ const gs=b[2].split('|'), t=[]; gs.forEach((g,i)=>{ const x=gradoS(g), mo=g.includes(' = ')?bem(g.split(' = ')[1].split(':')[0]):''; if(!x||(x===prev&&!mo)) return; prev=x;
+      t.push('<span class="'+(x==='sola'?'so':b[3][i]==='1'?'du':'')+'" title="'+esc(bem(g))+'">'+esc(x==='sola'?TC.sola:x)+(mo?'<span class="mo">→ '+esc(mo)+'</span>':'')+'</span>'); });
+    if(t.length) h+='<span class="cg">'+irL(f,b[0],'<i>'+b[0]+'</i>')+t.join(' · ')+'</span>'; });
+  return h+'</p>'; }
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dec=(x,n)=>{ const k=Math.pow(10,n==null?1:n); return String(Math.round(x*k)/k).replace('.',TC.coma); };
+function frac(x){ const q=Math.round(x*4)/4, e=Math.floor(q), r=q-e, f=r===.25?'¼':r===.5?'½':r===.75?'¾':''; return (e||!f?String(e):'')+f; }
+const plural=(n,uno,varios)=>n+' '+(n===1?uno:varios), pl=(n,w)=>plural(n,w[0],w[1]);
+function compasDe(f,t){ let c=f.bars[0][1]; for(const b of f.bars){ if(b[0]<=t+1e-6) c=b[1]; else break; } return c; }
+const tramo=(f,a,b)=>{ const x=compasDe(f,a), y=compasDe(f,Math.max(a,b-0.01)); return x===y?TC.c+' '+x:TC.c+' '+x+'–'+y; };
+
+const esDom=e=>e.g==='V'||e.g==='v';
+const colorEnt=e=>e.inv?COL.inv:e.ton?COL.ton:esDom(e)?COL.dom:COL.otro;
+const gradoTxt=e=>e.inv?TF.inv:e.g+(e.gn?' ('+TF.gn(e.gn)+')':'');
+function formaTxt(e){ const a=[], o=TF.fo; if(!e.inv) a.push(o.dir); if(e.r===2) a.push(o.aum); if(e.r===0.5) a.push(o.dis); if(e.stretto) a.push(o.str); if(e.var&&!e.inv) a.push(o.aj); return a.join(' · '); }
+const OTRA=TF.OTRA;
+const FUENTE=TF.FUENTE;
+const mediana=a=>{ if(!a.length) return 0; const b=[...a].sort((x,y)=>x-y); return b[Math.floor(b.length/2)]; };
+const secN=n=>TF.sec(n);
+
+const lista=()=>state.voces?F.filter(f=>f.voces===state.voces):F;
+const actual=()=>F[state.i];
+
+function secDe(f,k){ return f.sec.findIndex(s=>(s.ent||[]).includes(k)); }
+function abrev(c){ const a=TF.ab; return c.tipo==='expo'?a.expo:c.tipo==='coda'?a.coda:c.tipo==='epi'?a.epi+c.nombre.replace(/\D/g,''):c.nombre==='Stretto'?a.str:a.ent; }
+
+/* ── el mapa: una fila por voz, el tiempo en compases; arriba, las secciones ── */
+function mapaSVG(f,W){
+  const L=30,R=8,x=t=>L+(t/f.T)*(W-L-R), rows=[...f.nom], RH=32, top=32, H=top+rows.length*RH+(cifDe(f)?(progDe(f).length?82:54):24), fila=v=>top+rows.indexOf(v)*RH+RH/2;
+  let s='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+TF.ariaF+'">';
+  s+='<defs><pattern id="ray" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="5" fill="rgba(255,255,255,.5)"/></pattern></defs>';
+  f.sec.forEach((c,k)=>{ const nm=secN(c.nombre), a=x(c.t0), w=Math.max(2,x(c.t1)-a-1), col=SEC[c.tipo], ab=abrev(c), txt=w>nm.length*6.7+10?nm:w>ab.length*6.7+6?ab:'';
+    s+='<g class="sc'+(c.tipo==='epi'||c.tipo==='coda'?' gris':'')+'" data-k="'+k+'"><title>'+esc(nm+' · '+tramo(f,c.t0,c.t1))+'</title>';
+    s+='<rect class="col" x="'+a.toFixed(1)+'" y="'+(top-3)+'" width="'+w.toFixed(1)+'" height="'+(rows.length*RH+4)+'" rx="3"/>';
+    s+='<rect x="'+a.toFixed(1)+'" y="2" width="'+w.toFixed(1)+'" height="22" rx="3" fill="'+col[0]+'"/>';
+    if(txt) s+='<text x="'+(a+w/2).toFixed(1)+'" y="17" text-anchor="middle" font-size="11.5" fill="'+col[1]+'">'+esc(txt)+'</text>';
+    s+='</g>'; });
+  rows.forEach(v=>{ const cy=fila(v);
+    s+='<text x="4" y="'+(cy+4)+'" font-size="12.5" fill="#6b6f78"><title>'+VOZ[v]+'</title>'+v+'</text>';
+    s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+cy+'" y2="'+cy+'" stroke="#eceae3" stroke-width="1" pointer-events="none"/>';
+    (f.son[v]||[]).forEach(p=>{ s+='<line x1="'+x(p[0]).toFixed(1)+'" x2="'+x(p[1]).toFixed(1)+'" y1="'+cy+'" y2="'+cy+'" stroke="#b9b5aa" stroke-width="3" stroke-linecap="round" pointer-events="none"/>'; }); });
+  f.ped.forEach(p=>{ const cy=fila(p.v); s+='<rect x="'+x(p.t0).toFixed(1)+'" y="'+(cy+10)+'" width="'+Math.max(2,x(p.t1)-x(p.t0)).toFixed(1)+'" height="4" rx="2" fill="'+COL.ped+'"><title>'+esc(TF.pedT(TF.ped(p.grado),p.v))+' · '+tramo(f,p.t0,p.t1)+'</title></rect>'; });
+  f.cab.forEach(c=>{ const cy=fila(c.v); s+='<rect x="'+x(c.t).toFixed(1)+'" y="'+(cy-5)+'" width="'+Math.max(2,x(c.t+c.d)-x(c.t)).toFixed(1)+'" height="10" rx="2" fill="'+COL.ton+'" opacity=".35" pointer-events="none"/>'; });
+  f.ent.forEach(e=>{ if(!e.cs) return; const cy=fila(e.cs), a=x(e.t), w=Math.max(2,x(e.t+e.d)-a-1);
+    s+='<rect x="'+a.toFixed(1)+'" y="'+(cy-6)+'" width="'+w.toFixed(1)+'" height="12" rx="2" fill="'+COL.cs+'" pointer-events="none"/>';
+    if(w>20) s+='<text x="'+(a+w/2).toFixed(1)+'" y="'+(cy+3.5)+'" text-anchor="middle" font-size="10" fill="#3d4650" pointer-events="none">'+TF.csAb+'</text>'; });
+  f.ent.forEach((e,k)=>{ const cy=fila(e.v), a=x(e.t), w=Math.max(3,x(e.t+e.d)-a-1), lab=(e.inv?'inv':e.g)+(e.r===2?' ×2':e.r===0.5?' ×½':'');
+    s+='<g class="en" data-k="'+secDe(f,k)+'"><title>'+esc(TC.c+' '+e.c+' · '+VOZ[e.v]+' · '+gradoTxt(e)+(formaTxt(e)?' · '+formaTxt(e):''))+'</title>';
+    s+='<rect x="'+a.toFixed(1)+'" y="'+(cy-10)+'" width="'+w.toFixed(1)+'" height="20" rx="3" fill="'+colorEnt(e)+'"'+(e.stretto?' stroke="#22252b" stroke-width="1.2"':'')+'/>';
+    if(e.inv) s+='<rect x="'+a.toFixed(1)+'" y="'+(cy-10)+'" width="'+w.toFixed(1)+'" height="20" rx="3" fill="url(#ray)"/>';
+    if(w>lab.length*6.6+4) s+='<text x="'+(a+w/2).toFixed(1)+'" y="'+(cy+4)+'" text-anchor="middle" font-size="11.5" fill="#fff">'+esc(lab)+'</text>';
+    s+='</g>'; });
+  const y0=top+rows.length*RH+3, pxb=(W-L-R)/f.bars.length, paso=pxb>=24?1:pxb>=11?2:pxb>=5?5:10;
+  f.bars.forEach(b=>{ const xx=x(b[0]), n=b[1], marca=n===1||n%paso===0;
+    if(pxb>=4||marca) s+='<line x1="'+xx.toFixed(1)+'" x2="'+xx.toFixed(1)+'" y1="'+y0+'" y2="'+(y0+(marca?6:3))+'" stroke="#b9b5aa" stroke-width="1"/>';
+    if(marca&&n>0) s+='<text x="'+(xx+2).toFixed(1)+'" y="'+(y0+17)+'" font-size="10.5" fill="#6b6f78">'+n+'</text>'; });
+  s+=tiraTonal(f,x,y0+31)+tiraProg(f,x,y0+53);
+  return s+'</svg>';
+}
+
+function sujetoSVG(f){
+  const ns=f.sujeto.n, W=250, H=62, D=Math.max(f.sujeto.dur,ns[ns.length-1][0]+ns[ns.length-1][1]), ms=ns.map(n=>n[2]), lo=Math.min(...ms), hi=Math.max(...ms), r=Math.max(hi-lo,4);
+  let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+TF.ariaSuj+'">';
+  for(let t=0;t<=D+1e-6;t+=f.BL){ const xx=6+t/D*(W-12); s+='<line x1="'+xx.toFixed(1)+'" x2="'+xx.toFixed(1)+'" y1="4" y2="'+(H-4)+'" stroke="#e3e0d6" stroke-width="1"/>'; }
+  ns.forEach(n=>{ const a=6+n[0]/D*(W-12), w=Math.max(2,n[1]/D*(W-12)-1), y=H-9-(n[2]-lo)/r*(H-18); s+='<rect x="'+a.toFixed(1)+'" y="'+(y-2).toFixed(1)+'" width="'+w.toFixed(1)+'" height="4" rx="1.5" fill="#2f6f62"/>'; });
+  return s+'</svg>';
+}
+
+function fichaHTML(f){
+  const r=f.res, su=f.sujeto, ult=f.ent[f.ent.length-1], pf=f.ped.filter(p=>p.t1>=f.T-2*f.BL-1e-6), pct=n=>r.ent?Math.round(100*n/r.ent):0, X=TF.F;
+  const csT=X.csT(f.cs.tipo,f.cs.veces,f.cs.de);
+  const fila=(k,v)=>'<dt>'+k+'</dt><dd>'+v+'</dd>';
+  let h='<dl>';
+  h+=fila(esInv(f)?X.tema:X.suj,pl(su.notas,TF.nota)+' · '+frac(su.compases)+' '+(su.compases<=1.12?TF.compas[0]:TF.compas[1])+X.empieza(esc(su.grado0))+sujetoSVG(f));
+  h+=fila(X.entran,f.orden.map(v=>VOZ[v]).join(' → ')||'—');
+  h+=fila(X.resp,f.resp?X.respV(TF.resp(f.resp.tipo),esc(f.resp.g)):'—');
+  h+=fila(X.cs,csT);
+  h+=fila(X.ents,X.entsV({ent:r.ent,I:r.I,pI:pct(r.I),V:r.V,otra:r.otra,inv:r.inv,aum:r.aum,stretti:r.stretti}));
+  h+=fila(X.suena,X.suenaV(r.cubre));
+  h+=fila(X.epis,X.episV(r.epi,r.epiMed,dec(r.epiMed,2)));
+  h+=fila(X.largo,X.largoV(f.compases,dec(r.temas)));
+  if(cifDe(f)){ h+=fila(X.tons,tonTxt(f)+X.enPrinc(enCasa(f))); const ct=cadTxt(f); if(ct) h+=fila(X.cads,ct); h+=fila(X.progs,progTxt(f)); }
+  h+=fila(X.cierre,(ult?X.ultima(tramo(f,ult.t,ult.t+0.01),ult.v,gradoTxt(ult)):'—')+(pf.length?X.pedal(esc(TF.ped(pf[0].grado)),pf[0].v,tramo(f,pf[0].t0,pf[0].t1)):''));
+  return h+'</dl>';
+}
+
+function seccionHTML(f,c,k){
+  const col=SEC[c.tipo], X=TF.S; let h='<article class="sec'+(k===state.sel?' sel':'')+'" data-k="'+k+'"><header style="background:'+col[0]+'">'+esc(secN(c.nombre))+'<span>'+irL(f,compasDe(f,c.t0),tramo(f,c.t0,c.t1))+' · '+X.temas(dec(c.temas,2),c.temas)+'</span></header><div class="cu">';
+  if(c.ent){ c.ent.forEach(i=>{ const e=f.ent[i], ot=Object.keys(e.otras).map(v=>VOZ[v]+': '+OTRA[e.otras[v]]).join(' · ');
+      h+='<p><span class="pt" style="background:'+colorEnt(e)+'"></span>'+irL(f,e.c,TC.c+' '+e.c)+' · <b>'+VOZ[e.v]+'</b> · '+esc(gradoTxt(e))+(formaTxt(e)?' · '+formaTxt(e):'')+(ot?'<small>'+esc(ot)+'</small>':'')+'</p>'; });
+    if(!c.ent.length) h+='<p>'+X.sinEnt+'</p>'; }
+  else{
+    const fu=(c.fuente||[]).map(x=>FUENTE[x.de]+(x.inv?X.invP:'')+X.pct(x.pct));
+    h+='<p>'+(fu.length?X.sale(fu.join(X.y)):X.libre)+'.</p>';
+    if(c.sec){ const m=c.sec.modelo; h+='<p>'+X.secu(c.sec.v,TF.dir(c.sec.dir),TF.paso(c.sec.paso),frac(m),m,c.sec.veces)+'</p>'; }
+    else h+='<p>'+X.sinSecu+'</p>';
+    h+='<p><small>'+X.voces(c.voces||0)+'</small></p>'; }
+  const pd=f.ped.filter(p=>p.t0<c.t1-1e-6&&p.t1>c.t0+1e-6);
+  if(pd.length) h+='<p><span class="pt" style="background:'+COL.ped+'"></span>'+X.pedal(esc(TF.ped(pd[0].grado)),pd[0].v)+'</p>';
+  return h+progHTML(f,c)+gradosHTML(f,c)+'</div></article>';
+}
+
+function selecciona(k){
+  state.sel=state.sel===k?-1:k;
+  document.querySelectorAll('#mapa .sc').forEach(g=>g.classList.toggle('sel',+g.dataset.k===state.sel));
+  document.querySelectorAll('#maq .chip').forEach(g=>g.classList.toggle('sel',+g.dataset.k===state.sel));
+  document.querySelectorAll('#secs .sec').forEach(g=>g.classList.toggle('sel',+g.dataset.k===state.sel));
+}
+
+function pintaMapa(){ const f=actual(), W=Math.max(640,$('mapa').clientWidth-22); $('mapa').innerHTML=esCanon(f)?mapaCanonSVG(f,W):mapaSVG(f,W);
+  document.querySelectorAll('#mapa .sc').forEach(g=>{ g.classList.toggle('sel',+g.dataset.k===state.sel); g.onclick=()=>selecciona(+g.dataset.k); });
+  document.querySelectorAll('#mapa .en').forEach(g=>{ g.onclick=()=>selecciona(+g.dataset.k); }); }
+
+/* ── LA LECTURA DEL MAPA (2026-11-27, Mario: «¿se puede llenar con un análisis del map?» · «procede»): lo mismo que dicen el mapa, la ficha y las
+   secciones, contado en prosa y en orden — forma, tema, recorrido tonal, qué estudiar, cierre. No agrega nada que la máquina no haya leído; lo dudoso
+   va marcado. Los compases citados llevan al rollo, como en el resto de la página. ── */
+const yLista=a=>a.length<=1?(a[0]||''):a.slice(0,-1).join(', ')+TC.y+a[a.length-1];
+const hacia=(f,p)=>progHacia(f,p,true), cap=x=>x.charAt(0).toUpperCase()+x.slice(1), formaSin=e=>(formaTxt(e)||'').split(' · ').filter(x=>x&&x!==TF.fo.dir).join(', ');
+function lecturaHTML(f){
+  const r=f.res, su=f.sujeto, P=pieza(f), ult=f.ent[f.ent.length-1],
+        pf=f.ped.filter(p=>p.t1>=f.T-2*f.BL-1e-6), cf=cifDe(f), L=(t,x)=>'<p><b class="l">'+t+'.</b> '+x+'</p>';
+  let h='';
+  // forma
+  const cuenta=new Map(); f.sec.forEach(c=>{ const k=c.tipo==='epi'?'episodio':c.tipo==='coda'?'coda':c.tipo==='expo'?'exposición':c.nombre==='Stretto'?'stretto':'entrada'; cuenta.set(k,(cuenta.get(k)||0)+1); });
+  const tras=['stretto','entrada','episodio','coda'].filter(k=>cuenta.get(k)).map(k=>TF.secCount(k,cuenta.get(k)));
+  let fo=TF.forma1({P,comp:f.compases,temas:dec(r.temas),voces:f.voces,cifra:esc(f.cifra),inv:esInv(f),cubre:r.cubre});
+  fo+=TF.forma2(!!cuenta.get('exposición'),tras.length?yLista(tras):'');
+  if(r.epi){ const epis=f.sec.filter(c=>c.tipo==='epi'), deTema=epis.filter(c=>(c.fuente||[]).length).length, conSec=epis.filter(c=>c.sec).length;
+    fo+=TF.epis({med:r.epiMed,medT:dec(r.epiMed,2),deTema,n:epis.length,conSec,inv:esInv(f)}); }
+  h+=L(TF.Lb.forma,fo);
+  // el tema
+  let te=TF.te1(su.notas,frac(su.compases),su.compases,esc(su.grado0));
+  if(f.orden.length) te+=TF.te2(f.orden[0],f.orden.length>1?f.orden.map(v=>VOZ[v]).join(' → '):'');
+  if(f.resp) te+=TF.te3(esc(TF.resp(f.resp.tipo)),esc(f.resp.g));
+  te+=TF.te4({ent:r.ent,lista:yLista(TF.te4l(r.I,r.V,r.otra)),inv:r.inv,aum:r.aum,stretti:r.stretti});
+  te+=TF.te5(f.cs.tipo,f.cs.veces,f.cs.de);
+  h+=L(esInv(f)?TF.Lb.tema:TF.Lb.suj,te);
+  // recorrido tonal
+  if(cf&&cf.r.length){
+    let to=(cf.r.length===1?TF.toTodo:'')+tonTxt(f)+'. ';
+    if(cf.r.length>1) to+=TF.toCasa(enCasa(f));
+    else to+=TF.toSin;
+    const ks=cf.k; if(ks.length){ const N=8; to+=TF.toCads(ks.length,ks.slice(0,N).map(k=>irL(f,k[0],TC.c+' '+k[0])+TC.en+esc(k[1])).join(', '),ks.length>N?ks.length-N:0); }
+    h+=L(TF.Lb.ton,to); }
+  // para estudiar
+  const ps=progDe(f), N=4;
+  if(ps.length){ h+=L(TF.Lb.est,TF.est(ps.length,ps.slice(0,N).map(p=>TF.estI(esc(TC.progMin(progK(p))),irL(f,p[3],tramo(f,p[1],p[2])),esc(p[7].replace(/–/g,' – ')),esc(hacia(f,p)),progDud(p))).join('; '),ps.length>N?ps.length-N:0)); }
+  // cierre
+  if(ult){ let ci=TF.ci1(esInv(f),irL(f,ult.c,TC.c+' '+ult.c),ult.v,esc(gradoTxt(ult)),formaSin(ult));
+    if(pf.length) ci+=TF.ci2(esc(TF.ped(pf[0].grado)),pf[0].v,tramo(f,pf[0].t0,pf[0].t1));
+    const co=f.sec.find(c=>c.tipo==='coda'); ci+=TF.ci3(co?tramo(f,co.t0,co.t1):'',co&&(co.fuente||[]).length);
+    h+=L(TF.Lb.cierre,ci); }
+  if(f.dud.length||(cf&&cf.d&&cf.d.length)) h+='<p class="dudosa">'+TC.Dud+': '+esc([...f.dud,...(cf&&cf.d||[])].map(maqN).join(' · '))+'.</p>';
+  return h;
+}
+function lecturaCanonHTML(f){
+  const r=f.res, tm=f.tema, P=f.partes, cf=cifDe(f), coda=f.sec.find(c=>c.tipo==='coda'), L=(t,x)=>'<p><b class="l">'+t+'.</b> '+x+'</p>', X=TF.LC;
+  let h=L(TF.Lb.forma,X.forma(f.compases,esc(f.cifra),tm.notas,frac(tm.compases),tm.compases,tm.voz,r.canon,coda?tramo(f,coda.t0,coda.t1):''));
+  if(P.length){ let re=esc(reglaTxt(f,P[0]))+X.copia(r.estricto);
+    re+=P.length>1?X.cambian(P.slice(1).map(p=>X.cambI(compasDe(f,p.g0),p.g)).join('; ')):X.hasta(P[0].g);
+    h+=L(TF.Lb.regla,re); }
+  if(f.ent.length) h+=L(TF.Lb.tema,X.entra(f.ent.length,f.ent.map(e=>irL(f,e.c,esc(entTxt(e)))).join(', ')));
+  if(cf&&cf.r.length){ let to=tonTxt(f)+'. '+(cf.r.length>1?TF.toCasa(enCasa(f)):'');
+    if(cf.k.length) to+=X.cads(cf.k.length,cf.k.slice(0,8).map(k=>irL(f,k[0],TC.c+' '+k[0])+TC.en+esc(k[1])).join(', '),cf.k.length>8?cf.k.length-8:0);
+    h+=L(TF.Lb.ton,to); }
+  else if(f.reg&&f.reg.length) h+=L(TF.Lb.ton,esc(regTxt(f,f.reg))+X.tonica(r.tonica));
+  const ps=progDe(f); if(ps.length) h+=L(TF.Lb.est,X.est(ps.length,ps.slice(0,4).map(p=>TF.estI(esc(TC.progMin(progK(p))),irL(f,p[3],tramo(f,p[1],p[2])),esc(p[7].replace(/–/g,' – ')),esc(hacia(f,p)),false)).join('; '),ps.length>4?ps.length-4:0));
+  if(f.dud.length) h+='<p class="dudosa">'+TC.Dud+': '+esc(f.dud.map(maqN).join(' · '))+'.</p>';
+  return h;
+}
+function renderUno(){
+  const f=actual(); if(!f) return;
+  if(esCanon(f)) return renderCanon(f);
+  $('ley').innerHTML=LEY_FUGA;
+  $('num').textContent=f.num;
+  $('vinfo').innerHTML=esc(f.num+' · '+TF.tit(f.titulo)+' · '+tonN(f.ton))+' <span>· '+esc(f.bwv)+' · '+esc(TF.vinfo(f.voces,f.cifra,f.compases))+'</span>';
+  const b=$('banner'); b.className='banner'+(f.dud.length?' duda':''); b.textContent=f.dud.length?TC.Dud+': '+f.dud.map(maqN).join(' · ')+'.':'';
+  pintaMapa();
+  const su=f.sujeto; $('maqT').textContent=TF.maqT(pieza(f),frac(su.compases),su.compases);
+  $('maq').innerHTML=f.sec.map((c,k)=>(k?'<span class="flecha">→</span>':'')+'<button class="chip t-'+c.tipo+(k===state.sel?' sel':'')+'" data-k="'+k+'" title="'+esc(tramo(f,c.t0,c.t1))+'">'+esc(secN(c.nombre))+'<b>· '+dec(c.temas,2)+' t</b></button>').join('');
+  document.querySelectorAll('#maq .chip').forEach(g=>{ g.onclick=()=>selecciona(+g.dataset.k); });
+  $('ficha').innerHTML=fichaHTML(f);
+  $('secs').innerHTML=f.sec.map((c,k)=>seccionHTML(f,c,k)).join('');
+  $('lecT').textContent=TF.hLec; $('lectura').innerHTML=lecturaHTML(f);
+  document.querySelectorAll('#secs .sec').forEach(g=>{ g.onclick=()=>selecciona(+g.dataset.k); });
+}
+
+/* ── el canon (2026-11-23, Mario: «muy interesantes los cánones… ¿cómo se vería un mapa de esto?»): dos carriles —quién guía, quién sigue—, las líneas
+   que unen cada punto del guía con su copia (el retraso; en la aumentación se abren), dónde entra el tema y, debajo, la región tonal ── */
+const CAN={g:'#2f6f62',s:'#4f7fae',l:'#b9b5aa'}, REG={t:'#cfe5de',d:'#d5e2f0',o:'#e7e5de'};
+const regNom=r=>TF.regNom(r);
+const vozMin=v=>VOZ[v].toLowerCase();
+const intervalo=k=>TF.intervalo(k);
+const corto=k=>TF.corto(k);
+function reglaTxt(f,p){ const c=p.ret/f.BL; return TF.regla(p.s,p.g,frac(c),c,p.esp,p.esp?'':intervalo(p.k),p.r===2,p.esp?intervalo(p.int0):''); }
+function mapaCanonSVG(f,W){
+  const L=30,R=8,x=t=>L+(t/f.T)*(W-L-R), rows=['S','B'], RH=46, top=34, fila=v=>top+rows.indexOf(v)*RH+RH/2, yH=top+2*RH+2, H=yH+16+26+(progDe(f).length?28:0);
+  let s='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+TF.ariaC+'">';
+  s+='<defs><pattern id="ray" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="5" fill="rgba(255,255,255,.5)"/></pattern></defs>';
+  f.sec.forEach((c,k)=>{ const nm=secN(c.nombre), a=x(c.t0), w=Math.max(2,x(c.t1)-a-1), col=SEC[c.tipo], ab=c.tipo==='coda'?TF.ab.coda:TF.canAb(c.nombre), txt=w>nm.length*6.7+10?nm:w>ab.length*6.7+6?ab:'';
+    s+='<g class="sc'+(c.tipo==='coda'?' gris':'')+'" data-k="'+k+'"><title>'+esc(nm+' · '+tramo(f,c.t0,c.t1))+'</title>';
+    s+='<rect class="col" x="'+a.toFixed(1)+'" y="'+(top-3)+'" width="'+w.toFixed(1)+'" height="'+(2*RH+24)+'" rx="3"/>';
+    s+='<rect x="'+a.toFixed(1)+'" y="2" width="'+w.toFixed(1)+'" height="22" rx="3" fill="'+col[0]+'"/>';
+    if(txt) s+='<text x="'+(a+w/2).toFixed(1)+'" y="17" text-anchor="middle" font-size="11.5" fill="'+col[1]+'">'+esc(txt)+'</text>';
+    s+='</g>'; });
+  const pxb=(W-L-R)/f.bars.length;
+  f.partes.forEach(p=>{ const yg=fila(p.g)+(p.g==='S'?10:-10), ys=fila(p.s)+(p.s==='S'?10:-10), pasoT=Math.max(p.ret/p.r, Math.ceil(18/pxb)*f.BL);   // de cada punto del guía a su copia
+    for(let t=p.g0;t<=p.g1+1e-6;t+=pasoT) s+='<line x1="'+x(t).toFixed(1)+'" y1="'+yg+'" x2="'+x(p.s0+p.r*(t-p.g0)).toFixed(1)+'" y2="'+ys+'" stroke="#8f8b80" stroke-width="1" opacity=".75" pointer-events="none"/>'; });
+  rows.forEach(v=>{ const cy=fila(v);
+    s+='<text x="4" y="'+(cy+4)+'" font-size="12.5" fill="#6b6f78"><title>'+VOZ[v]+'</title>'+v+'</text>';
+    (f.carril[v]||[]).forEach(g=>{ const a=x(g[1]), w=Math.max(2,x(g[2])-a-1);
+      if(g[0]==='l'){ s+='<line x1="'+a.toFixed(1)+'" x2="'+(a+w).toFixed(1)+'" y1="'+cy+'" y2="'+cy+'" stroke="'+CAN.l+'" stroke-width="3" stroke-linecap="round"><title>'+TF.libreV(v)+' · '+tramo(f,g[1],g[2])+'</title></line>'; return; }
+      const p=f.partes.find(q=>(g[0]==='g'?q.g===v&&Math.abs(q.g0-g[1])<f.BL:q.s===v&&Math.abs(q.s0-g[1])<f.BL))||f.partes[0];
+      const lab=g[0]==='g'?TF.guia:TF.sigue+(p.esp?TF.espejo:' · '+corto(p.k))+(p.r===2?' ×2':''), lab2=g[0]==='g'?TF.guia:TF.sigue;
+      s+='<g class="en" data-k="'+f.sec.findIndex(c=>c.t0<=g[1]+1e-6&&g[1]<c.t1-1e-6)+'"><title>'+esc((g[0]==='g'?TF.guiaV(v):TF.sigueV(v))+' · '+tramo(f,g[1],g[2])+(g[0]==='s'?' · '+reglaTxt(f,p):''))+'</title>';
+      s+='<rect x="'+a.toFixed(1)+'" y="'+(cy-10)+'" width="'+w.toFixed(1)+'" height="20" rx="3" fill="'+CAN[g[0]]+'"/>';
+      if(g[0]==='s'&&p.esp) s+='<rect x="'+a.toFixed(1)+'" y="'+(cy-10)+'" width="'+w.toFixed(1)+'" height="20" rx="3" fill="url(#ray)"/>';
+      const t=w>lab.length*6.4+26?lab:w>lab2.length*6.6+22?lab2:''; if(t) s+='<text x="'+(a+w/2).toFixed(1)+'" y="'+(cy+4)+'" text-anchor="middle" font-size="11.5" fill="#fff"'+(g[0]==='s'&&p.esp?' stroke="'+CAN.s+'" stroke-width="4" stroke-linejoin="round" paint-order="stroke"':'')+'>'+esc(t)+'</text>';
+      s+='</g>'; }); });
+  f.ent.forEach(e=>{ const cy=fila(e.v); s+='<circle cx="'+(x(e.t)+6).toFixed(1)+'" cy="'+cy+'" r="3.2" fill="#fffdf8" stroke="#22252b" stroke-width="1"><title>'+esc(TF.entraT(e.c,e.v,e.inv,e.r===2))+'</title></circle>'; });
+  const tt=tiraTonal(f,x,yH); s+=tt;
+  if(!tt) f.reg.forEach(r=>{ const a=x(r.t0), w=Math.max(2,x(r.t1)-a-1);
+    s+='<rect x="'+a.toFixed(1)+'" y="'+yH+'" width="'+w.toFixed(1)+'" height="16" rx="3" fill="'+REG[r.tipo]+'"><title>'+esc(r.g+' ('+regNom(r)+') · '+tramo(f,r.t0,r.t1))+'</title></rect>';
+    if(w>r.g.length*7+6) s+='<text x="'+(a+w/2).toFixed(1)+'" y="'+(yH+12)+'" text-anchor="middle" font-size="11" fill="#22252b" pointer-events="none">'+esc(r.g)+'</text>'; });
+  const y0=yH+19, paso=pxb>=24?1:pxb>=11?2:pxb>=5?5:10;
+  f.bars.forEach(b=>{ const xx=x(b[0]), n=b[1], marca=n===1||n%paso===0;
+    if(pxb>=4||marca) s+='<line x1="'+xx.toFixed(1)+'" x2="'+xx.toFixed(1)+'" y1="'+y0+'" y2="'+(y0+(marca?6:3))+'" stroke="#b9b5aa" stroke-width="1"/>';
+    if(marca&&n>0) s+='<text x="'+(xx+2).toFixed(1)+'" y="'+(y0+17)+'" font-size="10.5" fill="#6b6f78">'+n+'</text>'; });
+  s+=tiraProg(f,x,y0+24);
+  return s+'</svg>';
+}
+function temaSVG(f){
+  const ns=f.tema.n, W=250, H=62, D=Math.max(f.tema.dur,ns[ns.length-1][0]+ns[ns.length-1][1]), ms=ns.map(n=>n[2]), lo=Math.min(...ms), hi=Math.max(...ms), r=Math.max(hi-lo,4);
+  let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+TF.ariaTema+'">';
+  for(let t=0;t<=D+1e-6;t+=f.BL){ const xx=6+t/D*(W-12); s+='<line x1="'+xx.toFixed(1)+'" x2="'+xx.toFixed(1)+'" y1="4" y2="'+(H-4)+'" stroke="#e3e0d6" stroke-width="1"/>'; }
+  ns.forEach(n=>{ const a=6+n[0]/D*(W-12), w=Math.max(2,n[1]/D*(W-12)-1), y=H-9-(n[2]-lo)/r*(H-18); s+='<rect x="'+a.toFixed(1)+'" y="'+(y-2).toFixed(1)+'" width="'+w.toFixed(1)+'" height="4" rx="1.5" fill="#2f6f62"/>'; });
+  return s+'</svg>';
+}
+const entTxt=e=>TF.entTxt(e.c,e.v,e.inv,e.r===2);
+const regTxt=(f,rs)=>rs.map(r=>r.g+' ('+tramo(f,r.t0,r.t1)+')').join(' → ');
+function fichaCanonHTML(f){
+  const r=f.res, tm=f.tema, P=f.partes, coda=f.sec.find(c=>c.tipo==='coda'), fila=(k,v)=>'<dt>'+k+'</dt><dd>'+v+'</dd>', X=TF.FC;
+  let h='<dl>';
+  h+=fila(X.tema,X.temaV(tm.notas,frac(tm.compases),tm.compases,tm.voz)+temaSVG(f));
+  h+=fila(X.regla,P.length?esc(reglaTxt(f,P[0])):'—');
+  h+=fila(X.cambio,P.length>1?P.slice(1).map(p=>X.cambioI(compasDe(f,p.g0),p.g,esc(reglaTxt(f,p)))).join('<br>'):X.noCambio(P.length?P[0].g:''));
+  h+=fila(X.copia,X.copiaV(r.estricto,r.canon));
+  h+=fila(X.entra,f.ent.length?f.ent.map(e=>irL(f,e.c,esc(entTxt(e)))).join(' · '):'—');
+  if(cifDe(f)){ h+=fila(TF.F.tons,tonTxt(f)+TF.F.enPrinc(enCasa(f))); const ct=cadTxt(f); if(ct) h+=fila(TF.F.cads,ct); h+=fila(TF.F.progs,progTxt(f)); }
+  else h+=fila(X.regs,X.regsV(esc(regTxt(f,f.reg)),r.tonica));
+  h+=fila(TF.F.largo,X.largoV(f.compases,coda?tramo(f,coda.t0,coda.t1):''));
+  return h+'</dl>';
+}
+function seccionCanonHTML(f,c,k){
+  const col=SEC[c.tipo], nb=Math.round((c.t1-c.t0)/f.BL), en=f.ent.filter(e=>e.t>=c.t0-1e-6&&e.t<c.t1-1e-6), rs=f.reg.filter(r=>r.t0<c.t1-1e-6&&r.t1>c.t0+1e-6).map(r=>({g:r.g,t0:Math.max(r.t0,c.t0),t1:Math.min(r.t1,c.t1)})), X=TF.SC;
+  let h='<article class="sec'+(k===state.sel?' sel':'')+'" data-k="'+k+'"><header style="background:'+col[0]+'">'+esc(secN(c.nombre))+'<span>'+irL(f,compasDe(f,c.t0),tramo(f,c.t0,c.t1))+' · '+pl(nb,TF.compas)+'</span></header><div class="cu">';
+  if(c.parte!=null){ const p=f.partes[c.parte], cl=(a,b)=>tramo(f,Math.max(a,c.t0),Math.min(b,c.t1));
+    if(p.g0<c.t1-1e-6&&p.g1>c.t0+1e-6) h+='<p><span class="pt" style="background:'+CAN.g+'"></span>'+X.guia+'<b>'+VOZ[p.g]+'</b> · '+cl(p.g0,p.g1)+'</p>';
+    if(p.s0<c.t1-1e-6&&p.s1>c.t0+1e-6) h+='<p><span class="pt" style="background:'+CAN.s+'"></span>'+X.sigue+'<b>'+VOZ[p.s]+'</b> · '+cl(p.s0,p.s1)+'<small>'+esc(reglaTxt(f,p))+'</small></p>';
+    const li=['S','B'].flatMap(v=>(f.carril[v]||[]).filter(g=>g[0]==='l'&&Math.min(g[2],c.t1)-Math.max(g[1],c.t0)>=f.BL-1e-6).map(g=>X.libreEn(v,cl(g[1],g[2]))));
+    if(li.length) h+='<p><small>'+esc(li.join(' · '))+X.acomp+'</small></p>'; }
+  else h+='<p>'+X.yaNo+'</p>';
+  if(en.length) h+='<p>'+X.entra+en.map(e=>irL(f,e.c,esc(entTxt(e)))).join(' · ')+'</p>';
+  if(!cifDe(f)&&rs.length) h+='<p><small>'+X.regs+esc(regTxt(f,rs))+'</small></p>';
+  return h+progHTML(f,c)+gradosHTML(f,c)+'</div></article>';
+}
+function renderCanon(f){
+  $('num').textContent=f.num;
+  $('vinfo').innerHTML=esc(f.num+' · '+TF.tit(f.titulo)+' · '+tonN(f.ton))+' <span>· '+esc(f.bwv)+' · '+esc(TF.vinfoC(f.cifra,f.compases))+'</span>';
+  const b=$('banner'); b.className='banner'+(f.dud.length?' duda':''); b.textContent=f.dud.length?TC.Dud+': '+f.dud.map(maqN).join(' · ')+'.':(f.partes.length?reglaTxt(f,f.partes[0])+'.':'');
+  const l=TF.leyC;
+  $('ley').innerHTML='<span><i style="background:'+CAN.g+'"></i>'+l[0]+'</span><span><i style="background:'+CAN.s+'"></i>'+l[1]+'</span><span><i class="ray" style="background-color:'+CAN.s+'"></i>'+l[2]+'</span><span><i style="background:'+CAN.l+';height:3px;vertical-align:3px"></i>'+l[3]+'</span><span><i style="background:#fffdf8;border:1px solid #22252b;width:8px;height:8px;border-radius:50%"></i>'+l[4]+'</span><span><i style="background:#8f8b80;height:1px;vertical-align:4px"></i>'+l[5]+'</span><span><i style="background:#cfe5de"></i>'+l[6]+'</span><span><i style="background:#d5e2f0"></i>'+l[7]+'</span><span><i style="background:#f1e2c3"></i>'+l[8]+'</span><span><i style="background:#ead9e6"></i>'+l[9]+'</span><span>'+l[10]+'</span><span><i style="background:#22252b;height:3px;vertical-align:3px"></i>'+l[11]+'</span><span><i style="background:#8a4b12;height:3px;vertical-align:3px"></i>'+l[12]+'</span>';
+  pintaMapa();
+  $('maqT').textContent=TF.maqTC;
+  $('maq').innerHTML=f.sec.map((c,k)=>(k?'<span class="flecha">→</span>':'')+'<button class="chip t-'+c.tipo+(k===state.sel?' sel':'')+'" data-k="'+k+'" title="'+esc(tramo(f,c.t0,c.t1))+'">'+esc(secN(c.nombre))+'<b>· '+TF.chipC(Math.round((c.t1-c.t0)/f.BL))+'</b></button>').join('');
+  document.querySelectorAll('#maq .chip').forEach(g=>{ g.onclick=()=>selecciona(+g.dataset.k); });
+  $('ficha').innerHTML=fichaCanonHTML(f);
+  $('secs').innerHTML=f.sec.map((c,k)=>seccionCanonHTML(f,c,k)).join('');
+  $('lecT').textContent=TF.hLec; $('lectura').innerHTML=lecturaCanonHTML(f);
+  document.querySelectorAll('#secs .sec').forEach(g=>{ g.onclick=()=>selecciona(+g.dataset.k); });
+}
+function tiraCanonSVG(f){
+  const rh=7, H=2*rh+2, X=t=>(1000*t/f.T); let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 '+H+'" height="'+(H+2)+'" preserveAspectRatio="none" role="img" aria-label="'+TF.ariaTC+'">';
+  f.sec.forEach(c=>{ if(c.tipo==='coda') s+='<rect x="'+X(c.t0).toFixed(1)+'" y="0" width="'+(X(c.t1)-X(c.t0)).toFixed(1)+'" height="'+H+'" fill="#e4e1d8"/>'; });
+  ['S','B'].forEach((v,i)=>{ (f.carril[v]||[]).forEach(g=>{ if(g[0]!=='l') s+='<rect x="'+X(g[1]).toFixed(1)+'" y="'+(1+i*rh)+'" width="'+Math.max(2,X(g[2])-X(g[1])-1).toFixed(1)+'" height="'+(rh-1)+'" fill="'+CAN[g[0]]+'"/>'; }); });
+  return s+'</svg>';
+}
+function filaCanonHTML(f){ const p=f.partes[0];
+  return '<div class="fila" data-num="'+f.num+'" title="Open this canon"><div class="n"><b>'+f.num+'</b> '+esc(f.titulo.replace('Arte de la fuga · ','').replace('Canon ','').replace('per Augmentationem in Contrario Motu','per Augment.'))+'</div>'+tiraCanonSVG(f)+
+    '<div class="d">'+(p?esc(reglaTxt(f,p)):'—')+TF.filaC(f.partes.length>1?compasDe(f,f.partes[1].g0):0,f.res.estricto)+'</div></div>'; }
+
+/* ── comparar: todas las fugas de un número de voces, una debajo de otra, a lo ancho de la pieza ── */
+function tiraSVG(f){
+  const rows=[...f.nom], rh=7, H=rows.length*rh+2, X=t=>(1000*t/f.T);
+  let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 '+H+'" height="'+(H+2)+'" preserveAspectRatio="none" role="img" aria-label="'+TF.ariaTC.replace(/ (del canon|of the canon|du canon|van de canon|des Kanons)$/,'')+'">';
+  f.sec.forEach(c=>{ if(c.tipo==='epi'||c.tipo==='coda') s+='<rect x="'+X(c.t0).toFixed(1)+'" y="0" width="'+(X(c.t1)-X(c.t0)).toFixed(1)+'" height="'+H+'" fill="#e4e1d8"/>'; });
+  f.ent.forEach(e=>{ const y=1+rows.indexOf(e.v)*rh; s+='<rect x="'+X(e.t).toFixed(1)+'" y="'+y+'" width="'+Math.max(2,X(e.t+e.d)-X(e.t)-1).toFixed(1)+'" height="'+(rh-1)+'" fill="'+colorEnt(e)+'"/>'; });
+  return s+'</svg>';
+}
+function cuenta(a){ const m=new Map(); a.forEach(x=>m.set(x,(m.get(x)||0)+1)); return [...m.entries()].sort((x,y)=>y[1]-x[1]); }
+function resumenHTML(n,fs){ const X=TF.R;
+  const ord=cuenta(fs.map(f=>f.orden.join('–'))).map(x=>x[0]+' <b>'+x[1]+'</b>').join(' · ');
+  const rs=cuenta(fs.map(f=>f.resp?TF.resp(f.resp.tipo):'—')).map(x=>x[0]+' <b>'+x[1]+'</b>').join(' · ');
+  const cs=cuenta(fs.map(f=>f.cs.tipo==='libre'?X.sinCs:X.conCs(TF.cs(f.cs.tipo)))).map(x=>x[0]+' <b>'+x[1]+'</b>').join(' · ');
+  const es=fs.map(f=>f.res.ent), pt=fs.map(f=>f.res.ent?Math.round(100*f.res.I/f.res.ent):0), cu=fs.map(f=>f.res.cubre), ep=fs.map(f=>f.res.epi), tm=fs.map(f=>f.res.temas);
+  let h='<h2>'+X.h(n,fs.length)+'</h2><div class="card res"><table>';
+  h+='<tr><td>'+X.orden+'</td><td>'+ord+'</td></tr>';
+  h+='<tr><td>'+X.resp+'</td><td>'+rs+'</td></tr>';
+  h+='<tr><td>'+X.cs+'</td><td>'+cs+'</td></tr>';
+  h+='<tr><td>'+X.ents+'</td><td>'+X.deA(Math.min(...es),Math.max(...es),mediana(es))+'</td></tr>';
+  h+='<tr><td>'+X.ton+'</td><td>'+X.deAp(Math.min(...pt),Math.max(...pt),mediana(pt))+'</td></tr>';
+  h+='<tr><td>'+X.suena+'</td><td>'+X.deApz(Math.min(...cu),Math.max(...cu),mediana(cu))+'</td></tr>';
+  h+='<tr><td>'+X.epis+'</td><td>'+X.deA(Math.min(...ep),Math.max(...ep),mediana(ep))+'</td></tr>';
+  h+='<tr><td>'+X.largo+'</td><td>'+X.deAt(dec(Math.min(...tm)),dec(Math.max(...tm)),dec(mediana(tm)))+'</td></tr>';
+  return h+'</table></div>';
+}
+function filaHTML(f){
+  const r=f.res, pt=r.ent?Math.round(100*r.I/r.ent):0;
+  return '<div class="fila" data-num="'+f.num+'" title="Open this piece"><div class="n"><b>'+f.num+'</b> '+esc(tonN(f.ton))+(f.dud.length?' <span class="d">'+TF.dudC+'</span>':'')+'</div>'+tiraSVG(f)+
+    '<div class="d">'+esc(f.orden.join('–'))+TF.fila(f.resp?TF.resp(f.resp.tipo):'—',r.ent,pt,f.cs.tipo==='libre'?TF.sinCsC:TF.csC(TF.cs(f.cs.tipo)),dec(r.temas))+'</div></div>';
+}
+function renderCmp(){
+  const FU=F.filter(esFuga), CA=(!state.voces||state.voces===2)?F.filter(esCanon):[], IV=[[TF.sinf,F.filter(f=>f.tipo==='sinfonia'),3],[TF.inven,F.filter(f=>f.tipo==='invencion'),2]].filter(g=>g[1].length&&(!state.voces||state.voces===g[2])), gs=(state.voces?[state.voces]:[2,3,4]).map(n=>[n,FU.filter(f=>f.voces===n)]), lc=TF.leyCmp;
+  $('cmp').innerHTML=gs.filter(g=>g[1].length).map(g=>resumenHTML(g[0],g[1])+'<div style="margin-top:8px">'+g[1].map(filaHTML).join('')+'</div>').join('')+
+    IV.map(g=>'<h2>'+g[0]+' · '+g[1].length+' · '+TF.vocesG(g[2])+'</h2><div style="margin-top:8px">'+g[1].map(filaHTML).join('')+'</div>').join('')+
+    (CA.length?'<h2>'+TF.canones+' · '+CA.length+'</h2><div style="margin-top:8px">'+CA.map(filaCanonHTML).join('')+'</div><div class="ley" style="margin-top:6px"><span><i style="background:'+CAN.g+'"></i>'+TF.guia+'</span><span><i style="background:'+CAN.s+'"></i>'+TF.sigue+'</span></div>':'')+
+    '<div class="ley" style="margin-top:10px"><span><i style="background:#2f6f62"></i>'+lc[0]+'</span><span><i style="background:#4f7fae"></i>'+lc[1]+'</span><span><i style="background:#b0613a"></i>'+lc[2]+'</span><span><i style="background:#7a6aa8"></i>'+lc[3]+'</span><span><i style="background:#e4e1d8"></i>'+lc[4]+'</span><span>'+lc[5]+'</span></div>';
+  document.querySelectorAll('#cmp .fila').forEach(d=>{ d.onclick=()=>{ state.i=F.findIndex(f=>f.num===d.dataset.num); state.sel=-1; state.vista='uno'; render(); window.scrollTo(0,0); }; });
+  $('vinfo').innerHTML=TF.cmpV+' <span>· '+(state.voces?TF.vocesG(state.voces):TF.todas)+'</span>'; const b=$('banner'); b.className='banner'; b.textContent=TF.toca;
+}
+
+function render(){
+  const L=lista(); if(L.length&&!L.includes(actual())){ state.i=F.indexOf(L[0]); state.sel=-1; }
+  [...$('vocs').querySelectorAll('button')].forEach(b=>{ const on=+b.dataset.v===state.voces; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); });
+  [...$('vistas').querySelectorAll('button')].forEach(b=>{ const on=b.dataset.v===state.vista; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); });
+  $('uno').hidden=state.vista!=='uno'; $('cmp').hidden=state.vista!=='cmp';
+  $('prev').disabled=$('next').disabled=state.vista!=='uno';
+  if(state.vista==='uno') renderUno(); else renderCmp();
+  try{ history.replaceState(null,'',location.pathname+(state.vista==='cmp'?'?compare'+(state.voces?'='+state.voces:''):'?n='+actual().num)+(QLANG?'&lang='+LANG:'')); }catch(e){}
+}
+function paso(d){ const L=lista(), k=L.indexOf(actual()); if(!L.length) return; state.i=F.indexOf(L[(k+d+L.length)%L.length]); state.sel=-1; render(); }
+
+function arranca(){
+  if(!F.length){ $('vinfo').textContent=TF.sinDatos; return; }
+  const q=new URLSearchParams(location.search);
+  if(q.has('n')){ const k=F.findIndex(f=>f.num===String(q.get('n')).padStart(3,'0')); if(k>=0) state.i=k; }
+  if(q.has('compare')){ state.vista='cmp'; const v=+q.get('compare'); if([2,3,4].includes(v)) state.voces=v; }
+  // ← : si esta ventana la abrió el rollo (botón MAP), se cierra y queda el rollo como estaba; si se abrió sola, va a rollo.html
+  $('volver').onclick=e=>{ let op=null; try{ op=window.opener&&!window.opener.closed?window.opener:null; }catch(x){} if(!op) return; e.preventDefault(); try{ op.focus(); }catch(x){} window.close(); };
+  // los enlaces de compás: si esta ventana la abrió el rollo (MAP), el rollo abre la pieza en ese compás sin recargarse (irA) y pasa adelante; si no
+  // pudo pasar adelante, esta ventana se cierra, como con ←. Si el mapa se abrió solo, el enlace abre rollo.html?pieza=NNN&c=N en la ventana «mm-rollo».
+  document.addEventListener('click',e=>{ const a=e.target.closest&&e.target.closest('a.ir'); if(!a) return; e.stopPropagation();
+    let op=null; try{ op=window.opener&&!window.opener.closed&&typeof window.opener.irA==='function'?window.opener:null; }catch(x){} if(!op) return;
+    e.preventDefault(); try{ op.irA(a.dataset.n,+a.dataset.c); op.focus(); }catch(x){} setTimeout(()=>{ if(document.hasFocus()) window.close(); },450); },true);
+  $('prev').onclick=()=>paso(-1); $('next').onclick=()=>paso(1);
+  $('vocs').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; state.voces=+b.dataset.v; render(); };
+  $('vistas').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; state.vista=b.dataset.v; render(); };
+  document.addEventListener('keydown',e=>{ if(state.vista!=='uno'||e.target.closest('input,textarea,select')) return; if(e.key==='ArrowLeft'){ paso(-1); e.preventDefault(); } else if(e.key==='ArrowRight'){ paso(1); e.preventDefault(); } });
+  let rz=null; window.addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(()=>{ if(state.vista==='uno') pintaMapa(); },120); });
+  const nC=F.filter(f=>+f.num<=48).length, nK=F.filter(esCanon).length, nI=F.filter(esInv).length, nA=F.length-nC-nK-nI;
+  $('pie').innerHTML=TF.pie(nC,nI,nA,nK,window.FUGAS_FECHA?', '+esc(window.FUGAS_FECHA):'');
+  render();
+}
+arranca();
+</script>
+</body>
+</html>

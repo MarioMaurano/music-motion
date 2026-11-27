@@ -134,15 +134,18 @@ html.mm-cerrado #mmCandado{display:grid}
 <div id="mmCandado"><p id="mmCandadoT"></p><button class="btn" id="mmCandadoB" type="button">MUSIC SCHOOL COACH</button></div>
 <script>
 (function(){ var MUESTRA_YA=/[?&]muestra\b/.test(location.search);   // ?muestra: la muestra también en el PC, para probarla
-  if(!MUESTRA_YA&&(location.protocol==='file:'||/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname))) return;
+  // 2026-11-27 (Mario: «si tienen la dirección, ¿puedes entrar a todo el rollo?»): MM_PUERTA dice cuándo la puerta ya decidió —true con pase (o en el PC), false en la muestra—;
+  // la dirección ?pieza=NNN espera esa respuesta, para que la pieza pedida no se cuele antes que la muestra
+  var listo; window.MM_PUERTA=new Promise(function(r){ listo=r; });
+  if(!MUESTRA_YA&&(location.protocol==='file:'||/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname))){ listo(true); return; }
   var H=document.documentElement, es=false; try{ es=localStorage.getItem('mmSiteLang')==='es'; }catch(e){}
   H.classList.add('mm-puerta');   // tapado hasta saber si hay pase
   document.getElementById('mmCandadoT').textContent=es?'Este rollo es parte del Music School Coach: el catálogo de orquestación, las clases de armonía y contrapunto, y el maestro exigente de la suite.':"This roll is part of the Music School Coach: the orchestration catalogue, the harmony and counterpoint classes, and the suite's demanding master.";
   document.getElementById('mmCandadoB').onclick=function(){ if(window.mmSalieriPuerta) mmSalieriPuerta(); };
   window.addEventListener('keydown',function(e){ if(H.classList.contains('mm-puerta')) e.stopImmediatePropagation(); },true);   // tapado, las teclas no llegan al rollo (la barra espaciadora no suena)
-  var abre=function(){ H.classList.remove('mm-puerta','mm-cerrado'); var w=document.getElementById('mm-salieri-pase'); if(w) w.classList.remove('open'); },
+  var abre=function(){ listo(true); H.classList.remove('mm-puerta','mm-cerrado'); var w=document.getElementById('mm-salieri-pase'); if(w) w.classList.remove('open'); },
       // 2026-11-26 (como en el rollo de corales V2.0.5): sin pase ya no sale el candado sino la muestra (la Fuga n.º 1); el candado queda solo si la muestra no puede abrir
-      cierra=function(){ H.classList.remove('mm-puerta'); H.classList.add('mm-demo'); window.MM_MUESTRA=true;
+      cierra=function(){ window.MM_MUESTRA=true; listo(false); H.classList.remove('mm-puerta'); H.classList.add('mm-demo');
         var go=function(){ if(window.mmMuestra) mmMuestra(); else { H.classList.remove('mm-demo'); H.classList.add('mm-puerta','mm-cerrado'); } };
         if(document.readyState==='complete') go(); else window.addEventListener('load',go); };
   document.addEventListener('mm-salieri',function(){ if(H.classList.contains('mm-demo')) location.reload(); else abre(); });   // el pase llega (también después de «Ya pagué — volver a mirar»)   // el pase llega (también después de «Ya pagué — volver a mirar»)
@@ -1335,6 +1338,7 @@ const CORALES='001,002,003,005,006,007,008,009,010,011,012,013,014,015,016,017,0
 // 2026-11-23 (Mario: «cuando Salieri explica estas progresiones, modulaciones y cadencias, ¿pudiera abrir el ejemplo en el rollo?»): con &bank —o irA(n,c,true),
 // que es lo que llama el Atelier del Coach— la pieza se abre en BANK, con el cifrado bajo cada compás: rollo.html?pieza=015&c=47&bank.
 async function irA(n,c,banco){ const s=$('coral'); n=String(n).padStart(3,'0'); if(!s||![...s.options].some(o=>o.value===n)) return false;
+  if(window.MM_MUESTRA&&n!=='001'){ if(window.mmSalieriPuerta) mmSalieriPuerta(); return false; }   // 2026-11-27: en la muestra, ni la dirección ni el mapa abren otra pieza: sale la ventana del pase
   if(VISTA&&VISTA.maq){ $('banner').textContent='Para abrir la pieza '+n+', cierra antes la maqueta (✕ CLOSE).'; return false; }
   if(banco&&!VER_BANCO){ VER_BANCO=true; bancoUI(); }
   const esta=()=>!!(VISTA&&VISTA.coral===n&&!!VISTA.banco===VER_BANCO);   // la pieza, y en la vista que está puesta
@@ -1343,7 +1347,7 @@ async function irA(n,c,banco){ const s=$('coral'); n=String(n).padStart(3,'0'); 
   let k=VISTA.num.findIndex(x=>+x===+c); if(k<0) k=0;
   const el=document.querySelector('#rollo .cc[data-k="'+k+'"]'); if(!el) return false;
   el.scrollIntoView({block:'center'}); if(pinEnLugar) pinEnLugar(k,0); return true; }
-{ const q=new URLSearchParams(location.search); if(q.has('pieza')) irA(q.get('pieza'),+q.get('c')||1,q.has('bank')); }
+{ const q=new URLSearchParams(location.search); if(q.has('pieza')) (window.MM_PUERTA||Promise.resolve(true)).then(ok=>{ if(ok) irA(q.get('pieza'),+q.get('c')||1,q.has('bank')); }); }
 
 // ── la vuelta del Score (↩ MACHINE) y el buzón: el .mmf entra a los rodillos, en HOLD ──
 function importMMF(d){ VISTA=null; const ban=$('banner'); const ts=d.timeSignature||{num:4,den:4}, met=ts.num+'/'+ts.den;
