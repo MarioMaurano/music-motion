@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>mm Rollo V3.0.6 · contrapunto y fuga</title>
-<!-- mm Rollo V3.0.6 (contrapunto y fuga) · 🔒 LOCKED 2026-11-27 · V3.0.6: OPEN IN SCORE abre la pieza que se ve · V3.0.5: la cabecera con el logo m∆°m (verde del rollo, enlace a musicmotionsuite.com), el título en verde y el subtítulo en una segunda línea; el «?» con el pie al final de la hoja y m∆°m® ; MAP y COMPARE imprimibles (analisis-fugas.html) · V3.0.4: el título y los pasos en el idioma de la suite, el «?» con su hoja imprimible, la MUESTRA sin pase (la Fuga n.º 1, OPEN IN SCORE y FUGA BACH la abren, la lista con candado), el compás corto que mide lo que dura, el tenor en clave de fa con su armadura; las 96 piezas con Pages 1, bracket y el tenor en fa · antes V3.0.3, 2026-11-23 · V3.0.3: el compás que suena, el pin y la barra espaciadora; Pipe Organ por defecto; la pieza abierta a la vista, con MAP y BANK; el banco con El arte de la fuga y su cifrado por grados; THEME · VOICES · ANSWER · BUILD · REALIZE; la fila MODEL (bloques, progresión, modulación y cadencias con su ritmo); la dirección ?pieza=NNN&c=N&bank; la puerta de Salieri al publicar · antes V3.0.2, 2026-11-01 · _Coach/maquina-composicionV3 · desde el 2026-11-22 esta página se edita directamente: las fuentes de _V3-TRABAJO/fuentes-pagina no llevan lo hecho desde entonces (no reconstruir con build.py) -->
+<title>mm Rollo V3.0.7 · contrapunto y fuga</title>
+<!-- mm Rollo V3.0.7 (contrapunto y fuga) · 🔒 LOCKED 2026-11-27 (noche) · V3.0.7: el panic al cerrar · la puerta sin atajos · bach aparte · V3.0.6: OPEN IN SCORE abre la pieza que se ve · V3.0.5: la cabecera con el logo m∆°m (verde del rollo, enlace a musicmotionsuite.com), el título en verde y el subtítulo en una segunda línea; el «?» con el pie al final de la hoja y m∆°m® ; MAP y COMPARE imprimibles (analisis-fugas.html) · V3.0.4: el título y los pasos en el idioma de la suite, el «?» con su hoja imprimible, la MUESTRA sin pase (la Fuga n.º 1, OPEN IN SCORE y FUGA BACH la abren, la lista con candado), el compás corto que mide lo que dura, el tenor en clave de fa con su armadura; las 96 piezas con Pages 1, bracket y el tenor en fa · antes V3.0.3, 2026-11-23 · V3.0.3: el compás que suena, el pin y la barra espaciadora; Pipe Organ por defecto; la pieza abierta a la vista, con MAP y BANK; el banco con El arte de la fuga y su cifrado por grados; THEME · VOICES · ANSWER · BUILD · REALIZE; la fila MODEL (bloques, progresión, modulación y cadencias con su ritmo); la dirección ?pieza=NNN&c=N&bank; la puerta de Salieri al publicar · antes V3.0.2, 2026-11-01 · _Coach/maquina-composicionV3 · desde el 2026-11-22 esta página se edita directamente: las fuentes de _V3-TRABAJO/fuentes-pagina no llevan lo hecho desde entonces (no reconstruir con build.py) -->
 <style>
 :root{--bg:#f4f3ef;--panel:#ffffff;--line:#d8d5cc;--line2:#b9b5aa;--text:#22252b;--muted:#6b6f78;--acc:#2f6f62;--acc-t:#ffffff;--paper:#fffdf8;color-scheme:light;--border:var(--line);--kb-border:#501828;--textm:var(--muted);--gold:var(--acc);--panel2:var(--bg)}   /* --border … --panel2: lo que lee la paleta de instrumentos del banco (mm-presets.js) */
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181b;--panel:#202226;--line:#34373d;--line2:#4a4e56;--text:#e6e6e6;--muted:#9a9ea6;--acc:#4fb39c;--acc-t:#0b1f1a;--paper:#fbf9f3;color-scheme:dark}}
@@ -170,7 +170,6 @@ html.mm-cerrado #mmCandado{display:grid}
   <span class="sep"></span>
   <button class="btn" id="todo" title="Cambiar todos">↻ TODO</button>
   <button class="btn" id="undo" disabled>↶</button>
-  <button class="btn" id="v4" title="Cuartetos (V4)">→</button>
   <span class="sep"></span>
   <span class="br"></span>
   <span class="paso"></span>
@@ -1116,8 +1115,8 @@ function harmoniza(){ if(state.uni==='medio'){ $('banner').textContent='HARMONIZ
   $('rollo').querySelectorAll('.cc').forEach((cc,k)=>{ if(ks.includes(k)&&!sin.includes(k+1)){ cc.classList.add('nuevo'); setTimeout(()=>cc.classList.remove('nuevo'),700); } }); }
 $('harm').onclick=harmoniza;
 $('v2').onclick=()=>{ window.open('../maquina-composicionV2/rollo.html','mm-rollo-v2'); };   // ← la hoja de los corales (V2)
-$('v4').onclick=()=>{ window.open('../maquina-composicionV4/rollo.html','mm-rollo-v4'); };
-fetch('../maquina-composicionV4/rollo.html',{method:'HEAD'}).then(r=>{ if(!r.ok) $('v4').style.display='none'; }).catch(()=>{});   // en el sitio sólo se publican V2 y V3: sin V4, la flecha no se muestra   // → la hoja de los cuartetos (V4)
+// 2026-11-27 (Mario: «como pertenecen a diferentes niveles, ¿lo dejamos separados?»): sin la → a los cuartetos; Bach (V2 ↔ V3) y cuartetos (V4 ↔ V5) son dos familias.
+   // en el sitio sólo se publican V2 y V3: sin V4, la flecha no se muestra   // → la hoja de los cuartetos (V4)
 // ── REPLICATE 1 2 3 4 (Mario, 2026-11-01: «para replicar, y con el + aumentar, y luego la tonalidad sin armadura: así quedan
 // progresiones y réplicas»): copia los últimos n compases de la hoja como tramo nuevo; con C D E F G A H ese tramo cambia de
 // tonalidad y queda una progresión (secuencia) de lo que había. En FRASE la réplica cuenta como una frase de n compases.
@@ -1207,6 +1206,8 @@ function play(solo,desde){ if(typeof solo!=='number') solo=null; if(playing.leng
   { const bs=new Map(); ev.forEach(x=>{ if(!bs.has(x.k)) bs.set(x.k,solo==null?x.b0:0); }); bs.forEach((a,k)=>pend.push(setTimeout(()=>marca(k),Math.round(a*1000)+150))); }
   $('play').textContent='■ STOP'; $('play').classList.add('sonando'); playT=setTimeout(stopPlay,end*1000+600); }
 $('play').onclick=play;
+// 2026-11-27: al cerrar o recargar la pestaña con el rollo sonando, el PANIC del ESC, para que no queden notas encendidas en el Keyboard (como en el Score).
+addEventListener('pagehide',()=>{ if(playing.length||pend.length){ try{ MM&&MM.postMessage({cmd:'PANIC',source:'rollo'}); }catch(e){} } });
 // ── EL PIN (2026-11-22, Mario: «¿podría existir un pin similar en los rollos?… para estudiar nota a nota»): como el playpin del
 // Score. Se aprieta sobre un compás y se arrastra: la línea roja sigue al ratón y suena lo que está sonando en ese punto, las
 // cuatro voces (también las notas tenidas); el sonido se mantiene mientras el pin no pase a otro acorde y se apaga al soltar.

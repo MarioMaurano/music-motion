@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>mm Rollo V2.0.7</title>
-<!-- mm Rollo V2.0.7 · 🔒 LOCKED 2026-11-27 · V2.0.7: OPEN IN SCORE abre la pieza que se ve ; MAP del coral (analisis-corales.html) e irA · V2.0.6: la cabecera con el logo m∆°m (verde del rollo, enlace a musicmotionsuite.com), el título en verde y el subtítulo en una segunda línea; el «?» con el pie al final de la hoja y m∆°m® · V2.0.5: el título y los pasos (1 · Escoger · 2 · Armar · 3 · Escuchar y llevar) en el idioma de la suite, la MUESTRA sin pase (coral 001: escuchar, pin, OPEN IN SCORE; la lista con los 360 y candado), el tenor en clave de fa, corales en Pipe Organ con Pages 1 y bracket · V2.0.4: el compás que suena se ve, el pin, la barra espaciadora sigue desde el pin, Pipe Organ por defecto y la puerta de Salieri al publicar · antes V2.0.3, 2026-11-01 · _Coach/maquina-composicionV2 · desde el 2026-11-22 esta página se edita directamente: las fuentes de _V2-TRABAJO/fuentes-pagina no llevan lo hecho desde entonces (no reconstruir con build.py) -->
+<title>mm Rollo V2.0.8</title>
+<!-- mm Rollo V2.0.8 · 🔒 LOCKED 2026-11-27 (noche) · V2.0.8: el panic al cerrar · la puerta sin atajos · V2.0.7: OPEN IN SCORE abre la pieza que se ve ; MAP del coral (analisis-corales.html) e irA · V2.0.6: la cabecera con el logo m∆°m (verde del rollo, enlace a musicmotionsuite.com), el título en verde y el subtítulo en una segunda línea; el «?» con el pie al final de la hoja y m∆°m® · V2.0.5: el título y los pasos (1 · Escoger · 2 · Armar · 3 · Escuchar y llevar) en el idioma de la suite, la MUESTRA sin pase (coral 001: escuchar, pin, OPEN IN SCORE; la lista con los 360 y candado), el tenor en clave de fa, corales en Pipe Organ con Pages 1 y bracket · V2.0.4: el compás que suena se ve, el pin, la barra espaciadora sigue desde el pin, Pipe Organ por defecto y la puerta de Salieri al publicar · antes V2.0.3, 2026-11-01 · _Coach/maquina-composicionV2 · desde el 2026-11-22 esta página se edita directamente: las fuentes de _V2-TRABAJO/fuentes-pagina no llevan lo hecho desde entonces (no reconstruir con build.py) -->
 <style>
 :root{--bg:#f4f3ef;--panel:#ffffff;--line:#d8d5cc;--line2:#b9b5aa;--text:#22252b;--muted:#6b6f78;--acc:#2f6f62;--acc-t:#ffffff;--paper:#fffdf8;color-scheme:light;--border:var(--line);--kb-border:#501828;--textm:var(--muted);--gold:var(--acc);--panel2:var(--bg)}   /* --border … --panel2: lo que lee la paleta de instrumentos del banco (mm-presets.js) */
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181b;--panel:#202226;--line:#34373d;--line2:#4a4e56;--text:#e6e6e6;--muted:#9a9ea6;--acc:#4fb39c;--acc-t:#0b1f1a;--paper:#fbf9f3;color-scheme:dark}}
@@ -630,6 +630,8 @@ function play(solo,desde){ if(typeof solo!=='number') solo=null; if(playing.leng
   { const bs=new Map(); ev.forEach(x=>{ if(!bs.has(x.k)) bs.set(x.k,solo==null?x.b0:0); }); bs.forEach((a,k)=>pend.push(setTimeout(()=>marca(k),Math.round(a*1000)+150))); }
   $('play').textContent='■ STOP'; $('play').classList.add('sonando'); playT=setTimeout(stopPlay,end*1000+600); }
 $('play').onclick=play;
+// 2026-11-27: al cerrar o recargar la pestaña con el rollo sonando, el PANIC del ESC, para que no queden notas encendidas en el Keyboard (como en el Score).
+addEventListener('pagehide',()=>{ if(playing.length||pend.length){ try{ MM&&MM.postMessage({cmd:'PANIC',source:'rollo'}); }catch(e){} } });
 // ── EL PIN (2026-11-22, Mario: «¿podría existir un pin similar en los rollos?… para estudiar nota a nota»): como el playpin del
 // Score. Se aprieta sobre un compás y se arrastra: la línea roja sigue al ratón y suena lo que está sonando en ese punto, las
 // cuatro voces (también las notas tenidas); el sonido se mantiene mientras el pin no pase a otro acorde y se apaga al soltar.

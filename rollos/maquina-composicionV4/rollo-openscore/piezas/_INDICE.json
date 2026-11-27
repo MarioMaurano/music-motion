@@ -1,0 +1,2899 @@
+[
+ {
+  "numero": "001",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major (“La Chasse”), Hob. III1, Op.1 No.1 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 64,
+  "cifra": "6/8",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "002",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major (“La Chasse”), Hob. III1, Op.1 No.1 · II",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 62,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "003",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major (“La Chasse”), Hob. III1, Op.1 No.1 · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 42,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "004",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major (“La Chasse”), Hob. III1, Op.1 No.1 · IV",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 46,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "005",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major (“La Chasse”), Hob. III1, Op.1 No.1 · V",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 68,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "006",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III2, Op.1 No.2 · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 128,
+  "cifra": "3/8",
+  "tempo": "Allegro molto"
+ },
+ {
+  "numero": "007",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III2, Op.1 No.2 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 60,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "008",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III2, Op.1 No.2 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 26,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "009",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III2, Op.1 No.2 · IV",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 56,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "010",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III2, Op.1 No.2 · V",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 80,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "011",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III3, Op.1 No.3 · I",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 88,
+  "cifra": "3/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "012",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III3, Op.1 No.3 · II",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 44,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "013",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III3, Op.1 No.3 · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 59,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "014",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III3, Op.1 No.3 · IV",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 52,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "015",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III3, Op.1 No.3 · V",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 148,
+  "cifra": "3/8",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "016",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III4, Op.1 No.4 · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 158,
+  "cifra": "3/8",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "017",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III4, Op.1 No.4 · II",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 60,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "018",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III4, Op.1 No.4 · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 44,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "019",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III4, Op.1 No.4 · IV",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 58,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "020",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III4, Op.1 No.4 · V",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 100,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "021",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III5, Op.1 No.5 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 113,
+  "cifra": "3/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "022",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III5, Op.1 No.5 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 73,
+  "cifra": "2/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "023",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III5, Op.1 No.5 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 75,
+  "cifra": "6/8",
+  "tempo": "Allegro molto"
+ },
+ {
+  "numero": "024",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III6, Op.1 No.6 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 66,
+  "cifra": "6/8",
+  "tempo": "Presto assai"
+ },
+ {
+  "numero": "025",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III6, Op.1 No.6 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 56,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "026",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III6, Op.1 No.6 · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 62,
+  "cifra": "2/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "027",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III6, Op.1 No.6 · IV",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 73,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "028",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III6, Op.1 No.6 · V",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 78,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "029",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III7, Op.2 No.1 · I",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 110,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "030",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III7, Op.2 No.1 · II",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 52,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "031",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III7, Op.2 No.1 · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 72,
+  "cifra": "2/4",
+  "tempo": "Poco adagio"
+ },
+ {
+  "numero": "032",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III7, Op.2 No.1 · IV",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 46,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "033",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III7, Op.2 No.1 · V",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 79,
+  "cifra": "2/4",
+  "tempo": "Allegro molto"
+ },
+ {
+  "numero": "034",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E major, Hob.III8, Op.2 No.2 · I",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 126,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "035",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E major, Hob.III8, Op.2 No.2 · II",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 54,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "036",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E major, Hob.III8, Op.2 No.2 · III",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 42,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "037",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E major, Hob.III8, Op.2 No.2 · IV",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 68,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "038",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E major, Hob.III8, Op.2 No.2 · V",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 123,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "039",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III9, Op.2 No.3 · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 98,
+  "cifra": "2/4",
+  "tempo": "Allegro molto."
+ },
+ {
+  "numero": "040",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III9, Op.2 No.3 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 40,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "041",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III9, Op.2 No.3 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 29,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "042",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III9, Op.2 No.3 · IV",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 118,
+  "cifra": "3/4"
+ },
+ {
+  "numero": "043",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III9, Op.2 No.3 · V",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 68,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "044",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III12, Op.2 No.6 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 120,
+  "cifra": "2/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "045",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III12, Op.2 No.6 · II",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 59,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "046",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III12, Op.2 No.6 · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 62,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "047",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III12, Op.2 No.6 · IV",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 44,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "048",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III12, Op.2 No.6 · V",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 75,
+  "cifra": "3/8",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "049",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III19, Op.9 No.1 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 74,
+  "cifra": "4/4",
+  "tempo": "Moderato"
+ },
+ {
+  "numero": "050",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III19, Op.9 No.1 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 66,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "051",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III19, Op.9 No.1 · III",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 67,
+  "cifra": "6/8",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "052",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III19, Op.9 No.1 · IV",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 156,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "053",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III20, Op.9 No.2 · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 111,
+  "cifra": "4/4",
+  "tempo": "Moderato"
+ },
+ {
+  "numero": "054",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III20, Op.9 No.2 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 42,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "055",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III20, Op.9 No.2 · III",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 61,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "056",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III20, Op.9 No.2 · IV",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 59,
+  "cifra": "4/4",
+  "tempo": "Allegro molto"
+ },
+ {
+  "numero": "057",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III21, Op.9 No.3 · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 81,
+  "cifra": "4/4",
+  "tempo": "Allegro moderato"
+ },
+ {
+  "numero": "058",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III21, Op.9 No.3 · II",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 51,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "059",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III21, Op.9 No.3 · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 73,
+  "cifra": "3/4",
+  "tempo": "Largo"
+ },
+ {
+  "numero": "060",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III21, Op.9 No.3 · IV",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 140,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "061",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D minor, Hob.III22, Op.9 No.4 · I",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 77,
+  "cifra": "4/4",
+  "tempo": "Allegro moderato"
+ },
+ {
+  "numero": "062",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D minor, Hob.III22, Op.9 No.4 · II",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 64,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "063",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D minor, Hob.III22, Op.9 No.4 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 76,
+  "cifra": "2/2",
+  "tempo": "Adagio cantabile"
+ },
+ {
+  "numero": "064",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D minor, Hob.III22, Op.9 No.4 · IV",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 93,
+  "cifra": "6/8",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "065",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III23, Op.9 No.5 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 133,
+  "cifra": "2/4",
+  "tempo": "Poco Adagio"
+ },
+ {
+  "numero": "066",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III23, Op.9 No.5 · II",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 48,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "067",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III23, Op.9 No.5 · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 71,
+  "cifra": "3/4",
+  "tempo": "Largo cantabile"
+ },
+ {
+  "numero": "068",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III23, Op.9 No.5 · IV",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 220,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "069",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III24, Op.9 No.6 · I",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 135,
+  "cifra": "6/8",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "070",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III24, Op.9 No.6 · II",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 68,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "071",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III24, Op.9 No.6 · III",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 57,
+  "cifra": "2/2",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "072",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III24, Op.9 No.6 · IV",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 55,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "073",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III31, Op.20 No.1 · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 109,
+  "cifra": "4/4",
+  "tempo": "Allegro moderato"
+ },
+ {
+  "numero": "074",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III31, Op.20 No.1 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 70,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "075",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III31, Op.20 No.1 · III",
+  "tonalidad": "A-",
+  "modo": "major",
+  "compases": 96,
+  "cifra": "3/8",
+  "tempo": "Affetuoso e sostenuto"
+ },
+ {
+  "numero": "076",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III31, Op.20 No.1 · IV",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 161,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "077",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III32, Op.20 No.2 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 108,
+  "cifra": "4/4",
+  "tempo": "Moderato"
+ },
+ {
+  "numero": "078",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III32, Op.20 No.2 · II",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 63,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "079",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III32, Op.20 No.2 · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 86,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "080",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III32, Op.20 No.2 · IV",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 162,
+  "cifra": "6/8",
+  "tempo": "Fuga a 4 Soggetti"
+ },
+ {
+  "numero": "081",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G minor, Hob.III33, Op.20 No.3 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 272,
+  "cifra": "2/4",
+  "tempo": "Allegro con spirito"
+ },
+ {
+  "numero": "082",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G minor, Hob.III33, Op.20 No.3 · II",
+  "tonalidad": "G",
+  "modo": "minor",
+  "compases": 92,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "083",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G minor, Hob.III33, Op.20 No.3 · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 113,
+  "cifra": "3/4",
+  "tempo": "Poco Adagio"
+ },
+ {
+  "numero": "084",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G minor, Hob.III33, Op.20 No.3 · IV",
+  "tonalidad": "G",
+  "modo": "minor",
+  "compases": 106,
+  "cifra": "4/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "085",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III34, Op.20 No.4 · I",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 305,
+  "cifra": "3/4",
+  "tempo": "Allegro di molto"
+ },
+ {
+  "numero": "086",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III34, Op.20 No.4 · II",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 131,
+  "cifra": "2/4",
+  "tempo": "Un poco Adagio affettuoso"
+ },
+ {
+  "numero": "087",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III34, Op.20 No.4 · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 40,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "088",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III34, Op.20 No.4 · IV",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 131,
+  "cifra": "4/4",
+  "tempo": "Presto scherzando"
+ },
+ {
+  "numero": "089",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in F minor, Hob.III35, Op.20 No.5 · I",
+  "tonalidad": "F",
+  "modo": "minor",
+  "compases": 161,
+  "cifra": "4/4",
+  "tempo": "Allegro moderato"
+ },
+ {
+  "numero": "090",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in F minor, Hob.III35, Op.20 No.5 · II",
+  "tonalidad": "F",
+  "modo": "minor",
+  "compases": 100,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "091",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in F minor, Hob.III35, Op.20 No.5 · III",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 85,
+  "cifra": "6/8",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "092",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in F minor, Hob.III35, Op.20 No.5 · IV",
+  "tonalidad": "F",
+  "modo": "minor",
+  "compases": 184,
+  "cifra": "2/2",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "093",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III36, Op.20 No.6 · I",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 166,
+  "cifra": "6/8",
+  "tempo": "Allegro di molto e Scherzando"
+ },
+ {
+  "numero": "094",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III36, Op.20 No.6 · II",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 79,
+  "cifra": "2/2",
+  "tempo": "Cantabile"
+ },
+ {
+  "numero": "095",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III36, Op.20 No.6 · III",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 42,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "096",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in A major, Hob.III36, Op.20 No.6 · IV",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 95,
+  "cifra": "4/4",
+  "tempo": "Fuga a 3 Soggetti"
+ },
+ {
+  "numero": "097",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · I",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 51,
+  "cifra": "4/4",
+  "tempo": "Introduzione"
+ },
+ {
+  "numero": "098",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · II",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 104,
+  "cifra": "3/4",
+  "tempo": "Sonata I."
+ },
+ {
+  "numero": "099",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · III",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 108,
+  "cifra": "4/4",
+  "tempo": "Sonata II."
+ },
+ {
+  "numero": "100",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · IV",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 128,
+  "cifra": "4/4",
+  "tempo": "Sonata III."
+ },
+ {
+  "numero": "101",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · V",
+  "tonalidad": "F",
+  "modo": "minor",
+  "compases": 131,
+  "cifra": "3/4",
+  "tempo": "Largo"
+ },
+ {
+  "numero": "102",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · VI",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 129,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "103",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · VII",
+  "tonalidad": "G",
+  "modo": "minor",
+  "compases": 102,
+  "cifra": "4/4",
+  "tempo": "Lento"
+ },
+ {
+  "numero": "104",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · VIII",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 102,
+  "cifra": "3/4",
+  "tempo": "Largo"
+ },
+ {
+  "numero": "105",
+  "compositor": "Haydn",
+  "titulo": "Die Worte des Erlösers am Kreuze, Hob.III50–56, Op.51 · IX",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 123,
+  "cifra": "3/4",
+  "tempo": "Presto e con tutta la forza"
+ },
+ {
+  "numero": "106",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III63, Op.64 No.5 · I",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 179,
+  "cifra": "2/2",
+  "tempo": "Allegro moderato"
+ },
+ {
+  "numero": "107",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III63, Op.64 No.5 · II",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 84,
+  "cifra": "3/4",
+  "tempo": "Adagio cantabile"
+ },
+ {
+  "numero": "108",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III63, Op.64 No.5 · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 70,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "109",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III63, Op.64 No.5 · IV",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 131,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "110",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III64, Op.64 No.6 · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 144,
+  "cifra": "4/4",
+  "tempo": "Allegretto"
+ },
+ {
+  "numero": "111",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III64, Op.64 No.6 · II",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 72,
+  "cifra": "3/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "112",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III64, Op.64 No.6 · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 64,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "113",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III64, Op.64 No.6 · IV",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 195,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "114",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III65, Op.64 No.1 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 176,
+  "cifra": "2/2",
+  "tempo": "Allegro moderato"
+ },
+ {
+  "numero": "115",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III65, Op.64 No.1 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 86,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "116",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III65, Op.64 No.1 · III",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 134,
+  "cifra": "2/4",
+  "tempo": "Allegretto scherzando"
+ },
+ {
+  "numero": "117",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III65, Op.64 No.1 · IV",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 112,
+  "cifra": "6/8",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "118",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III66, Op.64, No.4 · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 101,
+  "cifra": "4/4",
+  "tempo": "Allegro con brio"
+ },
+ {
+  "numero": "119",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III66, Op.64, No.4 · II",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 64,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "120",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III66, Op.64, No.4 · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 94,
+  "cifra": "2/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "121",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III66, Op.64, No.4 · IV",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 181,
+  "cifra": "6/8",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "122",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III67, Op.64 No.3 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 172,
+  "cifra": "3/4",
+  "tempo": "Vivace assai"
+ },
+ {
+  "numero": "123",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III67, Op.64 No.3 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 92,
+  "cifra": "2/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "124",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III67, Op.64 No.3 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 104,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "125",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III67, Op.64 No.3 · IV",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 247,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "126",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B minor, Hob.III68, Op.64 No.2 · I",
+  "tonalidad": "B",
+  "modo": "minor",
+  "compases": 108,
+  "cifra": "4/4",
+  "tempo": "Allegro spiritoso"
+ },
+ {
+  "numero": "127",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B minor, Hob.III68, Op.64 No.2 · II",
+  "tonalidad": "B",
+  "modo": "major",
+  "compases": 94,
+  "cifra": "3/4",
+  "tempo": "Adagio ma non troppo"
+ },
+ {
+  "numero": "128",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B minor, Hob.III68, Op.64 No.2 · III",
+  "tonalidad": "B",
+  "modo": "minor",
+  "compases": 66,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "129",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B minor, Hob.III68, Op.64 No.2 · IV",
+  "tonalidad": "B",
+  "modo": "minor",
+  "compases": 203,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "130",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III72, Op.74 No.1 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 155,
+  "cifra": "4/4"
+ },
+ {
+  "numero": "131",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III72, Op.74 No.1 · II",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 174,
+  "cifra": "3/8",
+  "tempo": "Andantino grazioso"
+ },
+ {
+  "numero": "132",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III72, Op.74 No.1 · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 114,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "133",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III72, Op.74 No.1 · IV",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 287,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "134",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in F major, Hob.III73, Op.74 No.2 · I",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 262,
+  "cifra": "4/4",
+  "tempo": "Allegro spirituoso"
+ },
+ {
+  "numero": "135",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in F major, Hob.III73, Op.74 No.2 · II",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 115,
+  "cifra": "2/4",
+  "tempo": "Andante grazioso"
+ },
+ {
+  "numero": "136",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in F major, Hob.III73, Op.74 No.2 · III",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 83,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "137",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in F major, Hob.III73, Op.74 No.2 · IV",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 292,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "138",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G minor, Hob.III74, Op.74 No.3 (The Horseman) · I",
+  "tonalidad": "G",
+  "modo": "minor",
+  "compases": 197,
+  "cifra": "3/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "139",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G minor, Hob.III74, Op.74 No.3 (The Horseman) · II",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 64,
+  "cifra": "4/4",
+  "tempo": "Largo assai"
+ },
+ {
+  "numero": "140",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G minor, Hob.III74, Op.74 No.3 (The Horseman) · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 78,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "141",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G minor, Hob.III74, Op.74 No.3 (The Horseman) · IV",
+  "tonalidad": "G",
+  "modo": "minor",
+  "compases": 148,
+  "cifra": "4/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "142",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III75, Op.76 No.1 · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 227,
+  "cifra": "2/2",
+  "tempo": "Allegro con spirito"
+ },
+ {
+  "numero": "143",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III75, Op.76 No.1 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 95,
+  "cifra": "2/4",
+  "tempo": "Adagio sostenuto"
+ },
+ {
+  "numero": "144",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III75, Op.76 No.1 · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 78,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "145",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in G major, Hob.III75, Op.76 No.1 · IV",
+  "tonalidad": "G",
+  "modo": "minor",
+  "compases": 202,
+  "cifra": "2/2",
+  "tempo": "Allegro ma non troppo"
+ },
+ {
+  "numero": "146",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D minor, Hob.III76, Op.76 No.2 · I",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 155,
+  "cifra": "4/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "147",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D minor, Hob.III76, Op.76 No.2 · II",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 70,
+  "cifra": "6/8",
+  "tempo": "Andante o più tosto allegretto"
+ },
+ {
+  "numero": "148",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D minor, Hob.III76, Op.76 No.2 · III",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 84,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "149",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D minor, Hob.III76, Op.76 No.2 · IV",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 270,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "150",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III77, Op.76 No.3 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 128,
+  "cifra": "4/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "151",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III77, Op.76 No.3 · II",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 109,
+  "cifra": "2/2",
+  "tempo": "Poco adagio; cantabile"
+ },
+ {
+  "numero": "152",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III77, Op.76 No.3 · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 104,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "153",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in C major, Hob.III77, Op.76 No.3 · IV",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 190,
+  "cifra": "2/2",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "154",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III78, Op.76 No.4 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 188,
+  "cifra": "4/4",
+  "tempo": "Allegro con spirito"
+ },
+ {
+  "numero": "155",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III78, Op.76 No.4 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 74,
+  "cifra": "3/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "156",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III78, Op.76 No.4 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 109,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "157",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in B-flat major, Hob.III78, Op.76 No.4 · IV",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 179,
+  "cifra": "2/2",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "158",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III79, Op.76 No.5 · I",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 128,
+  "cifra": "6/8",
+  "tempo": "Allegretto"
+ },
+ {
+  "numero": "159",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III79, Op.76 No.5 · II",
+  "tonalidad": "F#",
+  "modo": "major",
+  "compases": 98,
+  "cifra": "2/2",
+  "tempo": "Largo. Cantabile e mesto"
+ },
+ {
+  "numero": "160",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III79, Op.76 No.5 · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 69,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "161",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in D major, Hob.III79, Op.76 No.5 · IV",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 256,
+  "cifra": "2/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "162",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III80, Op.76 No.6 · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 235,
+  "cifra": "2/4",
+  "tempo": "Allegretto"
+ },
+ {
+  "numero": "163",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III80, Op.76 No.6 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 112,
+  "cifra": "3/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "164",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III80, Op.76 No.6 · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 159,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "165",
+  "compositor": "Haydn",
+  "titulo": "String Quartet in E-flat major, Hob.III80, Op.76 No.6 · IV",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 177,
+  "cifra": "3/4",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "166",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.1 in G major, K.8073f · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 67,
+  "cifra": "3/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "167",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.1 in G major, K.8073f · II",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 84,
+  "cifra": "4/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "168",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.1 in G major, K.8073f · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 52,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "169",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.1 in G major, K.8073f · IV",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 72,
+  "cifra": "2/2",
+  "tempo": "Rondo"
+ },
+ {
+  "numero": "170",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.2 in D major, K.155134a · I",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 120,
+  "cifra": "4/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "171",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.2 in D major, K.155134a · II",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 50,
+  "cifra": "3/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "172",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.2 in D major, K.155134a · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 103,
+  "cifra": "2/4",
+  "tempo": "Molto Allegro"
+ },
+ {
+  "numero": "173",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.3 in G major, K.156 (K. 134b) · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 180,
+  "cifra": "3/8",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "174",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.3 in G major, K.156 (K. 134b) · II",
+  "tonalidad": "E",
+  "modo": "minor",
+  "compases": 37,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "175",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.3 in G major, K.156 (K. 134b) · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 62,
+  "cifra": "3/4",
+  "tempo": "Tempo di Menuetto"
+ },
+ {
+  "numero": "176",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.4 in C major, K.157 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 126,
+  "cifra": "4/4"
+ },
+ {
+  "numero": "177",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.4 in C major, K.157 · II",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 126,
+  "cifra": "3/8",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "178",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.4 in C major, K.157 · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 126,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "179",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.5 in F major, K.158 · I",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 129,
+  "cifra": "3/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "180",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.5 in F major, K.158 · II",
+  "tonalidad": "A",
+  "modo": "minor",
+  "compases": 44,
+  "cifra": "4/4",
+  "tempo": "Andante un poco Allegretto"
+ },
+ {
+  "numero": "181",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.5 in F major, K.158 · III",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 114,
+  "cifra": "3/4",
+  "tempo": "Tempo di Menuetto"
+ },
+ {
+  "numero": "182",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.6 in B-flat major, K.159 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 71,
+  "cifra": "4/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "183",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.6 in B-flat major, K.159 · II",
+  "tonalidad": "G",
+  "modo": "minor",
+  "compases": 195,
+  "cifra": "3/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "184",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.6 in B-flat major, K.159 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 159,
+  "cifra": "2/4",
+  "tempo": "Rondo"
+ },
+ {
+  "numero": "185",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.7 in E-flat major, K.160159a · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 105,
+  "cifra": "4/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "186",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.7 in E-flat major, K.160159a · II",
+  "tonalidad": "F",
+  "modo": "minor",
+  "compases": 62,
+  "cifra": "3/4",
+  "tempo": "Un poco Adagio"
+ },
+ {
+  "numero": "187",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.7 in E-flat major, K.160159a · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 154,
+  "cifra": "2/4",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "188",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.8 in F major, K.168 · I",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 108,
+  "cifra": "4/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "189",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.8 in F major, K.168 · II",
+  "tonalidad": "F",
+  "modo": "minor",
+  "compases": 67,
+  "cifra": "3/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "190",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.8 in F major, K.168 · III",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 48,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "191",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.8 in F major, K.168 · IV",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 119,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "192",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.9 in A major, K.169 · I",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 117,
+  "cifra": "3/4",
+  "tempo": "Molto Allegro"
+ },
+ {
+  "numero": "193",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.9 in A major, K.169 · II",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 122,
+  "cifra": "2/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "194",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.9 in A major, K.169 · III",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 52,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "195",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.9 in A major, K.169 · IV",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 82,
+  "cifra": "2/4",
+  "tempo": "Rondeau"
+ },
+ {
+  "numero": "196",
+  "compositor": "Mozart",
+  "titulo": "String Quartet in C major, K.170 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 91,
+  "cifra": "2/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "197",
+  "compositor": "Mozart",
+  "titulo": "String Quartet in C major, K.170 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 52,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "198",
+  "compositor": "Mozart",
+  "titulo": "String Quartet in C major, K.170 · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 58,
+  "cifra": "4/4",
+  "tempo": "Un poco adagio"
+ },
+ {
+  "numero": "199",
+  "compositor": "Mozart",
+  "titulo": "String Quartet in C major, K.170 · IV",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 132,
+  "cifra": "2/4",
+  "tempo": "Rondo"
+ },
+ {
+  "numero": "200",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.14 in G major, K.387 (Op. 10, No. 1) · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 172,
+  "cifra": "4/4",
+  "tempo": "Allegro vivace assai"
+ },
+ {
+  "numero": "201",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.14 in G major, K.387 (Op. 10, No. 1) · II",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 147,
+  "cifra": "3/4",
+  "tempo": "Minuetto"
+ },
+ {
+  "numero": "202",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.14 in G major, K.387 (Op. 10, No. 1) · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 107,
+  "cifra": "3/4",
+  "tempo": "Andante cantabile"
+ },
+ {
+  "numero": "203",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.14 in G major, K.387 (Op. 10, No. 1) · IV",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 298,
+  "cifra": "4/4",
+  "tempo": "Molto Allegro"
+ },
+ {
+  "numero": "204",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.15 in D minor, K.421417b (Op. 10, No. 2) · I",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 119,
+  "cifra": "4/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "205",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.15 in D minor, K.421417b (Op. 10, No. 2) · II",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 87,
+  "cifra": "6/8",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "206",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.15 in D minor, K.421417b (Op. 10, No. 2) · III",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 67,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "207",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.15 in D minor, K.421417b (Op. 10, No. 2) · IV",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 153,
+  "cifra": "6/8",
+  "tempo": "Allegro ma non troppo"
+ },
+ {
+  "numero": "208",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.16 in E-flat major, K.428421b (Op. 10, No. 4) · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 164,
+  "cifra": "4/4",
+  "tempo": "Allegro non troppo"
+ },
+ {
+  "numero": "209",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.16 in E-flat major, K.428421b (Op. 10, No. 4) · II",
+  "tonalidad": "A-",
+  "modo": "major",
+  "compases": 96,
+  "cifra": "6/8",
+  "tempo": "Andante con moto"
+ },
+ {
+  "numero": "210",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.16 in E-flat major, K.428421b (Op. 10, No. 4) · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 108,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "211",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.16 in E-flat major, K.428421b (Op. 10, No. 4) · IV",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 342,
+  "cifra": "2/4",
+  "tempo": "Allegro vivace"
+ },
+ {
+  "numero": "212",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.17 in B-flat major, K.458 (Op. 10, No. 3) · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 283,
+  "cifra": "6/8",
+  "tempo": "Allegro vivace assai"
+ },
+ {
+  "numero": "213",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.17 in B-flat major, K.458 (Op. 10, No. 3) · II",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 63,
+  "cifra": "3/4",
+  "tempo": "Minuetto"
+ },
+ {
+  "numero": "214",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.17 in B-flat major, K.458 (Op. 10, No. 3) · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 53,
+  "cifra": "4/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "215",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.17 in B-flat major, K.458 (Op. 10, No. 3) · IV",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 335,
+  "cifra": "2/4",
+  "tempo": "Allegro assai"
+ },
+ {
+  "numero": "216",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.18 in A major, K.464 (Op. 10, No. 5) · I",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 272,
+  "cifra": "3/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "217",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.18 in A major, K.464 (Op. 10, No. 5) · II",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 104,
+  "cifra": "3/4",
+  "tempo": "Minuetto"
+ },
+ {
+  "numero": "218",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.18 in A major, K.464 (Op. 10, No. 5) · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 203,
+  "cifra": "2/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "219",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.18 in A major, K.464 (Op. 10, No. 5) · IV",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 263,
+  "cifra": "4/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "220",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.19 in C major, K.465 (Op. 10, No. 6) · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 246,
+  "cifra": "3/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "221",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.19 in C major, K.465 (Op. 10, No. 6) · II",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 114,
+  "cifra": "3/4",
+  "tempo": "Andante cantabile"
+ },
+ {
+  "numero": "222",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.19 in C major, K.465 (Op. 10, No. 6) · III",
+  "tonalidad": "A",
+  "modo": "minor",
+  "compases": 107,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "223",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.19 in C major, K.465 (Op. 10, No. 6) · IV",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 423,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "224",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.20 in D major, K.499 · I",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 270,
+  "cifra": "2/2",
+  "tempo": "Allegretto"
+ },
+ {
+  "numero": "225",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.20 in D major, K.499 · II",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 60,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "226",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.20 in D major, K.499 · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 105,
+  "cifra": "3/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "227",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.20 in D major, K.499 · IV",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 384,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "228",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.21 in D major, K.575 · I",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 193,
+  "cifra": "2/2",
+  "tempo": "Allegretto"
+ },
+ {
+  "numero": "229",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.21 in D major, K.575 · II",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 73,
+  "cifra": "3/4",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "230",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.21 in D major, K.575 · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 118,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "231",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.21 in D major, K.575 · IV",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 230,
+  "cifra": "2/2",
+  "tempo": "Allegretto"
+ },
+ {
+  "numero": "232",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.22 in B-flat major, K.589 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 208,
+  "cifra": "3/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "233",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.22 in B-flat major, K.589 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 89,
+  "cifra": "2/2",
+  "tempo": "Larghetto"
+ },
+ {
+  "numero": "234",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.22 in B-flat major, K.589 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 103,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "235",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.22 in B-flat major, K.589 · IV",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 158,
+  "cifra": "6/8",
+  "tempo": "Allegro assai"
+ },
+ {
+  "numero": "236",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.23 in F major, K.590 · I",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 198,
+  "cifra": "4/4",
+  "tempo": "Allegro moderato"
+ },
+ {
+  "numero": "237",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.23 in F major, K.590 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 123,
+  "cifra": "6/8",
+  "tempo": "Andante"
+ },
+ {
+  "numero": "238",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.23 in F major, K.590 · III",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 79,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "239",
+  "compositor": "Mozart",
+  "titulo": "String Quartet No.23 in F major, K.590 · IV",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 311,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "240",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.1, Op.18 No.1 · I",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 313,
+  "cifra": "3/4",
+  "tempo": "Allegro con brio"
+ },
+ {
+  "numero": "241",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.1, Op.18 No.1 · II",
+  "tonalidad": "D",
+  "modo": "minor",
+  "compases": 110,
+  "cifra": "9/8",
+  "tempo": "Adagio affettuoso ed appassionato"
+ },
+ {
+  "numero": "242",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.1, Op.18 No.1 · III",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 145,
+  "cifra": "3/4",
+  "tempo": "Scherzo"
+ },
+ {
+  "numero": "243",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.1, Op.18 No.1 · IV",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 381,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "244",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.2, Op.18 No.2 · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 249,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "245",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.2, Op.18 No.2 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 92,
+  "cifra": "3/4",
+  "tempo": "Adagio cantabile"
+ },
+ {
+  "numero": "246",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.2, Op.18 No.2 · III",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 92,
+  "cifra": "3/4",
+  "tempo": "Scherzo"
+ },
+ {
+  "numero": "247",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.2, Op.18 No.2 · IV",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 413,
+  "cifra": "2/4",
+  "tempo": "Allegro molto quasi Presto"
+ },
+ {
+  "numero": "248",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.3, Op.18 No.3 · I",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 271,
+  "cifra": "2/2",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "249",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.3, Op.18 No.3 · II",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 151,
+  "cifra": "2/4",
+  "tempo": "Andante con moto"
+ },
+ {
+  "numero": "250",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.3, Op.18 No.3 · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 172,
+  "cifra": "3/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "251",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.3, Op.18 No.3 · IV",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 372,
+  "cifra": "6/8",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "252",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.4, Op.18 No.4 · I",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 221,
+  "cifra": "4/4",
+  "tempo": "Allegro ma non tanto"
+ },
+ {
+  "numero": "253",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.4, Op.18 No.4 · II",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 261,
+  "cifra": "3/8",
+  "tempo": "Scherzo"
+ },
+ {
+  "numero": "254",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.4, Op.18 No.4 · III",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 101,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "255",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.4, Op.18 No.4 · IV",
+  "tonalidad": "C",
+  "modo": "minor",
+  "compases": 226,
+  "cifra": "2/2",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "256",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.5, Op.18 No.5 · I",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 228,
+  "cifra": "6/8",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "257",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.5, Op.18 No.5 · II",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 109,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "258",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.5, Op.18 No.5 · III",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 152,
+  "cifra": "2/4",
+  "tempo": "Andante cantabile"
+ },
+ {
+  "numero": "259",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.5, Op.18 No.5 · IV",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 304,
+  "cifra": "2/2",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "260",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.6, Op.18 No.6 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 266,
+  "cifra": "2/2",
+  "tempo": "Allegro con brio"
+ },
+ {
+  "numero": "261",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.6, Op.18 No.6 · II",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 79,
+  "cifra": "2/4",
+  "tempo": "Adagio ma non troppo"
+ },
+ {
+  "numero": "262",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.6, Op.18 No.6 · III",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 75,
+  "cifra": "3/4",
+  "tempo": "Scherzo"
+ },
+ {
+  "numero": "263",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.6, Op.18 No.6 · IV",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 44,
+  "cifra": "2/4",
+  "tempo": "Adagio"
+ },
+ {
+  "numero": "264",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.6, Op.18 No.6 · V",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 253,
+  "cifra": "3/8",
+  "tempo": "Allegretto quasi Allegro"
+ },
+ {
+  "numero": "265",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.9, Op.59 No.3 · I",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 270,
+  "cifra": "3/4",
+  "tempo": "Andante con moto"
+ },
+ {
+  "numero": "266",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.9, Op.59 No.3 · II",
+  "tonalidad": "A",
+  "modo": "minor",
+  "compases": 207,
+  "cifra": "6/8",
+  "tempo": "Andante con moto quasi allegretto"
+ },
+ {
+  "numero": "267",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.9, Op.59 No.3 · III",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 96,
+  "cifra": "3/4",
+  "tempo": "Menuetto"
+ },
+ {
+  "numero": "268",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.9, Op.59 No.3 · IV",
+  "tonalidad": "C",
+  "modo": "major",
+  "compases": 429,
+  "cifra": "2/2",
+  "tempo": "Allegro molto"
+ },
+ {
+  "numero": "269",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.12, Op.127 · I",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 282,
+  "cifra": "2/4",
+  "tempo": "Maestoso"
+ },
+ {
+  "numero": "270",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.12, Op.127 · II",
+  "tonalidad": "A-",
+  "modo": "major",
+  "compases": 131,
+  "cifra": "12/8",
+  "tempo": "Adagio, ma non troppo e molto cantabile"
+ },
+ {
+  "numero": "271",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.12, Op.127 · III",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 438,
+  "cifra": "3/4",
+  "tempo": "Scherzando vivace"
+ },
+ {
+  "numero": "272",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.12, Op.127 · IV",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 299,
+  "cifra": "2/2",
+  "tempo": "Finale"
+ },
+ {
+  "numero": "273",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.13 in B♭ major, Op.130 · I",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 238,
+  "cifra": "3/4",
+  "tempo": "Adagio ma non troppo"
+ },
+ {
+  "numero": "274",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.13 in B♭ major, Op.130 · II",
+  "tonalidad": "B-",
+  "modo": "minor",
+  "compases": 107,
+  "cifra": "2/2",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "275",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.13 in B♭ major, Op.130 · III",
+  "tonalidad": "D-",
+  "modo": "major",
+  "compases": 88,
+  "cifra": "4/4",
+  "tempo": "Andante con moto ma non troppo"
+ },
+ {
+  "numero": "276",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.13 in B♭ major, Op.130 · IV",
+  "tonalidad": "E",
+  "modo": "minor",
+  "compases": 150,
+  "cifra": "3/8",
+  "tempo": "Alla danza tedesca"
+ },
+ {
+  "numero": "277",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.13 in B♭ major, Op.130 · V",
+  "tonalidad": "E-",
+  "modo": "major",
+  "compases": 66,
+  "cifra": "3/4",
+  "tempo": "Adagio molto espressivo"
+ },
+ {
+  "numero": "278",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.13 in B♭ major, Op.130 · VI",
+  "tonalidad": "B-",
+  "modo": "major",
+  "compases": 498,
+  "cifra": "2/4",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "279",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.14 in C♯ minor, Op.131 · I",
+  "tonalidad": "C#",
+  "modo": "minor",
+  "compases": 122,
+  "cifra": "2/2",
+  "tempo": "Adagio ma non troppo e molto espressivo"
+ },
+ {
+  "numero": "280",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.14 in C♯ minor, Op.131 · II",
+  "tonalidad": "D",
+  "modo": "major",
+  "compases": 199,
+  "cifra": "6/8",
+  "tempo": "Allegro molto vivace"
+ },
+ {
+  "numero": "281",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.14 in C♯ minor, Op.131 · III",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 11,
+  "cifra": "4/4",
+  "tempo": "Allegro moderato"
+ },
+ {
+  "numero": "282",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.14 in C♯ minor, Op.131 · IV",
+  "tonalidad": "A",
+  "modo": "major",
+  "compases": 278,
+  "cifra": "2/4",
+  "tempo": "Andante ma non troppo e molto cantabile"
+ },
+ {
+  "numero": "283",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.14 in C♯ minor, Op.131 · V",
+  "tonalidad": "E",
+  "modo": "major",
+  "compases": 500,
+  "cifra": "2/2",
+  "tempo": "Presto"
+ },
+ {
+  "numero": "284",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.14 in C♯ minor, Op.131 · VI",
+  "tonalidad": "G#",
+  "modo": "minor",
+  "compases": 28,
+  "cifra": "3/4",
+  "tempo": "Adagio quasi un poco andante"
+ },
+ {
+  "numero": "285",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.14 in C♯ minor, Op.131 · VII",
+  "tonalidad": "C#",
+  "modo": "minor",
+  "compases": 388,
+  "cifra": "2/2",
+  "tempo": "Allegro"
+ },
+ {
+  "numero": "286",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.16 in F major, Op.135 · I",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 193,
+  "cifra": "2/4",
+  "tempo": "Allegretto"
+ },
+ {
+  "numero": "287",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.16 in F major, Op.135 · II",
+  "tonalidad": "F",
+  "modo": "major",
+  "compases": 275,
+  "cifra": "3/4",
+  "tempo": "Vivace"
+ },
+ {
+  "numero": "288",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.16 in F major, Op.135 · III",
+  "tonalidad": "D-",
+  "modo": "major",
+  "compases": 59,
+  "cifra": "6/8",
+  "tempo": "Lento assai, cantante e tranquillo"
+ },
+ {
+  "numero": "289",
+  "compositor": "Beethoven",
+  "titulo": "String Quartet No.16 in F major, Op.135 · IV",
+  "tonalidad": "F",
+  "modo": "minor",
+  "compases": 284,
+  "cifra": "3/2",
+  "tempo": "Grave ma non troppo tratto"
+ },
+ {
+  "numero": "290",
+  "compositor": "Beethoven",
+  "titulo": "Grosse Fuge in B-flat major, Op.133 · I",
+  "tonalidad": "G",
+  "modo": "major",
+  "compases": 742,
+  "cifra": "6/8",
+  "tempo": "Allegro"
+ }
+]
